@@ -26,8 +26,11 @@ are MCP connectors (no raw API keys in the sandbox). Drive MCP downloads return 
 ElevenLabs signed URLs from `creative_get_flow_run_status` work with plain `curl` for 2 h.
 
 ## Status (update this section every session)
-- Done/tested: Remotion template renders 1080×1920 30 fps H.264+AAC; word-synced captions; tracker sheet created and written; Ep02 Horns Reel produced;
-  carousel generator; 5-slide carousel for 2026-10-30 10:00.
-- Not yet verified: that Metricool `createScheduledPost` accepts jsDelivr/raw URLs for images/Reels (TikTok flow already used jsDelivr SHA URLs).
-- Not done: Cloud Routine creation (not possible from a session — owner creates it using `ROUTINE_PROMPT.md`); merge of the PR to `main`.
-- Known gaps: sting SFX is 1 s (Ep01 original); Discover Spain / News / Beyond pillars have no templates yet beyond `render-carousel.mjs`.
+- Tested 2026-10-29: Remotion renders 1080x1920/30fps H.264+AAC (QC script passes); word-synced captions; tracker sheet read/write; ElevenLabs voice+model
+  (generated twice for Ep02 — the first take had a factual error in the flare sentence; do not repeat); jsDelivr SHA URLs (video/mp4, image/png) work for commits
+  on any pushed branch; raw.githubusercontent serves mp4 as octet-stream (prefer jsDelivr). **Metricool accepted jsDelivr URLs for a 5-image carousel (POST)
+  and a Reel (REEL) and re-hosted them on static.metricool.com**; re-query confirmed date/time/caption/media.
+- Scheduled 2026-10-30: 10:00 carousel "Spacing" (Metricool 410018084), 18:00 Reel "Ep02 The Horns Set" (410018106).
+- Not done: Cloud Routine (owner creates it from `ROUTINE_PROMPT.md`); PR merge to `main` (owner/next session); templates for News/Spain/Beyond pillars beyond `render-carousel.mjs`;
+  weekly analytics not yet run (first Monday 2026-11-02); no Canva use. Sting SFX is 1 s (Ep01 original).
+- Tracker `plan` tab covers 2026-10-29 → 2026-11-03 only; extend weekly.
