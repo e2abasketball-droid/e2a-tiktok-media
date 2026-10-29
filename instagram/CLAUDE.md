@@ -34,3 +34,4 @@ ElevenLabs signed URLs from `creative_get_flow_run_status` work with plain `curl
 - Not done: Cloud Routine (owner creates it from `ROUTINE_PROMPT.md`); PR merge to `main` (owner/next session); templates for News/Spain/Beyond pillars beyond `render-carousel.mjs`;
   weekly analytics not yet run (first Monday 2026-11-02); no Canva use. Sting SFX is 1 s (Ep01 original).
 - Tracker `plan` tab covers 2026-10-29 → 2026-11-03 only; extend weekly.
+- 2026-10-29 (late run, branch clever-albattani-l35v88): merged PR #1 branch + magical-hamilton scaffold into this branch. Target 2026-10-30 verified in Metricool: 10:00 carousel + 18:00 Reel already scheduled; nothing produced (idempotent). Next free slots: 2026-10-31 18:00 Reel, 2026-11-01 10:00/18:00, 2026-11-02 18:00, 2026-11-03 both.
