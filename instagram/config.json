@@ -1,0 +1,22 @@
+{
+  "repo": "e2abasketball-droid/e2a-tiktok-media",
+  "metricool": {"brandId": "7681319", "label": "e2a_basketball", "timezone": "Australia/Sydney"},
+  "tracker": {
+    "name": "E2A_Instagram_Content_Tracker",
+    "spreadsheetId": "1FCzOnokacZwQF1oSE-czmj1PLyLaQ2EfzR3QZZ0myGI",
+    "tabs": {
+      "images": "filename,file_id_or_url,category,publication_date,publication_title,metricool_id,instagram_url,status",
+      "reels": "episode,title,concept,semantic_ids,script,sources,mp4_url,metricool_post_id,scheduled_date,scheduled_time,status,notes",
+      "plan": "date,time,content_type,pillar,topic,status,metricool_id"
+    }
+  },
+  "drive": {
+    "account": "e2abasketball@gmail.com",
+    "logoFileId": "1tBFMCBCuRZLgZ395G9rZQWt7pEXIH9zI",
+    "campaignFolderId": "1lD7j_tU143X5pjBWtZMg3oVCLOKqVJWO",
+    "logoPublicDownload": "https://drive.google.com/uc?export=download&id=1tBFMCBCuRZLgZ395G9rZQWt7pEXIH9zI"
+  },
+  "logo": {"preferred": "instagram/assets/E2A_LOGO_white.png", "original": "instagram/assets/E2A_LOGO.jpeg"},
+  "elevenlabs": {"voiceId": "KeU8nqWFDbaoi0QVUjD3", "model": "eleven_v4", "referenceFlow": "kHnMjfPaLEGbAYyZ4l0R"},
+  "chromium": "/opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell"
+}
