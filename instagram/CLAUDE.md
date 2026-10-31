@@ -38,3 +38,8 @@ ElevenLabs signed URLs from `creative_get_flow_run_status` work with plain `curl
 - 2026-10-30 (run on branch clever-albattani-aiqe67, fast-forwarded from l35v88): produced Ep03 "ICE ball-screen defence" (`episodes/ep03-ice`, narration 85 s, one ElevenLabs take),
   rendered + QC OK, media `2026-10-31/18pm_reel.mp4` (jsDelivr @7d1bf1d), scheduled 2026-10-31 18:00 REEL, Metricool 411577397 (re-query confirmed); tracker updated.
   Next free slots: 2026-11-01 10:00 (Beyond) / 18:00 Reel, 2026-11-02 18:00 Reel, 2026-11-03 both. Next Reel concept: team principle or individual skill (alternate). PR #1 still unmerged; routine still not created.
+- 2026-10-31 (run on branch clever-albattani-97q0lk, merged aiqe67): target 2026-11-01 was fully free for Instagram (other 11-01 Metricool entries are TikTok/YouTube-only). Produced + scheduled:
+  10:00 POST carousel "More Than a Game" (Beyond Basketball, Metricool 412392735, media @8a47891); 18:00 REEL Ep04 "The Extra Pass" (`episodes/ep04-extra-pass`, narration 87.4 s, ONE ElevenLabs take,
+  Metricool 412392772, isAiGenerated true). Re-query confirmed. Tracker updated (note: Sheets tools reject `valueInputOption` — omit it).
+  Lessons: QC requires total duration ≤ 90 s, so narration ≤ ~87 s with a ~2.4 s end card (DUR 89.9); `render-carousel.mjs` text slides now vertically centred.
+  Next free slots: 2026-11-02 18:00 Reel, 2026-11-03 10:00 (Inside) + 18:00 Reel. Monday 2026-11-02 run must also do weekly analytics. Next Reel: individual skill (euro step / jump stop). PR/routine still pending.
