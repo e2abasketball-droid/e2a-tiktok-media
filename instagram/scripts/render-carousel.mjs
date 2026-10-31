@@ -42,7 +42,7 @@ function slide(sl, i, n) {
   if (sl.type === 'cover') inner = `<div class="cov"><div class="kick">${sl.kicker}</div><h1>${sl.title}</h1><p class="sub">${sl.body}</p><div class="swipe">SWIPE ➜</div></div>`;
   else if (sl.type === 'diagram') inner = `<div class="mid"><div class="kick">${sl.kicker}</div><h2>${sl.title}</h2><div class="dg">${court(sl.diagram)}</div><p class="cap">${sl.body}</p></div>`;
   else if (sl.type === 'cta') inner = `<div class="cov"><div class="bigl"><img src="${LOGO}"></div><h2 style="font-size:92px;text-align:center">${sl.title}</h2><p class="sub" style="text-align:center">${sl.body}</p><div class="swipe" style="align-self:center">MORE THAN A GAME</div></div>`;
-  else inner = `<div class="mid"><div class="kick">${sl.kicker}</div><h2>${sl.title}</h2><p class="cap">${sl.body}</p></div>`;
+  else inner = `<div class="mid txt"><div class="kick">${sl.kicker}</div><h2>${sl.title}</h2><p class="cap">${sl.body}</p></div>`;
   return `<section>${head(sl, i, n)}${inner}<div class="foot">@e2a_basketball · Connecting Australia and Europe through basketball</div></section>`;
 }
 const css = `${FONT}*{box-sizing:border-box;margin:0}body{background:#000}section{width:1080px;height:1350px;position:relative;overflow:hidden;background:radial-gradient(circle at 30% 20%,#17335f,${N} 65%);color:${W};font-family:Inter;display:flex;flex-direction:column;padding:56px}
@@ -52,7 +52,7 @@ const css = `${FONT}*{box-sizing:border-box;margin:0}body{background:#000}sectio
 h1{font:400 150px/1 Anton;text-transform:uppercase}h2{font:400 84px/1.02 Anton;text-transform:uppercase}.sub{font:500 40px/1.35 Inter;color:rgba(255,255,255,.85)}
 .swipe{font:400 34px Anton;letter-spacing:4px;color:${N};background:${G};padding:14px 30px;border-radius:12px;align-self:flex-start}
 .mid{flex:1;display:flex;flex-direction:column;justify-content:flex-start;gap:16px;padding-top:34px;padding-bottom:50px}.dg{display:flex;justify-content:center}.dg svg{zoom:.78}.cap{font:500 35px/1.3 Inter;color:rgba(255,255,255,.9)}h2{font-size:76px}
-.bigl{width:560px;align-self:center}.bigl img{width:560px}
+.mid.txt{justify-content:center;gap:30px;padding-top:0}.mid.txt h2{font-size:96px}.mid.txt .cap{font-size:42px;line-height:1.35}.bigl{width:560px;align-self:center}.bigl img{width:560px}
 .foot{position:absolute;left:56px;right:56px;bottom:22px;font:600 22px Inter;color:rgba(255,255,255,.55);text-align:center;letter-spacing:1px}`;
 const html = `<html><head><meta charset=utf-8><style>${css}</style></head><body>${spec.slides.map((s, i) => slide(s, i, spec.slides.length)).join('')}</body></html>`;
 const browser = await chromium.launch();
