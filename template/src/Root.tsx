@@ -1,17 +1,28 @@
 import React from 'react';
 import {Composition} from 'remotion';
-import {Main} from './Main';
+import {Shell, Word} from './Daily';
+import {PLANS, DUR} from './plans';
 
 export const FPS = 30;
-export const DURATION = 1660; // ~55.3 s: narration (54.1 s) + short tail
+
+type DailyProps = {n: number; words: Word[]};
+
+const Daily: React.FC<DailyProps> = ({n, words}) => {
+  const plan = PLANS[n](words);
+  return <Shell plan={plan} words={words} n={n} total={DUR(words)} />;
+};
 
 export const Root: React.FC = () => (
-  <Composition
-    id="Main"
-    component={Main}
-    durationInFrames={DURATION}
-    fps={FPS}
-    width={1080}
-    height={1920}
-  />
+  <>
+    <Composition
+      id="Daily"
+      component={Daily}
+      durationInFrames={1500}
+      fps={FPS}
+      width={1080}
+      height={1920}
+      defaultProps={{n: 2, words: [] as Word[]}}
+      calculateMetadata={({props}) => ({durationInFrames: DUR(props.words)})}
+    />
+  </>
 );
