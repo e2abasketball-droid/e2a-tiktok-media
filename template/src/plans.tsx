@@ -367,5 +367,237 @@ export const plan4 = (w: Word[]): Plan => {
   };
 };
 
-export const PLANS: Record<number, (w: Word[]) => Plan> = {1: plan1, 2: plan2, 3: plan3, 4: plan4, 5: plan5};
+
+
+// ================================================================ 2026-11-03 BATCH (plans 6-10)
+export const plan6 = (w: Word[]): Plan => {
+  const T = makeT(w);
+  const tJune = T('June eleventh'), tSeries = T('The series is'), tRep = T('Reports say'), tPlays = T('He plays forty-four'), tTwentyFive = T('With twenty-five seconds');
+  const tThree = T('he hits the three-pointer'), tWin = T('The Bulls win'), tEnd = T('At the end'), tChi = T('Chicago takes'), tQ = T("Was this Jordan's");
+  return {
+    sub: 'BASKETBALL STORIES',
+    scenes: [
+      sc(0, tJune, (
+        <Stage>
+          <Pop><Tag>NBA Finals · 1997</Tag></Pop>
+          <Pop at={0.2}><Count to={38} start={1.0} dur={1.2} size={330} /></Pop>
+          <Pop at={0.4}><Tag size={56}>Points</Tag></Pop>
+        </Stage>
+      )),
+      sc(tJune, tSeries, <Lines tag="June 11, 1997" lines={[{t: 'Game 5'}, {t: 'NBA Finals', size: 110, color: GOLD}]} foot="Salt Lake City" />),
+      sc(tSeries, tRep, (
+        <Stage>
+          <Board label="Finals series" rows={[{name: 'BULLS', kf: [[0, 2]], color: GOLD}, {name: 'JAZZ', kf: [[0, 2]], color: WHITE}]} />
+        </Stage>
+      )),
+      sc(tRep, tPlays, <Lines tag="Before tip-off" lines={[{t: 'Ill & weak', size: 140}, {t: 'Dehydrated', size: 120, color: GOLD}]} foot="Trainer later: likely food poisoning" />),
+      sc(tPlays, tTwentyFive, (
+        <Stage>
+          <Pop><Big size={170} color={GOLD}>44 MIN</Big></Pop>
+          <Pop at={0.5}><Big size={170}>38 PTS</Big></Pop>
+          <Pop at={1.3}><Big size={96} color={GOLD}>7 REB · 5 AST</Big></Pop>
+        </Stage>
+      )),
+      sc(tTwentyFive, tWin, <Lines tag="25 seconds left" lines={[{t: 'Jordan', size: 150}, {t: 'Three-pointer', size: 120, color: GOLD}]} foot="Bulls take the lead" />),
+      sc(tWin, tEnd, (
+        <Stage>
+          <Board label="Game 5 · Final" rows={[{name: 'BULLS', kf: [[0, 90]], color: GOLD}, {name: 'JAZZ', kf: [[0, 88]], color: WHITE}]} />
+        </Stage>
+      )),
+      sc(tEnd, tChi, <Lines tag="After the buzzer" lines={[{t: 'Helped off', size: 130}, {t: 'by Pippen', size: 150, color: GOLD}]} />),
+      sc(tChi, tQ, <Lines tag="Series" lines={[{t: 'Bulls 3 – 2', size: 150, color: GOLD}]} foot="Title clinched in Game 6" />),
+      sc(tQ, END(w), <Lines lines={[{t: 'His greatest', size: 130}, {t: 'performance?', size: 140, color: GOLD}]} foot="Comment your answer" />),
+    ],
+    overlays: <Popup at={tThree + 0.4} text="+3" />,
+  };
+};
+
+export const plan8 = (w: Word[]): Plan => {
+  const T = makeT(w);
+  const tBarc = T('Barcelona'), tLith = T('Lithuania has just'), tDead = T('Then the Grateful'), tArt = T('An artist designs'), tWear = T('The team wears'), tBronze = T('The bronze medal game'), tWins = T('Lithuania wins');
+  const tSab = T('Arvydas Sabonis'), tSmall = T('A small nation'), tQ = T('Is this the coolest');
+  return {
+    sub: 'BASKETBALL STORIES',
+    scenes: [
+      sc(0, tBarc, <Lines tag="Olympic medal" lines={[{t: 'Wearing', size: 120}, {t: 'tie-dye', size: 230, color: GOLD}]} />),
+      sc(tBarc, tLith, <Lines tag="Barcelona" lines={[{t: '1992', size: 280, color: GOLD}, {t: 'Olympic Games', size: 90}]} />),
+      sc(tLith, tDead, <Lines tag="Lithuania" lines={[{t: 'Newly', size: 120}, {t: 'independent', size: 120, color: GOLD}]} foot="Very little funding" />),
+      sc(tDead, tArt, <Lines tag="Help arrives" lines={[{t: 'Grateful', size: 150, color: GOLD}, {t: 'Dead', size: 200}]} />),
+      sc(tArt, tWear, <Lines tag="The shirt" lines={[{t: 'Skeleton', size: 130}, {t: 'slam dunk', size: 150, color: GOLD}]} foot="Lithuania’s colours" />),
+      sc(tWear, tBronze, <Lines tag="On the podium" lines={[{t: 'Tie-dye', size: 170, color: GOLD}, {t: 'Bronze', size: 170}]} />),
+      sc(tBronze, tSab, (
+        <Stage>
+          <Board label="Bronze medal game" rows={[{name: 'LITHUANIA', kf: [[0, 0], [tWins + 0.5, 82]], color: GOLD}, {name: 'UNIFIED', kf: [[0, 0], [tWins + 0.5, 78]], color: WHITE}]} />
+        </Stage>
+      )),
+      sc(tSab, tSmall, <Lines tag="In the squad" lines={[{t: 'Arvydas', size: 150}, {t: 'Sabonis', size: 170, color: GOLD}]} />),
+      sc(tSmall, tQ, <Lines lines={[{t: 'Small nation', size: 120}, {t: 'Tight budget', size: 120, color: GOLD}, {t: 'Unforgettable', size: 110}]} />),
+      sc(tQ, END(w), <Lines lines={[{t: 'Coolest Olympic', size: 120}, {t: 'story?', size: 190, color: GOLD}]} foot="Comment below" />),
+    ],
+  };
+};
+
+export const plan10 = (w: Word[]): Plan => {
+  const T = makeT(w);
+  const tPsy = T('Psychologists call it'), tVoice = T('It is the inner'), tMeta = T('A 2011 meta-analysis'), tTrain = T('Training mattered too'), tPrac = T('Here is a practical'), tAfter = T('After a miss');
+  const tNot = T('Not I always choke'), tChoose = T('Choose a cue'), tEyes = T('Eyes on the rim'), tBal = T('Balance'), tFollow = T('Follow through'), tVary = T('Results do vary'), tMagic = T('It is not magic'), tQ = T('What is your cue');
+  return {
+    sub: 'MIND GAME',
+    scenes: [
+      sc(0, tPsy, (
+        <Stage>
+          <Pop><Tag>After a miss</Tag></Pop>
+          <Pop at={0.2}><Big size={230} color={RED}>MISS</Big></Pop>
+          <Pop at={0.9}><Big size={96}>What do you say next?</Big></Pop>
+        </Stage>
+      )),
+      sc(tPsy, tVoice, <Lines tag="Psychology" lines={[{t: 'Self-talk', size: 210, color: GOLD}]} />),
+      sc(tVoice, tMeta, <Lines tag="Your inner voice" lines={[{t: 'Before', size: 120}, {t: 'During', size: 120, color: GOLD}, {t: 'After', size: 120}]} />),
+      sc(tMeta, tTrain, (
+        <Stage>
+          <Pop><Tag>2011 meta-analysis</Tag></Pop>
+          <Pop at={0.2}><Count to={32} start={tMeta + 0.3} dur={1.0} size={300} /></Pop>
+          <Pop at={0.4}><Big size={90}>studies pooled</Big></Pop>
+          <Pop at={1.6}><Big size={84} color={GOLD}>Moderate positive effect</Big></Pop>
+        </Stage>
+      )),
+      sc(tTrain, tPrac, <Lines tag="Training mattered" lines={[{t: 'Taught to', size: 120}, {t: 'use it = better', size: 120, color: GOLD}]} />),
+      sc(tPrac, tAfter, <Lines tag="A practical idea" lines={[{t: 'Next-action', size: 130}, {t: 'cues', size: 180, color: GOLD}]} />),
+      sc(tAfter, tChoose, (
+        <Stage>
+          <Pop><Tag>After a miss</Tag></Pop>
+          <Pop at={0.1}><Big size={130} color={GOLD}>Drop the verdict</Big></Pop>
+          <Pop at={tNot - tAfter}><Big size={92} color={RED}>“I always choke”</Big></Pop>
+        </Stage>
+      )),
+      sc(tChoose, tVary, (
+        <Stage>
+          <Pop><Tag>Choose a cue</Tag></Pop>
+          <Pop at={tEyes - tChoose}><Big size={104} color={GOLD}>Eyes on the rim</Big></Pop>
+          <Pop at={tBal - tChoose}><Big size={104}>Balance</Big></Pop>
+          <Pop at={tFollow - tChoose}><Big size={104} color={GOLD}>Follow through</Big></Pop>
+        </Stage>
+      )),
+      sc(tVary, tMagic, <Lines tag="Results vary" lines={[{t: 'Test what', size: 120}, {t: 'works for you', size: 120, color: GOLD}]} />),
+      sc(tMagic, tQ, <Lines tag="Not magic" lines={[{t: 'A skill you', size: 120}, {t: 'can practise', size: 130, color: GOLD}]} />),
+      sc(tQ, END(w), <Lines lines={[{t: 'Your cue?', size: 190, color: GOLD}]} foot="Comment below" />),
+    ],
+  };
+};
+
+export const plan7 = (w: Word[]): Plan => {
+  const T = makeT(w);
+  const tSet = T('Here is the setup'), tBall = T('One has the ball'), tFive = T('Five waits'), tTwo = T('Two spreads'), tP1 = T('One passes to two');
+  const tCut = T('Now the cut'), tRun = T('One runs right'), tBlock = T('Five blocks'), tStuck = T('The defender is stuck'), tRead = T('Two reads it');
+  const tAns = T('The defence has an answer'), tSw = T('X five can step'), tLeft = T('Then X one is'), tSeal = T('And five turns'), tKey = T('The key is simple');
+  const tracks: Track[] = [
+    O('O1', [[0, 25, 33], [tRun, 25, 33], [tRun + 1.5, 29, 26], [tBlock, 28.2, 20.5], [tRead + 0.4, 26, 11], [tRead + 1.2, 25.5, 6.5], [tRead + 1.6, 25.5, 6.5], [tAns + 0.2, 25.5, 6.5], [tAns + 1.0, 26.5, 10]]),
+    O('O2', [[0, 41, 24]]),
+    O('O3', [[0, 9, 26]]),
+    O('O4', [[0, 8, 12]]),
+    O('O5', [[0, 31, 19], [tSeal - 0.2, 31, 19], [tSeal + 1.0, 29.5, 12.5]]),
+    X('X1', [[0, 25, 30.5], [tRun, 25, 30.5], [tRun + 1.0, 25.5, 30], [tRun + 2.5, 28.6, 25], [tBlock + 0.8, 31.4, 21.8], [tLeft, 31.4, 21.8], [tSeal + 0.2, 32.6, 17.4], [tSeal + 1.0, 31.5, 14.2]]),
+    X('X2', [[0, 42, 22]]),
+    X('X3', [[0, 9, 23]]),
+    X('X4', [[0, 9, 14]]),
+    X('X5', [[0, 31, 15.5], [tSw, 31, 15.5], [tSw + 1.1, 27.5, 12.5]]),
+  ];
+  const ball: [number, number, number][] = [
+    [0, 25, 33], [tP1, 25, 33], [tP1 + 0.6, 41, 24], [tRead, 41, 24], [tRead + 1.2, 25.5, 8], [tAns, 25.5, 6.5], [tAns + 0.5, 41, 24], [tSeal + 0.7, 41, 24], [tSeal + 1.3, 29.5, 12.5],
+  ];
+  const arrows: Arrow[] = [
+    {t: tP1, until: tP1 + 1.4, pts: [[25, 33], [40, 24.5]], kind: 'pass'},
+    {t: tRun, until: tRead + 0.4, pts: [[25, 33], [29, 26], [28.2, 20.5], [25.5, 8]], kind: 'move'},
+    {t: tBlock, until: tRead, pts: [[32.5, 20.5], [30, 23]], kind: 'screen'},
+    {t: tRead, until: tRead + 1.4, pts: [[41, 24], [26.5, 9]], kind: 'pass'},
+    {t: tSeal + 0.9, until: tSeal + 2.2, pts: [[41, 24], [30.5, 13]], kind: 'pass'},
+  ];
+  const rings = [
+    {t: 0.4, until: tFive, at: 'O1', text: 'BALL'},
+    {t: tFive, until: tTwo, at: 'O5', text: 'HIGH POST'},
+    {t: tBlock, until: tRead, at: 'X1', text: 'STUCK', color: '#FFFFFF', dy: 5.4},
+    {t: tRead + 0.8, until: tAns, at: 'O1', text: 'LAYUP'},
+    {t: tSw + 0.6, until: tSeal, at: 'X5', text: 'SWITCH', color: '#FFFFFF'},
+    {t: tSeal + 0.8, until: tKey, at: 'O5', text: 'SEALS X1'},
+  ];
+  return {
+    sub: 'TACTICS BOARD',
+    scenes: [],
+    court: {
+      title: 'UCLA CUT',
+      tracks, ball, arrows, rings, zones: [],
+      steps: [
+        [0, 'Why is this cut so hard to guard?'],
+        [tSet, 'Setup: O1 ball · O5 high post · O2 wing'],
+        [tP1, 'O1 passes to O2'],
+        [tCut, 'Now the cut'],
+        [tRun, 'O1 cuts off O5’s shoulder'],
+        [tBlock, 'O5 blocks X1’s path'],
+        [tRead, 'O2 passes to the cutter: layup'],
+        [tAns, 'Counter: X5 switches the cut'],
+        [tSeal, 'O5 seals the smaller X1 · entry pass'],
+        [tKey, 'Pass, then cut off the post'],
+      ],
+    } as CourtSpec,
+  };
+};
+
+export const plan9 = (w: Word[]): Plan => {
+  const T = makeT(w);
+  const tSet = T('Here is the setup'), tScr = T('Five comes to set'), tDef = T('Now the defence'), tArr = T('When the screen arrives'), tTk1 = T('X one takes five'), tTk5 = T('X five takes one');
+  const tChase = T('No chasing'), tBen = T('The benefit is clear'), tPrice = T('But look at the price'), tNow = T('Five now has'), tRoll = T('He rolls'), tPass = T('One throws the pass'), tMis = T('That mismatch');
+  const tAns = T('The defence answers'), tKey = T('Switching works best');
+  const tracks: Track[] = [
+    O('O1', [[0, 25, 31], [tArr, 25, 31], [tArr + 1.2, 33, 28.5]]),
+    O('O5', [[0, 31, 26], [tScr, 31, 26], [tScr + 0.9, 27.5, 28.4], [tRoll, 27.5, 28.4], [tRoll + 1.4, 27, 17], [tRoll + 2.2, 26.5, 10.5]]),
+    O('O2', [[0, 45, 24]]),
+    O('O3', [[0, 5, 24]]),
+    O('O4', [[0, 15, 17.5]]),
+    X('X1', [[0, 25, 27.6], [tArr, 25, 27.6], [tArr + 0.9, 26.4, 27.2], [tRoll, 26.4, 27.2], [tRoll + 1.4, 28.5, 19], [tRoll + 2.2, 28.4, 13.2]]),
+    X('X5', [[0, 31, 22.6], [tArr, 31, 22.6], [tArr + 1.0, 32.6, 25.4]]),
+    X('X2', [[0, 42, 22]]),
+    X('X3', [[0, 8, 22]]),
+    X('X4', [[0, 18, 19.5], [tAns, 18, 19.5], [tAns + 1.2, 24, 14.5]]),
+  ];
+  const ball: [number, number, number][] = [
+    [0, 25, 31], [tArr, 25, 31], [tArr + 1.2, 33, 28.5], [tPass, 33, 28.5], [tPass + 1.0, 26.5, 10.5],
+  ];
+  const arrows: Arrow[] = [
+    {t: tScr + 0.4, until: tArr, pts: [[31, 26], [27.8, 28.2]], kind: 'screen'},
+    {t: tArr + 0.1, until: tChase + 1, pts: [[25, 27.6], [27, 28]], kind: 'chase'},
+    {t: tArr + 0.1, until: tChase + 1, pts: [[31, 22.6], [32.6, 25.4]], kind: 'chase'},
+    {t: tRoll + 0.2, until: tPass, pts: [[27.5, 28.4], [27, 17], [26.5, 11]], kind: 'move'},
+    {t: tPass, until: tPass + 1.1, pts: [[33, 28.5], [27, 11.5]], kind: 'pass'},
+  ];
+  const rings = [
+    {t: 0.4, until: tSet, at: 'O1', text: 'BALL'},
+    {t: tScr + 0.3, until: tDef, at: 'O5', text: 'BALL SCREEN'},
+    {t: tTk1, until: tTk5, at: 'X1', text: 'X1 TAKES O5', color: '#FFFFFF'},
+    {t: tTk5, until: tBen, at: 'X5', text: 'X5 TAKES O1', color: '#FFFFFF', dy: 5.4},
+    {t: tNow, until: tPass + 1.2, at: 'X1', text: 'MISMATCH', color: '#FFFFFF', dy: -5.6},
+    {t: tAns + 0.5, until: tKey, at: 'X4', text: 'EARLY HELP', color: '#FFFFFF'},
+  ];
+  return {
+    sub: 'TACTICS BOARD',
+    scenes: [],
+    court: {
+      title: 'SWITCH EVERYTHING',
+      tracks, ball, arrows, rings, zones: [],
+      steps: [
+        [0, 'Defend every screen by swapping'],
+        [tSet, 'Setup: O1 ball · O5 ball screen'],
+        [tArr, 'Screen arrives: X1 and X5 swap'],
+        [tChase, 'No chasing · no fighting over'],
+        [tBen, 'Nobody gets lost'],
+        [tPrice, 'The price: a mismatch'],
+        [tRoll, 'O5 rolls and seals the smaller X1'],
+        [tPass, 'Pass over the top'],
+        [tAns, 'Counter: send early weak-side help'],
+        [tKey, 'Works best when all five can guard anyone'],
+      ],
+    } as CourtSpec,
+  };
+};
+
+export const PLANS: Record<number, (w: Word[]) => Plan> = {1: plan1, 2: plan2, 3: plan3, 4: plan4, 5: plan5, 6: plan6, 7: plan7, 8: plan8, 9: plan9, 10: plan10};
 export const DUR = (w: Word[]) => Math.ceil(END(w) * 30);
