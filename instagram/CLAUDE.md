@@ -43,3 +43,10 @@ ElevenLabs signed URLs from `creative_get_flow_run_status` work with plain `curl
   Metricool 412392772, isAiGenerated true). Re-query confirmed. Tracker updated (note: Sheets tools reject `valueInputOption` — omit it).
   Lessons: QC requires total duration ≤ 90 s, so narration ≤ ~87 s with a ~2.4 s end card (DUR 89.9); `render-carousel.mjs` text slides now vertically centred.
   Next free slots: 2026-11-02 18:00 Reel, 2026-11-03 10:00 (Inside) + 18:00 Reel. Monday 2026-11-02 run must also do weekly analytics. Next Reel: individual skill (euro step / jump stop). PR/routine still pending.
+- 2026-11-02 (Mon, run on branch clever-albattani-mngz83, merged 97q0lk): target 2026-11-03. **Nothing scheduled — no free slots.** Metricool already holds 5 Instagram REELs on 11-03
+  (09:00 Jordan Flu Game, 10:00 UCLA cut, 12:00 Lithuania 1992, 15:00 Switch defence, 18:00 self-talk): the TikTok/YouTube automation (`videos/`) now cross-posts every video to Instagram too
+  (same on 11-02: 09/10/12/15/18). This breaks SPEC's max-2-IG-posts/day and the pillar calendar. **Owner decision needed**: remove the Instagram provider from the TikTok routine's posts
+  (or relax the rule). Until then the Instagram routine finds no free slots on days the TikTok routine has already run; days 11-04+ are free except the old 10:00 statics (11-04,06,07,09,11,13,14).
+  Tracker `plan` rows for 11-02/11-03 updated. Weekly analytics run (feed posts, 10-26→11-02, Metricool): 8 posts, reach 40–197, likes 0–6, comments 0, saves 0–2, shares 0, follows 0;
+  best reach: older posts (more time); account is tiny/new, no meaningful pillar/time conclusions yet (Reels connector not queried). `scripts/preflight.sh` added (network+toolchain check, all OK today).
+  PR to main still the blocker for the routine (it must run from `main`).
