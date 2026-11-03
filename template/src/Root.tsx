@@ -2,6 +2,9 @@ import React from 'react';
 import {Composition} from 'remotion';
 import {Shell, Word} from './Daily';
 import {PLANS, DUR} from './plans';
+import {Pro, proDuration} from './pro/Pro';
+import type {Episode} from './pro/types';
+import pilot from '../episodes/pilot.json';
 
 export const FPS = 30;
 
@@ -23,6 +26,20 @@ export const Root: React.FC = () => (
       height={1920}
       defaultProps={{n: 2, words: [] as Word[]}}
       calculateMetadata={({props}) => ({durationInFrames: DUR(props.words)})}
+    />
+    {/* Pro editing system: render with --props=episodes/<id>.json wrapped as {"episode": ...} */}
+    <Composition
+      id="Pro"
+      component={Pro}
+      durationInFrames={750}
+      fps={FPS}
+      width={1080}
+      height={1920}
+      defaultProps={{episode: pilot as unknown as Episode}}
+      calculateMetadata={({props}) => {
+        const fps = props.episode.fps ?? FPS;
+        return {fps, durationInFrames: proDuration(props.episode, fps)};
+      }}
     />
   </>
 );
