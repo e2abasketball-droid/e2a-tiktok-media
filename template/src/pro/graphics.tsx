@@ -23,6 +23,47 @@ const springAt = (t: number, fps: number, at: number, damping = 13, mass = 0.55)
 
 const tone = (k?: 'gold' | 'white' | 'red') => (k === 'red' ? RED : k === 'white' ? WHITE : GOLD);
 
+// ------------------------------------------------------------------ impact burst
+/** Gold shock ring + rays when a number lands. age = seconds since the hit. */
+export const Burst: React.FC<{age: number; size?: number; color?: string}> = ({age, size = 700, color = GOLD}) => {
+  if (age < 0 || age > 0.55) return null;
+  const k = age / 0.55;
+  const e = 1 - Math.pow(1 - k, 3);
+  return (
+    <div style={{position: 'absolute', left: '50%', top: '50%', width: 0, height: 0, pointerEvents: 'none'}}>
+      <div
+        style={{
+          position: 'absolute',
+          left: (-size / 2) * e,
+          top: (-size / 2) * e,
+          width: size * e,
+          height: size * e,
+          borderRadius: '50%',
+          border: `${14 * (1 - k) + 2}px solid ${color}`,
+          opacity: 1 - k,
+          boxShadow: `0 0 60px ${color}`,
+        }}
+      />
+      {new Array(12).fill(0).map((_, i) => (
+        <div
+          key={i}
+          style={{
+            position: 'absolute',
+            left: 0,
+            top: -4,
+            width: size * 0.32,
+            height: 8,
+            background: `linear-gradient(90deg, transparent, ${color})`,
+            transformOrigin: '0 50%',
+            transform: `rotate(${i * 30 + 15}deg) translateX(${size * 0.18 + size * 0.3 * e}px) scaleX(${1 - k})`,
+            opacity: 0.9 * (1 - k),
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
 // ------------------------------------------------------------------ kicker
 export const Kicker: React.FC<{text: string; top?: number; at?: number; boxed?: boolean}> = ({text, top = 300, at = 0.05, boxed = false}) => {
   const t = useLocalT();
@@ -90,14 +131,19 @@ export const Stat: React.FC<{
   const {fps} = useVideoConfig();
   const k = interpolate(t, [0.05, 0.05 + countFor], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic)});
   const v = from + (value - from) * k;
-  const landed = t > 0.05 + countFor;
-  const land = landed ? springAt(t, fps, 0.05 + countFor, 9, 0.5) : 0;
+  const landAt = 0.05 + countFor;
+  const landed = t > landAt;
+  const land = landed ? springAt(t, fps, landAt, 9, 0.5) : 0;
+  // the figure slams down from 1.5x with motion blur when it lands
+  const slam = landed ? 1 + 0.5 * Math.exp(-(t - landAt) * 11) : 1;
+  const slamBlur = landed ? 10 * Math.exp(-(t - landAt) * 25) : 0;
   const s2 = second ? springAt(t, fps, second.at, 12, 0.55) : 0;
   const shrink = second ? interpolate(s2, [0, 1], [1, 0.62]) : 1;
   return (
     <div style={{position: 'absolute', top: 420, left: 0, right: 0, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-      <div style={{transform: `scale(${shrink * (1 + (landed ? (1 - land) * 0.12 : 0))})`, transformOrigin: '50% 0%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-        <div style={{fontFamily: DISPLAY, fontSize: 470, lineHeight: 0.9, color: GOLD, textShadow: `0 0 ${60 + land * 40}px rgba(201,162,77,0.45)`}}>
+      <div style={{position: 'relative', transform: `scale(${shrink * slam})`, transformOrigin: '50% 30%', display: 'flex', flexDirection: 'column', alignItems: 'center', filter: slamBlur > 0.3 ? `blur(${slamBlur}px)` : undefined}}>
+        <Burst age={t - landAt} size={760} />
+        <div style={{fontFamily: DISPLAY, fontSize: 470, lineHeight: 0.9, color: GOLD, textShadow: `0 0 ${60 + land * 40}px rgba(201,162,77,0.45), 0 18px 50px rgba(0,0,0,0.6)`}}>
           {prefix}
           {v.toFixed(decimals)}
           {suffix}
@@ -105,7 +151,8 @@ export const Stat: React.FC<{
         <div style={{fontFamily: DISPLAY, fontSize: 96, color: WHITE, letterSpacing: 10, marginTop: 4}}>{label}</div>
       </div>
       {second && t >= second.at - 0.02 && (
-        <div style={{marginTop: -40, transform: `scale(${0.6 + 0.4 * s2})`, opacity: s2, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+        <div style={{position: 'relative', marginTop: -40, transform: `scale(${(0.6 + 0.4 * s2) * (1 + 0.35 * Math.exp(-(t - second.at) * 11))})`, opacity: s2, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+          <Burst age={t - second.at} size={560} color={WHITE} />
           <div style={{fontFamily: DISPLAY, fontSize: 250, color: WHITE, lineHeight: 0.95}}>{second.value}</div>
           <div style={{fontFamily: DISPLAY, fontSize: 80, color: GOLD, letterSpacing: 10}}>{second.label}</div>
         </div>
@@ -141,15 +188,19 @@ export const Scoreboard: React.FC<{
   const row = (team: ScoreTeam) => {
     const {v, changed} = scoreAt(team, at, t);
     const age = t - changed;
-    const bump = age >= 0 && age < 0.5 ? 1 + 0.25 * Math.exp(-age * 7) : 1;
+    const bump = age >= 0 && age < 0.6 ? 1 + 0.6 * Math.exp(-age * 9) : 1;
+    const blurS = age >= 0 && age < 0.15 ? 8 * (1 - age / 0.15) : 0;
     const glow = age >= 0 && age < 0.8 ? 1 - age / 0.8 : 0;
     return (
-      <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 40px', background: team.accent ? 'rgba(201,162,77,0.10)' : 'transparent'}}>
+      <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 40px', borderRadius: 16, background: team.accent ? 'rgba(201,162,77,0.10)' : 'transparent'}}>
         <div style={{display: 'flex', alignItems: 'center', gap: 24}}>
           <div style={{width: 12, height: 86, background: team.accent ? GOLD : WHITE, borderRadius: 3}} />
           <div style={{fontFamily: DISPLAY, fontSize: 92, color: WHITE, letterSpacing: 4}}>{team.name}</div>
         </div>
-        <div style={{fontFamily: DISPLAY, fontSize: 168, color: team.accent ? GOLD : WHITE, transform: `scale(${bump})`, textShadow: `0 0 ${glow * 50}px rgba(230,195,116,${glow})`, minWidth: 260, textAlign: 'right'}}>{v}</div>
+        <div style={{position: 'relative', fontFamily: DISPLAY, fontSize: 168, color: team.accent ? GOLD : WHITE, transform: `scale(${bump})`, transformOrigin: '70% 50%', filter: blurS ? `blur(${blurS}px)` : undefined, textShadow: `0 0 ${glow * 70}px rgba(230,195,116,${glow})`, minWidth: 260, textAlign: 'right'}}>
+          {age >= 0 && <Burst age={age} size={420} />}
+          {v}
+        </div>
       </div>
     );
   };
@@ -161,7 +212,7 @@ export const Scoreboard: React.FC<{
           {label}
         </div>
       )}
-      <div style={{background: 'rgba(6,15,34,0.82)', border: `3px solid rgba(201,162,77,0.6)`, borderRadius: label ? '0 18px 18px 18px' : 18, overflow: 'hidden', backdropFilter: 'blur(6px)', boxShadow: '0 40px 80px rgba(0,0,0,0.5)'}}>
+      <div style={{background: 'rgba(6,15,34,0.82)', border: `3px solid rgba(201,162,77,0.6)`, borderRadius: label ? '0 18px 18px 18px' : 18, overflow: 'visible', backdropFilter: 'blur(6px)', boxShadow: '0 40px 80px rgba(0,0,0,0.5)'}}>
         {row(away)}
         <div style={{height: 2, background: 'rgba(255,255,255,0.12)', margin: '0 40px'}} />
         {row(home)}

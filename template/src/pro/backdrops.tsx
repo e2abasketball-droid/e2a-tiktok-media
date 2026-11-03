@@ -1,10 +1,10 @@
 // Backdrops for scenes without real footage. They are built from layers at different depths,
 // so the virtual camera produces parallax instead of sliding a flat card.
 import React from 'react';
-import {AbsoluteFill, Img, OffthreadVideo, random, staticFile, useCurrentFrame} from 'remotion';
+import {AbsoluteFill, Img, OffthreadVideo, random, spring, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import {Layer, useCam} from './camera';
-import {GOLD, NAVY, NAVY_DEEP, WHITE} from './brand';
-import type {Backdrop, Media} from './types';
+import {BODY, GOLD, NAVY, NAVY_DEEP, WHITE} from './brand';
+import type {Backdrop, Layout, Media, PhotoBg} from './types';
 
 const Crowd: React.FC<{seed: string}> = ({seed}) => {
   const frame = useCurrentFrame();
@@ -167,5 +167,75 @@ export const MediaView: React.FC<{media: Media}> = ({media}) => {
       )}
       <AbsoluteFill style={{background: `linear-gradient(180deg, rgba(11,28,61,0.55) 0%, transparent 25%, transparent 55%, rgba(11,28,61,0.85) 100%)`, opacity: 0.9 + c.punch * 0.1}} />
     </AbsoluteFill>
+  );
+};
+
+const GRADE: Record<NonNullable<PhotoBg['treatment']>, {img: string; wash: string; washBlend: React.CSSProperties['mixBlendMode']; washO: number}> = {
+  // navy/gold brand grade: the photo turns into a duotone that every graphic reads well on
+  duotone: {img: 'grayscale(1) contrast(1.2) brightness(1.35)', wash: '#1B3F86', washBlend: 'multiply', washO: 0.85},
+  tint: {img: 'saturate(0.95) contrast(1.05)', wash: NAVY_DEEP, washBlend: 'normal', washO: 0.3},
+  blur: {img: 'blur(16px) saturate(0.8) brightness(0.8)', wash: NAVY_DEEP, washBlend: 'normal', washO: 0.45},
+};
+
+/** A real photo/clip graded as the plate behind a graphic scene (stat, scoreboard, headline...). */
+export const PhotoBackdrop: React.FC<{media: PhotoBg; layout?: Layout}> = ({media, layout = 'center'}) => {
+  const frame = useCurrentFrame();
+  const g = GRADE[media.treatment ?? 'duotone'];
+  const [fx, fy] = media.focus ?? [0.5, 0.4];
+  const src = staticFile(media.src);
+  const isVideo = /\.(mp4|mov|webm)$/i.test(media.src);
+  const fit: React.CSSProperties = {width: '100%', height: '100%', objectFit: 'cover', objectPosition: `${fx * 100}% ${fy * 100}%`, filter: g.img};
+  // darken where the graphic sits so it always reads
+  const shade =
+    layout === 'low'
+      ? 'linear-gradient(180deg, rgba(6,15,34,0.25) 0%, rgba(6,15,34,0.1) 30%, rgba(6,15,34,0.85) 62%, rgba(6,15,34,0.95) 100%)'
+      : layout === 'high'
+        ? 'linear-gradient(180deg, rgba(6,15,34,0.9) 0%, rgba(6,15,34,0.75) 45%, rgba(6,15,34,0.15) 72%, rgba(6,15,34,0.7) 100%)'
+        : 'radial-gradient(ellipse 60% 35% at 50% 40%, rgba(6,15,34,0.45), transparent 75%), linear-gradient(180deg, rgba(6,15,34,0.45), transparent 25%, transparent 62%, rgba(6,15,34,0.8))';
+  return (
+    <AbsoluteFill style={{background: NAVY_DEEP}}>
+      <Layer depth={0.75}>
+        {isVideo ? <OffthreadVideo src={src} muted style={fit} startFrom={Math.round((media.startFrom ?? 0) * 30)} /> : <Img src={src} style={fit} />}
+      </Layer>
+      <AbsoluteFill style={{background: g.wash, mixBlendMode: g.washBlend, opacity: g.washO}} />
+      {media.treatment !== 'tint' && media.treatment !== 'blur' && (
+        // gold catches the highlights of the duotone, drifting slowly
+        <AbsoluteFill
+          style={{
+            mixBlendMode: 'screen',
+            opacity: 0.4,
+            background: `radial-gradient(ellipse 70% 50% at ${40 + Math.sin(frame / 60) * 15}% 30%, ${GOLD}, transparent 70%)`,
+          }}
+        />
+      )}
+      <AbsoluteFill style={{background: shade}} />
+    </AbsoluteFill>
+  );
+};
+
+/** Framed photo card (picture-in-picture) that slides in beside a graphic. */
+export const Inset: React.FC<{media: Media; at: number; corner?: 'tl' | 'tr'; caption?: string}> = ({media, at, corner = 'tl', caption}) => {
+  const frame = useCurrentFrame();
+  const {fps} = useVideoConfig();
+  const s = spring({frame: frame - at * fps, fps, config: {damping: 14, mass: 0.6}});
+  if (frame < at * fps) return null;
+  const left = corner === 'tl';
+  const [fx, fy] = media.focus ?? [0.5, 0.35];
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        top: 260,
+        [left ? 'left' : 'right']: left ? 70 : 170,
+        width: 400,
+        padding: 12,
+        background: WHITE,
+        boxShadow: '0 30px 70px rgba(0,0,0,0.65), 0 0 0 3px rgba(201,162,77,0.8)',
+        transform: `translateX(${(1 - s) * (left ? -520 : 520)}px) rotate(${(left ? -4 : 4) * s}deg)`,
+      }}
+    >
+      <Img src={staticFile(media.src)} style={{width: '100%', height: 300, objectFit: 'cover', objectPosition: `${fx * 100}% ${fy * 100}%`, display: 'block'}} />
+      {caption && <div style={{fontFamily: BODY, fontWeight: 800, fontSize: 24, letterSpacing: 3, color: NAVY, textTransform: 'uppercase', paddingTop: 10, textAlign: 'center'}}>{caption}</div>}
+    </div>
   );
 };

@@ -131,3 +131,55 @@ To steer the music, set any of these in the episode's `music` field:
 - `dropAt` and `payoffAt`: anchors for the two drops;
 - `track`: a library id;
 - `engine: "file"` with `src` and `volume`: uses a fixed file instead.
+
+## 9. Visual editing v4: real images first, then graphics
+
+The goal is a Reel that looks edited from real basketball images, with motion graphics on top,
+not a sequence of text cards on navy.
+
+### New scene options (any scene type)
+
+- `bg`: a real photo or clip behind a graphic (stat, scoreboard, headline, timeline, split).
+  It needs `credit` and `license` like `media`. Set `treatment`:
+  - `duotone` (default): the navy and gold brand grade, for the hook and big numbers;
+  - `tint`: the photo's natural colours, slightly darkened, when the place or player should read;
+  - `blur`: an out-of-focus plate behind dense graphics such as timelines and long headlines.
+- `layout`: `center` (default), `low` (graphic in the lower half, photo visible above), `high`
+  (graphic in the upper half, photo visible below), or `compact` (smaller card, more photo around it).
+- `inset`: a framed photo card that slides in at `at`, top-left (`tl`) or top-right (`tr`), with an
+  optional `caption`. Use it to keep a face on screen during a stat or timeline.
+- New sound effects: `bass_hit`, `impact_big`, `swish`, `squeak`, `crowd_cheer`, `reverse_cymbal`.
+
+### Impact, automatically
+
+- **Hook:** frame 1 slams in from 1.3x with motion blur, a white flash, a shake and a big impact.
+- **Numbers:** a stat figure slams down from 1.5x with a gold shock ring, a bass hit and a shake.
+  Score changes slam in the same way.
+- **Music:** `episode-music.mjs` passes the drop and payoff times (`music.hits`), and the picture
+  shakes and flashes on them, so the edit hits with the music.
+
+### Scene selection, in this order
+
+1. **Real footage or a real photo of the subject:** a `media` scene, or a `bg` behind the graphic.
+   Use only public domain, CC0, CC BY or CC BY-SA images, or licensed material, with credit on screen.
+2. **A real photo of the place, era or sport** (the arena, the team, a ball, a hoop, a crowd) as
+   `bg` B-roll. Its credit must say what it is; never present it as the event itself.
+3. **A motion graphic** (stat, scoreboard, timeline, split) over that plate.
+4. **A diagram** (`court`) when the story is a play: it stays on navy, because the court is the image.
+5. **A dark backdrop** (`arena`, `spotlight`, `navy`) only when there is no authorised image at all.
+
+Never download from protected sources without permission, and never present a recreation or AI
+image as real: those use `kind: "recreation"` and are labelled on screen.
+
+### Variety rules (checked by `validate-episode.mjs`)
+
+- Two consecutive scenes must not share the same composition (scene type + plate + layout).
+  Change at least one of them.
+- No more than 6 s in a row of text on a dark backdrop when the episode has photos.
+- Scene 0 must show a real image when one exists, and something must change before 2 s
+  (a second figure, a callout, a beat or a cut).
+- Alternate scales: full-bleed photo → graphic on a photo plate (low or high) → compact card → diagram.
+
+The Miller test (`episodes/miller-v4.json`) uses all of these: stat over a duotone photo (hook) →
+scoreboard low over the arena → compact headline on a blurred plate → full-bleed photo → court
+diagram → scoreboard slam over the crowd → timeline with a photo inset → final stat high over a photo.

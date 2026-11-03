@@ -2,7 +2,7 @@
 import React from 'react';
 import {AbsoluteFill, Audio, Img, Sequence, spring, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import {Court} from '../Daily';
-import {BackdropView, MediaView} from './backdrops';
+import {BackdropView, Inset, MediaView, PhotoBackdrop} from './backdrops';
 import {BODY, GOLD, NAVY_DEEP, RED, WHITE} from './brand';
 import {Camera} from './camera';
 import {Flash, Grain, LightLeak, Vignette} from './fx';
@@ -10,7 +10,7 @@ import {Callout, Credit, Headline, Kicker, SceneCtx, Scoreboard, Split, Stat, Ti
 import {STYLES, StylePreset} from './styles';
 import {Subtitles} from './subtitles';
 import {Timed, layoutScenes, makeResolver, totalSeconds, voiceEnd} from './timing';
-import type {CameraMove, Episode, SceneSpec, SfxCue, SfxName, Transition} from './types';
+import type {CameraMove, Episode, Layout, SceneSpec, SfxCue, SfxName, Transition} from './types';
 
 const OVERLAP: Record<Transition, number> = {cut: 0, flash: 0, whip: 0.22, punch: 0.14, 'zoom-through': 0.3, 'slide-up': 0.28};
 
@@ -50,12 +50,24 @@ const exitStyle = (tr: Transition, q: number): React.CSSProperties => {
   }
 };
 
+/** Where the graphic sits. Graphics are drawn for the centre; layouts move and scale the whole layer. */
+const LAYOUT: Record<Layout, React.CSSProperties> = {
+  center: {},
+  low: {transform: 'translateY(250px) scale(0.78)', transformOrigin: '50% 30%'},
+  high: {transform: 'translateY(-90px) scale(0.86)', transformOrigin: '50% 20%'},
+  compact: {transform: 'scale(0.74)', transformOrigin: '50% 42%'},
+};
+
 const SceneBody: React.FC<{spec: SceneSpec; seed: string; startFrame: number}> = ({spec, seed, startFrame}) => {
   const at = useAt();
   const backdrop = spec.backdrop ?? (spec.type === 'court' ? 'navy' : 'arena');
+  const credits = [spec.bg, spec.inset].filter(Boolean).map((m) => `${m!.kind === 'recreation' ? 'Recreation · ' : ''}${m!.credit}`);
   return (
     <AbsoluteFill>
-      {spec.type === 'media' ? <MediaView media={spec.media} /> : <BackdropView kind={backdrop} seed={seed} />}
+      {spec.type === 'media' ? <MediaView media={spec.media} /> : spec.bg ? <PhotoBackdrop media={spec.bg} layout={spec.layout} /> : <BackdropView kind={backdrop} seed={seed} />}
+      {spec.type !== 'media' && credits.length > 0 && <Credit text={credits.join(' · ')} />}
+      {spec.inset && <Inset media={spec.inset} at={spec.inset.at !== undefined ? at(spec.inset.at) : 0.1} corner={spec.inset.corner} caption={spec.inset.caption} />}
+      <AbsoluteFill style={LAYOUT[spec.layout ?? 'center']}>
       {spec.type === 'media' && (spec.title || spec.subtitle) && <Headline lines={[spec.title ?? '', spec.subtitle ?? ''].filter(Boolean)} accent={[1]} size={130} top={1000} />}
       {spec.type === 'media' && <Credit text={`${spec.media.kind === 'recreation' ? 'Recreation · ' : ''}${spec.media.credit}`} />}
       {spec.type === 'headline' && <Headline lines={spec.lines} accent={spec.accent} size={spec.size} />}
@@ -91,10 +103,11 @@ const SceneBody: React.FC<{spec: SceneSpec; seed: string; startFrame: number}> =
           </AbsoluteFill>
         </Sequence>
       )}
+      </AbsoluteFill>
       {(spec.callouts ?? []).map((c, i) => (
-        <Callout key={i} at={at(c.at)} text={c.text} color={c.tone === 'red' ? RED : c.tone === 'white' ? WHITE : GOLD} top={spec.type === 'scoreboard' ? 1150 : 1120} />
+        <Callout key={i} at={at(c.at)} text={c.text} color={c.tone === 'red' ? RED : c.tone === 'white' ? WHITE : GOLD} top={spec.layout === 'low' ? 520 : spec.type === 'scoreboard' ? 1150 : 1120} />
       ))}
-      {spec.kicker && <Kicker text={spec.kicker} top={spec.type === 'scoreboard' ? 330 : 300} boxed={spec.type === 'media'} />}
+      {spec.kicker && <Kicker text={spec.kicker} top={spec.type === 'scoreboard' ? 330 : 300} boxed={spec.type === 'media' || !!spec.bg} />}
     </AbsoluteFill>
   );
 };
@@ -117,7 +130,46 @@ const Outro: React.FC<{line?: string}> = ({line = 'MORE THAN A GAME'}) => {
 };
 
 // ---------------------------------------------------------------- sound
-const SFX_VOL: Record<SfxName, number> = {whoosh: 0.9, whip: 0.45, impact: 0.55, riser: 0.35, tick: 0.25, bounce: 0.6, shutter: 0.4, buzzer: 0.35};
+const SFX_VOL: Record<SfxName, number> = {
+  whoosh: 0.9, whip: 0.45, impact: 0.55, riser: 0.35, tick: 0.25, bounce: 0.6, shutter: 0.4, buzzer: 0.35,
+  bass_hit: 0.5, impact_big: 0.45, swish: 0.5, squeak: 0.35, crowd_cheer: 0.3, reverse_cymbal: 0.3,
+};
+
+/** Moments where the picture hits: numbers landing, score changes, stamps, music drops and the hook. */
+export type Hit = {t: number; power: number};
+const buildHits = (ep: Episode, scenes: Timed[]): Hit[] => {
+  const T = makeResolver(ep.words);
+  const hits: Hit[] = [{t: 0, power: 1.2}];
+  scenes.forEach((sc) => {
+    const s = sc.spec;
+    if (s.type === 'stat') {
+      if (sc.index > 0) hits.push({t: sc.start + 0.05 + (s.countFor ?? 0.7), power: 1});
+      if (s.second) hits.push({t: T(s.second.at), power: 0.8});
+    }
+    if (s.type === 'scoreboard') [s.home, s.away].forEach((team) => team.score.slice(1).forEach(([a]) => hits.push({t: T(a), power: 1})));
+    (s.callouts ?? []).forEach((c) => hits.push({t: T(c.at), power: 0.45}));
+  });
+  (ep.music?.hits ?? []).forEach((t) => {
+    if (!hits.some((h) => Math.abs(h.t - t) < 0.2)) hits.push({t, power: 0.7});
+  });
+  return hits.sort((a, b) => a.t - b.t);
+};
+
+/** Screen shake + punch zoom from the hits: decaying, deterministic jitter. */
+const shakeAt = (hits: Hit[], t: number) => {
+  let x = 0;
+  let y = 0;
+  let z = 0;
+  for (const h of hits) {
+    const a = t - h.t;
+    if (a < 0 || a > 0.4) continue;
+    const d = Math.exp(-a * 11) * h.power;
+    x += Math.sin(a * 95 + h.t * 7) * 22 * d;
+    y += Math.cos(a * 81 + h.t * 3) * 16 * d;
+    z += 0.035 * d;
+  }
+  return {x, y, z};
+};
 
 const buildCues = (ep: Episode, scenes: Timed[], style: StylePreset): {t: number; name: SfxName; volume: number}[] => {
   const T = makeResolver(ep.words);
@@ -132,15 +184,28 @@ const buildCues = (ep: Episode, scenes: Timed[], style: StylePreset): {t: number
       const dur = s.countFor ?? 0.7;
       for (let k = 0; k < 5; k++) add(sc.start + 0.05 + (dur * k) / 5, 'tick', 0.8);
       add(sc.start + 0.05 + dur, 'impact', 0.9);
-      if (s.second) add(T(s.second.at), 'impact', 0.8);
+      add(sc.start + 0.05 + dur, sc.index === 0 ? 'impact_big' : 'bass_hit', 0.9);
+      if (s.second) {
+        add(T(s.second.at), 'impact', 0.8);
+        add(T(s.second.at), 'bass_hit', 0.7);
+      }
     }
     if (s.type === 'scoreboard') {
-      [s.home, s.away].forEach((team) => team.score.slice(1).forEach(([a]) => add(T(a), 'bounce', 0.9)));
+      [s.home, s.away].forEach((team) =>
+        team.score.slice(1).forEach(([a]) => {
+          add(T(a), 'bounce', 0.9);
+          add(T(a), 'bass_hit', 0.8);
+        }),
+      );
     }
     (s.callouts ?? []).forEach((c) => add(T(c.at), 'impact', 0.7));
     if (s.type === 'timeline') s.items.forEach((i) => add(T(i.at), 'tick', 1.2));
     (s.beats ?? []).forEach((b) => add(T(b), 'impact', 0.5));
     (s.sfx ?? []).forEach((c: SfxCue) => add(T(c.at, c.offset ?? 0), c.name, c.volume ?? 1));
+  });
+  if (scenes[0]?.spec.type !== 'stat') add(0.02, 'impact_big', 0.8); // the hook always lands on a hit
+  scenes.forEach((sc) => {
+    if (sc.spec.inset) add(sc.start + (sc.spec.inset.at !== undefined ? T(sc.spec.inset.at) - sc.start : 0.1), 'whip', 0.8);
   });
   add(voiceEnd(ep.words) + 0.1, 'whoosh', 1.1);
   return cues.filter((c) => c.t >= 0);
@@ -176,10 +241,23 @@ export const Pro: React.FC<{episode: Episode}> = ({episode: ep}) => {
   const outroAt = voiceEnd(ep.words) + 0.25;
   const music = useMusicCurve(ep, fps, total, ep.music?.volume ?? style.musicVolume);
   const cues = React.useMemo(() => buildCues(ep, scenes, style), [ep, scenes, style]);
+  const hits = React.useMemo(() => buildHits(ep, scenes), [ep, scenes]);
+  const sh = shakeAt(hits, t);
+  // Hook: the first frame slams in from 1.3x with motion blur instead of fading up.
+  const hookP = Math.min(1, t / 0.32);
+  const hookS = 1 + 0.3 * Math.pow(1 - hookP, 3);
+  const hookBlur = 14 * Math.pow(1 - hookP, 2);
 
   return (
     <AbsoluteFill style={{backgroundColor: NAVY_DEEP}}>
-      <AbsoluteFill style={{isolation: 'isolate', overflow: 'hidden'}}>
+      <AbsoluteFill
+        style={{
+          isolation: 'isolate',
+          overflow: 'hidden',
+          transform: `translate(${sh.x}px, ${sh.y}px) scale(${hookS * (1 + sh.z)})`,
+          filter: hookBlur > 0.3 ? `blur(${hookBlur}px)` : undefined,
+        }}
+      >
       {scenes.map((sc) => {
         const tr = transitionOf(sc, style);
         const next = scenes[sc.index + 1];
@@ -210,6 +288,9 @@ export const Pro: React.FC<{episode: Episode}> = ({episode: ep}) => {
         if (tr !== 'flash' && tr !== 'punch') return null;
         return <Flash key={sc.index} age={t - sc.start} color={tr === 'punch' ? '#FFE3A1' : '#FFFFFF'} strength={tr === 'punch' ? 0.45 : 0.85} />;
       })}
+      {hits.map((h, i) => (
+        <Flash key={`h${i}`} age={t - h.t} color={i === 0 ? '#FFFFFF' : '#FFE3A1'} strength={i === 0 ? 0.9 : 0.28 * h.power} />
+      ))}
       {style.leak && <LightLeak />}
       <Vignette amount={style.vignette} />
       <Grain amount={style.grain} />

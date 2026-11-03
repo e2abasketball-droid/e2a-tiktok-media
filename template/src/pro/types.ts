@@ -28,7 +28,13 @@ export type SfxName =
   | 'tick'
   | 'bounce'
   | 'shutter'
-  | 'buzzer';
+  | 'buzzer'
+  | 'bass_hit'
+  | 'impact_big'
+  | 'swish'
+  | 'squeak'
+  | 'crowd_cheer'
+  | 'reverse_cymbal';
 
 export type SfxCue = {at: Anchor; name: SfxName; volume?: number; offset?: number};
 
@@ -50,6 +56,14 @@ export type Media = {
 
 export type Backdrop = 'arena' | 'navy' | 'spotlight' | 'archive';
 
+/** A real photo/clip behind a graphic. duotone = navy/gold brand grade (default), tint = natural
+ *  colours darkened, blur = soft out-of-focus plate. */
+export type PhotoBg = Media & {treatment?: 'duotone' | 'tint' | 'blur'};
+
+/** Where the graphic sits over its backdrop. center (default); low = lower half, the photo shows
+ *  above it; high = upper half; compact = smaller centred card with more photo around it. */
+export type Layout = 'center' | 'low' | 'high' | 'compact';
+
 type Base = {
   at: Anchor;
   offset?: number; // seconds added to the resolved anchor
@@ -60,6 +74,11 @@ type Base = {
   beats?: Anchor[]; // quick scale punches synced to words
   sfx?: SfxCue[];
   callouts?: {at: Anchor; text: string; tone?: 'gold' | 'white' | 'red'}[]; // stamped over the scene
+  /** Real photo/footage behind a graphic scene instead of a dark backdrop (needs credit + licence). */
+  bg?: PhotoBg;
+  layout?: Layout;
+  /** Framed photo card beside the graphic (picture-in-picture). at = when it slides in. */
+  inset?: Media & {corner?: 'tl' | 'tr'; at?: Anchor; caption?: string};
 };
 
 export type ScoreTeam = {name: string; score: [Anchor, number][]; accent?: boolean};
@@ -117,8 +136,9 @@ export type Episode = {
    * premixed=true (level, ducking and fades are baked in, so it plays at volume 1).
    * story: music story type (defaults from style); dropAt / payoffAt: anchors for the two drops
    * (default: the scene cuts nearest 30% and 75% of the narration); engine "file" keeps src as-is.
+   * hits: seconds of the music drops, written by episode-music.mjs; the picture shakes and flashes on them.
    */
-  music?: {src?: string; volume?: number; premixed?: boolean; engine?: 'e2a' | 'file'; story?: string; track?: string; dropAt?: Anchor; payoffAt?: Anchor};
+  music?: {src?: string; volume?: number; premixed?: boolean; engine?: 'e2a' | 'file'; story?: string; track?: string; dropAt?: Anchor; payoffAt?: Anchor; hits?: number[]};
   ambience?: boolean;
   sources: string[]; // fact-check sources, required by the validator
 };

@@ -63,4 +63,4 @@ if (ep.music?.track) args.push('--track', ep.music.track);
 fs.mkdirSync('public/music', {recursive: true});
 const info = JSON.parse(execFileSync('python3', args).toString());
 console.log(`music: ${info.track} (${info.style}, ${info.bpm} bpm) drop ${info.drop}s payoff ${info.payoff}s end hit ${info.end_hit}s`);
-write({...ep, music: {...ep.music, src, premixed: true}});
+write({...ep, music: {...ep.music, src, premixed: true, hits: [info.drop, info.payoff].filter((x) => typeof x === 'number')}});
