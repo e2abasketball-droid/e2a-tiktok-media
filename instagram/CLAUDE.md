@@ -50,3 +50,8 @@ ElevenLabs signed URLs from `creative_get_flow_run_status` work with plain `curl
   Tracker `plan` rows for 11-02/11-03 updated. Weekly analytics run (feed posts, 10-26→11-02, Metricool): 8 posts, reach 40–197, likes 0–6, comments 0, saves 0–2, shares 0, follows 0;
   best reach: older posts (more time); account is tiny/new, no meaningful pillar/time conclusions yet (Reels connector not queried). `scripts/preflight.sh` added (network+toolchain check, all OK today).
   PR to main still the blocker for the routine (it must run from `main`).
+- 2026-11-04 06:00 Sydney (routine run on branch clever-albattani-str6di; merged mngz83 which holds the full implementation — main lacks `instagram/` until the PR merges). NOTE: Sydney date is already
+  "tomorrow" vs UTC; the 08:00-Sydney run prepares the NEXT Sydney day (here 2026-11-05, Thu: Beyond 10:00 + News 18:00). Both slots were free of Instagram posts. Produced + scheduled (Metricool re-hosted media, accepted):
+  10:00 POST carousel "17,000 km apart. One game." (Beyond, 415670426); 18:00 POST carousel "Spain 95 Australia 88 (2OT, 2019 WC semi)" (News, evergreen because no verifiable fresh news found; 415670519). Media @b42dc49.
+  Facts verified via search: 71-71 after regulation, 2OT, Gasol 33, Mills 32; Spain beat Argentina 95-75 in final. Sydney-Barcelona great-circle 17,181 km. Tracker plan/images rows appended.
+  Still open: TikTok routine cross-posts Reels to IG (owner decision); PR to main; Routine creation; next Reel (Ep05 individual skill: euro step/jump stop) due Fri/Sat 18:00 slots.
