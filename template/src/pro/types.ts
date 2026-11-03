@@ -41,6 +41,11 @@ export type Media = {
   sourceUrl?: string;
   focus?: [number, number]; // 0..1 point the camera moves toward
   startFrom?: number; // seconds into a video clip
+  /** "cover" fills the frame (default). "print" shows the whole picture as a framed archive print
+   *  over a blurred copy: use it for small or landscape archive photos that would blur or lose
+   *  their subject if cropped to 9:16. */
+  fit?: 'cover' | 'print';
+  tilt?: number; // degrees of rotation for a print (default -2)
 };
 
 export type Backdrop = 'arena' | 'navy' | 'spotlight' | 'archive';

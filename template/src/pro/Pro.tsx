@@ -94,7 +94,7 @@ const SceneBody: React.FC<{spec: SceneSpec; seed: string; startFrame: number}> =
       {(spec.callouts ?? []).map((c, i) => (
         <Callout key={i} at={at(c.at)} text={c.text} color={c.tone === 'red' ? RED : c.tone === 'white' ? WHITE : GOLD} top={spec.type === 'scoreboard' ? 1150 : 1120} />
       ))}
-      {spec.kicker && <Kicker text={spec.kicker} top={spec.type === 'scoreboard' ? 330 : 300} />}
+      {spec.kicker && <Kicker text={spec.kicker} top={spec.type === 'scoreboard' ? 330 : 300} boxed={spec.type === 'media'} />}
     </AbsoluteFill>
   );
 };

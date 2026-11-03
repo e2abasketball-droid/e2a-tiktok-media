@@ -1,0 +1,546 @@
+{
+ "id": "first-game-1891",
+ "title": "The first basketball game ended 1-0",
+ "style": "curiosity",
+ "voice": "audio/first-game.mp3",
+ "words": [
+  {
+   "text": "The",
+   "start": 0.06,
+   "end": 0.18
+  },
+  {
+   "text": "first",
+   "start": 0.22,
+   "end": 0.4
+  },
+  {
+   "text": "basketball",
+   "start": 0.48,
+   "end": 0.92
+  },
+  {
+   "text": "game",
+   "start": 1.0,
+   "end": 1.3
+  },
+  {
+   "text": "ever",
+   "start": 1.38,
+   "end": 1.54
+  },
+  {
+   "text": "played",
+   "start": 1.66,
+   "end": 1.94
+  },
+  {
+   "text": "finished",
+   "start": 2.06,
+   "end": 2.34
+  },
+  {
+   "text": "one-nil.",
+   "start": 2.5,
+   "end": 2.98
+  },
+  {
+   "text": "December,",
+   "start": 3.32,
+   "end": 3.78
+  },
+  {
+   "text": "1891,",
+   "start": 4.019,
+   "end": 4.94
+  },
+  {
+   "text": "Springfield,",
+   "start": 5.22,
+   "end": 5.68
+  },
+  {
+   "text": "Massachusetts,",
+   "start": 5.74,
+   "end": 6.46
+  },
+  {
+   "text": "James",
+   "start": 6.72,
+   "end": 6.96
+  },
+  {
+   "text": "Naismith",
+   "start": 7.04,
+   "end": 7.48
+  },
+  {
+   "text": "nails",
+   "start": 7.52,
+   "end": 7.84
+  },
+  {
+   "text": "two",
+   "start": 7.9,
+   "end": 8.02
+  },
+  {
+   "text": "peach",
+   "start": 8.14,
+   "end": 8.36
+  },
+  {
+   "text": "baskets",
+   "start": 8.4,
+   "end": 8.84
+  },
+  {
+   "text": "to",
+   "start": 8.88,
+   "end": 8.94
+  },
+  {
+   "text": "a",
+   "start": 9.0,
+   "end": 9.06
+  },
+  {
+   "text": "gym",
+   "start": 9.1,
+   "end": 9.24
+  },
+  {
+   "text": "balcony.",
+   "start": 9.32,
+   "end": 9.72
+  },
+  {
+   "text": "18",
+   "start": 9.94,
+   "end": 10.28
+  },
+  {
+   "text": "students,",
+   "start": 10.4,
+   "end": 10.78
+  },
+  {
+   "text": "nine",
+   "start": 11.08,
+   "end": 11.24
+  },
+  {
+   "text": "a",
+   "start": 11.28,
+   "end": 11.34
+  },
+  {
+   "text": "side.",
+   "start": 11.38,
+   "end": 11.68
+  },
+  {
+   "text": "Only",
+   "start": 11.86,
+   "end": 12.18
+  },
+  {
+   "text": "one",
+   "start": 12.22,
+   "end": 12.38
+  },
+  {
+   "text": "shot",
+   "start": 12.5,
+   "end": 12.76
+  },
+  {
+   "text": "goes",
+   "start": 12.8,
+   "end": 12.98
+  },
+  {
+   "text": "in",
+   "start": 13.02,
+   "end": 13.24
+  },
+  {
+   "text": "all",
+   "start": 13.34,
+   "end": 13.52
+  },
+  {
+   "text": "game.",
+   "start": 13.56,
+   "end": 13.84
+  },
+  {
+   "text": "William",
+   "start": 14.04,
+   "end": 14.32
+  },
+  {
+   "text": "Chase",
+   "start": 14.4,
+   "end": 14.66
+  },
+  {
+   "text": "scores",
+   "start": 14.72,
+   "end": 15.0
+  },
+  {
+   "text": "it,",
+   "start": 15.06,
+   "end": 15.12
+  },
+  {
+   "text": "and",
+   "start": 15.32,
+   "end": 15.4
+  },
+  {
+   "text": "the",
+   "start": 15.42,
+   "end": 15.5
+  },
+  {
+   "text": "baskets",
+   "start": 15.52,
+   "end": 15.9
+  },
+  {
+   "text": "still",
+   "start": 15.96,
+   "end": 16.1
+  },
+  {
+   "text": "had",
+   "start": 16.14,
+   "end": 16.34
+  },
+  {
+   "text": "bottoms,",
+   "start": 16.36,
+   "end": 16.82
+  },
+  {
+   "text": "so",
+   "start": 17.02,
+   "end": 17.22
+  },
+  {
+   "text": "getting",
+   "start": 17.26,
+   "end": 17.44
+  },
+  {
+   "text": "the",
+   "start": 17.48,
+   "end": 17.58
+  },
+  {
+   "text": "ball",
+   "start": 17.6,
+   "end": 17.74
+  },
+  {
+   "text": "back",
+   "start": 17.82,
+   "end": 18.02
+  },
+  {
+   "text": "meant",
+   "start": 18.1,
+   "end": 18.26
+  },
+  {
+   "text": "climbing",
+   "start": 18.3,
+   "end": 18.6
+  },
+  {
+   "text": "a",
+   "start": 18.66,
+   "end": 18.72
+  },
+  {
+   "text": "ladder.",
+   "start": 18.78,
+   "end": 19.14
+  },
+  {
+   "text": "Today,",
+   "start": 19.36,
+   "end": 19.64
+  },
+  {
+   "text": "even",
+   "start": 19.96,
+   "end": 20.12
+  },
+  {
+   "text": "the",
+   "start": 20.14,
+   "end": 20.24
+  },
+  {
+   "text": "NBA's",
+   "start": 20.32,
+   "end": 20.78
+  },
+  {
+   "text": "lowest",
+   "start": 20.86,
+   "end": 21.14
+  },
+  {
+   "text": "scoring",
+   "start": 21.18,
+   "end": 21.52
+  },
+  {
+   "text": "teams",
+   "start": 21.56,
+   "end": 21.82
+  },
+  {
+   "text": "average",
+   "start": 21.94,
+   "end": 22.2
+  },
+  {
+   "text": "over",
+   "start": 22.26,
+   "end": 22.42
+  },
+  {
+   "text": "100",
+   "start": 22.58,
+   "end": 22.94
+  },
+  {
+   "text": "points",
+   "start": 22.98,
+   "end": 23.18
+  },
+  {
+   "text": "a",
+   "start": 23.24,
+   "end": 23.28
+  },
+  {
+   "text": "night.",
+   "start": 23.34,
+   "end": 23.56
+  }
+ ],
+ "display": {
+  "one-nil": "1–0",
+  "nine": "9"
+ },
+ "emphasis": [
+  "first",
+  "one-nil",
+  "Naismith",
+  "peach",
+  "one",
+  "Chase",
+  "bottoms",
+  "ladder",
+  "Today,",
+  "100"
+ ],
+ "outro": {
+  "seconds": 1.2
+ },
+ "sources": [
+  "Springfield College: birthplace of basketball, first game 21 Dec 1891, 18 students, 9 v 9, peach baskets on the gym balcony (springfield.edu/where-basketball-was-invented-the-birthplace-of-basketball)",
+  "Naismith Memorial Basketball Hall of Fame / Naismith, 'Basketball: Its Origin and Development' (1941): only goal by William R. Chase, final 1-0; ball retrieved with a ladder",
+  "Wikipedia 'History of basketball' (cross-check): closed-bottom peach baskets, ladder retrieval",
+  "ESPN NBA team stats 2025-26: lowest team scoring average about 106 PPG (over 100)"
+ ],
+ "scenes": [
+  {
+   "at": 0,
+   "type": "stat",
+   "value": 1,
+   "from": 1,
+   "suffix": "–0",
+   "label": "FINAL SCORE",
+   "countFor": 0.01,
+   "backdrop": "archive",
+   "camera": "push-in",
+   "kicker": "The first game ever",
+   "callouts": [
+    {
+     "at": "one-nil",
+     "text": "REALLY.",
+     "tone": "gold"
+    }
+   ]
+  },
+  {
+   "at": "December",
+   "type": "media",
+   "camera": "pan-right",
+   "kicker": "Springfield, Massachusetts",
+   "media": {
+    "src": "media/first-game/rules-draft.jpg",
+    "kind": "archive",
+    "credit": "James Naismith",
+    "license": "Public domain",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Naismith_Rules_of_Basketball_1892_first_draft.jpg",
+    "fit": "cover",
+    "focus": [
+     0.2,
+     0.0
+    ]
+   }
+  },
+  {
+   "at": "James Naismith",
+   "type": "media",
+   "camera": "push-in",
+   "kicker": "James Naismith · inventor",
+   "media": {
+    "src": "media/first-game/naismith-basket.jpg",
+    "kind": "photo",
+    "credit": "Unknown author",
+    "license": "Public domain",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Dr._James_Naismith.jpg",
+    "focus": [
+     0.3,
+     0.2
+    ]
+   }
+  },
+  {
+   "at": "to a gym balcony",
+   "type": "media",
+   "camera": "tilt-up",
+   "media": {
+    "src": "media/first-game/first-court.jpg",
+    "kind": "archive",
+    "credit": "Unknown author",
+    "license": "Public domain",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Firstbasketball.jpg",
+    "focus": [
+     0.5,
+     0.3
+    ]
+   }
+  },
+  {
+   "at": "18 students",
+   "type": "stat",
+   "value": 18,
+   "from": 1,
+   "label": "STUDENTS",
+   "countFor": 0.5,
+   "backdrop": "archive",
+   "camera": "pull-out",
+   "second": {
+    "at": "nine a side",
+    "value": "9 v 9",
+    "label": "A SIDE"
+   }
+  },
+  {
+   "at": "Only one shot",
+   "type": "headline",
+   "lines": [
+    "One shot.",
+    "All game."
+   ],
+   "accent": [
+    0
+   ],
+   "camera": "push-in",
+   "backdrop": "spotlight",
+   "beats": [
+    "all game"
+   ]
+  },
+  {
+   "at": "William Chase",
+   "type": "media",
+   "camera": "push-in",
+   "kicker": "William R. Chase",
+   "media": {
+    "src": "media/first-game/first-team.jpg",
+    "kind": "archive",
+    "credit": "Unknown author (1892)",
+    "license": "Public domain",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:FirstTeam1892.jpg",
+    "fit": "print",
+    "tilt": 1.5
+   },
+   "callouts": [
+    {
+     "at": "scores",
+     "text": "1–0",
+     "tone": "gold"
+    }
+   ]
+  },
+  {
+   "at": "the baskets still",
+   "type": "media",
+   "camera": "pan-left",
+   "kicker": "A real peach basket",
+   "media": {
+    "src": "media/first-game/naismith-basket.jpg",
+    "kind": "photo",
+    "credit": "Unknown author",
+    "license": "Public domain",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Dr._James_Naismith.jpg",
+    "focus": [
+     0.85,
+     0.4
+    ]
+   },
+   "callouts": [
+    {
+     "at": "bottoms",
+     "text": "NO HOLE",
+     "tone": "red"
+    },
+    {
+     "at": "ladder",
+     "text": "LADDER",
+     "tone": "gold"
+    }
+   ]
+  },
+  {
+   "at": "Today",
+   "type": "media",
+   "camera": "push-in",
+   "transition": "flash",
+   "media": {
+    "src": "media/first-game/nba-2025.jpg",
+    "kind": "photo",
+    "credit": "MhcL947",
+    "license": "CC BY 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Clippers_@_Nuggets,_2025_NBA_playoffs,_Game_1,_Ball_Arena.jpg",
+    "focus": [
+     0.5,
+     0.5
+    ]
+   }
+  },
+  {
+   "at": "average over",
+   "type": "stat",
+   "value": 100,
+   "from": 1,
+   "suffix": "+",
+   "label": "POINTS A NIGHT",
+   "countFor": 0.7,
+   "backdrop": "arena",
+   "camera": "push-in",
+   "kicker": "Even the NBA's lowest-scoring teams"
+  }
+ ]
+}

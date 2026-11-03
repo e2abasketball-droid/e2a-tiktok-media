@@ -143,9 +143,28 @@ export const MediaView: React.FC<{media: Media}> = ({media}) => {
       <Layer depth={0.4} style={{filter: 'blur(30px) brightness(0.5)'}}>
         {isVideo ? <OffthreadVideo src={src} muted style={fit} startFrom={Math.round((media.startFrom ?? 0) * 30)} /> : <Img src={src} style={fit} />}
       </Layer>
-      <Layer depth={1}>
-        {isVideo ? <OffthreadVideo src={src} muted style={fit} startFrom={Math.round((media.startFrom ?? 0) * 30)} /> : <Img src={src} style={fit} />}
-      </Layer>
+      {media.fit === 'print' && !isVideo ? (
+        <Layer depth={1.15}>
+          <AbsoluteFill style={{justifyContent: 'center', alignItems: 'center'}}>
+            <div
+              style={{
+                width: 880,
+                marginTop: -120,
+                padding: 18,
+                background: '#EFE6D2',
+                boxShadow: '0 40px 90px rgba(0,0,0,0.7), 0 0 0 2px rgba(201,162,77,0.6)',
+                transform: `rotate(${media.tilt ?? -2}deg)`,
+              }}
+            >
+              <Img src={src} style={{width: '100%', display: 'block', filter: 'sepia(0.25) contrast(1.05)'}} />
+            </div>
+          </AbsoluteFill>
+        </Layer>
+      ) : (
+        <Layer depth={1}>
+          {isVideo ? <OffthreadVideo src={src} muted style={fit} startFrom={Math.round((media.startFrom ?? 0) * 30)} /> : <Img src={src} style={fit} />}
+        </Layer>
+      )}
       <AbsoluteFill style={{background: `linear-gradient(180deg, rgba(11,28,61,0.55) 0%, transparent 25%, transparent 55%, rgba(11,28,61,0.85) 100%)`, opacity: 0.9 + c.punch * 0.1}} />
     </AbsoluteFill>
   );

@@ -11,6 +11,6 @@ node scripts/validate-episode.mjs "$EP"
 npx remotion render src/index.ts Pro "$TMP/raw.mp4" --props="$TMP/props.json" \
   ${CHROME:+--browser-executable="$CHROME"} --codec=h264 --crf=16 --x264-preset=medium --log=error
 # final encode: broadcast-safe pixel format, high-quality H.264, loudness -14 LUFS / -1.5 dBTP
-ffmpeg -y -loglevel error -i "$TMP/raw.mp4" -c:v libx264 -preset slow -crf 19 -pix_fmt yuv420p -profile:v high \
+ffmpeg -y -loglevel error -i "$TMP/raw.mp4" -c:v libx264 -preset slow -crf ${CRF:-19} -pix_fmt yuv420p -profile:v high \
   -movflags +faststart -af "loudnorm=I=-14:TP=-1.5:LRA=11" -ar 48000 -c:a aac -b:a 192k "$OUT"
 node scripts/qc-pro.mjs "$OUT" "$@" --frames "${OUT%.mp4}_qc"

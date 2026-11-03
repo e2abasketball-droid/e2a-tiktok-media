@@ -24,13 +24,13 @@ const springAt = (t: number, fps: number, at: number, damping = 13, mass = 0.55)
 const tone = (k?: 'gold' | 'white' | 'red') => (k === 'red' ? RED : k === 'white' ? WHITE : GOLD);
 
 // ------------------------------------------------------------------ kicker
-export const Kicker: React.FC<{text: string; top?: number; at?: number}> = ({text, top = 300, at = 0.05}) => {
+export const Kicker: React.FC<{text: string; top?: number; at?: number; boxed?: boolean}> = ({text, top = 300, at = 0.05, boxed = false}) => {
   const t = useLocalT();
   const {fps} = useVideoConfig();
   const s = springAt(t, fps, at, 18);
   return (
     <div style={{position: 'absolute', top, left: 0, right: 0, display: 'flex', justifyContent: 'center'}}>
-      <div style={{display: 'flex', alignItems: 'center', gap: 18, opacity: s, transform: `translateY(${(1 - s) * -24}px)`}}>
+      <div style={{display: 'flex', alignItems: 'center', gap: 18, opacity: s, transform: `translateY(${(1 - s) * -24}px)`, ...(boxed ? {background: 'rgba(11,28,61,0.82)', padding: '12px 26px', borderRadius: 6} : {})}}>
         <div style={{width: 46 * s, height: 5, background: GOLD}} />
         <div style={{fontFamily: BODY, fontWeight: 800, fontSize: 34, letterSpacing: 7, color: GOLD_LIGHT, textTransform: 'uppercase', whiteSpace: 'nowrap'}}>{text}</div>
         <div style={{width: 46 * s, height: 5, background: GOLD}} />
