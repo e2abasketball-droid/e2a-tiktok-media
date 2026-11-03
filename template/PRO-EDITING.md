@@ -135,7 +135,21 @@ To steer the music, set any of these in the episode's `music` field:
 ## 9. Visual editing v4: real images first, then graphics
 
 The goal is a Reel that looks edited from real basketball images, with motion graphics on top,
-not a sequence of text cards on navy.
+not a sequence of text cards on navy. **This is the standard for every new episode (approved
+2026-11-03).** For each video:
+
+1. Look for free-licence images with `scripts/fetch-commons.mjs` before writing the storyboard:
+   the player or subject, the arena or city, and 2-3 generic basketball shots (ball, hoop, net,
+   crowd, court) as B-roll. Put them in `public/media/<episode-id>/` with credit, licence and year.
+2. Open on a real image: scene 0 has `bg` (duotone) or is a `media` scene, and something changes
+   before 2 s.
+3. Put a photo plate (`bg`) behind most stat, scoreboard, headline and timeline scenes, alternating
+   `treatment` and `layout`; use `inset` to keep a face on screen. Only `court` stays on navy.
+4. The validator must print no composition, dark-run or hook warnings. Fix the storyboard if it does.
+5. If Wikimedia is unreachable or there is no free image, fall back to the dark backdrops: never
+   use protected images or invented scenes. Say so in the daily report.
+
+`episodes/miller-v4.json` is the reference episode.
 
 ### New scene options (any scene type)
 
