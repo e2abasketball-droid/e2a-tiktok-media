@@ -91,3 +91,16 @@ Both mixes went through the same final normalisation (-14 LUFS).
 2. Commit `music/history.json` with each day's videos so the rotation carries over.
 3. Move `assets/music_v3.mp3` to `assets/music/legacy/`. It stays as a backup and is excluded from
    selection (see `library.json` → `legacy`).
+
+## Cinematic library (default since v6)
+
+The user picked the cinematic style (taiko, strings, brass) after an A/B test on the Miller Reel on 2026-11-03. Since then the default music bed comes from `music/cinematic/`. It holds 10 instrumental tracks made once with the E2A ElevenLabs Music account (eleven_music_v2_5). Eight tracks are 30 s and two are 45 s, for the 30–45 s tactical videos. There is no cost per video.
+
+- `scripts/episode-music.mjs` calls `music/e2a_cinematic.py` for each episode. The script:
+  - picks a track long enough for the video, preferring the story mood (record → heroic/triumphant, tactical → hybrid…) and never one of the last 3 used;
+  - shifts it so the track's climax lands on the payoff cut;
+  - ducks it around the voice and sets its level from vo.mp3 with the same code as the synth engine.
+- The `music.hits` sent to the template are the real times of the track's drop and climax in the video.
+- `music.engine: "synth"` forces the old procedural engine, and `music.cinematicTrack: "cine-03"` forces one track. When no track is long enough (over about 44.5 s), the procedural engine is used automatically.
+- To add or replace tracks: drop the mp3 into `music/cinematic/`, run `python3 music/cinematic/analyse.py` (it measures duration, drop and climax), and set `mood` in `library.json`.
+- Do not generate new tracks for each video: that costs credits and needs the user's approval.

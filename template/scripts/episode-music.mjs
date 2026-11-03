@@ -5,6 +5,7 @@
 // unless the episode sets music.dropAt / music.payoffAt (anchors, like scene "at").
 // Usage: node scripts/episode-music.mjs episodes/<id>.json <props.json>
 // If python3 or the engine is missing, or music.engine is "file", the episode is passed through unchanged.
+// The bed comes from the cinematic library (music/e2a_cinematic.py) unless music.engine is "synth".
 import {execFileSync} from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -61,8 +62,23 @@ if (dropAt !== undefined) args.push('--drop-at', dropAt.toFixed(3));
 if (payoffAt !== undefined) args.push('--payoff-at', payoffAt.toFixed(3));
 if (ep.music?.track) args.push('--track', ep.music.track);
 fs.mkdirSync('public/music', {recursive: true});
-const info = JSON.parse(execFileSync('python3', args).toString());
-console.log(`music: ${info.track} (${info.style}, ${info.bpm} bpm) drop ${info.drop}s payoff ${info.payoff}s end hit ${info.end_hit}s`);
+// Default bed: the E2A cinematic library (ElevenLabs Music tracks, music/cinematic/), lined up with the cuts.
+// music.engine "synth" forces the procedural engine; it is also the fallback when no track is long enough.
+const cine = new URL('../../music/e2a_cinematic.py', import.meta.url).pathname;
+let info;
+if (ep.music?.engine !== 'synth' && fs.existsSync(cine)) {
+  const cargs = [cine, '--words', wordsFile, '--story', story, '--duration', total.toFixed(3), '--voice', `public/${ep.voice}`, '--out', `public/${src}`];
+  if (dropAt !== undefined) cargs.push('--drop-at', dropAt.toFixed(3));
+  if (payoffAt !== undefined) cargs.push('--payoff-at', payoffAt.toFixed(3));
+  if (ep.music?.cinematicTrack) cargs.push('--track', ep.music.cinematicTrack);
+  try {
+    info = JSON.parse(execFileSync('python3', cargs).toString());
+  } catch (e) {
+    console.log(`music: cinematic library not used (${String(e.stdout ?? e.message).trim()}), falling back to the synth engine`);
+  }
+}
+info ??= JSON.parse(execFileSync('python3', args).toString());
+console.log(`music: ${info.track} (${info.style}, ${info.bpm} bpm) drop ${info.drop}s payoff ${info.payoff}s end hit ${info.end_hit ?? '-'}s${info.offset !== undefined ? ` (track offset ${info.offset}s)` : ''}`);
 // log the edit choices next to the music rotation (music/history.json is committed with each day's videos),
 // so the validator can rotate hooks and endings across videos
 const histFile = new URL('../../music/history.json', import.meta.url).pathname;
@@ -71,4 +87,4 @@ try {
   if (hist.length) Object.assign(hist[hist.length - 1], {episode: ep.id, hook: ep.hook ?? 'stat-slam', ending: ep.ending ?? null});
   fs.writeFileSync(histFile, JSON.stringify(hist, null, 1));
 } catch {}
-write({...ep, music: {...ep.music, src, premixed: true, hits: [info.drop, info.payoff].filter((x) => typeof x === 'number')}});
+write({...ep, music: {...ep.music, src, premixed: true, hits: [info.drop ?? dropAt, info.payoff ?? payoffAt].filter((x) => typeof x === 'number')}});
