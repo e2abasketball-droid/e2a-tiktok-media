@@ -1,0 +1,42 @@
+[
+ {
+  "track": "susp_a",
+  "story": "surprise",
+  "out": "public/music/2026-11-05-v1.mp3",
+  "episode": "2026-11-05-v1",
+  "hook": "stat-slam",
+  "ending": "debate"
+ },
+ {
+  "track": "drive_a",
+  "story": "tactical",
+  "out": "public/music/2026-11-05-v2.mp3",
+  "episode": "2026-11-05-v2",
+  "hook": "photo-line",
+  "ending": "fact"
+ },
+ {
+  "track": "hype_a",
+  "story": "record",
+  "out": "public/music/2026-11-05-v3.mp3",
+  "episode": "2026-11-05-v3",
+  "hook": "split",
+  "ending": "surprise"
+ },
+ {
+  "track": "hiphop_a",
+  "story": "tactical",
+  "out": "public/music/2026-11-05-v4.mp3",
+  "episode": "2026-11-05-v4",
+  "hook": "photo-line",
+  "ending": "fact"
+ },
+ {
+  "track": "hiphop_b",
+  "story": "psychology",
+  "out": "public/music/2026-11-05-v5.mp3",
+  "episode": "2026-11-05-v5",
+  "hook": "photo-line",
+  "ending": "emotion"
+ }
+]
