@@ -10,6 +10,7 @@ import {
   useVideoConfig,
 } from 'remotion';
 import words from './words.json';
+import musicMix from './music-mix.json';
 import {BODY, DISPLAY, GOLD, GOLD_SOFT, MUTED, NAVY, NAVY_2, RED, WHITE} from './theme';
 
 type Word = {text: string; start: number; end: number};
@@ -540,10 +541,13 @@ export const Main: React.FC = () => {
         src={staticFile('music.mp3')}
         loop
         volume={(f) =>
-          interpolate(f, [0, 20, durationInFrames - 45, durationInFrames], [0, 0.13, 0.13, 0], {
-            extrapolateLeft: 'clamp',
-            extrapolateRight: 'clamp',
-          })
+          // premixed beds from music/e2a_music.py carry their own level, ducking and fades
+          musicMix.premixed
+            ? 1
+            : interpolate(f, [0, 20, durationInFrames - 45, durationInFrames], [0, musicMix.gain, musicMix.gain, 0], {
+                extrapolateLeft: 'clamp',
+                extrapolateRight: 'clamp',
+              })
         }
       />
     </AbsoluteFill>
