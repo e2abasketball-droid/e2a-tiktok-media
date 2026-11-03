@@ -61,8 +61,9 @@ export type Backdrop = 'arena' | 'navy' | 'spotlight' | 'archive';
 export type PhotoBg = Media & {treatment?: 'duotone' | 'tint' | 'blur'};
 
 /** Where the graphic sits over its backdrop. center (default); low = lower half, the photo shows
- *  above it; high = upper half; compact = smaller centred card with more photo around it. */
-export type Layout = 'center' | 'low' | 'high' | 'compact';
+ *  above it; high = upper half; compact = smaller centred card with more photo around it;
+ *  corner = small broadcast-style bug top-left (for scoreboards over a full photo). */
+export type Layout = 'center' | 'low' | 'high' | 'compact' | 'corner';
 
 type Base = {
   at: Anchor;
@@ -73,10 +74,14 @@ type Base = {
   kicker?: string; // small gold line above the main graphic
   beats?: Anchor[]; // quick scale punches synced to words
   sfx?: SfxCue[];
+  /** play the style's transition sound on this cut (off by default: cuts are clean) */
+  sfxTransition?: boolean;
   callouts?: {at: Anchor; text: string; tone?: 'gold' | 'white' | 'red'}[]; // stamped over the scene
   /** Real photo/footage behind a graphic scene instead of a dark backdrop (needs credit + licence). */
   bg?: PhotoBg;
   layout?: Layout;
+  /** subtitles position in this scene: low (default) or high, when a face or the action is low in the frame */
+  captions?: 'low' | 'high';
   /** Framed photo card beside the graphic (picture-in-picture). at = when it slides in. */
   inset?: Media & {corner?: 'tl' | 'tr'; at?: Anchor; caption?: string};
 };
@@ -140,5 +145,16 @@ export type Episode = {
    */
   music?: {src?: string; volume?: number; premixed?: boolean; engine?: 'e2a' | 'file'; story?: string; track?: string; dropAt?: Anchor; payoffAt?: Anchor; hits?: number[]};
   ambience?: boolean;
+  /** Opening template for the first 2 s (rotate between videos):
+   *  stat-slam = big figure slams in over a photo; photo-line = full-bleed photo with a slow push and the
+   *  hook line; split = two images/figures wipe in side by side; clock = hard cut onto a running game clock. */
+  hook?: 'stat-slam' | 'photo-line' | 'split' | 'clock';
+  /** How the story ends (rotate; about 1 in 3 debate): debate = an open, arguable closing line;
+   *  surprise = a twist; fact = a final striking figure; emotion = a memorable human line. */
+  ending?: 'debate' | 'surprise' | 'fact' | 'emotion';
+  /** Public texts in English: short caption, a comment to pin by hand, and a reply to keep the thread going. */
+  social?: {caption: string; pinnedComment?: string; reply?: string; hashtags?: string[]};
+  /** max automatic highlight effects (default 3); a scene's own sfx always play */
+  sfxBudget?: number;
   sources: string[]; // fact-check sources, required by the validator
 };

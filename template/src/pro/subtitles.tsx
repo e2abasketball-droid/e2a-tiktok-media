@@ -57,8 +57,9 @@ const chunk = (toks: Tok[], maxChars: number) => {
   return out;
 };
 
-export const Subtitles: React.FC<{words: Word[]; display?: Record<string, string>; emphasis?: string[]; size?: number; hideAfter?: number}> = ({
+export const Subtitles: React.FC<{words: Word[]; display?: Record<string, string>; emphasis?: string[]; size?: number; hideAfter?: number; highRanges?: [number, number][]}> = ({
   words,
+  highRanges = [],
   display,
   emphasis,
   size = 84,
@@ -76,13 +77,14 @@ export const Subtitles: React.FC<{words: Word[]; display?: Record<string, string
   });
   if (idx < 0) return null;
   const c = chunks[idx];
+  const high = highRanges.some(([a, b]) => c[0].start >= a && c[0].start < b);
   return (
     <div
       style={{
         position: 'absolute',
         left: SAFE.left,
         width: SAFE.right - SAFE.left,
-        bottom: 1920 - SAFE.bottom,
+        bottom: high ? 1920 - 640 : 1920 - SAFE.bottom,
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'center',

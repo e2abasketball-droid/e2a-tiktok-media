@@ -197,3 +197,62 @@ image as real: those use `kind: "recreation"` and are labelled on screen.
 The Miller test (`episodes/miller-v4.json`) uses all of these: stat over a duotone photo (hook) →
 scoreboard low over the arena → compact headline on a blurred plate → full-bleed photo → court
 diagram → scoreboard slam over the crowd → timeline with a photo inset → final stat high over a photo.
+
+## 10. Quality v5: less sound, more story
+
+### Sound design
+- Cuts are clean by default: no automatic whoosh, whip or impact on scene changes. Set
+  `"sfxTransition": true` on a scene only when the cut really needs a sound.
+- Automatic highlights follow a budget (`sfxBudget`, default 3). The renderer ranks candidate moments
+  (score changes and figures landing first, then second figures and stamps). It keeps the best ones,
+  at least 1.5 s apart and never on top of a music drop. Count-up ticks, timeline ticks and the end
+  whoosh are gone, because the music already hits there.
+- A scene's own `sfx` (swish on a made shot, crowd on a tie, a sneaker squeak) always plays. Keep
+  2-4 highlights per Reel in total; the validator warns above 4 hand-placed effects.
+- All effects are 4 dB lower than before, and 6 dB lower again when they land on a spoken word.
+  Hierarchy: narration > music > effects.
+- The screen shakes only on the hook and the climax (the hit nearest the music payoff). Other hits
+  get a soft flash.
+
+### Openings (`hook`), rotate between videos
+- `stat-slam`: the figure slams in over a duotone photo (scene 0 = stat with bg).
+- `photo-line`: full-bleed photo, slow push, the hook line in subtitles (scene 0 = media).
+- `split`: two images or figures whip in side by side (scene 0 = split).
+- `clock`: hard cut onto a running game clock (scene 0 = scoreboard with timer, or stat).
+The validator warns when the last 2 videos used the same opening (read from `music/history.json`).
+
+### Endings (`ending`) and social texts (`social`)
+- `ending`: `debate`, `surprise`, `fact` or `emotion`. About 1 in 3 videos uses `debate`. The
+  validator warns if debate repeats within 3 videos, or if the same ending is used 3 times in a row.
+- Debate endings are open statements built on real facts: "Some consider this the greatest comeback in
+  NBA history." Never end with "comment below", "what do you think", "agree or disagree", "tag a
+  friend" or similar. The validator rejects these phrases in the narration and in `social`.
+- `social.caption`: short English caption. `social.pinnedComment`: a genuine basketball comparison
+  or question to post as the first comment (Metricool `firstCommentText`; pinning stays manual in the
+  apps). `social.reply`: a factual follow-up for when people answer. Never invent fan opinions.
+
+### Layout and subtitles
+- `layout: "corner"`: the scoreboard becomes a small broadcast bug, top-left, over a full photo.
+- `captions: "high"` on a scene moves the subtitles up when a face or the action sits low in the frame.
+- Don't give a media scene a title that repeats the narration: the subtitles already say it.
+- Something must change at least every ~3 s (cut, beat, callout, second figure, inset or score). The
+  validator warns otherwise.
+
+### Real media library (`scripts/media-library.mjs`)
+```
+node scripts/media-library.mjs search "Reggie Miller" --role subject     # the person: Commons + Openverse only
+node scripts/media-library.mjs search "Madison Square Garden" --role place
+node scripts/media-library.mjs search "basketball hoop net" --role broll --video   # stock clips allowed
+node scripts/media-library.mjs fetch <id>        # downloads once into public/media/library/, returns a media object
+node scripts/media-library.mjs list --role broll # reuse what is already in the library
+```
+- Every result is licence-checked (public domain, CC0, CC BY or CC BY-SA; Pexels and Pixabay
+  licences only for generic B-roll). Each one is catalogued in `media-library.json` with source,
+  licence, author and year.
+- Searches and files are cached, so nothing is fetched twice. Failed searches are not cached.
+- `subject` results must name the subject in their title or description. When nothing matches,
+  use place or B-roll images: never a lookalike, and never generic footage presented as the event.
+- Pexels and Pixabay need free keys (`PEXELS_API_KEY`, `PIXABAY_API_KEY`). Without them, the script
+  searches Commons and Openverse only.
+
+`episodes/miller-v5.json` is the reference episode for v5.

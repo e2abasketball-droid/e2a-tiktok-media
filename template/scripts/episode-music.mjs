@@ -63,4 +63,12 @@ if (ep.music?.track) args.push('--track', ep.music.track);
 fs.mkdirSync('public/music', {recursive: true});
 const info = JSON.parse(execFileSync('python3', args).toString());
 console.log(`music: ${info.track} (${info.style}, ${info.bpm} bpm) drop ${info.drop}s payoff ${info.payoff}s end hit ${info.end_hit}s`);
+// log the edit choices next to the music rotation (music/history.json is committed with each day's videos),
+// so the validator can rotate hooks and endings across videos
+const histFile = new URL('../../music/history.json', import.meta.url).pathname;
+try {
+  const hist = JSON.parse(fs.readFileSync(histFile, 'utf8'));
+  if (hist.length) Object.assign(hist[hist.length - 1], {episode: ep.id, hook: ep.hook ?? 'stat-slam', ending: ep.ending ?? null});
+  fs.writeFileSync(histFile, JSON.stringify(hist, null, 1));
+} catch {}
 write({...ep, music: {...ep.music, src, premixed: true, hits: [info.drop, info.payoff].filter((x) => typeof x === 'number')}});

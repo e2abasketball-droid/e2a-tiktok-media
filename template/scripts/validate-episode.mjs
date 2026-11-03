@@ -93,6 +93,46 @@ if (firstChange > 2.0) warns.push(`the hook holds one image for ${firstChange.to
 if (ep.scenes.length < Math.floor(vEnd / 4.5)) warns.push(`only ${ep.scenes.length} scenes for ${vEnd.toFixed(0)} s of narration: aim for a new visual every 2-4 s`);
 if (!ep.scenes.some((s) => s.type === 'media')) warns.push('no real photo/footage scenes: add licensed media when it exists for this story');
 
+// ---------------------------------------------------------------- v5: hooks, endings, social, rhythm, sound
+const HOOKS = {'stat-slam': ['stat'], 'photo-line': ['media', 'headline'], split: ['split'], clock: ['scoreboard', 'stat']};
+const hook = ep.hook ?? 'stat-slam';
+if (!HOOKS[hook]) errors.push(`unknown hook "${hook}" (stat-slam, photo-line, split, clock)`);
+else if (!HOOKS[hook].includes(ep.scenes[0].type)) warns.push(`hook "${hook}" expects scene 0 to be ${HOOKS[hook].join(' or ')}, not ${ep.scenes[0].type}`);
+if (hook === 'photo-line' && ep.scenes[0].type === 'headline' && !ep.scenes[0].bg) warns.push('hook "photo-line" needs a photo: give scene 0 a bg');
+let hist = [];
+try {
+  hist = JSON.parse(fs.readFileSync(new URL('../../music/history.json', import.meta.url), 'utf8')).filter((h) => h.episode && h.episode !== ep.id);
+} catch {}
+const last = (k, n) => hist.slice(-n).map((h) => h[k]).filter(Boolean);
+if (last('hook', 2).length === 2 && last('hook', 2).every((h) => h === hook)) warns.push(`hook "${hook}" was also used by the last 2 videos: pick another opening`);
+const ENDINGS = ['debate', 'surprise', 'fact', 'emotion'];
+if (!ep.ending) warns.push('no "ending" type (debate, surprise, fact, emotion): set it so endings rotate');
+else if (!ENDINGS.includes(ep.ending)) errors.push(`unknown ending "${ep.ending}"`);
+else {
+  if (ep.ending === 'debate' && last('ending', 2).includes('debate')) warns.push('debate ending again within 3 videos: aim for about 1 in 3; use surprise, fact or emotion');
+  if (last('ending', 2).length === 2 && last('ending', 2).every((e) => e === ep.ending)) warns.push(`"${ep.ending}" ending three times in a row: vary it`);
+}
+const BAIT = /comment below|what do you think|agree or disagree|let me know|drop a comment|tag a friend|smash|like and follow|follow for more/i;
+if (!ep.social?.caption) warns.push('no social.caption: write the short public caption (English)');
+if (!ep.social?.pinnedComment) warns.push('no social.pinnedComment: write a comment to pin that opens a real basketball debate');
+for (const [k, v] of Object.entries(ep.social ?? {})) if (typeof v === 'string' && BAIT.test(v)) errors.push(`social.${k} reads as engagement bait ("${v.match(BAIT)[0]}"): rewrite it as a genuine basketball point`);
+const tail = ep.words.slice(-12).map((w) => w.text).join(' ');
+if (BAIT.test(tail)) errors.push('the narration ends with engagement bait: end on the story, not on a request for comments');
+// rhythm: something must change at least every 3 s (cut, beat, callout, second figure, inset, score change)
+ep.scenes.forEach((s, i) => {
+  const end = i + 1 < starts.length ? starts[i + 1] : vEnd + 0.25;
+  if (s.type === 'court' || s.type === 'timeline') return; // they animate continuously
+  const ev = [starts[i], end, ...(s.beats ?? []).map((b) => resolve(b)), ...(s.callouts ?? []).map((c) => resolve(c.at))];
+  if (s.second) ev.push(resolve(s.second.at));
+  if (s.inset?.at !== undefined) ev.push(resolve(s.inset.at));
+  if (s.type === 'scoreboard') [s.home, s.away].forEach((t) => t.score.slice(1).forEach(([a]) => ev.push(resolve(a))));
+  ev.sort((a, b) => a - b);
+  const gap = Math.max(...ev.slice(1).map((x, k) => x - ev[k]));
+  if (gap > 3.2) warns.push(`scene ${i} (${s.type}) holds the same picture for ${gap.toFixed(1)} s: add a beat, callout or inset, or cut`);
+});
+const own = ep.scenes.reduce((n, s) => n + (s.sfx?.length ?? 0) + (s.sfxTransition ? 1 : 0), 0);
+if (own > 4) warns.push(`${own} hand-placed sound effects: keep 2-4 highlights per Reel, the music carries the rest`);
+
 warns.forEach((w) => console.warn('WARN  ' + w));
 errors.forEach((e) => console.error('ERROR ' + e));
 if (errors.length) process.exit(1);

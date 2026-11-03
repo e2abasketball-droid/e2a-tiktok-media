@@ -56,6 +56,7 @@ const LAYOUT: Record<Layout, React.CSSProperties> = {
   low: {transform: 'translateY(250px) scale(0.78)', transformOrigin: '50% 30%'},
   high: {transform: 'translateY(-90px) scale(0.86)', transformOrigin: '50% 20%'},
   compact: {transform: 'scale(0.74)', transformOrigin: '50% 42%'},
+  corner: {transform: 'translateY(-190px) scale(0.56)', transformOrigin: '70px 470px'},
 };
 
 const SceneBody: React.FC<{spec: SceneSpec; seed: string; startFrame: number}> = ({spec, seed, startFrame}) => {
@@ -107,7 +108,7 @@ const SceneBody: React.FC<{spec: SceneSpec; seed: string; startFrame: number}> =
       {(spec.callouts ?? []).map((c, i) => (
         <Callout key={i} at={at(c.at)} text={c.text} color={c.tone === 'red' ? RED : c.tone === 'white' ? WHITE : GOLD} top={spec.layout === 'low' ? 520 : spec.type === 'scoreboard' ? 1150 : 1120} />
       ))}
-      {spec.kicker && <Kicker text={spec.kicker} top={spec.type === 'scoreboard' ? 330 : 300} boxed={spec.type === 'media' || !!spec.bg} />}
+      {spec.kicker && <Kicker text={spec.kicker} top={spec.layout === 'corner' ? 700 : spec.type === 'scoreboard' ? 330 : 300} boxed={spec.type === 'media' || !!spec.bg} />}
     </AbsoluteFill>
   );
 };
@@ -136,10 +137,10 @@ const SFX_VOL: Record<SfxName, number> = {
 };
 
 /** Moments where the picture hits: numbers landing, score changes, stamps, music drops and the hook. */
-export type Hit = {t: number; power: number};
+export type Hit = {t: number; power: number; shake?: boolean};
 const buildHits = (ep: Episode, scenes: Timed[]): Hit[] => {
   const T = makeResolver(ep.words);
-  const hits: Hit[] = [{t: 0, power: 1.2}];
+  const hits: Hit[] = [{t: 0, power: ep.hook === 'photo-line' || ep.hook === 'clock' ? 0.5 : 1.2, shake: ep.hook !== 'photo-line' && ep.hook !== 'clock'}];
   scenes.forEach((sc) => {
     const s = sc.spec;
     if (s.type === 'stat') {
@@ -147,11 +148,13 @@ const buildHits = (ep: Episode, scenes: Timed[]): Hit[] => {
       if (s.second) hits.push({t: T(s.second.at), power: 0.8});
     }
     if (s.type === 'scoreboard') [s.home, s.away].forEach((team) => team.score.slice(1).forEach(([a]) => hits.push({t: T(a), power: 1})));
-    (s.callouts ?? []).forEach((c) => hits.push({t: T(c.at), power: 0.45}));
   });
-  (ep.music?.hits ?? []).forEach((t) => {
-    if (!hits.some((h) => Math.abs(h.t - t) < 0.2)) hits.push({t, power: 0.7});
-  });
+  // the climax (music payoff, or the strongest late hit) is the only other moment that shakes
+  const payoff = ep.music?.hits?.[1];
+  if (payoff !== undefined && !hits.some((h) => Math.abs(h.t - payoff) < 0.2)) hits.push({t: payoff, power: 0.7});
+  const late = hits.filter((h) => h.t > 0.5);
+  const climax = payoff !== undefined ? late.reduce<Hit | undefined>((a, h) => (!a || Math.abs(h.t - payoff) < Math.abs(a.t - payoff) ? h : a), undefined) : late[late.length - 1];
+  if (climax) climax.shake = true;
   return hits.sort((a, b) => a.t - b.t);
 };
 
@@ -162,7 +165,7 @@ const shakeAt = (hits: Hit[], t: number) => {
   let z = 0;
   for (const h of hits) {
     const a = t - h.t;
-    if (a < 0 || a > 0.4) continue;
+    if (!h.shake || a < 0 || a > 0.4) continue;
     const d = Math.exp(-a * 11) * h.power;
     x += Math.sin(a * 95 + h.t * 7) * 22 * d;
     y += Math.cos(a * 81 + h.t * 3) * 16 * d;
@@ -171,44 +174,43 @@ const shakeAt = (hits: Hit[], t: number) => {
   return {x, y, z};
 };
 
+/**
+ * Sound design v5: fewer, better effects. Cuts are clean by default (the music carries the edit).
+ * Candidate moments are ranked; only `sfxBudget` of them (default 3) get a sound, at least 1.5 s
+ * apart and never on top of a music drop. Effects that fall on a spoken word play 6 dB lower.
+ * A scene's own `sfx` cues are always kept and count toward the budget.
+ */
+const SFX_GAIN = 0.63; // -4 dB under the old levels
 const buildCues = (ep: Episode, scenes: Timed[], style: StylePreset): {t: number; name: SfxName; volume: number}[] => {
   const T = makeResolver(ep.words);
-  const cues: {t: number; name: SfxName; volume: number}[] = [];
-  const add = (t: number, name: SfxName, v = 1) => cues.push({t, name, volume: SFX_VOL[name] * v});
+  const musicHits = [0, ...(ep.music?.hits ?? [])];
+  type C = {t: number; name: SfxName; v: number; prio: number; forced?: boolean};
+  const cand: C[] = [];
   scenes.forEach((sc) => {
-    const tr = transitionOf(sc, style);
-    const snd = style.transitionSfx[tr];
-    if (sc.index > 0 && snd) add(sc.start - (tr === 'whip' || tr === 'zoom-through' ? 0.12 : 0), snd);
     const s = sc.spec;
-    if (s.type === 'stat') {
-      const dur = s.countFor ?? 0.7;
-      for (let k = 0; k < 5; k++) add(sc.start + 0.05 + (dur * k) / 5, 'tick', 0.8);
-      add(sc.start + 0.05 + dur, 'impact', 0.9);
-      add(sc.start + 0.05 + dur, sc.index === 0 ? 'impact_big' : 'bass_hit', 0.9);
-      if (s.second) {
-        add(T(s.second.at), 'impact', 0.8);
-        add(T(s.second.at), 'bass_hit', 0.7);
-      }
+    if (s.type === 'stat' && sc.index > 0) cand.push({t: sc.start + 0.05 + (s.countFor ?? 0.7), name: 'impact', v: 0.9, prio: 3});
+    if (s.type === 'stat' && s.second) cand.push({t: T(s.second.at), name: 'bass_hit', v: 0.8, prio: 2});
+    if (s.type === 'scoreboard') [s.home, s.away].forEach((team) => team.score.slice(1).forEach(([a]) => cand.push({t: T(a), name: 'bass_hit', v: 0.9, prio: 3})));
+    (s.callouts ?? []).forEach((c) => cand.push({t: T(c.at), name: 'impact', v: 0.6, prio: 2}));
+    (s.sfx ?? []).forEach((c: SfxCue) => cand.push({t: T(c.at, c.offset ?? 0), name: c.name, v: c.volume ?? 1, prio: 9, forced: true}));
+    if (s.sfxTransition && sc.index > 0) {
+      const snd = style.transitionSfx[transitionOf(sc, style)];
+      if (snd) cand.push({t: sc.start, name: snd, v: 0.7, prio: 9, forced: true});
     }
-    if (s.type === 'scoreboard') {
-      [s.home, s.away].forEach((team) =>
-        team.score.slice(1).forEach(([a]) => {
-          add(T(a), 'bounce', 0.9);
-          add(T(a), 'bass_hit', 0.8);
-        }),
-      );
-    }
-    (s.callouts ?? []).forEach((c) => add(T(c.at), 'impact', 0.7));
-    if (s.type === 'timeline') s.items.forEach((i) => add(T(i.at), 'tick', 1.2));
-    (s.beats ?? []).forEach((b) => add(T(b), 'impact', 0.5));
-    (s.sfx ?? []).forEach((c: SfxCue) => add(T(c.at, c.offset ?? 0), c.name, c.volume ?? 1));
   });
-  if (scenes[0]?.spec.type !== 'stat') add(0.02, 'impact_big', 0.8); // the hook always lands on a hit
-  scenes.forEach((sc) => {
-    if (sc.spec.inset) add(sc.start + (sc.spec.inset.at !== undefined ? T(sc.spec.inset.at) - sc.start : 0.1), 'whip', 0.8);
-  });
-  add(voiceEnd(ep.words) + 0.1, 'whoosh', 1.1);
-  return cues.filter((c) => c.t >= 0);
+  const budget = ep.sfxBudget ?? 3;
+  const picked: C[] = [];
+  const free = (c: C) => picked.every((p) => Math.abs(p.t - c.t) >= 1.5) && (c.forced || musicHits.every((m) => Math.abs(m - c.t) >= 0.25));
+  cand
+    .sort((x, y) => y.prio - x.prio || x.t - y.t)
+    .forEach((c) => {
+      if ((c.forced || picked.length < budget) && (c.forced || free(c))) picked.push(c);
+    });
+  const speaking = (t: number) => ep.words.some((w) => t >= w.start - 0.05 && t <= w.end);
+  return picked
+    .filter((c) => c.t >= 0)
+    .sort((x, y) => x.t - y.t)
+    .map((c) => ({t: c.t, name: c.name, volume: SFX_VOL[c.name] * c.v * SFX_GAIN * (speaking(c.t) ? 0.5 : 1)}));
 };
 
 /** Music ducks under the voice and comes up in the gaps. */
@@ -243,10 +245,23 @@ export const Pro: React.FC<{episode: Episode}> = ({episode: ep}) => {
   const cues = React.useMemo(() => buildCues(ep, scenes, style), [ep, scenes, style]);
   const hits = React.useMemo(() => buildHits(ep, scenes), [ep, scenes]);
   const sh = shakeAt(hits, t);
-  // Hook: the first frame slams in from 1.3x with motion blur instead of fading up.
-  const hookP = Math.min(1, t / 0.32);
-  const hookS = 1 + 0.3 * Math.pow(1 - hookP, 3);
-  const hookBlur = 14 * Math.pow(1 - hookP, 2);
+  // Hook entrance (first frames), one of several openings so videos don't all start the same way.
+  const hook = ep.hook ?? 'stat-slam';
+  let hookS = 1;
+  let hookBlur = 0;
+  let hookX = 0;
+  if (hook === 'stat-slam') {
+    const p = Math.min(1, t / 0.32); // slams in from 1.3x with motion blur
+    hookS = 1 + 0.3 * Math.pow(1 - p, 3);
+    hookBlur = 14 * Math.pow(1 - p, 2);
+  } else if (hook === 'photo-line') {
+    const p = Math.min(1, t / 1.6); // slow cinematic push onto the photo
+    hookS = 1.12 - 0.12 * (1 - Math.pow(1 - p, 2));
+  } else if (hook === 'split') {
+    const p = Math.min(1, t / 0.28); // whips in from the right
+    hookX = 1080 * Math.pow(1 - p, 3);
+    hookBlur = 20 * Math.pow(1 - p, 2);
+  } // clock: hard cut, the running clock is the motion
 
   return (
     <AbsoluteFill style={{backgroundColor: NAVY_DEEP}}>
@@ -254,7 +269,7 @@ export const Pro: React.FC<{episode: Episode}> = ({episode: ep}) => {
         style={{
           isolation: 'isolate',
           overflow: 'hidden',
-          transform: `translate(${sh.x}px, ${sh.y}px) scale(${hookS * (1 + sh.z)})`,
+          transform: `translate(${sh.x + hookX}px, ${sh.y}px) scale(${hookS * (1 + sh.z)})`,
           filter: hookBlur > 0.3 ? `blur(${hookBlur}px)` : undefined,
         }}
       >
@@ -289,12 +304,12 @@ export const Pro: React.FC<{episode: Episode}> = ({episode: ep}) => {
         return <Flash key={sc.index} age={t - sc.start} color={tr === 'punch' ? '#FFE3A1' : '#FFFFFF'} strength={tr === 'punch' ? 0.45 : 0.85} />;
       })}
       {hits.map((h, i) => (
-        <Flash key={`h${i}`} age={t - h.t} color={i === 0 ? '#FFFFFF' : '#FFE3A1'} strength={i === 0 ? 0.9 : 0.28 * h.power} />
+        <Flash key={`h${i}`} age={t - h.t} color={i === 0 ? '#FFFFFF' : '#FFE3A1'} strength={i === 0 ? 0.9 : (h.shake ? 0.3 : 0.14) * h.power} />
       ))}
       {style.leak && <LightLeak />}
       <Vignette amount={style.vignette} />
       <Grain amount={style.grain} />
-      <Subtitles words={ep.words} display={ep.display} emphasis={ep.emphasis} size={style.captionSize} hideAfter={outroAt} />
+      <Subtitles highRanges={scenes.filter((sc) => sc.spec.captions === 'high').map((sc) => [sc.start, sc.end] as [number, number])} words={ep.words} display={ep.display} emphasis={ep.emphasis} size={style.captionSize} hideAfter={outroAt} />
       <Sequence from={Math.round(outroAt * fps)}>
         <Outro line={ep.outro?.line} />
       </Sequence>
