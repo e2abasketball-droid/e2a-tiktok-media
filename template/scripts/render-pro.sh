@@ -6,8 +6,9 @@ EP=$1; OUT=$2; shift 2
 CHROME=${CHROME:-$(ls /opt/pw-browsers/chromium_headless_shell-*/chrome-headless-shell-linux64/chrome-headless-shell 2>/dev/null | head -1)}
 mkdir -p "$(dirname "$OUT")"
 TMP=$(mktemp -d)
-node -e "const e=require('./$EP'); require('fs').writeFileSync('$TMP/props.json', JSON.stringify({episode: e}))"
 node scripts/validate-episode.mjs "$EP"
+# music bed fitted to this episode (E2A music engine); falls back to the episode's own music file
+node scripts/episode-music.mjs "$EP" "$TMP/props.json"
 npx remotion render src/index.ts Pro "$TMP/raw.mp4" --props="$TMP/props.json" \
   ${CHROME:+--browser-executable="$CHROME"} --codec=h264 --crf=16 --x264-preset=medium --log=error
 # final encode: broadcast-safe pixel format, high-quality H.264, loudness -14 LUFS / -1.5 dBTP

@@ -1,6 +1,7 @@
 import React from 'react';
 import {Composition} from 'remotion';
 import {Shell, Word} from './Daily';
+import {Main} from './Main';
 import {PLANS, DUR} from './plans';
 import {Pro, proDuration} from './pro/Pro';
 import type {Episode} from './pro/types';
@@ -17,6 +18,8 @@ const Daily: React.FC<DailyProps> = ({n, words}) => {
 
 export const Root: React.FC = () => (
   <>
+    {/* legacy v1 template (40-58 s videos): kept so older instructions still render */}
+    <Composition id="Main" component={Main} durationInFrames={1660} fps={FPS} width={1080} height={1920} />
     <Composition
       id="Daily"
       component={Daily}
@@ -25,7 +28,7 @@ export const Root: React.FC = () => (
       width={1080}
       height={1920}
       defaultProps={{n: 2, words: [] as Word[]}}
-      calculateMetadata={({props}) => ({durationInFrames: DUR(props.words)})}
+      calculateMetadata={({props}) => ({durationInFrames: props.words.length ? DUR(props.words) : 1500})}
     />
     {/* Pro editing system: render with --props=episodes/<id>.json wrapped as {"episode": ...} */}
     <Composition

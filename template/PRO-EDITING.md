@@ -118,3 +118,16 @@ scheduling. If anything fails, fix the episode and render again.
 
 `episodes/pilot.json`: Reggie Miller, 8 points in 8.9 seconds (record style), 25 s, re-cut from the
 narration of the 2026-11-02 video so the old and new edits can be compared on the same story.
+
+## 8. Music (v3)
+
+`render-pro.sh` now builds the music for each episode with `../music/e2a_music.py` (see
+`music/README.md`). It picks a library track from the episode style and rotates through the library.
+The bed is arranged to the episode length, the drops land on the scene cuts nearest 30% and 75% of
+the narration, and the level is set from `public/<voice>`. It plays at volume 1 (`music.premixed`).
+
+To steer the music, set any of these in the episode's `music` field:
+- `story`: one of curiosity, record, highlight, tactical, surprise, psychology;
+- `dropAt` and `payoffAt`: anchors for the two drops;
+- `track`: a library id;
+- `engine: "file"` with `src` and `volume`: uses a fixed file instead.

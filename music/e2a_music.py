@@ -455,18 +455,18 @@ def voice_activity(words, n):
     return np.interp(np.arange(n), np.arange(len(y)) * dec, y)
 
 
-def plan_sections(words, duration, drop_share, bar, style):
+def plan_sections(words, duration, drop_share, bar, style, drop_at=None, payoff_at=None):
     vstart, vend = words[0]['start'], words[-1]['end']
     starts = sentence_starts(words)
     target = vstart + max(3.5, drop_share * (vend - vstart))
-    drop = min([s for s in starts if s >= target] or [target], key=lambda s: abs(s - target))
+    drop = drop_at if drop_at is not None else min([s for s in starts if s >= target] or [target], key=lambda s: abs(s - target))
     # offset so a bar line lands exactly on the drop
     offset = (-drop) % bar  # music time = video time + offset
     to_mt = lambda vt: vt + offset
     drop_bar = round(to_mt(drop) / bar)
     payoff_t = vstart + 0.78 * (vend - vstart)
-    payoff_s = min([s for s in starts if s > drop + 2 * bar] or [payoff_t], key=lambda s: abs(s - payoff_t))
-    drop2_bar = max(drop_bar + 4, round(to_mt(payoff_s) / bar))
+    payoff_s = payoff_at if payoff_at is not None else min([s for s in starts if s > drop + 2 * bar] or [payoff_t], key=lambda s: abs(s - payoff_t))
+    drop2_bar = max(drop_bar + (2 if payoff_at is not None else 4), round(to_mt(payoff_s) / bar))
     break_bar = max(drop_bar + 2, drop2_bar - (1 if bar > 2.5 else 2))
     end_bar = math.ceil(to_mt(vend) / bar) + 1
     if style == 'suspense':
@@ -812,13 +812,13 @@ def pick_track(story, history_path, track=None):
     return cands[0]
 
 
-def make(words, story, out, duration=None, track=None, history=None, no_duck=False, voice_path=None):
+def make(words, story, out, duration=None, track=None, history=None, no_duck=False, voice_path=None, drop_at=None, payoff_at=None):
     t = pick_track(story, history, track)
     vend = words[-1]['end']
     total = duration or vend + 1.5
     song = Song(t['style'], t['seed'], t.get('key'), t.get('bpm'))
     drop_share = STORY[story][1] if story in STORY else 0.25
-    plan = plan_sections(words, total, drop_share, song.bar, t['style'])
+    plan = plan_sections(words, total, drop_share, song.bar, t['style'], drop_at, payoff_at)
     B, kicks, cut = song.render(plan, total + plan['offset'] + 1)
     bed = song.mix(B, kicks, words, total, cut)
     voice = None
@@ -859,6 +859,8 @@ def main():
     ap.add_argument('--story', default='curiosity', choices=list(STORY))
     ap.add_argument('--out', required=True)
     ap.add_argument('--duration', type=float, help='video length in seconds (default: last word end + 1.5)')
+    ap.add_argument('--drop-at', type=float, help='video second where the drop must land (default: the reveal sentence)')
+    ap.add_argument('--payoff-at', type=float, help='video second for the second drop (default: the payoff sentence)')
     ap.add_argument('--track', help='force a library track id')
     ap.add_argument('--history', default=os.path.join(HERE, 'history.json'), help='rotation log ("" to disable)')
     ap.add_argument('--voice', help='the narration file (vo.mp3): sets the music level so the voice stays clear')
@@ -867,7 +869,7 @@ def main():
     a = ap.parse_args()
     with open(a.words) as f:
         words = json.load(f)
-    info = make(words, a.story, a.out, a.duration, a.track, a.history or None, a.no_duck, a.voice)
+    info = make(words, a.story, a.out, a.duration, a.track, a.history or None, a.no_duck, a.voice, a.drop_at, a.payoff_at)
     if a.mix_json:
         with open(a.mix_json, 'w') as f:
             json.dump({'premixed': True, 'gain': 1, 'track': info['track']}, f)

@@ -107,7 +107,13 @@ export type Episode = {
   emphasis?: string[];
   scenes: SceneSpec[];
   outro?: {seconds?: number; line?: string};
-  music?: {src?: string; volume?: number};
+  /**
+   * Music. By default render-pro.sh builds a bed for this episode with music/e2a_music.py and sets
+   * premixed=true (level, ducking and fades are baked in, so it plays at volume 1).
+   * story: music story type (defaults from style); dropAt / payoffAt: anchors for the two drops
+   * (default: the scene cuts nearest 30% and 75% of the narration); engine "file" keeps src as-is.
+   */
+  music?: {src?: string; volume?: number; premixed?: boolean; engine?: 'e2a' | 'file'; story?: string; track?: string; dropAt?: Anchor; payoffAt?: Anchor};
   ambience?: boolean;
   sources: string[]; // fact-check sources, required by the validator
 };

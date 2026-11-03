@@ -219,8 +219,12 @@ export const Pro: React.FC<{episode: Episode}> = ({episode: ep}) => {
       </Sequence>
 
       <Audio src={staticFile(ep.voice)} />
-      <Audio src={staticFile(ep.music?.src ?? 'music.mp3')} loop volume={(f) => music[Math.min(music.length - 1, f)] ?? 0} />
-      {(ep.ambience ?? style.ambience > 0) && <Audio src={staticFile('sfx/arena.mp3')} loop volume={style.ambience || 0.05} />}
+      {ep.music?.premixed ? (
+        <Audio src={staticFile(ep.music.src ?? 'music.mp3')} volume={1} />
+      ) : (
+        <Audio src={staticFile(ep.music?.src ?? 'music.mp3')} loop volume={(f) => music[Math.min(music.length - 1, f)] ?? 0} />
+      )}
+      {(ep.ambience ?? (!ep.music?.premixed && style.ambience > 0)) && <Audio src={staticFile('sfx/arena.mp3')} loop volume={style.ambience || 0.05} />}
       {cues.map((c, i) => (
         <Sequence key={i} from={Math.round(c.t * fps)} layout="none">
           <Audio src={staticFile(`sfx/${c.name}.mp3`)} volume={c.volume} />
