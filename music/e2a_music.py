@@ -36,6 +36,19 @@ FULL_UNDER = 6.0  # dB: music (all bands, bass included) under the voice while t
 VOICE_REF_SPEECHBAND = -20.0  # dBFS fallback when the narration file is not given
 VOICE_REF_FULL = -19.0
 HERE = os.path.dirname(os.path.abspath(__file__))
+MIX_PATH = os.path.join(HERE, '..', 'template', 'audio-mix.json')
+
+
+def mix_cfg():
+    """Music section of the central mix config (template/audio-mix.json); defaults if it is missing."""
+    d = dict(underVoiceDb=FULL_UNDER, speechBandSnrDb=SPEECH_SNR, duckDb=11.0, duckBassDb=3.0, pauseMinSec=0.0,
+             bassCutDb=0.0, silenceBeforePayoff=0.0)
+    try:
+        with open(MIX_PATH) as f:
+            d.update({k: v for k, v in json.load(f).get('music', {}).items() if not k.startswith('_')})
+    except (OSError, ValueError):
+        pass
+    return d
 
 # ---------------------------------------------------------------------------------------------
 # DSP helpers
@@ -720,25 +733,50 @@ class Song:
         bed = B['drums'] * 0.75 + bass * 0.42 + music * 1.25 + B['fx'] * 0.9 + wet * 0.5
         return bed
 
-    def finish(self, bed, words, total_secs, offset, cut_t, duck=True, voice=None):
-        """Trim to the video, multiband duck around the voice, master."""
+    def finish(self, bed, words, total_secs, offset, cut_t, duck=True, voice=None, silences=None):
+        """Trim to the video, multiband duck around the voice, master. Levels come from template/audio-mix.json.
+        silences: video seconds where the music drops out just before (the payoff cut) and comes back on."""
+        mc = mix_cfg()
         a = int(offset * SR)
         n = int(total_secs * SR)
         bed = bed[:, a : a + n]
         if bed.shape[1] < n:
             bed = np.pad(bed, ((0, 0), (0, n - bed.shape[1])))
         # high-pass rumble, voice pocket
-        bed = np.stack([fft_filter(c, lambda f: hp(32, 2)(f) * peak(38, -3.5, 1.2)(f) * peak(2600, -4.5, 0.7)(f)) for c in bed])
+        shelf = 10 ** (-mc['bassCutDb'] / 20)
+        low_shelf = lambda f: shelf + (1 - shelf) / (1 + (140 / np.maximum(f, 1)) ** 4)
+        bed = np.stack([fft_filter(c, lambda f: hp(32, 2)(f) * peak(38, -3.5, 1.2)(f) * peak(2600, -4.5, 0.7)(f) * low_shelf(f)) for c in bed])
         low = np.stack([fft_filter(c, lp(170, 4)) for c in bed])
         high = bed - low
         if duck and words:
-            v = voice_activity(words, n)
-            g_low = 1 - 0.30 * v  # -3 dB: kick and bass keep pushing under the voice
-            g_high = 10 ** (-(11.0 * v) / 20)  # -11 dB on mids/highs while someone is talking
+            # short gaps between words count as speech: the music only comes back up in real pauses
+            segs = []
+            for w in words:
+                if segs and w['start'] - segs[-1]['end'] < mc['pauseMinSec']:
+                    segs[-1]['end'] = w['end']
+                else:
+                    segs.append({'start': w['start'], 'end': w['end']})
+            v = voice_activity(segs, n)
+            g_low = 10 ** (-(mc['duckBassDb'] * v) / 20)  # bass under the voice
+            g_high = 10 ** (-(mc['duckDb'] * v) / 20)  # mids/highs while someone is talking
         else:
             g_low = g_high = np.ones(n)
         y = low * g_low + high * g_high
-        y = self.calibrate(y, words, voice)
+        y = self.calibrate(y, words, voice, mc)
+        # strategic silence: the music drops out just before the payoff and comes back on it
+        if mc['silenceBeforePayoff'] > 0:
+            for t in silences or []:
+                if t is None:
+                    continue
+                b = int(t * SR)
+                a = int(max(0, t - mc['silenceBeforePayoff']) * SR)
+                fo = min(int(0.12 * SR), max(1, b - a))
+                if 0 < a < n and b < n:
+                    g = np.ones(n)
+                    g[a:a + fo] = np.linspace(1, 0, fo)
+                    g[a + fo:b] = 0
+                    g[b:b + int(0.03 * SR)] = np.linspace(0, 1, len(g[b:b + int(0.03 * SR)]))
+                    y = y * g
         # fades: open in 15 ms, close over the last 0.6 s
         fi = int(0.015 * SR)
         y[:, :fi] *= np.linspace(0, 1, fi)
@@ -746,7 +784,7 @@ class Song:
         y[:, -fo:] *= np.linspace(1, 0, fo) ** 1.5
         return np.clip(y, -0.98, 0.98)
 
-    def calibrate(self, y, words, voice):
+    def calibrate(self, y, words, voice, mc=None):
         """Set the bed level from the narration so the voice always wins in the speech band.
 
         Targets while someone is talking: music at least SPEECH_SNR dB under the voice in 300-4000 Hz,
@@ -766,7 +804,8 @@ class Song:
         # per-channel levels: the mono narration is played at full level on both channels
         m_sb = db(np.concatenate([fft_filter(c, bp(300, 4000, 4))[act] for c in y]))
         m_full = db(np.concatenate([c[act] for c in y]))
-        g_db = min(v_sb - SPEECH_SNR - m_sb, v_full - FULL_UNDER - m_full)
+        mc = mc or mix_cfg()
+        g_db = min(v_sb - mc['speechBandSnrDb'] - m_sb, v_full - mc['underVoiceDb'] - m_full)
         y = y * 10 ** (g_db / 20)
         pk = np.max(np.abs(y))
         if pk > 0.97:
@@ -829,7 +868,7 @@ def make(words, story, out, duration=None, track=None, history=None, no_duck=Fal
                             capture_output=True, text=True).stdout.strip()
         if ch == '1':
             voice = voice * 0.7071  # Remotion plays a mono file at -3 dB on each channel (equal-power upmix)
-    y = song.finish(bed, words, total, plan['offset'], cut, duck=not no_duck, voice=voice)
+    y = song.finish(bed, words, total, plan['offset'], cut, duck=not no_duck, voice=voice, silences=[plan['payoff']])
     with tempfile.TemporaryDirectory() as td:
         raw = os.path.join(td, 'bed.f32')
         y.T.astype(np.float32).tofile(raw)

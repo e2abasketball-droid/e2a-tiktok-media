@@ -110,7 +110,7 @@ def main():
     if ch == '1':
         voice = voice * 0.7071  # Remotion plays a mono file at -3 dB per channel
     # same trim + multiband ducking + voice-calibrated level + fades as the synth engine
-    y = M.Song.finish(M.Song.__new__(M.Song), x, words, a.duration, off, None, duck=True, voice=voice)
+    y = M.Song.finish(M.Song.__new__(M.Song), x, words, a.duration, off, None, duck=True, voice=voice, silences=[a.payoff_at])
     # leave headroom for the final loudnorm (dense orchestral peaks)
     pk = np.max(np.abs(y))
     if pk > 0.85:

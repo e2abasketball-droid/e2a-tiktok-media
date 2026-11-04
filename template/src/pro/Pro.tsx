@@ -11,6 +11,7 @@ import {STYLES, StylePreset} from './styles';
 import {Subtitles} from './subtitles';
 import {Timed, layoutScenes, makeResolver, totalSeconds, voiceEnd} from './timing';
 import type {CameraMove, Episode, Layout, SceneSpec, SfxCue, SfxName, Transition} from './types';
+import MIX from '../../audio-mix.json';
 
 const OVERLAP: Record<Transition, number> = {cut: 0, flash: 0, whip: 0.22, punch: 0.14, 'zoom-through': 0.3, 'slide-up': 0.28};
 
@@ -180,7 +181,9 @@ const shakeAt = (hits: Hit[], t: number) => {
  * apart and never on top of a music drop. Effects that fall on a spoken word play 6 dB lower.
  * A scene's own `sfx` cues are always kept and count toward the budget.
  */
-const SFX_GAIN = 0.63; // -4 dB under the old levels
+// levels from the central mix config (audio-mix.json -> sfx): effects are details, never above the voice
+const SFX_GAIN = 10 ** (MIX.sfx.gainDb / 20);
+const SFX_ON_SPEECH = 10 ** (MIX.sfx.onSpeechDb / 20);
 const buildCues = (ep: Episode, scenes: Timed[], style: StylePreset): {t: number; name: SfxName; volume: number}[] => {
   const T = makeResolver(ep.words);
   const musicHits = [0, ...(ep.music?.hits ?? [])];
@@ -190,7 +193,7 @@ const buildCues = (ep: Episode, scenes: Timed[], style: StylePreset): {t: number
     const s = sc.spec;
     if (s.type === 'stat' && sc.index > 0) cand.push({t: sc.start + 0.05 + (s.countFor ?? 0.7), name: 'impact', v: 0.9, prio: 3});
     if (s.type === 'stat' && s.second) cand.push({t: T(s.second.at), name: 'bass_hit', v: 0.8, prio: 2});
-    if (s.type === 'scoreboard') [s.home, s.away].forEach((team) => team.score.slice(1).forEach(([a]) => cand.push({t: T(a), name: 'bass_hit', v: 0.9, prio: 3})));
+    if (s.type === 'scoreboard') [s.home, s.away].forEach((team) => team.score.slice(1).forEach(([a]) => cand.push({t: T(a), name: MIX.sfx.scoreSound as SfxName, v: 0.9, prio: 3})));
     (s.callouts ?? []).forEach((c) => cand.push({t: T(c.at), name: 'impact', v: 0.6, prio: 2}));
     (s.sfx ?? []).forEach((c: SfxCue) => cand.push({t: T(c.at, c.offset ?? 0), name: c.name, v: c.volume ?? 1, prio: 9, forced: true}));
     if (s.sfxTransition && sc.index > 0) {
@@ -198,7 +201,7 @@ const buildCues = (ep: Episode, scenes: Timed[], style: StylePreset): {t: number
       if (snd) cand.push({t: sc.start, name: snd, v: 0.7, prio: 9, forced: true});
     }
   });
-  const budget = ep.sfxBudget ?? 3;
+  const budget = ep.sfxBudget ?? MIX.sfx.budget;
   const picked: C[] = [];
   const free = (c: C) => picked.every((p) => Math.abs(p.t - c.t) >= 1.5) && (c.forced || musicHits.every((m) => Math.abs(m - c.t) >= 0.25));
   cand
@@ -210,7 +213,7 @@ const buildCues = (ep: Episode, scenes: Timed[], style: StylePreset): {t: number
   return picked
     .filter((c) => c.t >= 0)
     .sort((x, y) => x.t - y.t)
-    .map((c) => ({t: c.t, name: c.name, volume: SFX_VOL[c.name] * c.v * SFX_GAIN * (speaking(c.t) ? 0.5 : 1)}));
+    .map((c) => ({t: c.t, name: c.name, volume: SFX_VOL[c.name] * c.v * SFX_GAIN * (speaking(c.t) ? SFX_ON_SPEECH : 1)}));
 };
 
 /** Music ducks under the voice and comes up in the gaps. */

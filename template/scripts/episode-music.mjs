@@ -16,6 +16,28 @@ const ep = JSON.parse(fs.readFileSync(epFile, 'utf8'));
 const write = (e) => fs.writeFileSync(propsOut, JSON.stringify({episode: e}));
 const engine = new URL('../../music/e2a_music.py', import.meta.url).pathname;
 
+// Narration first: clean and level the voice once (settings in audio-mix.json -> voice), so the music and
+// effects are measured against the voice the viewer will hear. The original file is left untouched.
+const MIX = JSON.parse(fs.readFileSync(new URL('../audio-mix.json', import.meta.url), 'utf8'));
+{
+  const v = MIX.voice;
+  const src = `public/${ep.voice}`;
+  const out = ep.voice.replace(/\.[a-z0-9]+$/i, '') + '.mix.mp3';
+  const chain = [
+    `highpass=f=${v.highpassHz}`,
+    `equalizer=f=${v.presenceHz}:t=q:w=1.0:g=${v.presenceDb}`,
+    `acompressor=threshold=${v.compressThresholdDb}dB:ratio=${v.compressRatio}:attack=8:release=120`,
+    `loudnorm=I=${v.targetLufs}:TP=${v.peakLimitDb}:LRA=7`,
+  ].join(',');
+  try {
+    execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', src, '-af', chain, '-ac', '1', '-ar', '44100', '-c:a', 'libmp3lame', '-b:a', '192k', `public/${out}`]);
+    ep.voice = out;
+    console.log(`voice: ${src} -> public/${out} (${v.targetLufs} LUFS, presence +${v.presenceDb} dB)`);
+  } catch (e) {
+    console.log(`voice: processing skipped (${e.message.split('\n')[0]}), using ${src} as-is`);
+  }
+}
+
 if (ep.music?.engine === 'file' || !fs.existsSync(engine)) {
   console.log(`music: using ${ep.music?.src ?? 'music.mp3'} as-is`);
   write(ep);

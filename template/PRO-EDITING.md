@@ -256,3 +256,21 @@ node scripts/media-library.mjs list --role broll # reuse what is already in the 
   searches Commons and Openverse only.
 
 `episodes/miller-v5.json` is the reference episode for v5.
+
+## 11. Audio mix v7: voice first (central config)
+
+Every level now lives in `template/audio-mix.json`. Change a number there and all future videos follow it. Do not hard-code levels in an episode.
+
+The order of priority is: 1, the narration; 2, the music as background; 3, effects as occasional details.
+
+- **Voice** (`scripts/episode-music.mjs`):
+  - high-pass at 80 Hz, +2 dB presence at 3.2 kHz (for phone speakers), gentle 2.5:1 compression
+  - levelled to -16 LUFS with peaks at -2 dB
+  - written to `public/audio/<voice>.mix.mp3`; the original file is untouched
+- **Music** (`music/e2a_music.py`, also used by `music/e2a_cinematic.py`):
+  - about 21 dB under the voice while someone talks, and at least 23 dB under it in the speech band (300–4000 Hz)
+  - drops 8 dB (mids and highs) and 6 dB (bass) when the voice comes in, and only comes back up in real pauses (at least 0.45 s)
+  - low shelf of -4 dB below 140 Hz
+  - 0.6 s of silence just before the payoff cut; the music comes back on the payoff
+- **Effects** (`src/pro/Pro.tsx`): 8 dB lower, a further 8 dB lower on a spoken word, at most 2 per video, and a swish (not an impact) for a score change.
+- **Master** (`render-pro.sh`): one loudnorm pass on the whole mix, -14 LUFS and -1.5 dBTP. Tracks are never normalised separately.
