@@ -38,5 +38,13 @@
   "episode": "2026-11-05-v5",
   "hook": "photo-line",
   "ending": "emotion"
+ },
+ {
+  "track": "trap_a",
+  "story": "highlight",
+  "out": "public/music/2026-11-04x-extra.mp3",
+  "episode": "2026-11-04x-extra",
+  "hook": "stat-slam",
+  "ending": "debate"
  }
 ]
