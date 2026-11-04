@@ -1,0 +1,115 @@
+{
+ "source": "ElevenLabs Music (eleven_music_v2_5, instrumental), E2A account, flow sAIdo6G6uFvhdvAaxyVU",
+ "tracks": [
+  {
+   "id": "cine-01",
+   "mood": "heroic",
+   "bpm": 125,
+   "file": "cine-01.mp3",
+   "duration": 30.0,
+   "drop": 7.2,
+   "climax": 19.0,
+   "end_hit": null,
+   "active": true
+  },
+  {
+   "id": "cine-02",
+   "mood": "heroic",
+   "bpm": 120,
+   "file": "cine-02.mp3",
+   "duration": 30.0,
+   "drop": 7.5,
+   "climax": 15.5,
+   "end_hit": null,
+   "active": true
+  },
+  {
+   "id": "cine-03",
+   "mood": "tension",
+   "bpm": 130,
+   "file": "cine-03.mp3",
+   "duration": 30.0,
+   "drop": 7.65,
+   "climax": 18.8,
+   "end_hit": null,
+   "active": true
+  },
+  {
+   "id": "cine-04",
+   "mood": "emotional",
+   "bpm": 115,
+   "file": "cine-04.mp3",
+   "duration": 30.0,
+   "drop": 6.8,
+   "climax": 15.65,
+   "end_hit": null,
+   "active": true
+  },
+  {
+   "id": "cine-05",
+   "mood": "hybrid",
+   "bpm": 128,
+   "file": "cine-05.mp3",
+   "duration": 30.0,
+   "drop": 8.0,
+   "climax": 15.45,
+   "end_hit": null,
+   "active": true
+  },
+  {
+   "id": "cine-06",
+   "mood": "tension",
+   "bpm": 135,
+   "file": "cine-06.mp3",
+   "duration": 30.0,
+   "drop": 7.1,
+   "climax": 17.7,
+   "end_hit": null,
+   "active": true
+  },
+  {
+   "id": "cine-07",
+   "mood": "triumphant",
+   "bpm": 122,
+   "file": "cine-07.mp3",
+   "duration": 30.0,
+   "drop": null,
+   "climax": 17.7,
+   "end_hit": null,
+   "active": true
+  },
+  {
+   "id": "cine-08",
+   "mood": "dark",
+   "bpm": 140,
+   "file": "cine-08.mp3",
+   "duration": 30.0,
+   "drop": 6.0,
+   "climax": 16.5,
+   "end_hit": null,
+   "active": true
+  },
+  {
+   "id": "cine-09",
+   "mood": "heroic",
+   "bpm": 118,
+   "file": "cine-09.mp3",
+   "duration": 45.0,
+   "drop": 7.7,
+   "climax": 28.2,
+   "end_hit": null,
+   "active": true
+  },
+  {
+   "id": "cine-10",
+   "mood": "hybrid",
+   "bpm": 126,
+   "file": "cine-10.mp3",
+   "duration": 45.0,
+   "drop": 7.5,
+   "climax": 30.25,
+   "end_hit": null,
+   "active": true
+  }
+ ]
+}

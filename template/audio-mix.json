@@ -1,0 +1,30 @@
+{
+  "_doc": "E2A central audio mix. One place for every level: the narration processing (scripts/episode-music.mjs), the music bed (music/e2a_music.py and music/e2a_cinematic.py) and the sound effects (src/pro/Pro.tsx). Change a number here and every future Reel, TikTok and Short follows. Hierarchy: 1 voice, 2 music (background), 3 effects (details). Final master: render-pro.sh (loudnorm -14 LUFS, true peak -1.5 dBTP) on the whole mix, never per track.",
+  "voice": {
+    "_doc": "Narration cleanup before the mix: rumble cut, gentle compression for an even level, a little presence for small phone speakers, peak limiter. targetLufs sets the voice level the music and effects are measured against.",
+    "highpassHz": 80,
+    "presenceDb": 2.0,
+    "presenceHz": 3200,
+    "compressRatio": 2.5,
+    "compressThresholdDb": -22,
+    "targetLufs": -16,
+    "peakLimitDb": -2
+  },
+  "music": {
+    "_doc": "underVoiceDb: music level under the voice while someone is talking (full band; 18 to 24 recommended). speechBandSnrDb: voice over music in 300-4000 Hz (where words live). duckDb: how far the music drops when the voice starts, relative to the gaps (mids/highs, bass). pauseMinSec: only gaps at least this long let the music come back up. bassCutDb: low shelf on the music under 140 Hz so it does not fight the voice. silenceBeforePayoff: seconds of music silence just before the payoff cut (0 disables); the music comes back on the payoff.",
+    "underVoiceDb": 21,
+    "speechBandSnrDb": 23,
+    "duckDb": 8,
+    "duckBassDb": 6,
+    "pauseMinSec": 0.45,
+    "bassCutDb": 4,
+    "silenceBeforePayoff": 0.6
+  },
+  "sfx": {
+    "_doc": "gainDb: all effects relative to their default level. onSpeechDb: extra cut when an effect falls on a spoken word. budget: max automatic effects per video (an episode can still set sfxBudget). scoreSound: effect for a score change on the scoreboard (natural basketball sound).",
+    "gainDb": -8,
+    "onSpeechDb": -8,
+    "budget": 2,
+    "scoreSound": "swish"
+  }
+}
