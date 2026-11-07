@@ -1,0 +1,18 @@
+[
+ {
+  "track": "cine_a",
+  "story": "record",
+  "out": "public/music/2026-11-09-v1.mp3",
+  "episode": "2026-11-09-v1",
+  "hook": "stat-slam",
+  "ending": "debate"
+ },
+ {
+  "track": "drive_a",
+  "story": "tactical",
+  "out": "public/music/2026-11-09-v2.mp3",
+  "episode": "2026-11-09-v2",
+  "hook": "photo-line",
+  "ending": "surprise"
+ }
+]
