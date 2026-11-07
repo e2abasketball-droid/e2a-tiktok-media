@@ -1,0 +1,2480 @@
+{
+ "id": "2026-11-09-v2",
+ "title": "Stagger screens explained: shooter or driver",
+ "style": "tactical",
+ "voice": "audio/2026-11-09-v2.mp3",
+ "words": [
+  {
+   "text": "Why",
+   "start": 0.16,
+   "end": 0.3
+  },
+  {
+   "text": "do",
+   "start": 0.34,
+   "end": 0.5
+  },
+  {
+   "text": "great",
+   "start": 0.56,
+   "end": 0.8
+  },
+  {
+   "text": "shooters",
+   "start": 0.86,
+   "end": 1.22
+  },
+  {
+   "text": "love",
+   "start": 1.44,
+   "end": 1.68
+  },
+  {
+   "text": "running",
+   "start": 1.76,
+   "end": 2.0
+  },
+  {
+   "text": "through",
+   "start": 2.02,
+   "end": 2.2
+  },
+  {
+   "text": "two",
+   "start": 2.24,
+   "end": 2.38
+  },
+  {
+   "text": "screens",
+   "start": 2.46,
+   "end": 2.78
+  },
+  {
+   "text": "in",
+   "start": 2.8,
+   "end": 2.86
+  },
+  {
+   "text": "a",
+   "start": 2.9,
+   "end": 2.94
+  },
+  {
+   "text": "row?",
+   "start": 3.0,
+   "end": 3.18
+  },
+  {
+   "text": "It",
+   "start": 3.76,
+   "end": 3.82
+  },
+  {
+   "text": "is",
+   "start": 3.86,
+   "end": 3.98
+  },
+  {
+   "text": "called",
+   "start": 4.019,
+   "end": 4.34
+  },
+  {
+   "text": "a",
+   "start": 4.4,
+   "end": 4.5
+  },
+  {
+   "text": "stagger",
+   "start": 4.6,
+   "end": 4.94
+  },
+  {
+   "text": "screen.",
+   "start": 5.04,
+   "end": 5.4
+  },
+  {
+   "text": "Here",
+   "start": 5.88,
+   "end": 6.02
+  },
+  {
+   "text": "is",
+   "start": 6.04,
+   "end": 6.14
+  },
+  {
+   "text": "the",
+   "start": 6.18,
+   "end": 6.28
+  },
+  {
+   "text": "setup.",
+   "start": 6.32,
+   "end": 6.66
+  },
+  {
+   "text": "Five",
+   "start": 7.26,
+   "end": 7.48
+  },
+  {
+   "text": "and",
+   "start": 7.5,
+   "end": 7.58
+  },
+  {
+   "text": "four",
+   "start": 7.7,
+   "end": 7.9
+  },
+  {
+   "text": "stand",
+   "start": 8.08,
+   "end": 8.3
+  },
+  {
+   "text": "in",
+   "start": 8.34,
+   "end": 8.4
+  },
+  {
+   "text": "the",
+   "start": 8.44,
+   "end": 8.48
+  },
+  {
+   "text": "lane,",
+   "start": 8.54,
+   "end": 8.82
+  },
+  {
+   "text": "one",
+   "start": 9.18,
+   "end": 9.36
+  },
+  {
+   "text": "above",
+   "start": 9.42,
+   "end": 9.66
+  },
+  {
+   "text": "the",
+   "start": 9.7,
+   "end": 9.78
+  },
+  {
+   "text": "other.",
+   "start": 9.86,
+   "end": 10.08
+  },
+  {
+   "text": "Two",
+   "start": 10.7,
+   "end": 10.82
+  },
+  {
+   "text": "starts",
+   "start": 10.94,
+   "end": 11.18
+  },
+  {
+   "text": "on",
+   "start": 11.22,
+   "end": 11.28
+  },
+  {
+   "text": "the",
+   "start": 11.3,
+   "end": 11.4
+  },
+  {
+   "text": "block",
+   "start": 11.42,
+   "end": 11.74
+  },
+  {
+   "text": "with",
+   "start": 11.86,
+   "end": 11.96
+  },
+  {
+   "text": "his",
+   "start": 12.0,
+   "end": 12.12
+  },
+  {
+   "text": "defender",
+   "start": 12.16,
+   "end": 12.64
+  },
+  {
+   "text": "on",
+   "start": 12.7,
+   "end": 12.76
+  },
+  {
+   "text": "his",
+   "start": 12.8,
+   "end": 12.92
+  },
+  {
+   "text": "hip.",
+   "start": 12.96,
+   "end": 13.22
+  },
+  {
+   "text": "Now",
+   "start": 13.72,
+   "end": 13.84
+  },
+  {
+   "text": "he",
+   "start": 13.88,
+   "end": 13.98
+  },
+  {
+   "text": "cuts",
+   "start": 14.04,
+   "end": 14.36
+  },
+  {
+   "text": "off",
+   "start": 14.8,
+   "end": 14.92
+  },
+  {
+   "text": "the",
+   "start": 14.96,
+   "end": 15.04
+  },
+  {
+   "text": "first",
+   "start": 15.1,
+   "end": 15.3
+  },
+  {
+   "text": "screen,",
+   "start": 15.36,
+   "end": 15.62
+  },
+  {
+   "text": "then",
+   "start": 16.14,
+   "end": 16.26
+  },
+  {
+   "text": "the",
+   "start": 16.3,
+   "end": 16.4
+  },
+  {
+   "text": "second.",
+   "start": 16.44,
+   "end": 16.82
+  },
+  {
+   "text": "X2",
+   "start": 17.5,
+   "end": 17.78
+  },
+  {
+   "text": "gets",
+   "start": 17.8,
+   "end": 18.0
+  },
+  {
+   "text": "caught",
+   "start": 18.04,
+   "end": 18.24
+  },
+  {
+   "text": "behind",
+   "start": 18.28,
+   "end": 18.6
+  },
+  {
+   "text": "both",
+   "start": 18.62,
+   "end": 18.88
+  },
+  {
+   "text": "and",
+   "start": 18.98,
+   "end": 19.06
+  },
+  {
+   "text": "falls",
+   "start": 19.18,
+   "end": 19.42
+  },
+  {
+   "text": "a",
+   "start": 19.46,
+   "end": 19.54
+  },
+  {
+   "text": "step",
+   "start": 19.6,
+   "end": 19.8
+  },
+  {
+   "text": "late.",
+   "start": 19.88,
+   "end": 20.14
+  },
+  {
+   "text": "One",
+   "start": 20.7,
+   "end": 20.84
+  },
+  {
+   "text": "passes",
+   "start": 20.94,
+   "end": 21.28
+  },
+  {
+   "text": "to",
+   "start": 21.32,
+   "end": 21.42
+  },
+  {
+   "text": "two",
+   "start": 21.48,
+   "end": 21.62
+  },
+  {
+   "text": "on",
+   "start": 21.68,
+   "end": 21.76
+  },
+  {
+   "text": "the",
+   "start": 21.78,
+   "end": 21.88
+  },
+  {
+   "text": "wing.",
+   "start": 21.92,
+   "end": 22.16
+  },
+  {
+   "text": "Open",
+   "start": 22.62,
+   "end": 22.82
+  },
+  {
+   "text": "shot.",
+   "start": 22.92,
+   "end": 23.26
+  },
+  {
+   "text": "The",
+   "start": 23.86,
+   "end": 23.96
+  },
+  {
+   "text": "defense",
+   "start": 24.0,
+   "end": 24.36
+  },
+  {
+   "text": "has",
+   "start": 24.4,
+   "end": 24.54
+  },
+  {
+   "text": "an",
+   "start": 24.58,
+   "end": 24.64
+  },
+  {
+   "text": "answer.",
+   "start": 24.7,
+   "end": 25.04
+  },
+  {
+   "text": "X2",
+   "start": 25.74,
+   "end": 26.04
+  },
+  {
+   "text": "chases",
+   "start": 26.08,
+   "end": 26.48
+  },
+  {
+   "text": "tight,",
+   "start": 26.56,
+   "end": 26.82
+  },
+  {
+   "text": "right",
+   "start": 27.06,
+   "end": 27.22
+  },
+  {
+   "text": "on",
+   "start": 27.26,
+   "end": 27.34
+  },
+  {
+   "text": "his",
+   "start": 27.36,
+   "end": 27.48
+  },
+  {
+   "text": "heels.",
+   "start": 27.52,
+   "end": 27.86
+  },
+  {
+   "text": "So",
+   "start": 28.28,
+   "end": 28.4
+  },
+  {
+   "text": "two",
+   "start": 28.46,
+   "end": 28.58
+  },
+  {
+   "text": "reads",
+   "start": 28.7,
+   "end": 28.94
+  },
+  {
+   "text": "it",
+   "start": 29.0,
+   "end": 29.1
+  },
+  {
+   "text": "and",
+   "start": 29.26,
+   "end": 29.34
+  },
+  {
+   "text": "curls",
+   "start": 29.48,
+   "end": 29.74
+  },
+  {
+   "text": "around",
+   "start": 29.8,
+   "end": 30.02
+  },
+  {
+   "text": "the",
+   "start": 30.04,
+   "end": 30.14
+  },
+  {
+   "text": "second",
+   "start": 30.18,
+   "end": 30.44
+  },
+  {
+   "text": "screen",
+   "start": 30.52,
+   "end": 30.84
+  },
+  {
+   "text": "straight",
+   "start": 31.22,
+   "end": 31.46
+  },
+  {
+   "text": "to",
+   "start": 31.5,
+   "end": 31.58
+  },
+  {
+   "text": "the",
+   "start": 31.6,
+   "end": 31.66
+  },
+  {
+   "text": "rim.",
+   "start": 31.72,
+   "end": 31.96
+  },
+  {
+   "text": "Same",
+   "start": 32.7,
+   "end": 32.9
+  },
+  {
+   "text": "action.",
+   "start": 32.98,
+   "end": 33.34
+  },
+  {
+   "text": "Two",
+   "start": 33.78,
+   "end": 33.92
+  },
+  {
+   "text": "reads,",
+   "start": 34.02,
+   "end": 34.36
+  },
+  {
+   "text": "shooter",
+   "start": 34.82,
+   "end": 35.14
+  },
+  {
+   "text": "or",
+   "start": 35.5,
+   "end": 35.56
+  },
+  {
+   "text": "driver?",
+   "start": 35.66,
+   "end": 36.04
+  }
+ ],
+ "display": {
+  "defense": "defence"
+ },
+ "emphasis": [
+  "stagger",
+  "screen",
+  "curls",
+  "tight",
+  "shooter",
+  "driver"
+ ],
+ "hook": "photo-line",
+ "ending": "surprise",
+ "sfxBudget": 2,
+ "outro": {
+  "seconds": 1.2
+ },
+ "music": {
+  "story": "tactical",
+  "engine": "synth"
+ },
+ "scenes": [
+  {
+   "at": 0,
+   "type": "media",
+   "media": {
+    "src": "media/library/commons-47740070.jpg",
+    "kind": "photo",
+    "credit": "Generic arena photo: Phil Roeder, 2016 · CC BY 2.0",
+    "license": "CC BY 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kansas_Jayhawks_Open_Practice_at_the_2016_March_Madness_Opening_Rounds_(25748751301).jpg",
+    "focus": [
+     0.5,
+     0.85
+    ]
+   },
+   "camera": "push-in",
+   "beats": [
+    "shooters"
+   ],
+   "callouts": [
+    {
+     "at": "running",
+     "text": "2 SCREENS"
+    }
+   ]
+  },
+  {
+   "at": "It is called",
+   "type": "headline",
+   "lines": [
+    "STAGGER",
+    "SCREEN"
+   ],
+   "accent": [
+    1
+   ],
+   "kicker": "TACTICS",
+   "bg": {
+    "src": "media/library/commons-9917549.jpg",
+    "kind": "photo",
+    "credit": "Generic basketball photo: J.smith, 2010 · CC BY-SA 4.0",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Basketball_net.jpg",
+    "treatment": "duotone"
+   },
+   "layout": "low",
+   "camera": "push-in",
+   "transition": "punch",
+   "callouts": [
+    {
+     "at": "stagger",
+     "text": "STAGGER",
+     "tone": "white"
+    }
+   ]
+  },
+  {
+   "at": "Here is the setup",
+   "type": "court",
+   "court": {
+    "title": "STAGGER SCREEN",
+    "tracks": [
+     {
+      "id": "O1",
+      "side": "O",
+      "kf": [
+       [
+        0,
+        25,
+        32
+       ]
+      ]
+     },
+     {
+      "id": "O2",
+      "side": "O",
+      "kf": [
+       [
+        0,
+        30,
+        4.5
+       ],
+       [
+        13.9,
+        30,
+        4.5
+       ],
+       [
+        15.5,
+        23.3,
+        9.8
+       ],
+       [
+        16.6,
+        23.3,
+        9.8
+       ],
+       [
+        17.4,
+        22.3,
+        14.6
+       ],
+       [
+        18.9,
+        14,
+        20
+       ],
+       [
+        20.1,
+        10.5,
+        24
+       ],
+       [
+        23.9,
+        10.5,
+        24
+       ],
+       [
+        24.6,
+        9,
+        11
+       ],
+       [
+        25.3,
+        13,
+        3
+       ],
+       [
+        26.3,
+        30,
+        4.5
+       ],
+       [
+        27.2,
+        23.3,
+        9.8
+       ],
+       [
+        28.0,
+        23.3,
+        9.8
+       ],
+       [
+        29.3,
+        22.3,
+        15.2
+       ],
+       [
+        30.2,
+        24.5,
+        13
+       ],
+       [
+        31.0,
+        25.3,
+        8.5
+       ],
+       [
+        31.8,
+        25,
+        6.4
+       ]
+      ]
+     },
+     {
+      "id": "O3",
+      "side": "O",
+      "kf": [
+       [
+        0,
+        43,
+        22
+       ]
+      ]
+     },
+     {
+      "id": "O4",
+      "side": "O",
+      "kf": [
+       [
+        0,
+        20.5,
+        14
+       ]
+      ]
+     },
+     {
+      "id": "O5",
+      "side": "O",
+      "kf": [
+       [
+        0,
+        22,
+        8.5
+       ]
+      ]
+     },
+     {
+      "id": "X1",
+      "side": "X",
+      "kf": [
+       [
+        0,
+        25,
+        29.5
+       ]
+      ]
+     },
+     {
+      "id": "X2",
+      "side": "X",
+      "kf": [
+       [
+        0,
+        31.8,
+        6.2
+       ],
+       [
+        13.9,
+        31.8,
+        6.2
+       ],
+       [
+        15.4,
+        26.5,
+        7.6
+       ],
+       [
+        16.4,
+        25.2,
+        10
+       ],
+       [
+        17.5,
+        25.2,
+        10
+       ],
+       [
+        18.4,
+        24.0,
+        14.6
+       ],
+       [
+        19.9,
+        21.5,
+        17.5
+       ],
+       [
+        23.9,
+        21.5,
+        17.5
+       ],
+       [
+        24.9,
+        19.5,
+        12
+       ],
+       [
+        25.7,
+        19,
+        8
+       ],
+       [
+        26.4,
+        31.8,
+        6.2
+       ],
+       [
+        27.3,
+        24.8,
+        8.6
+       ],
+       [
+        28.0,
+        24.8,
+        8.6
+       ],
+       [
+        29.3,
+        23.8,
+        16.4
+       ],
+       [
+        30.2,
+        25.8,
+        15.2
+       ],
+       [
+        31.0,
+        26.8,
+        11.2
+       ],
+       [
+        31.8,
+        26.8,
+        8.2
+       ]
+      ]
+     },
+     {
+      "id": "X3",
+      "side": "X",
+      "kf": [
+       [
+        0,
+        43,
+        20
+       ]
+      ]
+     },
+     {
+      "id": "X4",
+      "side": "X",
+      "kf": [
+       [
+        0,
+        18.2,
+        12.4
+       ]
+      ]
+     },
+     {
+      "id": "X5",
+      "side": "X",
+      "kf": [
+       [
+        0,
+        20.3,
+        6.0
+       ]
+      ]
+     }
+    ],
+    "ball": [
+     [
+      0,
+      25,
+      32
+     ],
+     [
+      20.7,
+      25,
+      32
+     ],
+     [
+      21.7,
+      10.5,
+      24
+     ],
+     [
+      22.7,
+      10.5,
+      24
+     ],
+     [
+      23.4,
+      25,
+      5.25
+     ],
+     [
+      23.7,
+      25,
+      5.25
+     ],
+     [
+      24.9,
+      25,
+      32
+     ],
+     [
+      30.4,
+      25,
+      32
+     ],
+     [
+      31.0,
+      25.3,
+      8.5
+     ],
+     [
+      31.8,
+      25,
+      6.4
+     ],
+     [
+      32.2,
+      25,
+      5.25
+     ]
+    ],
+    "arrows": [
+     {
+      "t": 14.4,
+      "until": 16.7,
+      "pts": [
+       [
+        30,
+        4.5
+       ],
+       [
+        23.3,
+        9.8
+       ]
+      ],
+      "kind": "move"
+     },
+     {
+      "t": 14.9,
+      "until": 16.7,
+      "pts": [
+       [
+        24.5,
+        7.6
+       ],
+       [
+        22.6,
+        9.6
+       ]
+      ],
+      "kind": "screen"
+     },
+     {
+      "t": 16.4,
+      "until": 18.4,
+      "pts": [
+       [
+        23.3,
+        9.8
+       ],
+       [
+        22.3,
+        14.6
+       ],
+       [
+        14,
+        20
+       ],
+       [
+        10.5,
+        24
+       ]
+      ],
+      "kind": "move"
+     },
+     {
+      "t": 16.6,
+      "until": 18.5,
+      "pts": [
+       [
+        22.8,
+        12.6
+       ],
+       [
+        21.4,
+        14.6
+       ]
+      ],
+      "kind": "screen"
+     },
+     {
+      "t": 20.7,
+      "until": 22.2,
+      "pts": [
+       [
+        25,
+        31
+       ],
+       [
+        11.5,
+        24.4
+       ]
+      ],
+      "kind": "pass"
+     },
+     {
+      "t": 22.7,
+      "until": 23.6,
+      "pts": [
+       [
+        10.5,
+        24
+       ],
+       [
+        24.5,
+        6
+       ]
+      ],
+      "kind": "shot"
+     },
+     {
+      "t": 26.5,
+      "until": 28.0,
+      "pts": [
+       [
+        30,
+        4.5
+       ],
+       [
+        23.3,
+        9.8
+       ]
+      ],
+      "kind": "move"
+     },
+     {
+      "t": 28.2,
+      "until": 31.0,
+      "pts": [
+       [
+        23.3,
+        9.8
+       ],
+       [
+        22.3,
+        15.2
+       ],
+       [
+        24.5,
+        13
+       ],
+       [
+        25.3,
+        8.5
+       ],
+       [
+        25,
+        6.4
+       ]
+      ],
+      "kind": "move"
+     },
+     {
+      "t": 30.4,
+      "until": 31.5,
+      "pts": [
+       [
+        25,
+        31
+       ],
+       [
+        25.3,
+        9.8
+       ]
+      ],
+      "kind": "pass"
+     }
+    ],
+    "rings": [
+     {
+      "t": 0.4,
+      "until": 7.2,
+      "at": "O1",
+      "text": "BALL"
+     },
+     {
+      "t": 7.3,
+      "until": 10.6,
+      "at": "O5",
+      "text": "SCREEN 1",
+      "dy": -4.8
+     },
+     {
+      "t": 8.6,
+      "until": 10.6,
+      "at": "O4",
+      "text": "SCREEN 2",
+      "dy": 4.6,
+      "color": "#FFFFFF"
+     },
+     {
+      "t": 10.8,
+      "until": 13.6,
+      "at": "O2",
+      "text": "SHOOTER"
+     },
+     {
+      "t": 17.6,
+      "until": 20.2,
+      "at": "X2",
+      "text": "CAUGHT",
+      "color": "#FFFFFF",
+      "dy": 4.6
+     },
+     {
+      "t": 22.4,
+      "until": 23.8,
+      "at": "O2",
+      "text": "OPEN"
+     },
+     {
+      "t": 26.0,
+      "until": 28.3,
+      "at": "X2",
+      "text": "TIGHT",
+      "color": "#FFFFFF",
+      "dy": 4.6
+     },
+     {
+      "t": 29.4,
+      "until": 31.0,
+      "at": "O2",
+      "text": "CURL"
+     },
+     {
+      "t": 31.9,
+      "until": 32.6,
+      "at": [
+       25,
+       5.25
+      ],
+      "text": "LAYUP"
+     }
+    ],
+    "zones": [],
+    "steps": [
+     [
+      5.88,
+      "Setup: two screeners stacked in the lane"
+     ],
+     [
+      10.7,
+      "O2 starts on the block"
+     ],
+     [
+      13.72,
+      "O2 cuts off screen 1, then screen 2"
+     ],
+     [
+      17.5,
+      "X2 is caught behind both"
+     ],
+     [
+      20.7,
+      "O1 passes to the wing: open shot"
+     ],
+     [
+      23.9,
+      "Counter: X2 chases tight"
+     ],
+     [
+      28.28,
+      "O2 reads it: curl to the rim"
+     ],
+     [
+      32.7,
+      "Same action, two reads"
+     ]
+    ]
+   },
+   "camera": "static",
+   "transition": "slide-up"
+  },
+  {
+   "at": "Now he cuts",
+   "type": "court",
+   "court": {
+    "title": "STAGGER SCREEN",
+    "tracks": [
+     {
+      "id": "O1",
+      "side": "O",
+      "kf": [
+       [
+        0,
+        25,
+        32
+       ]
+      ]
+     },
+     {
+      "id": "O2",
+      "side": "O",
+      "kf": [
+       [
+        0,
+        30,
+        4.5
+       ],
+       [
+        13.9,
+        30,
+        4.5
+       ],
+       [
+        15.5,
+        23.3,
+        9.8
+       ],
+       [
+        16.6,
+        23.3,
+        9.8
+       ],
+       [
+        17.4,
+        22.3,
+        14.6
+       ],
+       [
+        18.9,
+        14,
+        20
+       ],
+       [
+        20.1,
+        10.5,
+        24
+       ],
+       [
+        23.9,
+        10.5,
+        24
+       ],
+       [
+        24.6,
+        9,
+        11
+       ],
+       [
+        25.3,
+        13,
+        3
+       ],
+       [
+        26.3,
+        30,
+        4.5
+       ],
+       [
+        27.2,
+        23.3,
+        9.8
+       ],
+       [
+        28.0,
+        23.3,
+        9.8
+       ],
+       [
+        29.3,
+        22.3,
+        15.2
+       ],
+       [
+        30.2,
+        24.5,
+        13
+       ],
+       [
+        31.0,
+        25.3,
+        8.5
+       ],
+       [
+        31.8,
+        25,
+        6.4
+       ]
+      ]
+     },
+     {
+      "id": "O3",
+      "side": "O",
+      "kf": [
+       [
+        0,
+        43,
+        22
+       ]
+      ]
+     },
+     {
+      "id": "O4",
+      "side": "O",
+      "kf": [
+       [
+        0,
+        20.5,
+        14
+       ]
+      ]
+     },
+     {
+      "id": "O5",
+      "side": "O",
+      "kf": [
+       [
+        0,
+        22,
+        8.5
+       ]
+      ]
+     },
+     {
+      "id": "X1",
+      "side": "X",
+      "kf": [
+       [
+        0,
+        25,
+        29.5
+       ]
+      ]
+     },
+     {
+      "id": "X2",
+      "side": "X",
+      "kf": [
+       [
+        0,
+        31.8,
+        6.2
+       ],
+       [
+        13.9,
+        31.8,
+        6.2
+       ],
+       [
+        15.4,
+        26.5,
+        7.6
+       ],
+       [
+        16.4,
+        25.2,
+        10
+       ],
+       [
+        17.5,
+        25.2,
+        10
+       ],
+       [
+        18.4,
+        24.0,
+        14.6
+       ],
+       [
+        19.9,
+        21.5,
+        17.5
+       ],
+       [
+        23.9,
+        21.5,
+        17.5
+       ],
+       [
+        24.9,
+        19.5,
+        12
+       ],
+       [
+        25.7,
+        19,
+        8
+       ],
+       [
+        26.4,
+        31.8,
+        6.2
+       ],
+       [
+        27.3,
+        24.8,
+        8.6
+       ],
+       [
+        28.0,
+        24.8,
+        8.6
+       ],
+       [
+        29.3,
+        23.8,
+        16.4
+       ],
+       [
+        30.2,
+        25.8,
+        15.2
+       ],
+       [
+        31.0,
+        26.8,
+        11.2
+       ],
+       [
+        31.8,
+        26.8,
+        8.2
+       ]
+      ]
+     },
+     {
+      "id": "X3",
+      "side": "X",
+      "kf": [
+       [
+        0,
+        43,
+        20
+       ]
+      ]
+     },
+     {
+      "id": "X4",
+      "side": "X",
+      "kf": [
+       [
+        0,
+        18.2,
+        12.4
+       ]
+      ]
+     },
+     {
+      "id": "X5",
+      "side": "X",
+      "kf": [
+       [
+        0,
+        20.3,
+        6.0
+       ]
+      ]
+     }
+    ],
+    "ball": [
+     [
+      0,
+      25,
+      32
+     ],
+     [
+      20.7,
+      25,
+      32
+     ],
+     [
+      21.7,
+      10.5,
+      24
+     ],
+     [
+      22.7,
+      10.5,
+      24
+     ],
+     [
+      23.4,
+      25,
+      5.25
+     ],
+     [
+      23.7,
+      25,
+      5.25
+     ],
+     [
+      24.9,
+      25,
+      32
+     ],
+     [
+      30.4,
+      25,
+      32
+     ],
+     [
+      31.0,
+      25.3,
+      8.5
+     ],
+     [
+      31.8,
+      25,
+      6.4
+     ],
+     [
+      32.2,
+      25,
+      5.25
+     ]
+    ],
+    "arrows": [
+     {
+      "t": 14.4,
+      "until": 16.7,
+      "pts": [
+       [
+        30,
+        4.5
+       ],
+       [
+        23.3,
+        9.8
+       ]
+      ],
+      "kind": "move"
+     },
+     {
+      "t": 14.9,
+      "until": 16.7,
+      "pts": [
+       [
+        24.5,
+        7.6
+       ],
+       [
+        22.6,
+        9.6
+       ]
+      ],
+      "kind": "screen"
+     },
+     {
+      "t": 16.4,
+      "until": 18.4,
+      "pts": [
+       [
+        23.3,
+        9.8
+       ],
+       [
+        22.3,
+        14.6
+       ],
+       [
+        14,
+        20
+       ],
+       [
+        10.5,
+        24
+       ]
+      ],
+      "kind": "move"
+     },
+     {
+      "t": 16.6,
+      "until": 18.5,
+      "pts": [
+       [
+        22.8,
+        12.6
+       ],
+       [
+        21.4,
+        14.6
+       ]
+      ],
+      "kind": "screen"
+     },
+     {
+      "t": 20.7,
+      "until": 22.2,
+      "pts": [
+       [
+        25,
+        31
+       ],
+       [
+        11.5,
+        24.4
+       ]
+      ],
+      "kind": "pass"
+     },
+     {
+      "t": 22.7,
+      "until": 23.6,
+      "pts": [
+       [
+        10.5,
+        24
+       ],
+       [
+        24.5,
+        6
+       ]
+      ],
+      "kind": "shot"
+     },
+     {
+      "t": 26.5,
+      "until": 28.0,
+      "pts": [
+       [
+        30,
+        4.5
+       ],
+       [
+        23.3,
+        9.8
+       ]
+      ],
+      "kind": "move"
+     },
+     {
+      "t": 28.2,
+      "until": 31.0,
+      "pts": [
+       [
+        23.3,
+        9.8
+       ],
+       [
+        22.3,
+        15.2
+       ],
+       [
+        24.5,
+        13
+       ],
+       [
+        25.3,
+        8.5
+       ],
+       [
+        25,
+        6.4
+       ]
+      ],
+      "kind": "move"
+     },
+     {
+      "t": 30.4,
+      "until": 31.5,
+      "pts": [
+       [
+        25,
+        31
+       ],
+       [
+        25.3,
+        9.8
+       ]
+      ],
+      "kind": "pass"
+     }
+    ],
+    "rings": [
+     {
+      "t": 0.4,
+      "until": 7.2,
+      "at": "O1",
+      "text": "BALL"
+     },
+     {
+      "t": 7.3,
+      "until": 10.6,
+      "at": "O5",
+      "text": "SCREEN 1",
+      "dy": -4.8
+     },
+     {
+      "t": 8.6,
+      "until": 10.6,
+      "at": "O4",
+      "text": "SCREEN 2",
+      "dy": 4.6,
+      "color": "#FFFFFF"
+     },
+     {
+      "t": 10.8,
+      "until": 13.6,
+      "at": "O2",
+      "text": "SHOOTER"
+     },
+     {
+      "t": 17.6,
+      "until": 20.2,
+      "at": "X2",
+      "text": "CAUGHT",
+      "color": "#FFFFFF",
+      "dy": 4.6
+     },
+     {
+      "t": 22.4,
+      "until": 23.8,
+      "at": "O2",
+      "text": "OPEN"
+     },
+     {
+      "t": 26.0,
+      "until": 28.3,
+      "at": "X2",
+      "text": "TIGHT",
+      "color": "#FFFFFF",
+      "dy": 4.6
+     },
+     {
+      "t": 29.4,
+      "until": 31.0,
+      "at": "O2",
+      "text": "CURL"
+     },
+     {
+      "t": 31.9,
+      "until": 32.6,
+      "at": [
+       25,
+       5.25
+      ],
+      "text": "LAYUP"
+     }
+    ],
+    "zones": [],
+    "steps": [
+     [
+      5.88,
+      "Setup: two screeners stacked in the lane"
+     ],
+     [
+      10.7,
+      "O2 starts on the block"
+     ],
+     [
+      13.72,
+      "O2 cuts off screen 1, then screen 2"
+     ],
+     [
+      17.5,
+      "X2 is caught behind both"
+     ],
+     [
+      20.7,
+      "O1 passes to the wing: open shot"
+     ],
+     [
+      23.9,
+      "Counter: X2 chases tight"
+     ],
+     [
+      28.28,
+      "O2 reads it: curl to the rim"
+     ],
+     [
+      32.7,
+      "Same action, two reads"
+     ]
+    ]
+   },
+   "camera": "static",
+   "transition": "cut",
+   "backdrop": "spotlight"
+  },
+  {
+   "at": "The defense has",
+   "type": "headline",
+   "lines": [
+    "THE",
+    "COUNTER"
+   ],
+   "accent": [
+    1
+   ],
+   "kicker": "DEFENCE ADJUSTS",
+   "bg": {
+    "src": "media/library/commons-9917549.jpg",
+    "kind": "photo",
+    "credit": "Generic basketball photo: J.smith, 2010 · CC BY-SA 4.0",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Basketball_net.jpg",
+    "treatment": "tint"
+   },
+   "layout": "compact",
+   "camera": "push-in",
+   "transition": "punch"
+  },
+  {
+   "at": "X2 chases",
+   "type": "court",
+   "court": {
+    "title": "STAGGER SCREEN",
+    "tracks": [
+     {
+      "id": "O1",
+      "side": "O",
+      "kf": [
+       [
+        0,
+        25,
+        32
+       ]
+      ]
+     },
+     {
+      "id": "O2",
+      "side": "O",
+      "kf": [
+       [
+        0,
+        30,
+        4.5
+       ],
+       [
+        13.9,
+        30,
+        4.5
+       ],
+       [
+        15.5,
+        23.3,
+        9.8
+       ],
+       [
+        16.6,
+        23.3,
+        9.8
+       ],
+       [
+        17.4,
+        22.3,
+        14.6
+       ],
+       [
+        18.9,
+        14,
+        20
+       ],
+       [
+        20.1,
+        10.5,
+        24
+       ],
+       [
+        23.9,
+        10.5,
+        24
+       ],
+       [
+        24.6,
+        9,
+        11
+       ],
+       [
+        25.3,
+        13,
+        3
+       ],
+       [
+        26.3,
+        30,
+        4.5
+       ],
+       [
+        27.2,
+        23.3,
+        9.8
+       ],
+       [
+        28.0,
+        23.3,
+        9.8
+       ],
+       [
+        29.3,
+        22.3,
+        15.2
+       ],
+       [
+        30.2,
+        24.5,
+        13
+       ],
+       [
+        31.0,
+        25.3,
+        8.5
+       ],
+       [
+        31.8,
+        25,
+        6.4
+       ]
+      ]
+     },
+     {
+      "id": "O3",
+      "side": "O",
+      "kf": [
+       [
+        0,
+        43,
+        22
+       ]
+      ]
+     },
+     {
+      "id": "O4",
+      "side": "O",
+      "kf": [
+       [
+        0,
+        20.5,
+        14
+       ]
+      ]
+     },
+     {
+      "id": "O5",
+      "side": "O",
+      "kf": [
+       [
+        0,
+        22,
+        8.5
+       ]
+      ]
+     },
+     {
+      "id": "X1",
+      "side": "X",
+      "kf": [
+       [
+        0,
+        25,
+        29.5
+       ]
+      ]
+     },
+     {
+      "id": "X2",
+      "side": "X",
+      "kf": [
+       [
+        0,
+        31.8,
+        6.2
+       ],
+       [
+        13.9,
+        31.8,
+        6.2
+       ],
+       [
+        15.4,
+        26.5,
+        7.6
+       ],
+       [
+        16.4,
+        25.2,
+        10
+       ],
+       [
+        17.5,
+        25.2,
+        10
+       ],
+       [
+        18.4,
+        24.0,
+        14.6
+       ],
+       [
+        19.9,
+        21.5,
+        17.5
+       ],
+       [
+        23.9,
+        21.5,
+        17.5
+       ],
+       [
+        24.9,
+        19.5,
+        12
+       ],
+       [
+        25.7,
+        19,
+        8
+       ],
+       [
+        26.4,
+        31.8,
+        6.2
+       ],
+       [
+        27.3,
+        24.8,
+        8.6
+       ],
+       [
+        28.0,
+        24.8,
+        8.6
+       ],
+       [
+        29.3,
+        23.8,
+        16.4
+       ],
+       [
+        30.2,
+        25.8,
+        15.2
+       ],
+       [
+        31.0,
+        26.8,
+        11.2
+       ],
+       [
+        31.8,
+        26.8,
+        8.2
+       ]
+      ]
+     },
+     {
+      "id": "X3",
+      "side": "X",
+      "kf": [
+       [
+        0,
+        43,
+        20
+       ]
+      ]
+     },
+     {
+      "id": "X4",
+      "side": "X",
+      "kf": [
+       [
+        0,
+        18.2,
+        12.4
+       ]
+      ]
+     },
+     {
+      "id": "X5",
+      "side": "X",
+      "kf": [
+       [
+        0,
+        20.3,
+        6.0
+       ]
+      ]
+     }
+    ],
+    "ball": [
+     [
+      0,
+      25,
+      32
+     ],
+     [
+      20.7,
+      25,
+      32
+     ],
+     [
+      21.7,
+      10.5,
+      24
+     ],
+     [
+      22.7,
+      10.5,
+      24
+     ],
+     [
+      23.4,
+      25,
+      5.25
+     ],
+     [
+      23.7,
+      25,
+      5.25
+     ],
+     [
+      24.9,
+      25,
+      32
+     ],
+     [
+      30.4,
+      25,
+      32
+     ],
+     [
+      31.0,
+      25.3,
+      8.5
+     ],
+     [
+      31.8,
+      25,
+      6.4
+     ],
+     [
+      32.2,
+      25,
+      5.25
+     ]
+    ],
+    "arrows": [
+     {
+      "t": 14.4,
+      "until": 16.7,
+      "pts": [
+       [
+        30,
+        4.5
+       ],
+       [
+        23.3,
+        9.8
+       ]
+      ],
+      "kind": "move"
+     },
+     {
+      "t": 14.9,
+      "until": 16.7,
+      "pts": [
+       [
+        24.5,
+        7.6
+       ],
+       [
+        22.6,
+        9.6
+       ]
+      ],
+      "kind": "screen"
+     },
+     {
+      "t": 16.4,
+      "until": 18.4,
+      "pts": [
+       [
+        23.3,
+        9.8
+       ],
+       [
+        22.3,
+        14.6
+       ],
+       [
+        14,
+        20
+       ],
+       [
+        10.5,
+        24
+       ]
+      ],
+      "kind": "move"
+     },
+     {
+      "t": 16.6,
+      "until": 18.5,
+      "pts": [
+       [
+        22.8,
+        12.6
+       ],
+       [
+        21.4,
+        14.6
+       ]
+      ],
+      "kind": "screen"
+     },
+     {
+      "t": 20.7,
+      "until": 22.2,
+      "pts": [
+       [
+        25,
+        31
+       ],
+       [
+        11.5,
+        24.4
+       ]
+      ],
+      "kind": "pass"
+     },
+     {
+      "t": 22.7,
+      "until": 23.6,
+      "pts": [
+       [
+        10.5,
+        24
+       ],
+       [
+        24.5,
+        6
+       ]
+      ],
+      "kind": "shot"
+     },
+     {
+      "t": 26.5,
+      "until": 28.0,
+      "pts": [
+       [
+        30,
+        4.5
+       ],
+       [
+        23.3,
+        9.8
+       ]
+      ],
+      "kind": "move"
+     },
+     {
+      "t": 28.2,
+      "until": 31.0,
+      "pts": [
+       [
+        23.3,
+        9.8
+       ],
+       [
+        22.3,
+        15.2
+       ],
+       [
+        24.5,
+        13
+       ],
+       [
+        25.3,
+        8.5
+       ],
+       [
+        25,
+        6.4
+       ]
+      ],
+      "kind": "move"
+     },
+     {
+      "t": 30.4,
+      "until": 31.5,
+      "pts": [
+       [
+        25,
+        31
+       ],
+       [
+        25.3,
+        9.8
+       ]
+      ],
+      "kind": "pass"
+     }
+    ],
+    "rings": [
+     {
+      "t": 0.4,
+      "until": 7.2,
+      "at": "O1",
+      "text": "BALL"
+     },
+     {
+      "t": 7.3,
+      "until": 10.6,
+      "at": "O5",
+      "text": "SCREEN 1",
+      "dy": -4.8
+     },
+     {
+      "t": 8.6,
+      "until": 10.6,
+      "at": "O4",
+      "text": "SCREEN 2",
+      "dy": 4.6,
+      "color": "#FFFFFF"
+     },
+     {
+      "t": 10.8,
+      "until": 13.6,
+      "at": "O2",
+      "text": "SHOOTER"
+     },
+     {
+      "t": 17.6,
+      "until": 20.2,
+      "at": "X2",
+      "text": "CAUGHT",
+      "color": "#FFFFFF",
+      "dy": 4.6
+     },
+     {
+      "t": 22.4,
+      "until": 23.8,
+      "at": "O2",
+      "text": "OPEN"
+     },
+     {
+      "t": 26.0,
+      "until": 28.3,
+      "at": "X2",
+      "text": "TIGHT",
+      "color": "#FFFFFF",
+      "dy": 4.6
+     },
+     {
+      "t": 29.4,
+      "until": 31.0,
+      "at": "O2",
+      "text": "CURL"
+     },
+     {
+      "t": 31.9,
+      "until": 32.6,
+      "at": [
+       25,
+       5.25
+      ],
+      "text": "LAYUP"
+     }
+    ],
+    "zones": [],
+    "steps": [
+     [
+      5.88,
+      "Setup: two screeners stacked in the lane"
+     ],
+     [
+      10.7,
+      "O2 starts on the block"
+     ],
+     [
+      13.72,
+      "O2 cuts off screen 1, then screen 2"
+     ],
+     [
+      17.5,
+      "X2 is caught behind both"
+     ],
+     [
+      20.7,
+      "O1 passes to the wing: open shot"
+     ],
+     [
+      23.9,
+      "Counter: X2 chases tight"
+     ],
+     [
+      28.28,
+      "O2 reads it: curl to the rim"
+     ],
+     [
+      32.7,
+      "Same action, two reads"
+     ]
+    ]
+   },
+   "camera": "static",
+   "transition": "slide-up"
+  },
+  {
+   "at": "Same action",
+   "type": "headline",
+   "lines": [
+    "ONE ACTION",
+    "TWO READS"
+   ],
+   "accent": [
+    1
+   ],
+   "kicker": "SHOOTER OR DRIVER",
+   "bg": {
+    "src": "media/library/commons-47740070.jpg",
+    "kind": "photo",
+    "credit": "Generic arena photo: Phil Roeder, 2016 · CC BY 2.0",
+    "license": "CC BY 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kansas_Jayhawks_Open_Practice_at_the_2016_March_Madness_Opening_Rounds_(25748751301).jpg",
+    "treatment": "blur"
+   },
+   "layout": "compact",
+   "camera": "push-in",
+   "transition": "flash",
+   "callouts": [
+    {
+     "at": "shooter",
+     "text": "SHOOTER"
+    },
+    {
+     "at": "driver",
+     "text": "DRIVER",
+     "tone": "white"
+    }
+   ]
+  }
+ ],
+ "social": {
+  "caption": "The stagger screen: two screens in a row, and one read that decides the possession. A tactics board in 36 seconds.",
+  "pinnedComment": "Stagger screen: when the defender trails tight, the shooter curls to the rim. When the defender goes under, he fades to the wing. Which read is harder to guard?",
+  "reply": "Quick rule: tight chase from behind means curl toward the basket; defender goes under means fade or straight to the shot. The screeners stay put while the shooter reads.",
+  "hashtags": [
+   "BasketballTactics",
+   "BasketballIQ",
+   "StaggerScreen",
+   "EuropeanBasketball",
+   "E2A"
+  ]
+ },
+ "sources": [
+  "Standard coaching literature: FIBA Coaching and USA Basketball coach education material on staggered/double screens and curl/fade reads",
+  "Diagram is an E2A original tactics board (not a replica of any team's set)",
+  "Image: commons.wikimedia.org File:Kansas_Jayhawks_Open_Practice_at_the_2016_March_Madness_Opening_Rounds_(25748751301).jpg (CC BY 2.0, generic arena)",
+  "Image: commons.wikimedia.org File:Basketball_net.jpg (CC BY-SA 4.0, generic)"
+ ]
+}

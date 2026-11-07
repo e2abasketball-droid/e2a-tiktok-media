@@ -1,0 +1,466 @@
+{
+ "id": "2026-11-09-v1",
+ "title": "Jugoplastika Split: three European titles in a row",
+ "style": "record",
+ "voice": "audio/2026-11-09-v1.mp3",
+ "words": [
+  {
+   "text": "Three",
+   "start": 0.143,
+   "end": 0.339
+  },
+  {
+   "text": "European",
+   "start": 0.446,
+   "end": 0.875
+  },
+  {
+   "text": "finals,",
+   "start": 0.982,
+   "end": 1.411
+  },
+  {
+   "text": "three",
+   "start": 1.768,
+   "end": 1.964
+  },
+  {
+   "text": "wins,",
+   "start": 2.054,
+   "end": 2.411
+  },
+  {
+   "text": "16",
+   "start": 2.857,
+   "end": 3.304
+  },
+  {
+   "text": "points",
+   "start": 3.375,
+   "end": 3.588
+  },
+  {
+   "text": "of",
+   "start": 3.624,
+   "end": 3.679
+  },
+  {
+   "text": "margin",
+   "start": 3.75,
+   "end": 4.107
+  },
+  {
+   "text": "in",
+   "start": 4.268,
+   "end": 4.393
+  },
+  {
+   "text": "total.",
+   "start": 4.429,
+   "end": 4.75
+  },
+  {
+   "text": "Jugoplastika",
+   "start": 5.375,
+   "end": 6.018
+  },
+  {
+   "text": "Split.",
+   "start": 6.107,
+   "end": 6.482
+  },
+  {
+   "text": "1989,",
+   "start": 7.0,
+   "end": 7.821
+  },
+  {
+   "text": "Maccabi",
+   "start": 8.125,
+   "end": 8.571
+  },
+  {
+   "text": "by",
+   "start": 8.768,
+   "end": 8.911
+  },
+  {
+   "text": "six.",
+   "start": 9.0,
+   "end": 9.304
+  },
+  {
+   "text": "1990,",
+   "start": 9.786,
+   "end": 10.482
+  },
+  {
+   "text": "Barcelona",
+   "start": 10.821,
+   "end": 11.393
+  },
+  {
+   "text": "by",
+   "start": 11.571,
+   "end": 11.732
+  },
+  {
+   "text": "five.",
+   "start": 11.786,
+   "end": 12.125
+  },
+  {
+   "text": "1991,",
+   "start": 12.607,
+   "end": 13.411
+  },
+  {
+   "text": "Barcelona",
+   "start": 13.768,
+   "end": 14.232
+  },
+  {
+   "text": "again",
+   "start": 14.304,
+   "end": 14.661
+  },
+  {
+   "text": "by",
+   "start": 14.857,
+   "end": 15.018
+  },
+  {
+   "text": "five.",
+   "start": 15.071,
+   "end": 15.375
+  },
+  {
+   "text": "Three",
+   "start": 15.911,
+   "end": 16.143
+  },
+  {
+   "text": "straight",
+   "start": 16.339,
+   "end": 16.625
+  },
+  {
+   "text": "European",
+   "start": 16.661,
+   "end": 17.054
+  },
+  {
+   "text": "titles",
+   "start": 17.125,
+   "end": 17.518
+  },
+  {
+   "text": "with",
+   "start": 17.679,
+   "end": 17.821
+  },
+  {
+   "text": "Toni",
+   "start": 17.857,
+   "end": 18.036
+  },
+  {
+   "text": "Kukoč",
+   "start": 18.125,
+   "end": 18.571
+  },
+  {
+   "text": "and",
+   "start": 18.589,
+   "end": 18.679
+  },
+  {
+   "text": "Dino",
+   "start": 18.768,
+   "end": 18.964
+  },
+  {
+   "text": "Rađa.",
+   "start": 19.018,
+   "end": 19.339
+  },
+  {
+   "text": "Some",
+   "start": 19.893,
+   "end": 20.071
+  },
+  {
+   "text": "call",
+   "start": 20.107,
+   "end": 20.25
+  },
+  {
+   "text": "it",
+   "start": 20.286,
+   "end": 20.375
+  },
+  {
+   "text": "the",
+   "start": 20.411,
+   "end": 20.518
+  },
+  {
+   "text": "greatest",
+   "start": 20.554,
+   "end": 20.875
+  },
+  {
+   "text": "club",
+   "start": 20.964,
+   "end": 21.143
+  },
+  {
+   "text": "side",
+   "start": 21.232,
+   "end": 21.464
+  },
+  {
+   "text": "Europe",
+   "start": 21.518,
+   "end": 21.75
+  },
+  {
+   "text": "has",
+   "start": 21.768,
+   "end": 22.018
+  },
+  {
+   "text": "ever",
+   "start": 22.071,
+   "end": 22.232
+  },
+  {
+   "text": "seen",
+   "start": 22.357,
+   "end": 22.607
+  }
+ ],
+ "display": {},
+ "emphasis": [
+  "Jugoplastika",
+  "six",
+  "five",
+  "Kukoč",
+  "Rađa",
+  "greatest"
+ ],
+ "hook": "stat-slam",
+ "ending": "debate",
+ "sfxBudget": 2,
+ "outro": {
+  "seconds": 1.2
+ },
+ "music": {
+  "story": "record",
+  "engine": "synth"
+ },
+ "scenes": [
+  {
+   "at": 0,
+   "type": "stat",
+   "value": 3,
+   "label": "FINALS · 3 WINS",
+   "bg": {
+    "src": "media/library/commons-47740070.jpg",
+    "kind": "photo",
+    "credit": "Generic arena photo: Phil Roeder, 2016 · CC BY 2.0",
+    "license": "CC BY 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kansas_Jayhawks_Open_Practice_at_the_2016_March_Madness_Opening_Rounds_(25748751301).jpg",
+    "treatment": "duotone"
+   },
+   "camera": "push-in",
+   "beats": [
+    "European",
+    "three"
+   ],
+   "callouts": [
+    {
+     "at": "finals,",
+     "text": "3 FINALS"
+    },
+    {
+     "at": "16",
+     "text": "16 POINTS TOTAL",
+     "tone": "white"
+    }
+   ]
+  },
+  {
+   "at": "Jugoplastika",
+   "type": "media",
+   "media": {
+    "src": "media/library/commons-117929816.jpg",
+    "kind": "photo",
+    "credit": "Split, Croatia (Poljud): Frane Kapić, 2022 · CC BY-SA 4.0",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Croatia_dreaming_Poljud.jpg",
+    "focus": [
+     0.5,
+     0.55
+    ]
+   },
+   "subtitle": "SPLIT · CROATIA",
+   "camera": "push-in",
+   "transition": "punch"
+  },
+  {
+   "at": "1989,",
+   "type": "stat",
+   "value": 6,
+   "prefix": "+",
+   "label": "1989 · 75–69 vs MACCABI",
+   "bg": {
+    "src": "media/library/commons-9917549.jpg",
+    "kind": "photo",
+    "credit": "Generic basketball photo: J.smith, 2010 · CC BY-SA 4.0",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Basketball_net.jpg",
+    "treatment": "duotone"
+   },
+   "layout": "low",
+   "camera": "push-in",
+   "transition": "whip"
+  },
+  {
+   "at": "1990,",
+   "type": "scoreboard",
+   "label": "1990 FINAL · ZARAGOZA",
+   "home": {
+    "name": "SPLIT",
+    "score": [
+     [
+      "1990,",
+      72
+     ]
+    ],
+    "accent": true
+   },
+   "away": {
+    "name": "BARÇA",
+    "score": [
+     [
+      "1990,",
+      67
+     ]
+    ]
+   },
+   "bg": {
+    "src": "media/library/commons-47740070.jpg",
+    "kind": "photo",
+    "credit": "Generic arena photo: Phil Roeder, 2016 · CC BY 2.0",
+    "license": "CC BY 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kansas_Jayhawks_Open_Practice_at_the_2016_March_Madness_Opening_Rounds_(25748751301).jpg",
+    "treatment": "blur"
+   },
+   "layout": "compact",
+   "camera": "drift",
+   "transition": "cut"
+  },
+  {
+   "at": "1991,",
+   "type": "stat",
+   "value": 5,
+   "prefix": "+",
+   "label": "1991 · 70–65 vs BARCELONA",
+   "bg": {
+    "src": "media/library/commons-9917549.jpg",
+    "kind": "photo",
+    "credit": "Generic basketball photo: J.smith, 2010 · CC BY-SA 4.0",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Basketball_net.jpg",
+    "treatment": "tint"
+   },
+   "layout": "high",
+   "camera": "pull-out",
+   "transition": "cut",
+   "callouts": [
+    {
+     "at": "again",
+     "text": "AGAIN"
+    }
+   ]
+  },
+  {
+   "at": "Three straight",
+   "type": "stat",
+   "value": 3,
+   "label": "STRAIGHT TITLES",
+   "bg": {
+    "src": "media/library/commons-47740070.jpg",
+    "kind": "photo",
+    "credit": "Generic arena photo: Phil Roeder, 2016 · CC BY 2.0",
+    "license": "CC BY 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kansas_Jayhawks_Open_Practice_at_the_2016_March_Madness_Opening_Rounds_(25748751301).jpg",
+    "treatment": "tint"
+   },
+   "layout": "low",
+   "camera": "push-in",
+   "transition": "punch"
+  },
+  {
+   "at": "Toni",
+   "type": "media",
+   "media": {
+    "src": "media/library/commons-52165534.jpg",
+    "kind": "archive",
+    "credit": "Archive: Yugoslavia national team, 1989 · Public domain",
+    "license": "Public domain",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Yugoslavia_1990_basketball.jpg",
+    "fit": "print",
+    "tilt": -2
+   },
+   "subtitle": "YUGOSLAVIA NATIONAL TEAM · ARCHIVE",
+   "camera": "push-in",
+   "transition": "slide-up"
+  },
+  {
+   "at": "Some call",
+   "type": "headline",
+   "lines": [
+    "THE GREATEST",
+    "CLUB SIDE IN EUROPE?"
+   ],
+   "accent": [
+    1
+   ],
+   "bg": {
+    "src": "media/library/commons-9917549.jpg",
+    "kind": "photo",
+    "credit": "Generic basketball photo: J.smith, 2010 · CC BY-SA 4.0",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Basketball_net.jpg",
+    "treatment": "duotone"
+   },
+   "layout": "compact",
+   "camera": "push-in",
+   "transition": "flash"
+  }
+ ],
+ "social": {
+  "caption": "Three European finals. Three wins. Jugoplastika Split's 1989-1991 run, still talked about today.",
+  "pinnedComment": "Jugoplastika won three straight European titles (1989-91). Which club side would you put next to them: CSKA Moscow, Panathinaikos or Real Madrid?",
+  "reply": "The finals: 1989, 75-69 vs Maccabi (Munich); 1990, 72-67 vs Barcelona (Zaragoza); 1991, 70-65 vs Barcelona (Paris). Margins of 6, 5 and 5 points: 16 in total.",
+  "hashtags": [
+   "Basketball",
+   "EuroLeague",
+   "JugoplastikaSplit",
+   "BasketballHistory",
+   "E2A"
+  ]
+ },
+ "sources": [
+  "https://en.wikipedia.org/wiki/KK_Split_in_international_competitions",
+  "https://en.wikipedia.org/wiki/1989_FIBA_European_Champions_Cup_Final_Four",
+  "https://en.wikipedia.org/wiki/1990_FIBA_European_Champions_Cup_Final_Four",
+  "https://en.wikipedia.org/wiki/1991_FIBA_European_Champions_Cup_Final_Four",
+  "Image: commons.wikimedia.org File:Kansas_Jayhawks_Open_Practice_at_the_2016_March_Madness_Opening_Rounds_(25748751301).jpg (CC BY 2.0, generic arena)",
+  "Image: commons.wikimedia.org File:Croatia_dreaming_Poljud.jpg (CC BY-SA 4.0, city of Split)",
+  "Image: commons.wikimedia.org File:Basketball_net.jpg (CC BY-SA 4.0, generic)",
+  "Image: commons.wikimedia.org File:Yugoslavia_1990_basketball.jpg (public domain, Yugoslavia national team archive, not Jugoplastika)"
+ ]
+}
