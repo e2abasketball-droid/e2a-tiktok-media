@@ -1,0 +1,1325 @@
+{
+ "id": "2026-11-11-v2",
+ "title": "Elevator screens explained",
+ "style": "tactical",
+ "voice": "audio/2026-11-11-v2.mp3",
+ "words": [
+  {
+   "text": "How",
+   "start": 0.1,
+   "end": 0.2
+  },
+  {
+   "text": "do",
+   "start": 0.24,
+   "end": 0.3
+  },
+  {
+   "text": "you",
+   "start": 0.34,
+   "end": 0.48
+  },
+  {
+   "text": "free",
+   "start": 0.52,
+   "end": 0.66
+  },
+  {
+   "text": "a",
+   "start": 0.7,
+   "end": 0.78
+  },
+  {
+   "text": "shooter",
+   "start": 0.84,
+   "end": 1.12
+  },
+  {
+   "text": "when",
+   "start": 1.2,
+   "end": 1.3
+  },
+  {
+   "text": "his",
+   "start": 1.34,
+   "end": 1.46
+  },
+  {
+   "text": "defender",
+   "start": 1.5,
+   "end": 1.98
+  },
+  {
+   "text": "is",
+   "start": 2.04,
+   "end": 2.24
+  },
+  {
+   "text": "glued",
+   "start": 2.28,
+   "end": 2.6
+  },
+  {
+   "text": "to",
+   "start": 2.64,
+   "end": 2.74
+  },
+  {
+   "text": "him?",
+   "start": 2.78,
+   "end": 2.94
+  },
+  {
+   "text": "You",
+   "start": 3.54,
+   "end": 3.68
+  },
+  {
+   "text": "build",
+   "start": 3.72,
+   "end": 3.94
+  },
+  {
+   "text": "an",
+   "start": 3.98,
+   "end": 4.1
+  },
+  {
+   "text": "elevator.",
+   "start": 4.16,
+   "end": 4.66
+  },
+  {
+   "text": "Here's",
+   "start": 5.22,
+   "end": 5.52
+  },
+  {
+   "text": "the",
+   "start": 5.56,
+   "end": 5.66
+  },
+  {
+   "text": "setup.",
+   "start": 5.72,
+   "end": 6.06
+  },
+  {
+   "text": "Four",
+   "start": 6.6,
+   "end": 6.74
+  },
+  {
+   "text": "and",
+   "start": 6.76,
+   "end": 6.84
+  },
+  {
+   "text": "five",
+   "start": 6.94,
+   "end": 7.2
+  },
+  {
+   "text": "stand",
+   "start": 7.34,
+   "end": 7.56
+  },
+  {
+   "text": "in",
+   "start": 7.6,
+   "end": 7.68
+  },
+  {
+   "text": "the",
+   "start": 7.72,
+   "end": 7.78
+  },
+  {
+   "text": "lane,",
+   "start": 7.82,
+   "end": 8.1
+  },
+  {
+   "text": "one",
+   "start": 8.38,
+   "end": 8.5
+  },
+  {
+   "text": "on",
+   "start": 8.56,
+   "end": 8.64
+  },
+  {
+   "text": "each",
+   "start": 8.68,
+   "end": 8.86
+  },
+  {
+   "text": "side",
+   "start": 8.92,
+   "end": 9.22
+  },
+  {
+   "text": "with",
+   "start": 9.36,
+   "end": 9.46
+  },
+  {
+   "text": "a",
+   "start": 9.5,
+   "end": 9.58
+  },
+  {
+   "text": "gap",
+   "start": 9.64,
+   "end": 9.84
+  },
+  {
+   "text": "between",
+   "start": 9.88,
+   "end": 10.2
+  },
+  {
+   "text": "them.",
+   "start": 10.26,
+   "end": 10.42
+  },
+  {
+   "text": "Two",
+   "start": 10.96,
+   "end": 11.24
+  },
+  {
+   "text": "starts",
+   "start": 11.3,
+   "end": 11.52
+  },
+  {
+   "text": "on",
+   "start": 11.54,
+   "end": 11.62
+  },
+  {
+   "text": "the",
+   "start": 11.64,
+   "end": 11.74
+  },
+  {
+   "text": "baseline",
+   "start": 11.76,
+   "end": 12.26
+  },
+  {
+   "text": "right",
+   "start": 12.52,
+   "end": 12.68
+  },
+  {
+   "text": "in",
+   "start": 12.72,
+   "end": 12.78
+  },
+  {
+   "text": "that",
+   "start": 12.84,
+   "end": 13.0
+  },
+  {
+   "text": "gap.",
+   "start": 13.04,
+   "end": 13.34
+  },
+  {
+   "text": "Now",
+   "start": 13.86,
+   "end": 14.02
+  },
+  {
+   "text": "the",
+   "start": 14.06,
+   "end": 14.14
+  },
+  {
+   "text": "action.",
+   "start": 14.22,
+   "end": 14.58
+  },
+  {
+   "text": "Two",
+   "start": 15.04,
+   "end": 15.2
+  },
+  {
+   "text": "sprints",
+   "start": 15.42,
+   "end": 15.68
+  },
+  {
+   "text": "up",
+   "start": 15.72,
+   "end": 15.82
+  },
+  {
+   "text": "the",
+   "start": 15.86,
+   "end": 15.94
+  },
+  {
+   "text": "lane",
+   "start": 15.98,
+   "end": 16.3
+  },
+  {
+   "text": "between",
+   "start": 16.34,
+   "end": 16.74
+  },
+  {
+   "text": "the",
+   "start": 16.76,
+   "end": 16.86
+  },
+  {
+   "text": "screeners.",
+   "start": 16.9,
+   "end": 17.38
+  },
+  {
+   "text": "As",
+   "start": 17.78,
+   "end": 17.86
+  },
+  {
+   "text": "he",
+   "start": 17.88,
+   "end": 18.0
+  },
+  {
+   "text": "passes,",
+   "start": 18.04,
+   "end": 18.5
+  },
+  {
+   "text": "four",
+   "start": 18.76,
+   "end": 18.92
+  },
+  {
+   "text": "and",
+   "start": 18.94,
+   "end": 19.0
+  },
+  {
+   "text": "five",
+   "start": 19.12,
+   "end": 19.36
+  },
+  {
+   "text": "close",
+   "start": 19.48,
+   "end": 19.76
+  },
+  {
+   "text": "the",
+   "start": 19.8,
+   "end": 19.88
+  },
+  {
+   "text": "doors",
+   "start": 19.92,
+   "end": 20.18
+  },
+  {
+   "text": "behind",
+   "start": 20.2,
+   "end": 20.54
+  },
+  {
+   "text": "him.",
+   "start": 20.56,
+   "end": 20.7
+  },
+  {
+   "text": "X2",
+   "start": 21.3,
+   "end": 21.64
+  },
+  {
+   "text": "hits",
+   "start": 21.68,
+   "end": 21.9
+  },
+  {
+   "text": "the",
+   "start": 21.94,
+   "end": 22.02
+  },
+  {
+   "text": "wall.",
+   "start": 22.06,
+   "end": 22.28
+  },
+  {
+   "text": "One",
+   "start": 22.86,
+   "end": 23.04
+  },
+  {
+   "text": "passes",
+   "start": 23.14,
+   "end": 23.48
+  },
+  {
+   "text": "to",
+   "start": 23.52,
+   "end": 23.62
+  },
+  {
+   "text": "two",
+   "start": 23.68,
+   "end": 23.84
+  },
+  {
+   "text": "at",
+   "start": 23.88,
+   "end": 23.96
+  },
+  {
+   "text": "the",
+   "start": 24.0,
+   "end": 24.08
+  },
+  {
+   "text": "top",
+   "start": 24.12,
+   "end": 24.3
+  },
+  {
+   "text": "of",
+   "start": 24.32,
+   "end": 24.36
+  },
+  {
+   "text": "the",
+   "start": 24.4,
+   "end": 24.5
+  },
+  {
+   "text": "key.",
+   "start": 24.54,
+   "end": 24.76
+  },
+  {
+   "text": "Open",
+   "start": 25.18,
+   "end": 25.4
+  },
+  {
+   "text": "three.",
+   "start": 25.5,
+   "end": 25.78
+  },
+  {
+   "text": "The",
+   "start": 26.26,
+   "end": 26.36
+  },
+  {
+   "text": "defense",
+   "start": 26.4,
+   "end": 26.82
+  },
+  {
+   "text": "has",
+   "start": 26.86,
+   "end": 27.04
+  },
+  {
+   "text": "an",
+   "start": 27.08,
+   "end": 27.14
+  },
+  {
+   "text": "answer.",
+   "start": 27.22,
+   "end": 27.54
+  },
+  {
+   "text": "X2",
+   "start": 28.14,
+   "end": 28.42
+  },
+  {
+   "text": "can",
+   "start": 28.46,
+   "end": 28.58
+  },
+  {
+   "text": "get",
+   "start": 28.6,
+   "end": 28.7
+  },
+  {
+   "text": "ahead",
+   "start": 28.74,
+   "end": 28.96
+  },
+  {
+   "text": "of",
+   "start": 29.0,
+   "end": 29.06
+  },
+  {
+   "text": "the",
+   "start": 29.1,
+   "end": 29.14
+  },
+  {
+   "text": "shooter",
+   "start": 29.22,
+   "end": 29.56
+  },
+  {
+   "text": "to",
+   "start": 29.6,
+   "end": 29.68
+  },
+  {
+   "text": "cut",
+   "start": 29.72,
+   "end": 29.84
+  },
+  {
+   "text": "him",
+   "start": 29.86,
+   "end": 29.96
+  },
+  {
+   "text": "off,",
+   "start": 30.04,
+   "end": 30.28
+  },
+  {
+   "text": "so",
+   "start": 30.64,
+   "end": 30.76
+  },
+  {
+   "text": "two",
+   "start": 30.82,
+   "end": 31.0
+  },
+  {
+   "text": "reads",
+   "start": 31.06,
+   "end": 31.3
+  },
+  {
+   "text": "it",
+   "start": 31.36,
+   "end": 31.44
+  },
+  {
+   "text": "and",
+   "start": 31.6,
+   "end": 31.72
+  },
+  {
+   "text": "slips",
+   "start": 31.8,
+   "end": 32.06
+  },
+  {
+   "text": "back",
+   "start": 32.1,
+   "end": 32.299
+  },
+  {
+   "text": "down",
+   "start": 32.34,
+   "end": 32.52
+  },
+  {
+   "text": "the",
+   "start": 32.54,
+   "end": 32.619
+  },
+  {
+   "text": "lane",
+   "start": 32.659,
+   "end": 32.9
+  },
+  {
+   "text": "to",
+   "start": 32.94,
+   "end": 33.02
+  },
+  {
+   "text": "the",
+   "start": 33.06,
+   "end": 33.1
+  },
+  {
+   "text": "rim.",
+   "start": 33.18,
+   "end": 33.42
+  },
+  {
+   "text": "Same",
+   "start": 34.0,
+   "end": 34.18
+  },
+  {
+   "text": "action.",
+   "start": 34.28,
+   "end": 34.62
+  },
+  {
+   "text": "Two",
+   "start": 35.04,
+   "end": 35.18
+  },
+  {
+   "text": "reads.",
+   "start": 35.3,
+   "end": 35.66
+  }
+ ],
+ "display": {},
+ "emphasis": [
+  "elevator",
+  "doors",
+  "wall",
+  "three",
+  "reads",
+  "rim"
+ ],
+ "outro": {
+  "seconds": 1.2
+ },
+ "music": {
+  "story": "tactical"
+ },
+ "hook": "photo-line",
+ "ending": "surprise",
+ "sfxBudget": 2,
+ "sources": [
+  "Standard coaching literature (FIBA Coaching, USA Basketball coach education)",
+  "E2A original diagram",
+  "Images: Wikimedia Commons (credits on screen)"
+ ],
+ "scenes": [
+  {
+   "at": 0,
+   "type": "media",
+   "media": {
+    "src": "media/library/commons-47284302.jpg",
+    "kind": "photo",
+    "credit": "EuroLeague Final Four arena, Milan 2014 (not Belgrade) · Savino Paolella · CC BY 2.0",
+    "license": "CC BY 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Forum_Assago_Euroleague_Final_Four_2014.jpg",
+    "focus": [
+     0.5,
+     0.5
+    ]
+   },
+   "camera": "push-in",
+   "beats": [
+    "shooter",
+    "glued"
+   ]
+  },
+  {
+   "at": "You build",
+   "type": "headline",
+   "lines": [
+    "THE ELEVATOR",
+    "SCREEN"
+   ],
+   "accent": [
+    1
+   ],
+   "bg": {
+    "src": "media/library/commons-141377399.jpg",
+    "kind": "photo",
+    "credit": "Basketball hoop, 2023 · Daderot · CC0",
+    "license": "CC0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Basketball_hoop_with_chains_-_Arlington,_MA.jpg",
+    "focus": [
+     0.5,
+     0.4
+    ],
+    "treatment": "duotone"
+   },
+   "camera": "push-in",
+   "transition": "cut"
+  },
+  {
+   "at": "Here's",
+   "type": "court",
+   "court": {
+    "title": "ELEVATOR SCREEN",
+    "tracks": [
+     {
+      "id": "O1",
+      "side": "O",
+      "kf": [
+       [
+        5.22,
+        35,
+        26.5
+       ]
+      ]
+     },
+     {
+      "id": "O2",
+      "side": "O",
+      "kf": [
+       [
+        5.22,
+        25,
+        2
+       ],
+       [
+        15.2,
+        25,
+        2
+       ],
+       [
+        17.3,
+        25,
+        12
+       ],
+       [
+        18.8,
+        25,
+        19
+       ],
+       [
+        20.7,
+        25,
+        26
+       ],
+       [
+        22.4,
+        25,
+        29.5
+       ]
+      ]
+     },
+     {
+      "id": "O4",
+      "side": "O",
+      "kf": [
+       [
+        5.22,
+        21,
+        12
+       ],
+       [
+        18.76,
+        21,
+        12
+       ],
+       [
+        20.1,
+        23.2,
+        12
+       ]
+      ]
+     },
+     {
+      "id": "O5",
+      "side": "O",
+      "kf": [
+       [
+        5.22,
+        29,
+        12
+       ],
+       [
+        18.76,
+        29,
+        12
+       ],
+       [
+        20.1,
+        26.8,
+        12
+       ]
+      ]
+     },
+     {
+      "id": "X1",
+      "side": "X",
+      "kf": [
+       [
+        5.22,
+        31.8,
+        24.2
+       ]
+      ]
+     },
+     {
+      "id": "X2",
+      "side": "X",
+      "kf": [
+       [
+        5.22,
+        25,
+        4.5
+       ],
+       [
+        15.2,
+        25,
+        4.5
+       ],
+       [
+        17.3,
+        25,
+        9.2
+       ],
+       [
+        18.7,
+        25,
+        9.6
+       ],
+       [
+        23,
+        25,
+        9.6
+       ],
+       [
+        25.5,
+        27.5,
+        17
+       ]
+      ]
+     },
+     {
+      "id": "X4",
+      "side": "X",
+      "kf": [
+       [
+        5.22,
+        17.5,
+        14.2
+       ],
+       [
+        18.76,
+        17.5,
+        14.2
+       ],
+       [
+        20.5,
+        20.5,
+        15.6
+       ]
+      ]
+     },
+     {
+      "id": "X5",
+      "side": "X",
+      "kf": [
+       [
+        5.22,
+        32.5,
+        14.2
+       ],
+       [
+        18.76,
+        32.5,
+        14.2
+       ],
+       [
+        20.5,
+        29.5,
+        15.6
+       ]
+      ]
+     }
+    ],
+    "ball": [
+     [
+      5.22,
+      35,
+      26.5
+     ],
+     [
+      23.14,
+      35,
+      26.5
+     ],
+     [
+      24.5,
+      25,
+      29.5
+     ],
+     [
+      25.4,
+      25,
+      29.5
+     ],
+     [
+      26.0,
+      25,
+      5.25
+     ]
+    ],
+    "arrows": [
+     {
+      "t": 15.2,
+      "until": 23,
+      "pts": [
+       [
+        25,
+        3
+       ],
+       [
+        25,
+        12
+       ],
+       [
+        25,
+        24
+       ],
+       [
+        25,
+        28
+       ]
+      ],
+      "kind": "move"
+     },
+     {
+      "t": 18.76,
+      "until": 21.8,
+      "pts": [
+       [
+        21,
+        12
+       ],
+       [
+        23,
+        12
+       ]
+      ],
+      "kind": "screen"
+     },
+     {
+      "t": 18.76,
+      "until": 21.8,
+      "pts": [
+       [
+        29,
+        12
+       ],
+       [
+        27,
+        12
+       ]
+      ],
+      "kind": "screen"
+     },
+     {
+      "t": 23.14,
+      "until": 25,
+      "pts": [
+       [
+        34,
+        26.5
+       ],
+       [
+        26,
+        29.3
+       ]
+      ],
+      "kind": "pass"
+     },
+     {
+      "t": 25.5,
+      "pts": [
+       [
+        25,
+        29.3
+       ],
+       [
+        25,
+        6.5
+       ]
+      ],
+      "kind": "shot"
+     }
+    ],
+    "rings": [
+     {
+      "t": 21.3,
+      "until": 23,
+      "at": "X2",
+      "text": "STUCK",
+      "color": "#FF5A5F"
+     },
+     {
+      "t": 24.8,
+      "until": 26.2,
+      "at": "O2",
+      "text": "OPEN 3"
+     }
+    ],
+    "zones": [
+     {
+      "t": 10.9,
+      "until": 13.8,
+      "cx": 25,
+      "cy": 2.3,
+      "rx": 2.6,
+      "ry": 1.8,
+      "text": ""
+     },
+     {
+      "t": 18.9,
+      "until": 22,
+      "cx": 25,
+      "cy": 12,
+      "rx": 5,
+      "ry": 2.4,
+      "text": "DOORS"
+     }
+    ],
+    "steps": [
+     [
+      5.22,
+      "Two screeners, a gap"
+     ],
+     [
+      10.9,
+      "2 starts in the gap"
+     ],
+     [
+      15.0,
+      "2 sprints through"
+     ],
+     [
+      18.7,
+      "Doors close"
+     ],
+     [
+      21.3,
+      "X2 hits the wall"
+     ],
+     [
+      23.1,
+      "Pass: open three"
+     ]
+    ]
+   },
+   "camera": "static",
+   "transition": "cut"
+  },
+  {
+   "at": "The defense",
+   "type": "headline",
+   "lines": [
+    "THE DEFENCE",
+    "HAS AN ANSWER"
+   ],
+   "accent": [
+    1
+   ],
+   "bg": {
+    "src": "media/library/commons-8830791.jpg",
+    "kind": "photo",
+    "credit": "EuroLeague Final Four 2005 (generic) · Sportswikiman · CC BY-SA 3.0",
+    "license": "CC BY-SA 3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Marcus_Brown_Euroleague_Final_Four_2005.JPG",
+    "focus": [
+     0.5,
+     0.4
+    ],
+    "treatment": "blur"
+   },
+   "camera": "push-in",
+   "transition": "cut"
+  },
+  {
+   "at": 28.0,
+   "type": "court",
+   "court": {
+    "title": "THE COUNTER",
+    "tracks": [
+     {
+      "id": "O1",
+      "side": "O",
+      "kf": [
+       [
+        26.3,
+        35,
+        26.5
+       ]
+      ]
+     },
+     {
+      "id": "O2",
+      "side": "O",
+      "kf": [
+       [
+        26.3,
+        25,
+        2
+       ],
+       [
+        28.4,
+        25,
+        2
+       ],
+       [
+        29.8,
+        25,
+        8
+       ],
+       [
+        30.9,
+        25,
+        8.5
+       ],
+       [
+        32.3,
+        26.6,
+        7
+       ]
+      ]
+     },
+     {
+      "id": "O4",
+      "side": "O",
+      "kf": [
+       [
+        26.3,
+        21,
+        12
+       ]
+      ]
+     },
+     {
+      "id": "O5",
+      "side": "O",
+      "kf": [
+       [
+        26.3,
+        29,
+        12
+       ]
+      ]
+     },
+     {
+      "id": "X1",
+      "side": "X",
+      "kf": [
+       [
+        26.3,
+        31.8,
+        24.2
+       ]
+      ]
+     },
+     {
+      "id": "X2",
+      "side": "X",
+      "kf": [
+       [
+        26.3,
+        25,
+        4.5
+       ],
+       [
+        28.2,
+        25,
+        4.5
+       ],
+       [
+        29.7,
+        25,
+        12.8
+       ]
+      ]
+     },
+     {
+      "id": "X4",
+      "side": "X",
+      "kf": [
+       [
+        26.3,
+        17.5,
+        14.2
+       ]
+      ]
+     },
+     {
+      "id": "X5",
+      "side": "X",
+      "kf": [
+       [
+        26.3,
+        32.5,
+        14.2
+       ]
+      ]
+     }
+    ],
+    "ball": [
+     [
+      26.3,
+      35,
+      26.5
+     ],
+     [
+      31.3,
+      35,
+      26.5
+     ],
+     [
+      32.5,
+      26.6,
+      7
+     ],
+     [
+      32.9,
+      26.6,
+      7
+     ],
+     [
+      33.5,
+      25,
+      5.25
+     ]
+    ],
+    "arrows": [
+     {
+      "t": 28.2,
+      "until": 30.8,
+      "pts": [
+       [
+        25,
+        5.5
+       ],
+       [
+        25,
+        12.5
+       ]
+      ],
+      "kind": "chase"
+     },
+     {
+      "t": 30.9,
+      "until": 33,
+      "pts": [
+       [
+        25,
+        8.5
+       ],
+       [
+        26.6,
+        6.8
+       ]
+      ],
+      "kind": "move"
+     },
+     {
+      "t": 31.3,
+      "until": 32.6,
+      "pts": [
+       [
+        34,
+        26
+       ],
+       [
+        27,
+        8
+       ]
+      ],
+      "kind": "pass"
+     },
+     {
+      "t": 32.9,
+      "pts": [
+       [
+        26.6,
+        7
+       ],
+       [
+        25,
+        5.6
+       ]
+      ],
+      "kind": "shot"
+     }
+    ],
+    "rings": [
+     {
+      "t": 28.3,
+      "until": 30.2,
+      "at": "X2",
+      "text": "AHEAD",
+      "color": "#FF5A5F"
+     },
+     {
+      "t": 30.8,
+      "until": 32.4,
+      "at": "O2",
+      "text": "READ"
+     }
+    ],
+    "zones": [],
+    "steps": [
+     [
+      26.3,
+      "Defender gets ahead"
+     ],
+     [
+      30.8,
+      "Read: slip to the rim"
+     ]
+    ]
+   },
+   "camera": "static",
+   "transition": "cut"
+  },
+  {
+   "at": "Same",
+   "type": "headline",
+   "lines": [
+    "SAME ACTION.",
+    "TWO READS."
+   ],
+   "accent": [
+    1
+   ],
+   "bg": {
+    "src": "media/library/commons-8830791.jpg",
+    "kind": "photo",
+    "credit": "EuroLeague Final Four 2005 (generic) · Sportswikiman · CC BY-SA 3.0",
+    "license": "CC BY-SA 3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Marcus_Brown_Euroleague_Final_Four_2005.JPG",
+    "focus": [
+     0.5,
+     0.4
+    ],
+    "treatment": "tint"
+   },
+   "layout": "low",
+   "camera": "pull-out",
+   "transition": "cut"
+  }
+ ],
+ "social": {
+  "caption": "Elevator screens: the doors close, the shooter is free.",
+  "pinnedComment": "Elevator screens against a defender who gets ahead of the shooter: slip to the rim, or let him cut it off? Which read is easier to guard?",
+  "reply": "The two screeners close the gap right after the shooter passes, so his defender hits the wall. If the defender gets ahead, the shooter reads it and cuts back to the rim.",
+  "hashtags": [
+   "BasketballTactics",
+   "BasketballIQ",
+   "ElevatorScreen",
+   "EuropeanBasketball",
+   "E2A"
+  ]
+ }
+}
