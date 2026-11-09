@@ -1,0 +1,18 @@
+[
+ {
+  "track": "cine-02",
+  "story": "highlight",
+  "out": "public/music/2026-11-11-v1.mp3",
+  "episode": "2026-11-11-v1",
+  "hook": "stat-slam",
+  "ending": "fact"
+ },
+ {
+  "track": "cine-09",
+  "story": "tactical",
+  "out": "public/music/2026-11-11-v2.mp3",
+  "episode": "2026-11-11-v2",
+  "hook": "photo-line",
+  "ending": "surprise"
+ }
+]
