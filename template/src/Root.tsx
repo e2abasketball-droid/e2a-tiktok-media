@@ -6,6 +6,14 @@ import {PLANS, DUR} from './plans';
 import {Pro, proDuration} from './pro/Pro';
 import type {Episode} from './pro/types';
 import pilot from '../episodes/pilot.json';
+import {Tactical, tacticalDuration} from './tactical/Tactical';
+import type {TacticalEpisode} from './tactical/edit';
+import elevatorEdit from '../tactical/episodes/elevator-screen.json';
+import elevatorWords from '../tactical/episodes/elevator-screen.words.json';
+import playA from '../tactical/plays/elevator-a-chase.json';
+import playB from '../tactical/plays/elevator-b-switch.json';
+
+const elevator = {...elevatorEdit, words: elevatorWords, plays: {A: playA, B: playB}} as unknown as TacticalEpisode;
 
 export const FPS = 30;
 
@@ -42,6 +50,20 @@ export const Root: React.FC = () => (
       calculateMetadata={({props}) => {
         const fps = props.episode.fps ?? FPS;
         return {fps, durationInFrames: proDuration(props.episode, fps)};
+      }}
+    />
+    {/* Tactical engine (2.5D court, data-driven plays): render with --props={"episode": ...} from scripts/tactical-props.mjs */}
+    <Composition
+      id="Tactical"
+      component={Tactical}
+      durationInFrames={60 * 76}
+      fps={60}
+      width={1080}
+      height={1920}
+      defaultProps={{episode: elevator}}
+      calculateMetadata={({props}) => {
+        const fps = props.episode.fps ?? 60;
+        return {fps, durationInFrames: Math.ceil(tacticalDuration(props.episode) * fps)};
       }}
     />
   </>
