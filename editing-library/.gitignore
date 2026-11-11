@@ -1,0 +1,10 @@
+# frames, videos and audio never enter the library (public repository)
+frames/
+*.jpg
+*.jpeg
+*.png
+*.mp4
+*.mov
+*.m4a
+*.mp3
+*.wav

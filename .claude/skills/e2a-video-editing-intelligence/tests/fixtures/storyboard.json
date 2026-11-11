@@ -1,0 +1,447 @@
+{
+ "id": "test-storyboard",
+ "title": "TEST storyboard for the editing-intelligence skill (not for publication)",
+ "style": "player",
+ "voice": "audio/test-storyboard.mp3",
+ "words": [
+  {
+   "text": "Eighteen",
+   "start": 0.0,
+   "end": 0.394
+  },
+  {
+   "text": "seasons.",
+   "start": 0.424,
+   "end": 0.79
+  },
+  {
+   "text": "One",
+   "start": 1.04,
+   "end": 1.294
+  },
+  {
+   "text": "team.",
+   "start": 1.324,
+   "end": 1.606
+  },
+  {
+   "text": "Reggie",
+   "start": 1.856,
+   "end": 2.194
+  },
+  {
+   "text": "Miller",
+   "start": 2.224,
+   "end": 2.562
+  },
+  {
+   "text": "played",
+   "start": 2.592,
+   "end": 2.93
+  },
+  {
+   "text": "every",
+   "start": 2.96,
+   "end": 3.27
+  },
+  {
+   "text": "one",
+   "start": 3.3,
+   "end": 3.554
+  },
+  {
+   "text": "of",
+   "start": 3.584,
+   "end": 3.81
+  },
+  {
+   "text": "them",
+   "start": 3.84,
+   "end": 4.122
+  },
+  {
+   "text": "for",
+   "start": 4.152,
+   "end": 4.406
+  },
+  {
+   "text": "the",
+   "start": 4.436,
+   "end": 4.69
+  },
+  {
+   "text": "Pacers.",
+   "start": 4.72,
+   "end": 5.058
+  },
+  {
+   "text": "No",
+   "start": 5.308,
+   "end": 5.534
+  },
+  {
+   "text": "trade.",
+   "start": 5.564,
+   "end": 5.874
+  },
+  {
+   "text": "No",
+   "start": 6.124,
+   "end": 6.35
+  },
+  {
+   "text": "move.",
+   "start": 6.38,
+   "end": 6.662
+  },
+  {
+   "text": "Just",
+   "start": 6.912,
+   "end": 7.194
+  },
+  {
+   "text": "Indiana.",
+   "start": 7.224,
+   "end": 7.59
+  },
+  {
+   "text": "When",
+   "start": 7.84,
+   "end": 8.122
+  },
+  {
+   "text": "he",
+   "start": 8.152,
+   "end": 8.378
+  },
+  {
+   "text": "retired",
+   "start": 8.408,
+   "end": 8.774
+  },
+  {
+   "text": "in",
+   "start": 8.804,
+   "end": 9.03
+  },
+  {
+   "text": "two",
+   "start": 9.06,
+   "end": 9.314
+  },
+  {
+   "text": "thousand",
+   "start": 9.344,
+   "end": 9.738
+  },
+  {
+   "text": "five,",
+   "start": 9.768,
+   "end": 10.05
+  },
+  {
+   "text": "nobody",
+   "start": 10.18,
+   "end": 10.518
+  },
+  {
+   "text": "in",
+   "start": 10.548,
+   "end": 10.774
+  },
+  {
+   "text": "league",
+   "start": 10.804,
+   "end": 11.142
+  },
+  {
+   "text": "history",
+   "start": 11.172,
+   "end": 11.538
+  },
+  {
+   "text": "had",
+   "start": 11.568,
+   "end": 11.822
+  },
+  {
+   "text": "made",
+   "start": 11.852,
+   "end": 12.134
+  },
+  {
+   "text": "more",
+   "start": 12.164,
+   "end": 12.446
+  },
+  {
+   "text": "threes.",
+   "start": 12.476,
+   "end": 12.814
+  },
+  {
+   "text": "Two",
+   "start": 13.064,
+   "end": 13.318
+  },
+  {
+   "text": "thousand",
+   "start": 13.348,
+   "end": 13.742
+  },
+  {
+   "text": "five",
+   "start": 13.772,
+   "end": 14.054
+  },
+  {
+   "text": "hundred",
+   "start": 14.084,
+   "end": 14.45
+  },
+  {
+   "text": "sixty",
+   "start": 14.48,
+   "end": 14.79
+  },
+  {
+   "text": "of",
+   "start": 14.82,
+   "end": 15.046
+  },
+  {
+   "text": "them.",
+   "start": 15.076,
+   "end": 15.358
+  },
+  {
+   "text": "Ray",
+   "start": 15.608,
+   "end": 15.862
+  },
+  {
+   "text": "Allen",
+   "start": 15.892,
+   "end": 16.202
+  },
+  {
+   "text": "needed",
+   "start": 16.232,
+   "end": 16.57
+  },
+  {
+   "text": "until",
+   "start": 16.6,
+   "end": 16.91
+  },
+  {
+   "text": "twenty",
+   "start": 16.94,
+   "end": 17.278
+  },
+  {
+   "text": "eleven",
+   "start": 17.308,
+   "end": 17.646
+  },
+  {
+   "text": "to",
+   "start": 17.676,
+   "end": 17.902
+  },
+  {
+   "text": "pass",
+   "start": 17.932,
+   "end": 18.214
+  },
+  {
+   "text": "him.",
+   "start": 18.244,
+   "end": 18.498
+  },
+  {
+   "text": "Loyalty",
+   "start": 18.748,
+   "end": 19.114
+  },
+  {
+   "text": "and",
+   "start": 19.144,
+   "end": 19.398
+  },
+  {
+   "text": "range,",
+   "start": 19.428,
+   "end": 19.738
+  },
+  {
+   "text": "in",
+   "start": 19.868,
+   "end": 20.094
+  },
+  {
+   "text": "one",
+   "start": 20.124,
+   "end": 20.378
+  },
+  {
+   "text": "career.",
+   "start": 20.408,
+   "end": 20.746
+  }
+ ],
+ "display": {
+  "two thousand five": "2005",
+  "two thousand five hundred sixty": "2,560",
+  "twenty eleven": "2011"
+ },
+ "emphasis": [
+  "Pacers",
+  "threes",
+  "Loyalty"
+ ],
+ "scenes": [
+  {
+   "at": 0,
+   "type": "stat",
+   "value": 18,
+   "label": "SEASONS · ONE TEAM",
+   "camera": "push-in",
+   "bg": {
+    "src": "media/miller/miller-2003-pacers.jpg",
+    "kind": "photo",
+    "credit": "Photo: MavsFan28 · CC BY-SA 4.0",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Reggie_Miller_2003.jpg",
+    "focus": [
+     0.5,
+     0.3
+    ],
+    "treatment": "duotone"
+   },
+   "beats": [
+    "One team"
+   ]
+  },
+  {
+   "at": "Reggie Miller played",
+   "type": "media",
+   "media": {
+    "src": "media/miller/miller-2003-pacers.jpg",
+    "kind": "photo",
+    "credit": "Photo: MavsFan28 · CC BY-SA 4.0",
+    "license": "CC BY-SA 4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Reggie_Miller_2003.jpg",
+    "focus": [
+     0.5,
+     0.3
+    ]
+   },
+   "camera": "pan-right",
+   "transition": "cut",
+   "beats": [
+    "for the Pacers"
+   ]
+  },
+  {
+   "at": "No trade",
+   "type": "headline",
+   "lines": [
+    "NO TRADE.",
+    "JUST INDIANA."
+   ],
+   "accent": [
+    1
+   ],
+   "camera": "drift",
+   "transition": "punch",
+   "beats": [
+    "Just Indiana"
+   ]
+  },
+  {
+   "at": "When he retired",
+   "type": "media",
+   "media": {
+    "src": "media/miller/miller-2008-tnt.jpg",
+    "kind": "photo",
+    "credit": "Photo: Keith Allison · CC BY-SA 2.0",
+    "license": "CC BY-SA 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Reggie_Miller_TNT.jpg",
+    "focus": [
+     0.5,
+     0.3
+    ]
+   },
+   "camera": "push-in",
+   "transition": "cut",
+   "beats": [
+    "nobody",
+    "made more threes"
+   ]
+  },
+  {
+   "at": "Two thousand five hundred",
+   "type": "stat",
+   "value": 2560,
+   "label": "THREES MADE",
+   "camera": "pull-out",
+   "transition": "flash",
+   "beats": [
+    "sixty of them"
+   ]
+  },
+  {
+   "at": "Ray Allen",
+   "type": "headline",
+   "lines": [
+    "UNTIL 2011"
+   ],
+   "accent": [
+    0
+   ],
+   "camera": "tilt-up",
+   "transition": "slide-up",
+   "bg": {
+    "src": "media/miller/miller-2008-tnt.jpg",
+    "kind": "photo",
+    "credit": "Photo: Keith Allison · CC BY-SA 2.0",
+    "license": "CC BY-SA 2.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Reggie_Miller_TNT.jpg",
+    "focus": [
+     0.5,
+     0.3
+    ],
+    "treatment": "blur"
+   },
+   "beats": [
+    "to pass him"
+   ]
+  },
+  {
+   "at": "Loyalty and range",
+   "type": "stat",
+   "value": 18,
+   "label": "SEASONS IN INDIANA",
+   "camera": "push-in",
+   "transition": "cut"
+  }
+ ],
+ "outro": {
+  "seconds": 1.2
+ },
+ "music": {
+  "story": "player"
+ },
+ "hook": "stat-slam",
+ "ending": "fact",
+ "sfxBudget": 2,
+ "social": {
+  "caption": "18 seasons, one team, 2,560 threes.",
+  "pinnedComment": "Is loyalty to one franchise underrated in today's NBA?"
+ },
+ "sources": [
+  "https://www.basketball-reference.com/players/m/millere01.html",
+  "https://www.nba.com/news/history-ray-allen-breaks-reggie-millers-3-point-record"
+ ]
+}

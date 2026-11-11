@@ -3,18 +3,22 @@
   {
    "ref_id": "R-0001",
    "source_key": "1Gj0YIIo8BOXcu3rO5ctWSjpYGgaXzsZa",
-   "source_title": "PRUEBA — vídeo propio E2A Wembanyama EP03.mp4",
+   "source_title": "Vídeo propio E2A Wembanyama EP03 (prueba)",
    "kind": "file",
+   "rights": "propio",
    "status": "analyzed",
    "reason": "",
    "sha256": "8b9b39ba79612650fb4418cba593fe403976ae2c1133d20429ca17de76ea282c",
-   "analyzed_at": "2026-11-11T15:19:39Z",
+   "analyzed_at": "2026-11-11T15:48:32Z",
+   "content_sha256": "2992d55202c8aae92e5eeaf08066199e17acb438444201446dd4081ffffe8594",
    "cards": [
     "tec-0001",
     "tec-0002",
-    "tec-0003"
+    "tec-0003",
+    "tec-0004",
+    "tec-0005"
    ],
-   "summary": "Vídeo propio E2A (prueba). 49.5 s, 17 planos, mediana 1.9 s, 3.2 cortes/10 s, 97% planos estáticos, 65% transiciones animadas. Tipografía azul/dorado con cifras que crecen, gráfico de barras y cierre con pregunta + logo en silencio (2.9 s). -14.1 LUFS."
+   "summary": "Vídeo propio E2A (prueba). 49.5 s, 18 planos, mediana 1.85 s, 3.4 cortes/10 s, casi todo estático con transiciones animadas; subtítulos blancos al 88% con palabra clave en color; cierre con 2.9 s de silencio. -14.1 LUFS."
   },
   {
    "ref_id": "R-0002",
@@ -24,7 +28,7 @@
    "status": "failed",
    "reason": "enlace no descargable desde la nube; sube el vídeo como archivo",
    "sha256": "",
-   "analyzed_at": "2026-11-11T15:19:39Z",
+   "analyzed_at": "2026-11-11T15:41:22Z",
    "cards": [],
    "summary": "Enlace de Instagram (prueba). No descargable desde la nube."
   }

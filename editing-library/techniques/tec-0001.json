@@ -1,0 +1,82 @@
+{
+ "schema": "e2a.technique/1",
+ "version": 2,
+ "origen": "R-0001 (vídeo propio E2A, prueba del sistema)",
+ "estado": "propuesta",
+ "requiere_codigo": false,
+ "creada": "2026-11-11",
+ "actualizada": "2026-11-11",
+ "historial": [
+  {
+   "fecha": "2026-11-11",
+   "de": "fase 1",
+   "a": "e2a.technique/1",
+   "motivo": "migrada al formato de la skill e2a-video-editing-intelligence v1"
+  }
+ ],
+ "id": "tec-0001",
+ "nombre": "Cifra que crece en un plano largo y estático",
+ "categoria": "animacion",
+ "descripcion": "La cifra protagonista arranca en 0 y sube hasta su valor final dentro de un único plano estático y largo, mientras la voz explica el contexto; el resto del vídeo mantiene planos cortos, así el plano largo se percibe como pausa de énfasis. Observado a ojo en la hoja de fotogramas (contador 0.0 → 29.1) y confirmado por la medida del plano más largo.",
+ "para": [
+  "record",
+  "player",
+  "comparison"
+ ],
+ "evitar_en": [
+  "tactical"
+ ],
+ "aplicar_a": {
+  "scene_type": "stat",
+  "posicion": "mas_larga"
+ },
+ "receta": {
+  "scene": {
+   "transition": "slide-up",
+   "camera": "static"
+  },
+  "sfx": [
+   "tick"
+  ]
+ },
+ "comprobacion": {
+  "texto": "la escena de la cifra principal dura entre 4 y 9 s con cámara estática, y la mediana de las escenas no pasa de 3 s",
+  "reglas": [
+   {
+    "metrica": "plan.escena_s",
+    "op": ">=",
+    "valor": 4
+   },
+   {
+    "metrica": "plan.escena_s",
+    "op": "<=",
+    "valor": 9
+   },
+   {
+    "metrica": "plan.mediana_escenas_s",
+    "op": "<=",
+    "valor": 3
+   }
+  ]
+ },
+ "evidencia": [
+  {
+   "ref_id": "R-0001",
+   "medidas": {
+    "plano_largo_s": 8.5,
+    "plano_largo_inicio_s": 18.3,
+    "mediana_planos_s": 1.85,
+    "cortes_por_10s": 3.43
+   },
+   "nivel": "observacion"
+  },
+  {
+   "ref_id": "R-0001",
+   "medidas": {
+    "contador_0_a_29_1": true
+   },
+   "nivel": "hipotesis",
+   "nota": "la cifra que sube se ve en la hoja de fotogramas (12.5–17.1 s)"
+  }
+ ]
+}

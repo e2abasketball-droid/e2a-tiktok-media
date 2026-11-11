@@ -1,0 +1,8 @@
+{
+ "name": "E2A editing technique library",
+ "version": "1.0.0",
+ "analysis_schema": "e2a.analysis/1",
+ "technique_schema": "e2a.technique/1",
+ "updated": "2026-11-11T16:00:00Z",
+ "mode": "shadow"
+}
