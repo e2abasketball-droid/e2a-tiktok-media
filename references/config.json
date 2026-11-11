@@ -1,0 +1,19 @@
+{
+  "drive": {
+    "root": "1-eyx-Jf8K1C9MBuAzAGcU1AoLWk70G24",
+    "inbox": "1RQoclI6Ok8T4UOZuf6iRbAunCJ-_Tw0E",
+    "analyzed": "1nZRyt-qIpk00C-R1lGhPhBhFvxV2M_A-",
+    "techniques": "1eBEE4sr6uyQKbV7nlTwhrfv7bzB3A-NA",
+    "failed": "1Ap0_TiqLKQ_0bTy0RBxArPu2h_8h0x86",
+    "links_sheet": "138L-0I4WMb0_fF7Sz5pLY3n2P3HBMiyW3ZluhZ03-Yw",
+    "links_range": "Untitled!A2:F200",
+    "readme_doc": "1fgX_6s0O3JhoJw_j6RNo2BXRC2iZdrh5q8ze0lH_s0M"
+  },
+  "limits": {
+    "max_refs_per_run": 3,
+    "max_minutes_per_run": 20,
+    "max_download_mb": 10,
+    "elevenlabs_credits": 0
+  },
+  "mode": "shadow"
+}

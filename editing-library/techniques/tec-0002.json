@@ -1,0 +1,86 @@
+{
+ "schema": "e2a.technique/1",
+ "version": 2,
+ "origen": "R-0001 (vídeo propio E2A, prueba del sistema)",
+ "estado": "propuesta",
+ "requiere_codigo": false,
+ "creada": "2026-11-11",
+ "actualizada": "2026-11-11",
+ "historial": [
+  {
+   "fecha": "2026-11-11",
+   "de": "fase 1",
+   "a": "e2a.technique/1",
+   "motivo": "migrada al formato de la skill e2a-video-editing-intelligence v1"
+  }
+ ],
+ "id": "tec-0002",
+ "nombre": "Titular corto con una sola palabra clave en dorado",
+ "categoria": "tipografia",
+ "descripcion": "Cada bloque abre con un titular de dos o tres palabras en blanco sobre azul marino y una única palabra resaltada en dorado, colocado en el tercio superior; la cifra o el gráfico ocupan el centro y el subtítulo de voz va abajo, con su palabra clave también en dorado. Juzgado a ojo; la ocupación de bandas de texto está medida.",
+ "para": [
+  "record",
+  "player",
+  "curiosity",
+  "comparison"
+ ],
+ "evitar_en": [],
+ "aplicar_a": {
+  "scene_type": "headline",
+  "posicion": "cualquiera"
+ },
+ "receta": {
+  "scene": {
+   "layout": "high",
+   "transition": "cut"
+  }
+ },
+ "comprobacion": {
+  "texto": "como máximo una palabra en dorado por titular y texto en pantalla en al menos el 60% de los fotogramas del render",
+  "reglas": [
+   {
+    "metrica": "text.texto_en_pantalla_pct",
+    "op": ">=",
+    "valor": 0.6
+   },
+   {
+    "metrica": "plan.escena_s",
+    "op": "<=",
+    "valor": 4
+   }
+  ]
+ },
+ "evidencia": [
+  {
+   "ref_id": "R-0001",
+   "medidas": {
+    "texto_en_pantalla_pct": 0.992,
+    "franjas_ocupadas": [
+     {
+      "y_pct": 8,
+      "presencia": 0.94
+     },
+     {
+      "y_pct": 18,
+      "presencia": 0.55
+     },
+     {
+      "y_pct": 28,
+      "presencia": 0.22
+     },
+     {
+      "y_pct": 38,
+      "presencia": 0.19
+     }
+    ]
+   },
+   "nivel": "estimacion"
+  },
+  {
+   "ref_id": "R-0001",
+   "medidas": {},
+   "nivel": "hipotesis",
+   "nota": "una palabra dorada por titular, vista en la hoja de fotogramas"
+  }
+ ]
+}

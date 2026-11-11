@@ -1,0 +1,59 @@
+{
+ "video": "sb_render.mp4",
+ "tecnicas": [
+  {
+   "tecnica": "tec-0004",
+   "metrica": "retention.primer_corte_s",
+   "op": "<=",
+   "valor": 2.5,
+   "medido": 0.8,
+   "cumple": true
+  },
+  {
+   "tecnica": "tec-0002",
+   "metrica": "text.texto_en_pantalla_pct",
+   "op": ">=",
+   "valor": 0.6,
+   "medido": 0.892,
+   "cumple": true
+  }
+ ],
+ "estandares": [
+  {
+   "codigo": "R1",
+   "ok": true,
+   "detalle": "resolución 1080x1920 (1080x1920)"
+  },
+  {
+   "codigo": "R2",
+   "ok": true,
+   "detalle": "30.0 fps (30 o 60)"
+  },
+  {
+   "codigo": "R3",
+   "ok": true,
+   "detalle": "sonoridad -14.1 LUFS (−14 ± 1)"
+  },
+  {
+   "codigo": "R4",
+   "ok": true,
+   "detalle": "pico real -1.1 dBFS (≤ −1.0)"
+  },
+  {
+   "codigo": "R5",
+   "ok": true,
+   "detalle": "primer cambio de plano a 0.8 s (≤ 2.5)"
+  },
+  {
+   "codigo": "R6",
+   "ok": true,
+   "detalle": "mayor tramo sin cambio visual 2.7 s (≤ 4)"
+  },
+  {
+   "codigo": "R7",
+   "ok": true,
+   "detalle": "duración 22.2 s frente a 22.2 s del plan"
+  }
+ ],
+ "ok": true
+}

@@ -1,0 +1,62 @@
+{
+ "schema": "e2a.technique/1",
+ "id": "tec-0004",
+ "version": 1,
+ "nombre": "Gancho legible sin sonido con cambio antes de 1 s",
+ "categoria": "narrativa",
+ "descripcion": "El primer segundo ya se entiende sin sonido: la cifra del gancho está en pantalla desde el fotograma 1 y la imagen cambia antes de 1 s (la cifra se completa con un segundo y tercer dato). Para E2A: primera escena corta, corte seco y empuje suave de cámara mientras la voz arranca.",
+ "para": [
+  "record",
+  "player",
+  "comparison",
+  "curiosity"
+ ],
+ "evitar_en": [
+  "tactical"
+ ],
+ "aplicar_a": {
+  "posicion": "primera"
+ },
+ "receta": {
+  "scene": {
+   "transition": "cut",
+   "camera": "push-in"
+  }
+ },
+ "comprobacion": {
+  "texto": "la primera escena dura 2.5 s o menos y el primer corte del render llega antes de 2.5 s",
+  "reglas": [
+   {
+    "metrica": "plan.escena_s",
+    "op": "<=",
+    "valor": 2.5
+   },
+   {
+    "metrica": "retention.primer_corte_s",
+    "op": "<=",
+    "valor": 2.5
+   }
+  ]
+ },
+ "evidencia": [
+  {
+   "ref_id": "R-0001",
+   "medidas": {
+    "primer_corte_s": 0.2,
+    "texto_antes_de_1s": true
+   },
+   "nivel": "observacion"
+  },
+  {
+   "ref_id": "R-0001",
+   "medidas": {},
+   "nivel": "hipotesis",
+   "nota": "52 POINTS en pantalla a 0.7 s y lista de tres cifras a 3.2 s (hoja de fotogramas)"
+  }
+ ],
+ "origen": "R-0001 (propio)",
+ "estado": "propuesta",
+ "requiere_codigo": false,
+ "creada": "2026-11-11",
+ "actualizada": "2026-11-11"
+}
