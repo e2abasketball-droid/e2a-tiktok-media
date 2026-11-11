@@ -66,10 +66,11 @@ Ver `template/TACTICAL.md`. Resumen:
 |---|---|
 | Tests tácticos (60 comprobaciones, cubren los 12 puntos del brief) | **60/60** (`tactical-tests.json`) |
 | QC de motor, fotograma a fotograma (jugadores en cuadro, cámara sin saltos, reloj de juego) | **12/12 planos ok** (`qc-engine.json`) |
-| Formato del MP4 | ver `qc-final.txt` |
-| QC de la skill R1–R7 | ver `qc-final.txt` |
-| Fotogramas negros / congelados no intencionados | ver `qc-final.txt` |
-| Revisión visual (render v1 → v2) | ver errores 13–14 |
+| Formato del MP4 | **1080×1920, 60 fps, H.264 yuv420p, AAC 48 kHz, 75,5 s, 51,7 MB** |
+| QC de la skill R1–R7 | **ok** (0 estándares y 0 reglas fallidas) |
+| Fotogramas negros (≥0,1 s) | **ninguno** |
+| Sonoridad | **−14,2 LUFS integrados, LRA 3,8 LU** |
+| Revisión visual (render v1 → v2) | 24 capturas por versión; correcciones 13–14 aplicadas y verificadas en el MP4 final |
 
 **Errores encontrados y corregidos** (no se oculta ninguno):
 
