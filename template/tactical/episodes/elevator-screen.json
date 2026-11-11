@@ -1,0 +1,1417 @@
+{
+ "id": "elevator-screen",
+ "title": "The Elevator Screen: Two Ways to Punish the Defense",
+ "fps": 60,
+ "voiceRaw": "tactical/elevator/voice-raw.mp3",
+ "wordsRaw": "elevator-screen.words-raw.json",
+ "voice": "tactical/elevator/voice.wav",
+ "preroll": 0.7,
+ "tail": 2.4,
+ "pauses": [
+  {
+   "after": "This is the elevator screen.",
+   "sec": 1.3
+  },
+  {
+   "after": "Here's how it works.",
+   "sec": 0.5
+  },
+  {
+   "after": "leaving a narrow opening.",
+   "sec": 0.5
+  },
+  {
+   "after": "close the gap like elevator doors.",
+   "sec": 1.1
+  },
+  {
+   "after": "Watch what happens.",
+   "sec": 0.9
+  },
+  {
+   "after": "Catch. Shoot. Three points.",
+   "sec": 1.5
+  },
+  {
+   "after": "So the offense reads the switch.",
+   "sec": 0.9
+  },
+  {
+   "after": "a layup opportunity instead.",
+   "sec": 1.5
+  },
+  {
+   "after": "so dangerous.",
+   "sec": 0.6
+  },
+  {
+   "after": "slip to the rim.",
+   "sec": 0.5
+  }
+ ],
+ "plays": {
+  "A": "elevator-a-chase",
+  "B": "elevator-b-switch"
+ },
+ "emphasis": [
+  "elevator",
+  "screen",
+  "gap",
+  "chase",
+  "switch",
+  "switches",
+  "slip",
+  "slips",
+  "three",
+  "layup",
+  "doors",
+  "read",
+  "defense",
+  "open"
+ ],
+ "shots": [
+  {
+   "id": "s01-hook",
+   "name": "Hook: defender POV",
+   "at": 0,
+   "play": "A",
+   "hide": [
+    "X2"
+   ],
+   "remap": [
+    [
+     0,
+     0.95
+    ],
+    [
+     1,
+     1.35
+    ],
+    [
+     3,
+     1.75
+    ],
+    [
+     5,
+     2.32,
+     "out"
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "cam": {
+      "mode": "pov",
+      "player": "X2",
+      "look": "O2",
+      "height": 2.9,
+      "back": 2.6,
+      "fov": 60,
+      "lookZ": 0.6
+     }
+    },
+    {
+     "at": 5,
+     "cam": {
+      "mode": "pov",
+      "player": "X2",
+      "look": "O2",
+      "height": 2.9,
+      "back": 2.6,
+      "fov": 60,
+      "lookZ": 0.6
+     }
+    },
+    {
+     "at": 7.9,
+     "cam": {
+      "mode": "pov",
+      "player": "X2",
+      "look": "O2",
+      "height": 2.9,
+      "back": 2.6,
+      "fov": 60,
+      "lookZ": 0.6
+     }
+    }
+   ],
+   "overlays": [
+    {
+     "type": "kicker",
+     "from": 0.15,
+     "to": 4.6,
+     "text": "DEFENDER'S VIEW"
+    },
+    {
+     "type": "corridor",
+     "from": "tiny gap",
+     "to": 4.2,
+     "a": "O4",
+     "b": "O5",
+     "label": "THE GAP"
+    },
+    {
+     "type": "doors",
+     "from": 4,
+     "a": "O4",
+     "b": "O5",
+     "contact": "contact"
+    },
+    {
+     "type": "freeze",
+     "from": 5,
+     "label": "FREEZE"
+    },
+    {
+     "type": "title",
+     "from": 5.05,
+     "text": "TRAPPED.",
+     "size": 190,
+     "y": 330,
+     "accent": [
+      "TRAPPED."
+     ]
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0.35,
+     "name": "squeak",
+     "volume": 0.25
+    },
+    {
+     "at": 4.98,
+     "name": "impact",
+     "volume": 0.4
+    },
+    {
+     "at": 5.05,
+     "name": "shutter",
+     "volume": 0.3
+    }
+   ]
+  },
+  {
+   "id": "s02-reveal",
+   "name": "Rewind and reveal",
+   "at": "This is the elevator",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     2.32
+    ],
+    [
+     1.1,
+     0,
+     "inOut"
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "cam": {
+      "mode": "pov",
+      "player": "X2",
+      "look": "O2",
+      "height": 2.9,
+      "back": 2.6,
+      "fov": 60,
+      "lookZ": 0.6,
+      "at": 2.32
+     }
+    },
+    {
+     "at": 3.25,
+     "cam": "top"
+    }
+   ],
+   "overlays": [
+    {
+     "type": "rewind",
+     "from": 0,
+     "to": 1.15
+    },
+    {
+     "type": "title",
+     "from": "elevator screen",
+     "text": "THE ELEVATOR SCREEN",
+     "size": 100,
+     "y": 250,
+     "accent": [
+      "ELEVATOR"
+     ]
+    },
+    {
+     "type": "corridor",
+     "from": 1.7,
+     "a": "O4",
+     "b": "O5",
+     "label": "THE GAP"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "reverse_cymbal",
+     "volume": 0.3
+    },
+    {
+     "at": 1,
+     "name": "whoosh",
+     "volume": 0.2
+    }
+   ],
+   "hide": [
+    "X2"
+   ],
+   "hideUntil": 1
+  },
+  {
+   "id": "s03-setup",
+   "name": "The setup",
+   "at": "Here's how it works",
+   "offset": -0.15,
+   "play": "A",
+   "focus": "O",
+   "remap": [
+    [
+     0,
+     0
+    ],
+    [
+     "The shooter cuts",
+     0
+    ],
+    [
+     "between them",
+     1.45
+    ],
+    [
+     7.8,
+     1.6,
+     "out"
+    ],
+    [
+     "the screeners close",
+     1.6
+    ],
+    [
+     "doors",
+     2.15,
+     "inOut"
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "cam": "top"
+    },
+    {
+     "at": "side by side",
+     "cam": "gapTop"
+    },
+    {
+     "at": "leaving a narrow",
+     "cam": "gapTop"
+    },
+    {
+     "at": "between them",
+     "cam": "gapClose"
+    }
+   ],
+   "overlays": [
+    {
+     "type": "ring",
+     "from": "Two players set",
+     "to": "The shooter cuts",
+     "player": "O4",
+     "label": "SCREENER",
+     "tone": "gold"
+    },
+    {
+     "type": "ring",
+     "from": "side by side",
+     "to": "The shooter cuts",
+     "player": "O5",
+     "label": "SCREENER",
+     "tone": "gold"
+    },
+    {
+     "type": "corridor",
+     "from": "leaving a narrow",
+     "a": "O4",
+     "b": "O5",
+     "label": "NARROW GAP"
+    },
+    {
+     "type": "route",
+     "from": "The shooter cuts",
+     "player": "O2",
+     "t0": 0.45,
+     "t1": 2.6,
+     "mode": "progressive"
+    },
+    {
+     "type": "timing",
+     "from": "The shooter cuts",
+     "phases": [
+      {
+       "label": "CUT",
+       "t": "cut"
+      },
+      {
+       "label": "THROUGH",
+       "t": "inGap"
+      },
+      {
+       "label": "DOORS CLOSE",
+       "t": "doorsClosed"
+      }
+     ]
+    },
+    {
+     "type": "freeze",
+     "from": 7.8,
+     "to": "the screeners close",
+     "label": "THROUGH THE GAP"
+    },
+    {
+     "type": "doors",
+     "from": "the screeners close",
+     "a": "O4",
+     "b": "O5"
+    },
+    {
+     "type": "title",
+     "from": "like elevator doors",
+     "text": "LIKE ELEVATOR DOORS",
+     "size": 80,
+     "y": 250,
+     "accent": [
+      "DOORS"
+     ]
+    },
+    {
+     "type": "label",
+     "from": "doors",
+     "at": [
+      0,
+      5.8,
+      2.6
+     ],
+     "text": "SCREEN SET",
+     "tone": "white"
+    }
+   ],
+   "sfx": [
+    {
+     "at": "side by side",
+     "name": "whoosh",
+     "volume": 0.15
+    },
+    {
+     "at": 7.8,
+     "name": "tick",
+     "volume": 0.3
+    },
+    {
+     "at": "doors",
+     "name": "impact",
+     "volume": 0.25
+    }
+   ]
+  },
+  {
+   "id": "s04-caseA",
+   "name": "Case A at real speed",
+   "at": "First scenario",
+   "offset": -0.2,
+   "play": "A",
+   "enter": "whip",
+   "remap": [
+    [
+     0,
+     0
+    ],
+    [
+     2.82,
+     0
+    ],
+    [
+     7,
+     4.18
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "cam": "broadcastHigh"
+    },
+    {
+     "at": 2.6,
+     "cam": "broadcast"
+    }
+   ],
+   "overlays": [
+    {
+     "type": "title",
+     "from": 0,
+     "to": 2.7,
+     "text": "CASE A — CHASE",
+     "size": 120,
+     "y": 300,
+     "accent": [
+      "CHASE"
+     ]
+    },
+    {
+     "type": "kicker",
+     "from": 2.7,
+     "text": "CASE A — CHASE"
+    },
+    {
+     "type": "ring",
+     "from": "the defender follows",
+     "to": 2.85,
+     "player": "X2",
+     "label": "X2 CHASES",
+     "tone": "red"
+    },
+    {
+     "type": "route",
+     "from": 2.82,
+     "player": "O2",
+     "t0": 0.45,
+     "t1": 2.6
+    },
+    {
+     "type": "route",
+     "from": 2.82,
+     "player": "X2",
+     "t0": 0.5,
+     "t1": 3.75
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whip",
+     "volume": 0.25
+    },
+    {
+     "at": 3.5,
+     "name": "squeak",
+     "volume": 0.2
+    },
+    {
+     "at": 6.95,
+     "name": "swish",
+     "volume": 0.45
+    }
+   ]
+  },
+  {
+   "id": "s05-replayA",
+   "name": "Case A replay from above",
+   "at": "the defender gets caught",
+   "offset": 0,
+   "play": "A",
+   "enter": "flash",
+   "remap": [
+    [
+     0,
+     1.45
+    ],
+    [
+     "behind the screens",
+     2.2,
+     "out"
+    ],
+    [
+     "delivers",
+     2.2
+    ],
+    [
+     "right on time",
+     2.45
+    ],
+    [
+     4.6,
+     2.6,
+     "out"
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "cam": {
+      "preset": "topTight",
+      "target": [
+       0.6,
+       6.6,
+       0
+      ]
+     }
+    }
+   ],
+   "overlays": [
+    {
+     "type": "kicker",
+     "from": 0,
+     "text": "REPLAY · CASE A"
+    },
+    {
+     "type": "trail",
+     "from": 0,
+     "player": "X2",
+     "len": 1.4
+    },
+    {
+     "type": "doors",
+     "from": 0,
+     "a": "O4",
+     "b": "O5",
+     "contact": "contact"
+    },
+    {
+     "type": "ring",
+     "from": "caught",
+     "to": "behind the screens",
+     "player": "X2",
+     "label": "CAUGHT BEHIND",
+     "tone": "red"
+    },
+    {
+     "type": "freeze",
+     "from": "behind the screens",
+     "to": "delivers",
+     "label": "FREEZE"
+    },
+    {
+     "type": "separation",
+     "from": "behind the screens",
+     "a": "O2",
+     "b": "X2"
+    },
+    {
+     "type": "passLane",
+     "from": "passer",
+     "at": "catch",
+     "label": "PASS WINDOW",
+     "passer": "O1",
+     "receiver": "O2"
+    },
+    {
+     "type": "openSpace",
+     "from": "right on time",
+     "at": [
+      -0.25,
+      8.75
+     ],
+     "r": 1.7,
+     "label": "OPEN"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.2
+    },
+    {
+     "at": "behind the screens",
+     "name": "shutter",
+     "volume": 0.3
+    }
+   ]
+  },
+  {
+   "id": "s06-shotA",
+   "name": "Catch and shoot, court level",
+   "at": "Catch.",
+   "offset": -0.03,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     2.5
+    ],
+    [
+     0.12,
+     2.6
+    ],
+    [
+     0.8,
+     3.05
+    ],
+    [
+     2.5,
+     4.15,
+     "inOut"
+    ],
+    [
+     3.7,
+     4.7
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "cam": {
+      "target": [
+       -0.1,
+       5,
+       1.9
+      ],
+      "dist": 11.5,
+      "pitch": 81,
+      "yaw": 180,
+      "fov": 46,
+      "shiftY": -120
+     }
+    },
+    {
+     "at": 0.8,
+     "cam": {
+      "target": [
+       -0.1,
+       5,
+       1.9
+      ],
+      "dist": 11.5,
+      "pitch": 81,
+      "yaw": 180,
+      "fov": 46,
+      "shiftY": -120
+     }
+    },
+    {
+     "at": 2.45,
+     "cam": {
+      "target": [
+       0,
+       2.2,
+       2.6
+      ],
+      "dist": 8.5,
+      "pitch": 84,
+      "yaw": 180,
+      "fov": 46,
+      "shiftY": -140
+     }
+    }
+   ],
+   "overlays": [
+    {
+     "type": "kicker",
+     "from": 0,
+     "text": "CASE A — CHASE"
+    },
+    {
+     "type": "shotWindow",
+     "from": 0.05,
+     "to": 1,
+     "player": "O2",
+     "label": "OPEN LOOK"
+    },
+    {
+     "type": "stamp",
+     "from": 2.5,
+     "text": "OPEN THREE",
+     "badge": "+3",
+     "y": 300
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0.12,
+     "name": "bounce",
+     "volume": 0.15
+    },
+    {
+     "at": 2.48,
+     "name": "swish",
+     "volume": 0.5
+    },
+    {
+     "at": 2.52,
+     "name": "bass_hit",
+     "volume": 0.25
+    }
+   ]
+  },
+  {
+   "id": "s07a-rewind",
+   "name": "Back to the start",
+   "at": "But what if",
+   "offset": -0.4,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     4.7
+    ],
+    [
+     1.3,
+     0,
+     "linear"
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "cam": {
+      "target": [
+       0,
+       2.2,
+       2.6
+      ],
+      "dist": 8.5,
+      "pitch": 84,
+      "yaw": 180,
+      "fov": 46,
+      "shiftY": -140
+     }
+    }
+   ],
+   "overlays": [
+    {
+     "type": "rewind",
+     "from": 0,
+     "to": 1.35
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "reverse_cymbal",
+     "volume": 0.3
+    }
+   ]
+  },
+  {
+   "id": "s07b-fork",
+   "name": "Same start, other defence",
+   "at": "switches",
+   "offset": -0.02,
+   "play": "B",
+   "remap": [
+    [
+     0,
+     0
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "cam": "top"
+    }
+   ],
+   "overlays": [
+    {
+     "type": "fork",
+     "from": 0,
+     "to": "Now the shooter",
+     "left": "CHASE",
+     "right": "SWITCH?"
+    },
+    {
+     "type": "title",
+     "from": 0.1,
+     "text": "BUT WHAT IF THE DEFENSE SWITCHES?",
+     "size": 80,
+     "y": 250,
+     "accent": [
+      "SWITCHES?"
+     ]
+    },
+    {
+     "type": "label",
+     "from": 0.3,
+     "to": "Now the shooter",
+     "at": [
+      0,
+      11.4,
+      0
+     ],
+     "text": "SAME START",
+     "tone": "white"
+    },
+    {
+     "type": "switch",
+     "from": "Now the shooter",
+     "toPoint": [
+      0.3,
+      8.3
+     ],
+     "label": "EARLY SWITCH",
+     "defender": "X5"
+    },
+    {
+     "type": "label",
+     "from": "may not be open",
+     "at": [
+      -0.25,
+      9.6,
+      0
+     ],
+     "text": "SHOT TAKEN AWAY?",
+     "tone": "red"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.2
+    }
+   ],
+   "enter": "whip"
+  },
+  {
+   "id": "s08-caseB-read",
+   "name": "Case B: the read",
+   "at": "So the offense",
+   "offset": 0,
+   "play": "B",
+   "enter": "whip",
+   "remap": [
+    [
+     0,
+     0.55
+    ],
+    [
+     "reads the",
+     1.15
+    ],
+    [
+     "switch.",
+     1.4,
+     "out"
+    ],
+    [
+     "As one",
+     1.4
+    ],
+    [
+     5.1,
+     1.85,
+     "inOut"
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "cam": {
+      "target": [
+       1,
+       5.9,
+       0.4
+      ],
+      "dist": 15.5,
+      "pitch": 44,
+      "yaw": -12,
+      "fov": 42,
+      "shiftY": 60
+     }
+    }
+   ],
+   "overlays": [
+    {
+     "type": "title",
+     "from": 0,
+     "to": "switch.",
+     "text": "CASE B — SWITCH",
+     "size": 120,
+     "y": 300,
+     "accent": [
+      "SWITCH"
+     ]
+    },
+    {
+     "type": "kicker",
+     "from": "switch.",
+     "text": "CASE B — SWITCH",
+     "tone": "mint"
+    },
+    {
+     "type": "route",
+     "from": 0,
+     "player": "X5",
+     "t0": 1,
+     "t1": 2.35
+    },
+    {
+     "type": "ring",
+     "from": "reads the",
+     "player": "X5",
+     "label": "LEAVES THE PAINT",
+     "tone": "red",
+     "to": "switch."
+    },
+    {
+     "type": "freeze",
+     "from": "switch.",
+     "to": "As one",
+     "label": "THE READ"
+    },
+    {
+     "type": "ring",
+     "from": "switch.",
+     "player": "O5",
+     "label": "READS IT",
+     "tone": "gold"
+    },
+    {
+     "type": "openSpace",
+     "from": "As one",
+     "at": [
+      1.1,
+      3.3
+     ],
+     "r": 1.6,
+     "label": "OPEN LANE"
+    },
+    {
+     "type": "route",
+     "from": "As one",
+     "player": "O5",
+     "t0": 1.3,
+     "t1": 2.85
+    },
+    {
+     "type": "passLane",
+     "from": "perimeter,",
+     "at": "catch",
+     "label": "PASSING LANE",
+     "passer": "O1",
+     "receiver": "O5"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whip",
+     "volume": 0.25
+    },
+    {
+     "at": "switch.",
+     "name": "shutter",
+     "volume": 0.3
+    }
+   ]
+  },
+  {
+   "id": "s09-slip",
+   "name": "Slip to the rim, court level",
+   "at": "the screener slips",
+   "offset": -0.03,
+   "play": "B",
+   "remap": [
+    [
+     0,
+     1.8
+    ],
+    [
+     "slips into",
+     1.95
+    ],
+    [
+     "One quick",
+     2
+    ],
+    [
+     "pass,",
+     2.45,
+     "inOut"
+    ],
+    [
+     "layup",
+     2.8
+    ],
+    [
+     5.95,
+     3.1,
+     "out"
+    ],
+    [
+     8,
+     3.6
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "cam": {
+      "mode": "follow",
+      "player": "O5",
+      "yaw": 0,
+      "pitch": 64,
+      "dist": 12.5,
+      "z": 1,
+      "fov": 42,
+      "shiftY": -170
+     }
+    },
+    {
+     "at": "pass,",
+     "cam": {
+      "mode": "follow",
+      "player": "O5",
+      "yaw": 0,
+      "pitch": 64,
+      "dist": 12.5,
+      "z": 1,
+      "fov": 42,
+      "shiftY": -170
+     }
+    },
+    {
+     "at": "layup",
+     "cam": {
+      "mode": "follow",
+      "player": "O5",
+      "yaw": 0,
+      "pitch": 70,
+      "dist": 9.5,
+      "z": 1.4,
+      "fov": 42,
+      "shiftY": -170
+     }
+    }
+   ],
+   "overlays": [
+    {
+     "type": "kicker",
+     "from": 0,
+     "text": "CASE B — SWITCH",
+     "tone": "mint"
+    },
+    {
+     "type": "route",
+     "from": 0,
+     "player": "O5",
+     "t0": 1.3,
+     "t1": 2.85
+    },
+    {
+     "type": "passLane",
+     "from": "One quick",
+     "to": "layup",
+     "at": "catch",
+     "passer": "O1",
+     "receiver": "O5"
+    },
+    {
+     "type": "stamp",
+     "from": 5.95,
+     "text": "SLIP TO THE RIM",
+     "badge": "+2",
+     "tone": "mint",
+     "y": 300
+    }
+   ],
+   "sfx": [
+    {
+     "at": "pass,",
+     "name": "bounce",
+     "volume": 0.3
+    },
+    {
+     "at": 5.9,
+     "name": "swish",
+     "volume": 0.45
+    },
+    {
+     "at": 5.95,
+     "name": "bass_hit",
+     "volume": 0.25
+    }
+   ]
+  },
+  {
+   "id": "s10-compare",
+   "name": "Side-by-side comparison",
+   "at": "That's what makes",
+   "offset": -0.3,
+   "split": [
+    {
+     "play": "A",
+     "label": "CHASE",
+     "result": "OPEN THREE",
+     "remap": [
+      [
+       0,
+       0.4
+      ],
+      [
+       3,
+       1.6
+      ],
+      [
+       "Chase the",
+       1.6
+      ],
+      [
+       6.2,
+       4.25
+      ]
+     ],
+     "camera": [
+      {
+       "at": 0,
+       "cam": {
+        "target": [
+         0,
+         4.9,
+         0.3
+        ],
+        "dist": 15.5,
+        "pitch": 26,
+        "yaw": 0,
+        "fov": 50,
+        "shiftY": 0
+       }
+      }
+     ]
+    },
+    {
+     "play": "B",
+     "label": "AGGRESSIVE SWITCH",
+     "result": "SLIP TO THE RIM",
+     "remap": [
+      [
+       0,
+       0.4
+      ],
+      [
+       3,
+       1.6
+      ],
+      [
+       "Switch too",
+       1.6
+      ],
+      [
+       9.9,
+       3.25
+      ]
+     ],
+     "camera": [
+      {
+       "at": 0,
+       "cam": {
+        "target": [
+         0,
+         4.9,
+         0.3
+        ],
+        "dist": 15.5,
+        "pitch": 26,
+        "yaw": 0,
+        "fov": 50,
+        "shiftY": 0
+       }
+      }
+     ]
+    }
+   ],
+   "overlays": [
+    {
+     "type": "kicker",
+     "from": 0,
+     "text": "SAME PLAY · TWO DEFENSES"
+    },
+    {
+     "type": "route",
+     "panel": 0,
+     "from": 0,
+     "player": "O2",
+     "t0": 0.45,
+     "t1": 2.6
+    },
+    {
+     "type": "route",
+     "panel": 0,
+     "from": 0,
+     "player": "X2",
+     "t0": 0.5,
+     "t1": 3.75
+    },
+    {
+     "type": "route",
+     "panel": 1,
+     "from": 0,
+     "player": "X5",
+     "t0": 1,
+     "t1": 2.35
+    },
+    {
+     "type": "route",
+     "panel": 1,
+     "from": 0,
+     "player": "O5",
+     "t0": 1.3,
+     "t1": 2.85
+    },
+    {
+     "type": "dim",
+     "panel": 1,
+     "from": "Chase the",
+     "to": "Switch too"
+    },
+    {
+     "type": "dim",
+     "panel": 0,
+     "from": "Switch too"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.2
+    },
+    {
+     "at": 6.15,
+     "name": "swish",
+     "volume": 0.3
+    },
+    {
+     "at": 9.6,
+     "name": "swish",
+     "volume": 0.3
+    }
+   ]
+  },
+  {
+   "id": "s11-takeaway",
+   "name": "Read the defense",
+   "at": "The best offenses",
+   "offset": -0.3,
+   "play": "B",
+   "remap": [
+    [
+     0,
+     1
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "cam": "broadcastHigh"
+    },
+    {
+     "at": 3,
+     "cam": "top"
+    }
+   ],
+   "overlays": [
+    {
+     "type": "label",
+     "from": 0.2,
+     "to": "How would",
+     "at": [
+      0,
+      5,
+      0
+     ],
+     "text": "THE DEFENSE DECIDES",
+     "tone": "white"
+    },
+    {
+     "type": "route",
+     "from": 0.4,
+     "player": "O2",
+     "t0": 1,
+     "t1": 2.6,
+     "mode": "reveal"
+    },
+    {
+     "type": "label",
+     "from": 1.2,
+     "to": "How would",
+     "at": [
+      -1.6,
+      10.4,
+      0
+     ],
+     "text": "CHASE → OPEN THREE",
+     "tone": "gold"
+    },
+    {
+     "type": "route",
+     "from": 1.4,
+     "player": "O5",
+     "t0": 1.3,
+     "t1": 2.85,
+     "mode": "reveal",
+     "dashed": true
+    },
+    {
+     "type": "switch",
+     "from": 1.4,
+     "toPoint": [
+      0.45,
+      8.15
+     ],
+     "label": "SWITCH",
+     "defender": "X5"
+    },
+    {
+     "type": "label",
+     "from": 2,
+     "to": "How would",
+     "at": [
+      2.6,
+      1.3,
+      0
+     ],
+     "text": "SWITCH → SLIP",
+     "tone": "mint"
+    },
+    {
+     "type": "title",
+     "from": "They read",
+     "to": "How would",
+     "text": "READ THE DEFENSE.",
+     "size": 120,
+     "y": 290,
+     "accent": [
+      "DEFENSE."
+     ]
+    },
+    {
+     "type": "title",
+     "from": "How would",
+     "text": "HOW WOULD YOU GUARD IT?",
+     "size": 90,
+     "y": 290,
+     "accent": [
+      "GUARD"
+     ]
+    },
+    {
+     "type": "logo",
+     "from": 5.6
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.15
+    },
+    {
+     "at": "read the defense",
+     "name": "impact",
+     "volume": 0.25
+    }
+   ]
+  }
+ ],
+ "voiceMix": "tactical/elevator/voice.mix.wav",
+ "musicDrop": 24.62,
+ "musicPayoff": 57.6
+}

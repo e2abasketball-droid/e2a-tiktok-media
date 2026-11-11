@@ -1,0 +1,445 @@
+{
+ "id": "elevator-a-chase",
+ "title": "Elevator screen \u2014 Case A: the defender chases",
+ "duration": 4.8,
+ "notes": [
+  "FIBA half court in metres: x across (basket at x=0), y from the baseline (basket at y=1.575).",
+  "O4 and O5 stand shoulder-width apart on the free-throw line (y=5.8), leaving a 1.1 m corridor.",
+  "O2 jabs toward the baseline, sprints up the middle through the corridor and fades to the top of the arc.",
+  "O4 and O5 step together only after O2 is through (doors close 1.75-2.0 s) and are stationary before X2 arrives (legal screen).",
+  "X2 chases on the same path, meets the closed doors at 2.2 s and has to go around O4 and through X4's space.",
+  "O1 dribbles from the wing to the right slot to open the passing angle; pass leaves at 2.2 s, O2 catches at 2.6 s and shoots at 3.05 s."
+ ],
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Passer"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Shooter"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Spacer"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Left screener"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Right screener"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the passer",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "On the shooter",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "On the spacer",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "On the left screener",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "On the right screener",
+   "guards": "O5"
+  }
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0,
+    4.6,
+    7.0
+   ],
+   [
+    1.4,
+    4.0,
+    7.9
+   ],
+   [
+    4.8,
+    4.0,
+    7.9
+   ]
+  ],
+  "O2": [
+   [
+    0,
+    -1.9,
+    2.2
+   ],
+   [
+    0.5,
+    -1.15,
+    1.4
+   ],
+   [
+    0.7,
+    -0.75,
+    1.7
+   ],
+   [
+    0.95,
+    -0.4,
+    2.85
+   ],
+   [
+    1.3,
+    -0.15,
+    4.5
+   ],
+   [
+    1.6,
+    0.0,
+    5.8
+   ],
+   [
+    1.85,
+    0.0,
+    6.7
+   ],
+   [
+    2.2,
+    -0.15,
+    7.9
+   ],
+   [
+    2.6,
+    -0.25,
+    8.75
+   ],
+   [
+    4.8,
+    -0.25,
+    8.75
+   ]
+  ],
+  "O3": [
+   [
+    0,
+    -6.9,
+    1.0
+   ],
+   [
+    4.8,
+    -6.9,
+    1.0
+   ]
+  ],
+  "O4": [
+   [
+    0,
+    -0.85,
+    5.8
+   ],
+   [
+    1.7,
+    -0.85,
+    5.8
+   ],
+   [
+    2.1,
+    -0.3,
+    5.8
+   ],
+   [
+    3.25,
+    -0.3,
+    5.8
+   ],
+   [
+    3.95,
+    -0.6,
+    3.7
+   ],
+   [
+    4.8,
+    -0.6,
+    3.6
+   ]
+  ],
+  "O5": [
+   [
+    0,
+    0.85,
+    5.8
+   ],
+   [
+    1.7,
+    0.85,
+    5.8
+   ],
+   [
+    2.1,
+    0.3,
+    5.8
+   ],
+   [
+    3.25,
+    0.3,
+    5.8
+   ],
+   [
+    3.95,
+    0.7,
+    3.7
+   ],
+   [
+    4.8,
+    0.7,
+    3.6
+   ]
+  ],
+  "X1": [
+   [
+    0,
+    4.0,
+    6.3
+   ],
+   [
+    1.4,
+    3.5,
+    7.15
+   ],
+   [
+    2.4,
+    3.5,
+    7.15
+   ],
+   [
+    3.0,
+    3.1,
+    7.4
+   ],
+   [
+    4.8,
+    3.1,
+    7.4
+   ]
+  ],
+  "X2": [
+   [
+    0,
+    -1.6,
+    2.8
+   ],
+   [
+    0.5,
+    -1.45,
+    1.95
+   ],
+   [
+    0.9,
+    -1.1,
+    2.3
+   ],
+   [
+    1.3,
+    -0.65,
+    3.6
+   ],
+   [
+    1.6,
+    -0.4,
+    4.4
+   ],
+   [
+    1.85,
+    -0.15,
+    4.75
+   ],
+   [
+    2.0,
+    -0.05,
+    4.95
+   ],
+   [
+    2.1,
+    0.0,
+    5.05
+   ],
+   [
+    2.3,
+    0.0,
+    5.25
+   ],
+   [
+    2.55,
+    -0.6,
+    5.25
+   ],
+   [
+    2.8,
+    -1.0,
+    5.7
+   ],
+   [
+    3.05,
+    -1.0,
+    6.6
+   ],
+   [
+    3.35,
+    -0.75,
+    7.6
+   ],
+   [
+    3.75,
+    -0.5,
+    8.1
+   ],
+   [
+    4.8,
+    -0.5,
+    8.1
+   ]
+  ],
+  "X3": [
+   [
+    0,
+    -5.2,
+    2.6
+   ],
+   [
+    3.1,
+    -5.2,
+    2.6
+   ],
+   [
+    3.8,
+    -4.6,
+    2.4
+   ],
+   [
+    4.8,
+    -4.6,
+    2.4
+   ]
+  ],
+  "X4": [
+   [
+    0,
+    -1.25,
+    4.9
+   ],
+   [
+    3.3,
+    -1.25,
+    4.9
+   ],
+   [
+    3.95,
+    -0.85,
+    2.95
+   ],
+   [
+    4.8,
+    -0.85,
+    2.9
+   ]
+  ],
+  "X5": [
+   [
+    0,
+    1.25,
+    4.9
+   ],
+   [
+    3.3,
+    1.25,
+    4.9
+   ],
+   [
+    3.95,
+    0.95,
+    3.0
+   ],
+   [
+    4.8,
+    0.95,
+    2.95
+   ]
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 2.2,
+   "dribble": true
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O2",
+   "t0": 2.2,
+   "t1": 2.6,
+   "style": "chest"
+  },
+  {
+   "type": "hold",
+   "player": "O2",
+   "from": 2.6,
+   "to": 3.05
+  },
+  {
+   "type": "shot",
+   "player": "O2",
+   "t0": 3.05,
+   "t1": 4.15,
+   "make": true
+  }
+ ],
+ "screens": [
+  {
+   "screeners": [
+    "O4",
+    "O5"
+   ],
+   "cutter": "O2",
+   "target": "X2",
+   "lineY": 5.8,
+   "closeFrom": 1.7,
+   "closeTo": 2.1
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "jab": 0.45,
+  "cut": 0.7,
+  "inGap": 1.6,
+  "through": 1.7,
+  "doorsClosed": 2.1,
+  "contact": 2.3,
+  "pass": 2.2,
+  "exit": 2.25,
+  "catch": 2.6,
+  "release": 3.05,
+  "make": 4.15,
+  "end": 4.8
+ }
+}
