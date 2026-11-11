@@ -8,21 +8,14 @@
 import fs from 'node:fs';
 import {makeProjector} from '../src/tactical/geometry.ts';
 import {cameraAt} from '../src/tactical/camera.ts';
-import {remapAt, resolveRemap} from '../src/tactical/edit.ts';
+import {localResolver, makeTacticalResolver, remapAt, resolveRemap} from '../src/tactical/edit.ts';
 import type {TacticalEpisode} from '../src/tactical/edit.ts';
 import {sample} from '../src/tactical/play.ts';
 
 const [propsFile, out] = process.argv.slice(2);
 const ep: TacticalEpisode = JSON.parse(fs.readFileSync(propsFile, 'utf8')).episode;
 const fps = ep.fps ?? 60;
-const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
-const keys = ep.words.map((w) => norm(w.text));
-const T = (a: string | number, off = 0) => {
-  if (typeof a === 'number') return a + off;
-  const p = a.split(/\s+/).map(norm).filter(Boolean);
-  for (let i = 0; i + p.length <= keys.length; i++) if (p.every((w, k) => keys[i + k] === w)) return ep.words[i].start + off;
-  throw new Error(`anchor ${a}`);
-};
+const T = makeTacticalResolver(ep.words);
 const total = ep.words[ep.words.length - 1].end + ep.tail;
 const starts = ep.shots.map((s, i) => (i === 0 ? 0 : T(s.at, s.offset ?? 0)));
 const rows: Record<string, unknown>[] = [];
@@ -31,7 +24,7 @@ for (let i = 0; i < ep.shots.length; i++) {
   const s = ep.shots[i];
   const st = starts[i];
   const en = i + 1 < starts.length ? starts[i + 1] : total;
-  const toLocal = (a: unknown) => (typeof a === 'string' ? T(a) - st : (a as number));
+  const toLocal = localResolver(T, st, en);
   const panels = s.split ? s.split.map((p, k) => ({play: ep.plays[p.play], remap: p.remap, camera: p.camera, W: 540, H: 1070, k})) : [{play: ep.plays[s.play!], remap: s.remap ?? [[0, 0]], camera: s.camera ?? [{at: 0, cam: 'top'}], W: 1080, H: 1920, k: 0}];
   for (const pn of panels) {
     const rm = resolveRemap(pn.remap as never, pn.play, toLocal);

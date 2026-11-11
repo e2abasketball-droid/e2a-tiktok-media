@@ -1,0 +1,1034 @@
+{
+ "id": "elevator-screen-v2",
+ "title": "The Elevator Screen: Two Ways to Punish the Defense",
+ "style": "tactical",
+ "fps": 60,
+ "voice": "tactical/elevator/voice.wav",
+ "words": [
+  {
+   "text": "Two",
+   "start": 0.31,
+   "end": 0.47
+  },
+  {
+   "text": "screens.",
+   "start": 0.55,
+   "end": 1.43
+  },
+  {
+   "text": "One",
+   "start": 1.67,
+   "end": 1.91
+  },
+  {
+   "text": "tiny",
+   "start": 2.15,
+   "end": 2.55
+  },
+  {
+   "text": "gap.",
+   "start": 2.63,
+   "end": 3.23
+  },
+  {
+   "text": "And",
+   "start": 3.43,
+   "end": 3.59
+  },
+  {
+   "text": "one",
+   "start": 3.75,
+   "end": 3.83
+  },
+  {
+   "text": "decision",
+   "start": 3.91,
+   "end": 4.39
+  },
+  {
+   "text": "that",
+   "start": 4.47,
+   "end": 4.55
+  },
+  {
+   "text": "can",
+   "start": 4.63,
+   "end": 4.71
+  },
+  {
+   "text": "destroy",
+   "start": 4.99,
+   "end": 5.27
+  },
+  {
+   "text": "an",
+   "start": 5.35,
+   "end": 5.43
+  },
+  {
+   "text": "entire",
+   "start": 5.63,
+   "end": 6.07
+  },
+  {
+   "text": "defense.",
+   "start": 6.15,
+   "end": 7.27
+  },
+  {
+   "text": "This",
+   "start": 7.66,
+   "end": 8.22
+  },
+  {
+   "text": "is",
+   "start": 8.3,
+   "end": 8.38
+  },
+  {
+   "text": "the",
+   "start": 8.46,
+   "end": 8.54
+  },
+  {
+   "text": "elevator",
+   "start": 8.62,
+   "end": 9.02
+  },
+  {
+   "text": "screen.",
+   "start": 9.1,
+   "end": 9.82
+  },
+  {
+   "text": "Here's",
+   "start": 9.99,
+   "end": 10.15
+  },
+  {
+   "text": "how",
+   "start": 10.23,
+   "end": 10.31
+  },
+  {
+   "text": "it",
+   "start": 10.39,
+   "end": 10.47
+  },
+  {
+   "text": "works.",
+   "start": 10.67,
+   "end": 11.27
+  },
+  {
+   "text": "Two",
+   "start": 11.35,
+   "end": 11.43
+  },
+  {
+   "text": "players",
+   "start": 11.51,
+   "end": 11.91
+  },
+  {
+   "text": "set",
+   "start": 11.99,
+   "end": 12.07
+  },
+  {
+   "text": "up",
+   "start": 12.19,
+   "end": 12.31
+  },
+  {
+   "text": "side",
+   "start": 12.39,
+   "end": 12.55
+  },
+  {
+   "text": "by",
+   "start": 12.63,
+   "end": 12.87
+  },
+  {
+   "text": "side,",
+   "start": 13.03,
+   "end": 13.35
+  },
+  {
+   "text": "leaving",
+   "start": 13.39,
+   "end": 13.59
+  },
+  {
+   "text": "a",
+   "start": 13.67,
+   "end": 13.75
+  },
+  {
+   "text": "narrow",
+   "start": 13.79,
+   "end": 14.07
+  },
+  {
+   "text": "opening.",
+   "start": 14.15,
+   "end": 15.03
+  },
+  {
+   "text": "The",
+   "start": 15.07,
+   "end": 15.11
+  },
+  {
+   "text": "shooter",
+   "start": 15.19,
+   "end": 15.51
+  },
+  {
+   "text": "cuts",
+   "start": 15.63,
+   "end": 15.75
+  },
+  {
+   "text": "straight",
+   "start": 15.83,
+   "end": 16.07
+  },
+  {
+   "text": "between",
+   "start": 16.27,
+   "end": 16.47
+  },
+  {
+   "text": "them,",
+   "start": 16.67,
+   "end": 16.923
+  },
+  {
+   "text": "and",
+   "start": 16.977,
+   "end": 17.03
+  },
+  {
+   "text": "once",
+   "start": 17.11,
+   "end": 17.19
+  },
+  {
+   "text": "he's",
+   "start": 17.23,
+   "end": 17.43
+  },
+  {
+   "text": "through,",
+   "start": 17.71,
+   "end": 18.043
+  },
+  {
+   "text": "the",
+   "start": 18.097,
+   "end": 18.15
+  },
+  {
+   "text": "screeners",
+   "start": 18.27,
+   "end": 18.63
+  },
+  {
+   "text": "close",
+   "start": 18.71,
+   "end": 18.95
+  },
+  {
+   "text": "the",
+   "start": 18.99,
+   "end": 19.03
+  },
+  {
+   "text": "gap",
+   "start": 19.11,
+   "end": 19.35
+  },
+  {
+   "text": "like",
+   "start": 19.43,
+   "end": 19.59
+  },
+  {
+   "text": "elevator",
+   "start": 19.67,
+   "end": 20.07
+  },
+  {
+   "text": "doors.",
+   "start": 20.51,
+   "end": 20.97
+  },
+  {
+   "text": "First",
+   "start": 21.31,
+   "end": 21.33
+  },
+  {
+   "text": "scenario:",
+   "start": 21.73,
+   "end": 22.157
+  },
+  {
+   "text": "the",
+   "start": 22.183,
+   "end": 22.21
+  },
+  {
+   "text": "defender",
+   "start": 22.33,
+   "end": 22.77
+  },
+  {
+   "text": "follows",
+   "start": 22.85,
+   "end": 23.17
+  },
+  {
+   "text": "the",
+   "start": 23.25,
+   "end": 23.33
+  },
+  {
+   "text": "shooter.",
+   "start": 23.37,
+   "end": 24.05
+  },
+  {
+   "text": "Watch",
+   "start": 24.13,
+   "end": 24.29
+  },
+  {
+   "text": "what",
+   "start": 24.37,
+   "end": 24.45
+  },
+  {
+   "text": "happens.",
+   "start": 24.53,
+   "end": 25.37
+  },
+  {
+   "text": "The",
+   "start": 25.47,
+   "end": 25.55
+  },
+  {
+   "text": "shooter",
+   "start": 25.59,
+   "end": 25.79
+  },
+  {
+   "text": "escapes",
+   "start": 25.87,
+   "end": 26.27
+  },
+  {
+   "text": "through",
+   "start": 26.35,
+   "end": 26.43
+  },
+  {
+   "text": "the",
+   "start": 26.47,
+   "end": 26.51
+  },
+  {
+   "text": "middle,",
+   "start": 26.79,
+   "end": 27.097
+  },
+  {
+   "text": "the",
+   "start": 27.123,
+   "end": 27.15
+  },
+  {
+   "text": "defender",
+   "start": 27.27,
+   "end": 27.55
+  },
+  {
+   "text": "gets",
+   "start": 27.63,
+   "end": 27.87
+  },
+  {
+   "text": "caught",
+   "start": 27.99,
+   "end": 28.11
+  },
+  {
+   "text": "behind",
+   "start": 28.19,
+   "end": 28.35
+  },
+  {
+   "text": "the",
+   "start": 28.43,
+   "end": 28.51
+  },
+  {
+   "text": "screens,",
+   "start": 28.83,
+   "end": 29.177
+  },
+  {
+   "text": "and",
+   "start": 29.203,
+   "end": 29.23
+  },
+  {
+   "text": "the",
+   "start": 29.31,
+   "end": 29.39
+  },
+  {
+   "text": "passer",
+   "start": 29.51,
+   "end": 29.79
+  },
+  {
+   "text": "delivers",
+   "start": 29.87,
+   "end": 30.19
+  },
+  {
+   "text": "the",
+   "start": 30.23,
+   "end": 30.27
+  },
+  {
+   "text": "ball",
+   "start": 30.35,
+   "end": 30.67
+  },
+  {
+   "text": "right",
+   "start": 30.75,
+   "end": 30.91
+  },
+  {
+   "text": "on",
+   "start": 30.99,
+   "end": 31.07
+  },
+  {
+   "text": "time.",
+   "start": 31.15,
+   "end": 31.83
+  },
+  {
+   "text": "Catch.",
+   "start": 31.87,
+   "end": 32.55
+  },
+  {
+   "text": "Shoot.",
+   "start": 32.59,
+   "end": 33.19
+  },
+  {
+   "text": "Three",
+   "start": 33.23,
+   "end": 33.47
+  },
+  {
+   "text": "points.",
+   "start": 33.55,
+   "end": 34.35
+  },
+  {
+   "text": "But",
+   "start": 34.86,
+   "end": 35.02
+  },
+  {
+   "text": "what",
+   "start": 35.06,
+   "end": 35.1
+  },
+  {
+   "text": "if",
+   "start": 35.18,
+   "end": 35.26
+  },
+  {
+   "text": "the",
+   "start": 35.34,
+   "end": 35.42
+  },
+  {
+   "text": "defense",
+   "start": 35.62,
+   "end": 35.82
+  },
+  {
+   "text": "switches",
+   "start": 35.94,
+   "end": 36.22
+  },
+  {
+   "text": "early?",
+   "start": 36.62,
+   "end": 37.06
+  },
+  {
+   "text": "Now",
+   "start": 37.1,
+   "end": 37.26
+  },
+  {
+   "text": "the",
+   "start": 37.34,
+   "end": 37.42
+  },
+  {
+   "text": "shooter",
+   "start": 37.46,
+   "end": 37.74
+  },
+  {
+   "text": "may",
+   "start": 37.82,
+   "end": 37.9
+  },
+  {
+   "text": "not",
+   "start": 37.98,
+   "end": 38.06
+  },
+  {
+   "text": "be",
+   "start": 38.14,
+   "end": 38.22
+  },
+  {
+   "text": "open.",
+   "start": 38.3,
+   "end": 39.047
+  },
+  {
+   "text": "So",
+   "start": 39.073,
+   "end": 39.1
+  },
+  {
+   "text": "the",
+   "start": 39.18,
+   "end": 39.26
+  },
+  {
+   "text": "offense",
+   "start": 39.34,
+   "end": 39.82
+  },
+  {
+   "text": "reads",
+   "start": 39.9,
+   "end": 40.14
+  },
+  {
+   "text": "the",
+   "start": 40.22,
+   "end": 40.3
+  },
+  {
+   "text": "switch.",
+   "start": 40.7,
+   "end": 41.14
+  },
+  {
+   "text": "As",
+   "start": 41.18,
+   "end": 41.34
+  },
+  {
+   "text": "one",
+   "start": 41.42,
+   "end": 41.5
+  },
+  {
+   "text": "defender",
+   "start": 41.58,
+   "end": 41.98
+  },
+  {
+   "text": "jumps",
+   "start": 42.06,
+   "end": 42.3
+  },
+  {
+   "text": "toward",
+   "start": 42.353,
+   "end": 42.46
+  },
+  {
+   "text": "the",
+   "start": 42.54,
+   "end": 42.62
+  },
+  {
+   "text": "perimeter,",
+   "start": 42.7,
+   "end": 43.3
+  },
+  {
+   "text": "the",
+   "start": 43.34,
+   "end": 43.42
+  },
+  {
+   "text": "screener",
+   "start": 43.46,
+   "end": 43.9
+  },
+  {
+   "text": "slips",
+   "start": 43.98,
+   "end": 44.3
+  },
+  {
+   "text": "into",
+   "start": 44.42,
+   "end": 44.54
+  },
+  {
+   "text": "the",
+   "start": 44.58,
+   "end": 44.62
+  },
+  {
+   "text": "open",
+   "start": 44.7,
+   "end": 44.94
+  },
+  {
+   "text": "lane.",
+   "start": 45.3,
+   "end": 45.7
+  },
+  {
+   "text": "One",
+   "start": 45.74,
+   "end": 45.9
+  },
+  {
+   "text": "quick",
+   "start": 45.98,
+   "end": 46.14
+  },
+  {
+   "text": "pass,",
+   "start": 46.42,
+   "end": 46.727
+  },
+  {
+   "text": "and",
+   "start": 46.753,
+   "end": 46.78
+  },
+  {
+   "text": "the",
+   "start": 46.86,
+   "end": 46.94
+  },
+  {
+   "text": "offense",
+   "start": 47.02,
+   "end": 47.34
+  },
+  {
+   "text": "has",
+   "start": 47.42,
+   "end": 47.5
+  },
+  {
+   "text": "created",
+   "start": 47.66,
+   "end": 47.82
+  },
+  {
+   "text": "a",
+   "start": 47.98,
+   "end": 48.06
+  },
+  {
+   "text": "layup",
+   "start": 48.14,
+   "end": 48.3
+  },
+  {
+   "text": "opportunity",
+   "start": 48.38,
+   "end": 48.94
+  },
+  {
+   "text": "instead.",
+   "start": 49.42,
+   "end": 49.909
+  },
+  {
+   "text": "That's",
+   "start": 50.39,
+   "end": 50.55
+  },
+  {
+   "text": "what",
+   "start": 50.63,
+   "end": 50.71
+  },
+  {
+   "text": "makes",
+   "start": 50.79,
+   "end": 50.87
+  },
+  {
+   "text": "the",
+   "start": 50.95,
+   "end": 51.03
+  },
+  {
+   "text": "elevator",
+   "start": 51.07,
+   "end": 51.43
+  },
+  {
+   "text": "screen",
+   "start": 51.51,
+   "end": 51.99
+  },
+  {
+   "text": "so",
+   "start": 52.07,
+   "end": 52.31
+  },
+  {
+   "text": "dangerous.",
+   "start": 52.47,
+   "end": 53.31
+  },
+  {
+   "text": "Chase",
+   "start": 53.35,
+   "end": 53.51
+  },
+  {
+   "text": "the",
+   "start": 53.59,
+   "end": 53.67
+  },
+  {
+   "text": "shooter,",
+   "start": 53.75,
+   "end": 54.257
+  },
+  {
+   "text": "and",
+   "start": 54.283,
+   "end": 54.31
+  },
+  {
+   "text": "you",
+   "start": 54.39,
+   "end": 54.55
+  },
+  {
+   "text": "risk",
+   "start": 54.67,
+   "end": 54.79
+  },
+  {
+   "text": "giving",
+   "start": 54.83,
+   "end": 55.03
+  },
+  {
+   "text": "up",
+   "start": 55.11,
+   "end": 55.19
+  },
+  {
+   "text": "the",
+   "start": 55.23,
+   "end": 55.27
+  },
+  {
+   "text": "three.",
+   "start": 55.35,
+   "end": 56.11
+  },
+  {
+   "text": "Switch",
+   "start": 56.15,
+   "end": 56.39
+  },
+  {
+   "text": "too",
+   "start": 56.47,
+   "end": 56.55
+  },
+  {
+   "text": "aggressively,",
+   "start": 56.63,
+   "end": 57.457
+  },
+  {
+   "text": "and",
+   "start": 57.483,
+   "end": 57.51
+  },
+  {
+   "text": "the",
+   "start": 57.59,
+   "end": 57.67
+  },
+  {
+   "text": "screener",
+   "start": 57.71,
+   "end": 58.07
+  },
+  {
+   "text": "can",
+   "start": 58.15,
+   "end": 58.23
+  },
+  {
+   "text": "slip",
+   "start": 58.31,
+   "end": 58.47
+  },
+  {
+   "text": "to",
+   "start": 58.51,
+   "end": 58.55
+  },
+  {
+   "text": "the",
+   "start": 58.63,
+   "end": 58.71
+  },
+  {
+   "text": "rim.",
+   "start": 59.07,
+   "end": 59.47
+  },
+  {
+   "text": "The",
+   "start": 59.75,
+   "end": 59.91
+  },
+  {
+   "text": "best",
+   "start": 60.03,
+   "end": 60.15
+  },
+  {
+   "text": "offenses",
+   "start": 60.23,
+   "end": 60.79
+  },
+  {
+   "text": "don't",
+   "start": 60.83,
+   "end": 61.03
+  },
+  {
+   "text": "just",
+   "start": 61.11,
+   "end": 61.19
+  },
+  {
+   "text": "run",
+   "start": 61.27,
+   "end": 61.35
+  },
+  {
+   "text": "the",
+   "start": 61.43,
+   "end": 61.51
+  },
+  {
+   "text": "play.",
+   "start": 61.83,
+   "end": 62.23
+  },
+  {
+   "text": "They",
+   "start": 62.31,
+   "end": 62.39
+  },
+  {
+   "text": "read",
+   "start": 62.47,
+   "end": 62.63
+  },
+  {
+   "text": "the",
+   "start": 62.71,
+   "end": 62.79
+  },
+  {
+   "text": "defense.",
+   "start": 63.27,
+   "end": 63.803
+  },
+  {
+   "text": "How",
+   "start": 63.857,
+   "end": 63.91
+  },
+  {
+   "text": "would",
+   "start": 63.99,
+   "end": 64.07
+  },
+  {
+   "text": "you",
+   "start": 64.15,
+   "end": 64.23
+  },
+  {
+   "text": "guard",
+   "start": 64.31,
+   "end": 64.39
+  },
+  {
+   "text": "it?",
+   "start": 64.47,
+   "end": 64.79
+  }
+ ],
+ "scenes": [
+  {
+   "type": "headline",
+   "at": 0,
+   "lines": [
+    "HOOK: DEFENDER POV"
+   ]
+  },
+  {
+   "type": "headline",
+   "at": 7.27,
+   "lines": [
+    "REWIND AND REVEAL"
+   ]
+  },
+  {
+   "type": "headline",
+   "at": 9.99,
+   "lines": [
+    "THE SETUP"
+   ]
+  },
+  {
+   "type": "headline",
+   "at": 21.11,
+   "lines": [
+    "CASE A AT REAL SPEED"
+   ],
+   "transition": "whip"
+  },
+  {
+   "type": "headline",
+   "at": 27.123,
+   "lines": [
+    "CASE A REPLAY FROM ABOVE"
+   ]
+  },
+  {
+   "type": "headline",
+   "at": 31.84,
+   "lines": [
+    "CATCH AND SHOOT, COURT LEVEL"
+   ]
+  },
+  {
+   "type": "headline",
+   "at": 34.76,
+   "lines": [
+    "BACK TO THE START"
+   ]
+  },
+  {
+   "type": "headline",
+   "at": 35.92,
+   "lines": [
+    "SAME START, OTHER DEFENCE"
+   ]
+  },
+  {
+   "type": "headline",
+   "at": 39.073,
+   "lines": [
+    "CASE B: THE READ"
+   ],
+   "transition": "whip"
+  },
+  {
+   "type": "headline",
+   "at": 43.31,
+   "lines": [
+    "SLIP TO THE RIM, COURT LEVEL"
+   ]
+  },
+  {
+   "type": "headline",
+   "at": 50.09,
+   "lines": [
+    "COMPARISON 1/3: CASE A ENLARGED"
+   ],
+   "transition": "whip"
+  },
+  {
+   "type": "headline",
+   "at": 56.11,
+   "lines": [
+    "COMPARISON 2/3: CASE B ENLARGED"
+   ]
+  },
+  {
+   "type": "headline",
+   "at": 59.47,
+   "lines": [
+    "COMPARISON 3/3: SIDE BY SIDE (RESULTS)"
+   ]
+  },
+  {
+   "type": "headline",
+   "at": 60.83,
+   "lines": [
+    "READ THE DEFENSE"
+   ]
+  }
+ ],
+ "outro": {
+  "seconds": 2.15,
+  "line": "How would you guard it?"
+ },
+ "emphasis": [
+  "elevator",
+  "screen",
+  "gap",
+  "chase",
+  "switch",
+  "switches",
+  "slip",
+  "slips",
+  "three",
+  "layup",
+  "doors",
+  "read",
+  "defense",
+  "open"
+ ],
+ "hook": "clock",
+ "ending": "question"
+}

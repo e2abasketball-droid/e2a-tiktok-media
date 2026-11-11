@@ -23,8 +23,8 @@ WORDS=${EP%.json}.words.json
 DUR=$(node -e "const e=require('./$EP');const w=require('./$WORDS');console.log((w.at(-1).end+e.tail).toFixed(3))")
 if [ $SKIP_MUSIC = 0 ]; then
   echo "== music bed (E2A engine, ducked under the voice)"
-  DROP=$(node -e "const e=require('./$EP');console.log(e.musicDrop??'')")
-  PAY=$(node -e "const e=require('./$EP');console.log(e.musicPayoff??'')")
+  DROP=$(node scripts/tactical-cue.mjs "$EP" musicDrop)
+  PAY=$(node scripts/tactical-cue.mjs "$EP" musicPayoff)
   python3 ../music/e2a_music.py --words "$WORDS" --story tactical --duration "$DUR" --voice "$DIR/voice.mix.wav" --out "$DIR/music.mp3" ${DROP:+--drop-at $DROP} ${PAY:+--payoff-at $PAY} --history "" >/dev/null
 fi
 node scripts/tactical-props.mjs "$EP" "$TMP/props.json" --music "$DIR/music.mp3"

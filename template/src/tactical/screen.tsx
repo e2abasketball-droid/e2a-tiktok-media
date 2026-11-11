@@ -60,13 +60,13 @@ export const TacticalText: React.FC<{text: string; age: number; dur: number; y?:
 };
 
 /** Result stamp ("OPEN THREE", "SLIP TO THE RIM"): slams in, holds, fades. */
-export const ResultStamp: React.FC<{text: string; age: number; dur: number; tone?: 'gold' | 'mint'; y?: number; badge?: string}> = ({text, age, dur, tone = 'gold', y = 300, badge}) => {
+export const ResultStamp: React.FC<{text: string; age: number; dur: number; tone?: 'gold' | 'mint'; y?: number; badge?: string; scale?: number}> = ({text, age, dur, tone = 'gold', y = 300, badge, scale = 1}) => {
   const k = back(age / 0.35);
   const out = clamp((age - (dur - 0.3)) / 0.3);
   const bg = tone === 'gold' ? GOLD : '#7BE0A8';
   return (
     <div style={{position: 'absolute', left: 0, right: 0, top: y, display: 'flex', justifyContent: 'center', opacity: clamp(age / 0.08) * (1 - out)}}>
-      <div style={{transform: `scale(${1.6 - 0.6 * k}) rotate(-2deg)`, background: bg, color: NAVY, fontFamily: DISPLAY, fontSize: 112, padding: '6px 38px 10px', borderRadius: 18, border: `6px solid ${NAVY}`, boxShadow: '0 18px 50px rgba(0,0,0,0.5)', letterSpacing: 3, display: 'flex', alignItems: 'center', gap: 24}}>
+      <div style={{transform: `scale(${(1.6 - 0.6 * k) * scale}) rotate(-2deg)`, background: bg, color: NAVY, fontFamily: DISPLAY, fontSize: 112, padding: '6px 38px 10px', borderRadius: 18, border: `6px solid ${NAVY}`, boxShadow: '0 18px 50px rgba(0,0,0,0.5)', letterSpacing: 3, display: 'flex', alignItems: 'center', gap: 24}}>
         {text}
         {badge && <span style={{background: NAVY, color: bg, borderRadius: 12, padding: '0 16px', fontSize: 84}}>{badge}</span>}
       </div>
