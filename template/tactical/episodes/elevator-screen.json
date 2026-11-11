@@ -109,6 +109,55 @@
       "fov": 60,
       "lookZ": 0.6
      }
+    },
+    {
+     "at": "One tiny-0.2",
+     "cam": {
+      "mode": "pov",
+      "player": "X2",
+      "look": "O2",
+      "height": 2.9,
+      "back": 2.6,
+      "fov": 60,
+      "lookZ": 0.6
+     }
+    },
+    {
+     "at": "One tiny+0.1",
+     "cam": {
+      "mode": "pov",
+      "player": "X2",
+      "look": "O2",
+      "height": 2.9,
+      "back": 2.6,
+      "fov": 52,
+      "lookZ": 0.6
+     },
+     "ease": "out"
+    },
+    {
+     "at": "decision",
+     "cam": {
+      "mode": "pov",
+      "player": "X2",
+      "look": "O2",
+      "height": 2.9,
+      "back": 2.6,
+      "fov": 52,
+      "lookZ": 0.6
+     }
+    },
+    {
+     "at": "destroy",
+     "cam": {
+      "mode": "pov",
+      "player": "X2",
+      "look": "O2",
+      "height": 2.9,
+      "back": 2.6,
+      "fov": 56,
+      "lookZ": 0.6
+     }
     }
    ],
    "overlays": [

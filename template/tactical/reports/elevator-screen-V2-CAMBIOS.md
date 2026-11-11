@@ -13,7 +13,19 @@ Todos los tiempos «V1» son del vídeo original; los «V2» son del vídeo nuev
 
 ## 1. Duración y audio: antes y después
 
-__AUDIO_TABLE__
+| | V1 | V2 |
+|---|---|---|
+| Duración (contenedor) | 75,50 s | 66,00 s |
+| Duración del contenido (última palabra + cola) | 75,44 s | 65,89 s |
+| Primera palabra | 0,70 s | 0,31 s |
+| Cola después de la última palabra | 2,4 s | 1,1 s |
+| Sonoridad integrada | −14,2 LUFS | __LUFS__ |
+| Pico real | −1,3 dBTP | __TP__ |
+| Rango de sonoridad (LRA) | 3,8 LU | __LRA__ |
+| Silencios en la mezcla final (silencedetect −35 dB, ≥ 0,25 s) | 16 tramos, el mayor de 1,64 s | __SIL__ |
+| Silencio añadido a la voz | 10,0 s de silencio digital (9,3 s en 10 pausas + 0,7 s de entrada), más la cola de 2,4 s | 1,75 s (ruido de sala en 7 pausas, entrada de 0,15 s) |
+| Voz | Deuce, 1 toma, misma cadena (paso alto 80 Hz, +2 dB a 3,2 kHz, compresión 2,5:1, −16 LUFS) | **Idéntica**: misma toma y misma cadena; no se ha cambiado el timbre |
+| Música | motor E2A, drop 24,62 s / payoff 57,6 s fijos | motor E2A, drop y payoff anclados a «First scenario» (21,11 s) y «That's what makes» (50,09 s); continua bajo la voz |
 
 ## 2. Los 7 intervalos de audio indicados
 
@@ -89,7 +101,7 @@ Al acortar las pausas, todo se movió con la voz. Las referencias en segundos ab
 
 | Escena (V1 → V2) | Problema | Cambio | Verificación |
 |---|---|---|---|
-| Hook 00:00–07:90 → 00:00–07:27 | Momentos sin acción; congelado largo | Las puertas se cierran a cámara lenta bajo «And one decision…». El congelado y «TRAPPED.» caen **sobre la palabra "destroy"** (antes, a un segundo fijo). El congelado pasa de 2,9 s a 2,3 s | Captura 01 |
+| Hook 00:00–07:90 → 00:00–07:27 | Momentos sin acción; congelado largo | Acercamiento suave hacia el hueco sobre «One tiny gap». Las puertas se cierran a cámara lenta bajo «And one decision…». El congelado y «TRAPPED.» caen **sobre la palabra "destroy"** (antes, a un segundo fijo). El congelado pasa de 2,9 s a 2,3 s | Captura 01 |
 | Rebobinado 07:90–11:29 → 07:27–09:99 | Grúa lenta tras una pausa larga | El rebobinado empieza en la pausa tras «defense.». La grúa termina justo antes del corte, encuadrando una cancha más grande | Captura 02; QC de cámara 0,035/fotograma (límite 0,035) |
 | Explicación 11:29–24:52 → 09:99–21:11 | Cancha pequeña, pausas, todo a la vez | Cancha más grande: distancia 41 → 30 m. Un movimiento cada ~2 s (cenital → hueco → acercamiento → bloqueo → «puertas»). Orden de la información: bloqueadores → hueco → **tirador O2 (anillo «SHOOTER»)** → ruta → cierre. Se elimina la barra de tiempos y el pasillo desaparece cuando entra el tirador | Capturas 03–06 |
 | Case A 24:52–31:37 → 21:11–27:12 | 2,8 s parado bajo el título | La jugada arranca con «the defender follows» (cámara lenta) y va a velocidad real desde «Watch what happens». Cámara de seguimiento de O2. Rutas de O2 y X2 progresivas. La canasta se reserva para el plano del tiro | Capturas 07–08 |
