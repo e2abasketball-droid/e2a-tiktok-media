@@ -112,3 +112,46 @@ export const resolveRemap = (keys: RemapKey[], play: Play, toLocal: (a: LocalT) 
 
 /** playback speed (play seconds per real second) at local time — used for motion-blur and SFX logic */
 export const speedAt = (keys: [number, number, keyof typeof EASE | undefined][], lt: number) => (remapAt(keys, lt + 1 / 120) - remapAt(keys, lt - 1 / 120)) * 60;
+
+/**
+ * Narration anchors for tactical edits (v2). A string anchor is
+ *   "phrase"         start of the first word of the phrase
+ *   "phrase>"        end of the last word of the phrase
+ *   "phrase#2"       second occurrence
+ *   "phrase>+0.25"   any of the above plus an offset in seconds (also "phrase-0.1")
+ * so a key keeps its place against the voice when pauses before it change.
+ */
+export const makeTacticalResolver = (words: {text: string; start: number; end: number}[]) => {
+  const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const keys = words.map((w) => norm(w.text));
+  return (a: Anchor, off = 0): number => {
+    if (typeof a === 'number') return a + off;
+    let s = a.trim();
+    const m = s.match(/([+-]\d+(?:\.\d+)?)$/);
+    if (m && /[a-z>#'?.,:!]\s*$/i.test(s.slice(0, -m[1].length))) {
+      off += parseFloat(m[1]);
+      s = s.slice(0, -m[1].length).trim();
+    }
+    const atEnd = s.endsWith('>');
+    if (atEnd) s = s.slice(0, -1).trim();
+    const [phrase, occ] = s.split('#');
+    const want = occ ? parseInt(occ, 10) - 1 : 0;
+    const p = phrase.split(/\s+/).map(norm).filter(Boolean);
+    let seen = 0;
+    for (let i = 0; i + p.length <= keys.length; i++) {
+      if (p.every((w, k) => keys[i + k] === w)) {
+        if (seen === want) return (atEnd ? words[i + p.length - 1].end : words[i].start) + off;
+        seen++;
+      }
+    }
+    throw new Error(`Anchor not found in narration: "${a}"`);
+  };
+};
+
+/** local time inside a shot: number, narration anchor, or "@end-0.5" (relative to the shot's end) */
+export const localResolver = (T: (a: Anchor, off?: number) => number, start: number, end: number) => (a: unknown): number => {
+  if (typeof a === 'number') return a;
+  const s = String(a);
+  if (s.startsWith('@end')) return end - start + (parseFloat(s.slice(4)) || 0);
+  return T(s) - start;
+};

@@ -4,10 +4,9 @@ import {AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame, useVideoConf
 import {BODY, DISPLAY, GOLD, NAVY, NAVY_DEEP, WHITE} from '../pro/brand';
 import {Flash, Grain, Vignette} from '../pro/fx';
 import {Subtitles} from '../pro/subtitles';
-import {makeResolver} from '../pro/timing';
 import {cameraAt} from './camera.ts';
 import type {Overlay, Shot, TacticalEpisode} from './edit.ts';
-import {remapAt, resolveRemap} from './edit.ts';
+import {localResolver, makeTacticalResolver, remapAt, resolveRemap} from './edit.ts';
 import {sample} from './play.ts';
 import type {LiveOverlay} from './TacticalView';
 import {TacticalView} from './TacticalView';
@@ -18,7 +17,7 @@ export const tacticalDuration = (ep: TacticalEpisode) => ep.words[ep.words.lengt
 type Laid = {shot: Shot; start: number; end: number};
 
 const layout = (ep: TacticalEpisode): Laid[] => {
-  const T = makeResolver(ep.words);
+  const T = makeTacticalResolver(ep.words);
   const starts = ep.shots.map((s, i) => (i === 0 ? 0 : T(s.at, s.offset ?? 0)));
   const total = tacticalDuration(ep);
   return ep.shots.map((shot, i) => ({shot, start: starts[i], end: i + 1 < starts.length ? starts[i + 1] : total}));
@@ -31,12 +30,12 @@ export const Tactical: React.FC<{episode: TacticalEpisode}> = ({episode: ep}) =>
   const {fps} = useVideoConfig();
   const t = frame / fps;
   const laid = React.useMemo(() => layout(ep), [ep]);
-  const T = React.useMemo(() => makeResolver(ep.words), [ep]);
+  const T = React.useMemo(() => makeTacticalResolver(ep.words), [ep]);
   const idx = Math.max(0, laid.findIndex((l) => t >= l.start && t < l.end));
   const cur = laid[idx === -1 ? laid.length - 1 : idx] ?? laid[laid.length - 1];
   const {shot, start, end} = cur;
   const lt = t - start;
-  const toLocal = (a: unknown): number => (typeof a === 'string' ? T(a) - start : (a as number));
+  const toLocal = localResolver(T, start, end);
 
   const live = (shot.overlays ?? [])
     .map((o: Overlay) => {
@@ -102,7 +101,7 @@ export const Tactical: React.FC<{episode: TacticalEpisode}> = ({episode: ep}) =>
           case 'title':
             return <TacticalText key={i} text={g('text')} age={o.age} dur={o.dur} y={g('y')} size={g('size')} accent={g('accent')} sub={g('sub')} />;
           case 'stamp':
-            return <ResultStamp key={i} text={g('text')} age={o.age} dur={o.dur} tone={g('tone')} y={g('y')} badge={g('badge')} />;
+            return <ResultStamp key={i} text={g('text')} age={o.age} dur={o.dur} tone={g('tone')} y={g('y')} badge={g('badge')} scale={g('scale')} />;
           case 'freeze':
             return <FreezeFrameOverlay key={i} age={o.age} dur={o.dur} label={g('label')} />;
           case 'rewind':
@@ -112,7 +111,7 @@ export const Tactical: React.FC<{episode: TacticalEpisode}> = ({episode: ep}) =>
           case 'fork':
             return <Fork key={i} age={o.age} dur={o.dur} left={g('left')} right={g('right')} y={g('y')} />;
           case 'logo':
-            return <LogoBug key={i} age={o.age} big={g('big')} />;
+            return <LogoBug key={i} age={o.age} big={g('big')} y={g('y')} />;
           case 'kicker':
             return <Kicker key={i} text={g('text')} age={o.age} tone={g('tone')} />;
           case 'flash':
@@ -128,7 +127,7 @@ export const Tactical: React.FC<{episode: TacticalEpisode}> = ({episode: ep}) =>
       {ep.music?.src && <Audio src={staticFile(ep.music.src)} volume={ep.music.volume ?? 1} />}
       {laid.flatMap((l) =>
         (l.shot.sfx ?? []).map((s, i) => {
-          const at = (typeof s.at === 'string' ? T(s.at) : l.start + s.at);
+          const at = l.start + localResolver(T, l.start, l.end)(s.at);
           return (
             <Sequence key={`${l.shot.id}-${i}`} from={Math.max(0, Math.round(at * fps))} durationInFrames={Math.round(3 * fps)}>
               <Audio src={staticFile(`sfx/${s.name}.mp3`)} volume={s.volume ?? 0.35} />
