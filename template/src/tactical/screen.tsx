@@ -185,8 +185,8 @@ export const Kicker: React.FC<{text: string; age: number; tone?: 'gold' | 'mint'
   </div>
 );
 
-export const LogoBug: React.FC<{age: number; big?: boolean}> = ({age, big}) => (
-  <div style={{position: 'absolute', left: 0, right: 0, top: big ? 1060 : 1400, display: 'flex', justifyContent: 'center', opacity: clamp(age / 0.5)}}>
+export const LogoBug: React.FC<{age: number; big?: boolean; y?: number}> = ({age, big, y}) => (
+  <div style={{position: 'absolute', left: 0, right: 0, top: y ?? (big ? 1060 : 1400), display: 'flex', justifyContent: 'center', opacity: clamp(age / 0.5)}}>
     <Img src={staticFile('e2a_logo_white.png')} style={{height: big ? 210 : 120, transform: `scale(${0.92 + 0.08 * easeOut(age / 0.8)})`, filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.5))'}} />
   </div>
 );

@@ -111,7 +111,7 @@ export const Tactical: React.FC<{episode: TacticalEpisode}> = ({episode: ep}) =>
           case 'fork':
             return <Fork key={i} age={o.age} dur={o.dur} left={g('left')} right={g('right')} y={g('y')} />;
           case 'logo':
-            return <LogoBug key={i} age={o.age} big={g('big')} />;
+            return <LogoBug key={i} age={o.age} big={g('big')} y={g('y')} />;
           case 'kicker':
             return <Kicker key={i} text={g('text')} age={o.age} tone={g('tone')} />;
           case 'flash':

@@ -26,6 +26,11 @@ for (let i = 0; i < ep.shots.length; i++) {
   const en = i + 1 < starts.length ? starts[i + 1] : total;
   const toLocal = localResolver(T, st, en);
   const panels = s.split ? s.split.map((p, k) => ({play: ep.plays[p.play], remap: p.remap, camera: p.camera, W: 540, H: 1070, k})) : [{play: ep.plays[s.play!], remap: s.remap ?? [[0, 0]], camera: s.camera ?? [{at: 0, cam: 'top'}], W: 1080, H: 1920, k: 0}];
+  // every narration anchor of the shot must land inside the shot (catches a phrase matching an earlier occurrence)
+  const anchors: unknown[] = [...(s.overlays ?? []).flatMap((o) => [o.from, o.to]), ...(s.sfx ?? []).map((x) => x.at), ...(s.camera ?? []).map((k) => k.at), ...(s.remap ?? []).map((k) => k[0])];
+  for (const p of s.split ?? []) anchors.push(...p.remap.map((k) => k[0]), ...p.camera.map((k) => k.at));
+  const stray = anchors.filter((a) => typeof a === 'string' && !a.startsWith('@')).map((a) => [a, toLocal(a)] as [string, number]).filter(([, v]) => v < -0.05 || v > en - st + 0.05);
+  if (stray.length) { fails++; rows.push({shot: s.id, anchorsOutsideShot: stray.map(([a, v]) => `${a}@${v.toFixed(2)}`).join(' | '), ok: false}); }
   for (const pn of panels) {
     const rm = resolveRemap(pn.remap as never, pn.play, toLocal);
     const cams = (pn.camera as {at: unknown; cam: never}[]).map((k) => ({...k, at: toLocal(k.at)}));

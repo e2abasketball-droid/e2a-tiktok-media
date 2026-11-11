@@ -19,10 +19,10 @@ Todos los tiempos «V1» son del vídeo original; los «V2» son del vídeo nuev
 | Duración del contenido (última palabra + cola) | 75,44 s | 65,89 s |
 | Primera palabra | 0,70 s | 0,31 s |
 | Cola después de la última palabra | 2,4 s | 1,1 s |
-| Sonoridad integrada | −14,2 LUFS | __LUFS__ |
-| Pico real | −1,3 dBTP | __TP__ |
-| Rango de sonoridad (LRA) | 3,8 LU | __LRA__ |
-| Silencios en la mezcla final (silencedetect −35 dB, ≥ 0,25 s) | 16 tramos, el mayor de 1,64 s | __SIL__ |
+| Sonoridad integrada | −14,2 LUFS | −14,4 LUFS |
+| Pico real | −1,3 dBTP | −1,3 dBTP |
+| Rango de sonoridad (LRA) | 3,8 LU | 2,3 LU |
+| Silencios en la mezcla final (silencedetect −35 dB, ≥ 0,25 s) | 16 tramos, el mayor de 1,64 s | **ninguno** dentro del vídeo; solo los últimos 0,35 s, cuando acaba la música (65,65–66,00 s) |
 | Silencio añadido a la voz | 10,0 s de silencio digital (9,3 s en 10 pausas + 0,7 s de entrada), más la cola de 2,4 s | 1,75 s (ruido de sala en 7 pausas, entrada de 0,15 s) |
 | Voz | Deuce, 1 toma, misma cadena (paso alto 80 Hz, +2 dB a 3,2 kHz, compresión 2,5:1, −16 LUFS) | **Idéntica**: misma toma y misma cadena; no se ha cambiado el timbre |
 | Música | motor E2A, drop 24,62 s / payoff 57,6 s fijos | motor E2A, drop y payoff anclados a «First scenario» (21,11 s) y «That's what makes» (50,09 s); continua bajo la voz |
@@ -110,11 +110,37 @@ Al acortar las pausas, todo se movió con la voz. Las referencias en segundos ab
 | Cambio de caso 39:78–44:39 → 34:76–39:07 | Pregunta larga, bifurcación cargada | Rebobinado en vista cenital y **match cut** con la posición inicial idéntica del Case B. Texto «WHAT IF THEY SWITCH?»; se eliminan la bifurcación y «SAME START» | Captura 11 |
 | Case B 44:39–57:48 → 39:07–50:09 | Encuadres parecidos, demasiada información, «+2» enorme | La cámara se mueve hacia el espacio que deja X5 («SPACE LEFT OPEN»). La línea de pase solo aparece cuando se abre (se quitó del plano de la lectura). «SLIP TO THE RIM +2» al 62 %, sin tapar a O5. **La bandeja sí entra** (marca `make` de la jugada B), así que «+2» es un hecho mostrado | Capturas 12–15 |
 | Comparación 57:48–67:70 → 50:09–60:83 | Dos canchas pequeñas durante 10 s, un panel oscurecido | **Case A ampliado (6,0 s)**: «CHASE → OPEN THREE», con seguimiento de O2 y la canasta sobre «three». **Case B ampliado (3,4 s)**: «AGGRESSIVE SWITCH → SLIP». **Split de 1,4 s** con los dos resultados. Sin paneles oscurecidos | Capturas 16–18 |
-| Conclusión 67:70–75:44 → 60:83–65:89 | Poca energía, cancha pequeña, 2,4 s de silencio | Pizarra más grande (distancia 41 → 26,5 m) con acercamiento lento durante la frase final. «READ THE DEFENSE.» a 128 px, «HOW WOULD YOU GUARD IT?» en una sola línea y logo E2A sobre «it?». Final 1,1 s después de la última palabra | Capturas 19–20 |
+| Conclusión 67:70–75:44 → 60:83–65:89 | Poca energía, cancha pequeña, 2,4 s de silencio | Pizarra más grande (distancia 41 → 26,5 m) con acercamiento lento durante la frase final. «READ THE DEFENSE.» a 128 px, «HOW WOULD YOU GUARD IT?» en una sola línea y logo E2A sobre «it?». Logo E2A debajo de los subtítulos (antes los tapaba). Final 1,1 s después de la última palabra | Capturas 19–20 |
 
 ## 5. QA
 
-__QA__
+| Control | Resultado | Archivo |
+|---|---|---|
+| Formato | 1080×1920, 60 fps, H.264 yuv420p (High), AAC 48 kHz estéreo, 66,0 s, faststart | `qc-final-v2.txt` |
+| Sonoridad / pico | −14,4 LUFS integrados, −1,3 dBTP (objetivo ≤ −1) | ídem |
+| Huecos de audio en la mezcla (−35 dB, ≥ 0,25 s) | ninguno (V1: 16) | ídem |
+| Pista de voz | 22 pausas de 0,26–0,84 s; las 4 de más de 0,6 s están justificadas en la tabla de la sección 2 | ídem |
+| Palabras o sílabas cortadas | ninguna: la voz V2 es idéntica a la toma fuente fuera de los fundidos de 8 ms, que caen en silencio (−59 a −89 dB) | `voice-report-v2.json` |
+| Fotogramas negros (≥ 0,1 s) | 0 | `qc-final-v2.txt` |
+| Imagen congelada > 2 s | 0 (los freeze frames duran ≤ 2,3 s) | ídem |
+| QC de motor, fotograma a fotograma | 15/15 planos ok: jugadores en cuadro, giro de cámara ≤ 1,6°/fotograma, desplazamiento ≤ 3,5 %, reloj de juego ≤ 2x (rebobinado ≤ 6x) y **anclas dentro de su plano** (control nuevo) | `qc-engine.json` |
+| Tests tácticos | 60/60 (las jugadas no se han tocado): cierre de las pantallas, corte de O2, persecución de X2, pase del Case A, cambio defensivo, slip, balón continuo | `tactical-tests.json` |
+| Skill `e2a-video-editing-intelligence` · plan | tec-0005 (barrido) elegida. Q9 ✔: todos los cortes caen entre palabras | `skill-plan-v2.md` |
+| Skill · QC del render | R1, R2, R3, R4, R6 y R7 ✔. **R5 ✘** (primer cambio de plano detectado a los 21,1 s; el estándar pide ≤ 2,5 s) | `skill-qc-v2.json` |
+| Revisión visual | 24 capturas de la V2 + 20 pares V1/V2 del mismo momento de la narración | `contact-sheet-v2.png`, `capturas/` |
+
+**Sobre R5.** El gancho de la V2 es un solo plano continuo desde los ojos del defensor: acercamiento, puertas que se cierran, congelado y rebobinado. El detector de la skill solo cuenta los cortes duros, y el primero llega con el Case A.
+
+- No he añadido un corte artificial antes de los 2,5 s porque el brief pide conservar la introducción.
+- El dinamismo del gancho sí pasa la otra regla de la skill: R6 indica que el tramo más largo sin cambio visual es de 3,6 s, por debajo de 4.
+- Si queréis cumplir R5, la opción mínima es un corte a un contraplano sobre «One tiny gap». Os lo puedo preparar.
+
+**Error encontrado y corregido durante la revisión.** El logo final usaba el ancla «it?», que coincidía con el primer «it» de la narración («Here's how **it** works»). Por eso aparecía desde el inicio de la conclusión, encima de los subtítulos.
+
+- Lo detecté en las capturas.
+- Lo corregí con el ancla «guard it?» y moví el logo debajo de los subtítulos.
+- Volví a renderizar solo el último plano (fotogramas 3650–3953) y lo empalmé.
+- Añadí un control automático al QC de motor: toda ancla tiene que caer dentro de su plano. Ahora no hay ninguna fuera.
 
 ## 6. Lo que no se ha podido cumplir
 
