@@ -68,7 +68,7 @@
    "shadow": "never writes to Metricool; writes the publication package only",
    "supervised": "NOT AVAILABLE on the current Metricool plan (2026-11-12: createScheduledPostForReview → 403 'no subscription with team management'). Would use approvalSystem 'any'.",
    "limited_autonomy": "NOT AVAILABLE: owner decision 2026-11-12 — no approval by silence; every post needs an explicit human approval",
-   "owner_manual": "Proposed while there is no review flow: the agent NEVER writes to Metricool (verifier stays 'blocked'); it delivers the QC'd package (pinned URL, captions, titles, AI labels); the owner schedules by hand; the agent only confirms by read-back (media bytes, status)."
+   "owner_manual": "CHOSEN by owner 2026-11-12 23:03Z for the supervised pilot: the agent NEVER writes to Metricool (verifier stays 'blocked'); it delivers the QC'd package (pinned URL, captions, titles, AI labels); the owner schedules by hand; the agent only confirms by read-back (media bytes, status)."
   },
   "never": [
    "createScheduledPost",
@@ -79,7 +79,8 @@
   ],
   "approval_system": "any",
   "create_tool": "createScheduledPostForReview",
-  "metricool_review_available": false
+  "metricool_review_available": false,
+  "pilot_mode": "owner_manual"
  },
  "delegation": {
   "status": "NO DELEGATION: the verifier is blocked until the owner grants one through a channel the agent cannot write",
