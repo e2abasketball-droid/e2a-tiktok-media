@@ -1,0 +1,1 @@
+static.metricool.com 2026-11-13: post 426159230 media https://static.metricool.com/planner/202611/7681319-file-11004146168744774122.mp4 → 9272409 B sha256 32da0a1658b61a09efcdf039ecef7e4cfad5cfc4944889c5185d26c82e341a8a = original stagger V2 social MP4 (cmp: identical). Metricool does not transcode.

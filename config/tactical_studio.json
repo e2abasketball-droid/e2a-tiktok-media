@@ -57,11 +57,11 @@
  },
  "retries_per_phase": 1,
  "ai_labels": {
-  "status": "PROPOSED, owner decision pending",
-  "instagram_isAiGenerated": true,
-  "tiktok_isAigc": true,
+  "status": "OWNER DECISION 2026-11-13: do not label as AI-generated unless required",
+  "instagram_isAiGenerated": false,
+  "tiktok_isAigc": false,
   "youtube_isAiGeneratedContent": false,
-  "why": "Synthetic narrator voice (ElevenLabs) and computer-generated 3D players; the players are not realistic people and impersonate nobody"
+  "why": "Platforms require the label for realistic synthetic content (realistic people, places or events, or a real person's voice). Our videos are clearly stylised 3D animations of fictional players with a generic narrator voice that imitates nobody. Re-evaluate if a video ever shows realistic people or a real person's voice."
  },
  "publishing": {
   "mode": "shadow",
