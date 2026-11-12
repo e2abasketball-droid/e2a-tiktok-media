@@ -19,7 +19,7 @@ import '../theme';
 
 type Word = {text: string; start: number; end: number};
 type Timed = {from: Anchor; to?: Anchor};
-type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: number; gold?: number[]; sub?: string} | {type: 'stamp'; text: string; y?: number; tone?: 'gold' | 'white'; badge?: string} | {type: 'pin'; player: string; text: string; tone?: 'gold' | 'red' | 'white'; dy?: number; z?: number} | {type: 'freeze'; label?: string} | {type: 'rewind'} | {type: 'logo'; big?: boolean} | {type: 'grade'});
+type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: number; gold?: number[]; sub?: string} | {type: 'stamp'; text: string; y?: number; tone?: 'gold' | 'white'; badge?: string} | {type: 'pin'; player: string; text: string; tone?: 'gold' | 'red' | 'white'; dy?: number; z?: number; size?: number} | {type: 'freeze'; label?: string} | {type: 'rewind'} | {type: 'logo'; big?: boolean} | {type: 'grade'} | {type: 'scrim'; opacity?: number});
 type CamKeyA = Omit<CamKey3, 'at'> & {at: Anchor};
 export type Shot3 = {
   id: string;
@@ -123,12 +123,15 @@ export const Tactical3D: React.FC<{episode: Episode3}> = ({episode: ep}) => {
           case 'pin': {
             const p = posAt(play.tracks[s.player], Math.max(0, Math.min(play.duration, pt))) as V2;
             const q = proj([p[0], p[1], s.z ?? 2.25]);
-            return q.visible ? <PinLabel key={i} x={q.x} y={q.y} text={s.text} age={s.age} dur={s.dur} tone={s.tone} dy={s.dy} /> : null;
+            return q.visible ? <PinLabel key={i} x={q.x} y={q.y} text={s.text} age={s.age} dur={s.dur} tone={s.tone} dy={s.dy} size={s.size} /> : null;
           }
           case 'freeze':
             return <FreezeFrame key={i} age={s.age} dur={s.dur} label={s.label} />;
           case 'rewind':
             return <RewindTag key={i} age={s.age} dur={s.dur} />;
+          case 'scrim':
+            // navy veil that lifts a closing question off the court
+            return <AbsoluteFill key={i} style={{background: '#050A15', opacity: (s.opacity ?? 0.5) * Math.min(1, s.age / 0.3)}} />;
           case 'logo':
             return <Logo key={i} age={s.age} big={s.big} />;
           default:
