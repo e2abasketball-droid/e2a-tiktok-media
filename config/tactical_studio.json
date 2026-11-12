@@ -67,7 +67,7 @@
   "modes": {
    "shadow": "never writes to Metricool; writes the publication package only",
    "supervised": "createScheduledPostForReview with approvalSystem 'any': the owner approves each post in Metricool",
-   "limited_autonomy": "createScheduledPostForReview with approvalSystem 'optional': publishes unless the owner rejects; needs a live delegation"
+   "limited_autonomy": "NOT AVAILABLE: owner decision 2026-11-12 — no approval by silence; every post needs an explicit human approval"
   },
   "never": [
    "createScheduledPost",
@@ -75,7 +75,9 @@
    "sendScheduledPostForReview",
    "delete or move any post",
    "Trial Reels"
-  ]
+  ],
+  "approval_system": "any",
+  "create_tool": "createScheduledPostForReview"
  },
  "delegation": {
   "status": "NO DELEGATION: the verifier is blocked until the owner grants one through a channel the agent cannot write",

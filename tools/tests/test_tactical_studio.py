@@ -424,6 +424,22 @@ class TestRenderAndQC(Base):
         ts.asset(self.st, CID, "a3", "https://x/y.mp4", fetch=self.fetch_good)
 
 
+class TestApprovalSystem(unittest.TestCase):
+    def _cfg(self, mode, system):
+        c = json.loads(json.dumps(ts.cfg()))
+        c["publishing"]["mode"], c["publishing"]["approval_system"] = mode, system
+        return c
+
+    def test_only_supervised_with_explicit_approval(self):
+        for mode, system, ok in [("supervised", "any", True), ("supervised", "optional", False), ("supervised", "all", False),
+                                 ("limited_autonomy", "any", False), ("shadow", "any", False)]:
+            with mock.patch.object(ts, "cfg", return_value=self._cfg(mode, system)):
+                self.assertEqual(ts.metricool_review_verifier("x")[0], ok, (mode, system))
+
+    def test_config_forbids_approval_by_silence(self):
+        self.assertEqual(ts.cfg()["publishing"]["approval_system"], "any")
+
+
 class TestBoundsQC(Base):
     """Screen elements must stay in the frame/safe area during the whole animation, judged on the engine
     code that actually rendered the MP4."""

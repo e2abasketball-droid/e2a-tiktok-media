@@ -376,9 +376,12 @@ def blocked_verifier(scope):
 def metricool_review_verifier(scope):
     """Supervised / limited autonomy: the create call is only a REQUEST for review; the human approval
     happens in Metricool, outside the agent, and `confirm` only counts an approved, scheduled post."""
-    mode = cfg()["publishing"]["mode"]
-    if mode not in ("supervised", "limited_autonomy"):
-        return False, f"publishing mode is {mode!r}"
+    pub = cfg()["publishing"]
+    mode = pub["mode"]
+    if mode != "supervised":
+        return False, f"publishing mode is {mode!r} (only 'supervised' may write to Metricool)"
+    if pub.get("approval_system") != "any":
+        return False, "approvalSystem must be 'any' (explicit human approval); 'optional' approves by silence"
     return True, "review request only: approval is given by a human in Metricool"
 
 
@@ -1006,7 +1009,8 @@ def schedule_check(st, cid, op, readback, pkg, verifier=None):
     with st.lock():
         exp = st.clock() + dt.timedelta(minutes=c["ticket_ttl_min"])
         return st._append({"kind": "ticket", "cid": cid, "op": op, "package_sha256": pkg["package_sha256"],
-                           "expires": exp.isoformat()})
+                           "expires": exp.isoformat(), "tool": c["publishing"].get("create_tool"),
+                           "approvalSystem": c["publishing"].get("approval_system")})
 
 
 # ------------------------------------------------------------------ confirmation
