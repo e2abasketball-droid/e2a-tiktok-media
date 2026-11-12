@@ -1,0 +1,60 @@
+# Prueba integral en seco sobre una COPIA del registro real (2026-11-12)
+
+$ tactical_publisher.py authorise E2A-TACTICAL-2026-11-20-V01 --sha 0000
+{"error": "publishing mode is 'shadow': direct scheduling is off", "stop": true}
+$ tactical_publisher.py delegation --sha 0000
+{"error": "no delegation on origin/main:config/delegation.tactical-studio.json: publishing is not authorised", "stop": true}
+$ tactical_publisher.py status 2026-11-20
+[
+ {
+  "cid": "E2A-TACTICAL-2026-11-20-V01",
+  "play": "hammer-screen",
+  "duration_s": null,
+  "qc": "QC_PASS",
+  "mp4_url": null,
+  "instagram": "error",
+  "tiktok": "error",
+  "youtube": "error",
+  "metricool_id": null,
+  "slot": "2026-11-20 10:00 Sydney",
+  "voice_credits": 450,
+  "state": "qc_passed",
+  "incidents": [
+   {
+    "attempt": 1,
+    "phase": "render",
+    "reason": "licences: [{'src': 'tactical/hammer/voice.wav', 'licence_key': 'voice/elevenlabs/hammer', 'why': 'commercial use: pending_owner_confirmation'}, {'src': 'tactical/hammer/voice.mix.wav', 'licence_key': 'voice/elevenlabs/hammer', 'why': 'commercial use: pending_owner_confirmation'}]"
+   },
+   {
+    "attempt": 1,
+    "phase": "qc",
+    "reason": "QC_FAIL: audio"
+   }
+  ],
+  "mp4": "produccion/tactical/prueba-2026-11-20/out/E2A-TACTICAL-2026-11-20-V01.mp4"
+ },
+ {
+  "cid": "E2A-TACTICAL-2026-11-20-V02",
+  "play": "spain-pick-and-roll",
+  "duration_s": null,
+  "qc": "QC_PASS",
+  "mp4_url": null,
+  "instagram": "error",
+  "tiktok": "error",
+  "youtube": "error",
+  "metricool_id": null,
+  "slot": "2026-11-20 13:00 Sydney",
+  "voice_credits": 450,
+  "state": "qc_passed",
+  "incidents": [
+   {
+    "attempt": 1,
+    "phase": "qc",
+    "reason": "QC_FAIL: audio"
+   }
+  ],
+  "mp4": "produccion/tactical/prueba-2026-11-20/out/E2A-TACTICAL-2026-11-20-V02.mp4"
+ }
+]
+
+Capa siguiente (ya probada): asset-V01-refused.txt / asset-V02-refused.txt — MP4 renderizados con licencias de PRUEBA, rechazados por el gate asset.

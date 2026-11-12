@@ -1,10 +1,12 @@
-# E2A — TACTICAL CHECK (prompt corto, 08:30 Sydney, solo lectura)
+# E2A — TACTICAL CHECK (08:30 Sydney, SOLO LECTURA)
 
-Comprueba los 2 vídeos de HOY con `python3 tools/tactical_studio.py plan --date <hoy>` y la lectura de
-Metricool (`getScheduledPosts` del día, timezone Australia/Sydney).
-- Si ambos están `scheduled_confirmed`: informe «OK» de 3 líneas.
-- Si falta alguno, hay un duplicado o una colisión con otro post a la misma hora: informe de incidencia con
-  `content_id`, red y causa. NO programes, edites, muevas ni borres nada: esta tarea no tiene herramientas
-  de escritura. La corrección es humana.
-- Lanza analítica pendiente (24 h / 72 h / 7 d) solo con métricas reales de `getAnalyticsDataByMetrics`;
-  si no hay dato, escribe «sin dato», nunca un número inventado.
+Esta tarea no tiene herramientas de escritura: no puede programar, cancelar, mover ni modificar publicaciones.
+
+1. `python3 tools/studio_sync.py pull` (sin lease) y `python3 tools/tactical_publisher.py status <hoy>`.
+2. `getScheduledPosts` de hoy (00:00–23:59 Australia/Sydney, brand 7681319).
+3. Comprueba para V01 (10:00) y V02 (13:00): un único post por vídeo, en las 3 redes, a su hora, con el estado
+   que registró `confirm`; ningún duplicado ni otro post nuestro a ±60 min.
+4. Todo correcto → informe «OK» de 3 líneas. Si falta algo, hay un duplicado, un error de red o una colisión →
+   informe de incidencia con `content_id`, red, id de Metricool y causa. La corrección es humana.
+5. Analítica pendiente (24 h / 72 h / 7 d) solo con datos reales de `getAnalyticsDataByMetrics`; si no hay dato,
+   «sin dato», nunca un número inventado.

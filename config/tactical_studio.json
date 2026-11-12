@@ -1,6 +1,6 @@
 {
- "version": "0.2.0",
- "status": "SHADOW: nothing in this file authorises publishing, scheduling, spending credits or changing tasks",
+ "version": "0.3.0",
+ "status": "SHADOW until the owner merges a granted delegation AND sets publishing.mode=direct_delegated AND creates the task with the pinned delegation sha. Nothing in this file alone authorises publishing.",
  "timezone": "Australia/Sydney",
  "content_id": "E2A-TACTICAL-{date}-V{n:02d}",
  "slots": {
@@ -47,12 +47,13 @@
   "social_max_mb": 10
  },
  "budget_per_day": {
-  "status": "ENFORCED in code: voice-permit charges voice_takes and voice_credits, render charges final_renders; values PROPOSED, owner approval pending",
+  "status": "ENFORCED in code per post date: voice-permit charges voice_takes/voice_credits, render charges final_renders, publisher prepare charges create_calls; values PROPOSED, owner approval pending",
   "voice_takes": 2,
   "voice_credits": 1200,
   "final_renders": 4,
   "music_generations": 0,
-  "publications": 6
+  "publications": 6,
+  "create_calls": 4
  },
  "retries_per_phase": 1,
  "ai_labels": {
@@ -65,26 +66,33 @@
  "publishing": {
   "mode": "shadow",
   "modes": {
-   "shadow": "never writes to Metricool; writes the publication package only",
-   "supervised": "NOT AVAILABLE on the current Metricool plan (2026-11-12: createScheduledPostForReview → 403 'no subscription with team management'). Would use approvalSystem 'any'.",
-   "limited_autonomy": "NOT AVAILABLE: owner decision 2026-11-12 — no approval by silence; every post needs an explicit human approval",
-   "owner_manual": "CHOSEN by owner 2026-11-12 23:03Z for the supervised pilot: the agent NEVER writes to Metricool (verifier stays 'blocked'); it delivers the QC'd package (pinned URL, captions, titles, AI labels); the owner schedules by hand; the agent only confirms by read-back (media bytes, status)."
+   "shadow": "never writes to Metricool; writes the publication package only (current)",
+   "direct_delegated": "V3 (owner brief 2026-11-12 23:16Z): tools/tactical_publisher.py may make ONE createScheduledPost per video (IG Reel + TikTok + YT Short) only while a granted delegation on origin/main matches the sha pinned in the scheduled task, inside its dates and scope, after all QC gates. Not active.",
+   "owner_manual": "FALLBACK (owner decision 2026-11-12 23:03Z, superseded by V3 when a delegation is granted): the agent delivers the package; the owner schedules by hand; the agent only confirms by read-back.",
+   "supervised": "NOT AVAILABLE on the current Metricool plan (createScheduledPostForReview → 403 'no subscription with team management', 2026-11-12).",
+   "limited_autonomy": "NOT AVAILABLE: no approval by silence."
   },
   "never": [
-   "createScheduledPost",
    "updateScheduledPost",
    "sendScheduledPostForReview",
+   "createScheduledPostForReview (not the main path; 403 on this plan)",
    "delete or move any post",
-   "Trial Reels"
+   "Trial Reels",
+   "createScheduledPost outside tools/tactical_publisher.py prepare"
   ],
   "approval_system": "any",
-  "create_tool": "createScheduledPostForReview",
-  "metricool_review_available": false,
-  "pilot_mode": "owner_manual"
+  "create_tool": "createScheduledPost",
+  "max_create_attempts": 2,
+  "approval_system_note": "only for the Metricool review flow, unavailable on this plan; direct_delegated does not use it",
+  "metricool_review_available": false
  },
  "delegation": {
-  "status": "NO DELEGATION: the verifier is blocked until the owner grants one through a channel the agent cannot write",
-  "verifier": "blocked"
+  "status": "NO DELEGATION GRANTED. The owner grants one by merging config/delegation.tactical-studio.json with status 'granted' to main and pinning its sha256 in the scheduled task.",
+  "verifier": "blocked",
+  "verifier_when_active": "delegation (checked only by tools/tactical_publisher.py with the pinned sha)",
+  "file": "config/delegation.tactical-studio.json",
+  "ref": "origin/main",
+  "max_days": 7
  },
  "speech": {
   "words_per_s": 3.0,

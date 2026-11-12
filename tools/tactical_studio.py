@@ -385,7 +385,12 @@ def metricool_review_verifier(scope):
     return True, "review request only: approval is given by a human in Metricool"
 
 
-VERIFIERS = {"blocked": blocked_verifier, "metricool_review": metricool_review_verifier}
+def delegation_placeholder(scope):
+    """'delegation' needs the pinned sha from the scheduled task: only tools/tactical_publisher.py can check it."""
+    return False, "direct publishing is authorised only through tools/tactical_publisher.py authorise (pinned delegation sha)"
+
+
+VERIFIERS = {"blocked": blocked_verifier, "metricool_review": metricool_review_verifier, "delegation": delegation_placeholder}
 
 
 def configured_verifier():

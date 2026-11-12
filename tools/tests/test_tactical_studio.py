@@ -715,13 +715,14 @@ class TestF_N_Confirmation(Base):
 
 # ---------------------------------------------------------------- configuration (H)
 class TestH_Config(unittest.TestCase):
-    def test_routine_has_no_direct_write_tool(self):
+    def test_routine_write_tools(self):
         r = json.load(open(os.path.join(ts.ROOT, "config", "routine.tactical-studio.json")))
         for t in r["tasks"]:
             tools = t["connectors"].get("Metricool-Social-Media-Management", {}).get("permitted_tools", [])
             self.assertTrue(tools, "empty permitted_tools = all tools")
-            for w in ("createScheduledPost", "updateScheduledPost", "sendScheduledPostForReview"):
+            for w in ("updateScheduledPost", "sendScheduledPostForReview", "createScheduledPostForReview"):
                 self.assertNotIn(w, tools)
+            self.assertEqual("createScheduledPost" in tools, t["name"] == "E2A — TACTICAL STUDIO")
             self.assertIn("Claude_Code_Remote", t["never_attach"])
 
     def test_shadow_and_blocked_by_default(self):
