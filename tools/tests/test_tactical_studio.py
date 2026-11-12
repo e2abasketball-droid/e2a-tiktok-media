@@ -71,6 +71,9 @@ class Base(unittest.TestCase):
         self.lic = mock.patch.object(ts, "load_licences", return_value=OK_LIC)
         self.lic.start()
         self.addCleanup(self.lic.stop)
+        self.bounds = mock.patch.object(ts, "run_bounds_qc", return_value={"pass": True, "frames_checked": 1000, "violations": []})
+        self.bounds.start()
+        self.addCleanup(self.bounds.stop)
         self.calls = []
 
     def _media(self, rel, data, key):
@@ -419,6 +422,32 @@ class TestRenderAndQC(Base):
         with self.assertRaises(ts.StudioError):
             ts.asset(self.st, CID, "a2", "http://x/y.mp4", fetch=self.fetch_good)
         ts.asset(self.st, CID, "a3", "https://x/y.mp4", fetch=self.fetch_good)
+
+
+class TestBoundsQC(Base):
+    """Screen elements must stay in the frame/safe area during the whole animation, judged on the engine
+    code that actually rendered the MP4."""
+
+    def test_bounds_violation_fails_qc(self):
+        self.drive(CID, "rendered")
+        bad = {"pass": False, "violations": [{"kind": "pin", "text": "HAMMER", "area": "frame", "side": "right", "worst_px": 130}]}
+        with mock.patch.object(ts, "run_bounds_qc", return_value=bad):
+            r = ts.qc(self.st, CID, "q", "ep.json", os.path.join(self.tmp, "q"), measure=self.measure_ok,
+                      plays_validator=self.validator_ok, engine=self.engine_ok)
+        self.assertEqual(r["result"], "QC_FAIL")
+        self.assertFalse(r["checks"]["bounds"]["pass"])
+
+    def test_engine_changed_after_render_fails_qc(self):
+        self.drive(CID, "rendered")
+        with mock.patch.object(ts, "engine_hash", return_value="0" * 64):
+            r = ts.qc(self.st, CID, "q", "ep.json", os.path.join(self.tmp, "q"), measure=self.measure_ok,
+                      plays_validator=self.validator_ok, engine=self.engine_ok)
+        self.assertEqual(r["result"], "QC_FAIL")
+        self.assertIn("engine changed", r["measured"]["bounds"]["why"])
+
+    def test_render_records_engine_hash(self):
+        self.drive(CID, "rendered")
+        self.assertEqual(self.st.refs(CID, "rendered")["engine_sha256"], ts.engine_hash())
 
 
 class TestLoudnessInProductionPath(Base):

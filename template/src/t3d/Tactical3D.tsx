@@ -71,7 +71,35 @@ const useLogo = () => {
   return logo;
 };
 
-export const Tactical3D: React.FC<{episode: Episode3}> = ({episode: ep}) => {
+/** Bounds QC probe: after each frame is laid out, report every on-screen text/graphic box (data-qc) in
+ *  composition pixels. Used by scripts/qc-bounds.mts through renderFrames (imageFormat none). */
+const BoundsProbe: React.FC<{frame: number}> = ({frame}) => {
+  const ref = React.useRef<HTMLDivElement>(null);
+  React.useLayoutEffect(() => {
+    const root = ref.current?.parentElement;
+    if (!root) return;
+    const rr = root.getBoundingClientRect();
+    const k = rr.width / 1080;
+    const boxes: {kind: string; text: string; x0: number; y0: number; x1: number; y1: number; op: number}[] = [];
+    root.querySelectorAll<HTMLElement>('[data-qc]').forEach((el) => {
+      let op = 1;
+      for (let e: HTMLElement | null = el; e && e !== root; e = e.parentElement) op *= parseFloat(getComputedStyle(e).opacity || '1');
+      let r: DOMRect;
+      if (el.dataset.qcText) {
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        r = range.getBoundingClientRect();
+      } else r = el.getBoundingClientRect();
+      if (r.width === 0 || r.height === 0) return;
+      boxes.push({kind: el.dataset.qc ?? '?', text: (el.textContent ?? '').trim().slice(0, 40), op: Math.round(op * 100) / 100,
+        x0: Math.round((r.left - rr.left) / k), y0: Math.round((r.top - rr.top) / k), x1: Math.round((r.right - rr.left) / k), y1: Math.round((r.bottom - rr.top) / k)});
+    });
+    console.log('QCBOX ' + JSON.stringify({frame, boxes}));
+  });
+  return <div ref={ref} style={{display: 'none'}} />;
+};
+
+export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({episode: ep, qcProbe}) => {
   const frame = useCurrentFrame();
   const {fps, width: W, height: H} = useVideoConfig();
   const logo = useLogo();
@@ -107,9 +135,11 @@ export const Tactical3D: React.FC<{episode: Episode3}> = ({episode: ep}) => {
   return (
     <AbsoluteFill style={{background: '#050A15'}}>
       <AbsoluteFill style={{filter: freezeOn ? 'saturate(0.72) brightness(0.94) contrast(1.04)' : undefined}}>
-        <Scene3D play={play} pt={pt} cam={cam} W={W} H={H} hide={shot.hide} logo={logo}>
-          <Overlays3D play={play} pt={pt} items={ov} />
-        </Scene3D>
+        {!qcProbe && (
+          <Scene3D play={play} pt={pt} cam={cam} W={W} H={H} hide={shot.hide} logo={logo}>
+            <Overlays3D play={play} pt={pt} items={ov} />
+          </Scene3D>
+        )}
       </AbsoluteFill>
       {/* cinematic grade: vignette + top/bottom falloff that also protects text */}
       <AbsoluteFill style={{background: 'radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 55%, rgba(3,8,20,0.55) 100%)'}} />
@@ -139,9 +169,10 @@ export const Tactical3D: React.FC<{episode: Episode3}> = ({episode: ep}) => {
         }
       })}
       <PremiumSubtitles words={ep.words} t={t} keys={ep.keywords ?? []} hideRanges={subHide} />
-      <Audio src={staticFile(ep.voiceMix ?? ep.voice)} />
-      {ep.music?.src && <Audio src={staticFile(ep.music.src)} volume={ep.music.volume ?? 1} />}
-      {laid.flatMap((l) =>
+      {qcProbe && <BoundsProbe frame={frame} />}
+      {!qcProbe && <Audio src={staticFile(ep.voiceMix ?? ep.voice)} />}
+      {!qcProbe && ep.music?.src && <Audio src={staticFile(ep.music.src)} volume={ep.music.volume ?? 1} />}
+      {!qcProbe && laid.flatMap((l) =>
         (l.shot.sfx ?? []).map((s, i) => {
           const at = l.start + localResolver(T, l.start, l.end)(s.at);
           return (

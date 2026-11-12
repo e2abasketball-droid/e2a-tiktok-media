@@ -19,6 +19,8 @@ export const KineticTitle: React.FC<{lines: string[]; age: number; dur: number; 
         return (
           <div key={i} style={{overflow: 'hidden', height: size * 1.04}}>
             <div
+              data-qc="title"
+              data-qc-text="1"
               style={{
                 fontFamily: DISPLAY,
                 fontSize: size,
@@ -37,7 +39,7 @@ export const KineticTitle: React.FC<{lines: string[]; age: number; dur: number; 
       })}
       <div style={{height: 7, width: `${eo((age - 0.15) / 0.4) * 180}px`, background: GOLD, marginTop: 14, borderRadius: 4}} />
       {sub && (
-        <div style={{fontFamily: BODY, fontWeight: 800, fontSize: 38, letterSpacing: 4, color: 'rgba(255,255,255,0.85)', marginTop: 16, opacity: eo((age - 0.25) / 0.3), textTransform: 'uppercase'}}>{sub}</div>
+        <div data-qc="title-sub" data-qc-text="1" style={{fontFamily: BODY, fontWeight: 800, fontSize: 38, letterSpacing: 4, color: 'rgba(255,255,255,0.85)', marginTop: 16, opacity: eo((age - 0.25) / 0.3), textTransform: 'uppercase'}}>{sub}</div>
       )}
     </div>
   );
@@ -49,7 +51,7 @@ export const Stamp: React.FC<{text: string; age: number; dur: number; y?: number
   const s = 0.9 + 0.1 * eo(age / 0.3);
   return (
     <div style={{position: 'absolute', left: 0, right: 0, top: y, display: 'flex', justifyContent: 'center', opacity: a, transform: `translateY(${(1 - eo(age / 0.3)) * 30}px) scale(${s})`}}>
-      <div style={{display: 'flex', alignItems: 'center', gap: 18, background: 'rgba(11,28,61,0.92)', border: `3px solid ${GOLD}`, borderRadius: 18, padding: '14px 30px', boxShadow: '0 14px 50px rgba(0,0,0,0.55)'}}>
+      <div data-qc="stamp" style={{display: 'flex', alignItems: 'center', gap: 18, background: 'rgba(11,28,61,0.92)', border: `3px solid ${GOLD}`, borderRadius: 18, padding: '14px 30px', boxShadow: '0 14px 50px rgba(0,0,0,0.55)'}}>
         {badge && <span style={{fontFamily: DISPLAY, fontSize: 70, color: NAVY, background: GOLD, borderRadius: 12, padding: '0 16px', lineHeight: 1.15}}>{badge}</span>}
         <span style={{fontFamily: DISPLAY, fontSize: 78, letterSpacing: 2, color: tone === 'gold' ? GOLD : WHITE, lineHeight: 1.1}}>{text}</span>
       </div>
@@ -57,17 +59,39 @@ export const Stamp: React.FC<{text: string; age: number; dur: number; y?: number
   );
 };
 
-/** label pinned to a player (projected from 3D), with a short leader line */
+/** text width with the real font (canvas measureText), used to keep projected labels inside the safe area */
+let measureCtx: CanvasRenderingContext2D | null = null;
+export const textWidth = (text: string, font: string, letterSpacing = 0) => {
+  if (!measureCtx) measureCtx = document.createElement('canvas').getContext('2d');
+  if (!measureCtx) return text.length * 0.6 * parseFloat(font.match(/(\d+)px/)?.[1] ?? '40');
+  measureCtx.font = font;
+  return measureCtx.measureText(text).width + letterSpacing * text.length;
+};
+
+/** Reels/TikTok/Shorts safe area in a 1080x1920 frame (same numbers as scripts/qc-bounds.mts): header
+ *  220 px, caption 420 px, 40 px side margins, and the action-button rail (right 150 px from y 760 down) */
+export const SAFE = {left: 40, right: 1080 - 40, top: 220, bottom: 1920 - 420, railX: 1080 - 150, railY0: 760};
+
+/** label pinned to a player (projected from 3D), with a short leader line. The label box is kept inside
+ *  the safe area (it slides sideways / down when the player is near an edge); the leader line keeps
+ *  pointing at the player. Script, play and edit timing are untouched. */
 export const PinLabel: React.FC<{x: number; y: number; text: string; age: number; dur: number; tone?: 'gold' | 'red' | 'white'; dy?: number; size?: number}> = ({x, y, text, age, dur, tone = 'gold', dy = -70, size = 40}) => {
+  // the player itself is out of shot: no label (it was never visible before either)
+  if (x < 0 || x > 1080 || y < 0 || y > 1920) return null;
   const a = inOut(age, dur, 0.25, 0.2);
   const bg = tone === 'red' ? '#E5483A' : tone === 'white' ? 'rgba(255,255,255,0.95)' : GOLD;
   const fg = tone === 'white' ? NAVY : tone === 'red' ? WHITE : NAVY;
-  const ty = y + dy;
+  const ty = Math.max(SAFE.top + size * 1.5, y + dy);
+  // full-scale box (the pop-in scale only shrinks it): text + horizontal padding 2x16 + safety 6
+  const half = (textWidth(text, `900 ${size}px ${BODY}`, 1.5) + 32 + 6) / 2;
+  const right = ty > SAFE.railY0 ? SAFE.railX : SAFE.right; // ty = bottom edge of the label box
+  const cx = Math.min(Math.max(x, SAFE.left + half), right - half);
+  const lead = Math.abs(y - ty);
   return (
     <>
-      <div style={{position: 'absolute', left: x - 1.5, top: Math.min(y, ty), width: 3, height: Math.abs(dy) * eo(age / 0.25), background: bg, opacity: a * 0.9}} />
-      <div style={{position: 'absolute', left: x, top: ty, transform: `translate(-50%, -100%) scale(${0.85 + 0.15 * eo(age / 0.25)})`, opacity: a}}>
-        <div style={{fontFamily: BODY, fontWeight: 900, fontSize: size, letterSpacing: 1.5, color: fg, background: bg, padding: '6px 16px', borderRadius: 10, whiteSpace: 'nowrap', boxShadow: '0 8px 24px rgba(0,0,0,0.45)'}}>{text}</div>
+      <div style={{position: 'absolute', left: x - 1.5, top: Math.min(y, ty), width: 3, height: lead * eo(age / 0.25), background: bg, opacity: a * 0.9}} />
+      <div style={{position: 'absolute', left: cx, top: ty, transform: `translate(-50%, -100%) scale(${0.85 + 0.15 * eo(age / 0.25)})`, opacity: a}}>
+        <div data-qc="pin" style={{fontFamily: BODY, fontWeight: 900, fontSize: size, letterSpacing: 1.5, color: fg, background: bg, padding: '6px 16px', borderRadius: 10, whiteSpace: 'nowrap', boxShadow: '0 8px 24px rgba(0,0,0,0.45)'}}>{text}</div>
       </div>
     </>
   );
@@ -84,7 +108,7 @@ export const FreezeFrame: React.FC<{age: number; dur: number; label?: string}> =
       {corner({right: 40, top: 240, borderRightWidth: 5, borderTopWidth: 5})}
       {corner({left: 40, bottom: 440, borderLeftWidth: 5, borderBottomWidth: 5})}
       {corner({right: 40, bottom: 440, borderRightWidth: 5, borderBottomWidth: 5})}
-      <div style={{position: 'absolute', right: 60, top: 258, fontFamily: BODY, fontWeight: 900, fontSize: 26, letterSpacing: 5, color: NAVY, background: GOLD, padding: '4px 12px', borderRadius: 6, opacity: a}}>❚❚ {label}</div>
+      <div data-qc="freeze" style={{position: 'absolute', right: 60, top: 258, fontFamily: BODY, fontWeight: 900, fontSize: 26, letterSpacing: 5, color: NAVY, background: GOLD, padding: '4px 12px', borderRadius: 6, opacity: a}}>❚❚ {label}</div>
     </>
   );
 };
@@ -94,7 +118,7 @@ export const RewindTag: React.FC<{age: number; dur: number}> = ({age, dur}) => {
   return (
     <>
       <div style={{position: 'absolute', inset: 0, background: 'rgba(11,28,61,0.18)', opacity: a}} />
-      <div style={{position: 'absolute', left: 60, top: 258, fontFamily: BODY, fontWeight: 900, fontSize: 30, letterSpacing: 5, color: WHITE, opacity: a}}>◀◀ REWIND</div>
+      <div data-qc="rewind" data-qc-text="1" style={{position: 'absolute', left: 60, top: 258, fontFamily: BODY, fontWeight: 900, fontSize: 30, letterSpacing: 5, color: WHITE, opacity: a}}>◀◀ REWIND</div>
       {Array.from({length: 5}, (_, i) => (
         <div key={i} style={{position: 'absolute', left: 0, right: 0, top: ((age * 2400 + i * 380) % 1920) | 0, height: 2, background: 'rgba(255,255,255,0.18)', opacity: a}} />
       ))}
@@ -104,7 +128,7 @@ export const RewindTag: React.FC<{age: number; dur: number}> = ({age, dur}) => {
 
 export const Logo: React.FC<{age: number; big?: boolean}> = ({age, big}) => (
   <div style={{position: 'absolute', left: 0, right: 0, top: big ? 1010 : 1640, display: 'flex', justifyContent: 'center', opacity: eo(age / 0.4)}}>
-    <Img src={staticFile('e2a_logo_white.png')} style={{width: big ? 300 : 150, opacity: 0.92}} />
+    <Img data-qc="logo" src={staticFile('e2a_logo_white.png')} style={{width: big ? 300 : 150, opacity: 0.92}} />
   </div>
 );
 
@@ -157,6 +181,7 @@ export const PremiumSubtitles: React.FC<{words: W[]; t: number; keys: string[]; 
         return (
           <span
             key={i}
+            data-qc="subtitle"
             style={{
               fontFamily: BODY,
               fontWeight: 900,

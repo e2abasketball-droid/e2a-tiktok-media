@@ -65,7 +65,7 @@ FLOW = ["candidate", "researched", "selected", "scripted", "storyboard_ready", "
 STATES = set(FLOW) | {"failed"}
 FREE = {"candidate", "researched", "analytics_pending", "analysed"}
 GATED = set(FLOW) - FREE
-QC_REQUIRED = ("tactical", "engine", "audio", "technical", "frames", "licences")
+QC_REQUIRED = ("tactical", "engine", "audio", "technical", "frames", "licences", "bounds")
 SECTIONS = ("HOOK", "SETUP", "CASE A", "CASE B", "COUNTER", "TAKEAWAY", "CTA")
 # Metricool provider statuses that mean "really scheduled" / "really published". Anything else (unknown,
 # awaiting approval, draft, error) is never confirmed.
@@ -673,7 +673,7 @@ def render(st, cid, op, bundle_path, out_dir, renderer=None):
     official = os.path.abspath(LICENCES) == os.path.abspath(OFFICIAL_LICENCES)
     return st._advance(cid, "rendered", op, artifacts={"bundle": bundle_path, "master": master, "mp4": social},
                        refs={"licences": lic, "licence_file": _rel(LICENCES), "licence_sha256": sha256(LICENCES),
-                             "licences_official": official, "encode": enc}, _token=_GATE)
+                             "licences_official": official, "encode": enc, "engine_sha256": engine_hash()}, _token=_GATE)
 
 
 def remaster(st, cid, op, encoder=None):
@@ -749,6 +749,37 @@ def run_engine_qc(episode_path):
                 "fails": [l for l in res if l.startswith("FAIL")], "exit": p.returncode}
 
 
+ENGINE_DIRS = ("src/t3d", "src/tactical", "src/pro/brand.ts")
+
+
+def engine_hash():
+    """Hash of the engine source the frames are drawn with: QC must judge the code that actually rendered."""
+    h = hashlib.sha256()
+    files = []
+    for d in ENGINE_DIRS:
+        p = os.path.join(TEMPLATE, d)
+        if os.path.isfile(p):
+            files.append(p)
+        for root, _, names in os.walk(p):
+            files += [os.path.join(root, n) for n in names if n.endswith((".ts", ".tsx"))]
+    for f in sorted(set(files)):
+        h.update(os.path.relpath(f, TEMPLATE).encode() + b"\0" + open(f, "rb").read() + b"\0")
+    return h.hexdigest()
+
+
+def run_bounds_qc(bundle_path):
+    """Every screen element inside the frame and the platform safe area during its whole animation
+    (scripts/qc-bounds.mts, real browser + fonts, every frame)."""
+    with tempfile.TemporaryDirectory() as td:
+        rep = os.path.join(td, "b.json")
+        p = _run(["node", "--experimental-strip-types", "scripts/qc-bounds.mts", os.path.abspath(_abs(bundle_path)), rep], cwd=TEMPLATE)
+        if not os.path.exists(rep):
+            return {"pass": False, "why": f"bounds QC did not run (exit {p.returncode}): {p.stderr[-300:]}"}
+        r = json.load(open(rep))
+        return {"pass": r["pass"], "frames_checked": r["frames_checked"], "boxes_checked": r["boxes_checked"],
+                "violations": r["violations"]}
+
+
 def qc_evaluate(r, c=None):
     c = c or cfg()
     out = {}
@@ -777,7 +808,14 @@ def qc_evaluate(r, c=None):
     return out
 
 
-def qc(st, cid, op, episode_path, reports_dir, measure=None, plays_validator=None, engine=None):
+def _bounds_for(st, cid, arts, bounds=None):
+    rr = st.refs(cid, "rendered") or {}
+    if rr.get("engine_sha256") != engine_hash():
+        return {"pass": False, "why": "the engine changed since this MP4 was rendered (or the render predates engine hashing): re-render"}
+    return (bounds or run_bounds_qc)(arts["bundle"]["path"])
+
+
+def qc(st, cid, op, episode_path, reports_dir, measure=None, plays_validator=None, engine=None, bounds=None):
     """GATE qc_passed: every measurement is taken HERE from the rendered MP4 (hash = the `rendered` one)."""
     st.require(cid, "rendered")
     arts = st.artifacts(cid)
@@ -792,6 +830,7 @@ def qc(st, cid, op, episode_path, reports_dir, measure=None, plays_validator=Non
     r = {"technical": technical, "audio": aud, "frames": frames,
          "tactical": (plays_validator or run_play_validator)(plays),
          "engine": (engine or run_engine_qc)(episode_path),
+         "bounds": _bounds_for(st, cid, arts, bounds),
          "licences": licence_check(bundle_manifest(bundle))}
     checks = qc_evaluate(r)
     result = "QC_PASS" if all(v["pass"] for v in checks.values()) else "QC_FAIL"

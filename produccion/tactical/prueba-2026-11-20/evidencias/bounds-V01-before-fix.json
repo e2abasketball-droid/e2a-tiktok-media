@@ -1,0 +1,106 @@
+{
+ "bundle": "../produccion/tactical/prueba-2026-11-20/V01.bundle.json",
+ "frames_checked": 1026,
+ "every_nth_frame": 1,
+ "boxes_checked": 3376,
+ "frame_area": {
+  "left": 24,
+  "right": 1056,
+  "top": 24,
+  "bottom": 1896
+ },
+ "safe_area": {
+  "left": 40,
+  "right": 1040,
+  "top": 220,
+  "bottom": 1500
+ },
+ "right_rail": {
+  "x": 930,
+  "y0": 760,
+  "y1": 1500
+ },
+ "pass": false,
+ "violations": [
+  {
+   "kind": "pin",
+   "text": "DRIVE",
+   "area": "frame",
+   "side": "left",
+   "worst_px": 657,
+   "first_s": 4.37,
+   "last_s": 8.73,
+   "frames": 132
+  },
+  {
+   "kind": "pin",
+   "text": "DRIVE",
+   "area": "safe",
+   "side": "left",
+   "worst_px": 673,
+   "first_s": 4.37,
+   "last_s": 8.73,
+   "frames": 132
+  },
+  {
+   "kind": "pin",
+   "text": "HAMMER",
+   "area": "frame",
+   "side": "right",
+   "worst_px": 130,
+   "first_s": 5.33,
+   "last_s": 8.73,
+   "frames": 103
+  },
+  {
+   "kind": "pin",
+   "text": "HAMMER",
+   "area": "safe",
+   "side": "right",
+   "worst_px": 146,
+   "first_s": 5.33,
+   "last_s": 8.73,
+   "frames": 103
+  },
+  {
+   "kind": "pin",
+   "text": "HELPS",
+   "area": "frame",
+   "side": "right",
+   "worst_px": 80,
+   "first_s": 9.97,
+   "last_s": 10.63,
+   "frames": 21
+  },
+  {
+   "kind": "pin",
+   "text": "HELPS",
+   "area": "safe",
+   "side": "right",
+   "worst_px": 96,
+   "first_s": 9.97,
+   "last_s": 10.67,
+   "frames": 22
+  },
+  {
+   "kind": "pin",
+   "text": "STAYS HOME",
+   "area": "frame",
+   "side": "right",
+   "worst_px": 85,
+   "first_s": 18.17,
+   "last_s": 19.87,
+   "frames": 52
+  },
+  {
+   "kind": "pin",
+   "text": "STAYS HOME",
+   "area": "safe",
+   "side": "right",
+   "worst_px": 101,
+   "first_s": 18.17,
+   "last_s": 19.87,
+   "frames": 52
+  }
+ ]
+}
