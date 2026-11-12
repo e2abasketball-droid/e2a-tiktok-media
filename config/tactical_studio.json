@@ -1,21 +1,51 @@
 {
- "version": "0.1.0",
+ "version": "0.2.0",
  "status": "SHADOW: nothing in this file authorises publishing, scheduling, spending credits or changing tasks",
  "timezone": "Australia/Sydney",
  "content_id": "E2A-TACTICAL-{date}-V{n:02d}",
  "slots": {
-  "1": {"time": "10:00", "label": "TACTICAL VIDEO A", "brief": "offensive action, visually strong"},
-  "2": {"time": "13:00", "label": "TACTICAL VIDEO B", "brief": "a different read: defence, counter or another action"}
+  "1": {
+   "time": "10:00",
+   "label": "TACTICAL VIDEO A",
+   "brief": "offensive action, visually strong"
+  },
+  "2": {
+   "time": "13:00",
+   "label": "TACTICAL VIDEO B",
+   "brief": "a different read: defence, counter or another action"
+  }
  },
- "networks": ["instagram", "tiktok", "youtube"],
+ "networks": [
+  "instagram",
+  "tiktok",
+  "youtube"
+ ],
  "production_cutoff_local": "09:00",
- "duration_s": {"min": 30, "max": 40, "target": [35, 38]},
+ "duration_s": {
+  "min": 30,
+  "max": 40,
+  "target": [
+   35,
+   38
+  ]
+ },
  "repeat_window_days": 45,
  "concept_overlap_block": 0.6,
- "audio": {"lufs_target": -14.0, "lufs_tolerance": 1.0, "true_peak_max": -1.0},
- "video": {"width": 1080, "height": 1920, "fps_min": 30, "vcodec": "h264", "acodec": "aac", "social_max_mb": 10},
+ "audio": {
+  "lufs_target": -14.0,
+  "lufs_tolerance": 1.0,
+  "true_peak_max": -1.0
+ },
+ "video": {
+  "width": 1080,
+  "height": 1920,
+  "fps_min": 30,
+  "vcodec": "h264",
+  "acodec": "aac",
+  "social_max_mb": 10
+ },
  "budget_per_day": {
-  "status": "PROPOSED, not approved: counters are advisory, the hard limits are the ElevenLabs balance and the Metricool review flow",
+  "status": "ENFORCED in code: voice-permit charges voice_takes and voice_credits, render charges final_renders; values PROPOSED, owner approval pending",
   "voice_takes": 2,
   "voice_credits": 1200,
   "final_renders": 4,
@@ -37,10 +67,31 @@
    "supervised": "createScheduledPostForReview with approvalSystem 'any': the owner approves each post in Metricool",
    "limited_autonomy": "createScheduledPostForReview with approvalSystem 'optional': publishes unless the owner rejects; needs a live delegation"
   },
-  "never": ["createScheduledPost", "updateScheduledPost", "sendScheduledPostForReview", "delete or move any post", "Trial Reels"]
+  "never": [
+   "createScheduledPost",
+   "updateScheduledPost",
+   "sendScheduledPostForReview",
+   "delete or move any post",
+   "Trial Reels"
+  ]
  },
  "delegation": {
   "status": "NO DELEGATION: the verifier is blocked until the owner grants one through a channel the agent cannot write",
   "verifier": "blocked"
+ },
+ "speech": {
+  "words_per_s": 2.7,
+  "designed_pauses_s": 3.0,
+  "tail_s": 0.9,
+  "why": "measured on Deuce/eleven_v4 takes (Elevator 2.78 w/s, Stagger 2.7 w/s without designed gaps)"
+ },
+ "collision_window_min": 60,
+ "readback_max_age_min": 15,
+ "ticket_ttl_min": 30,
+ "state_sync": {
+  "remote": "origin",
+  "branch": "PENDING owner decision (proposed: studio-state, protected: no force-push, no deletion)",
+  "dir": "studio-state",
+  "lease_ttl_min": 240
  }
 }

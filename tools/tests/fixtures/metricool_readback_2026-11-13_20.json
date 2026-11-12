@@ -1,0 +1,25 @@
+{
+ "source": "REAL read-back: Metricool getScheduledPosts, brand 7681319, 2026-11-13..2026-11-20 Australia/Sydney, fetched 2026-11-12T21:20Z. Personal fields (creator e-mail and user id) removed; captions shortened.",
+ "fetched_at": "2026-11-12T21:20:00+00:00",
+ "from": "2026-11-13T00:00:00+11:00",
+ "to": "2026-11-20T23:59:59+11:00",
+ "data": [
+  {"id": 407520370, "uuid": "-1586228486695663109", "publicationDate": {"dateTime": "2026-11-13T10:00:00", "timezone": "Australia/Sydney"},
+   "text": "New to the EuroLeague? Here's the quick version. ...", "providers": [{"network": "instagram", "status": "PENDING", "detailedStatus": "Pending"}],
+   "media": ["https://static.metricool.com/planner/202610/7681319-file-12508293141170418064.png", "https://static.metricool.com/planner/202610/7681319-file-831534947720036148.png", "https://static.metricool.com/planner/202610/7681319-file-12458718794619264573.png", "https://static.metricool.com/planner/202610/7681319-file-4794160328964612127.png"],
+   "autoPublish": true, "draft": false, "instagramData": {"autoPublish": true, "type": "POST", "showReelOnFeed": true, "isAiGenerated": false}},
+  {"id": 407520558, "uuid": "-4573656920932595595", "publicationDate": {"dateTime": "2026-11-14T10:00:00", "timezone": "Australia/Sydney"},
+   "text": "Australians at the top of European basketball. ...", "providers": [{"network": "instagram", "status": "PENDING", "detailedStatus": "Pending"}],
+   "media": ["https://static.metricool.com/planner/202610/7681319-file-10267635714905308826.png"],
+   "autoPublish": true, "draft": false, "instagramData": {"autoPublish": true, "type": "POST", "showReelOnFeed": true, "isAiGenerated": false}},
+  {"id": 426159230, "uuid": "8933586454808643697", "publicationDate": {"dateTime": "2026-11-13T10:00:00", "timezone": "Australia/Sydney"},
+   "text": "Two screens. One shooter. One problem for the defence. ...", "providers": [{"network": "instagram", "status": "PENDING", "detailedStatus": "Pending"}, {"network": "tiktok", "status": "PENDING", "detailedStatus": "Pending"}, {"network": "youtube", "status": "PENDING", "detailedStatus": "Pending"}],
+   "media": ["https://static.metricool.com/planner/202611/7681319-file-11004146168744774122.mp4"],
+   "autoPublish": true, "draft": false, "instagramData": {"autoPublish": true, "type": "REEL", "showReelOnFeed": true, "isAiGenerated": false},
+   "youtubeData": {"title": "The Stagger Screen: Two Screens, Two Reads #shorts", "type": "short"}, "tiktokData": {"privacyOption": "PUBLIC_TO_EVERYONE"}},
+  {"id": 426159411, "uuid": "3455615971284242375", "publicationDate": {"dateTime": "2026-11-13T13:00:00", "timezone": "Australia/Sydney"},
+   "text": "Two screens. One shooter. One problem for the defence. ...", "providers": [{"network": "instagram", "status": "PENDING", "detailedStatus": "Pending"}],
+   "media": ["https://static.metricool.com/planner/202611/7681319-file-11004146168744774122.mp4"],
+   "autoPublish": true, "draft": false, "instagramData": {"autoPublish": true, "type": "TRIAL_REEL", "isAiGenerated": false, "shareTrialAutomatically": false}}
+ ]
+}
