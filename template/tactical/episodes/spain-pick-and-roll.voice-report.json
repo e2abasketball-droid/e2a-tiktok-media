@@ -1,0 +1,84 @@
+{
+ "source": "public/tactical/spain/voice-raw.mp3",
+ "source_sec": 28.48,
+ "preroll": 0.12,
+ "output": "public/tactical/spain/voice.wav",
+ "output_sec": 32.89,
+ "inserted_total_sec": 4.29,
+ "last_word_end": 32.97,
+ "gaps": [
+  {
+   "after": "Two screens.",
+   "natural_silence": [
+    2.15,
+    2.47
+   ],
+   "natural_sec": 0.32,
+   "target_sec": 0.7,
+   "inserted_sec": 0.38,
+   "cut_at_source": 2.345,
+   "why": "hook titles land"
+  },
+  {
+   "after": "to stop the roll.",
+   "natural_silence": [
+    8.19,
+    8.69
+   ],
+   "natural_sec": 0.5,
+   "target_sec": 1.1,
+   "inserted_sec": 0.6,
+   "cut_at_source": 8.415,
+   "why": "both screens drawn before Case A"
+  },
+  {
+   "after": "picks up the roller.",
+   "natural_silence": [
+    12.2,
+    12.64
+   ],
+   "natural_sec": 0.44,
+   "target_sec": 0.9,
+   "inserted_sec": 0.46,
+   "cut_at_source": 12.325,
+   "why": "freeze: the roller is alone"
+  },
+  {
+   "after": "Easy two at the rim.",
+   "natural_silence": [
+    14.75,
+    15.24
+   ],
+   "natural_sec": 0.49,
+   "target_sec": 1.5,
+   "inserted_sec": 1.01,
+   "cut_at_source": 14.955,
+   "why": "layup lands + EASY TWO"
+  },
+  {
+   "after": "Open three.",
+   "natural_silence": [
+    19.89,
+    20.39
+   ],
+   "natural_sec": 0.5,
+   "target_sec": 1.8,
+   "inserted_sec": 1.3,
+   "cut_at_source": 20.045,
+   "why": "ball flight to the swish + OPEN THREE"
+  },
+  {
+   "after": "give something up.",
+   "natural_silence": [
+    24.96,
+    25.42
+   ],
+   "natural_sec": 0.46,
+   "target_sec": 1.0,
+   "inserted_sec": 0.54,
+   "cut_at_source": 25.145,
+   "why": "title holds before the CTA"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}

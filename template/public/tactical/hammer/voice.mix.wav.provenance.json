@@ -1,0 +1,5 @@
+{
+ "licence_key": "voice/elevenlabs/hammer",
+ "source": "voice.wav + EQ/compression/loudnorm on the voice stem only (render-tactical.sh chain)",
+ "sha256": "0af122b9c094cda719c5910ccd2b317d087a4d5e0e3fc8407c107d2946b8b58b"
+}

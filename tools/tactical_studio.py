@@ -51,7 +51,10 @@ from zoneinfo import ZoneInfo
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 TEMPLATE = os.path.join(ROOT, "template")
 CONFIG = os.path.join(ROOT, "config", "tactical_studio.json")
-LICENCES = os.path.join(ROOT, "config", "asset_licences.json")
+OFFICIAL_LICENCES = os.path.join(ROOT, "config", "asset_licences.json")
+# A TEST override (E2A_LICENCES) can let a shadow render through, but an MP4 rendered under it can never
+# become asset_ready: the asset gate requires the official licence file.
+LICENCES = os.environ.get("E2A_LICENCES", OFFICIAL_LICENCES)
 STATE = os.environ.get("E2A_STUDIO_STATE", os.path.join(ROOT, "state", "tactical"))
 NETWORKS = ("instagram", "tiktok", "youtube")
 CHROME = "/opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell"
@@ -644,8 +647,10 @@ def render(st, cid, op, bundle_path, out_dir, renderer=None):
     os.makedirs(_abs(out_dir), exist_ok=True)
     master, social = os.path.join(_abs(out_dir), f"{cid}.master.mp4"), os.path.join(_abs(out_dir), f"{cid}.mp4")
     (renderer or default_renderer)(_abs(bundle_path), master, social, c)
+    official = os.path.abspath(LICENCES) == os.path.abspath(OFFICIAL_LICENCES)
     return st._advance(cid, "rendered", op, artifacts={"bundle": bundle_path, "master": master, "mp4": social},
-                       refs={"licences": lic}, _token=_GATE)
+                       refs={"licences": lic, "licence_file": _rel(LICENCES), "licence_sha256": sha256(LICENCES),
+                             "licences_official": official}, _token=_GATE)
 
 
 # ------------------------------------------------------------------ QC (measured here, from the MP4)
@@ -778,6 +783,10 @@ def asset(st, cid, op, url, fetch=None):
     st.require(cid, "qc_passed")
     if not url.startswith("https://"):
         raise StudioError("the asset URL must be https")
+    rr = st.refs(cid, "rendered") or {}
+    if not rr.get("licences_official") or rr.get("licence_sha256") != sha256(OFFICIAL_LICENCES):
+        raise StudioError("this MP4 was rendered under a TEST licence override (or the licence file changed since): "
+                          "it can never be published; re-render after the owner confirms the licences")
     want = st.artifacts(cid)["mp4"]
     got, n = (fetch or fetch_sha)(url)
     if got != want["sha256"] or n != want["bytes"]:

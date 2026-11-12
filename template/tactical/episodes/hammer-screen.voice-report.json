@@ -1,0 +1,96 @@
+{
+ "source": "public/tactical/hammer/voice-raw.mp3",
+ "source_sec": 28.56,
+ "preroll": 0.12,
+ "output": "public/tactical/hammer/voice.wav",
+ "output_sec": 32.72,
+ "inserted_total_sec": 4.04,
+ "last_word_end": 32.8,
+ "gaps": [
+  {
+   "after": "not the ball.",
+   "natural_silence": [
+    1.92,
+    2.47
+   ],
+   "natural_sec": 0.55,
+   "target_sec": 0.7,
+   "inserted_sec": 0.15,
+   "cut_at_source": 2.195,
+   "why": "hook titles land"
+  },
+  {
+   "after": "help defender.",
+   "natural_silence": [
+    7.56,
+    8.09
+   ],
+   "natural_sec": 0.53,
+   "target_sec": 1.1,
+   "inserted_sec": 0.57,
+   "cut_at_source": 7.695,
+   "why": "the drive route and the screen spot finish drawing"
+  },
+  {
+   "after": "pins him inside.",
+   "natural_silence": [
+    12.53,
+    13.02
+   ],
+   "natural_sec": 0.49,
+   "target_sec": 0.9,
+   "inserted_sec": 0.41,
+   "cut_at_source": 12.835,
+   "why": "freeze on the hammer screen"
+  },
+  {
+   "after": "Skip pass.",
+   "natural_silence": [
+    13.75,
+    14.1
+   ],
+   "natural_sec": 0.35,
+   "target_sec": 0.5,
+   "inserted_sec": 0.15,
+   "cut_at_source": 13.915,
+   "why": "the skip pass travels"
+  },
+  {
+   "after": "Open three.",
+   "natural_silence": [
+    14.7,
+    15.2
+   ],
+   "natural_sec": 0.5,
+   "target_sec": 1.8,
+   "inserted_sec": 1.3,
+   "cut_at_source": 14.855,
+   "why": "ball flight to the swish + OPEN THREE"
+  },
+  {
+   "after": "finish at the rim.",
+   "natural_silence": [
+    19.86,
+    20.29
+   ],
+   "natural_sec": 0.43,
+   "target_sec": 1.4,
+   "inserted_sec": 0.97,
+   "cut_at_source": 20.175,
+   "why": "layup lands + LAYUP stamp"
+  },
+  {
+   "after": "give up the layup.",
+   "natural_silence": [
+    25.6,
+    26.11
+   ],
+   "natural_sec": 0.51,
+   "target_sec": 1.0,
+   "inserted_sec": 0.49,
+   "cut_at_source": 25.795,
+   "why": "both answers on screen before the CTA"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}

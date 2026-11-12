@@ -80,10 +80,10 @@
   "verifier": "blocked"
  },
  "speech": {
-  "words_per_s": 2.7,
-  "designed_pauses_s": 3.0,
-  "tail_s": 0.9,
-  "why": "measured on Deuce/eleven_v4 takes (Elevator 2.78 w/s, Stagger 2.7 w/s without designed gaps)"
+  "words_per_s": 3.0,
+  "designed_pauses_s": 4.2,
+  "tail_s": 1.4,
+  "why": "measured 2026-11-12 on Deuce/eleven_v4: 87 words in 28.6 s (3.04 w/s), 88 in 28.6 s; pauses inserted by tactical-voice.py ~4.2 s"
  },
  "collision_window_min": 60,
  "readback_max_age_min": 15,

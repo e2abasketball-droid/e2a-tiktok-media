@@ -401,6 +401,14 @@ class TestRenderAndQC(Base):
         self.assertEqual(r["result"], "QC_FAIL")
         self.assertFalse(r["checks"]["engine"]["pass"])
 
+    def test_test_licence_override_can_never_reach_asset(self):
+        with mock.patch.object(ts, "LICENCES", self.file("test-lic.json", '{"assets": {}}')):
+            self.drive(CID, "qc_passed")
+        self.assertFalse(self.st.refs(CID, "rendered")["licences_official"])
+        with self.assertRaises(ts.StudioError) as e:
+            ts.asset(self.st, CID, "a", "https://x/y.mp4", fetch=self.fetch_good)
+        self.assertIn("TEST licence override", str(e.exception))
+
     def test_asset_url_must_serve_the_qcd_bytes(self):
         self.drive(CID, "qc_passed")
         with self.assertRaises(ts.StudioError):

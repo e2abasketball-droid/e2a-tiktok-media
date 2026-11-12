@@ -1,0 +1,452 @@
+{
+ "id": "spain-b-pop",
+ "title": "Spain pick-and-roll — Case B: X2 switches onto the roller, the back-screener pops",
+ "duration": 5,
+ "notes": [
+  "Same spots at 0 s. X2 leaves O2 to wall off the roll.",
+  "O2 pops from the back screen to the top of the arc: open three."
+ ],
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Ball handler"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Back-screener (shooter)"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Spacer, right corner"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Spacer, left corner"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Ball screener / roller"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the ball",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "On the back-screener",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Right corner",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "Left corner",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "On the roller (drop)",
+   "guards": "O5"
+  }
+ ],
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 2.6,
+   "dribble": true
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O2",
+   "t0": 2.6,
+   "t1": 3.2,
+   "style": "chest"
+  },
+  {
+   "type": "hold",
+   "player": "O2",
+   "from": 3.2,
+   "to": 3.55
+  },
+  {
+   "type": "shot",
+   "player": "O2",
+   "t0": 3.55,
+   "t1": 4.65,
+   "make": true
+  }
+ ],
+ "screens": [],
+ "marks": {
+  "start": 0,
+  "ballscreen": 0.85,
+  "roll": 1.4,
+  "backscreen": 1.7,
+  "switch": 1.9,
+  "pop": 2.05,
+  "pass": 2.6,
+  "catch": 3.2,
+  "release": 3.55,
+  "make": 4.65,
+  "end": 5
+ },
+ "actions": {
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 5,
+    "face": "O1"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 5,
+    "face": "O1"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 5,
+    "face": "O1"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 1.2,
+    "face": "O1"
+   }
+  ],
+  "O5": [
+   {
+    "type": "screen",
+    "from": 0.85,
+    "to": 1.4,
+    "face": "X1"
+   }
+  ],
+  "O2": [
+   {
+    "type": "screen",
+    "from": 1.7,
+    "to": 2,
+    "face": "X5"
+   },
+   {
+    "type": "celebrate",
+    "from": 4.7,
+    "to": 5
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 1.9,
+    "face": "O2"
+   },
+   {
+    "type": "stance",
+    "from": 2.6,
+    "to": 5,
+    "face": "O5"
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "X2",
+   "b": "O5",
+   "at": "pass",
+   "max": 1.4,
+   "says": "X2 jumps the roller"
+  },
+  {
+   "type": "far",
+   "a": "X2",
+   "b": "O2",
+   "at": "catch",
+   "min": 3.5,
+   "says": "the screener is left alone"
+  },
+  {
+   "type": "open",
+   "player": "O2",
+   "at": "release",
+   "min": 2,
+   "says": "he pops for an open three"
+  },
+  {
+   "type": "behind_arc",
+   "player": "O2",
+   "at": "catch",
+   "says": "he pops for an open three"
+  },
+  {
+   "type": "order",
+   "marks": [
+    "ballscreen",
+    "roll",
+    "backscreen",
+    "switch",
+    "pop",
+    "pass",
+    "catch",
+    "release",
+    "make"
+   ],
+   "says": "ball screen, back screen, switch, pop, three"
+  }
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0,
+    0,
+    9
+   ],
+   [
+    0.75,
+    0,
+    9
+   ],
+   [
+    1.321,
+    -1.6,
+    9
+   ],
+   [
+    1.936,
+    -2.6,
+    7.6
+   ],
+   [
+    2.525,
+    -3,
+    6
+   ],
+   [
+    5,
+    -3,
+    6
+   ]
+  ],
+  "O2": [
+   [
+    0,
+    1.6,
+    2.6
+   ],
+   [
+    0.2,
+    1.6,
+    2.6
+   ],
+   [
+    1.579,
+    -1,
+    5.2
+   ],
+   [
+    2.05,
+    -1,
+    5.2
+   ],
+   [
+    3.188,
+    0.2,
+    8.8
+   ],
+   [
+    5,
+    0.2,
+    8.8
+   ]
+  ],
+  "O3": [
+   [
+    0,
+    6.6,
+    1.3
+   ],
+   [
+    5,
+    6.6,
+    1.3
+   ]
+  ],
+  "O4": [
+   [
+    0,
+    -6.6,
+    1.3
+   ],
+   [
+    5,
+    -6.6,
+    1.3
+   ]
+  ],
+  "O5": [
+   [
+    0,
+    -2,
+    6.4
+   ],
+   [
+    0.791,
+    -0.75,
+    8.1
+   ],
+   [
+    1.4,
+    -0.75,
+    8.1
+   ],
+   [
+    1.95,
+    0.6,
+    6.6
+   ],
+   [
+    2.507,
+    1,
+    4.6
+   ],
+   [
+    5,
+    1,
+    4.6
+   ]
+  ],
+  "X1": [
+   [
+    0,
+    0,
+    8.1
+   ],
+   [
+    1.45,
+    0,
+    8.1
+   ],
+   [
+    1.966,
+    -0.9,
+    8.9
+   ],
+   [
+    2.988,
+    -2.9,
+    7.6
+   ],
+   [
+    5,
+    -2.9,
+    7.6
+   ]
+  ],
+  "X2": [
+   [
+    0,
+    2,
+    3.6
+   ],
+   [
+    0.2,
+    2,
+    3.6
+   ],
+   [
+    1.585,
+    -0.4,
+    5.9
+   ],
+   [
+    1.9,
+    -0.4,
+    5.9
+   ],
+   [
+    2.683,
+    0.2,
+    3.9
+   ],
+   [
+    5,
+    0.2,
+    3.9
+   ]
+  ],
+  "X3": [
+   [
+    0,
+    5.6,
+    2.1
+   ],
+   [
+    5,
+    5.6,
+    2.1
+   ]
+  ],
+  "X4": [
+   [
+    0,
+    -5.6,
+    2.1
+   ],
+   [
+    5,
+    -5.6,
+    2.1
+   ]
+  ],
+  "X5": [
+   [
+    0,
+    -1.4,
+    5.6
+   ],
+   [
+    0.5,
+    -1.4,
+    5.6
+   ],
+   [
+    1.059,
+    -1.6,
+    6
+   ],
+   [
+    5,
+    -1.6,
+    6
+   ]
+  ]
+ }
+}
