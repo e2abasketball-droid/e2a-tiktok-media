@@ -1,0 +1,15 @@
+{
+ "note": "Every asset an episode uses must match an entry here with commercial_use true, or QC fails (unknown origin is never inferred). Prefix entries end with '*'. Change commercial_use only with the owner's written confirmation, and record where it came from.",
+ "assets": {
+  "sfx/*": {"origin": "generated with ffmpeg in this repo (music/make_sfx.py)", "owner": "E2A", "commercial_use": true},
+  "anton.woff2": {"origin": "Anton, Google Fonts", "licence": "SIL Open Font License 1.1", "commercial_use": true},
+  "inter.woff2": {"origin": "Inter, Google Fonts", "licence": "SIL Open Font License 1.1", "commercial_use": true},
+  "e2a_logo_white.png": {"origin": "official E2A logo", "owner": "E2A", "commercial_use": true},
+  "music/synth/*": {"origin": "E2A in-house synth engine (music/e2a_music.py)", "owner": "E2A", "commercial_use": true},
+  "music/cinematic/*": {"origin": "ElevenLabs Music generated on the E2A account (Nov 2026)", "commercial_use": "pending_owner_confirmation",
+                        "needs": "confirmation that the ElevenLabs plan was paid when the tracks were generated"},
+  "voice/elevenlabs/*": {"origin": "ElevenLabs TTS, voice Deuce (DaueUomjhh8LFuAV8aGj), E2A account", "commercial_use": "pending_owner_confirmation",
+                         "needs": "confirmation that the ElevenLabs plan allows commercial use of generated speech"},
+  "3d/procedural": {"origin": "Tactical3D procedural athletes, court and arena (code in template/src/t3d)", "owner": "E2A", "commercial_use": true}
+ }
+}

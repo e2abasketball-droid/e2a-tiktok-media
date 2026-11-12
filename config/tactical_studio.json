@@ -1,0 +1,46 @@
+{
+ "version": "0.1.0",
+ "status": "SHADOW: nothing in this file authorises publishing, scheduling, spending credits or changing tasks",
+ "timezone": "Australia/Sydney",
+ "content_id": "E2A-TACTICAL-{date}-V{n:02d}",
+ "slots": {
+  "1": {"time": "10:00", "label": "TACTICAL VIDEO A", "brief": "offensive action, visually strong"},
+  "2": {"time": "13:00", "label": "TACTICAL VIDEO B", "brief": "a different read: defence, counter or another action"}
+ },
+ "networks": ["instagram", "tiktok", "youtube"],
+ "production_cutoff_local": "09:00",
+ "duration_s": {"min": 30, "max": 40, "target": [35, 38]},
+ "repeat_window_days": 45,
+ "concept_overlap_block": 0.6,
+ "audio": {"lufs_target": -14.0, "lufs_tolerance": 1.0, "true_peak_max": -1.0},
+ "video": {"width": 1080, "height": 1920, "fps_min": 30, "vcodec": "h264", "acodec": "aac", "social_max_mb": 10},
+ "budget_per_day": {
+  "status": "PROPOSED, not approved: counters are advisory, the hard limits are the ElevenLabs balance and the Metricool review flow",
+  "voice_takes": 2,
+  "voice_credits": 1200,
+  "final_renders": 4,
+  "music_generations": 0,
+  "publications": 6
+ },
+ "retries_per_phase": 1,
+ "ai_labels": {
+  "status": "PROPOSED, owner decision pending",
+  "instagram_isAiGenerated": true,
+  "tiktok_isAigc": true,
+  "youtube_isAiGeneratedContent": false,
+  "why": "Synthetic narrator voice (ElevenLabs) and computer-generated 3D players; the players are not realistic people and impersonate nobody"
+ },
+ "publishing": {
+  "mode": "shadow",
+  "modes": {
+   "shadow": "never writes to Metricool; writes the publication package only",
+   "supervised": "createScheduledPostForReview with approvalSystem 'any': the owner approves each post in Metricool",
+   "limited_autonomy": "createScheduledPostForReview with approvalSystem 'optional': publishes unless the owner rejects; needs a live delegation"
+  },
+  "never": ["createScheduledPost", "updateScheduledPost", "sendScheduledPostForReview", "delete or move any post", "Trial Reels"]
+ },
+ "delegation": {
+  "status": "NO DELEGATION: the verifier is blocked until the owner grants one through a channel the agent cannot write",
+  "verifier": "blocked"
+ }
+}

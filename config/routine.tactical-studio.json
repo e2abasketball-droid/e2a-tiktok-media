@@ -1,0 +1,34 @@
+{
+ "status": "PROPOSED configuration of the two scheduled tasks. Not created: needs the owner's activation approval.",
+ "tasks": [
+  {
+   "name": "E2A — TACTICAL STUDIO",
+   "cron": "CRON_TZ=Australia/Sydney 0 17 * * *",
+   "repositories": [{"repo": "e2abasketball-droid/e2a-tiktok-media", "branch": "claude/project-thread-akohki"}],
+   "prompt_file": "produccion/tactical/PROMPT-DIARIO.md",
+   "connectors": {
+    "Metricool-Social-Media-Management": {"permitted_tools": ["getBrandSettings", "getScheduledPosts", "getAnalyticsAvailableMetrics",
+                                                             "getAnalyticsDataByMetrics", "getBestTimeToPostByNetwork",
+                                                             "createScheduledPostForReview"]},
+    "ElevenLabs": {"permitted_tools": ["creative_create_flow", "creative_generate_speech", "creative_get_flow_run_status",
+                                      "creative_transcribe_audio", "creative_attach_reference_file", "creative_list_voices"]},
+    "Google-Drive": {"permitted_tools": ["search_files", "get_file_metadata", "download_file_content"]}
+   },
+   "never_attach": ["Claude_Code_Remote", "Gmail", "Google-Sheets (until the registry migration is approved)", "Canva"]
+  },
+  {
+   "name": "E2A — TACTICAL CHECK",
+   "cron": "CRON_TZ=Australia/Sydney 30 8 * * *",
+   "repositories": [{"repo": "e2abasketball-droid/e2a-tiktok-media", "branch": "claude/project-thread-akohki"}],
+   "prompt_file": "produccion/tactical/PROMPT-CHECK.md",
+   "connectors": {
+    "Metricool-Social-Media-Management": {"permitted_tools": ["getBrandSettings", "getScheduledPosts", "getAnalyticsAvailableMetrics",
+                                                             "getAnalyticsDataByMetrics"]}
+   },
+   "never_attach": ["Claude_Code_Remote", "ElevenLabs", "Gmail", "Google-Sheets", "Canva"]
+  }
+ ],
+ "metricool_write_tools": ["createScheduledPost", "updateScheduledPost", "sendScheduledPostForReview", "createScheduledPostForReview"],
+ "allowed_write_tool": "createScheduledPostForReview",
+ "revocation": "Disable the task (or remove the Metricool connector) on claude.ai. The routine cannot re-enable itself: it has no Claude_Code_Remote connector."
+}
