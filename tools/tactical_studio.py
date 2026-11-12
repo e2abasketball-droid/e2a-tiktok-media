@@ -233,6 +233,8 @@ class Studio:
         base = self.last_good(cid) if cur == "failed" else cur
         if base is None:
             return to == "candidate"
+        if cur == "failed" and to == base == "rendered":
+            return True  # remaster gate only (rendered is GATED)
         i, j = FLOW.index(base), FLOW.index(to)
         if to == "scheduled_confirmed" and base in ("authorised", "scheduled_partial"):
             return True
@@ -609,16 +611,35 @@ def bundle_manifest(bundle):
 # ------------------------------------------------------------------ render
 def default_renderer(bundle_path, master, social, c):
     subprocess.run(["npx", "remotion", "render", "src/index.ts", "Tactical3DV2", master, f"--props={os.path.abspath(bundle_path)}",
-                    "--gl=swangle", f"--browser-executable={CHROME}", "--concurrency=4"], cwd=TEMPLATE, check=True)
-    social_encode(master, social, c)
+                    "--gl=swangle", f"--browser-executable={CHROME}", "--concurrency=4", "--timeout=180000"], cwd=TEMPLATE, check=True)
+    return social_encode(master, social, c)
+
+
+def ebur128(path):
+    e = _run(["ffmpeg", "-nostats", "-i", path, "-vn", "-af", "ebur128=peak=true", "-f", "null", "-"]).stderr
+    summ = e[e.rfind("Summary:"):]
+    return (float(re.search(r"I:\s*(-?[\d.]+) LUFS", summ).group(1)),
+            float(re.search(r"Peak:\s*(-?[\d.]+) dBFS", summ).group(1)))
+
+
+def master_gain(I, TP, c):
+    """ONE fixed linear gain for the whole mix (voice, music and SFX move together, so the music never rises
+    relative to the voice and no SFX cut is squashed): no loudnorm, no compressor, no limiter. The gain aims
+    at the LUFS target, is capped so the true peak stays under the ceiling, and is bounded by config."""
+    a = c["audio"]
+    g = a["lufs_target"] - I
+    g = min(g, a["true_peak_max"] - 0.2 - TP, a.get("max_master_gain_db", 6.0))
+    return round(max(g, -a.get("max_master_gain_db", 6.0)), 2)
 
 
 def social_encode(master, social, c):
-    """2-pass H.264 sized to the social limit; the audio stream is COPIED (no re-normalisation over SFX)."""
+    """2-pass H.264 sized to the social limit + ONE fixed master gain on the audio (see master_gain).
+    Returns what was applied so the render gate can record it."""
     dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", master],
                                capture_output=True, text=True, check=True).stdout)
-    abr = int(subprocess.run(["ffprobe", "-v", "error", "-select_streams", "a:0", "-show_entries", "stream=bit_rate", "-of", "csv=p=0", master],
-                             capture_output=True, text=True).stdout.strip() or 320000)
+    I, TP = ebur128(master)
+    gain = master_gain(I, TP, c)
+    abr = 320000
     target = c["video"]["social_max_mb"] * 0.92 * 8e6 / dur
     vbr = int(max(1.2e6, target - abr))
     with tempfile.TemporaryDirectory() as td:
@@ -626,7 +647,9 @@ def social_encode(master, social, c):
         base = ["ffmpeg", "-v", "error", "-y", "-i", master, "-c:v", "libx264", "-preset", "slow", "-b:v", str(vbr),
                 "-pix_fmt", "yuv420p", "-passlogfile", log]
         subprocess.run(base + ["-pass", "1", "-an", "-f", "mp4", os.devnull], check=True)
-        subprocess.run(base + ["-pass", "2", "-c:a", "copy", "-movflags", "+faststart", social], check=True)
+        subprocess.run(base + ["-pass", "2", "-af", f"volume={gain}dB", "-c:a", "aac", "-b:a", str(abr),
+                               "-movflags", "+faststart", social], check=True)
+    return {"master_I": I, "master_TP": TP, "gain_db": gain, "method": "fixed volume filter (no loudnorm/limiter)"}
 
 
 def render(st, cid, op, bundle_path, out_dir, renderer=None):
@@ -646,11 +669,34 @@ def render(st, cid, op, bundle_path, out_dir, renderer=None):
     st.spend(cid, "final_renders", 1, f"{op}:render", _token=_GATE)
     os.makedirs(_abs(out_dir), exist_ok=True)
     master, social = os.path.join(_abs(out_dir), f"{cid}.master.mp4"), os.path.join(_abs(out_dir), f"{cid}.mp4")
-    (renderer or default_renderer)(_abs(bundle_path), master, social, c)
+    enc = (renderer or default_renderer)(_abs(bundle_path), master, social, c)
     official = os.path.abspath(LICENCES) == os.path.abspath(OFFICIAL_LICENCES)
     return st._advance(cid, "rendered", op, artifacts={"bundle": bundle_path, "master": master, "mp4": social},
                        refs={"licences": lic, "licence_file": _rel(LICENCES), "licence_sha256": sha256(LICENCES),
-                             "licences_official": official}, _token=_GATE)
+                             "licences_official": official, "encode": enc}, _token=_GATE)
+
+
+def remaster(st, cid, op, encoder=None):
+    """GATE rendered (re-entry) after an audio-only QC failure: re-encode the SAME hashed master with the
+    production encoder (fixed gain). No new frames are rendered, so no render budget is spent; the
+    licence refs of the original render are carried over unchanged. At most `max_remasters` per cid."""
+    if st.state(cid) != "failed" or st.last_good(cid) != "rendered":
+        raise StudioError(f"{cid}: remaster only after a QC failure of a rendered video")
+    last = st.events(cid, "state")[-1]["refs"]
+    if last.get("phase") != "qc" or set(last.get("reason", "").replace("QC_FAIL: ", "").split(",")) != {"audio"}:
+        raise StudioError(f"{cid}: remaster only fixes an audio-only QC failure (got {last.get('reason')!r})")
+    c = cfg()
+    if len([e for e in st.events(cid, "state") if e["to"] == "rendered"]) > c["audio"].get("max_remasters", 1):
+        raise StudioError(f"{cid}: remaster limit reached")
+    arts, rr = st.artifacts(cid), st.refs(cid, "rendered")
+    master = _abs(arts["master"]["path"])
+    if not os.path.exists(master) or sha256(master) != arts["master"]["sha256"]:
+        raise StudioError("the master is not the rendered one (missing or changed)")
+    social = _abs(arts["mp4"]["path"])
+    enc = (encoder or social_encode)(master, social, c)
+    return st._advance(cid, "rendered", op, artifacts={"bundle": arts["bundle"]["path"], "master": master, "mp4": social},
+                       refs={**{k: v for k, v in rr.items() if k != "encode"}, "encode": enc, "remaster_of": arts["mp4"]["sha256"]},
+                       _token=_GATE)
 
 
 # ------------------------------------------------------------------ QC (measured here, from the MP4)
@@ -668,10 +714,7 @@ def measure_mp4(mp4, words, frames_dir, c):
                  "acodec": a.get("codec_name"), "duration": dur, "social_mb": int(pr["format"]["size"]) / 1e6}
     err = _run(["ffmpeg", "-v", "info", "-nostats", "-i", mp4, "-vf", "blackdetect=d=0.1:pix_th=0.06", "-an", "-f", "null", "-"]).stderr
     technical["black_frames"] = len(re.findall(r"black_start", err))
-    e = _run(["ffmpeg", "-nostats", "-i", mp4, "-vn", "-af", "ebur128=peak=true", "-f", "null", "-"]).stderr
-    summ = e[e.rfind("Summary:"):]
-    I = float(re.search(r"I:\s*(-?[\d.]+) LUFS", summ).group(1))
-    TP = float(re.search(r"Peak:\s*(-?[\d.]+) dBFS", summ).group(1))
+    I, TP = ebur128(mp4)
     sd = _run(["ffmpeg", "-nostats", "-i", mp4, "-vn", "-af", "silencedetect=n=-55dB:d=0.5", "-f", "null", "-"]).stderr
     t0, t1 = words[0]["start"], words[-1]["end"]
     sil = [float(x) for x in re.findall(r"silence_start: (-?[\d.]+)", sd)]
@@ -1057,6 +1100,7 @@ def main(argv=None):
     p.add_argument("--op", required=True)
     p = sp.add_parser("licences"); p.add_argument("bundle")
     p = sp.add_parser("render"); p.add_argument("cid"); p.add_argument("bundle"); p.add_argument("--out", required=True); p.add_argument("--op", required=True)
+    p = sp.add_parser("remaster"); p.add_argument("cid"); p.add_argument("--op", required=True)
     p = sp.add_parser("qc"); p.add_argument("cid"); p.add_argument("--episode", required=True); p.add_argument("--reports", required=True)
     p.add_argument("--op", required=True)
     p = sp.add_parser("asset"); p.add_argument("cid"); p.add_argument("url"); p.add_argument("--op", required=True)
@@ -1106,6 +1150,8 @@ def main(argv=None):
         out = licence_check(bundle_manifest(_j(a.bundle)))
     elif a.cmd == "render":
         out = render(s, a.cid, a.op, a.bundle, a.out)
+    elif a.cmd == "remaster":
+        out = remaster(s, a.cid, a.op)
     elif a.cmd == "qc":
         out = qc(s, a.cid, a.op, a.episode, a.reports)
     elif a.cmd == "asset":

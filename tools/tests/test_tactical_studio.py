@@ -7,6 +7,7 @@ import copy
 import datetime as dt
 import hashlib
 import json
+import re
 import multiprocessing as mp
 import os
 import shutil
@@ -416,6 +417,82 @@ class TestRenderAndQC(Base):
         with self.assertRaises(ts.StudioError):
             ts.asset(self.st, CID, "a2", "http://x/y.mp4", fetch=self.fetch_good)
         ts.asset(self.st, CID, "a3", "https://x/y.mp4", fetch=self.fetch_good)
+
+
+class TestLoudnessInProductionPath(Base):
+    """The audio level is fixed in the render/encode path itself (not by a prompt): one fixed gain, capped."""
+
+    def test_master_gain_is_fixed_and_capped(self):
+        c = ts.cfg()
+        self.assertEqual(ts.master_gain(-16.6, -4.1, c), 2.6)          # plain lift to -14
+        self.assertEqual(ts.master_gain(-16.0, -2.0, c), 0.8)          # capped by true peak (-1.0 - 0.2)
+        self.assertEqual(ts.master_gain(-30.0, -20.0, c), 6.0)         # capped by max_master_gain_db
+        self.assertEqual(ts.master_gain(-12.0, -1.5, c), -2.0)         # too loud: fixed attenuation
+
+    def test_real_encoder_applies_one_gain_without_dynamics(self):
+        """Real ffmpeg on a synthetic master: a loud 'SFX' burst over a quiet bed must keep its ratio to the bed
+        (a loudnorm/limiter would squash it)."""
+        m = os.path.join(self.tmp, "m.mp4")
+        sub = subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i", "color=c=gray:s=108x192:d=6:r=30",
+                              "-f", "lavfi", "-i", "sine=f=220:d=6", "-filter_complex",
+                              "[1]volume=-26dB,volume='if(between(t,3,3.5),15,1)':eval=frame[a]",
+                              "-map", "0", "-map", "[a]", "-c:v", "libx264", "-c:a", "aac", "-b:a", "320k", m])
+        self.assertEqual(sub.returncode, 0)
+        out = os.path.join(self.tmp, "s.mp4")
+        c = json.loads(json.dumps(ts.cfg()))
+        c["video"]["social_max_mb"] = 1
+        enc = ts.social_encode(m, out, c)
+        def rms(path, a, b):
+            e = ts._run(["ffmpeg", "-nostats", "-ss", str(a), "-t", str(b - a), "-i", path, "-vn", "-af", "astats", "-f", "null", "-"]).stderr
+            return float(re.findall(r"RMS level dB: (-?[\d.]+)", e)[-1])
+        d_in = rms(m, 3.05, 3.45) - rms(m, 1.0, 2.5)
+        d_out = rms(out, 3.05, 3.45) - rms(out, 1.0, 2.5)
+        self.assertAlmostEqual(d_in, d_out, delta=0.3)                  # burst-to-bed ratio unchanged
+        self.assertAlmostEqual(rms(out, 1.0, 2.5) - rms(m, 1.0, 2.5), enc["gain_db"], delta=0.3)
+        I, TP = ts.ebur128(out)
+        self.assertLessEqual(TP, ts.cfg()["audio"]["true_peak_max"] + 0.3)
+
+    def _audio_fail(self, cid):
+        quiet = lambda *a: (self.measure_ok(*a)[0], {"mix": {"I": -16.6, "TP": -4.1}, "silences_inside_narration": []}, self.measure_ok(*a)[2])
+        r = self.drive(cid, "qc_passed", measure=quiet)
+        self.assertEqual(r["result"], "QC_FAIL")
+
+    def test_remaster_reencodes_the_same_master_once_and_spends_no_render(self):
+        self._audio_fail(CID)
+        spent = self.st.events(CID, "spend")
+        enc = lambda master, social, c: (open(social, "wb").write(b"REMASTERED") and {"gain_db": 2.6})
+        ts.remaster(self.st, CID, "rm", encoder=enc)
+        self.assertEqual(self.st.state(CID), "rendered")
+        self.assertEqual(self.st.events(CID, "spend"), spent)
+        self.assertEqual(self.st.refs(CID, "rendered")["encode"]["gain_db"], 2.6)
+        self.assertIn("licences_official", self.st.refs(CID, "rendered"))
+        r = ts.qc(self.st, CID, "q2", "ep.json", os.path.join(self.tmp, "q2"), measure=self.measure_ok,
+                  plays_validator=self.validator_ok, engine=self.engine_ok)
+        self.assertEqual(r["result"], "QC_PASS")
+        self.assertEqual(r["mp4_sha256"], hashlib.sha256(b"REMASTERED").hexdigest())
+
+    def test_remaster_refusals(self):
+        self.drive(CID, "rendered")
+        enc = lambda master, social, c: {"gain_db": 0}
+        with self.assertRaises(ts.StudioError):                       # not failed
+            ts.remaster(self.st, CID, "rm0", encoder=enc)
+        ts.qc(self.st, CID, "q", "ep.json", os.path.join(self.tmp, "q"), measure=self.measure_ok,
+              plays_validator=self.validator_ok, engine=lambda e: {"passed": 1, "failed": 1})
+        with self.assertRaises(ts.StudioError):                       # engine failure is not an audio fix
+            ts.remaster(self.st, CID, "rm1", encoder=enc)
+        cid2 = "E2A-TACTICAL-2026-11-29-V02"
+        self._audio_fail(cid2)
+        open(os.path.join(self.tmp, "out", f"{cid2}.master.mp4"), "wb").write(b"other master")
+        with self.assertRaises(ts.StudioError):                       # master swapped
+            ts.remaster(self.st, cid2, "rm2", encoder=enc)
+        cid3 = "E2A-TACTICAL-2026-11-30-V01"
+        self._audio_fail(cid3)
+        ts.remaster(self.st, cid3, "rm3", encoder=enc)
+        quiet = lambda *a: (self.measure_ok(*a)[0], {"mix": {"I": -16.6, "TP": -4.1}, "silences_inside_narration": []}, self.measure_ok(*a)[2])
+        ts.qc(self.st, cid3, "q3", "ep.json", os.path.join(self.tmp, "q3"), measure=quiet,
+              plays_validator=self.validator_ok, engine=self.engine_ok)
+        with self.assertRaises(ts.StudioError):                       # limit: one remaster
+            ts.remaster(self.st, cid3, "rm4", encoder=enc)
 
 
 # ---------------------------------------------------------------- 3. collisions (real Metricool data)

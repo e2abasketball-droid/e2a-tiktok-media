@@ -34,7 +34,9 @@
  "audio": {
   "lufs_target": -14.0,
   "lufs_tolerance": 1.0,
-  "true_peak_max": -1.0
+  "true_peak_max": -1.0,
+  "max_master_gain_db": 6.0,
+  "max_remasters": 1
  },
  "video": {
   "width": 1080,

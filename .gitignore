@@ -3,3 +3,5 @@ state/
 .studio-sync/
 produccion/tactical/*/out/
 produccion/tactical/*/out-render-*.log
+produccion/tactical/prueba-*/render-*.log
+produccion/tactical/prueba-*/qc-*/frames/

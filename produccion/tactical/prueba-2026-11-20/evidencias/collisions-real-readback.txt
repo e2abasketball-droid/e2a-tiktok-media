@@ -1,0 +1,64 @@
+== 2026-11-13
+[
+ {
+  "slot": 1,
+  "metricool_id": 407520370,
+  "at": {
+   "dateTime": "2026-11-13T10:00:00",
+   "timezone": "Australia/Sydney"
+  },
+  "networks": [
+   "instagram"
+  ],
+  "type": "POST",
+  "blocks": true
+ },
+ {
+  "slot": 1,
+  "metricool_id": 426159230,
+  "at": {
+   "dateTime": "2026-11-13T10:00:00",
+   "timezone": "Australia/Sydney"
+  },
+  "networks": [
+   "instagram",
+   "tiktok",
+   "youtube"
+  ],
+  "type": "REEL",
+  "blocks": true
+ },
+ {
+  "slot": 2,
+  "metricool_id": 426159411,
+  "at": {
+   "dateTime": "2026-11-13T13:00:00",
+   "timezone": "Australia/Sydney"
+  },
+  "networks": [
+   "instagram"
+  ],
+  "type": "TRIAL_REEL",
+  "blocks": true
+ }
+]
+== 2026-11-14
+[
+ {
+  "slot": 1,
+  "metricool_id": 407520558,
+  "at": {
+   "dateTime": "2026-11-14T10:00:00",
+   "timezone": "Australia/Sydney"
+  },
+  "networks": [
+   "instagram"
+  ],
+  "type": "POST",
+  "blocks": true
+ }
+]
+== 2026-11-15
+[]
+== 2026-11-20
+[]

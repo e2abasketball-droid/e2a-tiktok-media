@@ -13,7 +13,8 @@ IDs: `E2A-TACTICAL-{YYYY-MM-DD}-V01|V02` (fecha Sydney del post). `T = python3 t
 | storyboard_ready | `T storyboard CID jugada-a.json jugada-b.json` | ejecuta `test-play.mts`: 0 fallos y ≥1 claim de narración por jugada; guion intacto |
 | (antes de ElevenLabs) | `T voice-permit CID --credits N` | presupuesto diario (tomas y créditos); niega si ya hay toma pagada para ese guion |
 | audio_ready | `T audio CID --voice … --words …` | permiso emitido + la transcripción Scribe dice el guion congelado (≥ 0,90) |
-| rendered | `T render CID bundle.json --out dir` | licencias de cada medio (sidecar `.provenance.json` con hash) ANTES de gastar; voz = la de audio_ready; presupuesto de renders; Remotion + encode social |
+| rendered | `T render CID bundle.json --out dir` | licencias de cada medio (sidecar `.provenance.json` con hash) ANTES de gastar; voz = la de audio_ready; presupuesto de renders; Remotion + encode social con UNA ganancia fija de master (objetivo −14 LUFS, tope por true peak −1,2 dBTP y ±6 dB; sin loudnorm, sin limitador: música y SFX conservan su relación con la voz) |
+| rendered (re-entrada) | `T remaster CID --op …` | solo tras un QC_FAIL exclusivamente de audio; re-codifica EL MISMO master (hash) sin renderizar fotogramas (no gasta presupuesto de render); máximo 1 por vídeo; conserva las referencias de licencia del render |
 | qc_passed | `T qc CID --episode … --reports dir` | mide el MP4 (ffprobe, EBU R128, blackdetect, silencios, 8 fotogramas), test-play, qc-tactical3d, licencias; hash = el renderizado |
 | asset_ready | `T asset CID https://…` | descarga la URL: SHA-256 y tamaño = MP4 del QC; exige el fichero oficial de licencias |
 | authorised | `T authorise CID` | verificador configurado (`blocked` en sombra) |
