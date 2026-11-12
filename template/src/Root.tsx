@@ -6,6 +6,9 @@ import {PLANS, DUR} from './plans';
 import {Pro, proDuration} from './pro/Pro';
 import type {Episode} from './pro/types';
 import pilot from '../episodes/pilot.json';
+import {Probe} from './t3d/Probe';
+import {Tactical3D, tactical3dDuration} from './t3d/Tactical3D';
+import {staggerEpisode} from './t3d/episode';
 import {Tactical, tacticalDuration} from './tactical/Tactical';
 import type {TacticalEpisode} from './tactical/edit';
 import elevatorEdit from '../tactical/episodes/elevator-screen.json';
@@ -66,5 +69,20 @@ export const Root: React.FC = () => (
         return {fps, durationInFrames: Math.ceil(tacticalDuration(props.episode) * fps)};
       }}
     />
+    {/* 3D tactical engine (real 3D: Three.js athletes, court, cameras) — Episode 02 Stagger Screen */}
+    <Composition
+      id="Tactical3D"
+      component={Tactical3D}
+      durationInFrames={30 * 34}
+      fps={30}
+      width={1080}
+      height={1920}
+      defaultProps={{episode: staggerEpisode}}
+      calculateMetadata={({props}) => {
+        const fps = props.episode.fps ?? 30;
+        return {fps, durationInFrames: Math.ceil(tactical3dDuration(props.episode) * fps)};
+      }}
+    />
+    <Composition id="Probe3D" component={Probe} durationInFrames={300} fps={60} width={1080} height={1920} defaultProps={{cam: 'broadcast'}} />
   </>
 );

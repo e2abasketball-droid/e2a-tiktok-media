@@ -1,0 +1,44 @@
+{
+ "schema": "e2a.technique/1",
+ "version": 1,
+ "para": [
+  "tactical"
+ ],
+ "evitar_en": [],
+ "origen": "Episodio 02 Stagger Screen (propio, motor Tactical3D)",
+ "estado": "propuesta",
+ "requiere_codigo": true,
+ "creada": "2026-11-12",
+ "actualizada": "2026-11-12",
+ "historial": [],
+ "id": "tec-0008",
+ "nombre": "Rebobinado a la bifurcación de la lectura",
+ "categoria": "estructura",
+ "descripcion": "Para enseñar la segunda lectura de la misma jugada, el vídeo rebobina visiblemente (imagen hacia atrás en ~0.5 s, líneas de barrido y etiqueta 'REWIND') hasta el momento exacto en que las dos opciones se separan y desde ahí juega la otra versión. El espectador entiende que es la misma acción con otra respuesta defensiva.",
+ "aplicar_a": {
+  "posicion": "cualquiera"
+ },
+ "receta": {
+  "sfx": [
+   "reverse_cymbal"
+  ]
+ },
+ "comprobacion": {
+  "texto": "el rebobinado dura menos de 1 s",
+  "reglas": [
+   {
+    "metrica": "plan.escena_s",
+    "op": "<=",
+    "valor": 1.0
+   }
+  ]
+ },
+ "evidencia": [
+  {
+   "ref_id": "R-0001",
+   "medidas": {},
+   "nivel": "hipotesis",
+   "nota": "implementada con remap de tiempo de juego decreciente + RewindTag"
+  }
+ ]
+}

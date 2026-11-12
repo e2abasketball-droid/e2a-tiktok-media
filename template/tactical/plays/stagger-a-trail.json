@@ -1,0 +1,515 @@
+{
+ "id": "stagger-a-trail",
+ "title": "Stagger screen \u2014 Case A: the defender trails",
+ "duration": 6.0,
+ "notes": [
+  "FIBA half court in metres: x across (basket x=0), y from the baseline (basket y=1.575).",
+  "Ball on the right: O1 on the right wing, O3 spaces the ball-side corner so X3 cannot help.",
+  "Stagger on the left side: O4 sets the first screen low (-4.3, 4.6), O5 the second one higher and more inside (-2.7, 7.2): about 3.1 m apart along O2's path, one after the other (never side by side like an elevator).",
+  "Both screeners are stationary before contact (O4 from 0.75 s, O5 from 1.0 s).",
+  "O2 jabs to the baseline, runs up the sideline past O4's outside shoulder, then curls over the top of O5 to the left slot, behind the arc.",
+  "X2 trails on O2's hip, is hit by O4 (1.5 s) and by O5 (2.5 s) and has to go around both: the gap grows from ~0.8 m to ~2.6 m.",
+  "O5 rolls to the rim after screening, so X5 stays with him; O4 pops to the wing with X4.",
+  "O1 passes on time (2.45 s), O2 catches at 2.95 s and releases at 3.45 s while X2's closeout is late."
+ ],
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Ball handler / passer"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Shooter"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Spacer (ball-side corner)"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "First screener"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Second screener"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the ball",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "On the shooter",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "On the corner",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "On the first screener",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "On the second screener",
+   "guards": "O5"
+  }
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0,
+    4.6,
+    7.4
+   ],
+   [
+    1.2,
+    4.35,
+    7.6
+   ],
+   [
+    2.0,
+    4.25,
+    7.7
+   ],
+   [
+    6.0,
+    4.25,
+    7.7
+   ]
+  ],
+  "O2": [
+   [
+    0,
+    -5.9,
+    1.6
+   ],
+   [
+    0.38,
+    -5.79,
+    1.3
+   ],
+   [
+    0.9,
+    -5.58,
+    2.45
+   ],
+   [
+    1.15,
+    -5.33,
+    3.55
+   ],
+   [
+    1.4,
+    -5.15,
+    4.7
+   ],
+   [
+    1.7,
+    -4.6,
+    5.9
+   ],
+   [
+    2.0,
+    -3.6,
+    6.8
+   ],
+   [
+    2.3,
+    -2.85,
+    8.0
+   ],
+   [
+    2.6,
+    -1.75,
+    8.75
+   ],
+   [
+    2.95,
+    -1.2,
+    9.0
+   ],
+   [
+    3.0,
+    -1.18,
+    9.0
+   ],
+   [
+    6.0,
+    -1.18,
+    9.0
+   ]
+  ],
+  "O3": [
+   [
+    0,
+    6.85,
+    1.1
+   ],
+   [
+    6.0,
+    6.85,
+    1.1
+   ]
+  ],
+  "O4": [
+   [
+    0,
+    -3.1,
+    3.5
+   ],
+   [
+    0.75,
+    -4.3,
+    4.6
+   ],
+   [
+    2.8,
+    -4.3,
+    4.6
+   ],
+   [
+    3.6,
+    -6.0,
+    5.4
+   ],
+   [
+    6.0,
+    -6.0,
+    5.4
+   ]
+  ],
+  "O5": [
+   [
+    0,
+    -1.6,
+    6.3
+   ],
+   [
+    1.0,
+    -2.7,
+    7.2
+   ],
+   [
+    2.98,
+    -2.7,
+    7.2
+   ],
+   [
+    4.05,
+    -1.45,
+    3.9
+   ],
+   [
+    6.0,
+    -1.3,
+    3.6
+   ]
+  ],
+  "X1": [
+   [
+    0,
+    3.95,
+    6.75
+   ],
+   [
+    1.2,
+    3.7,
+    6.95
+   ],
+   [
+    2.0,
+    3.6,
+    7.05
+   ],
+   [
+    6.0,
+    3.6,
+    7.05
+   ]
+  ],
+  "X2": [
+   [
+    0,
+    -5.25,
+    2.0
+   ],
+   [
+    0.45,
+    -5.15,
+    1.8
+   ],
+   [
+    0.8,
+    -4.95,
+    2.1
+   ],
+   [
+    1.1,
+    -4.85,
+    2.8
+   ],
+   [
+    1.4,
+    -4.78,
+    3.72
+   ],
+   [
+    1.62,
+    -4.8,
+    4.06
+   ],
+   [
+    1.8,
+    -4.95,
+    4.3
+   ],
+   [
+    2.02,
+    -5.08,
+    4.95
+   ],
+   [
+    2.27,
+    -4.5,
+    5.82
+   ],
+   [
+    2.65,
+    -3.3,
+    6.7
+   ],
+   [
+    2.84,
+    -3.32,
+    6.92
+   ],
+   [
+    3.12,
+    -3.5,
+    7.62
+   ],
+   [
+    3.45,
+    -2.8,
+    8.12
+   ],
+   [
+    3.8,
+    -2.2,
+    8.45
+   ],
+   [
+    3.85,
+    -2.19,
+    8.45
+   ],
+   [
+    6.0,
+    -2.19,
+    8.45
+   ]
+  ],
+  "X3": [
+   [
+    0,
+    5.5,
+    1.9
+   ],
+   [
+    2.5,
+    5.25,
+    2.05
+   ],
+   [
+    6.0,
+    5.25,
+    2.05
+   ]
+  ],
+  "X4": [
+   [
+    0,
+    -2.6,
+    3.0
+   ],
+   [
+    0.8,
+    -3.7,
+    4.0
+   ],
+   [
+    2.8,
+    -3.7,
+    4.0
+   ],
+   [
+    3.7,
+    -5.3,
+    4.7
+   ],
+   [
+    6.0,
+    -5.3,
+    4.7
+   ]
+  ],
+  "X5": [
+   [
+    0,
+    -1.2,
+    5.6
+   ],
+   [
+    1.0,
+    -2.15,
+    6.6
+   ],
+   [
+    2.95,
+    -2.15,
+    6.6
+   ],
+   [
+    4.0,
+    -0.95,
+    3.6
+   ],
+   [
+    6.0,
+    -0.75,
+    3.25
+   ]
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 2.45,
+   "dribble": true
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O2",
+   "t0": 2.45,
+   "t1": 2.95,
+   "style": "chest"
+  },
+  {
+   "type": "hold",
+   "player": "O2",
+   "from": 2.95,
+   "to": 3.45
+  },
+  {
+   "type": "shot",
+   "player": "O2",
+   "t0": 3.45,
+   "t1": 4.55,
+   "make": true
+  }
+ ],
+ "screens": [],
+ "marks": {
+  "start": 0,
+  "jab": 0.4,
+  "go": 0.45,
+  "screen1": 1.4,
+  "hit1": 1.62,
+  "screen2": 2.3,
+  "hit2": 2.64,
+  "freeze": 2.7,
+  "pass": 2.45,
+  "catch": 2.95,
+  "release": 3.45,
+  "make": 4.55,
+  "end": 6.0
+ },
+ "actions": {
+  "O4": [
+   {
+    "type": "screen",
+    "from": 0.7,
+    "to": 2.75,
+    "face": -2.214297435588181
+   }
+  ],
+  "O5": [
+   {
+    "type": "screen",
+    "from": 0.95,
+    "to": 2.98,
+    "face": -2.5535900500422257
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6,
+    "face": "O1"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6,
+    "face": "O1"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 2.8,
+    "face": "O2"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 2.95,
+    "face": "O2"
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 0.75,
+    "face": "O2"
+   },
+   {
+    "type": "contest",
+    "from": 3.3,
+    "to": 3.85
+   }
+  ],
+  "O2": [
+   {
+    "type": "celebrate",
+    "from": 4.7,
+    "to": 5.6
+   }
+  ]
+ }
+}

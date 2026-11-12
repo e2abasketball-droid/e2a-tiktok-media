@@ -1,0 +1,44 @@
+{
+ "schema": "e2a.technique/1",
+ "version": 1,
+ "para": [
+  "tactical"
+ ],
+ "evitar_en": [],
+ "origen": "Episodio 02 Stagger Screen (propio, motor Tactical3D)",
+ "estado": "propuesta",
+ "requiere_codigo": true,
+ "creada": "2026-11-12",
+ "actualizada": "2026-11-12",
+ "historial": [],
+ "id": "tec-0009",
+ "nombre": "Resaltado táctico en la palabra exacta",
+ "categoria": "subtitulos",
+ "descripcion": "Cada elemento táctico aparece en la palabra de la locución que lo nombra: el primer bloqueo con 'first', el segundo con 'second', la separación con 'trails', la posición del defensor con 'top-locks', el corte con 'backdoor'. Los anclajes son palabras de la transcripción real, no segundos fijos, así que si cambia la voz el montaje se reajusta solo.",
+ "aplicar_a": {
+  "posicion": "cualquiera"
+ },
+ "receta": {
+  "sfx": [
+   "tick"
+  ]
+ },
+ "comprobacion": {
+  "texto": "todos los anclajes caen dentro de su plano (QC del motor)",
+  "reglas": [
+   {
+    "metrica": "plan.escenas_n",
+    "op": ">=",
+    "valor": 5
+   }
+  ]
+ },
+ "evidencia": [
+  {
+   "ref_id": "R-0001",
+   "medidas": {},
+   "nivel": "hipotesis",
+   "nota": "anclajes por palabra en tactical/episodes/stagger-screen.json"
+  }
+ ]
+}
