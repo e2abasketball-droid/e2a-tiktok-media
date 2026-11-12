@@ -9,7 +9,15 @@
   "music/cinematic/*": {"origin": "ElevenLabs Music generated on the E2A account (Nov 2026)", "commercial_use": "pending_owner_confirmation",
                         "needs": "confirmation that the ElevenLabs plan was paid when the tracks were generated"},
   "voice/elevenlabs/*": {"origin": "ElevenLabs TTS, voice Deuce (DaueUomjhh8LFuAV8aGj), E2A account", "commercial_use": "pending_owner_confirmation",
-                         "needs": "confirmation that the ElevenLabs plan allows commercial use of generated speech"},
+                         "needs": "confirmation that the ElevenLabs plan allows commercial use of generated speech",
+                         "evidence_2026_11_12": {"source": "ElevenLabs connector (read-only)",
+                           "generations": {"hammer": "flow OjCBIPvHk3QMGWxKfZx3 node LJeYoWGsrbhLvXoh13VH gen kduIKO9Gk5b5mrPoDKtX 2026-11-12T21:31:22Z eleven_v4",
+                                           "spain": "flow OjCBIPvHk3QMGWxKfZx3 node 115DN4Qqm9hNXHewf8CG gen OiDtkra9HqDjFv4Kvw93 2026-11-12T21:31:22Z eleven_v4"},
+                           "voice": "Deuce is category 'professional' (a creator's shared Professional Voice Clone from another workspace), not premade",
+                           "not_verifiable_here": ["plan tier and billing status on the generation dates (connector has no billing tool)",
+                                                   "Voice Library terms set by Deuce's creator (allowed use cases, notice period)",
+                                                   "whether eleven_v4 is a Beta Service excluded from the commercial licence",
+                                                   "official terms pages: elevenlabs.io is blocked by this environment's network"]}},
   "3d/procedural": {"origin": "Tactical3D procedural athletes, court and arena (code in template/src/t3d)", "owner": "E2A", "commercial_use": true}
  }
 }
