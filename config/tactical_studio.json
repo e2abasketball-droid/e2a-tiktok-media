@@ -92,8 +92,9 @@
  "ticket_ttl_min": 30,
  "state_sync": {
   "remote": "origin",
-  "branch": "PENDING owner decision (proposed: studio-state, protected: no force-push, no deletion)",
+  "branch": "studio-state",
   "dir": "studio-state",
-  "lease_ttl_min": 240
+  "lease_ttl_min": 240,
+  "branch_note": "owner accepted name 2026-11-12; protection (no force-push, no deletion) must be set by the owner in GitHub rulesets"
  }
 }
