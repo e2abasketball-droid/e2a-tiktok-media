@@ -19,6 +19,8 @@ from unittest import mock
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(HERE))
+for _v in ("E2A_STUDIO_STATE", "E2A_LICENCES"):  # tests never read the real registry or a licence override
+    os.environ.pop(_v, None)
 import studio_sync as ss  # noqa: E402
 import tactical_studio as ts  # noqa: E402
 
