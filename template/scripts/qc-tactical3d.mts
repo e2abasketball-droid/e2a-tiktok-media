@@ -14,6 +14,7 @@ import {posAt} from '../src/tactical/play.ts';
 import type {CamKey3} from '../src/t3d/camera3d.ts';
 import {camera3At} from '../src/t3d/camera3d.ts';
 import {footTrack} from '../src/t3d/rig.ts';
+import {choosePin, placePin} from '../src/t3d/pinPlace.ts';
 import type {PlayWithActions} from '../src/t3d/rig.ts';
 
 const epFile = process.argv[2];
@@ -112,6 +113,8 @@ let anchorsOut = 0;
 let minClear = 99, clearWho = '', clearFrames = 0;
 let glassFrames = 0, glassWho = '', glassWarn = 0, glassMax = 0, glassMaxWho = '';
 let occl = 0, occlWho = '';
+let pinWrong = 0, pinWho = '';
+const pinBy: Record<string, number> = {};
 const anchorList: string[] = [];
 ep.shots.forEach((shot: any, i: number) => {
   const start = starts[i];
@@ -155,6 +158,29 @@ ep.shots.forEach((shot: any, i: number) => {
       if (cover > 0.1) { glassFrames++; if (!glassWho) glassWho = `${shot.id}@${gt}s (${(cover * 100).toFixed(0)} % of the picture through the glass)`; }
       else if (cover > 0.02) glassWarn++;
     }
+    // pin identity: the label must sit on its own player, never on another body (sampled every 3rd frame)
+    if (f % 3 === 0) for (const pn of (shot.screen ?? []).filter((o: any) => o.type === 'pin')) {
+      const a = toLocal(pn.from);
+      const b = pn.to !== undefined ? toLocal(pn.to) : len;
+      if (lt < a || lt > b) continue;
+      const pp = (q: number[]) => project(cam, q);
+      const samples = [0, 0.2, 0.4, 0.6, 0.8, 1].map((u) => {
+        const l = a + u * (b - a) * 0.999;
+        const p2 = remapAt(rm, l);
+        const c2 = camera3At(play, keys, l, p2);
+        return {pt: p2, proj: (q: number[]) => project(c2, q)};
+      });
+      const pl = ep.pinV2 ? placePin(play, pn.player, pt, pp, pn.text, pn.size ?? 40, pn.dy, pn.z, choosePin(play, pn.player, samples, pn.text, pn.size ?? 40, pn.dy, pn.z)) : (() => {
+        const p = posAt(play.tracks[pn.player], Math.max(0, Math.min(play.duration, pt)));
+        const q = pp([p[0], p[1], pn.z ?? 2.25]);
+        return placePin(play, pn.player, pt, pp, pn.text, pn.size ?? 40, pn.dy ?? -70, pn.z ?? 2.25) ?? q;
+      })();
+      if (pl.on) {
+        pinWrong++;
+        if (!pinWho) pinWho = `${shot.id}:${pn.text}(${pn.player}) over ${pl.on} @${(start + lt).toFixed(2)}s`;
+        pinBy[`${shot.id}:${pn.text}>${pl.on}`] = (pinBy[`${shot.id}:${pn.text}>${pl.on}`] ?? 0) + 1;
+      }
+    }
     for (const r of rings) {
       const a = toLocal(r.from);
       const b = r.to !== undefined ? toLocal(r.to) : len;
@@ -188,6 +214,7 @@ check(`camera stays ≥ ${CLEAR} m from the basket structure`, clearFrames === 0
 check('camera never films through the backboard glass (> 10 % of the picture)', glassFrames === 0, glassFrames ? `${glassFrames} frames, first ${glassWho}` : `max ${(glassMax * 100).toFixed(0)} %${glassMaxWho ? ' (' + glassMaxWho + ')' : ''}`);
 if (glassWarn) warn('part of the picture (2–10 %) seen through the backboard glass', `${glassWarn} frames`);
 if (occl) warn('highlighted player hidden behind the basket structure (ray vs boxes, approximate)', `${occl} frames, first ${occlWho}`);
+check('every pin label sits on its own player (no other body under it)', pinWrong === 0, pinWrong ? `${pinWrong} samples, first ${pinWho}; ${Object.entries(pinBy).map(([k, v]) => `${k}=${v}`).join(" ")}` : 'ok');
 check('highlighted players stay inside the safe frame', outOfFrame === 0, outOfFrame ? `${outOfFrame} frames, first ${ofWhere}; by shot ${Object.entries(ofByShot).map(([k, v]) => `${k}=${v}`).join(' ')}` : 'ok');
 
 // foot contact

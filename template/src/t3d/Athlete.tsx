@@ -240,13 +240,14 @@ export const Athlete: React.FC<Props> = ({pose: P, team, num, skin}) => {
   // girth: limbs and trunk thicken with the build (lean guard ~0.92, strong big ~1.14); length stays with height
   const b = P.dims.build ?? 1;
   const kb = k * b;
-  const skinM = mat(`skin${skin}`, () => new THREE.MeshPhysicalMaterial({color: skin, roughness: 0.46, metalness: 0.0, clearcoat: 0.18, clearcoatRoughness: 0.45}));
-  const jerseyM = mat(`jersey${team}${num}`, () => new THREE.MeshStandardMaterial({map: jerseyTex(kit, num, 'jersey'), roughness: 0.72, metalness: 0.0, side: THREE.DoubleSide}));
-  const shortsM = mat(`shorts${team}`, () => new THREE.MeshStandardMaterial({map: jerseyTex(kit, num, 'shorts'), roughness: 0.75, side: THREE.DoubleSide}));
+  // V2 materials (2026-11-13): matte skin with a soft sheen instead of a plastic clearcoat; fabric = rough + sheen
+  const skinM = mat(`skinV2${skin}`, () => new THREE.MeshPhysicalMaterial({color: skin, roughness: 0.64, metalness: 0.0, clearcoat: 0.04, clearcoatRoughness: 0.7, sheen: 0.25, sheenRoughness: 0.6, sheenColor: new THREE.Color('#f3d9c4')}));
+  const jerseyM = mat(`jerseyV2${team}${num}`, () => new THREE.MeshPhysicalMaterial({map: jerseyTex(kit, num, 'jersey'), roughness: 0.88, metalness: 0.0, sheen: 0.55, sheenRoughness: 0.75, sheenColor: new THREE.Color('#ffffff'), side: THREE.DoubleSide}));
+  const shortsM = mat(`shortsV2${team}`, () => new THREE.MeshPhysicalMaterial({map: jerseyTex(kit, num, 'shorts'), roughness: 0.9, sheen: 0.55, sheenRoughness: 0.75, sheenColor: new THREE.Color('#ffffff'), side: THREE.DoubleSide}));
   const shoeM = mat(`shoe${team}`, () => new THREE.MeshStandardMaterial({color: kit.shoe, roughness: 0.42}));
   const soleM = mat(`sole${team}`, () => new THREE.MeshStandardMaterial({color: kit.sole, roughness: 0.6}));
   const sockM = mat(`sock${team}`, () => new THREE.MeshStandardMaterial({color: kit.sock, roughness: 0.85}));
-  const headM = mat('headV', () => new THREE.MeshPhysicalMaterial({vertexColors: true, roughness: 0.5, clearcoat: 0.15, clearcoatRoughness: 0.5}));
+  const headM = mat('headV2', () => new THREE.MeshPhysicalMaterial({vertexColors: true, roughness: 0.62, clearcoat: 0.05, clearcoatRoughness: 0.7, sheen: 0.2, sheenRoughness: 0.6}));
 
   const up: V3 = [P.chest[0] - P.pelvis[0], P.chest[1] - P.pelvis[1], P.chest[2] - P.pelvis[2]];
   const chestFwd: V3 = [Math.cos(P.chestYaw), Math.sin(P.chestYaw), 0];
@@ -283,6 +284,8 @@ export const Athlete: React.FC<Props> = ({pose: P, team, num, skin}) => {
     parts.push(<Limb key={`th${sfx}`} a={P.hip[i]} b={P.knee[i]} geo={G.thigh} m={skinM} s={kb} from={0.12} />);
     parts.push(<Limb key={`sl${sfx}`} a={P.hip[i]} b={P.knee[i]} geo={G.shortsLeg} m={shortsM} s={kb} from={0.0} to={0.56} />);
     parts.push(<Limb key={`sh${sfx}`} a={P.knee[i]} b={P.ankle[i]} geo={G.shin} m={skinM} s={kb} />);
+    // knee: a cap that keeps the joint round when it bends (no pinched cylinder ends)
+    parts.push(<mesh key={`kn${sfx}`} geometry={G.sphere} material={skinM} position={W3(P.knee[i])} scale={[0.052 * kb, 0.056 * kb, 0.052 * kb]} castShadow />);
     parts.push(<Limb key={`so${sfx}`} a={P.knee[i]} b={P.ankle[i]} geo={G.sock} m={sockM} s={kb} from={0.78} to={1.03} />);
     // shoe: capsule along heel -> toe, flattened
     const heel: V3 = [P.ankle[i][0] - (P.toe[i][0] - P.ankle[i][0]) * 0.32, P.ankle[i][1] - (P.toe[i][1] - P.ankle[i][1]) * 0.32, P.ankle[i][2] - 0.045 * k];
@@ -293,11 +296,17 @@ export const Athlete: React.FC<Props> = ({pose: P, team, num, skin}) => {
     parts.push(<mesh key={`sole${sfx}`} geometry={G.shoe} material={soleM} position={[mid[0], mid[1] - 0.026 * k, mid[2]]} quaternion={shoeQ} scale={[0.056 * k, S.len * 0.45, 0.03 * k]} castShadow />);
     // arms: deltoid, upper arm, elbow, forearm, hand
     parts.push(<mesh key={`dl${sfx}`} geometry={G.sphere} material={skinM} position={W3(P.shoulder[i])} scale={[0.06 * kb, 0.058 * kb, 0.058 * kb]} castShadow />);
+    // trapezius: shoulder joined to the base of the neck (reads as one torso, not a pinned arm)
+    parts.push(<Limb key={`tr${sfx}`} a={[P.chest[0], P.chest[1], P.chest[2] - 0.02 * k]} b={P.shoulder[i]} geo={G.upper} m={jerseyM} s={kb * 1.15} to={0.9} />);
     parts.push(<Limb key={`ua${sfx}`} a={P.shoulder[i]} b={P.elbow[i]} geo={G.upper} m={skinM} s={kb} />);
+    parts.push(<mesh key={`el${sfx}`} geometry={G.sphere} material={skinM} position={W3(P.elbow[i])} scale={[0.036 * kb, 0.036 * kb, 0.036 * kb]} castShadow />);
     parts.push(<Limb key={`fa${sfx}`} a={P.elbow[i]} b={P.wrist[i]} geo={G.fore} m={skinM} s={kb} />);
     const hm: V3 = [(P.wrist[i][0] + P.hand[i][0]) / 2, (P.wrist[i][1] + P.hand[i][1]) / 2, (P.wrist[i][2] + P.hand[i][2]) / 2];
     const HS = seg(P.wrist[i], P.hand[i]);
-    parts.push(<mesh key={`hd${sfx}`} geometry={G.sphere} material={skinM} position={W3(hm)} quaternion={HS.quat} scale={[0.039 * k, 0.066 * k, 0.03 * k]} castShadow />);
+    parts.push(<mesh key={`hd${sfx}`} geometry={G.sphere} material={skinM} position={W3(hm)} quaternion={HS.quat} scale={[0.046 * k, 0.074 * k, 0.034 * k]} castShadow />);
+    // thumb: a small lobe on the inside of the palm (gives the hand volume and a readable grip)
+    const th: V3 = [P.wrist[i][0] + (P.hand[i][0] - P.wrist[i][0]) * 0.35 + Math.sin(P.chestYaw) * (i === 0 ? 0.03 : -0.03) * k, P.wrist[i][1] + (P.hand[i][1] - P.wrist[i][1]) * 0.35 - Math.cos(P.chestYaw) * (i === 0 ? 0.03 : -0.03) * k, P.wrist[i][2] + (P.hand[i][2] - P.wrist[i][2]) * 0.35];
+    parts.push(<mesh key={`tb${sfx}`} geometry={G.sphere} material={skinM} position={W3(th)} quaternion={HS.quat} scale={[0.017 * k, 0.034 * k, 0.017 * k]} />);
   }
   return <group>{parts}</group>;
 };

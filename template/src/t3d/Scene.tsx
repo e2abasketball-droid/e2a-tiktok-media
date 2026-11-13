@@ -33,6 +33,48 @@ const CameraSync: React.FC<{cam: Cam3}> = ({cam}) => {
   return null;
 };
 
+/** V2: soft contact shadows under each shoe (darkest when the foot is planted) — the weight on the floor */
+const contactTex = (() => {
+  let t: THREE.Texture | null = null;
+  return () => {
+    if (t) return t;
+    const c = document.createElement('canvas');
+    c.width = c.height = 128;
+    const g = c.getContext('2d')!;
+    const r = g.createRadialGradient(64, 64, 4, 64, 64, 62);
+    r.addColorStop(0, 'rgba(0,0,0,0.85)');
+    r.addColorStop(0.5, 'rgba(0,0,0,0.35)');
+    r.addColorStop(1, 'rgba(0,0,0,0)');
+    g.fillStyle = r;
+    g.fillRect(0, 0, 128, 128);
+    t = new THREE.CanvasTexture(c);
+    return t;
+  };
+})();
+const contactMats = new Map<number, THREE.MeshBasicMaterial>();
+const ContactShadows: React.FC<{pose: ReturnType<typeof poseAt>}> = ({pose}) => {
+  const out: React.ReactNode[] = [];
+  for (let i = 0; i < 2; i++) {
+    const a = pose.ankle[i], toe = pose.toe[i];
+    const hgt = Math.max(0, Math.min(a[2], toe[2]) - 0.02);
+    const op = Math.round(Math.max(0, 0.55 * (1 - hgt / 0.22)) * 20) / 20;
+    if (op <= 0) continue;
+    let m = contactMats.get(op);
+    if (!m) {
+      m = new THREE.MeshBasicMaterial({map: contactTex(), transparent: true, opacity: op, depthWrite: false, toneMapped: false});
+      contactMats.set(op, m);
+    }
+    const mid: V3 = [(a[0] + toe[0]) / 2, (a[1] + toe[1]) / 2, 0.004];
+    const yaw = Math.atan2(toe[1] - a[1], toe[0] - a[0]);
+    out.push(
+      <mesh key={i} position={W3(mid)} rotation={[-Math.PI / 2, 0, yaw]} material={m} renderOrder={1}>
+        <planeGeometry args={[0.42, 0.22]} />
+      </mesh>,
+    );
+  }
+  return <>{out}</>;
+};
+
 const Ball: React.FC<{pos: V3; spin?: [V3, number]}> = ({pos, spin}) => {
   const tex = React.useMemo(() => {
     const c = document.createElement('canvas');
@@ -125,9 +167,16 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
       <fog attach="fog" args={['#050A15', 14, 40]} />
       <ArenaLights focus={W3([cam.target[0] * 0.5, Math.max(2, cam.target[1] * 0.7 + 1.5), 0])} />
       <Court3D logo={logo} swish={swish} />
-      {play.players.map((p, i) =>
-        hide.includes(p.id) ? null : <Athlete key={p.id} pose={poseAt(play, p.id, pt, {holder: ball.holder, pos: ball.pos}, RIM)} team={p.team} num={p.id.slice(1)} skin={SKINS[i % SKINS.length]} />,
-      )}
+      {play.players.map((p, i) => {
+        if (hide.includes(p.id)) return null;
+        const pose = poseAt(play, p.id, pt, {holder: ball.holder, pos: ball.pos}, RIM);
+        return (
+          <React.Fragment key={p.id}>
+            <Athlete pose={pose} team={p.team} num={p.id.slice(1)} skin={SKINS[i % SKINS.length]} />
+            <ContactShadows pose={pose} />
+          </React.Fragment>
+        );
+      })}
       <Ball pos={ball.pos} spin={spin} />
       {children}
     </ThreeCanvas>

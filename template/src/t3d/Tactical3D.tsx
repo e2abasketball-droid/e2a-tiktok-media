@@ -14,6 +14,7 @@ import type {LiveOv3, Ov3} from './overlays3d';
 import {Overlays3D, projector} from './overlays3d';
 import type {PlayWithActions} from './rig.ts';
 import {Scene3D} from './Scene';
+import {choosePin, placePin} from './pinPlace';
 import {FreezeFrame, KineticTitle, Logo, PinLabel, PremiumSubtitles, RewindTag, Stamp} from './screen3d';
 import '../theme';
 
@@ -49,6 +50,8 @@ export type Episode3 = {
   /** sound by event (2026-11-13): bounces, catches, braking squeaks and the net, placed on their visible
    *  contact through each shot's remap (silent in freezes, rewinds and slow motion below 0.3x) */
   autoSfx?: boolean | {bounce?: number; catch?: number; squeak?: number; swish?: number; land?: number; players?: string[]};
+  /** V2 pins: anchored to the posed head, flipped below the feet when they would cover another player */
+  pinV2?: boolean;
   /** arena room tone under everything (looped) */
   ambience?: {src: string; volume?: number};
 };
@@ -223,6 +226,18 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
           case 'stamp':
             return <Stamp key={i} text={s.text} age={s.age} dur={s.dur} y={s.y} tone={s.tone} badge={s.badge} />;
           case 'pin': {
+            // V2: anchored to the posed head (or below the feet when the head spot covers another player)
+            if (ep.pinV2) {
+              const lt0 = lt - s.age;
+              const samples = [0, 0.2, 0.4, 0.6, 0.8, 1].map((u) => {
+                const l = lt0 + u * s.dur * 0.999;
+                const p2 = remapAt(rm, l);
+                return {pt: p2, proj: projector(camera3At(play, shot.camera.map((k) => ({...k, at: toLocal(k.at)})), l, p2), W, H)};
+              });
+              const pick = choosePin(play, s.player, samples, s.text, s.size ?? 40, s.dy, s.z);
+              const q = placePin(play, s.player, pt, proj, s.text, s.size ?? 40, s.dy, s.z, pick);
+              return <PinLabel key={i} x={q.x} y={q.y} text={s.text} age={s.age} dur={s.dur} tone={s.tone} dy={q.dy} dx={q.dx} size={s.size} />;
+            }
             const p = posAt(play.tracks[s.player], Math.max(0, Math.min(play.duration, pt))) as V2;
             const q = proj([p[0], p[1], s.z ?? 2.25]);
             return q.visible ? <PinLabel key={i} x={q.x} y={q.y} text={s.text} age={s.age} dur={s.dur} tone={s.tone} dy={s.dy} size={s.size} /> : null;
