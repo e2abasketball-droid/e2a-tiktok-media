@@ -131,6 +131,14 @@ class TestDelegation(PBase):
         with self.assertRaises(tp.PublishError):
             self.check(d)
 
+    def test_the_eve_of_the_first_post_day_is_allowed_but_not_before_the_grant(self):
+        eve = dt.datetime(2026, 11, 13, 6, 0, tzinfo=UTC)  # 17:00 Sydney on 13 Nov, posts start 14 Nov
+        self.assertTrue(tp.check_delegation(granted(), sha_of(granted()), sha_of(granted()), eve, "E2A-TACTICAL-2026-11-14-V02", self.c)["ok"])
+        with self.assertRaises(tp.PublishError):
+            self.check(granted(), now=dt.datetime(2026, 11, 12, 21, 0, tzinfo=UTC))  # before granted_at
+        with self.assertRaises(tp.PublishError):
+            self.check(granted(), now=eve, cid="E2A-TACTICAL-2026-11-13-V02")  # post outside the window
+
     def test_only_two_videos_a_day_and_inside_the_window(self):
         with self.assertRaises(tp.PublishError):
             self.check(granted(), cid="E2A-TACTICAL-2026-11-20-V03")
