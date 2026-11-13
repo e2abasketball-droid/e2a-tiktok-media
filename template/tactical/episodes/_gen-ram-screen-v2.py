@@ -20,7 +20,7 @@ fol = lambda ids, z=1.0, **k: {"follow": ids, "z": z, **k}
 key = lambda at, rig, ease=None: {"at": at, "rig": rig, **({"ease": ease} if ease else {})}
 RED, WHITE = "#E5483A", "#FFFFFF"
 
-CAM_HOOK = orb(fol(["O5", "X5"], 1.0), 8.6, 68, -28, 44)        # low three-quarter, O5 running at camera, X5 behind
+CAM_HOOK = orb(fol(["O5", "O5", "X5"], 1.0, lead=0.15), 7.4, 70, -22, 44)        # low three-quarter, O5 running at camera, X5 behind
 CAM_HIGH = orb([-1.6, 5.6, 0.4], 13.5, 46, -34, 42)             # high angle on the ram (O4, X5, O5 in one frame)
 CAM_D = orb([0.5, 8.4, 1.0], 10.0, 56, -46)                      # divergence axis, identical in A and B
 CAM_C = orb([0.0, 8.0, 0.5], 14.5, 46, -18, 40)                  # comparison: X5 back (y~5.5) and X5 up (y~10.3)
@@ -28,7 +28,7 @@ CAM_C = orb([0.0, 8.0, 0.5], 14.5, 46, -18, 40)                  # comparison: X
 shots = [
  {"id": "hook", "name": "Hook — O5 escapes, X5 goes around the first screen", "at": 0, "play": "A",
   "remap": [[0, 1.0], ["@end", 3.15]],
-  "camera": [key(0, CAM_HOOK), key("@end", orb(fol(["O5", "X5"], 1.0), 8.2, 70, -34, 44), "linear")],
+  "camera": [key(0, CAM_HOOK), key("@end", orb(fol(["O5", "O5", "X5"], 1.0, lead=0.15), 7.2, 70, -28, 44), "linear")],
   "ov3": [{"type": "ring", "player": "O5", "from": 0.35, "to": "@end"},
           {"type": "ring", "player": "X5", "color": RED, "from": 0.6, "to": "@end"},
           {"type": "separation", "a": "O5", "b": "X5", "from": 1.0, "to": "@end"}],
@@ -63,7 +63,7 @@ shots = [
   "sfx": []},
  {"id": "readA2", "name": "Read A — behind the shooter: flight, make, then the result", "at": "pull-up.>+0.15", "play": "A",
   "remap": [[0, 4.85], [1.05, 5.62], ["@end-0.5", 6.15], ["@end", 6.3]],
-  "camera": [key(0, orb([-0.7, 5.6, 1.8], 9.4, 68, 8, 44)), key(1.05, orb([-0.4, 4.4, 2.1], 8.8, 70, 9, 44), "inOut"), key("@end", orb([-0.4, 4.2, 2.1], 8.6, 70, 9, 44), "linear")],
+  "camera": [key(0, orb([-0.7, 5.4, 2.4], 9.8, 66, 8, 44)), key(1.05, orb([-0.4, 4.2, 2.7], 9.6, 68, 9, 44), "inOut"), key("@end", orb([-0.4, 4.0, 2.7], 9.4, 68, 9, 44), "linear")],
   "ov3": [],
   "screen": [{"type": "stamp", "text": "PULL-UP", "badge": "+2", "from": 1.25, "to": "@end", "y": 330}],
   "sfx": []},
@@ -77,7 +77,7 @@ shots = [
  {"id": "readB2", "name": "Read B — the gap, the pass to the offered hands, the steps, the finish", "at": "Five is open-0.6", "play": "B",
   "remap": [[0, 3.85], ["open on-0.1", 4.38], ["short roll.>", 4.62], ["@end-1.3", 5.75], ["@end", 6.3]],
   "camera": [key(0, orb([0.4, 8.6, 1.4], 9.6, 66, 4, 44)), key("open on-0.1", orb(fol("O5", 1.3, lead=0.2), 8.8, 68, 4, 44), "inOut"),
-             key("@end-1.3", orb([0.1, 3.4, 1.9], 8.4, 72, 4, 44), "inOut"), key("@end", orb([0.1, 3.2, 2.0], 8.2, 72, 4, 44), "linear")],
+             key("@end-1.3", orb([0.1, 3.2, 2.6], 9.2, 70, 4, 44), "inOut"), key("@end", orb([0.1, 3.0, 2.7], 9.0, 70, 4, 44), "linear")],
   "ov3": [{"type": "passLane", "src": "O1", "dst": "O5", "from": 0.25, "to": "open on-0.1"},
           {"type": "ring", "player": "O5", "from": "open on-0.1", "to": "short roll.>+0.4"},
           {"type": "route", "player": "O5", "t0": 4.45, "t1": 5.4, "trail": True, "from": "short roll.>", "to": "@end-0.9"}],
