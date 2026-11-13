@@ -1,0 +1,1335 @@
+{
+ "id": "ram-screen",
+ "title": "RAM SCREEN: The Screen Before the Screen",
+ "fps": 30,
+ "voiceRaw": "tactical/ram/voice-raw.mp3",
+ "wordsRaw": "ram-screen.words-raw.json",
+ "voice": "tactical/ram/voice.wav",
+ "voiceMix": "tactical/ram/voice.mix.wav",
+ "preroll": 0.12,
+ "tail": 2.0,
+ "gaps": [
+  {
+   "after": "before the pick.",
+   "sec": 1.2,
+   "why": "freeze on O5's half step, then the rewind"
+  },
+  {
+   "after": "head start.",
+   "sec": 1.1,
+   "why": "O5's route off the first screen finishes drawing"
+  },
+  {
+   "after": "his defender.",
+   "sec": 1.3,
+   "why": "open question: where is X5, before the reads"
+  },
+  {
+   "after": "The big drops.",
+   "sec": 0.6,
+   "why": "X5 backpedals before the pull-up line"
+  },
+  {
+   "after": "room to pull up.",
+   "sec": 2.3,
+   "why": "rise, release, flight, swish and landing"
+  },
+  {
+   "after": "Same setup.",
+   "sec": 0.7,
+   "why": "cut back to the same spot before the blitz"
+  },
+  {
+   "after": "The lane is open.",
+   "sec": 2.0,
+   "why": "drive, layup, net and landing"
+  },
+  {
+   "after": "two different reads.",
+   "sec": 0.8,
+   "why": "matched cut big back / big up"
+  },
+  {
+   "after": "where the big goes.",
+   "sec": 1.3,
+   "why": "second matched pair before the CTA"
+  }
+ ],
+ "plays": {
+  "A": "ram-a-drop",
+  "B": "ram-b-blitz"
+ },
+ "shots": [
+  {
+   "id": "hook",
+   "name": "Hook — live possession, freeze on O5's head start",
+   "at": 0,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     1.1
+    ],
+    [
+     1.55,
+     2.05,
+     "out"
+    ],
+    [
+     "the pick.>-0.35",
+     2.15
+    ],
+    [
+     "@end",
+     2.8,
+     "in"
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.2,
+       7.9,
+       1.0
+      ],
+      "dist": 9.8,
+      "pitch": 79,
+      "yaw": -36,
+      "fov": 44
+     }
+    },
+    {
+     "at": 1.6,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O5",
+        "X5",
+        "O4"
+       ],
+       "z": 1.0
+      },
+      "dist": 9.4,
+      "pitch": 70,
+      "yaw": -34,
+      "fov": 44
+     },
+     "ease": "out"
+    },
+    {
+     "at": "the pick.>-0.35",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O5",
+        "X5",
+        "O4"
+       ],
+       "z": 1.0
+      },
+      "dist": 9.0,
+      "pitch": 70,
+      "yaw": -34,
+      "fov": 44
+     },
+     "ease": "linear"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O5",
+        "O1"
+       ],
+       "z": 1.1
+      },
+      "dist": 9.5,
+      "pitch": 72,
+      "yaw": -40,
+      "fov": 44
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O5",
+     "from": 1.5,
+     "to": "the pick.>-0.3",
+     "pulse": true
+    },
+    {
+     "type": "ring",
+     "player": "X5",
+     "from": 1.6,
+     "to": "the pick.>-0.3"
+    },
+    {
+     "type": "separation",
+     "a": "O5",
+     "b": "X5",
+     "from": 1.7,
+     "to": "the pick.>-0.3"
+    }
+   ],
+   "screen": [
+    {
+     "type": "freeze",
+     "label": "FREEZE",
+     "from": 1.6,
+     "to": "the pick.>-0.3"
+    },
+    {
+     "type": "title",
+     "lines": [
+      "BEFORE",
+      "THE PICK"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "before-0.05",
+     "to": "@end",
+     "y": 260,
+     "size": 124
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.1
+    },
+    {
+     "at": 1.6,
+     "name": "impact",
+     "volume": 0.08
+    }
+   ]
+  },
+  {
+   "id": "reveal",
+   "name": "Rewind + the first screen (ram)",
+   "at": "Rewind.-0.12",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     2.8
+    ],
+    [
+     0.55,
+     0.35,
+     "inOut"
+    ],
+    [
+     "Four",
+     0.95
+    ],
+    [
+     "screens",
+     1.2
+    ],
+    [
+     "defender.>",
+     1.62
+    ],
+    [
+     "head start>",
+     2.5
+    ],
+    [
+     "@end",
+     2.95
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       7.0,
+       1.1
+      ],
+      "dist": 9.5,
+      "pitch": 72,
+      "yaw": -40,
+      "fov": 44
+     }
+    },
+    {
+     "at": "Four-0.3",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.3,
+       3.7,
+       0.4
+      ],
+      "dist": 11.0,
+      "pitch": 50,
+      "yaw": -38,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "head start",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.1,
+       5.4,
+       0.4
+      ],
+      "dist": 12.0,
+      "pitch": 50,
+      "yaw": -42,
+      "fov": 42
+     },
+     "ease": "linear"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.2,
+       7.6,
+       0.6
+      ],
+      "dist": 12.0,
+      "pitch": 52,
+      "yaw": -46,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "screen",
+     "player": "O4",
+     "n": 1,
+     "facing": -0.785,
+     "from": "screens",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "X5",
+     "from": "big's",
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O5",
+     "t0": 0.85,
+     "t1": 3.05,
+     "draw": 1.2,
+     "from": "Now Five",
+     "to": "@end"
+    },
+    {
+     "type": "separation",
+     "a": "O5",
+     "b": "X5",
+     "from": "head start",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "rewind",
+     "from": 0,
+     "to": 0.55
+    },
+    {
+     "type": "title",
+     "lines": [
+      "RAM SCREEN"
+     ],
+     "gold": [
+      0
+     ],
+     "sub": "The screen before the screen",
+     "from": "Four",
+     "to": "@end",
+     "y": 250,
+     "size": 116
+    },
+    {
+     "type": "pin",
+     "player": "O4",
+     "text": "1 · OFF-BALL SCREEN",
+     "from": "screens",
+     "to": "@end",
+     "z": 0,
+     "dy": 70,
+     "size": 44
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "reverse_cymbal",
+     "volume": 0.14
+    },
+    {
+     "at": "screens",
+     "name": "tick",
+     "volume": 0.17
+    }
+   ]
+  },
+  {
+   "id": "ballscreen",
+   "name": "Second screen — the open question",
+   "at": "Five gets-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     2.72
+    ],
+    [
+     "first.>",
+     3.1,
+     "out"
+    ],
+    [
+     "Now watch",
+     3.12
+    ],
+    [
+     "@end",
+     3.14
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.3,
+       8.0,
+       0.8
+      ],
+      "dist": 11.0,
+      "pitch": 52,
+      "yaw": -46,
+      "fov": 42
+     }
+    },
+    {
+     "at": "first.>",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.6,
+       8.5,
+       1.0
+      ],
+      "dist": 9.2,
+      "pitch": 57,
+      "yaw": -48,
+      "fov": 42
+     },
+     "ease": "out"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.6,
+       8.5,
+       1.0
+      ],
+      "dist": 8.6,
+      "pitch": 57,
+      "yaw": -48,
+      "fov": 42
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "screen",
+     "player": "O5",
+     "n": 2,
+     "facing": -0.427,
+     "from": "first-0.2",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "O5",
+     "from": 0,
+     "to": "Now watch"
+    },
+    {
+     "type": "ring",
+     "player": "X5",
+     "pulse": true,
+     "from": "his defender",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "pin",
+     "player": "O5",
+     "text": "2 · BALL SCREEN",
+     "from": "gets",
+     "to": "@end",
+     "dy": -90,
+     "size": 44
+    },
+    {
+     "type": "freeze",
+     "label": "FREEZE",
+     "from": "Now watch",
+     "to": "@end"
+    },
+    {
+     "type": "pin",
+     "player": "X5",
+     "text": "X5",
+     "tone": "red",
+     "from": "his defender",
+     "to": "@end",
+     "size": 48
+    }
+   ],
+   "sfx": [
+    {
+     "at": "his defender",
+     "name": "tick",
+     "volume": 0.17
+    }
+   ]
+  },
+  {
+   "id": "readA",
+   "name": "Read A — drop: the big sinks, the guard pulls up",
+   "at": "First look-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.05
+    ],
+    [
+     "drops.>",
+     4.0
+    ],
+    [
+     "pull-0.12",
+     4.1
+    ],
+    [
+     "@end-0.9",
+     5.85
+    ],
+    [
+     "@end",
+     6.3
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.6,
+       8.5,
+       1.0
+      ],
+      "dist": 9.2,
+      "pitch": 57,
+      "yaw": -48,
+      "fov": 42
+     }
+    },
+    {
+     "at": "The big",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O1",
+        "X5"
+       ],
+       "z": 1.0
+      },
+      "dist": 9.5,
+      "pitch": 60,
+      "yaw": -62,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "pull-0.12",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O1",
+        "X5"
+       ],
+       "z": 1.0
+      },
+      "dist": 9.0,
+      "pitch": 64,
+      "yaw": -40,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "up.>-0.1",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       5.6,
+       1.6
+      ],
+      "dist": 9.6,
+      "pitch": 68,
+      "yaw": -14,
+      "fov": 44
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "up.>+0.55",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.5,
+       4.4,
+       2.0
+      ],
+      "dist": 9.0,
+      "pitch": 70,
+      "yaw": 10,
+      "fov": 44
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.3,
+       3.4,
+       2.3
+      ],
+      "dist": 8.4,
+      "pitch": 72,
+      "yaw": 8,
+      "fov": 44
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "route",
+     "player": "X1",
+     "t0": 3.1,
+     "t1": 4.5,
+     "trail": true,
+     "width": 0.12,
+     "from": 0,
+     "to": "drops.>"
+    },
+    {
+     "type": "ring",
+     "player": "X5",
+     "from": "The big",
+     "to": "pull"
+    },
+    {
+     "type": "separation",
+     "a": "X5",
+     "b": "O1",
+     "from": "drops-0.2",
+     "to": "pull+0.3"
+    },
+    {
+     "type": "ring",
+     "player": "O1",
+     "from": "room",
+     "to": "up.>"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "DROP",
+      "→ PULL-UP"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "The big",
+     "to": "up.>+0.9",
+     "y": 260,
+     "size": 112
+    },
+    {
+     "type": "freeze",
+     "label": "FREEZE",
+     "from": "drops.>",
+     "to": "pull-0.15"
+    },
+    {
+     "type": "stamp",
+     "text": "PULL-UP",
+     "badge": "+2",
+     "from": "up.>+0.95",
+     "to": "@end",
+     "y": 330
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "readB",
+   "name": "Read B — blitz: two on the ball, short roll, layup",
+   "at": "Same setup-0.15",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     2.95
+    ],
+    [
+     "This time",
+     3.06
+    ],
+    [
+     "ball.>",
+     3.97
+    ],
+    [
+     "Hit",
+     4.0
+    ],
+    [
+     "short roll.>",
+     4.4
+    ],
+    [
+     "lane",
+     4.62
+    ],
+    [
+     "open.>",
+     5.35
+    ],
+    [
+     "@end",
+     6.45
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.6,
+       8.5,
+       1.0
+      ],
+      "dist": 9.2,
+      "pitch": 57,
+      "yaw": -48,
+      "fov": 42
+     }
+    },
+    {
+     "at": "This time",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.6,
+       8.5,
+       1.0
+      ],
+      "dist": 9.2,
+      "pitch": 57,
+      "yaw": -48,
+      "fov": 42
+     },
+     "ease": "linear"
+    },
+    {
+     "at": "jump",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.3,
+       10.0,
+       1.0
+      ],
+      "dist": 13.0,
+      "pitch": 55,
+      "yaw": -30,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "short roll.>",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O5",
+        "X5"
+       ],
+       "z": 1.0
+      },
+      "dist": 11.2,
+      "pitch": 64,
+      "yaw": -52,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "open.>",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       1.6,
+       2.6,
+       1.6
+      ],
+      "dist": 11.2,
+      "pitch": 72,
+      "yaw": -80,
+      "fov": 44
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.8,
+       2.3,
+       1.9
+      ],
+      "dist": 9.8,
+      "pitch": 74,
+      "yaw": -80,
+      "fov": 44
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X5",
+     "from": "two defenders",
+     "to": "Hit"
+    },
+    {
+     "type": "ring",
+     "player": "X1",
+     "from": "two defenders",
+     "to": "Hit"
+    },
+    {
+     "type": "passLane",
+     "src": "O1",
+     "dst": "O5",
+     "from": "Hit",
+     "to": "short roll.>"
+    },
+    {
+     "type": "ring",
+     "player": "O5",
+     "from": "Hit",
+     "to": "open.>"
+    },
+    {
+     "type": "route",
+     "player": "O5",
+     "t0": 4.45,
+     "t1": 5.35,
+     "trail": true,
+     "from": "lane",
+     "to": "open.>+0.3"
+    },
+    {
+     "type": "ring",
+     "player": "X2",
+     "from": "lane+0.3",
+     "to": "open.>"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "BLITZ",
+      "→ SHORT ROLL"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "two defenders",
+     "to": "open.>+0.65",
+     "y": 260,
+     "size": 112
+    },
+    {
+     "type": "stamp",
+     "text": "SHORT ROLL",
+     "badge": "+2",
+     "from": "open.>+0.7",
+     "to": "@end",
+     "y": 330
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "cmpA1",
+   "name": "Compare — big back",
+   "at": "Same two-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.85
+    ],
+    [
+     "@end",
+     4.1
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.1,
+       7.8,
+       0.5
+      ],
+      "dist": 14.0,
+      "pitch": 46,
+      "yaw": -15,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X5",
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "separation",
+     "a": "X5",
+     "b": "O1",
+     "from": 0.1,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "BIG BACK"
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 270,
+     "size": 122
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whip",
+     "volume": 0.06
+    }
+   ]
+  },
+  {
+   "id": "cmpB1",
+   "name": "Compare — big up",
+   "at": "two different-0.1",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     3.82
+    ],
+    [
+     "@end",
+     3.98
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.1,
+       7.8,
+       0.5
+      ],
+      "dist": 14.0,
+      "pitch": 46,
+      "yaw": -15,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X5",
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "X1",
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "BIG UP"
+     ],
+     "gold": [
+      0
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 270,
+     "size": 122
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whip",
+     "volume": 0.06
+    }
+   ]
+  },
+  {
+   "id": "cmpA2",
+   "name": "Compare — big back (2)",
+   "at": "Watch where-0.1",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.95
+    ],
+    [
+     "@end",
+     4.15
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.1,
+       7.8,
+       0.5
+      ],
+      "dist": 14.0,
+      "pitch": 46,
+      "yaw": -15,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X5",
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "BIG BACK"
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 270,
+     "size": 122
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whip",
+     "volume": 0.06
+    }
+   ]
+  },
+  {
+   "id": "cmpB2",
+   "name": "Compare — big up (2)",
+   "at": "goes.>+0.15",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     3.9
+    ],
+    [
+     "@end",
+     4.0
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.1,
+       7.8,
+       0.5
+      ],
+      "dist": 14.0,
+      "pitch": 46,
+      "yaw": -15,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X5",
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "BIG UP"
+     ],
+     "gold": [
+      0
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 270,
+     "size": 122
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whip",
+     "volume": 0.06
+    }
+   ]
+  },
+  {
+   "id": "cta",
+   "name": "CTA — both options on the decision frame, camera back to the opening",
+   "at": "You're-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.1
+    ],
+    [
+     "@end",
+     3.1
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.1,
+       7.8,
+       0.5
+      ],
+      "dist": 14.0,
+      "pitch": 46,
+      "yaw": -15,
+      "fov": 40
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.2,
+       7.9,
+       1.0
+      ],
+      "dist": 9.8,
+      "pitch": 79,
+      "yaw": -36,
+      "fov": 44
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X5",
+     "pulse": true,
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "X5",
+     "t0": 3.1,
+     "t1": 4.35,
+     "color": "#E5483A",
+     "draw": 0.5,
+     "from": "drop",
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "X5",
+     "fromPlay": "B",
+     "t0": 3.0,
+     "t1": 3.75,
+     "color": "#FFFFFF",
+     "dashed": true,
+     "draw": 0.5,
+     "from": "blitz?",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "pin",
+     "player": "X5",
+     "text": "YOU",
+     "tone": "red",
+     "from": "You're",
+     "to": "@end",
+     "size": 50
+    },
+    {
+     "type": "scrim",
+     "opacity": 0.35,
+     "from": "Do you-0.1",
+     "to": "@end"
+    },
+    {
+     "type": "title",
+     "lines": [
+      "DROP",
+      "OR BLITZ?"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "Do you-0.05",
+     "to": "@end",
+     "y": 600,
+     "size": 140
+    },
+    {
+     "type": "logo",
+     "big": false,
+     "from": "You're the big.>",
+     "to": "@end"
+    }
+   ],
+   "sfx": [
+    {
+     "at": "Do you",
+     "name": "tick",
+     "volume": 0.15
+    }
+   ]
+  }
+ ],
+ "keywords": [
+  "ram",
+  "screens",
+  "head start",
+  "first",
+  "drops",
+  "pull up",
+  "two defenders",
+  "short roll",
+  "lane",
+  "drop",
+  "blitz"
+ ],
+ "subtitleHide": [],
+ "autoSfx": {
+  "bounce": 0.2,
+  "catch": 0.13,
+  "squeak": 0.1,
+  "swish": 0.3,
+  "land": 0.08
+ },
+ "ambience": {
+  "src": "sfx/arena.mp3",
+  "volume": 0.08
+ },
+ "music": {
+  "src": "tactical/ram/music.mp3",
+  "volume": 1
+ }
+}

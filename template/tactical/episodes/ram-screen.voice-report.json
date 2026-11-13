@@ -1,0 +1,120 @@
+{
+ "source": "public/tactical/ram/voice-raw.mp3",
+ "source_sec": 28.4,
+ "preroll": 0.12,
+ "output": "public/tactical/ram/voice.wav",
+ "output_sec": 35.5,
+ "inserted_total_sec": 6.98,
+ "last_word_end": 35.28,
+ "gaps": [
+  {
+   "after": "before the pick.",
+   "natural_silence": [
+    2.95,
+    3.42
+   ],
+   "natural_sec": 0.47,
+   "target_sec": 1.2,
+   "inserted_sec": 0.73,
+   "cut_at_source": 3.275,
+   "why": "freeze on O5's half step, then the rewind"
+  },
+  {
+   "after": "head start.",
+   "natural_silence": [
+    7.83,
+    8.35
+   ],
+   "natural_sec": 0.52,
+   "target_sec": 1.1,
+   "inserted_sec": 0.58,
+   "cut_at_source": 8.185,
+   "why": "O5's route off the first screen finishes drawing"
+  },
+  {
+   "after": "his defender.",
+   "natural_silence": [
+    10.95,
+    11.43
+   ],
+   "natural_sec": 0.48,
+   "target_sec": 1.3,
+   "inserted_sec": 0.82,
+   "cut_at_source": 11.105,
+   "why": "open question: where is X5, before the reads"
+  },
+  {
+   "after": "The big drops.",
+   "natural_silence": [
+    13.21,
+    13.57
+   ],
+   "natural_sec": 0.36,
+   "target_sec": 0.6,
+   "inserted_sec": 0.24,
+   "cut_at_source": 13.445,
+   "why": "X5 backpedals before the pull-up line"
+  },
+  {
+   "after": "room to pull up.",
+   "natural_silence": [
+    14.83,
+    15.4
+   ],
+   "natural_sec": 0.57,
+   "target_sec": 2.3,
+   "inserted_sec": 1.73,
+   "cut_at_source": 15.205,
+   "why": "rise, release, flight, swish and landing"
+  },
+  {
+   "after": "Same setup.",
+   "natural_silence": [
+    16.03,
+    16.47
+   ],
+   "natural_sec": 0.44,
+   "target_sec": 0.7,
+   "inserted_sec": 0.26,
+   "cut_at_source": 16.355,
+   "why": "cut back to the same spot before the blitz"
+  },
+  {
+   "after": "The lane is open.",
+   "natural_silence": [
+    21.07,
+    21.57
+   ],
+   "natural_sec": 0.5,
+   "target_sec": 2.0,
+   "inserted_sec": 1.5,
+   "cut_at_source": 21.365,
+   "why": "drive, layup, net and landing"
+  },
+  {
+   "after": "two different reads.",
+   "natural_silence": [
+    24.01,
+    24.44
+   ],
+   "natural_sec": 0.43,
+   "target_sec": 0.8,
+   "inserted_sec": 0.37,
+   "cut_at_source": 24.145,
+   "why": "matched cut big back / big up"
+  },
+  {
+   "after": "where the big goes.",
+   "natural_silence": [
+    25.46,
+    26.01
+   ],
+   "natural_sec": 0.55,
+   "target_sec": 1.3,
+   "inserted_sec": 0.75,
+   "cut_at_source": 25.865,
+   "why": "second matched pair before the CTA"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}
