@@ -1,0 +1,62 @@
+{
+ "passed": 11,
+ "failed": 0,
+ "results": [
+  {
+   "check": "duration 30–40 s",
+   "ok": true,
+   "value": "33.31 s"
+  },
+  {
+   "check": "shots in narration order",
+   "ok": true,
+   "value": "0.00 4.42 9.39 16.51 17.31 21.33 25.72 27.42 29.30"
+  },
+  {
+   "check": "every graphic points at a player that exists",
+   "ok": true,
+   "value": "ok"
+  },
+  {
+   "check": "every anchor falls inside its shot",
+   "ok": true,
+   "value": "ok"
+  },
+  {
+   "check": "camera moves smoothly inside shots (≤ 0.9 m per frame)",
+   "ok": true,
+   "value": "0.73 m (reveal@1.53)"
+  },
+  {
+   "check": "camera never below 0.8 m",
+   "ok": true,
+   "value": "2.43 m"
+  },
+  {
+   "check": "camera stays ≥ 0.5 m from the basket structure",
+   "ok": true,
+   "value": "0 frame-structure hits, min 0.61 m (hook@2.533s board)"
+  },
+  {
+   "check": "camera never films through the backboard glass (> 10 % of the picture)",
+   "ok": true,
+   "value": "max 0 %"
+  },
+  {
+   "check": "highlighted players stay inside the safe frame",
+   "ok": true,
+   "value": "ok"
+  },
+  {
+   "check": "planted feet never slide (max drift per 1/120 s)",
+   "ok": true,
+   "value": "0.000 mm (none)"
+  },
+  {
+   "check": "feet never go under the floor",
+   "ok": true,
+   "value": "0 samples"
+  }
+ ],
+ "warnings": []
+}

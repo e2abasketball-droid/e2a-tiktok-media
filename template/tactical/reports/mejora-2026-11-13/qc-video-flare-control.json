@@ -1,0 +1,178 @@
+{
+ "episode": "flare-screen",
+ "mp4": "/mnt/project-files/tactical-studio/2026-11-14/E2A-TACTICAL-2026-11-14-V02.mp4",
+ "result": "PASS",
+ "checks": {
+  "technical": {
+   "pass": true,
+   "width": 1080,
+   "height": 1920,
+   "fps": 30.0,
+   "vcodec": "h264",
+   "acodec": "aac",
+   "duration": 34.901,
+   "mb": 9.20116
+  },
+  "audio": {
+   "pass": true,
+   "I": -14.0,
+   "TP": -1.9,
+   "margin_lu": 1.0,
+   "tp_headroom_db": 0.9
+  }
+ },
+ "warnings": [],
+ "planned_shots": [
+  {
+   "shot": "setup",
+   "start": 3.35,
+   "hard_cut": true
+  },
+  {
+   "shot": "caseA",
+   "start": 10.13,
+   "hard_cut": true
+  },
+  {
+   "shot": "caseB",
+   "start": 18.08,
+   "hard_cut": true
+  },
+  {
+   "shot": "takeaway",
+   "start": 25.75,
+   "hard_cut": true
+  },
+  {
+   "shot": "close",
+   "start": 30.37,
+   "hard_cut": false
+  }
+ ],
+ "moments": [
+  {
+   "t": 0.2,
+   "label": "hook: start",
+   "shot": "hook",
+   "kind": "shot",
+   "prio": 2
+  },
+  {
+   "t": 2.933333333333333,
+   "label": "hook: screen",
+   "shot": "hook",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 3.5500000000000003,
+   "label": "setup: start",
+   "shot": "setup",
+   "kind": "shot",
+   "prio": 2
+  },
+  {
+   "t": 5.35,
+   "label": "setup: screen",
+   "shot": "setup",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 7.483333333333334,
+   "label": "setup: flare",
+   "shot": "setup",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 8.45,
+   "label": "setup: pass",
+   "shot": "setup",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 11.096666666666668,
+   "label": "caseA: caught",
+   "shot": "caseA",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 13.996666666666668,
+   "label": "caseA: pass",
+   "shot": "caseA",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 15.363333333333333,
+   "label": "caseA: catch",
+   "shot": "caseA",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 15.830000000000002,
+   "label": "caseA: release",
+   "shot": "caseA",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 17.830000000000002,
+   "label": "caseA: make",
+   "shot": "caseA",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 19.28,
+   "label": "caseB: switch",
+   "shot": "caseB",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 20.713333333333335,
+   "label": "caseB: slip",
+   "shot": "caseB",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 22.14666666666667,
+   "label": "caseB: pass",
+   "shot": "caseB",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 23.480000000000004,
+   "label": "caseB: catch",
+   "shot": "caseB",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 24.513333333333335,
+   "label": "caseB: make",
+   "shot": "caseB",
+   "kind": "mark",
+   "prio": 1
+  }
+ ],
+ "timing": {
+  "moments_s": 0.52,
+  "probe_loudness_s": 0.41,
+  "frame_analysis_s": 4.41,
+  "contact_sheet_s": 11.11,
+  "total_s": 16.45
+ },
+ "contact_sheet": "/tmp/claude-0/occ/qcv-flare/contact-sheet.png",
+ "not_measured": [
+  "player-on-player occlusion (needs depth or an ID pass)",
+  "text over a key player (needs projected player boxes per frame: see qc-tactical3d rays)"
+ ]
+}
