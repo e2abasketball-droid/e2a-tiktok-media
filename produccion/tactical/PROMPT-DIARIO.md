@@ -16,7 +16,8 @@ Reglas que no puedes saltarte:
    `voice-permit`; si lo niega, no generes. Un reintento por fase y el presupuesto de `budget_per_day`.
 2. QC completo obligatorio (táctico, motor, audio −14 LUFS ±1 y TP ≤ −1, técnico, fotogramas, licencias y
    `qc-bounds` en TODOS los fotogramas). QC_FAIL → ese vídeo no se programa.
-3. Solo medios con licencia comercial oficial (`config/asset_licences.json`). El MP4 se sube a la rama
+3. Solo medios con licencia comercial oficial (`config/asset_licences.json`). La voz nueva lleva sidecar con
+   `licence_key: voice/elevenlabs-creator/<CID>` y la fecha de generación en `source`. El MP4 se sube a la rama
    `tactical-media` y se usa la URL raw FIJADA AL COMMIT; `tactical_studio.py asset` debe aceptarla.
 4. Programar (por vídeo, en este orden y sin saltos):
    `tactical_publisher.py authorise CID --sha $DELEGATION_SHA256 --op …` → `tactical_studio.py package …` →

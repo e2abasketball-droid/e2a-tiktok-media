@@ -33,7 +33,7 @@ delegación antes de `authorise` y antes de cada creación, registro encadenado 
 4. Lo ya programado sigue en Metricool; el propietario lo borra allí si quiere (el agente nunca borra).
 
 ## Bloqueos antes de la etapa 2
-- A Licencias: plan y facturación de ElevenLabs el 12-nov, términos de la voz Deuce (biblioteca compartida) y estado de eleven_v4. Solo el propietario puede cambiar `pending_owner_confirmation`.
+- A Licencias: RESUELTO 2026-11-13 para voces NUEVAS. Clave `voice/elevenlabs-creator/*` aprobada explícitamente por el propietario con evidencia (plan Creator con licencia comercial; Deuce verificada, 2 años de aviso). Las voces anteriores al 13-nov (V01/V02 de prueba) siguen pendientes y nunca se publican.
 - B Verificación del medio: RESUELTO 2026-11-13. `static.metricool.com` añadido a la red del entorno (aprobado por el propietario). Prueba real: el MP4 que Metricool sirve para el post 426159230 es byte a byte idéntico al original (9.272.409 B, sha256 32da0a16…): Metricool no recomprime, la verificación por bytes funciona.
 - C Rama de medios `tactical-media`: CREADA 2026-11-13 desde main. Falta la protección (rulesets) de `main`, `studio-state` y `tactical-media`: la hace el propietario.
 - D Límite de publicaciones de Metricool: RESUELTO 2026-11-13. Plan del propietario «Starter 5» (de pago, activo, mensual; captura del propietario). Los planes de pago tienen programación ilimitada sujeta a la política de uso razonable (metricool.com/pricing). El límite de 20/mes era del plan gratuito y de la regla de la rutina semanal de Instagram; el piloto añade 14 posts en 7 días. El propietario QUITÓ la regla de 20/mes el 2026-11-13 (también en el prompt de la tarea semanal de Instagram).

@@ -57,6 +57,14 @@
     "status_note": "status NOT changed: stays pending_owner_confirmation until the owner explicitly approves"
    }
   },
+  "voice/elevenlabs-creator/*": {
+   "origin": "ElevenLabs TTS (voice Deuce DaueUomjhh8LFuAV8aGj) generated ON OR AFTER 2026-11-13 under the E2A account's Creator plan",
+   "commercial_use": true,
+   "approved_by": "owner, 2026-11-13 00:01Z, explicit: 'aprueba la licencia de elevenlabs'",
+   "evidence": "owner screenshots 2026-11-13: Creator = current plan (includes Starter's 'Commercial License for Speech and Music'); Deuce is a verified library voice with 2 years notice",
+   "rule": "only generations made from 2026-11-13 while a paid plan (Creator or higher) is active; the sidecar source states the generation date. Files generated before 2026-11-13 stay under voice/elevenlabs/* (pending) and are never published.",
+   "revisit": "if the plan is downgraded to Free or Deuce's notice period starts"
+  },
   "3d/procedural": {
    "origin": "Tactical3D procedural athletes, court and arena (code in template/src/t3d)",
    "owner": "E2A",
