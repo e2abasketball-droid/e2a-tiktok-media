@@ -33,7 +33,7 @@ const CameraSync: React.FC<{cam: Cam3}> = ({cam}) => {
   return null;
 };
 
-const Ball: React.FC<{pos: V3}> = ({pos}) => {
+const Ball: React.FC<{pos: V3; spin?: [V3, number]}> = ({pos, spin}) => {
   const tex = React.useMemo(() => {
     const c = document.createElement('canvas');
     c.width = 512;
@@ -61,8 +61,13 @@ const Ball: React.FC<{pos: V3}> = ({pos}) => {
     t.colorSpace = THREE.SRGBColorSpace;
     return t;
   }, []);
+  const q = React.useMemo(() => {
+    if (!spin) return new THREE.Quaternion();
+    const ax = new THREE.Vector3(...W3(spin[0]));
+    return ax.lengthSq() < 1e-9 ? new THREE.Quaternion() : new THREE.Quaternion().setFromAxisAngle(ax.normalize(), spin[1]);
+  }, [spin]);
   return (
-    <mesh position={W3(pos)} castShadow>
+    <mesh position={W3(pos)} quaternion={q} castShadow>
       <sphereGeometry args={[0.121, 32, 20]} />
       <meshStandardMaterial map={tex} roughness={0.62} />
     </mesh>
@@ -84,6 +89,20 @@ export type SceneProps = {
 export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], children, logo}) => {
   const f = sample(play, pt);
   const ball = f.ball;
+  // ball spin (2026-11-13): backspin in the air (shots, layups, passes), rolling forward when dribbled or
+  // carried. Axis from the ball's real horizontal velocity, angle from the time spent in the event.
+  const spin = ((): [V3, number] | undefined => {
+    const prev = sample(play, Math.max(0, pt - 1 / 60)).ball.pos;
+    const v: V3 = [(ball.pos[0] - prev[0]) * 60, (ball.pos[1] - prev[1]) * 60, 0];
+    const sp = Math.hypot(v[0], v[1]);
+    if (sp < 0.05) return undefined;
+    const ev = ball.event as {t0?: number; from?: number} | undefined;
+    const since = pt - (ev?.t0 ?? ev?.from ?? 0);
+    const up: V3 = [0, 0, 1];
+    const cr = (a: V3, b: V3): V3 => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+    if (ball.inFlight) return [cr(v, up), since * 2 * Math.PI * (ball.inFlight === 'pass' ? 3 : 2.3)];
+    return [cr(up, v), (since * sp) / 0.121];
+  })();
   const swish = (() => {
     const shot = play.ball.find((e) => e.type === 'shot' || e.type === 'layup') as {t1: number} | undefined;
     if (!shot) return 0;
@@ -109,7 +128,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
       {play.players.map((p, i) =>
         hide.includes(p.id) ? null : <Athlete key={p.id} pose={poseAt(play, p.id, pt, {holder: ball.holder, pos: ball.pos}, RIM)} team={p.team} num={p.id.slice(1)} skin={SKINS[i % SKINS.length]} />,
       )}
-      <Ball pos={ball.pos} />
+      <Ball pos={ball.pos} spin={spin} />
       {children}
     </ThreeCanvas>
   );

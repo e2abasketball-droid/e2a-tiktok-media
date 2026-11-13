@@ -170,12 +170,27 @@ const release = (p: PlayerState, type: 'shot' | 'layup'): V3 => [p.pos[0] + Math
 
 const RIM: V3 = [FIBA.basket[0], FIBA.basket[1], FIBA.rimZ];
 
+/** the ball sits in the hand of a body that turns smoothly: facing averaged over the last 0.15 s (a raw facing
+ *  that snaps from "rest" to "running" swung the ball sideways at 15+ m/s). Used by holds AND pass ends, so a
+ *  pass leaves from / arrives at exactly the hand the hold uses. */
+const smoothHand = (play: Play, id: string, t: number): V3 => {
+  let cx = 0, cy = 0;
+  for (let k = 0; k < 6; k++) {
+    const f = stateOf(play, id, Math.max(0, t - k * 0.03)).facing;
+    cx += Math.cos(f);
+    cy += Math.sin(f);
+  }
+  return hand({...stateOf(play, id, t), facing: Math.atan2(cy, cx)});
+};
+
 const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallState => {
   const ev = play.ball;
   const cur = ev.find((e) => (e.type === 'hold' ? t >= e.from && t <= e.to : t >= e.t0 && t <= e.t1));
   if (cur) {
     if (cur.type === 'hold') {
-      const h = hand(ps[cur.player]);
+      // the ball sits in the hand of a body that turns smoothly: average the facing over the last 0.15 s
+      // (a raw facing that snaps from "rest" to "running" swung the ball sideways at 15+ m/s)
+      const h = smoothHand(play, cur.player, t);
       // gather: the ball rises into the shooting pocket before a shot or layup
       const next = play.ball.find((e): e is Extract<BallEvent, {type: 'shot' | 'layup'}> => (e.type === 'shot' || e.type === 'layup') && e.player === cur.player && Math.abs(e.t0 - cur.to) < 1e-6);
       if (next && t > cur.to - 0.3) {
@@ -184,9 +199,42 @@ const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallSta
         const r = release(ps[cur.player], next.type);
         return {pos: [h[0] + (r[0] - h[0]) * e, h[1] + (r[1] - h[1]) * e, h[2] + (r[2] - h[2]) * e], holder: cur.player, event: cur};
       }
+      // an overhead pass is loaded above the head during the last 0.35 s of the hold
+      const ohp = play.ball.find((e): e is Extract<BallEvent, {type: 'pass'}> => e.type === 'pass' && e.from === cur.player && e.style === 'overhead' && Math.abs(e.t0 - cur.to) < 1e-6);
+      if (ohp && !cur.dribble && t > cur.to - 0.35) {
+        const g = Math.min(1, (t - (cur.to - 0.35)) / 0.35);
+        const e = g * g * (3 - 2 * g);
+        return {pos: [h[0], h[1], h[2] + (2.05 - h[2]) * e], holder: cur.player, event: cur};
+      }
       if (cur.dribble) {
-        const ph = Math.abs(Math.sin(Math.PI * 2.1 * (t - cur.from)));
-        return {pos: [h[0], h[1], 0.12 + ph * 0.95], holder: cur.player, event: cur};
+        // live dribble (2026-11-13): cadence and height follow the handler's speed (faster + lower when he
+        // attacks, slower + higher when he probes), the ball is pushed ahead of the body at the floor contact,
+        // and the bounce count is rounded so the ball is back in the hand exactly when the dribble ends.
+        const wp = play.tracks[cur.player];
+        const spd = (x: number) => {
+          const a = posAt(wp, x - 1 / 120);
+          const b = posAt(wp, x + 1 / 120);
+          return Math.hypot(b[0] - a[0], b[1] - a[1]) * 60;
+        };
+        const rate = (x: number) => 1.75 + 0.6 * Math.min(1, spd(x) / 5) + 0.1 * Math.sin(1.3 * (x - cur.from));
+        const step = 1 / 60;
+        const integ = (x1: number) => {
+          let c = 0;
+          for (let x = cur.from; x < x1 - 1e-9; x += step) c += rate(Math.min(x1, x + step / 2)) * Math.min(step, x1 - x);
+          return c;
+        };
+        const total = integ(cur.to);
+        const n = Math.max(1, Math.round(total));
+        const c = (integ(t) * n) / total;
+        const sp = Math.min(1, spd(t) / 5);
+        let hz = 1.05 - 0.17 * sp + 0.04 * Math.sin(0.9 * (t - cur.from) + 1);
+        const endW = Math.max(0, Math.min(1, (t - (cur.to - 0.2)) / 0.2));
+        hz += (h[2] - hz) * endW;
+        const down = Math.abs(Math.cos(Math.PI * c)); // 1 = in the hand, 0 = on the floor
+        const push = 0.12 * sp * (1 - down);
+        const v = velAt(wp, t);
+        const vl = Math.hypot(v[0], v[1]) || 1;
+        return {pos: [h[0] + (v[0] / vl) * push, h[1] + (v[1] / vl) * push, 0.12 + (hz - 0.12) * down], holder: cur.player, event: cur};
       }
       return {pos: h, holder: cur.player, event: cur};
     }
@@ -194,8 +242,10 @@ const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallSta
     if (cur.type === 'pass') {
       const a = hand(ps[cur.from]);
       // the passer's release follows him at t0, the catch point follows the receiver at t1
-      const a0 = hand(stateOf(play, cur.from, cur.t0));
-      const b1 = hand(stateOf(play, cur.to, cur.t1));
+      const a0 = smoothHand(play, cur.from, cur.t0);
+      const loaded = cur.style === 'overhead' && play.ball.some((e) => e.type === 'hold' && e.player === cur.from && !e.dribble && Math.abs(e.to - cur.t0) < 1e-6);
+      if (loaded) a0[2] = 2.05;
+      const b1 = smoothHand(play, cur.to, cur.t1);
       void a;
       const x = a0[0] + (b1[0] - a0[0]) * u;
       const y = a0[1] + (b1[1] - a0[1]) * u;
@@ -205,7 +255,10 @@ const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallSta
         const k = 0.62;
         z = u < k ? a0[2] * (1 - u / k) ** 1.15 + 0.12 * (u / k) : 0.12 + (b1[2] - 0.12) * Math.sin(((u - k) / (1 - k)) * Math.PI * 0.5);
       } else if (cur.style === 'overhead') {
-        z = 2.1 + (b1[2] - 2.1) * u + 0.6 * Math.sin(Math.PI * u);
+        // continuous from wherever the ball is at the release (above the head when the pass was loaded,
+        // 2026-11-13; the old fixed 2.1 m start teleported the ball up out of a dribble), arcing to ~2.4 m
+        const z0 = a0[2];
+        z = z0 + (b1[2] - z0) * u + Math.max(0.25, 2.4 - (z0 + b1[2]) / 2) * Math.sin(Math.PI * u);
       } else {
         z = a0[2] + (b1[2] - a0[2]) * u + 0.35 * Math.sin(Math.PI * u);
       }
@@ -232,8 +285,8 @@ const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallSta
     const bounce = 0.12 + Math.max(0, 1.6 * Math.abs(Math.sin(after * 3.2)) * Math.exp(-after * 2.2));
     return {pos: [RIM[0], RIM[1] + 0.05 + after * 0.4, bounce], event: done};
   }
-  if (done && done.type === 'hold') return {pos: hand(ps[done.player]), holder: done.player};
-  if (done && done.type === 'pass') return {pos: hand(ps[done.to]), holder: done.to};
+  if (done && done.type === 'hold') return {pos: smoothHand(play, done.player, t), holder: done.player};
+  if (done && done.type === 'pass') return {pos: smoothHand(play, done.to, t), holder: done.to};
   const first = ev[0];
   const holder = first.type === 'hold' ? first.player : first.type === 'pass' ? first.from : first.player;
   return {pos: hand(ps[holder]), holder};
@@ -253,7 +306,12 @@ export const stateOf = (play: Play, id: string, t: number): PlayerState => {
   // facing: direction of travel when moving, otherwise toward the ball holder (offence) or the man guarded
   let facing: number;
   const look = (q: V2) => Math.atan2(q[1] - pos[1], q[0] - pos[0]);
-  const rest = spec.team === 'X' && spec.guards ? look(posAt(play.tracks[spec.guards], t)) : look(spec.team === 'O' ? (ballHolderPos(play, t) ?? FIBA.basket) : FIBA.basket);
+  // the ball handler himself faces the basket (looking at "the ball holder" = his own spot gave atan2(0,0) = +x)
+  const bh = spec.team === 'O' ? ballHolderPos(play, t) : undefined;
+  const ownBall = bh !== undefined && Math.hypot(bh[0] - pos[0], bh[1] - pos[1]) < 0.05;
+  // ...unless he is about to pass: then he squares up to the receiver
+  const nextPass = ownBall ? (play.ball.find((e) => e.type === 'pass' && e.from === id && e.t0 >= t - 0.05 && e.t0 - t < 0.8) as Extract<BallEvent, {type: 'pass'}> | undefined) : undefined;
+  const rest = spec.team === 'X' && spec.guards ? look(posAt(play.tracks[spec.guards], t)) : look(nextPass ? posAt(play.tracks[nextPass.to], nextPass.t1) : spec.team === 'O' && bh && !ownBall ? bh : FIBA.basket);
   if (speed > 0.6) {
     const mv = Math.atan2(vel[1], vel[0]);
     const w = Math.min(1, (speed - 0.6) / 1.4);

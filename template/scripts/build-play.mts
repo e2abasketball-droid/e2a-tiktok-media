@@ -20,7 +20,7 @@
 import fs from 'node:fs';
 
 type V2 = [number, number];
-type Leg = {at?: number | string; to?: V2; via?: V2[]; speed?: number; until?: number; dur?: number};
+type Leg = {at?: number | string; to?: V2; via?: V2[]; speed?: number; until?: number; dur?: number; linear?: boolean};
 type Spec = {
   id: string;
   title: string;
@@ -56,11 +56,17 @@ export const buildTracks = (spec: Spec): Record<string, [number, number, number]
       const seg = [pos, ...pts];
       const lens = seg.slice(1).map((q, i) => Math.hypot(q[0] - seg[i][0], q[1] - seg[i][1]));
       const total = lens.reduce((a, b) => a + b, 0);
-      const dur = leg.dur ?? (total * EASE) / (leg.speed ?? 4);
+      // short shuffles need time too: a rest-to-rest move of L metres in T seconds peaks at 6·L/T² (cap 14 m/s²)
+      const dur = leg.dur ?? Math.max((total * EASE) / (leg.speed ?? 4), Math.sqrt((6 * total) / 14));
+      // time each via point on a rest-to-rest ease (distance = smoothstep of time), not linearly: with linear
+      // timing the spline had to jump from rest to the average speed on the first short segment (40+ m/s²);
+      // eased timing gives the real launch / brake profile of a sprint (peak accel 6·L/T²).
+      const invSmooth = (y: number) => 0.5 - Math.sin(Math.asin(1 - 2 * Math.min(1, Math.max(0, y))) / 3);
       let acc = 0;
       pts.forEach((q, i) => {
         acc += lens[i];
-        wp.push([+(start + (dur * acc) / total).toFixed(3), +q[0].toFixed(3), +q[1].toFixed(3)]);
+        const u = leg.linear ? acc / total : invSmooth(acc / total);
+        wp.push([+(start + dur * u).toFixed(3), +q[0].toFixed(3), +q[1].toFixed(3)]);
       });
       t = start + dur;
       pos = pts[pts.length - 1];

@@ -105,6 +105,7 @@ const glassCover = (cam: {pos: number[]; target: number[]; up: number[]; fov: nu
 let maxJump = 0;
 let jumpAt = '';
 let minCamZ = 99;
+const ofByShot: Record<string, number> = {};
 let outOfFrame = 0;
 let ofWhere = '';
 let anchorsOut = 0;
@@ -166,6 +167,7 @@ ep.shots.forEach((shot: any, i: number) => {
       }
       if (q.x < 60 || q.x > 1020 || q.y < 230 || q.y > 1560 || q.z > 1) {
         outOfFrame++;
+        ofByShot[`${shot.id}:${r.player}`] = (ofByShot[`${shot.id}:${r.player}`] ?? 0) + 1;
         if (!ofWhere) ofWhere = `${shot.id}:${r.player}@${lt.toFixed(2)} (${q.x.toFixed(0)},${q.y.toFixed(0)})`;
       }
     }
@@ -186,7 +188,7 @@ check(`camera stays ≥ ${CLEAR} m from the basket structure`, clearFrames === 0
 check('camera never films through the backboard glass (> 10 % of the picture)', glassFrames === 0, glassFrames ? `${glassFrames} frames, first ${glassWho}` : `max ${(glassMax * 100).toFixed(0)} %${glassMaxWho ? ' (' + glassMaxWho + ')' : ''}`);
 if (glassWarn) warn('part of the picture (2–10 %) seen through the backboard glass', `${glassWarn} frames`);
 if (occl) warn('highlighted player hidden behind the basket structure (ray vs boxes, approximate)', `${occl} frames, first ${occlWho}`);
-check('highlighted players stay inside the safe frame', outOfFrame === 0, outOfFrame ? `${outOfFrame} frames, first ${ofWhere}` : 'ok');
+check('highlighted players stay inside the safe frame', outOfFrame === 0, outOfFrame ? `${outOfFrame} frames, first ${ofWhere}; by shot ${Object.entries(ofByShot).map(([k, v]) => `${k}=${v}`).join(' ')}` : 'ok');
 
 // foot contact
 let drift = 0;

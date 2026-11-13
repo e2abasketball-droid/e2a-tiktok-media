@@ -237,6 +237,9 @@ const Limb: React.FC<{a: V3; b: V3; geo: THREE.BufferGeometry; m: THREE.Material
 export const Athlete: React.FC<Props> = ({pose: P, team, num, skin}) => {
   const kit = KITS[team];
   const k = P.dims.H / 2;
+  // girth: limbs and trunk thicken with the build (lean guard ~0.92, strong big ~1.14); length stays with height
+  const b = P.dims.build ?? 1;
+  const kb = k * b;
   const skinM = mat(`skin${skin}`, () => new THREE.MeshPhysicalMaterial({color: skin, roughness: 0.46, metalness: 0.0, clearcoat: 0.18, clearcoatRoughness: 0.45}));
   const jerseyM = mat(`jersey${team}${num}`, () => new THREE.MeshStandardMaterial({map: jerseyTex(kit, num, 'jersey'), roughness: 0.72, metalness: 0.0, side: THREE.DoubleSide}));
   const shortsM = mat(`shorts${team}`, () => new THREE.MeshStandardMaterial({map: jerseyTex(kit, num, 'shorts'), roughness: 0.75, side: THREE.DoubleSide}));
@@ -255,30 +258,32 @@ export const Athlete: React.FC<Props> = ({pose: P, team, num, skin}) => {
   const Wp = W3(waist);
   const headW = W3(P.head);
   const neckBase: V3 = P.chest;
-  const headQ = frameQuat([P.head[0] - P.chest[0], P.head[1] - P.chest[1], P.head[2] - P.chest[2]], chestFwd);
+  const headYaw = P.headYaw ?? P.chestYaw;
+  const headFwd: V3 = [Math.cos(headYaw), Math.sin(headYaw), 0];
+  const headQ = frameQuat([P.head[0] - P.chest[0], P.head[1] - P.chest[1], P.head[2] - P.chest[2]], headFwd);
 
   const parts: React.ReactNode[] = [];
   // torso (jersey) — elliptical: wide across the shoulders, shallow front-to-back
-  parts.push(<mesh key="torso" geometry={G.torso} material={jerseyM} position={Wp} quaternion={torsoQ} scale={[1.0 * k, torsoLen, 0.66 * k]} castShadow receiveShadow />);
+  parts.push(<mesh key="torso" geometry={G.torso} material={jerseyM} position={Wp} quaternion={torsoQ} scale={[1.0 * k * (0.55 + 0.45 * b), torsoLen, 0.66 * k * (0.4 + 0.6 * b)]} castShadow receiveShadow />);
   // shorts body around the hips
   const sb: V3 = [P.pelvis[0], P.pelvis[1], P.pelvis[2] - 0.2 * k];
-  parts.push(<mesh key="shorts" geometry={G.shortsBody} material={shortsM} position={W3(sb)} quaternion={hipQ} scale={[1.04 * k, 0.25 * k, 0.98 * k]} castShadow receiveShadow />);
+  parts.push(<mesh key="shorts" geometry={G.shortsBody} material={shortsM} position={W3(sb)} quaternion={hipQ} scale={[1.04 * k * (0.6 + 0.4 * b), 0.25 * k, 0.98 * k * (0.6 + 0.4 * b)]} castShadow receiveShadow />);
   // neck + head + hair
-  parts.push(<Limb key="neck" a={[neckBase[0], neckBase[1], neckBase[2] - 0.04 * k]} b={P.head} geo={G.neck} m={skinM} s={k} to={0.62} />);
+  parts.push(<Limb key="neck" a={[neckBase[0], neckBase[1], neckBase[2] - 0.04 * k]} b={P.head} geo={G.neck} m={skinM} s={k * (0.7 + 0.3 * b)} to={0.62} />);
   parts.push(<mesh key="head" geometry={headGeo(skin)} material={headM} position={headW} quaternion={headQ} scale={[0.082 * k, 0.112 * k, 0.098 * k]} castShadow />);
   // ears / jaw hint (gives the head a readable orientation without a face)
   for (const s of [-1, 1]) {
-    const r: V3 = [Math.sin(P.chestYaw) * s, -Math.cos(P.chestYaw) * s, 0];
+    const r: V3 = [Math.sin(headYaw) * s, -Math.cos(headYaw) * s, 0];
     const e: V3 = [P.head[0] + r[0] * 0.08 * k, P.head[1] + r[1] * 0.08 * k, P.head[2] - 0.0];
     parts.push(<mesh key={`ear${s}`} geometry={G.sphere} material={skinM} position={W3(e)} scale={[0.018 * k, 0.03 * k, 0.022 * k]} />);
   }
   for (let i = 0; i < 2; i++) {
     const sfx = i === 0 ? 'L' : 'R';
     // legs
-    parts.push(<Limb key={`th${sfx}`} a={P.hip[i]} b={P.knee[i]} geo={G.thigh} m={skinM} s={k} from={0.12} />);
-    parts.push(<Limb key={`sl${sfx}`} a={P.hip[i]} b={P.knee[i]} geo={G.shortsLeg} m={shortsM} s={k} from={0.0} to={0.56} />);
-    parts.push(<Limb key={`sh${sfx}`} a={P.knee[i]} b={P.ankle[i]} geo={G.shin} m={skinM} s={k} />);
-    parts.push(<Limb key={`so${sfx}`} a={P.knee[i]} b={P.ankle[i]} geo={G.sock} m={sockM} s={k} from={0.78} to={1.03} />);
+    parts.push(<Limb key={`th${sfx}`} a={P.hip[i]} b={P.knee[i]} geo={G.thigh} m={skinM} s={kb} from={0.12} />);
+    parts.push(<Limb key={`sl${sfx}`} a={P.hip[i]} b={P.knee[i]} geo={G.shortsLeg} m={shortsM} s={kb} from={0.0} to={0.56} />);
+    parts.push(<Limb key={`sh${sfx}`} a={P.knee[i]} b={P.ankle[i]} geo={G.shin} m={skinM} s={kb} />);
+    parts.push(<Limb key={`so${sfx}`} a={P.knee[i]} b={P.ankle[i]} geo={G.sock} m={sockM} s={kb} from={0.78} to={1.03} />);
     // shoe: capsule along heel -> toe, flattened
     const heel: V3 = [P.ankle[i][0] - (P.toe[i][0] - P.ankle[i][0]) * 0.32, P.ankle[i][1] - (P.toe[i][1] - P.ankle[i][1]) * 0.32, P.ankle[i][2] - 0.045 * k];
     const S = seg(heel, P.toe[i]);
@@ -287,12 +292,12 @@ export const Athlete: React.FC<Props> = ({pose: P, team, num, skin}) => {
     parts.push(<mesh key={`shoe${sfx}`} geometry={G.shoe} material={shoeM} position={mid} quaternion={shoeQ} scale={[0.052 * k, S.len * 0.42, 0.06 * k]} castShadow receiveShadow />);
     parts.push(<mesh key={`sole${sfx}`} geometry={G.shoe} material={soleM} position={[mid[0], mid[1] - 0.026 * k, mid[2]]} quaternion={shoeQ} scale={[0.056 * k, S.len * 0.45, 0.03 * k]} castShadow />);
     // arms: deltoid, upper arm, elbow, forearm, hand
-    parts.push(<mesh key={`dl${sfx}`} geometry={G.sphere} material={skinM} position={W3(P.shoulder[i])} scale={[0.06 * k, 0.058 * k, 0.058 * k]} castShadow />);
-    parts.push(<Limb key={`ua${sfx}`} a={P.shoulder[i]} b={P.elbow[i]} geo={G.upper} m={skinM} s={k} />);
-    parts.push(<Limb key={`fa${sfx}`} a={P.elbow[i]} b={P.wrist[i]} geo={G.fore} m={skinM} s={k} />);
+    parts.push(<mesh key={`dl${sfx}`} geometry={G.sphere} material={skinM} position={W3(P.shoulder[i])} scale={[0.06 * kb, 0.058 * kb, 0.058 * kb]} castShadow />);
+    parts.push(<Limb key={`ua${sfx}`} a={P.shoulder[i]} b={P.elbow[i]} geo={G.upper} m={skinM} s={kb} />);
+    parts.push(<Limb key={`fa${sfx}`} a={P.elbow[i]} b={P.wrist[i]} geo={G.fore} m={skinM} s={kb} />);
     const hm: V3 = [(P.wrist[i][0] + P.hand[i][0]) / 2, (P.wrist[i][1] + P.hand[i][1]) / 2, (P.wrist[i][2] + P.hand[i][2]) / 2];
     const HS = seg(P.wrist[i], P.hand[i]);
-    parts.push(<mesh key={`hd${sfx}`} geometry={G.sphere} material={skinM} position={W3(hm)} quaternion={HS.quat} scale={[0.034 * k, 0.062 * k, 0.026 * k]} castShadow />);
+    parts.push(<mesh key={`hd${sfx}`} geometry={G.sphere} material={skinM} position={W3(hm)} quaternion={HS.quat} scale={[0.039 * k, 0.066 * k, 0.03 * k]} castShadow />);
   }
   return <group>{parts}</group>;
 };
