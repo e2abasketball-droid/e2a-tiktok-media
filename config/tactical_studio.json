@@ -1,6 +1,6 @@
 {
  "version": "0.3.0",
- "status": "SHADOW until the owner merges a granted delegation AND sets publishing.mode=direct_delegated AND creates the task with the pinned delegation sha. Nothing in this file alone authorises publishing.",
+ "status": "PILOT: direct_delegated, posts 2026-11-14..20 Sydney. Publishing still requires the granted delegation on main whose sha is pinned in the scheduled task.",
  "timezone": "Australia/Sydney",
  "content_id": "E2A-TACTICAL-{date}-V{n:02d}",
  "slots": {
@@ -64,10 +64,10 @@
   "why": "Platforms require the label for realistic synthetic content (realistic people, places or events, or a real person's voice). Our videos are clearly stylised 3D animations of fictional players with a generic narrator voice that imitates nobody. Re-evaluate if a video ever shows realistic people or a real person's voice."
  },
  "publishing": {
-  "mode": "shadow",
+  "mode": "direct_delegated",
   "modes": {
-   "shadow": "never writes to Metricool; writes the publication package only (current)",
-   "direct_delegated": "V3 (owner brief 2026-11-12 23:16Z): tools/tactical_publisher.py may make ONE createScheduledPost per video (IG Reel + TikTok + YT Short) only while a granted delegation on origin/main matches the sha pinned in the scheduled task, inside its dates and scope, after all QC gates. Not active.",
+   "shadow": "never writes to Metricool; writes the publication package only",
+   "direct_delegated": "V3 (owner brief 2026-11-12 23:16Z): tools/tactical_publisher.py may make ONE createScheduledPost per video (IG Reel + TikTok + YT Short) only while a granted delegation on origin/main matches the sha pinned in the scheduled task, inside its dates and scope, after all QC gates. ACTIVE for the pilot 2026-11-14..20 (owner decision 2026-11-13T00:07Z).",
    "owner_manual": "FALLBACK (owner decision 2026-11-12 23:03Z, superseded by V3 when a delegation is granted): the agent delivers the package; the owner schedules by hand; the agent only confirms by read-back.",
    "supervised": "NOT AVAILABLE on the current Metricool plan (createScheduledPostForReview → 403 'no subscription with team management', 2026-11-12).",
    "limited_autonomy": "NOT AVAILABLE: no approval by silence."
@@ -87,7 +87,7 @@
   "metricool_review_available": false
  },
  "delegation": {
-  "status": "NO DELEGATION GRANTED. The owner grants one by merging config/delegation.tactical-studio.json with status 'granted' to main and pinning its sha256 in the scheduled task.",
+  "status": "GRANTED by the owner 2026-11-13 for posts 2026-11-14..2026-11-20 (Sydney); see config/delegation.tactical-studio.json",
   "verifier": "blocked",
   "verifier_when_active": "delegation (checked only by tools/tactical_publisher.py with the pinned sha)",
   "file": "config/delegation.tactical-studio.json",

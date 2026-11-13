@@ -10,6 +10,9 @@ Inicio: `python3 tools/studio_sync.py lease <run>` y `pull`; `python3 tools/tact
 Delegación: `python3 tools/tactical_publisher.py delegation --sha $DELEGATION_SHA256`. Si da error, produce en
 sombra (sin programar) y dilo en el informe. Tras cada fase `studio_sync.py push <run>`; al final `release <run>`.
 
+Antes de producir: `getScheduledPosts` del día del post y `tactical_studio.py collisions <fecha> --readback …`.
+Si un hueco ya está ocupado (±60 min), NO produzcas ese vídeo (no gastes voz ni render) e indícalo en el informe.
+
 Reglas que no puedes saltarte:
 1. Solo Tactical3DV2 (3D real), baloncesto táctico, 30–40 s, jugada nueva validada (`test-play.mts` todo PASS),
    guion congelado antes de la voz. Cada estado con su comando-puerta, nunca con `advance`. Antes de ElevenLabs,

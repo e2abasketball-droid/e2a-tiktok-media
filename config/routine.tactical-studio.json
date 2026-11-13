@@ -1,10 +1,10 @@
 {
- "status": "PROPOSED configuration of the two scheduled tasks (V3, direct_delegated). NOT created: needs the owner's single production authorisation. Placeholders <DELEGATION_SHA256> and the cron dates are filled from the granted delegation.",
+ "status": "PILOT 2026-11-14..20 authorised by the owner 2026-11-13T00:07Z. Tasks created from this file.",
  "tasks": [
   {
    "name": "E2A — TACTICAL STUDIO",
-   "cron": "CRON_TZ=Australia/Sydney 0 17 14-20 11 *",
-   "cron_note": "17:00 Sydney the day BEFORE each post date; the day-of-month range is the delegation window minus one day (posts 15–21 Nov → runs 14–20 Nov). It stops by itself when the window ends: an extension needs the owner to edit the task.",
+   "cron": "CRON_TZ=Australia/Sydney 0 17 13-19 11 *",
+   "cron_note": "17:00 Sydney the day BEFORE each post date: posts 14–20 Nov → runs 13–19 Nov. Stops by itself; an extension needs the owner.",
    "repositories": [
     {
      "repo": "e2abasketball-droid/e2a-tiktok-media",
@@ -43,7 +43,7 @@
   },
   {
    "name": "E2A — TACTICAL CHECK",
-   "cron": "CRON_TZ=Australia/Sydney 30 8 15-21 11 *",
+   "cron": "CRON_TZ=Australia/Sydney 30 8 14-20 11 *",
    "cron_note": "08:30 Sydney on each post date of the delegation window. Read-only.",
    "repositories": [
     {

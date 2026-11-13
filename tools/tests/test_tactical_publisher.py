@@ -26,7 +26,8 @@ import tactical_publisher as tp  # noqa: E402
 UTC = dt.timezone.utc
 NOW = dt.datetime(2026, 11, 19, 6, 0, tzinfo=UTC)  # 17:00 Sydney the day before the posts
 STATIC = "https://static.metricool.com/planner/202611/7681319-file-1.mp4"
-TEMPLATE = json.load(open(os.path.join(ts.ROOT, "config", "delegation.tactical-studio.json")))
+COMMITTED = json.load(open(os.path.join(ts.ROOT, "config", "delegation.tactical-studio.json")))
+TEMPLATE = dict(COMMITTED, status="draft", granted_by=None, granted_at=None)
 
 
 def granted(**over):
@@ -379,8 +380,11 @@ class TestWriteToolsOnlyInThePublisherStep(unittest.TestCase):
                 src = open(os.path.join(tools, f)).read()
                 self.assertNotRegex(src, r"WRITE_TOOL|tool\s*=\s*\"createScheduledPost\"", f)
         self.assertEqual(ts.cfg()["publishing"]["create_tool"], "createScheduledPost")
-        self.assertEqual(ts.cfg()["publishing"]["mode"], "shadow")  # this PR does not activate anything
-        self.assertEqual(TEMPLATE["status"], "draft")
+        self.assertIn(ts.cfg()["publishing"]["mode"], ("shadow", "direct_delegated"))
+        self.assertIn(COMMITTED["status"], ("draft", "granted", "revoked"))
+        if COMMITTED["status"] == "granted":  # the committed grant must itself pass the scope check
+            b = (json.dumps(COMMITTED, indent=1, ensure_ascii=False) + "\n").encode()
+            tp.check_delegation(COMMITTED, "x", "x", tp.ts.parse_ts(COMMITTED["valid_from"]), None)
 
 
 # ---------------------------------------------------------------- 5. integral (production → publication prep, dry run)

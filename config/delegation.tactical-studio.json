@@ -1,11 +1,11 @@
 {
- "status": "draft",
+ "status": "granted",
  "revoked": false,
  "what": "Delegation of the owner of E2A Basketball to the Tactical Studio scheduled task to schedule, WITHOUT per-video review, the tactical videos defined in scope. Only valid when status is 'granted', it is on main, and its sha256 equals the one pinned in the scheduled task's prompt.",
- "granted_by": "OWNER (fill in when granting)",
- "granted_at": null,
- "valid_from": "2026-11-15T00:00:00+11:00",
- "valid_until": "2026-11-22T00:00:00+11:00",
+ "granted_by": "owner (E2A), decision card 2026-11-13T00:07:36Z: 'Sí, pero desde el 14 nov'",
+ "granted_at": "2026-11-13T11:07:36+11:00",
+ "valid_from": "2026-11-14T00:00:00+11:00",
+ "valid_until": "2026-11-21T00:00:00+11:00",
  "scope": {
   "brand": "7681319",
   "accounts": {

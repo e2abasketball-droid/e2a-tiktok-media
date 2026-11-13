@@ -100,5 +100,5 @@ test_order_enforced_on_free_states (test_tactical_studio.TestStateMachine.test_o
 test_resume_after_failure_and_no_loops (test_tactical_studio.TestStateMachine.test_resume_after_failure_and_no_loops) ... ok
 test_truncated_line_ignored (test_tactical_studio.TestStateMachine.test_truncated_line_ignored) ... ok
 test_usage_limit_wait (test_tactical_studio.TestStateMachine.test_usage_limit_wait) ... ok
-Ran 102 tests in 4.881s
+Ran 102 tests in 4.608s
 OK

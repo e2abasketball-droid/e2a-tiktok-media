@@ -727,8 +727,8 @@ class TestH_Config(unittest.TestCase):
 
     def test_shadow_and_blocked_by_default(self):
         c = ts.cfg()
-        self.assertEqual(c["publishing"]["mode"], "shadow")
-        self.assertEqual(c["delegation"]["verifier"], "blocked")
+        self.assertIn(c["publishing"]["mode"], ("shadow", "direct_delegated"))
+        self.assertEqual(c["delegation"]["verifier"], "blocked")  # tactical_studio.py authorise never opens publishing
         self.assertFalse(ts.metricool_review_verifier({})[0])
 
     def test_real_licences_block_unconfirmed_elevenlabs(self):
