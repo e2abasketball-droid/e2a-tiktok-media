@@ -1,0 +1,961 @@
+{
+ "id": "hammer-screen",
+ "title": "The Hammer Screen: Help or Stay (E2A-TACTICAL-2026-11-20-V01, shadow test)",
+ "fps": 30,
+ "voiceRaw": "tactical/hammer/voice-raw.mp3",
+ "wordsRaw": "hammer-screen.words-raw.json",
+ "voice": "tactical/hammer/voice.wav",
+ "preroll": 0.12,
+ "tail": 1.4,
+ "gaps": [
+  {
+   "after": "not the ball.",
+   "sec": 0.7,
+   "why": "hook titles land"
+  },
+  {
+   "after": "help defender.",
+   "sec": 1.1,
+   "why": "the drive route and the screen spot finish drawing"
+  },
+  {
+   "after": "pins him inside.",
+   "sec": 0.9,
+   "why": "freeze on the hammer screen"
+  },
+  {
+   "after": "Skip pass.",
+   "sec": 0.5,
+   "why": "the skip pass travels"
+  },
+  {
+   "after": "Open three.",
+   "sec": 1.8,
+   "why": "ball flight to the swish + OPEN THREE"
+  },
+  {
+   "after": "finish at the rim.",
+   "sec": 1.4,
+   "why": "layup lands + LAYUP stamp"
+  },
+  {
+   "after": "give up the layup.",
+   "sec": 1.0,
+   "why": "both answers on screen before the CTA"
+  }
+ ],
+ "plays": {
+  "A": "hammer-a-skip",
+  "B": "hammer-b-rim"
+ },
+ "musicDrop": "If the corner",
+ "musicPayoff": "The low man",
+ "shots": [
+  {
+   "id": "hook",
+   "name": "Hook — the corner, not the ball",
+   "at": 0,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "@end",
+     0.55
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.6,
+       1.8,
+       1.0
+      ],
+      "dist": 6.2,
+      "pitch": 58,
+      "yaw": -35,
+      "fov": 46
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -4.6,
+       2.4,
+       0.9
+      ],
+      "dist": 8.0,
+      "pitch": 55,
+      "yaw": -20,
+      "fov": 46
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O2",
+     "from": "corner",
+     "to": "@end",
+     "pulse": true
+    },
+    {
+     "type": "ring",
+     "player": "X2",
+     "from": "not",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "WATCH THE CORNER."
+     ],
+     "gold": [
+      0
+     ],
+     "from": 0.05,
+     "to": "not-0.05",
+     "y": 270,
+     "size": 124
+    },
+    {
+     "type": "title",
+     "lines": [
+      "NOT THE BALL."
+     ],
+     "from": "not",
+     "to": "@end",
+     "y": 270,
+     "size": 124
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.12
+    },
+    {
+     "at": "not",
+     "name": "impact",
+     "volume": 0.09
+    }
+   ]
+  },
+  {
+   "id": "setup",
+   "name": "Setup — drive + weak-side screen",
+   "at": "The hammer-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "baseline",
+     0.3
+    ],
+    [
+     "help defender.>",
+     1.75,
+     "out"
+    ],
+    [
+     "@end",
+     1.75
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.5,
+       4.8,
+       0
+      ],
+      "dist": 16.5,
+      "pitch": 34,
+      "yaw": 0,
+      "fov": 40
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.2,
+       4.4,
+       0
+      ],
+      "dist": 15.5,
+      "pitch": 36,
+      "yaw": 0,
+      "fov": 40
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "route",
+     "player": "O1",
+     "t0": 0.3,
+     "t1": 1.82,
+     "draw": 1.2,
+     "from": "baseline",
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O4",
+     "t0": 0.6,
+     "t1": 1.7,
+     "draw": 1.0,
+     "from": "screen on",
+     "to": "@end"
+    },
+    {
+     "type": "screen",
+     "at": [
+      -4.1,
+      2.5
+     ],
+     "n": 1,
+     "facing": 0.18,
+     "from": "help defender",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "X2",
+     "from": "help",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "HAMMER SCREEN"
+     ],
+     "gold": [
+      0
+     ],
+     "sub": "Baseline drive + weak-side screen",
+     "from": "hammer",
+     "to": "baseline-0.05",
+     "y": 250,
+     "size": 112
+    },
+    {
+     "type": "pin",
+     "player": "O1",
+     "text": "DRIVE",
+     "from": "baseline",
+     "to": "@end",
+     "dy": -90,
+     "size": 46
+    },
+    {
+     "type": "pin",
+     "player": "O4",
+     "text": "HAMMER",
+     "from": "screen on",
+     "to": "@end",
+     "dy": -90,
+     "size": 46
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "reverse_cymbal",
+     "volume": 0.12
+    },
+    {
+     "at": "baseline",
+     "name": "tick",
+     "volume": 0.17
+    },
+    {
+     "at": "screen on",
+     "name": "tick",
+     "volume": 0.17
+    }
+   ]
+  },
+  {
+   "id": "caseA",
+   "name": "Case A — the low man helps, skip to the corner",
+   "at": "If the corner-0.1",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.25
+    ],
+    [
+     "leaves",
+     0.7
+    ],
+    [
+     "stop the drive>",
+     1.6
+    ],
+    [
+     "hammer pins",
+     1.75,
+     "out"
+    ],
+    [
+     "inside.>",
+     1.8
+    ],
+    [
+     "Skip",
+     1.95
+    ],
+    [
+     "pass.>",
+     2.75
+    ],
+    [
+     "Open three",
+     3.05
+    ],
+    [
+     "Open three>+0.35",
+     4.2
+    ],
+    [
+     "@end",
+     4.7
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.6,
+       3.0,
+       0
+      ],
+      "dist": 18.5,
+      "pitch": 40,
+      "yaw": 0,
+      "fov": 48
+     }
+    },
+    {
+     "at": "hammer pins",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.0,
+       2.6,
+       0.8
+      ],
+      "dist": 10.5,
+      "pitch": 55,
+      "yaw": -5,
+      "fov": 44
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "Skip",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.4,
+       2.4,
+       0.8
+      ],
+      "dist": 12.0,
+      "pitch": 50,
+      "yaw": 0,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "Open three",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.6,
+       1.8,
+       1.2
+      ],
+      "dist": 7.0,
+      "pitch": 60,
+      "yaw": -35,
+      "fov": 46
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.6,
+       1.8,
+       1.2
+      ],
+      "dist": 6.4,
+      "pitch": 62,
+      "yaw": -35,
+      "fov": 46
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "from": "leaves",
+     "to": "Skip"
+    },
+    {
+     "type": "route",
+     "player": "X2",
+     "t0": 0.7,
+     "t1": 1.5,
+     "trail": true,
+     "width": 0.14,
+     "from": "leaves",
+     "to": "Skip"
+    },
+    {
+     "type": "screen",
+     "player": "O4",
+     "n": 1,
+     "facing": 0.18,
+     "from": "hammer pins-0.2",
+     "to": "Open three"
+    },
+    {
+     "type": "passLane",
+     "src": "O1",
+     "dst": "O2",
+     "from": "Skip",
+     "to": "pass.>"
+    },
+    {
+     "type": "ring",
+     "player": "O2",
+     "from": "Open three",
+     "to": "@end",
+     "pulse": true
+    },
+    {
+     "type": "separation",
+     "a": "O2",
+     "b": "X2",
+     "from": "Open three",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "pin",
+     "player": "X2",
+     "text": "HELPS",
+     "tone": "red",
+     "from": "leaves",
+     "to": "hammer pins"
+    },
+    {
+     "type": "freeze",
+     "label": "FREEZE",
+     "from": "hammer pins",
+     "to": "inside.>"
+    },
+    {
+     "type": "pin",
+     "player": "X2",
+     "text": "PINNED",
+     "tone": "red",
+     "from": "hammer pins",
+     "to": "Skip"
+    },
+    {
+     "type": "stamp",
+     "text": "SKIP PASS",
+     "from": "Skip",
+     "to": "Open three-0.1",
+     "y": 300
+    },
+    {
+     "type": "stamp",
+     "text": "OPEN THREE",
+     "badge": "+3",
+     "from": "Open three>+0.35",
+     "to": "@end",
+     "y": 330
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.085
+    },
+    {
+     "at": "hammer pins",
+     "name": "tick",
+     "volume": 0.21
+    },
+    {
+     "at": "Skip",
+     "name": "whip",
+     "volume": 0.085
+    },
+    {
+     "at": "Open three>+0.35",
+     "name": "swish",
+     "volume": 0.32
+    }
+   ]
+  },
+  {
+   "id": "caseB",
+   "name": "Case B — the low man stays home, layup",
+   "at": "If he stays-0.15",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "stays",
+     0.5
+    ],
+    [
+     "helps.>",
+     1.3
+    ],
+    [
+     "baseline is",
+     1.55
+    ],
+    [
+     "rim.>",
+     2.75,
+     "in"
+    ],
+    [
+     "@end",
+     3.4
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.4,
+       2.8,
+       0
+      ],
+      "dist": 13,
+      "pitch": 44,
+      "yaw": 0,
+      "fov": 46
+     }
+    },
+    {
+     "at": "helps.>",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.4,
+       2.8,
+       0
+      ],
+      "dist": 13,
+      "pitch": 44,
+      "yaw": 0,
+      "fov": 46
+     }
+    },
+    {
+     "at": "baseline is+0.5",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.6,
+       3.0,
+       0.6
+      ],
+      "dist": 11,
+      "pitch": 52,
+      "yaw": 10,
+      "fov": 44
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.6,
+       1.9,
+       1.4
+      ],
+      "dist": 6.6,
+      "pitch": 66,
+      "yaw": 35,
+      "fov": 46
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "from": "stays",
+     "to": "helps.>"
+    },
+    {
+     "type": "route",
+     "player": "O1",
+     "t0": 0.3,
+     "t1": 2.25,
+     "trail": true,
+     "from": "nobody",
+     "to": "@end"
+    },
+    {
+     "type": "openSpace",
+     "at": [
+      2.0,
+      2.4
+     ],
+     "r": 0.9,
+     "rx": 1.6,
+     "from": "baseline is",
+     "to": "rim"
+    },
+    {
+     "type": "ring",
+     "player": "O1",
+     "from": "rim",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "rewind",
+     "from": 0,
+     "to": 0.35
+    },
+    {
+     "type": "pin",
+     "player": "X2",
+     "text": "STAYS HOME",
+     "from": "stays",
+     "to": "helps.>"
+    },
+    {
+     "type": "stamp",
+     "text": "OPEN BASELINE",
+     "from": "baseline is",
+     "to": "rim.>-0.1",
+     "y": 300
+    },
+    {
+     "type": "stamp",
+     "text": "LAYUP",
+     "badge": "+2",
+     "from": "rim.>",
+     "to": "@end",
+     "y": 330
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "reverse_cymbal",
+     "volume": 0.09
+    },
+    {
+     "at": "baseline is",
+     "name": "squeak",
+     "volume": 0.15
+    },
+    {
+     "at": "rim.>",
+     "name": "swish",
+     "volume": 0.3
+    }
+   ]
+  },
+  {
+   "id": "takeaway",
+   "name": "Takeaway — the low man has to choose",
+   "at": "The low man-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     1.45
+    ],
+    [
+     "@end",
+     1.55
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.6,
+       3.6,
+       0
+      ],
+      "dist": 15.0,
+      "pitch": 40,
+      "yaw": 0,
+      "fov": 40
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.6,
+       3.6,
+       0
+      ],
+      "dist": 13.8,
+      "pitch": 42,
+      "yaw": 0,
+      "fov": 40
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "from": 0,
+     "to": "@end",
+     "pulse": true
+    },
+    {
+     "type": "route",
+     "player": "O1",
+     "fromPlay": "B",
+     "t0": 0.3,
+     "t1": 2.25,
+     "draw": 0.6,
+     "color": "#FFFFFF",
+     "from": "Stay and",
+     "to": "@end"
+    },
+    {
+     "type": "passLane",
+     "src": "O1",
+     "dst": "O2",
+     "from": "Help and",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "THE LOW MAN",
+      "HAS TO CHOOSE."
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0.05,
+     "to": "Help and-0.05",
+     "y": 250,
+     "size": 112
+    },
+    {
+     "type": "title",
+     "lines": [
+      "HELP",
+      "→ OPEN THREE"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "Help and",
+     "to": "Stay and-0.05",
+     "y": 250,
+     "size": 112
+    },
+    {
+     "type": "title",
+     "lines": [
+      "STAY",
+      "→ LAYUP"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "Stay and",
+     "to": "@end",
+     "y": 250,
+     "size": 112
+    }
+   ],
+   "sfx": [
+    {
+     "at": "Help and",
+     "name": "tick",
+     "volume": 0.17
+    },
+    {
+     "at": "Stay and",
+     "name": "tick",
+     "volume": 0.17
+    }
+   ]
+  },
+  {
+   "id": "close",
+   "name": "CTA",
+   "at": "Which-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     1.55
+    ],
+    [
+     "@end",
+     1.6
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.6,
+       3.6,
+       0
+      ],
+      "dist": 13.8,
+      "pitch": 42,
+      "yaw": 0,
+      "fov": 40
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.6,
+       3.6,
+       0
+      ],
+      "dist": 12.8,
+      "pitch": 40,
+      "yaw": 0,
+      "fov": 40
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [],
+   "screen": [
+    {
+     "type": "scrim",
+     "opacity": 0.55,
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "title",
+     "lines": [
+      "WHICH WOULD",
+      "YOU TAKE?"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 600,
+     "size": 140
+    },
+    {
+     "type": "logo",
+     "big": true,
+     "from": "Follow",
+     "to": "@end"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "impact",
+     "volume": 0.08
+    }
+   ]
+  }
+ ],
+ "keywords": [
+  "hammer screen",
+  "corner",
+  "drive",
+  "pins",
+  "skip pass",
+  "open three",
+  "stays home",
+  "rim",
+  "low man",
+  "choose"
+ ],
+ "subtitleHide": [
+  [
+   0,
+   "The hammer-0.2"
+  ],
+  [
+   "Which-0.05",
+   "play.>+2"
+  ]
+ ],
+ "music": {
+  "src": "tactical/hammer/music.mp3",
+  "volume": 1
+ },
+ "voiceMix": "tactical/hammer/voice.mix.wav"
+}

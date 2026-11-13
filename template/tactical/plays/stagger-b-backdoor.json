@@ -1,0 +1,518 @@
+{
+ "id": "stagger-b-backdoor",
+ "title": "Stagger screen \u2014 Case B: top-lock, backdoor",
+ "duration": 5.0,
+ "notes": [
+  "Same structure as Case A (same spots for all ten players at 0 s).",
+  "X2 reads the stagger and top-locks: from 0.75 s he sits on O2's high side, between O2 and O4's screen, facing O2 \u2014 the route to the screens is denied before O2 gets there.",
+  "O2 plants at 1.05-1.12 s (before reaching O4) and rejects both screens: backdoor cut along the baseline behind X2.",
+  "X4 had stepped up on the high side to show on the expected curl (0.6-1.45 s), 4.3 m from the rim: his rotation to the rim arrives late (contest at the layup, ~1 m away).",
+  "X5 is at the second screen, 5 m from the rim; X3 is tied to O3 in the ball-side corner (leaving him = open corner three).",
+  "O1 sees the top-lock, dribbles toward the middle to clear X1 from the lane and throws an overhead lead pass over the paint (1.45 s); O2 catches at 2.2 s and finishes a left-side layup."
+ ],
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Ball handler / passer"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Shooter"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Spacer (ball-side corner)"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "First screener"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Second screener"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the ball",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "On the shooter",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "On the corner",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "On the first screener",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "On the second screener",
+   "guards": "O5"
+  }
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0,
+    4.6,
+    7.4
+   ],
+   [
+    0.9,
+    3.9,
+    8.0
+   ],
+   [
+    1.3,
+    3.2,
+    8.35
+   ],
+   [
+    1.45,
+    3.1,
+    8.4
+   ],
+   [
+    5.0,
+    3.1,
+    8.4
+   ]
+  ],
+  "O2": [
+   [
+    0,
+    -5.9,
+    1.6
+   ],
+   [
+    0.38,
+    -5.79,
+    1.3
+   ],
+   [
+    0.88,
+    -5.6,
+    2.4
+   ],
+   [
+    1.07,
+    -5.52,
+    2.68
+   ],
+   [
+    1.24,
+    -5.25,
+    2.5
+   ],
+   [
+    1.5,
+    -4.6,
+    2.0
+   ],
+   [
+    1.78,
+    -3.5,
+    1.58
+   ],
+   [
+    2.05,
+    -2.2,
+    1.3
+   ],
+   [
+    2.25,
+    -1.55,
+    1.25
+   ],
+   [
+    2.5,
+    -1.0,
+    1.3
+   ],
+   [
+    2.55,
+    -0.98,
+    1.31
+   ],
+   [
+    5.0,
+    -0.98,
+    1.31
+   ]
+  ],
+  "O3": [
+   [
+    0,
+    6.85,
+    1.1
+   ],
+   [
+    5.0,
+    6.85,
+    1.1
+   ]
+  ],
+  "O4": [
+   [
+    0,
+    -3.1,
+    3.5
+   ],
+   [
+    0.75,
+    -4.3,
+    4.6
+   ],
+   [
+    5.0,
+    -4.3,
+    4.6
+   ]
+  ],
+  "O5": [
+   [
+    0,
+    -1.6,
+    6.3
+   ],
+   [
+    1.0,
+    -2.7,
+    7.2
+   ],
+   [
+    5.0,
+    -2.7,
+    7.2
+   ]
+  ],
+  "X1": [
+   [
+    0,
+    3.95,
+    6.75
+   ],
+   [
+    0.9,
+    3.75,
+    7.35
+   ],
+   [
+    1.3,
+    3.7,
+    7.75
+   ],
+   [
+    1.45,
+    3.68,
+    7.8
+   ],
+   [
+    5.0,
+    3.68,
+    7.8
+   ]
+  ],
+  "X2": [
+   [
+    0,
+    -5.25,
+    2.0
+   ],
+   [
+    0.45,
+    -5.15,
+    1.8
+   ],
+   [
+    0.75,
+    -5.2,
+    2.5
+   ],
+   [
+    1.0,
+    -5.2,
+    3.15
+   ],
+   [
+    1.35,
+    -5.2,
+    3.05
+   ],
+   [
+    1.65,
+    -4.85,
+    2.6
+   ],
+   [
+    2.0,
+    -3.9,
+    2.05
+   ],
+   [
+    2.3,
+    -3.0,
+    1.75
+   ],
+   [
+    2.65,
+    -2.3,
+    1.6
+   ],
+   [
+    2.7,
+    -2.28,
+    1.6
+   ],
+   [
+    5.0,
+    -2.28,
+    1.6
+   ]
+  ],
+  "X3": [
+   [
+    0,
+    5.5,
+    1.9
+   ],
+   [
+    1.5,
+    5.45,
+    1.95
+   ],
+   [
+    2.3,
+    5.1,
+    2.05
+   ],
+   [
+    5.0,
+    5.1,
+    2.05
+   ]
+  ],
+  "X4": [
+   [
+    0,
+    -2.6,
+    3.0
+   ],
+   [
+    0.6,
+    -3.4,
+    4.3
+   ],
+   [
+    1.0,
+    -3.75,
+    5.25
+   ],
+   [
+    1.45,
+    -3.7,
+    5.3
+   ],
+   [
+    1.8,
+    -3.2,
+    4.4
+   ],
+   [
+    2.2,
+    -2.4,
+    3.15
+   ],
+   [
+    2.55,
+    -1.6,
+    2.25
+   ],
+   [
+    2.62,
+    -1.58,
+    2.22
+   ],
+   [
+    5.0,
+    -1.58,
+    2.22
+   ]
+  ],
+  "X5": [
+   [
+    0,
+    -1.2,
+    5.6
+   ],
+   [
+    1.0,
+    -2.15,
+    6.6
+   ],
+   [
+    1.55,
+    -2.1,
+    6.5
+   ],
+   [
+    2.3,
+    -1.5,
+    4.3
+   ],
+   [
+    2.75,
+    -1.2,
+    3.4
+   ],
+   [
+    5.0,
+    -1.2,
+    3.4
+   ]
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 1.45,
+   "dribble": true
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O2",
+   "t0": 1.45,
+   "t1": 2.2,
+   "style": "overhead"
+  },
+  {
+   "type": "hold",
+   "player": "O2",
+   "from": 2.2,
+   "to": 2.65
+  },
+  {
+   "type": "layup",
+   "player": "O2",
+   "t0": 2.65,
+   "t1": 3.03,
+   "make": true
+  }
+ ],
+ "screens": [],
+ "marks": {
+  "start": 0,
+  "go": 0.45,
+  "lock": 1.0,
+  "freeze": 1.04,
+  "plant": 1.08,
+  "reject": 1.12,
+  "pass": 1.45,
+  "catch": 2.2,
+  "release": 2.65,
+  "make": 3.03,
+  "end": 5.0
+ },
+ "actions": {
+  "O4": [
+   {
+    "type": "screen",
+    "from": 0.7,
+    "to": 5.0,
+    "face": -2.214297435588181
+   }
+  ],
+  "O5": [
+   {
+    "type": "screen",
+    "from": 0.95,
+    "to": 5.0,
+    "face": -2.5535900500422257
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 5,
+    "face": "O1"
+   },
+   {
+    "type": "contest",
+    "from": 1.25,
+    "to": 1.6
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 5,
+    "face": "O1"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 1.45,
+    "face": "O2"
+   },
+   {
+    "type": "contest",
+    "from": 2.5,
+    "to": 3.0
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 1.55,
+    "face": "O2"
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 0.6,
+    "face": "O2"
+   },
+   {
+    "type": "topLock",
+    "from": 0.7,
+    "to": 1.3,
+    "face": "O2",
+    "side": 1
+   }
+  ],
+  "O2": [
+   {
+    "type": "celebrate",
+    "from": 3.2,
+    "to": 4.2
+   }
+  ]
+ }
+}

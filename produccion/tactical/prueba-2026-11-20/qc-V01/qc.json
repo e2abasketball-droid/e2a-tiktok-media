@@ -1,0 +1,123 @@
+{
+ "cid": "E2A-TACTICAL-2026-11-20-V01",
+ "mp4": "produccion/tactical/prueba-2026-11-20/out/E2A-TACTICAL-2026-11-20-V01.mp4",
+ "mp4_sha256": "1a8e656950faa5c0c0f95d1673c16798fcd5214cab1238b2650fc52a00d9a4e0",
+ "result": "QC_PASS",
+ "checks": {
+  "tactical": {
+   "pass": true
+  },
+  "engine": {
+   "pass": true
+  },
+  "audio": {
+   "pass": true
+  },
+  "technical": {
+   "pass": true
+  },
+  "frames": {
+   "pass": true
+  },
+  "licences": {
+   "pass": true
+  }
+ },
+ "measured": {
+  "technical": {
+   "width": 1080,
+   "height": 1920,
+   "fps": 30.0,
+   "vcodec": "h264",
+   "acodec": "aac",
+   "duration": 34.218,
+   "social_mb": 9.209226,
+   "black_frames": 0
+  },
+  "audio": {
+   "mix": {
+    "I": -14.0,
+    "TP": -1.5
+   },
+   "silences_inside_narration": []
+  },
+  "frames": {
+   "extracted_from_mp4": true,
+   "count": 8,
+   "issues": [],
+   "frames": [
+    {
+     "t": 2.14,
+     "file": "/home/user/e2a-tiktok-media/produccion/tactical/prueba-2026-11-20/qc-V01/frames/frame_01.png",
+     "exists": true,
+     "contrast": 219,
+     "sha": "ab5e44498cd4474f9bd568490b72c6f3ef2b2180182479cb55344d71cf074b81"
+    },
+    {
+     "t": 6.42,
+     "file": "/home/user/e2a-tiktok-media/produccion/tactical/prueba-2026-11-20/qc-V01/frames/frame_02.png",
+     "exists": true,
+     "contrast": 219,
+     "sha": "f821925f81ff49eefcfb6c005dcb8faa90abc23c460938a1c79bbdddb5754d95"
+    },
+    {
+     "t": 10.69,
+     "file": "/home/user/e2a-tiktok-media/produccion/tactical/prueba-2026-11-20/qc-V01/frames/frame_03.png",
+     "exists": true,
+     "contrast": 219,
+     "sha": "d58e8cbfa4c4ad93b94d03d9c4e899afb747bbc52764aaef6d28d369dcfc9940"
+    },
+    {
+     "t": 14.97,
+     "file": "/home/user/e2a-tiktok-media/produccion/tactical/prueba-2026-11-20/qc-V01/frames/frame_04.png",
+     "exists": true,
+     "contrast": 219,
+     "sha": "292ed02492d2ee7990f04476ed6e03e8651e178d66e4f074599c02a35c6c6bed"
+    },
+    {
+     "t": 19.25,
+     "file": "/home/user/e2a-tiktok-media/produccion/tactical/prueba-2026-11-20/qc-V01/frames/frame_05.png",
+     "exists": true,
+     "contrast": 219,
+     "sha": "837e13b3f779e2ebefa7e2f43c5db7eb65c385281b16ac71483169ce5fecd8dc"
+    },
+    {
+     "t": 23.52,
+     "file": "/home/user/e2a-tiktok-media/produccion/tactical/prueba-2026-11-20/qc-V01/frames/frame_06.png",
+     "exists": true,
+     "contrast": 218,
+     "sha": "b9f941cbcfcad5a166f76c507582be418e4f1f5ccfafa95f61b4ae6a45fd8ead"
+    },
+    {
+     "t": 27.8,
+     "file": "/home/user/e2a-tiktok-media/produccion/tactical/prueba-2026-11-20/qc-V01/frames/frame_07.png",
+     "exists": true,
+     "contrast": 219,
+     "sha": "0e6376262e1769aa68274031a7e8c704388702c43c351d1a20425313c1c4df89"
+    },
+    {
+     "t": 32.08,
+     "file": "/home/user/e2a-tiktok-media/produccion/tactical/prueba-2026-11-20/qc-V01/frames/frame_08.png",
+     "exists": true,
+     "contrast": 219,
+     "sha": "e630f20164f9d7fc6b05ae96eae06fa6f807f65c0283896961ae40c651b3a03d"
+    }
+   ]
+  },
+  "engine": {
+   "passed": 9,
+   "failed": 0,
+   "fails": [],
+   "exit": 0
+  },
+  "licences": {
+   "pass": true,
+   "failures": [],
+   "checked": 14
+  }
+ },
+ "tactical": {
+  "passed": 37,
+  "failed": 0
+ }
+}

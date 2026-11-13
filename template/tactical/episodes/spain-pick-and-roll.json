@@ -1,0 +1,958 @@
+{
+ "id": "spain-pick-and-roll",
+ "title": "The Spain Pick-and-Roll: Two Screens (E2A-TACTICAL-2026-11-20-V02, shadow test)",
+ "fps": 30,
+ "voiceRaw": "tactical/spain/voice-raw.mp3",
+ "wordsRaw": "spain-pick-and-roll.words-raw.json",
+ "voice": "tactical/spain/voice.wav",
+ "preroll": 0.12,
+ "tail": 1.4,
+ "gaps": [
+  {
+   "after": "Two screens.",
+   "sec": 0.7,
+   "why": "hook titles land"
+  },
+  {
+   "after": "to stop the roll.",
+   "sec": 1.1,
+   "why": "both screens drawn before Case A"
+  },
+  {
+   "after": "picks up the roller.",
+   "sec": 0.9,
+   "why": "freeze: the roller is alone"
+  },
+  {
+   "after": "Easy two at the rim.",
+   "sec": 1.5,
+   "why": "layup lands + EASY TWO"
+  },
+  {
+   "after": "Open three.",
+   "sec": 1.8,
+   "why": "ball flight to the swish + OPEN THREE"
+  },
+  {
+   "after": "give something up.",
+   "sec": 1.0,
+   "why": "title holds before the CTA"
+  }
+ ],
+ "plays": {
+  "A": "spain-a-roll",
+  "B": "spain-b-pop"
+ },
+ "musicDrop": "If the back",
+ "musicPayoff": "Two screens one defender",
+ "shots": [
+  {
+   "id": "hook",
+   "name": "Hook — one pick-and-roll, two screens",
+   "at": 0,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.3
+    ],
+    [
+     "@end",
+     1.75
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       7.4,
+       1.0
+      ],
+      "dist": 8.5,
+      "pitch": 52,
+      "yaw": 180,
+      "fov": 46
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.8,
+       6.6,
+       0.9
+      ],
+      "dist": 10.0,
+      "pitch": 55,
+      "yaw": 170,
+      "fov": 46
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O5",
+     "from": "One",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "O2",
+     "from": "Two",
+     "to": "@end",
+     "pulse": true
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "ONE PICK-AND-ROLL."
+     ],
+     "from": 0.05,
+     "to": "Two-0.05",
+     "y": 270,
+     "size": 118
+    },
+    {
+     "type": "title",
+     "lines": [
+      "TWO SCREENS."
+     ],
+     "gold": [
+      0
+     ],
+     "from": "Two",
+     "to": "@end",
+     "y": 270,
+     "size": 130
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.12
+    },
+    {
+     "at": "Two",
+     "name": "impact",
+     "volume": 0.09
+    }
+   ]
+  },
+  {
+   "id": "setup",
+   "name": "Setup — ball screen, back screen on the big",
+   "at": "The Spain-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "ball screen",
+     0.85
+    ],
+    [
+     "back screen",
+     1.7,
+     "inOut"
+    ],
+    [
+     "the roll.>",
+     1.95,
+     "out"
+    ],
+    [
+     "@end",
+     1.95
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.8,
+       6.0,
+       0
+      ],
+      "dist": 15.5,
+      "pitch": 36,
+      "yaw": 0,
+      "fov": 40
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.8,
+       5.6,
+       0
+      ],
+      "dist": 14.5,
+      "pitch": 38,
+      "yaw": 0,
+      "fov": 40
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "screen",
+     "player": "O5",
+     "n": 1,
+     "facing": 0.0,
+     "from": "ball screen-0.2",
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 0.2,
+     "t1": 1.6,
+     "draw": 1.0,
+     "from": "back screen",
+     "to": "@end"
+    },
+    {
+     "type": "screen",
+     "at": [
+      -1.0,
+      5.2
+     ],
+     "n": 2,
+     "facing": 2.214,
+     "from": "back screen+0.3",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "X5",
+     "from": "big who",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "SPAIN PICK-AND-ROLL"
+     ],
+     "gold": [
+      0
+     ],
+     "sub": "Ball screen + back screen on the big",
+     "from": "Spain",
+     "to": "ball screen-0.05",
+     "y": 250,
+     "size": 100
+    },
+    {
+     "type": "pin",
+     "player": "O5",
+     "text": "BALL SCREEN",
+     "from": "ball screen",
+     "to": "@end",
+     "dy": -90,
+     "size": 44
+    },
+    {
+     "type": "pin",
+     "player": "O2",
+     "text": "BACK SCREEN",
+     "from": "back screen",
+     "to": "@end",
+     "dy": -90,
+     "size": 44
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "reverse_cymbal",
+     "volume": 0.12
+    },
+    {
+     "at": "ball screen",
+     "name": "tick",
+     "volume": 0.17
+    },
+    {
+     "at": "back screen",
+     "name": "tick",
+     "volume": 0.17
+    }
+   ]
+  },
+  {
+   "id": "caseA",
+   "name": "Case A — X2 stays, nobody picks up the roller",
+   "at": "If the back-0.1",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     1.4
+    ],
+    [
+     "stays with",
+     1.75
+    ],
+    [
+     "nobody",
+     2.05
+    ],
+    [
+     "roller.>",
+     2.3,
+     "out"
+    ],
+    [
+     "Pocket",
+     2.3
+    ],
+    [
+     "pass.>",
+     3.0
+    ],
+    [
+     "Easy two",
+     3.25
+    ],
+    [
+     "rim.>",
+     3.75
+    ],
+    [
+     "@end",
+     4.4
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.4,
+       5.2,
+       0
+      ],
+      "dist": 12.5,
+      "pitch": 46,
+      "yaw": 10,
+      "fov": 42
+     }
+    },
+    {
+     "at": "Pocket",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       4.2,
+       0.8
+      ],
+      "dist": 10.5,
+      "pitch": 54,
+      "yaw": 15,
+      "fov": 44
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "Easy two",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.3,
+       2.4,
+       1.2
+      ],
+      "dist": 6.8,
+      "pitch": 64,
+      "yaw": 20,
+      "fov": 46
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.3,
+       2.2,
+       1.4
+      ],
+      "dist": 6.2,
+      "pitch": 66,
+      "yaw": 20,
+      "fov": 46
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "from": "stays with",
+     "to": "Pocket"
+    },
+    {
+     "type": "ring",
+     "player": "X5",
+     "from": "nobody",
+     "to": "Pocket"
+    },
+    {
+     "type": "route",
+     "player": "O5",
+     "t0": 1.4,
+     "t1": 2.95,
+     "trail": true,
+     "from": "nobody",
+     "to": "@end"
+    },
+    {
+     "type": "passLane",
+     "src": "O1",
+     "dst": "O5",
+     "from": "Pocket",
+     "to": "pass.>"
+    },
+    {
+     "type": "ring",
+     "player": "O5",
+     "from": "Easy two",
+     "to": "@end",
+     "pulse": true
+    }
+   ],
+   "screen": [
+    {
+     "type": "pin",
+     "player": "X2",
+     "text": "STAYS",
+     "tone": "red",
+     "from": "stays with",
+     "to": "Pocket"
+    },
+    {
+     "type": "pin",
+     "player": "X5",
+     "text": "SCREENED",
+     "tone": "red",
+     "from": "nobody",
+     "to": "Pocket"
+    },
+    {
+     "type": "freeze",
+     "label": "FREEZE",
+     "from": "roller.>-0.25",
+     "to": "Pocket-0.05"
+    },
+    {
+     "type": "stamp",
+     "text": "POCKET PASS",
+     "from": "Pocket",
+     "to": "Easy two-0.1",
+     "y": 300
+    },
+    {
+     "type": "stamp",
+     "text": "EASY TWO",
+     "badge": "+2",
+     "from": "rim.>-0.2",
+     "to": "@end",
+     "y": 330
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.085
+    },
+    {
+     "at": "nobody",
+     "name": "tick",
+     "volume": 0.21
+    },
+    {
+     "at": "Pocket",
+     "name": "whip",
+     "volume": 0.085
+    },
+    {
+     "at": "rim.>-0.2",
+     "name": "swish",
+     "volume": 0.3
+    }
+   ]
+  },
+  {
+   "id": "caseB",
+   "name": "Case B — X2 jumps the roller, O2 pops",
+   "at": "If he jumps-0.15",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     1.6
+    ],
+    [
+     "jumps",
+     1.9
+    ],
+    [
+     "jumps the roller>",
+     2.25
+    ],
+    [
+     "left alone>",
+     2.6,
+     "out"
+    ],
+    [
+     "He pops",
+     2.6
+    ],
+    [
+     "arc.>",
+     3.2
+    ],
+    [
+     "Open three",
+     3.5
+    ],
+    [
+     "Open three>+0.35",
+     4.65
+    ],
+    [
+     "@end",
+     5.0
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.4,
+       5.2,
+       0
+      ],
+      "dist": 12.5,
+      "pitch": 46,
+      "yaw": -10,
+      "fov": 42
+     }
+    },
+    {
+     "at": "He pops",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       6.6,
+       0.9
+      ],
+      "dist": 10.0,
+      "pitch": 52,
+      "yaw": -12,
+      "fov": 44
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "Open three",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.2,
+       8.4,
+       1.2
+      ],
+      "dist": 6.8,
+      "pitch": 60,
+      "yaw": -5,
+      "fov": 46
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.2,
+       8.4,
+       1.3
+      ],
+      "dist": 6.2,
+      "pitch": 62,
+      "yaw": -5,
+      "fov": 46
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "from": "jumps",
+     "to": "He pops"
+    },
+    {
+     "type": "route",
+     "player": "X2",
+     "t0": 1.9,
+     "t1": 2.9,
+     "trail": true,
+     "width": 0.14,
+     "from": "jumps",
+     "to": "He pops"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 2.05,
+     "t1": 3.2,
+     "trail": true,
+     "from": "He pops",
+     "to": "@end"
+    },
+    {
+     "type": "passLane",
+     "src": "O1",
+     "dst": "O2",
+     "from": "arc",
+     "to": "Open three"
+    },
+    {
+     "type": "ring",
+     "player": "O2",
+     "from": "Open three",
+     "to": "@end",
+     "pulse": true
+    },
+    {
+     "type": "separation",
+     "a": "O2",
+     "b": "X5",
+     "from": "Open three",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "rewind",
+     "from": 0,
+     "to": 0.35
+    },
+    {
+     "type": "pin",
+     "player": "X2",
+     "text": "JUMPS THE ROLL",
+     "tone": "red",
+     "from": "jumps",
+     "to": "He pops"
+    },
+    {
+     "type": "pin",
+     "player": "O2",
+     "text": "ALONE",
+     "from": "left alone",
+     "to": "Open three"
+    },
+    {
+     "type": "stamp",
+     "text": "OPEN THREE",
+     "badge": "+3",
+     "from": "Open three>+0.35",
+     "to": "@end",
+     "y": 330
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "reverse_cymbal",
+     "volume": 0.09
+    },
+    {
+     "at": "jumps",
+     "name": "tick",
+     "volume": 0.21
+    },
+    {
+     "at": "He pops",
+     "name": "whoosh",
+     "volume": 0.085
+    },
+    {
+     "at": "Open three>+0.35",
+     "name": "swish",
+     "volume": 0.32
+    }
+   ]
+  },
+  {
+   "id": "takeaway",
+   "name": "Takeaway — one defender too many",
+   "at": "Two screens one defender-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     1.85
+    ],
+    [
+     "@end",
+     1.95
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.8,
+       5.6,
+       0
+      ],
+      "dist": 14.5,
+      "pitch": 38,
+      "yaw": 0,
+      "fov": 40
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.8,
+       5.6,
+       0
+      ],
+      "dist": 13.5,
+      "pitch": 40,
+      "yaw": 0,
+      "fov": 40
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "screen",
+     "player": "O5",
+     "n": 1,
+     "facing": 0.0,
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "screen",
+     "at": [
+      -1.0,
+      5.2
+     ],
+     "n": 2,
+     "facing": 2.214,
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O5",
+     "t0": 1.4,
+     "t1": 2.95,
+     "draw": 0.6,
+     "from": "one defender",
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "fromPlay": "B",
+     "t0": 2.05,
+     "t1": 3.2,
+     "draw": 0.6,
+     "color": "#FFFFFF",
+     "from": "one defender",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "TWO SCREENS.",
+      "ONE DEFENDER TOO MANY."
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0.05,
+     "to": "The defence-0.05",
+     "y": 250,
+     "size": 96
+    },
+    {
+     "type": "title",
+     "lines": [
+      "THE DEFENCE",
+      "GIVES SOMETHING UP."
+     ],
+     "gold": [
+      1
+     ],
+     "from": "The defence",
+     "to": "@end",
+     "y": 250,
+     "size": 100
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "tick",
+     "volume": 0.17
+    }
+   ]
+  },
+  {
+   "id": "close",
+   "name": "CTA",
+   "at": "How-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     1.95
+    ],
+    [
+     "@end",
+     2.0
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.8,
+       5.6,
+       0
+      ],
+      "dist": 13.5,
+      "pitch": 40,
+      "yaw": 0,
+      "fov": 40
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.8,
+       5.6,
+       0
+      ],
+      "dist": 12.6,
+      "pitch": 38,
+      "yaw": 0,
+      "fov": 40
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [],
+   "screen": [
+    {
+     "type": "scrim",
+     "opacity": 0.55,
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "title",
+     "lines": [
+      "HOW WOULD",
+      "YOU GUARD IT?"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 600,
+     "size": 140
+    },
+    {
+     "type": "logo",
+     "big": true,
+     "from": "Follow",
+     "to": "@end"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "impact",
+     "volume": 0.08
+    }
+   ]
+  }
+ ],
+ "keywords": [
+  "spain pick-and-roll",
+  "two screens",
+  "ball screen",
+  "back screen",
+  "roller",
+  "pocket pass",
+  "easy two",
+  "jumps",
+  "pops",
+  "open three"
+ ],
+ "subtitleHide": [
+  [
+   0,
+   "The Spain-0.2"
+  ],
+  [
+   "How-0.05",
+   "basketball.>+2"
+  ]
+ ],
+ "music": {
+  "src": "tactical/spain/music.mp3",
+  "volume": 1
+ },
+ "voiceMix": "tactical/spain/voice.mix.wav"
+}

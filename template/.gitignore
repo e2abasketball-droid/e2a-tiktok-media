@@ -1,0 +1,6 @@
+node_modules/
+public/audio/
+public/music.mp3
+out/
+public/music/
+public/tactical/**/*.wav

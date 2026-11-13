@@ -1,0 +1,1202 @@
+{
+ "schema_version": "e2a.analysis/1",
+ "ref_id": "R-0001",
+ "source": {
+  "title": "Vídeo propio E2A Wembanyama EP03 (prueba)",
+  "key": "1Gj0YIIo8BOXcu3rO5ctWSjpYGgaXzsZa",
+  "sha256": "8b9b39ba79612650fb4418cba593fe403976ae2c1133d20429ca17de76ea282c",
+  "rights": "propio",
+  "size_bytes": 9125172
+ },
+ "technical": {
+  "duration_s": 49.5,
+  "fps": 30.0,
+  "width": 1080,
+  "height": 1920,
+  "aspect_ratio": "9:16",
+  "orientation": "vertical",
+  "video_codec": "h264",
+  "pix_fmt": "yuv420p",
+  "has_audio": true,
+  "audio_codec": "aac",
+  "audio_sample_rate": 48000,
+  "nivel": "observacion"
+ },
+ "editing": {
+  "cuts": [
+   0.2,
+   1.2,
+   5.2,
+   6.2,
+   12.3,
+   12.7,
+   13.0,
+   13.9,
+   15.8,
+   18.3,
+   26.8,
+   33.2,
+   35.0,
+   40.9,
+   42.1,
+   43.8,
+   46.6
+  ],
+  "n_planos": 18,
+  "plano_mediano_s": 1.85,
+  "plano_medio_s": 2.75,
+  "plano_min_s": 0.2,
+  "plano_max_s": 8.5,
+  "planos_estaticos_pct": 0.78,
+  "cambios_de_perspectiva": 3,
+  "nivel": "observacion"
+ },
+ "shots": [
+  {
+   "n": 1,
+   "inicio": 0.0,
+   "fin": 0.2,
+   "duracion_s": 0.2,
+   "movimiento_imagen": 1.58,
+   "imagen": "en_movimiento",
+   "cambios_graficos_por_s": 0.0,
+   "camara": {
+    "movimiento": "indeterminado",
+    "nivel": "estimacion",
+    "motivo": "plano demasiado corto"
+   },
+   "color": {
+    "luma_media": 7.9,
+    "contraste_std": 12.4,
+    "saturacion_media": 0.517,
+    "calidez_r_menos_b": -17.5,
+    "negros_pct": 0.98,
+    "blancos_pct": 0.0
+   },
+   "nivel": "observacion"
+  },
+  {
+   "n": 2,
+   "inicio": 0.2,
+   "fin": 1.2,
+   "duracion_s": 1.0,
+   "movimiento_imagen": 0.36,
+   "imagen": "estatica",
+   "cambios_graficos_por_s": 1.0,
+   "camara": {
+    "movimiento": "static",
+    "zoom_total": 1.0,
+    "desplazamiento_x": 0.0,
+    "desplazamiento_y": 0.0,
+    "temblor": 0.0,
+    "nivel": "estimacion",
+    "metodo": "correlación de fase + búsqueda de escala entre fotogramas a 0.4 s",
+    "nota": "imagen sin cambios"
+   },
+   "color": {
+    "luma_media": 14.0,
+    "contraste_std": 32.5,
+    "saturacion_media": 0.713,
+    "calidez_r_menos_b": -14.2,
+    "negros_pct": 0.95,
+    "blancos_pct": 0.006
+   },
+   "nivel": "observacion"
+  },
+  {
+   "n": 3,
+   "inicio": 1.2,
+   "fin": 5.2,
+   "duracion_s": 4.0,
+   "movimiento_imagen": 0.02,
+   "imagen": "estatica",
+   "cambios_graficos_por_s": 2.0,
+   "camara": {
+    "movimiento": "static",
+    "zoom_total": 1.0,
+    "desplazamiento_x": 0.0,
+    "desplazamiento_y": 0.0,
+    "temblor": 0.0,
+    "nivel": "estimacion",
+    "metodo": "correlación de fase + búsqueda de escala entre fotogramas a 0.4 s"
+   },
+   "color": {
+    "luma_media": 21.4,
+    "contraste_std": 48.2,
+    "saturacion_media": 0.656,
+    "calidez_r_menos_b": -8.9,
+    "negros_pct": 0.902,
+    "blancos_pct": 0.017
+   },
+   "nivel": "observacion"
+  },
+  {
+   "n": 4,
+   "inicio": 5.2,
+   "fin": 6.2,
+   "duracion_s": 1.0,
+   "movimiento_imagen": 0.48,
+   "imagen": "estatica",
+   "cambios_graficos_por_s": 3.0,
+   "camara": {
+    "movimiento": "static",
+    "zoom_total": 1.0,
+    "desplazamiento_x": 0.0,
+    "desplazamiento_y": 0.0,
+    "temblor": 0.0,
+    "nivel": "estimacion",
+    "metodo": "correlación de fase + búsqueda de escala entre fotogramas a 0.4 s"
+   },
+   "color": {
+    "luma_media": 12.3,
+    "contraste_std": 28.7,
+    "saturacion_media": 0.598,
+    "calidez_r_menos_b": -19.0,
+    "negros_pct": 0.957,
+    "blancos_pct": 0.007
+   },
+   "nivel": "observacion"
+  },
+  {
+   "n": 5,
+   "inicio": 6.2,
+   "fin": 12.3,
+   "duracion_s": 6.1,
+   "movimiento_imagen": 0.22,
+   "imagen": "estatica",
+   "cambios_graficos_por_s": 1.31,
+   "camara": {
+    "movimiento": "static",
+    "zoom_total": 1.0,
+    "desplazamiento_x": 0.0,
+    "desplazamiento_y": 0.0,
+    "temblor": 0.0,
+    "nivel": "hipotesis",
+    "metodo": "correlación de fase + búsqueda de escala entre fotogramas a 0.4 s",
+    "nota": "la imagen cambia pero no como un movimiento de cámara: objetos, gráficos o texto animado"
+   },
+   "color": {
+    "luma_media": 25.1,
+    "contraste_std": 49.1,
+    "saturacion_media": 0.46,
+    "calidez_r_menos_b": -10.9,
+    "negros_pct": 0.834,
+    "blancos_pct": 0.013
+   },
+   "nivel": "observacion"
+  },
+  {
+   "n": 6,
+   "inicio": 12.3,
+   "fin": 12.7,
+   "duracion_s": 0.4,
+   "movimiento_imagen": 1.93,
+   "imagen": "en_movimiento",
+   "cambios_graficos_por_s": 7.5,
+   "camara": {
+    "movimiento": "indeterminado",
+    "nivel": "estimacion",
+    "motivo": "plano demasiado corto"
+   },
+   "color": {
+    "luma_media": 18.4,
+    "contraste_std": 39.0,
+    "saturacion_media": 0.661,
+    "calidez_r_menos_b": -9.5,
+    "negros_pct": 0.895,
+    "blancos_pct": 0.004
+   },
+   "nivel": "observacion"
+  },
+  {
+   "n": 7,
+   "inicio": 12.7,
+   "fin": 13.0,
+   "duracion_s": 0.3,
+   "movimiento_imagen": 2.44,
+   "imagen": "en_movimiento",
+   "cambios_graficos_por_s": 0.0,
+   "camara": {
+    "movimiento": "indeterminado",
+    "nivel": "estimacion",
+    "motivo": "plano demasiado corto"
+   },
+   "color": {
+    "luma_media": 20.3,
+    "contraste_std": 42.6,
+    "saturacion_media": 0.672,
+    "calidez_r_menos_b": -7.3,
+    "negros_pct": 0.885,
+    "blancos_pct": 0.005
+   },
+   "nivel": "observacion"
+  },
+  {
+   "n": 8,
+   "inicio": 13.0,
+   "fin": 13.9,
+   "duracion_s": 0.9,
+   "movimiento_imagen": 2.57,
+   "imagen": "en_movimiento",
+   "cambios_graficos_por_s": 7.78,
+   "camara": {
+    "movimiento": "static",
+    "zoom_total": 1.0,
+    "desplazamiento_x": 0.0,
+    "desplazamiento_y": 0.0,
+    "temblor": 0.0,
+    "nivel": "hipotesis",
+    "metodo": "correlación de fase + búsqueda de escala entre fotogramas a 0.4 s",
+    "nota": "la imagen cambia pero no como un movimiento de cámara: objetos, gráficos o texto animado"
+   },
+   "color": {
+    "luma_media": 21.1,
+    "contraste_std": 44.4,
+    "saturacion_media": 0.667,
+    "calidez_r_menos_b": -6.7,
+    "negros_pct": 0.882,
+    "blancos_pct": 0.007
+   },
+   "nivel": "observacion"
+  },
+  {
+   "n": 9,
+   "inicio": 13.9,
+   "fin": 15.8,
+   "duracion_s": 1.9,
+   "movimiento_imagen": 0.45,
+   "imagen": "estatica",
+   "cambios_graficos_por_s": 3.68,
+   "camara": {
+    "movimiento": "static",
+    "zoom_total": 1.0,
+    "desplazamiento_x": 0.0,
+    "desplazamiento_y": 0.0,
+    "temblor": 0.0,
+    "nivel": "estimacion",
+    "metodo": "correlación de fase + búsqueda de escala entre fotogramas a 0.4 s",
+    "nota": "imagen sin cambios"
+   },
+   "color": {
+    "luma_media": 22.8,
+    "contraste_std": 47.8,
+    "saturacion_media": 0.662,
+    "calidez_r_menos_b": -5.2,
+    "negros_pct": 0.878,
+    "blancos_pct": 0.009
+   },
+   "nivel": "observacion"
+  },
+  {
+   "n": 10,
+   "inicio": 15.8,
+   "fin": 18.3,
+   "duracion_s": 2.5,
+   "movimiento_imagen": 0.22,
+   "imagen": "estatica",
+   "cambios_graficos_por_s": 1.6,
+   "camara": {
+    "movimiento": "static",
+    "zoom_total": 1.0,
+    "desplazamiento_x": 0.0,
+    "desplazamiento_y": 0.0,
+    "temblor": 0.0,
+    "nivel": "estimacion",
+    "metodo": "correlación de fase + búsqueda de escala entre fotogramas a 0.4 s",
+    "nota": "imagen sin cambios"
+   },
+   "color": {
+    "luma_media": 23.1,
+    "contraste_std": 47.3,
+    "saturacion_media": 0.73,
+    "calidez_r_menos_b": -3.2,
+    "negros_pct": 0.877,
+    "blancos_pct": 0.006
+   },
+   "nivel": "observacion"
+  },
+  {
+   "n": 11,
+   "inicio": 18.3,
+   "fin": 26.8,
+   "duracion_s": 8.5,
+   "movimiento_imagen": 0.22,
+   "imagen": "estatica",
+   "cambios_graficos_por_s": 2.35,
+   "camara": {
+    "movimiento": "static",
+    "zoom_total": 1.0,
+    "desplazamiento_x": 0.0,
+    "desplazamiento_y": 0.0,
+    "temblor": 0.0,
+    "nivel": "estimacion",
+    "metodo": "correlación de fase + búsqueda de escala entre fotogramas a 0.4 s",
+    "nota": "imagen sin cambios"
+   },
+   "color": {
+    "luma_media": 20.3,
+    "contraste_std": 43.5,
+    "saturacion_media": 0.648,
+    "calidez_r_menos_b": -8.7,
+    "negros_pct": 0.891,
+    "blancos_pct": 0.008
+   },
+   "nivel": "observacion"
+  },
+  {
+   "n": 12,
+   "inicio": 26.8,
+   "fin": 33.2,
+   "duracion_s": 6.4,
+   "movimiento_imagen": 0.14,
+   "imagen": "estatica",
+   "cambios_graficos_por_s": 2.03,
+   "camara": {
+    "movimiento": "static",
+    "zoom_total": 1.0,
+    "desplazamiento_x": 0.0,
+    "desplazamiento_y": 0.0,
+    "temblor": 0.0,
+    "nivel": "estimacion",
+    "metodo": "correlación de fase + búsqueda de escala entre fotogramas a 0.4 s",
+    "nota": "imagen sin cambios"
+   },
+   "color": {
+    "luma_media": 23.7,
+    "contraste_std": 45.0,
+    "saturacion_media": 0.533,
+    "calidez_r_menos_b": -7.6,
+    "negros_pct": 0.834,
+    "blancos_pct": 0.008
+   },
+   "nivel": "observacion"
+  },
+  {
+   "n": 13,
+   "inicio": 33.2,
+   "fin": 35.0,
+   "duracion_s": 1.8,
+   "movimiento_imagen": 0.18,
+   "imagen": "estatica",
+   "cambios_graficos_por_s": 2.22,
+   "camara": {
+    "movimiento": "static",
+    "zoom_total": 1.0,
+    "desplazamiento_x": 0.0,
+    "desplazamiento_y": 0.0,
+    "temblor": 0.0,
+    "nivel": "estimacion",
+    "metodo": "correlación de fase + búsqueda de escala entre fotogramas a 0.4 s",
+    "nota": "imagen sin cambios"
+   },
+   "color": {
+    "luma_media": 17.6,
+    "contraste_std": 36.3,
+    "saturacion_media": 0.658,
+    "calidez_r_menos_b": -9.6,
+    "negros_pct": 0.906,
+    "blancos_pct": 0.005
+   },
+   "nivel": "observacion"
+  },
+  {
+   "n": 14,
+   "inicio": 35.0,
+   "fin": 40.9,
+   "duracion_s": 5.9,
+   "movimiento_imagen": 0.12,
+   "imagen": "estatica",
+   "cambios_graficos_por_s": 2.71,
+   "camara": {
+    "movimiento": "static",
+    "zoom_total": 1.0,
+    "desplazamiento_x": 0.0,
+    "desplazamiento_y": 0.0,
+    "temblor": 0.0,
+    "nivel": "estimacion",
+    "metodo": "correlación de fase + búsqueda de escala entre fotogramas a 0.4 s",
+    "nota": "imagen sin cambios"
+   },
+   "color": {
+    "luma_media": 21.9,
+    "contraste_std": 42.1,
+    "saturacion_media": 0.654,
+    "calidez_r_menos_b": -4.8,
+    "negros_pct": 0.866,
+    "blancos_pct": 0.006
+   },
+   "nivel": "observacion"
+  },
+  {
+   "n": 15,
+   "inicio": 40.9,
+   "fin": 42.1,
+   "duracion_s": 1.2,
+   "movimiento_imagen": 0.55,
+   "imagen": "estatica",
+   "cambios_graficos_por_s": 3.33,
+   "camara": {
+    "movimiento": "static",
+    "zoom_total": 1.0,
+    "desplazamiento_x": 0.0,
+    "desplazamiento_y": 0.0,
+    "temblor": 0.0,
+    "nivel": "hipotesis",
+    "metodo": "correlación de fase + búsqueda de escala entre fotogramas a 0.4 s",
+    "nota": "la imagen cambia pero no como un movimiento de cámara: objetos, gráficos o texto animado"
+   },
+   "color": {
+    "luma_media": 20.4,
+    "contraste_std": 46.2,
+    "saturacion_media": 0.427,
+    "calidez_r_menos_b": -17.2,
+    "negros_pct": 0.891,
+    "blancos_pct": 0.022
+   },
+   "nivel": "observacion"
+  },
+  {
+   "n": 16,
+   "inicio": 42.1,
+   "fin": 43.8,
+   "duracion_s": 1.7,
+   "movimiento_imagen": 0.08,
+   "imagen": "estatica",
+   "cambios_graficos_por_s": 1.76,
+   "camara": {
+    "movimiento": "static",
+    "zoom_total": 1.0,
+    "desplazamiento_x": 0.0,
+    "desplazamiento_y": 0.0,
+    "temblor": 0.0,
+    "nivel": "estimacion",
+    "metodo": "correlación de fase + búsqueda de escala entre fotogramas a 0.4 s",
+    "nota": "imagen sin cambios"
+   },
+   "color": {
+    "luma_media": 28.1,
+    "contraste_std": 57.0,
+    "saturacion_media": 0.469,
+    "calidez_r_menos_b": -9.9,
+    "negros_pct": 0.837,
+    "blancos_pct": 0.032
+   },
+   "nivel": "observacion"
+  },
+  {
+   "n": 17,
+   "inicio": 43.8,
+   "fin": 46.6,
+   "duracion_s": 2.8,
+   "movimiento_imagen": 0.23,
+   "imagen": "estatica",
+   "cambios_graficos_por_s": 2.14,
+   "camara": {
+    "movimiento": "static",
+    "zoom_total": 1.0,
+    "desplazamiento_x": 0.0,
+    "desplazamiento_y": 0.0,
+    "temblor": 0.0,
+    "nivel": "estimacion",
+    "metodo": "correlación de fase + búsqueda de escala entre fotogramas a 0.4 s",
+    "nota": "imagen sin cambios"
+   },
+   "color": {
+    "luma_media": 14.5,
+    "contraste_std": 34.2,
+    "saturacion_media": 0.682,
+    "calidez_r_menos_b": -17.1,
+    "negros_pct": 0.939,
+    "blancos_pct": 0.009
+   },
+   "nivel": "observacion"
+  },
+  {
+   "n": 18,
+   "inicio": 46.6,
+   "fin": 49.5,
+   "duracion_s": 2.9,
+   "movimiento_imagen": 0.17,
+   "imagen": "estatica",
+   "cambios_graficos_por_s": 1.38,
+   "camara": {
+    "movimiento": "static",
+    "zoom_total": 1.0,
+    "desplazamiento_x": 0.0,
+    "desplazamiento_y": 0.0,
+    "temblor": 0.0,
+    "nivel": "hipotesis",
+    "metodo": "correlación de fase + búsqueda de escala entre fotogramas a 0.4 s",
+    "nota": "la imagen cambia pero no como un movimiento de cámara: objetos, gráficos o texto animado"
+   },
+   "color": {
+    "luma_media": 15.8,
+    "contraste_std": 47.0,
+    "saturacion_media": 0.392,
+    "calidez_r_menos_b": -15.3,
+    "negros_pct": 0.925,
+    "blancos_pct": 0.021
+   },
+   "nivel": "observacion"
+  }
+ ],
+ "transitions": {
+  "items": [
+   {
+    "t": 0.2,
+    "duracion_s": 0.2,
+    "tipo": "transicion_animada",
+    "nivel": "estimacion",
+    "evidencia": "cambio repartido en 0.20 s"
+   },
+   {
+    "t": 1.2,
+    "duracion_s": 0.1,
+    "tipo": "corte",
+    "nivel": "observacion",
+    "evidencia": "cambio completo entre dos fotogramas consecutivos"
+   },
+   {
+    "t": 5.2,
+    "duracion_s": 0.2,
+    "tipo": "fundido_encadenado",
+    "nivel": "estimacion",
+    "evidencia": "fotograma intermedio ≈ mezcla de ambos planos (1.6 vs 7.2)"
+   },
+   {
+    "t": 6.2,
+    "duracion_s": 0.2,
+    "tipo": "fundido_encadenado",
+    "nivel": "estimacion",
+    "evidencia": "fotograma intermedio ≈ mezcla de ambos planos (3.7 vs 5.5)"
+   },
+   {
+    "t": 12.3,
+    "duracion_s": 0.3,
+    "tipo": "transicion_animada",
+    "nivel": "estimacion",
+    "evidencia": "cambio repartido en 0.30 s"
+   },
+   {
+    "t": 12.7,
+    "duracion_s": 0.1,
+    "tipo": "corte",
+    "nivel": "observacion",
+    "evidencia": "cambio completo entre dos fotogramas consecutivos"
+   },
+   {
+    "t": 13.0,
+    "duracion_s": 0.5,
+    "tipo": "transicion_animada",
+    "nivel": "estimacion",
+    "evidencia": "cambio repartido en 0.50 s"
+   },
+   {
+    "t": 13.9,
+    "duracion_s": 0.3,
+    "tipo": "transicion_animada",
+    "nivel": "estimacion",
+    "evidencia": "cambio repartido en 0.30 s"
+   },
+   {
+    "t": 15.8,
+    "duracion_s": 0.1,
+    "tipo": "corte",
+    "nivel": "observacion",
+    "evidencia": "cambio completo entre dos fotogramas consecutivos"
+   },
+   {
+    "t": 18.3,
+    "duracion_s": 0.2,
+    "tipo": "fundido_encadenado",
+    "nivel": "estimacion",
+    "evidencia": "fotograma intermedio ≈ mezcla de ambos planos (2.5 vs 6.8)"
+   },
+   {
+    "t": 26.8,
+    "duracion_s": 0.4,
+    "tipo": "transicion_animada",
+    "nivel": "estimacion",
+    "evidencia": "cambio repartido en 0.40 s"
+   },
+   {
+    "t": 33.2,
+    "duracion_s": 0.3,
+    "tipo": "transicion_animada",
+    "nivel": "estimacion",
+    "evidencia": "cambio repartido en 0.30 s"
+   },
+   {
+    "t": 35.0,
+    "duracion_s": 0.1,
+    "tipo": "corte",
+    "nivel": "observacion",
+    "evidencia": "cambio completo entre dos fotogramas consecutivos"
+   },
+   {
+    "t": 40.9,
+    "duracion_s": 0.4,
+    "tipo": "barrido_con_desenfoque",
+    "nivel": "estimacion",
+    "evidencia": "nitidez cae a 1.2 desde 7.4 (desenfoque de movimiento)"
+   },
+   {
+    "t": 42.1,
+    "duracion_s": 0.1,
+    "tipo": "corte",
+    "nivel": "observacion",
+    "evidencia": "cambio completo entre dos fotogramas consecutivos"
+   },
+   {
+    "t": 43.8,
+    "duracion_s": 0.3,
+    "tipo": "transicion_animada",
+    "nivel": "estimacion",
+    "evidencia": "cambio repartido en 0.30 s"
+   },
+   {
+    "t": 46.6,
+    "duracion_s": 0.6,
+    "tipo": "barrido_con_desenfoque",
+    "nivel": "estimacion",
+    "evidencia": "nitidez cae a 1.1 desde 3.7 (desenfoque de movimiento)"
+   }
+  ],
+  "resumen": {
+   "transicion_animada": 7,
+   "corte": 5,
+   "fundido_encadenado": 3,
+   "barrido_con_desenfoque": 2
+  },
+  "nivel": "estimacion"
+ },
+ "camera": {
+  "resumen": {
+   "static": 15,
+   "indeterminado": 3
+  },
+  "nivel": "estimacion",
+  "nota": "zoom/paneo reales o simulados no se distinguen: en ambos casos el encuadre cambia igual"
+ },
+ "rhythm": {
+  "cortes_por_10s": 3.43,
+  "por_ventana_5s": [
+   {
+    "desde": 0.0,
+    "cortes": 2
+   },
+   {
+    "desde": 5.0,
+    "cortes": 2
+   },
+   {
+    "desde": 10.0,
+    "cortes": 4
+   },
+   {
+    "desde": 15.0,
+    "cortes": 2
+   },
+   {
+    "desde": 20.0,
+    "cortes": 0
+   },
+   {
+    "desde": 25.0,
+    "cortes": 1
+   },
+   {
+    "desde": 30.0,
+    "cortes": 1
+   },
+   {
+    "desde": 35.0,
+    "cortes": 1
+   },
+   {
+    "desde": 40.0,
+    "cortes": 3
+   },
+   {
+    "desde": 45.0,
+    "cortes": 1
+   }
+  ],
+  "cortes_10s_primera_mitad": 4.04,
+  "cortes_10s_segunda_mitad": 2.83,
+  "variacion_planos_cv": 0.87,
+  "cambios_de_ritmo": [],
+  "nivel": "observacion"
+ },
+ "structure": {
+  "gancho": {
+   "inicio": 0.0,
+   "fin": 3.0,
+   "cortes": 2,
+   "texto_antes_de_1s": true,
+   "nivel": "estimacion"
+  },
+  "desarrollo": {
+   "inicio": 3.0,
+   "fin": 12.0,
+   "nivel": "estimacion"
+  },
+  "climax": {
+   "inicio": 12.0,
+   "fin": 15.0,
+   "nivel": "estimacion",
+   "motivo": "ventana de 3 s con más cortes, movimiento y nivel de audio (entre 20% y 90% del vídeo)"
+  },
+  "desenlace": {
+   "inicio": 46.6,
+   "fin": 49.5,
+   "silencio_final_s": 2.93,
+   "nivel": "estimacion"
+  },
+  "metodo": "energía por segundo = cortes + diferencia de imagen + nivel de audio (z-scores)"
+ },
+ "text": {
+  "texto_en_pantalla_pct": 0.992,
+  "nivel": "estimacion",
+  "metodo": "densidad de bordes horizontales fuertes por franja de 5% de altura",
+  "franjas_ocupadas": [
+   {
+    "y_pct": 8,
+    "presencia": 0.94
+   },
+   {
+    "y_pct": 18,
+    "presencia": 0.55
+   },
+   {
+    "y_pct": 28,
+    "presencia": 0.22
+   },
+   {
+    "y_pct": 38,
+    "presencia": 0.19
+   },
+   {
+    "y_pct": 42,
+    "presencia": 0.26
+   },
+   {
+    "y_pct": 57,
+    "presencia": 0.17
+   },
+   {
+    "y_pct": 88,
+    "presencia": 0.76
+   }
+  ],
+  "subtitulos": {
+   "probable": true,
+   "nivel": "estimacion",
+   "posicion_y_pct": 88,
+   "alto_bloque_px_aprox": 96,
+   "cambios_por_s": 0.95,
+   "intervalo_mediano_s": 1.0,
+   "color_dominante": "blanco",
+   "palabras_resaltadas_en_color": true,
+   "aparicion": "instantánea (aparece de golpe)",
+   "aparicion_nivel": "hipotesis",
+   "cambios_t": [
+    1.0,
+    1.2,
+    2.8,
+    3.8,
+    5.2,
+    6.8,
+    7.8,
+    8.0,
+    8.8,
+    10.2,
+    10.4,
+    11.4,
+    12.0,
+    12.2,
+    14.4,
+    15.8,
+    18.0,
+    18.2,
+    20.2,
+    20.4,
+    22.0,
+    22.2,
+    23.8,
+    24.0,
+    25.0,
+    26.4,
+    26.6,
+    27.4,
+    27.6,
+    29.0,
+    29.6,
+    31.4,
+    31.6,
+    33.0,
+    34.6,
+    35.4,
+    35.6,
+    37.4,
+    38.2,
+    38.4,
+    40.8,
+    41.8,
+    42.0,
+    43.6,
+    44.4,
+    44.6,
+    46.2
+   ],
+   "tipografia": "no identificable automáticamente: revisar en los fotogramas (hipótesis visual)"
+  }
+ },
+ "overlays": {
+  "items": [
+   {
+    "tipo": "rotulo_fijo",
+    "zona": "franja al 8% de la altura",
+    "presencia": 0.94,
+    "nivel": "estimacion",
+    "lectura": "cabecera, marca o rótulo presente casi todo el vídeo",
+    "lectura_nivel": "hipotesis"
+   }
+  ],
+  "nivel": "estimacion",
+  "nota": "máscaras y composiciones complejas no se detectan automáticamente: revisar la hoja de fotogramas"
+ },
+ "color": {
+  "global": {
+   "luma_media": 20.8,
+   "contraste_std": 44.1,
+   "saturacion_media": 0.592,
+   "calidez_r_menos_b": -9.7,
+   "negros_pct": 0.88,
+   "blancos_pct": 0.01
+  },
+  "estetica": [
+   "oscuro",
+   "contraste medio",
+   "muy saturado",
+   "neutro"
+  ],
+  "estetica_nivel": "estimacion",
+  "paleta": [
+   {
+    "hex": "#101010",
+    "proporcion": 0.809
+   },
+   {
+    "hex": "#101030",
+    "proporcion": 0.079
+   },
+   {
+    "hex": "#F0B010",
+    "proporcion": 0.021
+   },
+   {
+    "hex": "#F0F0F0",
+    "proporcion": 0.011
+   },
+   {
+    "hex": "#303050",
+    "proporcion": 0.01
+   },
+   {
+    "hex": "#303030",
+    "proporcion": 0.007
+   }
+  ],
+  "afinidad_paleta_e2a": {
+   "azul_marino": 0.315,
+   "dorado": 0.003,
+   "dorado_profundo": 0.003,
+   "blanco": 0.011
+  },
+  "flashes": [],
+  "nivel": "observacion"
+ },
+ "audio": {
+  "loudness": {
+   "integrated_lufs": -14.1,
+   "lra_lu": 2.1,
+   "true_peak_dbfs": -1.6,
+   "nivel": "observacion"
+  },
+  "silences": {
+   "items": [
+    [
+     38.11,
+     38.4
+    ],
+    [
+     40.5,
+     40.75
+    ],
+    [
+     41.71,
+     41.99
+    ],
+    [
+     44.28,
+     44.55
+    ],
+    [
+     46.58,
+     49.51
+    ]
+   ],
+   "umbral_db": -35,
+   "nivel": "observacion"
+  },
+  "hits": {
+   "times": [
+    0.38,
+    0.78,
+    1.08,
+    1.43,
+    3.33,
+    3.93,
+    6.33,
+    6.68,
+    7.58,
+    8.83,
+    12.73,
+    14.23,
+    14.78,
+    16.23,
+    16.73,
+    18.03,
+    21.03,
+    23.83,
+    25.88,
+    26.18,
+    26.53,
+    27.28,
+    28.58,
+    28.88,
+    29.18,
+    30.48,
+    30.78,
+    31.43,
+    32.53,
+    35.68,
+    36.83,
+    37.53,
+    38.43,
+    39.13,
+    40.18,
+    40.73,
+    41.28,
+    41.98,
+    43.43,
+    43.58,
+    44.58,
+    46.08
+   ],
+   "per_10s": 8.48,
+   "strong": [
+    12.73,
+    16.23,
+    29.18,
+    40.73,
+    41.98,
+    43.58
+   ],
+   "nivel": "observacion"
+  },
+  "tempo": {
+   "bpm": 109.1,
+   "confianza": 0.09,
+   "fiable": false,
+   "nivel": "estimacion"
+  },
+  "voz": {
+   "presente": true,
+   "proporcion": 0.93,
+   "tramos": [
+    [
+     0.03,
+     38.03
+    ],
+    [
+     38.53,
+     46.53
+    ]
+   ],
+   "nivel": "estimacion",
+   "metodo": "energía 300-3400 Hz modulada a 3-8 Hz (ritmo silábico)"
+  },
+  "musica": {
+   "presente": false,
+   "proporcion_sin_voz": 0.0,
+   "nivel": "estimacion",
+   "metodo": "energía tonal (baja planitud espectral) fuera de la voz"
+  },
+  "mezcla": {
+   "voz_sobre_fondo_db": 11.0,
+   "nivel": "estimacion",
+   "nota": "aproximación: el fondo se mide en las pausas, no debajo de la voz"
+  },
+  "bandas": {
+   "graves_pct": 0.225,
+   "voz_pct": 0.676,
+   "agudos_pct": 0.021,
+   "nivel": "observacion"
+  },
+  "efectos_candidatos": {
+   "times": [],
+   "nivel": "estimacion",
+   "nota": "golpes fuertes fuera de la voz: impactos, whooshes o golpes de música"
+  },
+  "envolvente_db_p10_p50_p90": [
+   -17.6,
+   0.0,
+   10.1
+  ]
+ },
+ "sync": {
+  "nivel": "estimacion",
+  "cortes_en_golpe_de_audio": {
+   "n": 1,
+   "de": 17,
+   "proporcion": 0.06,
+   "esperado_por_azar": 0.17,
+   "tolerancia_s": 0.1
+  },
+  "texto_y_voz": {
+   "inicios_de_frase_con_cambio_de_texto": 1,
+   "frases": 2
+  },
+  "cortes_tras_silencio": 2,
+  "lectura": "si la proporción de cortes en golpe supera claramente lo esperado por azar, el montaje está cortado al audio (música o efectos)"
+ },
+ "retention": {
+  "primer_corte_s": 0.2,
+  "primer_sonido_s": 0.0,
+  "texto_en_el_primer_segundo": true,
+  "mayor_tramo_sin_cambio_visual_s": 2.9,
+  "interrupciones_de_patron": 3,
+  "cambios_de_ritmo": 0,
+  "bucle_inicio_final": false,
+  "diferencia_primer_ultimo_fotograma": 15.6,
+  "nivel": "observacion",
+  "lecturas": [
+   {
+    "texto": "cambio visual en el primer 1.5 s: gancho visual rápido",
+    "nivel": "hipotesis"
+   },
+   {
+    "texto": "texto en pantalla desde el primer segundo: el gancho se lee sin audio",
+    "nivel": "hipotesis"
+   },
+   {
+    "texto": "silencio de 2.93 s al final",
+    "nivel": "observacion"
+   }
+  ]
+ },
+ "frames": {
+  "items": [
+   {
+    "t": 0.1,
+    "file": "frames/f_0000.10.jpg"
+   },
+   {
+    "t": 0.7,
+    "file": "frames/f_0000.70.jpg"
+   },
+   {
+    "t": 3.2,
+    "file": "frames/f_0003.20.jpg"
+   },
+   {
+    "t": 5.7,
+    "file": "frames/f_0005.70.jpg"
+   },
+   {
+    "t": 9.25,
+    "file": "frames/f_0009.25.jpg"
+   },
+   {
+    "t": 12.5,
+    "file": "frames/f_0012.50.jpg"
+   },
+   {
+    "t": 12.85,
+    "file": "frames/f_0012.85.jpg"
+   },
+   {
+    "t": 13.45,
+    "file": "frames/f_0013.45.jpg"
+   },
+   {
+    "t": 13.5,
+    "file": "frames/f_0013.50.jpg"
+   },
+   {
+    "t": 14.85,
+    "file": "frames/f_0014.85.jpg"
+   },
+   {
+    "t": 17.05,
+    "file": "frames/f_0017.05.jpg"
+   },
+   {
+    "t": 22.55,
+    "file": "frames/f_0022.55.jpg"
+   },
+   {
+    "t": 30.0,
+    "file": "frames/f_0030.00.jpg"
+   },
+   {
+    "t": 34.1,
+    "file": "frames/f_0034.10.jpg"
+   },
+   {
+    "t": 37.95,
+    "file": "frames/f_0037.95.jpg"
+   },
+   {
+    "t": 41.5,
+    "file": "frames/f_0041.50.jpg"
+   },
+   {
+    "t": 42.95,
+    "file": "frames/f_0042.95.jpg"
+   },
+   {
+    "t": 45.2,
+    "file": "frames/f_0045.20.jpg"
+   },
+   {
+    "t": 48.05,
+    "file": "frames/f_0048.05.jpg"
+   },
+   {
+    "t": 49.3,
+    "file": "frames/f_0049.30.jpg"
+   }
+  ],
+  "sheet": "frames/sheet.jpg",
+  "nota": "material de trabajo: no se sube al repositorio si el vídeo es de terceros"
+ },
+ "meta": {
+  "skill_version": "1.0.0",
+  "code_sha256": "db24a93b255ae5d9",
+  "params": {
+   "low_fps": 10,
+   "mid_fps": 5,
+   "mid_long_side": 320,
+   "cut_k": 6.0,
+   "cut_min": 3.0,
+   "min_shot_s": 0.2,
+   "static_diff": 1.2
+  },
+  "content_sha256": "2992d55202c8aae92e5eeaf08066199e17acb438444201446dd4081ffffe8594",
+  "analyzed_at": "2026-11-11T15:48:32Z",
+  "tools": "ffmpeg/ffprobe + numpy"
+ }
+}

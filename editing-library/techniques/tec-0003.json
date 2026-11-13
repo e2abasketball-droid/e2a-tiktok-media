@@ -1,0 +1,72 @@
+{
+ "schema": "e2a.technique/1",
+ "version": 2,
+ "origen": "R-0001 (vídeo propio E2A, prueba del sistema)",
+ "estado": "propuesta",
+ "requiere_codigo": false,
+ "creada": "2026-11-11",
+ "actualizada": "2026-11-11",
+ "historial": [
+  {
+   "fecha": "2026-11-11",
+   "de": "fase 1",
+   "a": "e2a.technique/1",
+   "motivo": "migrada al formato de la skill e2a-video-editing-intelligence v1"
+  }
+ ],
+ "id": "tec-0003",
+ "nombre": "Cierre con pregunta al espectador y logo en silencio",
+ "categoria": "estructura",
+ "descripcion": "Tras la conclusión, un plano con una pregunta abierta invita a comentar y el vídeo termina con el logo sobre azul marino en casi silencio durante unos 3 segundos, sin música que compita. El silencio final está medido; la pregunta y el logo se ven en la hoja de fotogramas.",
+ "para": [
+  "record",
+  "player",
+  "curiosity",
+  "comparison"
+ ],
+ "evitar_en": [],
+ "aplicar_a": {
+  "posicion": "ultima"
+ },
+ "receta": {
+  "episode": {
+   "ending": "debate"
+  },
+  "scene": {
+   "camera": "static",
+   "transition": "cut"
+  }
+ },
+ "comprobacion": {
+  "texto": "el render termina con al menos 1.5 s en silencio (logo) y la última escena dura 2 s o más",
+  "reglas": [
+   {
+    "metrica": "structure.desenlace.silencio_final_s",
+    "op": ">=",
+    "valor": 1.5
+   },
+   {
+    "metrica": "plan.escena_s",
+    "op": ">=",
+    "valor": 2
+   }
+  ]
+ },
+ "evidencia": [
+  {
+   "ref_id": "R-0001",
+   "medidas": {
+    "silencio_final_s": 2.93,
+    "ultimo_plano_s": 2.9,
+    "lufs_integrado": -14.1
+   },
+   "nivel": "observacion"
+  },
+  {
+   "ref_id": "R-0001",
+   "medidas": {},
+   "nivel": "hipotesis",
+   "nota": "pregunta al espectador (45.2 s) y logo (48 s) vistos en la hoja de fotogramas"
+  }
+ ]
+}

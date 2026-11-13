@@ -1,0 +1,72 @@
+{
+ "source": "public/tactical/stagger/voice-raw.mp3",
+ "source_sec": 29.92,
+ "preroll": 0.12,
+ "output": "public/tactical/stagger/voice.wav",
+ "output_sec": 32.33,
+ "inserted_total_sec": 2.29,
+ "last_word_end": 32.411,
+ "gaps": [
+  {
+   "after": "has a problem.",
+   "natural_silence": [
+    3.76,
+    4.15
+   ],
+   "natural_sec": 0.39,
+   "target_sec": 0.7,
+   "inserted_sec": 0.31,
+   "cut_at_source": 4.045,
+   "why": "freeze on the second screen lands (ONE PROBLEM.) before the rewind"
+  },
+  {
+   "after": "one after another.",
+   "natural_silence": [
+    8.49,
+    8.94
+   ],
+   "natural_sec": 0.45,
+   "target_sec": 0.55,
+   "inserted_sec": 0.1,
+   "cut_at_source": 8.625,
+   "why": "the route finishes drawing before Case A starts"
+  },
+  {
+   "after": "catches for three.",
+   "natural_silence": [
+    14.89,
+    15.4
+   ],
+   "natural_sec": 0.51,
+   "target_sec": 1.8,
+   "inserted_sec": 1.29,
+   "cut_at_source": 15.025,
+   "why": "ball flight to the swish + OPEN THREE, then the rewind"
+  },
+  {
+   "after": "if the help is late.",
+   "natural_silence": [
+    22.88,
+    23.41
+   ],
+   "natural_sec": 0.53,
+   "target_sec": 1.0,
+   "inserted_sec": 0.47,
+   "cut_at_source": 23.055,
+   "why": "layup finishes + OPEN LANE / +2 before the summary"
+  },
+  {
+   "after": "Same action.",
+   "natural_silence": [
+    27.73,
+    27.96
+   ],
+   "natural_sec": 0.23,
+   "target_sec": 0.35,
+   "inserted_sec": 0.12,
+   "cut_at_source": 27.855,
+   "why": "both routes on one court before 'Two reads.'"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}

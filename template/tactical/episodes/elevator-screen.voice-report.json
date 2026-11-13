@@ -1,0 +1,96 @@
+{
+ "source": "public/tactical/elevator/voice-raw.mp3",
+ "source_sec": 62.96,
+ "preroll": 0.15,
+ "output": "public/tactical/elevator/voice.wav",
+ "output_sec": 64.71,
+ "inserted_total_sec": 1.6,
+ "last_word_end": 64.79,
+ "gaps": [
+  {
+   "after": "an entire defense.",
+   "natural_silence": [
+    6.57,
+    7.11
+   ],
+   "natural_sec": 0.54,
+   "target_sec": 0.85,
+   "inserted_sec": 0.31,
+   "cut_at_source": 6.955,
+   "why": "hook -> rewind: dramatic beat on the freeze (TRAPPED.)"
+  },
+  {
+   "after": "This is the elevator screen.",
+   "natural_silence": [
+    8.99,
+    9.45
+   ],
+   "natural_sec": 0.46,
+   "target_sec": 0.55,
+   "inserted_sec": 0.09,
+   "cut_at_source": 9.305,
+   "why": "title lands before the explanation"
+  },
+  {
+   "after": "close the gap like elevator doors.",
+   "natural_silence": [
+    19.96,
+    20.42
+   ],
+   "natural_sec": 0.46,
+   "target_sec": 0.6,
+   "inserted_sec": 0.14,
+   "cut_at_source": 20.295,
+   "why": "block change: setup -> Case A"
+  },
+  {
+   "after": "Watch what happens.",
+   "natural_silence": [
+    24.21,
+    24.7
+   ],
+   "natural_sec": 0.49,
+   "target_sec": 0.55,
+   "inserted_sec": 0.06,
+   "cut_at_source": 24.385,
+   "why": "the play starts at real speed"
+  },
+  {
+   "after": "Catch. Shoot. Three points.",
+   "natural_silence": [
+    33.24,
+    33.66
+   ],
+   "natural_sec": 0.42,
+   "target_sec": 0.85,
+   "inserted_sec": 0.43,
+   "cut_at_source": 33.465,
+   "why": "the ball drops through the rim, OPEN THREE"
+  },
+  {
+   "after": "a layup opportunity instead.",
+   "natural_silence": [
+    48.27,
+    48.69
+   ],
+   "natural_sec": 0.42,
+   "target_sec": 0.75,
+   "inserted_sec": 0.33,
+   "cut_at_source": 48.425,
+   "why": "layup lands; block change -> comparison"
+  },
+  {
+   "after": "slip to the rim.",
+   "natural_silence": [
+    57.49,
+    58.0
+   ],
+   "natural_sec": 0.51,
+   "target_sec": 0.75,
+   "inserted_sec": 0.24,
+   "cut_at_source": 57.865,
+   "why": "side-by-side summary holds before the conclusion"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}

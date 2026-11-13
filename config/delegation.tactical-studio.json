@@ -1,0 +1,59 @@
+{
+ "status": "granted",
+ "revoked": false,
+ "what": "Delegation of the owner of E2A Basketball to the Tactical Studio scheduled task to schedule, WITHOUT per-video review, the tactical videos defined in scope. Only valid when status is 'granted', it is on main, and its sha256 equals the one pinned in the scheduled task's prompt.",
+ "granted_by": "owner (E2A), decision card 2026-11-13T00:07:36Z: 'Sí, pero desde el 14 nov'",
+ "granted_at": "2026-11-13T11:07:36+11:00",
+ "valid_from": "2026-11-14T00:00:00+11:00",
+ "valid_until": "2026-11-21T00:00:00+11:00",
+ "scope": {
+  "brand": "7681319",
+  "accounts": {
+   "instagram": "e2a_basketball",
+   "tiktok": "e2a.basketball",
+   "youtube": "UCdjEpbOnxtCaNn1m7YXyJqQ"
+  },
+  "networks": [
+   "instagram",
+   "tiktok",
+   "youtube"
+  ],
+  "max_videos_per_day": 2,
+  "slots": [
+   "10:00",
+   "13:00"
+  ],
+  "timezone": "Australia/Sydney",
+  "format": "tactical basketball",
+  "duration_s": [
+   30,
+   40
+  ],
+  "engine": "Tactical3DV2",
+  "write_tool": "createScheduledPost",
+  "qc_required": [
+   "tactical",
+   "engine",
+   "audio",
+   "technical",
+   "frames",
+   "licences",
+   "bounds"
+  ],
+  "budget_per_day": {
+   "voice_takes": 2,
+   "voice_credits": 1200,
+   "final_renders": 4,
+   "create_calls": 4
+  }
+ },
+ "never": [
+  "updateScheduledPost",
+  "delete or move posts",
+  "Trial Reels",
+  "posts outside the two slots",
+  "other brands or accounts",
+  "content that is not a Tactical3DV2 episode"
+ ],
+ "revocation": "Immediate and hard: disable or delete the scheduled task 'E2A — TACTICAL STUDIO' on claude.ai. Also: any edit of this file on main (e.g. revoked=true) changes its sha256 and stops publishing at the next check. The task's cron only fires inside these dates."
+}

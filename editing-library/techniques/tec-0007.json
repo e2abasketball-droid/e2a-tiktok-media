@@ -1,0 +1,44 @@
+{
+ "schema": "e2a.technique/1",
+ "version": 1,
+ "para": [
+  "tactical"
+ ],
+ "evitar_en": [],
+ "origen": "Episodio 02 Stagger Screen (propio, motor Tactical3D)",
+ "estado": "propuesta",
+ "requiere_codigo": true,
+ "creada": "2026-11-12",
+ "actualizada": "2026-11-12",
+ "historial": [],
+ "id": "tec-0007",
+ "nombre": "Congelación de lectura con esquinas doradas",
+ "categoria": "efectos",
+ "descripcion": "En el instante de la decisión táctica (separación del tirador, top-lock) el juego se congela con una rampa de velocidad, la imagen pierde algo de saturación y aparecen cuatro esquinas finas doradas y una etiqueta pequeña 'FREEZE'. Sin destello blanco. La voz explica sobre la imagen quieta y el juego reanuda con otra rampa.",
+ "aplicar_a": {
+  "posicion": "cualquiera"
+ },
+ "receta": {
+  "sfx": [
+   "impact"
+  ]
+ },
+ "comprobacion": {
+  "texto": "cada congelación dura entre 0.6 y 2.5 s (medir en el plan del episodio)",
+  "reglas": [
+   {
+    "metrica": "plan.escena_s",
+    "op": ">=",
+    "valor": 0.5
+   }
+  ]
+ },
+ "evidencia": [
+  {
+   "ref_id": "R-0001",
+   "medidas": {},
+   "nivel": "hipotesis",
+   "nota": "implementada en screen3d.tsx (FreezeFrame) y en los remaps del episodio 02"
+  }
+ ]
+}

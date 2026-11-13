@@ -1,0 +1,84 @@
+{
+ "status": "PILOT 2026-11-14..20 authorised by the owner 2026-11-13T00:07Z. Tasks created from this file.",
+ "tasks": [
+  {
+   "name": "E2A — TACTICAL STUDIO",
+   "cron": "CRON_TZ=Australia/Sydney 0 17 13-19 11 *",
+   "cron_note": "17:00 Sydney the day BEFORE each post date: posts 14–20 Nov → runs 13–19 Nov. Stops by itself; an extension needs the owner.",
+   "repositories": [
+    {
+     "repo": "e2abasketball-droid/e2a-tiktok-media",
+     "branch": "main"
+    }
+   ],
+   "prompt_file": "produccion/tactical/PROMPT-DIARIO.md",
+   "prompt_pins": {
+    "DELEGATION_SHA256": "<sha256 of config/delegation.tactical-studio.json on main, status granted>"
+   },
+   "connectors": {
+    "Metricool-Social-Media-Management": {
+     "permitted_tools": [
+      "getBrandSettings",
+      "getScheduledPosts",
+      "createScheduledPost"
+     ]
+    },
+    "ElevenLabs": {
+     "permitted_tools": [
+      "creative_create_flow",
+      "creative_generate_speech",
+      "creative_get_flow_run_status",
+      "creative_transcribe_audio",
+      "creative_list_voices"
+     ]
+    }
+   },
+   "never_attach": [
+    "Claude_Code_Remote",
+    "Gmail",
+    "Google-Sheets",
+    "Google-Drive",
+    "Canva"
+   ]
+  },
+  {
+   "name": "E2A — TACTICAL CHECK",
+   "cron": "CRON_TZ=Australia/Sydney 30 8 14-20 11 *",
+   "cron_note": "08:30 Sydney on each post date of the delegation window. Read-only.",
+   "repositories": [
+    {
+     "repo": "e2abasketball-droid/e2a-tiktok-media",
+     "branch": "main"
+    }
+   ],
+   "prompt_file": "produccion/tactical/PROMPT-CHECK.md",
+   "connectors": {
+    "Metricool-Social-Media-Management": {
+     "permitted_tools": [
+      "getBrandSettings",
+      "getScheduledPosts",
+      "getAnalyticsAvailableMetrics",
+      "getAnalyticsDataByMetrics"
+     ]
+    }
+   },
+   "never_attach": [
+    "Claude_Code_Remote",
+    "ElevenLabs",
+    "Gmail",
+    "Google-Sheets",
+    "Google-Drive",
+    "Canva"
+   ]
+  }
+ ],
+ "metricool_write_tools": [
+  "createScheduledPost",
+  "updateScheduledPost",
+  "sendScheduledPostForReview",
+  "createScheduledPostForReview"
+ ],
+ "allowed_write_tool": "createScheduledPost",
+ "allowed_write_tool_only_in": "E2A — TACTICAL STUDIO, step 'publisher' (tools/tactical_publisher.py prepare → one call → record)",
+ "revocation": "Immediate: disable or delete 'E2A — TACTICAL STUDIO' on claude.ai (Scheduled tasks). The routines cannot re-enable or extend themselves: they have no Claude_Code_Remote connector. Already scheduled posts stay in Metricool; the owner deletes them there if wanted."
+}

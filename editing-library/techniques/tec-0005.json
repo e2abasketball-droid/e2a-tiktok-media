@@ -1,0 +1,52 @@
+{
+ "schema": "e2a.technique/1",
+ "id": "tec-0005",
+ "version": 1,
+ "nombre": "Barrido rápido al cambiar de bloque",
+ "categoria": "transicion",
+ "descripcion": "Los cambios de bloque (presentación → dato → cierre) usan transiciones animadas de 0.2–0.6 s, dos de ellas con desenfoque de movimiento; dentro de un bloque se corta en seco. En Remotion Pro equivale a 'whip' en la segunda escena (entrada al primer bloque de datos), sin repetirlo en escenas seguidas.",
+ "para": [
+  "record",
+  "player",
+  "comparison",
+  "curiosity"
+ ],
+ "evitar_en": [],
+ "aplicar_a": {
+  "posicion": "segunda"
+ },
+ "receta": {
+  "scene": {
+   "transition": "whip"
+  }
+ },
+ "comprobacion": {
+  "texto": "la escena con barrido dura al menos 2 s y el vídeo tiene 5 escenas o más (si no, el barrido se nota repetido)",
+  "reglas": [
+   {
+    "metrica": "plan.escenas_n",
+    "op": ">=",
+    "valor": 5
+   },
+   {
+    "metrica": "plan.escena_s",
+    "op": ">=",
+    "valor": 2
+   }
+  ]
+ },
+ "evidencia": [
+  {
+   "ref_id": "R-0001",
+   "medidas": {
+    "transiciones_animadas": 9
+   },
+   "nivel": "estimacion"
+  }
+ ],
+ "origen": "R-0001 (propio)",
+ "estado": "propuesta",
+ "requiere_codigo": false,
+ "creada": "2026-11-11",
+ "actualizada": "2026-11-11"
+}

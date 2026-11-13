@@ -1,0 +1,1394 @@
+{
+ "id": "stagger-screen",
+ "title": "The Stagger Screen: Two Screens. Two Reads.",
+ "fps": 30,
+ "voiceRaw": "tactical/stagger/voice-raw.mp3",
+ "wordsRaw": "stagger-screen.words-raw.json",
+ "voice": "tactical/stagger/voice.wav",
+ "preroll": 0.12,
+ "tail": 0.9,
+ "gaps": [
+  {
+   "after": "has a problem.",
+   "sec": 0.7,
+   "why": "freeze on the second screen lands (ONE PROBLEM.) before the rewind"
+  },
+  {
+   "after": "one after another.",
+   "sec": 0.55,
+   "why": "the route finishes drawing before Case A starts"
+  },
+  {
+   "after": "catches for three.",
+   "sec": 1.8,
+   "why": "ball flight to the swish + OPEN THREE, then the rewind"
+  },
+  {
+   "after": "if the help is late.",
+   "sec": 1.0,
+   "why": "layup finishes + OPEN LANE / +2 before the summary"
+  },
+  {
+   "after": "Same action.",
+   "sec": 0.35,
+   "why": "both routes on one court before 'Two reads.'"
+  }
+ ],
+ "plays": {
+  "A": "stagger-a-trail",
+  "B": "stagger-b-backdoor"
+ },
+ "shots": [
+  {
+   "id": "hook",
+   "name": "Instant hook \u2014 defender POV",
+   "at": 0,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.6
+    ],
+    [
+     2.3,
+     2.68,
+     "out"
+    ],
+    [
+     "@end",
+     2.68
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "pov",
+      "behind": "X2",
+      "look": "O2",
+      "back": 3.3,
+      "height": 2.55,
+      "side": 0.85,
+      "fov": 50,
+      "lookZ": 1.05
+     }
+    },
+    {
+     "at": 1.9,
+     "rig": {
+      "type": "pov",
+      "behind": "X2",
+      "look": "O2",
+      "back": 3.3,
+      "height": 2.55,
+      "side": 0.85,
+      "fov": 50,
+      "lookZ": 1.05
+     }
+    },
+    {
+     "at": 2.9,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.3,
+       7.8,
+       1.1
+      ],
+      "dist": 7.4,
+      "pitch": 70,
+      "yaw": 200,
+      "fov": 46
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.3,
+       7.8,
+       1.1
+      ],
+      "dist": 8.2,
+      "pitch": 64,
+      "yaw": 160,
+      "fov": 46
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O2",
+     "from": "One shooter",
+     "to": "@end",
+     "pulse": true
+    },
+    {
+     "type": "ring",
+     "player": "X2",
+     "from": 2.32,
+     "to": "@end"
+    },
+    {
+     "type": "separation",
+     "a": "X2",
+     "b": "O2",
+     "from": 2.45,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "TWO SCREENS."
+     ],
+     "from": "Two",
+     "to": 2.2,
+     "y": 270,
+     "size": 130
+    },
+    {
+     "type": "title",
+     "lines": [
+      "ONE PROBLEM."
+     ],
+     "gold": [
+      0
+     ],
+     "from": 2.32,
+     "to": "@end",
+     "y": 270,
+     "size": 130
+    },
+    {
+     "type": "freeze",
+     "label": "FREEZE",
+     "from": 2.32,
+     "to": "@end"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.22
+    },
+    {
+     "at": 1.08,
+     "name": "impact",
+     "volume": 0.22
+    },
+    {
+     "at": 2.3,
+     "name": "impact_big",
+     "volume": 0.32
+    }
+   ]
+  },
+  {
+   "id": "reveal",
+   "name": "Rewind + rise to the tactical view",
+   "at": "This-0.25",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     2.68
+    ],
+    [
+     0.55,
+     0.0,
+     "inOut"
+    ],
+    [
+     "one after another>",
+     0.25,
+     "linear"
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.3,
+       7.8,
+       1.1
+      ],
+      "dist": 8.2,
+      "pitch": 64,
+      "yaw": 160,
+      "fov": 46
+     }
+    },
+    {
+     "at": 3.0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.6,
+       4.2,
+       0
+      ],
+      "dist": 18.0,
+      "pitch": 30,
+      "yaw": 0,
+      "fov": 40
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.6,
+       4.2,
+       0
+      ],
+      "dist": 17.0,
+      "pitch": 30,
+      "yaw": 0,
+      "fov": 40
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "screen",
+     "at": [
+      -4.3,
+      4.6
+     ],
+     "n": 1,
+     "facing": -2.214297435588181,
+     "from": "two off-ball",
+     "to": "@end"
+    },
+    {
+     "type": "screen",
+     "at": [
+      -2.7,
+      7.2
+     ],
+     "n": 2,
+     "facing": -2.5535900500422257,
+     "from": "off-ball screens",
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 0.45,
+     "t1": 3.0,
+     "draw": 1.1,
+     "from": "one after",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "rewind",
+     "from": 0,
+     "to": 0.55
+    },
+    {
+     "type": "title",
+     "lines": [
+      "STAGGER SCREEN"
+     ],
+     "gold": [
+      0
+     ],
+     "sub": "Two off-ball screens",
+     "from": "stagger",
+     "to": "@end",
+     "y": 250,
+     "size": 112
+    },
+    {
+     "type": "pin",
+     "player": "O4",
+     "text": "SCREEN 1",
+     "from": "two off-ball",
+     "to": "@end",
+     "dy": -60
+    },
+    {
+     "type": "pin",
+     "player": "O5",
+     "text": "SCREEN 2",
+     "from": "off-ball screens",
+     "to": "@end",
+     "dy": -60
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "reverse_cymbal",
+     "volume": 0.25
+    },
+    {
+     "at": "two off-ball",
+     "name": "tick",
+     "volume": 0.25
+    },
+    {
+     "at": "off-ball screens",
+     "name": "tick",
+     "volume": 0.25
+    }
+   ]
+  },
+  {
+   "id": "caseA",
+   "name": "Case A \u2014 the defender trails",
+   "at": "Watch-0.1",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.25
+    ],
+    [
+     "first",
+     1.45
+    ],
+    [
+     "second",
+     2.55
+    ],
+    [
+     "trails",
+     2.75,
+     "out"
+    ],
+    [
+     "catches-0.2",
+     2.75
+    ],
+    [
+     "for three",
+     3.45,
+     "in"
+    ],
+    [
+     "for three>+0.25",
+     4.58
+    ],
+    [
+     "@end",
+     5.2
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.6,
+       4.2,
+       0
+      ],
+      "dist": 17.0,
+      "pitch": 30,
+      "yaw": 0,
+      "fov": 40
+     }
+    },
+    {
+     "at": "comes",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X2"
+       ],
+       "z": 1.0
+      },
+      "dist": 10.5,
+      "pitch": 50,
+      "yaw": -28,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "second",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X2"
+       ],
+       "z": 1.0
+      },
+      "dist": 10.5,
+      "pitch": 50,
+      "yaw": -28,
+      "fov": 42
+     }
+    },
+    {
+     "at": "trails",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X2"
+       ],
+       "z": 1.0
+      },
+      "dist": 7.4,
+      "pitch": 46,
+      "yaw": -40,
+      "fov": 42
+     },
+     "ease": "out"
+    },
+    {
+     "at": "catches-0.2",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X2"
+       ],
+       "z": 1.0
+      },
+      "dist": 7.0,
+      "pitch": 50,
+      "yaw": -30,
+      "fov": 42
+     },
+     "ease": "linear"
+    },
+    {
+     "at": "for three",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.7,
+       5.6,
+       1.9
+      ],
+      "dist": 10.5,
+      "pitch": 76,
+      "yaw": 6,
+      "fov": 46
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.5,
+       4.6,
+       2.4
+      ],
+      "dist": 10.0,
+      "pitch": 78,
+      "yaw": 4,
+      "fov": 44
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O2",
+     "from": 0,
+     "to": "trails"
+    },
+    {
+     "type": "screen",
+     "player": "O4",
+     "n": 1,
+     "facing": -2.214297435588181,
+     "from": "first-0.3",
+     "to": "trails"
+    },
+    {
+     "type": "screen",
+     "player": "O5",
+     "n": 2,
+     "facing": -2.5535900500422257,
+     "from": "second-0.3",
+     "to": "trails"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 0.45,
+     "t1": 2.9,
+     "trail": true,
+     "from": "comes",
+     "to": "catches"
+    },
+    {
+     "type": "route",
+     "player": "X2",
+     "t0": 0.6,
+     "t1": 3.0,
+     "trail": true,
+     "width": 0.14,
+     "from": "comes",
+     "to": "catches"
+    },
+    {
+     "type": "separation",
+     "a": "O2",
+     "b": "X2",
+     "from": "trails",
+     "to": "catches"
+    },
+    {
+     "type": "passLane",
+     "from": "trails+0.25",
+     "to": "catches",
+     "src": "O1",
+     "dst": "O2"
+    },
+    {
+     "type": "ring",
+     "player": "X2",
+     "from": "trails",
+     "to": "catches"
+    }
+   ],
+   "screen": [
+    {
+     "type": "pin",
+     "player": "O4",
+     "text": "1",
+     "from": "first-0.2",
+     "to": "trails"
+    },
+    {
+     "type": "pin",
+     "player": "O5",
+     "text": "2",
+     "from": "second-0.2",
+     "to": "trails"
+    },
+    {
+     "type": "pin",
+     "player": "X2",
+     "text": "X2 TRAILS",
+     "tone": "red",
+     "from": "trails",
+     "to": "catches"
+    },
+    {
+     "type": "freeze",
+     "label": "FREEZE",
+     "from": "trails",
+     "to": "catches-0.2"
+    },
+    {
+     "type": "stamp",
+     "text": "OPEN THREE",
+     "badge": "+3",
+     "from": "for three>+0.25",
+     "to": "@end",
+     "y": 300
+    }
+   ],
+   "sfx": [
+    {
+     "at": "comes",
+     "name": "whoosh",
+     "volume": 0.15
+    },
+    {
+     "at": "trails",
+     "name": "tick",
+     "volume": 0.3
+    },
+    {
+     "at": "for three>+0.25",
+     "name": "swish",
+     "volume": 0.45
+    }
+   ]
+  },
+  {
+   "id": "rewind2",
+   "name": "Rewind to the same alignment",
+   "at": "But-0.75",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     5.2
+    ],
+    [
+     "@end",
+     0.45,
+     "inOut"
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.5,
+       4.6,
+       2.4
+      ],
+      "dist": 10.0,
+      "pitch": 78,
+      "yaw": 4,
+      "fov": 44
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.4,
+       1.8,
+       1.0
+      ],
+      "dist": 9.8,
+      "pitch": 52,
+      "yaw": -28,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "screen": [
+    {
+     "type": "rewind",
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "reverse_cymbal",
+     "volume": 0.22
+    }
+   ]
+  },
+  {
+   "id": "toplock",
+   "name": "The defensive adjustment \u2014 top-lock (3D freeze orbit)",
+   "at": "But+0.05",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     0.45
+    ],
+    [
+     "top-locks",
+     1.04,
+     "out"
+    ],
+    [
+     "cut-0.25",
+     1.04
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X2"
+       ],
+       "z": 1.0
+      },
+      "dist": 9.8,
+      "pitch": 52,
+      "yaw": -28,
+      "fov": 42
+     }
+    },
+    {
+     "at": "top-locks",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X2"
+       ],
+       "z": 1.0,
+       "offset": [
+        0.4,
+        -0.2
+       ]
+      },
+      "dist": 6.6,
+      "pitch": 55,
+      "yaw": -48,
+      "fov": 42
+     },
+     "ease": "out"
+    },
+    {
+     "at": "cut-0.25",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -4.2,
+       2.6,
+       0.9
+      ],
+      "dist": 7.6,
+      "pitch": 60,
+      "yaw": 25,
+      "fov": 44
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "from": "top-locks",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "O2",
+     "from": "top-locks",
+     "to": "@end"
+    },
+    {
+     "type": "deny",
+     "player": "X2",
+     "toward": [
+      -4.3,
+      4.6
+     ],
+     "from": "top-locks+0.2",
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "fromPlay": "A",
+     "t0": 0.95,
+     "t1": 2.4,
+     "dashed": true,
+     "color": "#FFFFFF",
+     "width": 0.12,
+     "draw": 0.6,
+     "from": "the exit",
+     "to": "@end"
+    },
+    {
+     "type": "blocked",
+     "at": [
+      -5.3,
+      3.75
+     ],
+     "from": "reject",
+     "to": "@end"
+    },
+    {
+     "type": "openSpace",
+     "at": [
+      -3.4,
+      1.55
+     ],
+     "r": 1.1,
+     "rx": 2.3,
+     "from": "both screens",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "freeze",
+     "label": "FREEZE",
+     "from": "top-locks",
+     "to": "@end"
+    },
+    {
+     "type": "title",
+     "lines": [
+      "TOP-LOCK"
+     ],
+     "gold": [],
+     "from": "top-locks",
+     "to": "@end",
+     "y": 250,
+     "size": 120
+    },
+    {
+     "type": "pin",
+     "player": "X2",
+     "text": "X2",
+     "tone": "red",
+     "from": "top-locks",
+     "to": "@end"
+    }
+   ],
+   "sfx": [
+    {
+     "at": "top-locks",
+     "name": "tick",
+     "volume": 0.3
+    },
+    {
+     "at": "reject",
+     "name": "whoosh",
+     "volume": 0.12
+    }
+   ]
+  },
+  {
+   "id": "backdoor",
+   "name": "Case B \u2014 reject and backdoor",
+   "at": "cut-0.25",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     1.04
+    ],
+    [
+     "backdoor",
+     1.18,
+     "in"
+    ],
+    [
+     "receive",
+     1.95
+    ],
+    [
+     "rim",
+     2.2
+    ],
+    [
+     "late",
+     2.65,
+     "out"
+    ],
+    [
+     "late>-0.1",
+     3.03
+    ],
+    [
+     "@end",
+     3.5
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -4.2,
+       2.6,
+       0.9
+      ],
+      "dist": 7.6,
+      "pitch": 60,
+      "yaw": 25,
+      "fov": 44
+     }
+    },
+    {
+     "at": "receive",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O2",
+       "z": 1.1,
+       "lead": 0.15
+      },
+      "dist": 7.0,
+      "pitch": 70,
+      "yaw": 62,
+      "fov": 46
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "rim",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.9,
+       1.6,
+       1.9
+      ],
+      "dist": 5.6,
+      "pitch": 80,
+      "yaw": 72,
+      "fov": 48
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.7,
+       1.6,
+       2.1
+      ],
+      "dist": 6.2,
+      "pitch": 80,
+      "yaw": 64,
+      "fov": 48
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 1.08,
+     "t1": 2.6,
+     "trail": true,
+     "from": 0,
+     "to": "late"
+    },
+    {
+     "type": "openSpace",
+     "at": [
+      -3.4,
+      1.55
+     ],
+     "r": 1.1,
+     "rx": 2.3,
+     "from": 0,
+     "to": "receive"
+    },
+    {
+     "type": "passLane",
+     "from": "backdoor+0.25",
+     "to": "rim",
+     "src": "O1",
+     "dst": [
+      -1.55,
+      1.25
+     ]
+    },
+    {
+     "type": "ring",
+     "player": "X4",
+     "from": "late-0.3",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "stamp",
+     "text": "BACKDOOR",
+     "from": "backdoor",
+     "to": "rim-0.1",
+     "y": 290
+    },
+    {
+     "type": "stamp",
+     "text": "OPEN LANE",
+     "from": "rim-0.05",
+     "to": "late>-0.1",
+     "y": 290
+    },
+    {
+     "type": "pin",
+     "player": "X4",
+     "text": "HELP: LATE",
+     "tone": "red",
+     "from": "late-0.2",
+     "to": "late>-0.1"
+    },
+    {
+     "type": "stamp",
+     "text": "BACKDOOR",
+     "badge": "+2",
+     "from": "late>-0.1",
+     "to": "@end",
+     "y": 290
+    }
+   ],
+   "sfx": [
+    {
+     "at": "backdoor",
+     "name": "squeak",
+     "volume": 0.3
+    },
+    {
+     "at": "backdoor+0.3",
+     "name": "whip",
+     "volume": 0.15
+    },
+    {
+     "at": "late>-0.1",
+     "name": "swish",
+     "volume": 0.45
+    }
+   ]
+  },
+  {
+   "id": "chase",
+   "name": "Two reads \u2014 chase",
+   "at": "Chase-0.05",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     2.55
+    ],
+    [
+     "@end",
+     3.7
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O2",
+       "z": 1.3
+      },
+      "dist": 6.4,
+      "pitch": 76,
+      "yaw": 12,
+      "fov": 46
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O2",
+       "z": 1.4
+      },
+      "dist": 5.6,
+      "pitch": 78,
+      "yaw": 4,
+      "fov": 46
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O2",
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "separation",
+     "a": "O2",
+     "b": "X2",
+     "from": 0.2,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "CHASE",
+      "\u2192 THREE"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 260,
+     "size": 118
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.15
+    }
+   ]
+  },
+  {
+   "id": "overplay",
+   "name": "Two reads \u2014 overplay",
+   "at": "Overplay-0.15",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     0.95
+    ],
+    [
+     "@end",
+     2.3
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O2",
+       "z": 1.1
+      },
+      "dist": 7.4,
+      "pitch": 66,
+      "yaw": 48,
+      "fov": 46
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O2",
+       "z": 1.1
+      },
+      "dist": 6.8,
+      "pitch": 70,
+      "yaw": 62,
+      "fov": 46
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 1.08,
+     "t1": 2.4,
+     "trail": true,
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "OVERPLAY",
+      "\u2192 BACKDOOR"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 260,
+     "size": 118
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.15
+    }
+   ]
+  },
+  {
+   "id": "close",
+   "name": "Same action, two reads + question",
+   "at": "Same-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.2
+    ],
+    [
+     "@end",
+     0.3
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.4,
+       3.6,
+       0
+      ],
+      "dist": 17.5,
+      "pitch": 30,
+      "yaw": 0,
+      "fov": 40
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.4,
+       3.6,
+       0
+      ],
+      "dist": 15.5,
+      "pitch": 28,
+      "yaw": 0,
+      "fov": 40
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "screen",
+     "at": [
+      -4.3,
+      4.6
+     ],
+     "n": 1,
+     "facing": -2.214297435588181,
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "screen",
+     "at": [
+      -2.7,
+      7.2
+     ],
+     "n": 2,
+     "facing": -2.5535900500422257,
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 0.45,
+     "t1": 3.0,
+     "draw": 0.6,
+     "from": 0.05,
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "fromPlay": "B",
+     "t0": 0.45,
+     "t1": 2.55,
+     "draw": 0.6,
+     "color": "#FFFFFF",
+     "from": "Two reads",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "TWO SCREENS.",
+      "TWO READS."
+     ],
+     "gold": [
+      1
+     ],
+     "from": "Two reads-0.1",
+     "to": "How-0.05",
+     "y": 250,
+     "size": 118
+    },
+    {
+     "type": "title",
+     "lines": [
+      "HOW WOULD",
+      "YOU GUARD IT?"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "How-0.05",
+     "to": "@end",
+     "y": 250,
+     "size": 118
+    },
+    {
+     "type": "logo",
+     "from": "How",
+     "to": "@end"
+    }
+   ],
+   "sfx": [
+    {
+     "at": "Two reads",
+     "name": "tick",
+     "volume": 0.25
+    }
+   ]
+  }
+ ],
+ "keywords": [
+  "stagger screen",
+  "off-ball",
+  "first",
+  "second",
+  "trails",
+  "top-locks",
+  "backdoor",
+  "three",
+  "rim",
+  "late"
+ ],
+ "subtitleHide": [
+  [
+   0,
+   "This-0.25"
+  ],
+  [
+   "How-0.05",
+   "it?>+2"
+  ]
+ ],
+ "music": {
+  "src": "tactical/stagger/music.mp3",
+  "volume": 1
+ },
+ "voiceMix": "tactical/stagger/voice.mix.wav"
+}

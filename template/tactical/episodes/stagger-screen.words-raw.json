@@ -1,0 +1,397 @@
+[
+ {
+  "text": "Two",
+  "start": 0.081,
+  "end": 0.161
+ },
+ {
+  "text": "screens.",
+  "start": 0.321,
+  "end": 0.961
+ },
+ {
+  "text": "One",
+  "start": 1.121,
+  "end": 1.281
+ },
+ {
+  "text": "shooter.",
+  "start": 1.441,
+  "end": 2.001
+ },
+ {
+  "text": "The",
+  "start": 2.161,
+  "end": 2.241
+ },
+ {
+  "text": "defense",
+  "start": 2.321,
+  "end": 2.801
+ },
+ {
+  "text": "has",
+  "start": 2.961,
+  "end": 3.041
+ },
+ {
+  "text": "a",
+  "start": 3.121,
+  "end": 3.201
+ },
+ {
+  "text": "problem.",
+  "start": 3.281,
+  "end": 4.001
+ },
+ {
+  "text": "This",
+  "start": 4.241,
+  "end": 4.561
+ },
+ {
+  "text": "is",
+  "start": 4.641,
+  "end": 4.721
+ },
+ {
+  "text": "the",
+  "start": 4.801,
+  "end": 4.881
+ },
+ {
+  "text": "stagger",
+  "start": 4.961,
+  "end": 5.361
+ },
+ {
+  "text": "screen:",
+  "start": 5.441,
+  "end": 5.961
+ },
+ {
+  "text": "two",
+  "start": 6.161,
+  "end": 6.321
+ },
+ {
+  "text": "off-ball",
+  "start": 6.401,
+  "end": 6.721
+ },
+ {
+  "text": "screens,",
+  "start": 6.801,
+  "end": 7.361
+ },
+ {
+  "text": "one",
+  "start": 7.521,
+  "end": 7.761
+ },
+ {
+  "text": "after",
+  "start": 7.841,
+  "end": 8.081
+ },
+ {
+  "text": "another.",
+  "start": 8.281,
+  "end": 8.721
+ },
+ {
+  "text": "Watch",
+  "start": 8.961,
+  "end": 9.121
+ },
+ {
+  "text": "number",
+  "start": 9.201,
+  "end": 9.361
+ },
+ {
+  "text": "two.",
+  "start": 9.441,
+  "end": 9.881
+ },
+ {
+  "text": "He",
+  "start": 10.081,
+  "end": 10.161
+ },
+ {
+  "text": "comes",
+  "start": 10.241,
+  "end": 10.401
+ },
+ {
+  "text": "off",
+  "start": 10.481,
+  "end": 10.561
+ },
+ {
+  "text": "the",
+  "start": 10.641,
+  "end": 10.721
+ },
+ {
+  "text": "first",
+  "start": 10.801,
+  "end": 10.961
+ },
+ {
+  "text": "screen,",
+  "start": 11.121,
+  "end": 11.441
+ },
+ {
+  "text": "then",
+  "start": 11.601,
+  "end": 11.761
+ },
+ {
+  "text": "the",
+  "start": 11.841,
+  "end": 11.921
+ },
+ {
+  "text": "second.",
+  "start": 12.121,
+  "end": 12.481
+ },
+ {
+  "text": "His",
+  "start": 12.641,
+  "end": 12.801
+ },
+ {
+  "text": "defender",
+  "start": 12.881,
+  "end": 13.201
+ },
+ {
+  "text": "trails,",
+  "start": 13.281,
+  "end": 13.721
+ },
+ {
+  "text": "and",
+  "start": 13.761,
+  "end": 13.841
+ },
+ {
+  "text": "he",
+  "start": 13.921,
+  "end": 14.001
+ },
+ {
+  "text": "catches",
+  "start": 14.121,
+  "end": 14.321
+ },
+ {
+  "text": "for",
+  "start": 14.401,
+  "end": 14.561
+ },
+ {
+  "text": "three.",
+  "start": 14.721,
+  "end": 15.161
+ },
+ {
+  "text": "But",
+  "start": 15.441,
+  "end": 15.681
+ },
+ {
+  "text": "if",
+  "start": 15.761,
+  "end": 15.841
+ },
+ {
+  "text": "the",
+  "start": 15.881,
+  "end": 15.921
+ },
+ {
+  "text": "defender",
+  "start": 16.041,
+  "end": 16.401
+ },
+ {
+  "text": "top-locks",
+  "start": 16.481,
+  "end": 16.961
+ },
+ {
+  "text": "the",
+  "start": 17.041,
+  "end": 17.121
+ },
+ {
+  "text": "exit,",
+  "start": 17.401,
+  "end": 17.721
+ },
+ {
+  "text": "the",
+  "start": 17.761,
+  "end": 17.841
+ },
+ {
+  "text": "shooter",
+  "start": 17.881,
+  "end": 18.081
+ },
+ {
+  "text": "can",
+  "start": 18.161,
+  "end": 18.241
+ },
+ {
+  "text": "reject",
+  "start": 18.321,
+  "end": 18.721
+ },
+ {
+  "text": "both",
+  "start": 18.801,
+  "end": 18.961
+ },
+ {
+  "text": "screens,",
+  "start": 19.041,
+  "end": 19.681
+ },
+ {
+  "text": "cut",
+  "start": 19.761,
+  "end": 19.921
+ },
+ {
+  "text": "backdoor,",
+  "start": 20.001,
+  "end": 20.521
+ },
+ {
+  "text": "and",
+  "start": 20.561,
+  "end": 20.641
+ },
+ {
+  "text": "receive",
+  "start": 20.841,
+  "end": 21.041
+ },
+ {
+  "text": "at",
+  "start": 21.081,
+  "end": 21.121
+ },
+ {
+  "text": "the",
+  "start": 21.201,
+  "end": 21.241
+ },
+ {
+  "text": "rim",
+  "start": 21.281,
+  "end": 21.841
+ },
+ {
+  "text": "if",
+  "start": 22.081,
+  "end": 22.161
+ },
+ {
+  "text": "the",
+  "start": 22.241,
+  "end": 22.321
+ },
+ {
+  "text": "help",
+  "start": 22.401,
+  "end": 22.481
+ },
+ {
+  "text": "is",
+  "start": 22.561,
+  "end": 22.641
+ },
+ {
+  "text": "late.",
+  "start": 22.721,
+  "end": 23.441
+ },
+ {
+  "text": "Chase:",
+  "start": 23.481,
+  "end": 24.081
+ },
+ {
+  "text": "open",
+  "start": 24.201,
+  "end": 24.321
+ },
+ {
+  "text": "three.",
+  "start": 24.401,
+  "end": 25.121
+ },
+ {
+  "text": "Overplay:",
+  "start": 25.281,
+  "end": 26.001
+ },
+ {
+  "text": "backdoor.",
+  "start": 26.121,
+  "end": 27.041
+ },
+ {
+  "text": "Same",
+  "start": 27.161,
+  "end": 27.281
+ },
+ {
+  "text": "action.",
+  "start": 27.361,
+  "end": 28.001
+ },
+ {
+  "text": "Two",
+  "start": 28.081,
+  "end": 28.161
+ },
+ {
+  "text": "reads.",
+  "start": 28.241,
+  "end": 28.961
+ },
+ {
+  "text": "How",
+  "start": 29.001,
+  "end": 29.041
+ },
+ {
+  "text": "would",
+  "start": 29.121,
+  "end": 29.201
+ },
+ {
+  "text": "you",
+  "start": 29.281,
+  "end": 29.361
+ },
+ {
+  "text": "guard",
+  "start": 29.481,
+  "end": 29.601
+ },
+ {
+  "text": "it?",
+  "start": 29.641,
+  "end": 30.001
+ }
+]

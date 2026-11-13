@@ -1,0 +1,25 @@
+{
+ "bundle": "../produccion/tactical/prueba-2026-11-20/V01.bundle.json",
+ "frames_checked": 1026,
+ "every_nth_frame": 1,
+ "boxes_checked": 3244,
+ "frame_area": {
+  "left": 24,
+  "right": 1056,
+  "top": 24,
+  "bottom": 1896
+ },
+ "safe_area": {
+  "left": 40,
+  "right": 1040,
+  "top": 220,
+  "bottom": 1500
+ },
+ "right_rail": {
+  "x": 930,
+  "y0": 760,
+  "y1": 1500
+ },
+ "pass": true,
+ "violations": []
+}

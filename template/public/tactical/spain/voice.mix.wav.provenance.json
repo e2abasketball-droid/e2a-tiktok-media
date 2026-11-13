@@ -1,0 +1,5 @@
+{
+ "licence_key": "voice/elevenlabs/spain",
+ "source": "voice.wav + EQ/compression/loudnorm on the voice stem only (render-tactical.sh chain)",
+ "sha256": "a125d90c3f52e0f07e1912df812f12cd9b183a7cda7e0ac3a271ceee443ad860"
+}

@@ -1,0 +1,127 @@
+{
+ "date": "2026-11-20",
+ "log": {
+  "ok": true,
+  "events": 30,
+  "head": "f4b3751e2769e593644542054798816564b978ca7586539be93e0938247075f1"
+ },
+ "videos": [
+  {
+   "cid": "E2A-TACTICAL-2026-11-20-V01",
+   "slot": "10:00",
+   "state": "qc_passed",
+   "confirmations": [],
+   "failures": [
+    {
+     "attempt": 1,
+     "phase": "render",
+     "reason": "licences: [{'src': 'tactical/hammer/voice.wav', 'licence_key': 'voice/elevenlabs/hammer', 'why': 'commercial use: pending_owner_confirmation'}, {'src': 'tactical/hammer/voice.mix.wav', 'licence_key': 'voice/elevenlabs/hammer', 'why': 'commercial use: pending_owner_confirmation'}]"
+    },
+    {
+     "attempt": 1,
+     "phase": "qc",
+     "reason": "QC_FAIL: audio"
+    }
+   ]
+  },
+  {
+   "cid": "E2A-TACTICAL-2026-11-20-V02",
+   "slot": "13:00",
+   "state": "qc_passed",
+   "confirmations": [],
+   "failures": [
+    {
+     "attempt": 1,
+     "phase": "qc",
+     "reason": "QC_FAIL: audio"
+    }
+   ]
+  }
+ ],
+ "spend": [
+  {
+   "amount": 1,
+   "at": "2026-11-12T21:31:12+00:00",
+   "cid": "E2A-TACTICAL-2026-11-20-V01",
+   "date": "2026-11-20",
+   "id": "23a8173f43bdf4d7f27796e6910982c30c55f74336b63670538e5889d77f1796",
+   "kind": "spend",
+   "kind2": "voice_takes",
+   "op": "V01:voice-permit:takes",
+   "prev": "1bf83edbb0dfbd017d5c22fc4365bec7d450e142c075c33db10f3604991008f9",
+   "seq": 10
+  },
+  {
+   "amount": 450,
+   "at": "2026-11-12T21:31:12+00:00",
+   "cid": "E2A-TACTICAL-2026-11-20-V01",
+   "date": "2026-11-20",
+   "id": "4e19cfdc4dac34ff1204056708227a020e660439e4ce0c851ecc2df93bef8f14",
+   "kind": "spend",
+   "kind2": "voice_credits",
+   "op": "V01:voice-permit:credits",
+   "prev": "23a8173f43bdf4d7f27796e6910982c30c55f74336b63670538e5889d77f1796",
+   "seq": 11
+  },
+  {
+   "amount": 1,
+   "at": "2026-11-12T21:31:13+00:00",
+   "cid": "E2A-TACTICAL-2026-11-20-V02",
+   "date": "2026-11-20",
+   "id": "65996f6cdcaa0b82a9df767b80452f0f4cf2ab6d6bf89d5a9b9fe07b15b08855",
+   "kind": "spend",
+   "kind2": "voice_takes",
+   "op": "V02:voice-permit:takes",
+   "prev": "e6c20622ec0c01ea145bbe7f7678c4fef22f643f17efeef315659cd31803cc4c",
+   "seq": 13
+  },
+  {
+   "amount": 450,
+   "at": "2026-11-12T21:31:13+00:00",
+   "cid": "E2A-TACTICAL-2026-11-20-V02",
+   "date": "2026-11-20",
+   "id": "67fecbd87d6d3dd2ce147dd20b2a729c9641dbeeb567bc7dd2cef8c1dd12ea85",
+   "kind": "spend",
+   "kind2": "voice_credits",
+   "op": "V02:voice-permit:credits",
+   "prev": "65996f6cdcaa0b82a9df767b80452f0f4cf2ab6d6bf89d5a9b9fe07b15b08855",
+   "seq": 14
+  },
+  {
+   "amount": 1,
+   "at": "2026-11-12T21:40:26+00:00",
+   "cid": "E2A-TACTICAL-2026-11-20-V01",
+   "date": "2026-11-20",
+   "id": "3696a5a07cb199a49794ad9fdfd3d96b884183f5714f2c938d49cd028c679017",
+   "kind": "spend",
+   "kind2": "final_renders",
+   "op": "V01:render:render",
+   "prev": "13fe296b041e96d48c9750d63aff1aaf5f7f587e7cb097d6ce3ef037159fde67",
+   "seq": 19
+  },
+  {
+   "amount": 1,
+   "at": "2026-11-12T22:00:43+00:00",
+   "cid": "E2A-TACTICAL-2026-11-20-V02",
+   "date": "2026-11-20",
+   "id": "00e04836fca1bcc94ddb8ed0487fb2f14115a226f93d0f2dcaf4d4c7f535471d",
+   "kind": "spend",
+   "kind2": "final_renders",
+   "op": "V02:render:render",
+   "prev": "3538dedb8c4067c8ec2331daac5a412424b4f0ef901aca6d1c7851ed9b63e802",
+   "seq": 21
+  },
+  {
+   "amount": 1,
+   "at": "2026-11-12T22:02:38+00:00",
+   "cid": "E2A-TACTICAL-2026-11-20-V02",
+   "date": "2026-11-20",
+   "id": "cb48c0afe9e22b59d68292b3b8c948b7f434b69b167652d8f5cd1f3c99317fcc",
+   "kind": "spend",
+   "kind2": "final_renders",
+   "op": "V02:render-2:render",
+   "prev": "00e04836fca1bcc94ddb8ed0487fb2f14115a226f93d0f2dcaf4d4c7f535471d",
+   "seq": 22
+  }
+ ]
+}

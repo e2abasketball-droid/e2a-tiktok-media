@@ -1,0 +1,44 @@
+{
+ "schema": "e2a.technique/1",
+ "version": 1,
+ "para": [
+  "tactical"
+ ],
+ "evitar_en": [],
+ "origen": "Episodio 02 Stagger Screen (propio, motor Tactical3D)",
+ "estado": "propuesta",
+ "requiere_codigo": true,
+ "creada": "2026-11-12",
+ "actualizada": "2026-11-12",
+ "historial": [],
+ "id": "tec-0006",
+ "nombre": "Gancho en primera persona del defensor",
+ "categoria": "camara",
+ "descripcion": "El vídeo abre con la cámara detrás del defensor del tirador, a la altura de sus hombros, mirando al atacante que va a usar los bloqueos; dos titulares cortos ('TWO SCREENS.' / 'ONE PROBLEM.') y una congelación ponen al espectador en el problema antes de explicar nada. A los ~2 s la cámara sale del punto de vista con un movimiento suave para dar contexto. Solo existe en el motor 3D (rig 'pov' de camera3d.ts).",
+ "aplicar_a": {
+  "posicion": "primera"
+ },
+ "receta": {
+  "sfx": [
+   "whoosh"
+  ]
+ },
+ "comprobacion": {
+  "texto": "la primera imagen cambia antes de 2.5 s y el primer plano no pasa de 5 s",
+  "reglas": [
+   {
+    "metrica": "retention.primer_corte_s",
+    "op": "<=",
+    "valor": 2.5
+   }
+  ]
+ },
+ "evidencia": [
+  {
+   "ref_id": "R-0001",
+   "medidas": {},
+   "nivel": "hipotesis",
+   "nota": "técnica nueva del episodio 02; sin referencia medida. Comprobar en el render con la hoja de contactos."
+  }
+ ]
+}

@@ -1,0 +1,113 @@
+{
+ "version": "0.3.0",
+ "status": "PILOT: direct_delegated, posts 2026-11-14..20 Sydney. Publishing still requires the granted delegation on main whose sha is pinned in the scheduled task.",
+ "timezone": "Australia/Sydney",
+ "content_id": "E2A-TACTICAL-{date}-V{n:02d}",
+ "slots": {
+  "1": {
+   "time": "10:00",
+   "label": "TACTICAL VIDEO A",
+   "brief": "offensive action, visually strong"
+  },
+  "2": {
+   "time": "13:00",
+   "label": "TACTICAL VIDEO B",
+   "brief": "a different read: defence, counter or another action"
+  }
+ },
+ "networks": [
+  "instagram",
+  "tiktok",
+  "youtube"
+ ],
+ "production_cutoff_local": "09:00",
+ "duration_s": {
+  "min": 30,
+  "max": 40,
+  "target": [
+   35,
+   38
+  ]
+ },
+ "repeat_window_days": 45,
+ "concept_overlap_block": 0.6,
+ "audio": {
+  "lufs_target": -14.0,
+  "lufs_tolerance": 1.0,
+  "true_peak_max": -1.0,
+  "max_master_gain_db": 6.0,
+  "max_remasters": 1
+ },
+ "video": {
+  "width": 1080,
+  "height": 1920,
+  "fps_min": 30,
+  "vcodec": "h264",
+  "acodec": "aac",
+  "social_max_mb": 10
+ },
+ "budget_per_day": {
+  "status": "ENFORCED in code per post date: voice-permit charges voice_takes/voice_credits, render charges final_renders, publisher prepare charges create_calls; values PROPOSED, owner approval pending",
+  "voice_takes": 2,
+  "voice_credits": 1200,
+  "final_renders": 4,
+  "music_generations": 0,
+  "publications": 6,
+  "create_calls": 4
+ },
+ "retries_per_phase": 1,
+ "ai_labels": {
+  "status": "OWNER DECISION 2026-11-13: do not label as AI-generated unless required",
+  "instagram_isAiGenerated": false,
+  "tiktok_isAigc": false,
+  "youtube_isAiGeneratedContent": false,
+  "why": "Platforms require the label for realistic synthetic content (realistic people, places or events, or a real person's voice). Our videos are clearly stylised 3D animations of fictional players with a generic narrator voice that imitates nobody. Re-evaluate if a video ever shows realistic people or a real person's voice."
+ },
+ "publishing": {
+  "mode": "direct_delegated",
+  "modes": {
+   "shadow": "never writes to Metricool; writes the publication package only",
+   "direct_delegated": "V3 (owner brief 2026-11-12 23:16Z): tools/tactical_publisher.py may make ONE createScheduledPost per video (IG Reel + TikTok + YT Short) only while a granted delegation on origin/main matches the sha pinned in the scheduled task, inside its dates and scope, after all QC gates. ACTIVE for the pilot 2026-11-14..20 (owner decision 2026-11-13T00:07Z).",
+   "owner_manual": "FALLBACK (owner decision 2026-11-12 23:03Z, superseded by V3 when a delegation is granted): the agent delivers the package; the owner schedules by hand; the agent only confirms by read-back.",
+   "supervised": "NOT AVAILABLE on the current Metricool plan (createScheduledPostForReview → 403 'no subscription with team management', 2026-11-12).",
+   "limited_autonomy": "NOT AVAILABLE: no approval by silence."
+  },
+  "never": [
+   "updateScheduledPost",
+   "sendScheduledPostForReview",
+   "createScheduledPostForReview (not the main path; 403 on this plan)",
+   "delete or move any post",
+   "Trial Reels",
+   "createScheduledPost outside tools/tactical_publisher.py prepare"
+  ],
+  "approval_system": "any",
+  "create_tool": "createScheduledPost",
+  "max_create_attempts": 2,
+  "approval_system_note": "only for the Metricool review flow, unavailable on this plan; direct_delegated does not use it",
+  "metricool_review_available": false
+ },
+ "delegation": {
+  "status": "GRANTED by the owner 2026-11-13 for posts 2026-11-14..2026-11-20 (Sydney); see config/delegation.tactical-studio.json",
+  "verifier": "blocked",
+  "verifier_when_active": "delegation (checked only by tools/tactical_publisher.py with the pinned sha)",
+  "file": "config/delegation.tactical-studio.json",
+  "ref": "origin/main",
+  "max_days": 7
+ },
+ "speech": {
+  "words_per_s": 3.0,
+  "designed_pauses_s": 4.2,
+  "tail_s": 1.4,
+  "why": "measured 2026-11-12 on Deuce/eleven_v4: 87 words in 28.6 s (3.04 w/s), 88 in 28.6 s; pauses inserted by tactical-voice.py ~4.2 s"
+ },
+ "collision_window_min": 60,
+ "readback_max_age_min": 15,
+ "ticket_ttl_min": 30,
+ "state_sync": {
+  "remote": "origin",
+  "branch": "studio-state",
+  "dir": "studio-state",
+  "lease_ttl_min": 240,
+  "branch_note": "owner accepted name 2026-11-12; protection (no force-push, no deletion) must be set by the owner in GitHub rulesets"
+ }
+}

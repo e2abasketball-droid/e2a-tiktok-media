@@ -1,0 +1,78 @@
+{
+ "source": "REAL createScheduledPost response, 2026-11-12 (Stagger V2, owner-approved); personal fields removed",
+ "response": {
+  "data": {
+   "id": 426159230,
+   "publicationDate": {
+    "dateTime": "2026-11-13T10:00:00",
+    "timezone": "Australia/Sydney"
+   },
+   "creationDate": {
+    "dateTime": "2026-11-13T07:00:00",
+    "timezone": "Australia/Sydney"
+   },
+   "text": "Two screens. One shooter. One problem for the defence. 🏀\n\nThe stagger screen forces a read:\n▸ Chase the shooter over the screens → caught behind, open three.\n▸ Top-lock to deny the exit → back door, easy two.\n\nThe best offences don't just run the play. They read the defence.\n\nHow would you guard it? 👇\n\n#basketball #basketballtactics #staggerscreen #basketballcoach #coaching #E2ABasketball #MoreThanAGame",
+   "firstCommentText": "",
+   "providers": [
+    {
+     "network": "instagram",
+     "status": "PENDING",
+     "detailedStatus": "Pending"
+    },
+    {
+     "network": "tiktok",
+     "status": "PENDING",
+     "detailedStatus": "Pending"
+    },
+    {
+     "network": "youtube",
+     "status": "PENDING",
+     "detailedStatus": "Pending"
+    }
+   ],
+   "media": [
+    "https://static.metricool.com/planner/202611/7681319-file-11004146168744774122.mp4"
+   ],
+   "autoPublish": true,
+   "saveExternalMediaFiles": false,
+   "mediaAltText": [
+    null
+   ],
+   "shortener": false,
+   "draft": false,
+   "imageVariants": false,
+   "twitterData": {
+    "type": "POST"
+   },
+   "instagramData": {
+    "autoPublish": true,
+    "type": "REEL",
+    "showReelOnFeed": true,
+    "isAiGenerated": false
+   },
+   "youtubeData": {
+    "title": "The Stagger Screen: Two Screens, Two Reads #shorts",
+    "type": "short",
+    "privacy": "public",
+    "tags": [
+     "basketball",
+     "basketball tactics",
+     "stagger screen",
+     "coaching"
+    ],
+    "category": "SPORTS",
+    "madeForKids": false,
+    "isAiGeneratedContent": false
+   },
+   "tiktokData": {
+    "privacyOption": "PUBLIC_TO_EVERYONE",
+    "title": "The Stagger Screen: two screens, two reads",
+    "photoCoverIndex": 0
+   },
+   "hasNotReadNotes": false,
+   "uuid": "8933586454808643697",
+   "brandTags": [],
+   "plannerUrl": "https://app.metricool.com/planner/calendar?blogId=7681319&openWithPostUuid=8933586454808643697"
+  }
+ }
+}
