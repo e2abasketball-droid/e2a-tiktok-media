@@ -1,0 +1,474 @@
+{
+ "id": "ram-v2-a-drop",
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Point guard, ball handler"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Shooter, right corner"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Wing, right"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Ram screener (first, off the ball)"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Big: uses the ram, sets the ball screen"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the ball",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "Weak-side corner (low man)",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Right wing",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "On the ram screener",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "The big's defender (the read)",
+   "guards": "O5"
+  }
+ ],
+ "start": {
+  "O1": [
+   1.7,
+   9.6
+  ],
+  "X1": [
+   1.4,
+   8.7
+  ],
+  "O5": [
+   -2.5,
+   2.9
+  ],
+  "X5": [
+   -1.9,
+   3.5
+  ],
+  "O4": [
+   -3.6,
+   6.6
+  ],
+  "X4": [
+   -2.6,
+   6.1
+  ],
+  "O2": [
+   6.6,
+   1.4
+  ],
+  "X2": [
+   5.4,
+   2.2
+  ],
+  "O3": [
+   5.3,
+   6.9
+  ],
+  "X3": [
+   4.4,
+   6.3
+  ]
+ },
+ "title": "RAM screen \u2014 Read A: drop. X5 sinks, X1 chases over, O1 pulls up",
+ "duration": 6.6,
+ "notes": [
+  "O4 screens X5 (ram); O5 comes off it with a head start and screens X1.",
+  "X1 goes over the screen and trails; X5 drops to the paint: the space is in front of O1.",
+  "O1 stops on two feet and rises for a mid-range pull-up.",
+  "V2: O4 plants first; X5 absorbs the screen and goes around it (half step lost); O5 loads and plants the ball screen."
+ ],
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 4.1,
+   "dribble": true
+  },
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 4.1,
+   "to": 4.6
+  },
+  {
+   "type": "shot",
+   "player": "O1",
+   "t0": 4.6,
+   "t1": 5.55,
+   "make": true,
+   "three": false
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "ram": 1.2,
+  "contact": 1.55,
+  "lead": 2.45,
+  "ballscreen": 3.1,
+  "use": 3.2,
+  "drop": 3.6,
+  "gather": 4.1,
+  "release": 4.6,
+  "make": 5.55,
+  "end": 6.6
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "O4",
+   "b": "X5",
+   "at": "contact",
+   "max": 0.9,
+   "says": "Four screens the big's defender."
+  },
+  {
+   "type": "far",
+   "a": "O5",
+   "b": "X5",
+   "at": "lead",
+   "min": 2.0,
+   "says": "Now Five has a head start."
+  },
+  {
+   "type": "near",
+   "a": "O5",
+   "b": "X1",
+   "at": "ballscreen",
+   "max": 1.0,
+   "says": "Five gets there first."
+  },
+  {
+   "type": "far",
+   "a": "X5",
+   "b": "O1",
+   "at": "release",
+   "min": 2.2,
+   "says": "The big drops."
+  },
+  {
+   "type": "open",
+   "player": "O1",
+   "at": "release",
+   "min": 1.8,
+   "says": "The guard has room to pull up."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "ram",
+    "contact",
+    "lead",
+    "ballscreen",
+    "use",
+    "release",
+    "make"
+   ],
+   "says": "ram screen, ball screen, pull-up"
+  }
+ ],
+ "legs": {
+  "O1": [
+   {
+    "at": 0.3,
+    "to": [
+     1.9,
+     9.8
+    ],
+    "speed": 1.4
+   },
+   {
+    "at": 2.75,
+    "via": [
+     [
+      0.9,
+      9.95
+     ],
+     [
+      -0.2,
+      9.2
+     ]
+    ],
+    "to": [
+     -1.15,
+     7.55
+    ],
+    "dur": 1.6
+   }
+  ],
+  "O4": [
+   {
+    "at": 0.05,
+    "to": [
+     -2.15,
+     4.35
+    ],
+    "dur": 1.0
+   },
+   {
+    "at": 2.15,
+    "via": [
+     [
+      -3.6,
+      3.3
+     ]
+    ],
+    "to": [
+     -5.9,
+     2.2
+    ],
+    "speed": 5.0
+   }
+  ],
+  "O5": [
+   {
+    "at": 0.8,
+    "via": [
+     [
+      -3.2,
+      5.0
+     ],
+     [
+      -2.3,
+      7.4
+     ]
+    ],
+    "to": [
+     0.85,
+     8.95
+    ],
+    "dur": 2.1
+   },
+   {
+    "at": 4.05,
+    "to": [
+     0.75,
+     5.3
+    ],
+    "speed": 4.2
+   }
+  ],
+  "X5": [
+   {
+    "at": 1.1,
+    "to": [
+     -1.75,
+     3.95
+    ],
+    "dur": 0.45
+   },
+   {
+    "at": 1.85,
+    "via": [
+     [
+      -1.25,
+      4.85
+     ],
+     [
+      -0.55,
+      6.1
+     ]
+    ],
+    "to": [
+     0.0,
+     7.4
+    ],
+    "dur": 1.3
+   },
+   {
+    "at": 3.15,
+    "to": [
+     -0.55,
+     5.25
+    ],
+    "dur": 1.35
+   }
+  ],
+  "X4": [
+   {
+    "at": 0.4,
+    "to": [
+     -1.35,
+     6.5
+    ],
+    "speed": 2.0
+   },
+   {
+    "at": 2.3,
+    "via": [
+     [
+      -2.9,
+      4.4
+     ]
+    ],
+    "to": [
+     -5.0,
+     2.9
+    ],
+    "speed": 4.8
+   }
+  ],
+  "X1": [
+   {
+    "at": 3.3,
+    "via": [
+     [
+      1.55,
+      10.15
+     ]
+    ],
+    "to": [
+     -0.45,
+     9.5
+    ],
+    "dur": 1.4
+   },
+   {
+    "at": 4.75,
+    "to": [
+     -0.8,
+     8.55
+    ],
+    "dur": 0.7
+   }
+  ],
+  "O2": [],
+  "O3": [],
+  "X2": [],
+  "X3": [
+   {
+    "at": 1.4,
+    "to": [
+     4.1,
+     6.1
+    ],
+    "speed": 1.2
+   }
+  ]
+ },
+ "actions": {
+  "O4": [
+   {
+    "type": "screen",
+    "from": 1.05,
+    "to": 2.1,
+    "face": "X5"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 1.0,
+    "face": "O4"
+   },
+   {
+    "type": "stance",
+    "from": 1.0,
+    "to": 6.6,
+    "face": "ball"
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6.6,
+    "face": "ball"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6.6,
+    "face": "ball"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 3.15,
+    "face": "O1"
+   },
+   {
+    "type": "contest",
+    "from": 4.75,
+    "to": 5.25
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 1.1,
+    "face": "O5"
+   },
+   {
+    "type": "bump",
+    "from": 1.5,
+    "to": 1.85,
+    "face": "O4"
+   },
+   {
+    "type": "stance",
+    "from": 2.9,
+    "to": 5.2,
+    "face": "O1"
+   }
+  ],
+  "O5": [
+   {
+    "type": "screen",
+    "from": 2.85,
+    "to": 3.95,
+    "face": "X1"
+   }
+  ],
+  "O1": [
+   {
+    "type": "gather",
+    "from": 4.08,
+    "to": 4.42
+   },
+   {
+    "type": "celebrate",
+    "from": 5.75,
+    "to": 6.4
+   }
+  ]
+ },
+ "screens": [],
+ "squareUp": true
+}

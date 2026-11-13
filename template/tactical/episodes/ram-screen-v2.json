@@ -1,0 +1,1148 @@
+{
+ "id": "ram-screen-v2",
+ "title": "RAM SCREEN V2: How the big gets there first",
+ "fps": 30,
+ "voiceRaw": "tactical/ram-v2/voice-raw.mp3",
+ "wordsRaw": "ram-screen-v2.words-raw.json",
+ "voice": "tactical/ram-v2/voice.wav",
+ "voiceMix": "tactical/ram-v2/voice.mix.wav",
+ "preroll": 0.15,
+ "tail": 2.6,
+ "gaps": [
+  {
+   "after": "get there first?",
+   "sec": 1.6,
+   "why": "hook: O5 escapes, cut before the result"
+  },
+  {
+   "after": "the first screen.",
+   "sec": 1.3,
+   "why": "O4 plants, X5 goes around"
+  },
+  {
+   "after": "a head start.",
+   "sec": 2.2,
+   "why": "O5's half step visible, RAM SCREEN title"
+  },
+  {
+   "after": "big's defender.",
+   "sec": 1.3,
+   "why": "X5 highlighted, his first step"
+  },
+  {
+   "after": "He backs up.",
+   "sec": 1.0,
+   "why": "drop: the gap to O1"
+  },
+  {
+   "after": "for the pull-up.",
+   "sec": 3.3,
+   "why": "brake, rise, release, swish, landing"
+  },
+  {
+   "after": "Same setup.",
+   "sec": 1.0,
+   "why": "back to the same instant"
+  },
+  {
+   "after": "go to the ball.",
+   "sec": 1.2,
+   "why": "the passing gap opens"
+  },
+  {
+   "after": "the short roll.",
+   "sec": 3.4,
+   "why": "catch, steps, finish, net"
+  },
+  {
+   "after": "Same play.",
+   "sec": 2.4,
+   "why": "matched cut big back / big up"
+  }
+ ],
+ "plays": {
+  "A": "ram-v2-a-drop",
+  "B": "ram-v2-b-blitz"
+ },
+ "shots": [
+  {
+   "id": "hook",
+   "name": "Hook — O5 escapes, X5 goes around the first screen",
+   "at": 0,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     1.0
+    ],
+    [
+     "@end",
+     3.15
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O5",
+        "X5"
+       ],
+       "z": 1.0
+      },
+      "dist": 8.6,
+      "pitch": 68,
+      "yaw": -28,
+      "fov": 44
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O5",
+        "X5"
+       ],
+       "z": 1.0
+      },
+      "dist": 8.2,
+      "pitch": 70,
+      "yaw": -34,
+      "fov": 44
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O5",
+     "from": 0.35,
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "X5",
+     "color": "#E5483A",
+     "from": 0.6,
+     "to": "@end"
+    },
+    {
+     "type": "separation",
+     "a": "O5",
+     "b": "X5",
+     "from": 1.0,
+     "to": "@end"
+    }
+   ],
+   "screen": [],
+   "sfx": []
+  },
+  {
+   "id": "reveal",
+   "name": "Rewind, high angle: the first screen and the head start",
+   "at": "Watch the first-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.15
+    ],
+    [
+     0.4,
+     0.55,
+     "inOut"
+    ],
+    [
+     "the first screen.>",
+     1.35
+    ],
+    [
+     "head start.>",
+     2.45
+    ],
+    [
+     "@end",
+     2.95
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.2,
+       6.0,
+       0.5
+      ],
+      "dist": 12.5,
+      "pitch": 48,
+      "yaw": -32,
+      "fov": 42
+     }
+    },
+    {
+     "at": 0.4,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.6,
+       5.6,
+       0.4
+      ],
+      "dist": 13.5,
+      "pitch": 46,
+      "yaw": -34,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "head start.>",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.9,
+       6.4,
+       0.5
+      ],
+      "dist": 13.5,
+      "pitch": 48,
+      "yaw": -38,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.3,
+       7.2,
+       0.6
+      ],
+      "dist": 13.0,
+      "pitch": 50,
+      "yaw": -42,
+      "fov": 42
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "screen",
+     "player": "O4",
+     "n": 1,
+     "facing": -0.785,
+     "from": "the first",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "X5",
+     "color": "#E5483A",
+     "from": "It gives",
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O5",
+     "t0": 0.85,
+     "t1": 2.95,
+     "draw": 1.3,
+     "from": "gives Five",
+     "to": "@end"
+    },
+    {
+     "type": "separation",
+     "a": "O5",
+     "b": "X5",
+     "from": "head start",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "rewind",
+     "from": 0,
+     "to": 0.4
+    },
+    {
+     "type": "title",
+     "lines": [
+      "RAM SCREEN"
+     ],
+     "gold": [
+      0
+     ],
+     "sub": "The screen before the screen",
+     "from": "head start.>-0.1",
+     "to": "@end",
+     "y": 250,
+     "size": 112
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "reverse_cymbal",
+     "volume": 0.05
+    }
+   ]
+  },
+  {
+   "id": "question",
+   "name": "The ball screen — watch the big's defender",
+   "at": "Now watch-0.12",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     2.85
+    ],
+    [
+     "defender.>",
+     3.15
+    ],
+    [
+     "@end",
+     3.4
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.4,
+       8.2,
+       1.0
+      ],
+      "dist": 10.6,
+      "pitch": 56,
+      "yaw": -44,
+      "fov": 42
+     }
+    },
+    {
+     "at": "defender.>",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.5,
+       8.4,
+       1.0
+      ],
+      "dist": 10.0,
+      "pitch": 56,
+      "yaw": -46,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.5,
+       8.4,
+       1.0
+      ],
+      "dist": 9.6,
+      "pitch": 56,
+      "yaw": -46,
+      "fov": 42
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "screen",
+     "player": "O5",
+     "n": 2,
+     "facing": -0.427,
+     "from": 0.1,
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "X5",
+     "color": "#E5483A",
+     "pulse": true,
+     "from": "big's defender",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "pin",
+     "player": "X5",
+     "text": "X5",
+     "tone": "red",
+     "from": "big's defender",
+     "to": "@end",
+     "size": 48
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "readA1",
+   "name": "Read A — drop: X5 backs up, O1 brakes, rises, releases, lands",
+   "at": "He backs-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.25
+    ],
+    [
+     "backs up.>",
+     3.95
+    ],
+    [
+     "That's enough",
+     4.12
+    ],
+    [
+     "the pull-up",
+     4.5
+    ],
+    [
+     "@end",
+     4.98
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.5,
+       8.4,
+       1.0
+      ],
+      "dist": 10.0,
+      "pitch": 56,
+      "yaw": -46,
+      "fov": 42
+     }
+    },
+    {
+     "at": "backs up.>",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O1",
+        "X5"
+       ],
+       "z": 1.1
+      },
+      "dist": 9.4,
+      "pitch": 62,
+      "yaw": -64,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "the pull-up",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O1",
+       "z": 1.3
+      },
+      "dist": 7.2,
+      "pitch": 64,
+      "yaw": -52,
+      "fov": 44
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O1",
+       "z": 1.4
+      },
+      "dist": 7.0,
+      "pitch": 64,
+      "yaw": -48,
+      "fov": 44
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X5",
+     "color": "#E5483A",
+     "from": 0,
+     "to": "That's enough"
+    },
+    {
+     "type": "separation",
+     "a": "X5",
+     "b": "O1",
+     "from": "backs up.>-0.2",
+     "to": "the pull-up"
+    },
+    {
+     "type": "ring",
+     "player": "O1",
+     "from": "enough room",
+     "to": "the pull-up"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "DROP",
+      "→ PULL-UP"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "He backs",
+     "to": "@end",
+     "y": 260,
+     "size": 108
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "readA2",
+   "name": "Read A — behind the shooter: flight, make, then the result",
+   "at": "pull-up.>+0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     4.85
+    ],
+    [
+     1.05,
+     5.62
+    ],
+    [
+     "@end-0.5",
+     6.15
+    ],
+    [
+     "@end",
+     6.3
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.7,
+       5.6,
+       1.8
+      ],
+      "dist": 9.4,
+      "pitch": 68,
+      "yaw": 8,
+      "fov": 44
+     }
+    },
+    {
+     "at": 1.05,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.4,
+       4.4,
+       2.1
+      ],
+      "dist": 8.8,
+      "pitch": 70,
+      "yaw": 9,
+      "fov": 44
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.4,
+       4.2,
+       2.1
+      ],
+      "dist": 8.6,
+      "pitch": 70,
+      "yaw": 9,
+      "fov": 44
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [],
+   "screen": [
+    {
+     "type": "stamp",
+     "text": "PULL-UP",
+     "badge": "+2",
+     "from": 1.25,
+     "to": "@end",
+     "y": 330
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "readB1",
+   "name": "Read B — same instant, same axis: X5 jumps the ball",
+   "at": "Same setup-0.15",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     2.1
+    ],
+    [
+     "Now both",
+     3.0
+    ],
+    [
+     "the ball.>",
+     3.75
+    ],
+    [
+     "@end",
+     3.85
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.5,
+       8.4,
+       1.0
+      ],
+      "dist": 10.0,
+      "pitch": 56,
+      "yaw": -46,
+      "fov": 42
+     }
+    },
+    {
+     "at": "Now both",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.5,
+       8.4,
+       1.0
+      ],
+      "dist": 10.0,
+      "pitch": 56,
+      "yaw": -46,
+      "fov": 42
+     },
+     "ease": "linear"
+    },
+    {
+     "at": "the ball.>",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.1,
+       9.9,
+       1.0
+      ],
+      "dist": 12.6,
+      "pitch": 56,
+      "yaw": -38,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.1,
+       9.9,
+       1.0
+      ],
+      "dist": 12.4,
+      "pitch": 56,
+      "yaw": -38,
+      "fov": 42
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X5",
+     "color": "#E5483A",
+     "from": "Now both",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "X1",
+     "color": "#E5483A",
+     "from": "both defenders",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "BLITZ",
+      "→ SHORT ROLL"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "Now both",
+     "to": "@end",
+     "y": 260,
+     "size": 108
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "readB2",
+   "name": "Read B — the gap, the pass to the offered hands, the steps, the finish",
+   "at": "Five is open-0.6",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     3.85
+    ],
+    [
+     "open on-0.1",
+     4.38
+    ],
+    [
+     "short roll.>",
+     4.62
+    ],
+    [
+     "@end-1.3",
+     5.75
+    ],
+    [
+     "@end",
+     6.3
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.4,
+       8.6,
+       1.4
+      ],
+      "dist": 9.6,
+      "pitch": 66,
+      "yaw": 4,
+      "fov": 44
+     }
+    },
+    {
+     "at": "open on-0.1",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O5",
+       "z": 1.3,
+       "lead": 0.2
+      },
+      "dist": 8.8,
+      "pitch": 68,
+      "yaw": 4,
+      "fov": 44
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end-1.3",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.1,
+       3.4,
+       1.9
+      ],
+      "dist": 8.4,
+      "pitch": 72,
+      "yaw": 4,
+      "fov": 44
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.1,
+       3.2,
+       2.0
+      ],
+      "dist": 8.2,
+      "pitch": 72,
+      "yaw": 4,
+      "fov": 44
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "passLane",
+     "src": "O1",
+     "dst": "O5",
+     "from": 0.25,
+     "to": "open on-0.1"
+    },
+    {
+     "type": "ring",
+     "player": "O5",
+     "from": "open on-0.1",
+     "to": "short roll.>+0.4"
+    },
+    {
+     "type": "route",
+     "player": "O5",
+     "t0": 4.45,
+     "t1": 5.4,
+     "trail": true,
+     "from": "short roll.>",
+     "to": "@end-0.9"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "BLITZ",
+      "→ SHORT ROLL"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0,
+     "to": "@end-1.3",
+     "y": 260,
+     "size": 108
+    },
+    {
+     "type": "stamp",
+     "text": "SHORT ROLL",
+     "badge": "+2",
+     "from": "@end-1.05",
+     "to": "@end",
+     "y": 330
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "cmpA",
+   "name": "Same play — X5 back (A)",
+   "at": "Same play-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.72
+    ],
+    [
+     "@end",
+     3.8
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       8.0,
+       0.5
+      ],
+      "dist": 14.5,
+      "pitch": 46,
+      "yaw": -18,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X5",
+     "color": "#E5483A",
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "separation",
+     "a": "X5",
+     "b": "O1",
+     "from": 0.1,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "BIG BACK"
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 270,
+     "size": 120
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "cmpB",
+   "name": "Same play — X5 up (B)",
+   "at": "play.>+0.75",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     3.72
+    ],
+    [
+     "@end",
+     3.8
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       8.0,
+       0.5
+      ],
+      "dist": 14.5,
+      "pitch": 46,
+      "yaw": -18,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X5",
+     "color": "#E5483A",
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "separation",
+     "a": "X5",
+     "b": "O1",
+     "from": 0.1,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "BIG UP"
+     ],
+     "gold": [
+      0
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 270,
+     "size": 120
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "cta",
+   "name": "CTA — both options on the decision frame, back to the hook framing",
+   "at": "Where would-0.25",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.1
+    ],
+    [
+     "@end",
+     3.1
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       8.0,
+       0.5
+      ],
+      "dist": 14.5,
+      "pitch": 46,
+      "yaw": -18,
+      "fov": 40
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O5",
+        "X5"
+       ],
+       "z": 1.0
+      },
+      "dist": 8.6,
+      "pitch": 68,
+      "yaw": -28,
+      "fov": 44
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X5",
+     "color": "#E5483A",
+     "pulse": true,
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "X5",
+     "t0": 3.1,
+     "t1": 4.45,
+     "color": "#E5483A",
+     "draw": 0.5,
+     "from": 0.2,
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "X5",
+     "fromPlay": "B",
+     "t0": 3.0,
+     "t1": 3.8,
+     "color": "#FFFFFF",
+     "dashed": true,
+     "draw": 0.5,
+     "from": 0.5,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "scrim",
+     "opacity": 0.3,
+     "from": "put the big?-0.2",
+     "to": "@end"
+    },
+    {
+     "type": "title",
+     "lines": [
+      "DROP",
+      "OR BLITZ?"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "put the big?",
+     "to": "@end",
+     "y": 600,
+     "size": 136
+    },
+    {
+     "type": "logo",
+     "big": false,
+     "from": "put the big?>",
+     "to": "@end"
+    }
+   ],
+   "sfx": []
+  }
+ ],
+ "pinV2": true,
+ "keywords": [
+  "first screen",
+  "head start",
+  "defender",
+  "backs up",
+  "pull-up",
+  "both defenders",
+  "open",
+  "short roll",
+  "big"
+ ],
+ "subtitleHide": [],
+ "autoSfx": {
+  "bounce": 0.12,
+  "catch": 0.09,
+  "squeak": 0.05,
+  "swish": 0.16,
+  "land": 0.05
+ },
+ "ambience": {
+  "src": "sfx/arena.mp3",
+  "volume": 0.06
+ },
+ "music": {
+  "src": "tactical/ram-v2/music.mp3",
+  "volume": 1
+ }
+}
