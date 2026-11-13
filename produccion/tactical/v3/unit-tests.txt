@@ -21,6 +21,7 @@ test_revoked_expired_too_long (test_tactical_publisher.TestDelegation.test_revok
 test_scope_must_match_the_studio (test_tactical_publisher.TestDelegation.test_scope_must_match_the_studio) ... ok
 test_studio_budget_cannot_exceed_the_delegated_one (test_tactical_publisher.TestDelegation.test_studio_budget_cannot_exceed_the_delegated_one) ... ok
 test_the_committed_template_is_not_a_grant (test_tactical_publisher.TestDelegation.test_the_committed_template_is_not_a_grant) ... ok
+test_the_eve_of_the_first_post_day_is_allowed_but_not_before_the_grant (test_tactical_publisher.TestDelegation.test_the_eve_of_the_first_post_day_is_allowed_but_not_before_the_grant) ... ok
 test_two_videos_end_to_end_with_fake_metricool (test_tactical_publisher.TestIntegralDryRun.test_two_videos_end_to_end_with_fake_metricool) ... ok
 test_bad_asset_url_never_reaches_authorised (test_tactical_publisher.TestModesAndGates.test_bad_asset_url_never_reaches_authorised) ... ok
 test_qc_fail_is_never_schedulable (test_tactical_publisher.TestModesAndGates.test_qc_fail_is_never_schedulable) ... ok
@@ -100,5 +101,5 @@ test_order_enforced_on_free_states (test_tactical_studio.TestStateMachine.test_o
 test_resume_after_failure_and_no_loops (test_tactical_studio.TestStateMachine.test_resume_after_failure_and_no_loops) ... ok
 test_truncated_line_ignored (test_tactical_studio.TestStateMachine.test_truncated_line_ignored) ... ok
 test_usage_limit_wait (test_tactical_studio.TestStateMachine.test_usage_limit_wait) ... ok
-Ran 102 tests in 4.608s
+Ran 103 tests in 4.561s
 OK

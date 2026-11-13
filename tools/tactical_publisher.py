@@ -67,8 +67,11 @@ def check_delegation(deleg, sha, pinned_sha, now, cid=None, c=None):
     frm, until = ts.parse_ts(deleg["valid_from"]), ts.parse_ts(deleg["valid_until"])
     if until - frm > dt.timedelta(days=c["delegation"]["max_days"]):
         raise PublishError(f"delegation longer than {c['delegation']['max_days']} days")
-    if not frm <= now < until:
-        raise PublishError(f"delegation not in force now ({frm} – {until})")
+    # the studio works the day BEFORE each post: acting is allowed from the grant until the end of the window;
+    # the POST slots themselves must lie inside [valid_from, valid_until) (checked below for the cid)
+    start = ts.parse_ts(deleg["granted_at"]) if deleg.get("granted_at") else frm
+    if start > frm or not start <= now < until:
+        raise PublishError(f"delegation not in force now ({start} – {until})")
     want = {"brand": BRAND, "networks": sorted(ts.NETWORKS), "slots": sorted(c["slots"][k]["time"] for k in ("1", "2")),
             "timezone": c["timezone"], "max_videos_per_day": 2, "engine": "Tactical3DV2", "format": "tactical basketball",
             "duration_s": [c["duration_s"]["min"], c["duration_s"]["max"]], "write_tool": WRITE_TOOL,
