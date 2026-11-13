@@ -242,8 +242,8 @@ export const Athlete: React.FC<Props> = ({pose: P, team, num, skin}) => {
   const kb = k * b;
   // V2 materials (2026-11-13): matte skin with a soft sheen instead of a plastic clearcoat; fabric = rough + sheen
   const skinM = mat(`skinV2${skin}`, () => new THREE.MeshPhysicalMaterial({color: skin, roughness: 0.64, metalness: 0.0, clearcoat: 0.04, clearcoatRoughness: 0.7, sheen: 0.25, sheenRoughness: 0.6, sheenColor: new THREE.Color('#f3d9c4')}));
-  const jerseyM = mat(`jerseyV2${team}${num}`, () => new THREE.MeshPhysicalMaterial({map: jerseyTex(kit, num, 'jersey'), roughness: 0.88, metalness: 0.0, sheen: 0.55, sheenRoughness: 0.75, sheenColor: new THREE.Color('#ffffff'), side: THREE.DoubleSide}));
-  const shortsM = mat(`shortsV2${team}`, () => new THREE.MeshPhysicalMaterial({map: jerseyTex(kit, num, 'shorts'), roughness: 0.9, sheen: 0.55, sheenRoughness: 0.75, sheenColor: new THREE.Color('#ffffff'), side: THREE.DoubleSide}));
+  const jerseyM = mat(`jerseyV2b${team}${num}`, () => new THREE.MeshPhysicalMaterial({map: jerseyTex(kit, num, 'jersey'), roughness: 0.86, metalness: 0.0, sheen: 0.3, sheenRoughness: 0.8, sheenColor: new THREE.Color(kit.jersey).lerp(new THREE.Color('#ffffff'), 0.3), side: THREE.DoubleSide}));
+  const shortsM = mat(`shortsV2b${team}`, () => new THREE.MeshPhysicalMaterial({map: jerseyTex(kit, num, 'shorts'), roughness: 0.88, sheen: 0.3, sheenRoughness: 0.8, sheenColor: new THREE.Color(kit.shorts).lerp(new THREE.Color('#ffffff'), 0.3), side: THREE.DoubleSide}));
   const shoeM = mat(`shoe${team}`, () => new THREE.MeshStandardMaterial({color: kit.shoe, roughness: 0.42}));
   const soleM = mat(`sole${team}`, () => new THREE.MeshStandardMaterial({color: kit.sole, roughness: 0.6}));
   const sockM = mat(`sock${team}`, () => new THREE.MeshStandardMaterial({color: kit.sock, roughness: 0.85}));

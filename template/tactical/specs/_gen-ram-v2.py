@@ -20,7 +20,7 @@ for kind in ("a-drop", "b-blitz"):
     L["O4"][0] = {"at": 0.05, "to": [-2.15, 4.35], "dur": 1.0}
     A["O4"] = [{"type": "screen", "from": 1.05, "to": 2.1, "face": "X5"}]
     # X5: steps into O4, absorbs, then goes around on the inside (loses the half step)
-    L["X5"][0] = {"at": 1.1, "to": [-1.75, 3.95], "dur": 0.45}
+    L["X5"][0] = {"at": 1.1, "to": [-1.6, 3.85], "dur": 0.45}
     if kind == "a-drop":
         L["X5"][1] = {"at": 1.85, "via": [[-1.25, 4.85], [-0.55, 6.1]], "to": [0.0, 7.4], "dur": 1.3}
     else:
