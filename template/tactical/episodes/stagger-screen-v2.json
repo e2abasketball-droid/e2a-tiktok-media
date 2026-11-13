@@ -36,7 +36,7 @@
  ],
  "plays": {
   "A": "stagger-a-trail",
-  "B": "stagger-b-backdoor"
+  "B": "stagger-b-backdoor-lowlock"
  },
  "shots": [
   {

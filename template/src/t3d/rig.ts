@@ -14,7 +14,9 @@ import type {Play} from '../tactical/play.ts';
 import {posAt, stateOf} from '../tactical/play.ts';
 
 export type ActionType = 'screen' | 'stance' | 'topLock' | 'catchReady' | 'shoot' | 'layup' | 'pass' | 'dribble' | 'contest' | 'seal' | 'celebrate';
-export type Action = {type: ActionType; from: number; to: number; face?: string | number; side?: number};
+export type Action = {type: ActionType; from: number; to: number; face?: string | number; side?: number; pose?: 'low'};
+/** topLock pose 'low' (prototype 2026-11-13, opt-in per action): deeper, more upright, hips open to the
+ *  screen side, weight over the inside foot, denial arm straighter into the lane. Without `pose` nothing changes. */
 
 export type PlayWithActions = Play & {actions?: Record<string, Action[]>};
 
@@ -204,9 +206,11 @@ const simulate = (play: PlayWithActions, id: string, dims: Dims): Sim => {
     // ----- stance width by action
     const screenW = activeW(acts, 'screen', tc).w;
     const stanceW0 = activeW(acts, 'stance', tc).w;
-    const lockW = activeW(acts, 'topLock', tc).w;
+    const lockA = activeW(acts, 'topLock', tc);
+    const lockW = lockA.w;
+    const lowW = lockA.a?.pose === 'low' ? lockW : 0;
     const sealW = activeW(acts, 'seal', tc).w;
-    const stanceW = lerp(0.36, 0.62, Math.max(screenW, stanceW0, lockW * 0.9, sealW));
+    const stanceW = lerp(0.36, 0.62, Math.max(screenW, stanceW0, lockW * 0.9, sealW)) + 0.08 * lowW;
     // ----- gait phase from distance (stride grows with speed)
     const cycleLen = clamp(0.8 + 0.5 * speed, 0.9, 3.4);
     let rate = speed / cycleLen;
@@ -348,6 +352,7 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
   const screen = w('screen');
   const stance = w('stance');
   const lock = w('topLock');
+  const low = lock.a?.pose === 'low' ? lock.w : 0;
   const seal = w('seal');
   const catchR = w('catchReady', 0.15);
   const shoot = w('shoot', 0.12);
@@ -372,15 +377,16 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
     if (tt > 0 && tt < 0.22) dip = Math.max(dip, 0.08 * Math.sin((Math.PI * tt) / 0.22));
   }
   const bob = run * 0.035 * Math.cos(4 * Math.PI * r.phase);
-  const pelvisZ = legLen * (0.955 - 0.1 * run - 0.13 * crouchAmt) - dip + bob + air;
+  const pelvisZ = legLen * (0.955 - 0.1 * run - 0.13 * crouchAmt) - dip + bob + air - 0.06 * low;
   // the hips sit slightly behind/ahead of the feet midpoint depending on speed; use the track position
-  const pelvis: V3 = [p2[0], p2[1], pelvisZ];
+  // (low top-lock: weight shifted 5 cm over the inside foot, toward the lock side)
+  const pelvis: V3 = low > 0 ? add([p2[0], p2[1], pelvisZ], mul(R, 0.05 * low * (lock.a?.side ?? 1))) : [p2[0], p2[1], pelvisZ];
 
   // ----- trunk orientation
-  const lean = clamp(0.06 + 0.05 * speed + 0.025 * acc, -0.12, 0.42) * (1 - Math.max(shoot.w, layup.w) * 0.7) + crouchAmt * 0.28 + catchR.w * 0.06 - celebrate.w * 0.05;
+  const lean = clamp(0.06 + 0.05 * speed + 0.025 * acc, -0.12, 0.42) * (1 - Math.max(shoot.w, layup.w) * 0.7) + crouchAmt * 0.28 + catchR.w * 0.06 - celebrate.w * 0.05 - 0.12 * low;
   const roll = clamp(speed * turn * 0.035, -0.28, 0.28);
   const counter = run * 0.16 * Math.sin(2 * Math.PI * r.phase);
-  const sideTurn = lock.w * 0.5 * (lock.a?.side ?? 1) + seal.w * 0.6 * (seal.a?.side ?? 1);
+  const sideTurn = (lock.w * 0.5 + 0.35 * low) * (lock.a?.side ?? 1) + seal.w * 0.6 * (seal.a?.side ?? 1);
   const chestYaw = h + counter + sideTurn * 0.35;
   const up: V3 = [0, 0, 1];
   // trunk direction: up tilted forward by lean and sideways by roll
@@ -445,7 +451,9 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
     if (lock.w > 0) {
       const lockSide = lock.a?.side ?? 1;
       const deny = side === lockSide;
-      blend(lock.w, deny ? L(0.5, 0.42, 0.1) : L(0.22, 0.38, -0.25), norm(add(mul(chestR, side), [0, 0, -0.4])));
+      const denyT = low > 0 ? L(0.58, 0.36, 0.16) : L(0.5, 0.42, 0.1);
+      const feelT = low > 0 ? L(0.2, 0.26, -0.22) : L(0.22, 0.38, -0.25);
+      blend(lock.w, deny ? denyT : feelT, norm(add(mul(chestR, side), [0, 0, -0.4])));
     }
     // screen: arms crossed low in front of the body (legal screen posture)
     blend(screen.w, L(-0.06, 0.24, -0.38), norm(add(mul(chestR, side), [0, 0, -0.6])));
