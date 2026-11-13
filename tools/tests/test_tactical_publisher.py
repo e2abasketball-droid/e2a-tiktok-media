@@ -31,7 +31,8 @@ TEMPLATE = json.load(open(os.path.join(ts.ROOT, "config", "delegation.tactical-s
 
 def granted(**over):
     d = copy.deepcopy(TEMPLATE)
-    d.update({"status": "granted", "granted_by": "owner", "granted_at": "2026-11-13T09:00:00+11:00"})
+    d.update({"status": "granted", "granted_by": "owner", "granted_at": "2026-11-13T09:00:00+11:00",
+              "valid_from": "2026-11-14T00:00:00+11:00", "valid_until": "2026-11-21T00:00:00+11:00"})  # fixed test window
     for k, v in over.items():
         if k.startswith("scope_"):
             d["scope"][k[6:]] = v
