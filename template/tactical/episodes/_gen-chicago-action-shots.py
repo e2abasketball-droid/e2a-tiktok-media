@@ -46,7 +46,7 @@ shots = [
           {"type": "route", "player": "O2", "t0": 0.75, "t1": 2.5, "trail": True, "from": "pin-down,", "to": "@end"},
           {"type": "ring", "player": "O1", "from": "straight", "to": "@end"}],
   "screen": [{"type": "title", "lines": ["CHICAGO ACTION"], "gold": [0], "sub": "Pin-down into a handoff", "from": "Chicago", "to": "@end", "y": 230, "size": 104},
-             {"type": "pin", "player": "X2", "text": "X2", "tone": "red", "from": 0.3, "to": "Chicago action.>", "size": 44}],
+             {"type": "pin", "player": "X2", "text": "X2", "tone": "red", "from": 0.3, "to": "Chicago-0.05", "size": 44}],
   "sfx": []},
  {"id": "caseA", "name": "Case A — he trails: hand to hands to first dribble, turn the corner, big deep, pull-up", "at": "If he-0.15", "play": "A",
   "remap": [[0, 1.3], ["take", 2.35], ["tight.>", 2.8], ["deep.", 3.75], ["@end-0.35", 5.1], ["@end", 5.25]],
