@@ -193,8 +193,11 @@ const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallSta
       const h = smoothHand(play, cur.player, t);
       // gather: the ball rises into the shooting pocket before a shot or layup
       const next = play.ball.find((e): e is Extract<BallEvent, {type: 'shot' | 'layup'}> => (e.type === 'shot' || e.type === 'layup') && e.player === cur.player && Math.abs(e.t0 - cur.to) < 1e-6);
-      if (next && t > cur.to - 0.3) {
-        const g = Math.min(1, (t - (cur.to - 0.3)) / 0.3);
+      // gather window never longer than the hold itself (2026-11-15: a 0.25 s catch-and-finish started the
+      // gather at 17 % on the catch frame, a 23 m/s jump); a dribble ends (pick-up) where the gather starts
+      const gw = next ? Math.min(0.3, cur.to - cur.from) : 0;
+      if (next && t > cur.to - gw) {
+        const g = Math.min(1, (t - (cur.to - gw)) / gw);
         const e = g * g * (3 - 2 * g);
         const r = release(ps[cur.player], next.type);
         return {pos: [h[0] + (r[0] - h[0]) * e, h[1] + (r[1] - h[1]) * e, h[2] + (r[2] - h[2]) * e], holder: cur.player, event: cur};
@@ -207,7 +210,8 @@ const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallSta
         const e = g * g * (3 - 2 * g);
         return {pos: [h[0], h[1], h[2] + (2.05 - h[2]) * e], holder: cur.player, event: cur};
       }
-      if (cur.dribble) {
+      if (cur.dribble && cur.to - gw > cur.from) {
+        const dTo = cur.to - gw; // the dribble ends in the hand at the pick-up, before the gather
         // live dribble (2026-11-13): cadence and height follow the handler's speed (faster + lower when he
         // attacks, slower + higher when he probes), the ball is pushed ahead of the body at the floor contact,
         // and the bounce count is rounded so the ball is back in the hand exactly when the dribble ends.
@@ -224,12 +228,12 @@ const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallSta
           for (let x = cur.from; x < x1 - 1e-9; x += step) c += rate(Math.min(x1, x + step / 2)) * Math.min(step, x1 - x);
           return c;
         };
-        const total = integ(cur.to);
+        const total = integ(dTo);
         const n = Math.max(1, Math.round(total));
         const c = (integ(t) * n) / total;
         const sp = Math.min(1, spd(t) / 5);
         let hz = 1.05 - 0.17 * sp + 0.04 * Math.sin(0.9 * (t - cur.from) + 1);
-        const endW = Math.max(0, Math.min(1, (t - (cur.to - 0.2)) / 0.2));
+        const endW = Math.max(0, Math.min(1, (t - (dTo - 0.2)) / 0.2));
         hz += (h[2] - hz) * endW;
         // ...and starts from the hand height of a held ball (catch -> first dribble without a jump)
         const startW = 1 - Math.max(0, Math.min(1, (t - cur.from) / 0.2));
@@ -322,7 +326,15 @@ export const stateOf = (play: Play, id: string, t: number): PlayerState => {
   const ownBall = bh !== undefined && Math.hypot(bh[0] - pos[0], bh[1] - pos[1]) < 0.05;
   // ...unless he is about to pass: then he squares up to the receiver
   const nextPass = ownBall ? (play.ball.find((e) => e.type === 'pass' && e.from === id && e.t0 >= t - 0.05 && e.t0 - t < 0.8) as Extract<BallEvent, {type: 'pass'}> | undefined) : undefined;
-  const rest = spec.team === 'X' && spec.guards ? look(posAt(play.tracks[spec.guards], t)) : look(nextPass ? posAt(play.tracks[nextPass.to], nextPass.t1) : spec.team === 'O' && bh && !ownBall ? bh : FIBA.basket);
+  // 2026-11-15: the square-up to the receiver is eased in over 0.4 s (it used to snap at t0 - 0.8 s, which moved
+  // the held ball 8 cm in one 240 Hz step through the smoothed hand = a 20 m/s jump)
+  const baseLook = look(spec.team === 'O' && bh && !ownBall ? bh : FIBA.basket);
+  let rest: number;
+  if (spec.team === 'X' && spec.guards) rest = look(posAt(play.tracks[spec.guards], t));
+  else if (nextPass) {
+    const k = Math.max(0, Math.min(1, (0.8 - (nextPass.t0 - t)) / 0.4));
+    rest = blendAngle(baseLook, look(posAt(play.tracks[nextPass.to], nextPass.t1)), k * k * (3 - 2 * k));
+  } else rest = baseLook;
   if (speed > 0.6) {
     const mv = Math.atan2(vel[1], vel[0]);
     const w = Math.min(1, (speed - 0.6) / 1.4);
