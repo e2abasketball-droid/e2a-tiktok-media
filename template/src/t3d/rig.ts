@@ -118,6 +118,7 @@ export const actionsOf = (play: PlayWithActions, id: string): Action[] => {
   for (const e of play.ball) {
     if (e.type === 'shot' && e.player === id) out.push({type: 'shoot', from: e.t0 - 0.5, to: e.t0 + 0.75});
     if (e.type === 'layup' && e.player === id) out.push({type: 'layup', from: e.t0 - 0.38, to: e.t0 + 0.55});
+    if (e.type === 'pass' && e.from === id && e.style === 'handoff') continue; // hand-off: hands stay on the ball (below)
     if (e.type === 'pass' && e.from === id) {
       // overhead arms only when the pass is loaded from a held ball (play.ts raises it above the head)
       const loaded = e.style === 'overhead' && play.ball.some((h) => h.type === 'hold' && h.player === id && !h.dribble && Math.abs(h.to - e.t0) < 1e-6);
@@ -527,6 +528,12 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
       const wr = smooth((tc - (incoming.t1 - 0.22)) / 0.18);
       blend(wr, add(ball.pos, mul(chestR, side * 0.11)), norm(add(mul(chestR, side), [0, 0, -0.7])));
     }
+    // dribble hand-off (2026-11-15): the passer's hands ride the ball until the receiver's hands have it
+    const ho = play.ball.find((e) => e.type === 'pass' && e.style === 'handoff' && e.from === id && tc >= e.t0 - 0.02 && tc <= e.t1 + 0.2);
+    if (ho && ho.type === 'pass') {
+      const wh = 0.95 * (1 - smooth((tc - (ho.t1 - 0.04)) / 0.2));
+      blend(wh, add(add(ball.pos, mul(chestR, side * 0.115)), mul(chestF, -0.03)), norm(add(mul(chestR, side), [0, 0, -0.7])));
+    }
     // holding the ball: both hands on it
     if (isBallHolder && !inDribble && shoot.w < 0.01 && layup.w < 0.01) {
       const ballSide: V3 = add(ball.pos, mul(chestR, side * 0.115));
@@ -539,7 +546,10 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
       else blend(dribble.w, L(0.3, 0.32, -0.28), norm(add(mul(chestR, -1), [0, 0, -0.5])));
     }
     // pass: hands follow the ball and push forward
-    if (pass.a && pass.w > 0) {
+    // 2026-11-15: a picked-up ball (held, not dribbled) stays in both hands until the release; the push below
+    // is the throw itself (it pulled the hands 15 cm off a held ball before t0)
+    const preRelease = isBallHolder && !inDribble && pass.a !== undefined && tc < pass.a.to - 0.18;
+    if (pass.a && pass.w > 0 && !preRelease) {
       const tt = (tc - pass.a.from) / (pass.a.to - pass.a.from);
       const ext = smooth((tt - 0.4) / 0.4);
       if (pass.a.pose === 'overhead' && isBallHolder) {

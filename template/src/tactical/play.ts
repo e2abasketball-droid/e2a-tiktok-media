@@ -19,7 +19,7 @@ export type Waypoint = [number, number, number];
 
 export type BallEvent =
   | {type: 'hold'; player: string; from: number; to: number; dribble?: boolean}
-  | {type: 'pass'; from: string; to: string; t0: number; t1: number; style?: 'chest' | 'bounce' | 'overhead'; side?: number}
+  | {type: 'pass'; from: string; to: string; t0: number; t1: number; style?: 'chest' | 'bounce' | 'overhead' | 'handoff'; side?: number}
   | {type: 'shot'; player: string; t0: number; t1: number; make?: boolean}
   | {type: 'layup'; player: string; t0: number; t1: number; make?: boolean};
 
@@ -267,6 +267,12 @@ const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallSta
         // 2026-11-13; the old fixed 2.1 m start teleported the ball up out of a dribble), arcing to ~2.4 m
         const z0 = a0[2];
         z = z0 + (b1[2] - z0) * u + Math.max(0.25, 2.4 - (z0 + b1[2]) / 2) * Math.sin(Math.PI * u);
+      } else if (cur.style === 'handoff') {
+        // 2026-11-15 dribble hand-off: the ball never flies. It goes hand to hand at hip height along the
+        // straight line between the passer's hand at t0 and the receiver's hand at t1 (eased, no arc), so both
+        // pairs of hands meet the same ball (rig.ts keeps the passer's hands on it until the release)
+        const e = u * u * (3 - 2 * u);
+        return {pos: [a0[0] + (b1[0] - a0[0]) * e, a0[1] + (b1[1] - a0[1]) * e, a0[2] + (b1[2] - a0[2]) * e - 0.06 * Math.sin(Math.PI * u)], inFlight: 'pass', event: cur, progress: u};
       } else {
         z = a0[2] + (b1[2] - a0[2]) * u + 0.35 * Math.sin(Math.PI * u);
       }

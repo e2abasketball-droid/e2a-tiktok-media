@@ -97,7 +97,13 @@ for (const f of files) {
       check(p.id, `pass ${e.from}→${e.to}: lane open (ball ≥ 0.6 m from every defender)`, near >= 0.6, `${near.toFixed(2)} m (${who})`);
       const len = d2(posAt(p.tracks[e.from], e.t0), posAt(p.tracks[e.to], e.t1));
       const sp = len / (e.t1 - e.t0);
-      check(p.id, `pass ${e.from}→${e.to}: speed 6–14 m/s`, sp >= 6 && sp <= 14, `${sp.toFixed(1)} m/s over ${len.toFixed(1)} m`);
+      if (e.style === 'handoff') {
+        // a hand-off is hand to hand: bodies within reach for the whole exchange, ball slow
+        let far = 0;
+        for (let t = e.t0; t <= e.t1 + 1e-9; t += DT) far = Math.max(far, d2(posAt(p.tracks[e.from], t), posAt(p.tracks[e.to], t)));
+        check(p.id, `hand-off ${e.from}→${e.to}: bodies within reach (≤ 1.0 m) through the exchange`, far <= 1.0, `${far.toFixed(2)} m`);
+        check(p.id, `hand-off ${e.from}→${e.to}: 0.15–0.35 s, ball ≤ 5 m/s`, e.t1 - e.t0 >= 0.15 && e.t1 - e.t0 <= 0.35 && sp <= 5, `${(e.t1 - e.t0).toFixed(2)} s, ${sp.toFixed(1)} m/s`);
+      } else check(p.id, `pass ${e.from}→${e.to}: speed 6–14 m/s`, sp >= 6 && sp <= 14, `${sp.toFixed(1)} m/s over ${len.toFixed(1)} m`);
       const rv = Math.hypot(...(sample(p, e.t1).players[e.to].vel as [number, number]));
       check(p.id, `pass ${e.from}→${e.to}: receiver under control at the catch (≤ 3.5 m/s)`, rv <= 3.5, `${rv.toFixed(2)} m/s`);
     }
