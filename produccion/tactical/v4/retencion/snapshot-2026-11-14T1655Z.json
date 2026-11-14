@@ -1,0 +1,36 @@
+{
+ "taken_at": "2026-11-14T16:55:00Z",
+ "source": "Metricool getAnalyticsDataByMetrics brand 7681319 (IG reels IGRE*, TikTok TKPO*, YouTube YTVP*); lifetime values at the snapshot time, not per-age windows",
+ "registry": [
+  {"key": "elevator-v2", "format": "tactical3d", "duration_s": 66.0, "published_utc": "2026-11-11T23:07:40Z", "ig_reel": "17908583511344516"},
+  {"key": "elevator-v2-2nd", "format": "tactical3d", "duration_s": 66.0, "published_utc": "2026-11-12T03:04:20Z", "ig_reel": "18138311611647423", "note": "same caption, 4 h later; type (trial or feed) not returned by analytics"},
+  {"key": "stagger-v2", "format": "tactical3d", "duration_s": 33.344, "published_utc": "2026-11-12T23:06:38Z", "ig_reel": "18141775414639524", "metricool": 426159230},
+  {"key": "stagger-v2-trial", "format": "tactical3d-trial", "duration_s": 33.344, "published_utc": "2026-11-13T02:03:08Z", "ig_reel": "18381600901210255", "metricool": 426159411},
+  {"key": "flare", "format": "tactical3d", "duration_s": 34.901, "published_utc": "2026-11-14T02:04:42Z", "ig_reel": "18378380494242180", "metricool": 426590443},
+  {"key": "ram-v1", "format": "tactical3d", "duration_s": 37.312, "published_utc": "2026-11-14T11:25:59Z", "ig_reel": "18399065959167683", "metricool": 427918987}
+ ],
+ "instagram_cols": ["published", "reel_id", "reach", "views", "avg_watch_s", "total_watch_s", "duration_s(IGRE26)", "retention(IGRE27)", "view_rate_3s", "skip_rate_3s", "saves", "shares", "comments"],
+ "instagram": [
+  ["20261111230740", "17908583511344516", 2220, 2543, 18.155, 39779.734, null, null, 55.1, 44.9, 31, 46, 1],
+  ["20261112030420", "18138311611647423", 73678, 86806, 26.078, 1914512.961, null, null, 73.3, 26.7, 715, 3396, 14],
+  ["20261112230638", "18141775414639524", 46359, 57987, 17.744, 821779.523, null, null, 73.0, 27.0, 317, 598, 8],
+  ["20261113020308", "18381600901210255", 26840, 32580, 16.67, 438036.485, null, null, 74.0, 26.0, 127, 479, 3],
+  ["20261114020442", "18378380494242180", 13893, 16337, 15.874, 219116.111, null, null, 63.3, 36.7, 189, 363, 7],
+  ["20261114112559", "18399065959167683", 1220, 1508, 17.7, 21453.475, null, null, 69.4, 30.6, 2, 1, 1]
+ ],
+ "instagram_baseline_2d_tactical": [
+  {"published": "20261110070317", "topic": "blitz (2D board)", "avg_watch_s": 9.414, "skip_rate_3s": 59.6, "views": 211, "duration_s": null},
+  {"published": "20261111070312", "topic": "elevator (2D board)", "avg_watch_s": 9.126, "skip_rate_3s": 54.9, "views": 199, "duration_s": null},
+  {"published": "20261109070315", "topic": "stagger (2D board)", "avg_watch_s": 9.674, "skip_rate_3s": 53.3, "views": 389, "duration_s": null}
+ ],
+ "tiktok": {
+  "available": ["views", "duration", "shares", "comments"],
+  "missing": ["fullVideoWatchedRate (TKPO13) = null", "totalTimeWatched (TKPO14) = null", "averageTimeWatched (TKPO15) = null", "reach (TKPO11) = null"],
+  "rows": [["20261111230437", "elevator", 66, 1199], ["20261112230339", "stagger", 33, 5369], ["20261114020238", "flare", 34, 634], ["20261114112532", "ram", 37, 75]]
+ },
+ "youtube": {
+  "available": ["views", "watchMinutes", "averageViewDuration (s)"],
+  "missing": ["stayed to watch / swiped away (not exposed by Metricool)", "average percentage viewed (not exposed; = avg view duration / duration)", "rows after 2026-11-11: YouTube Analytics lag, Stagger V2 / Flare / RAM not yet present"],
+  "rows": [["20261109070358", "Stagger Screen Explained (2D)", 907, 333.658, 22]]
+ }
+}

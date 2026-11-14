@@ -1,0 +1,451 @@
+{
+ "version": "0.4.0",
+ "status": "V4 SHADOW concept list. Each concept needs a play spec (play_status needs_spec) before it can be produced; 'play' names an existing tactical/plays file when there is one.",
+ "concepts": [
+  {
+   "id": "horns-twist",
+   "format": "execution",
+   "family": "horns",
+   "variant": "twist: wedge into second ball screen",
+   "concepts": [
+    "horns",
+    "twist",
+    "wedge screen",
+    "second ball screen"
+   ],
+   "question": "Why does the second screen beat the switch?",
+   "cta": "Comment TWIST if your team runs it.",
+   "play": null,
+   "play_status": "needs_spec",
+   "source": "standard FIBA/European half-court action (generic coaching knowledge)"
+  },
+  {
+   "id": "floppy-curl",
+   "format": "execution",
+   "family": "floppy",
+   "variant": "shooter reads the trail: curl or fade",
+   "concepts": [
+    "floppy",
+    "pin down",
+    "curl",
+    "fade"
+   ],
+   "question": "Curl or fade: who decides?",
+   "cta": "Tell us which read you teach first.",
+   "play": null,
+   "play_status": "needs_spec",
+   "source": "standard FIBA/European half-court action (generic coaching knowledge)"
+  },
+  {
+   "id": "zipper-empty-pnr",
+   "format": "execution",
+   "family": "zipper",
+   "variant": "zip cut into empty-side pick and roll",
+   "concepts": [
+    "zipper cut",
+    "empty side",
+    "ball screen",
+    "roll"
+   ],
+   "question": "Why empty the side before the screen?",
+   "cta": "Comment ZIP if you would run it in your league.",
+   "play": null,
+   "play_status": "needs_spec",
+   "source": "standard FIBA/European half-court action (generic coaching knowledge)"
+  },
+  {
+   "id": "chicago-dho",
+   "format": "execution",
+   "family": "chicago",
+   "variant": "pin down into dribble hand-off",
+   "concepts": [
+    "pin down",
+    "dribble hand-off",
+    "chicago action"
+   ],
+   "question": "What does the hand-off give the shooter?",
+   "cta": "Tag a coach who loves hand-offs.",
+   "play": null,
+   "play_status": "needs_spec",
+   "source": "standard FIBA/European half-court action (generic coaching knowledge)"
+  },
+  {
+   "id": "iverson-ball-screen",
+   "format": "execution",
+   "family": "iverson",
+   "variant": "two wing cuts into middle ball screen",
+   "concepts": [
+    "iverson cut",
+    "wing cut",
+    "middle ball screen"
+   ],
+   "question": "Which defender gets lost first?",
+   "cta": "Comment the defender you would watch.",
+   "play": null,
+   "play_status": "needs_spec",
+   "source": "standard FIBA/European half-court action (generic coaching knowledge)"
+  },
+  {
+   "id": "ucla-post",
+   "format": "execution",
+   "family": "ucla",
+   "variant": "UCLA screen: cutter posts the mismatch",
+   "concepts": [
+    "ucla screen",
+    "post up",
+    "high post",
+    "mismatch"
+   ],
+   "question": "Who is the screen really for?",
+   "cta": "Answer in one word in the comments.",
+   "play": null,
+   "play_status": "needs_spec",
+   "source": "standard FIBA/European half-court action (generic coaching knowledge)"
+  },
+  {
+   "id": "ice-side-pnr",
+   "format": "defensive_read",
+   "family": "ice coverage",
+   "variant": "ice the side ball screen to the baseline",
+   "concepts": [
+    "ice",
+    "side pick and roll",
+    "sideline",
+    "big drop"
+   ],
+   "question": "Where does ICE send the ball?",
+   "cta": "Would you ICE this screen? Yes or no.",
+   "play": null,
+   "play_status": "needs_spec",
+   "source": "standard FIBA/European half-court action (generic coaching knowledge)"
+  },
+  {
+   "id": "switch-post-seal",
+   "format": "defensive_read",
+   "family": "switch coverage",
+   "variant": "switch and front the small-on-big post",
+   "concepts": [
+    "switch",
+    "mismatch",
+    "post seal",
+    "fronting"
+   ],
+   "question": "How do you stop the seal after the switch?",
+   "cta": "Comment FRONT or BEHIND.",
+   "play": null,
+   "play_status": "needs_spec",
+   "source": "standard FIBA/European half-court action (generic coaching knowledge)"
+  },
+  {
+   "id": "hedge-recover",
+   "format": "defensive_read",
+   "family": "hedge coverage",
+   "variant": "hard hedge and two-step recover",
+   "concepts": [
+    "hedge",
+    "recover",
+    "roller",
+    "tag"
+   ],
+   "question": "When does the big go back?",
+   "cta": "Count the steps: answer in the comments.",
+   "play": null,
+   "play_status": "needs_spec",
+   "source": "standard FIBA/European half-court action (generic coaching knowledge)"
+  },
+  {
+   "id": "closeout-control",
+   "format": "defensive_read",
+   "family": "closeout",
+   "variant": "short closeout, high hands, chase the drive",
+   "concepts": [
+    "closeout",
+    "one more pass",
+    "drive",
+    "help"
+   ],
+   "question": "Fly by or short closeout?",
+   "cta": "Which closeout do you teach? Comment it.",
+   "play": null,
+   "play_status": "needs_spec",
+   "source": "standard FIBA/European half-court action (generic coaching knowledge)"
+  },
+  {
+   "id": "xout-rotation",
+   "format": "defensive_read",
+   "family": "rotation",
+   "variant": "X-out after the skip",
+   "concepts": [
+    "x-out",
+    "skip pass",
+    "weak side",
+    "rotation"
+   ],
+   "question": "Who takes the corner after the skip?",
+   "cta": "Name the defender in the comments.",
+   "play": null,
+   "play_status": "needs_spec",
+   "source": "standard FIBA/European half-court action (generic coaching knowledge)"
+  },
+  {
+   "id": "tag-the-roller",
+   "format": "defensive_read",
+   "family": "low man",
+   "variant": "tag the roller from the weak side, then recover",
+   "concepts": [
+    "tag",
+    "roll",
+    "weak side",
+    "recover"
+   ],
+   "question": "Who tags the roll, and who pays for it?",
+   "cta": "Comment the player number.",
+   "play": null,
+   "play_status": "needs_spec",
+   "source": "standard FIBA/European half-court action (generic coaching knowledge)"
+  },
+  {
+   "id": "slip-vs-hedge",
+   "format": "counter",
+   "family": "slip screen",
+   "variant": "screener slips before contact against a hard hedge",
+   "concepts": [
+    "slip",
+    "hedge",
+    "ball screen"
+   ],
+   "question": "What does the hedge leave open?",
+   "cta": "Would your big slip it? Comment yes or no.",
+   "play": null,
+   "play_status": "needs_spec",
+   "source": "standard FIBA/European half-court action (generic coaching knowledge)"
+  },
+  {
+   "id": "reject-vs-ice",
+   "format": "counter",
+   "family": "reject",
+   "variant": "handler rejects the ICE screen to the middle",
+   "concepts": [
+    "reject",
+    "ice",
+    "middle drive",
+    "side pick and roll"
+   ],
+   "question": "Why does ICE invite the reject?",
+   "cta": "Tag a guard who rejects screens.",
+   "play": null,
+   "play_status": "needs_spec",
+   "source": "standard FIBA/European half-court action (generic coaching knowledge)"
+  },
+  {
+   "id": "ghost-vs-switch",
+   "format": "counter",
+   "family": "ghost screen",
+   "variant": "ghost the screen against a switching defence",
+   "concepts": [
+    "ghost screen",
+    "switch",
+    "pop"
+   ],
+   "question": "Why not set the screen at all?",
+   "cta": "Comment GHOST if you have seen it this season.",
+   "play": null,
+   "play_status": "needs_spec",
+   "source": "standard FIBA/European half-court action (generic coaching knowledge)"
+  },
+  {
+   "id": "backcut-vs-denial",
+   "format": "counter",
+   "family": "denial back cut",
+   "variant": "wing back-cuts the denial, big hits him",
+   "concepts": [
+    "back cut",
+    "denial",
+    "high post pass"
+   ],
+   "question": "What tells the cutter to go back door?",
+   "cta": "Answer: eyes, feet or hands?",
+   "play": null,
+   "play_status": "needs_spec",
+   "source": "standard FIBA/European half-court action (generic coaching knowledge)"
+  },
+  {
+   "id": "rescreen-vs-under",
+   "format": "counter",
+   "family": "re-screen",
+   "variant": "defender goes under: flip the screen",
+   "concepts": [
+    "re-screen",
+    "under",
+    "flip"
+   ],
+   "question": "Under the screen: shoot or re-screen?",
+   "cta": "Comment SHOOT or FLIP.",
+   "play": null,
+   "play_status": "needs_spec",
+   "source": "standard FIBA/European half-court action (generic coaching knowledge)"
+  },
+  {
+   "id": "pocket-vs-show",
+   "format": "counter",
+   "family": "pocket pass",
+   "variant": "pocket pass to the roller against a show",
+   "concepts": [
+    "pocket pass",
+    "show",
+    "roll"
+   ],
+   "question": "Where is the pocket?",
+   "cta": "Draw it in the comments: left or right hand?",
+   "play": null,
+   "play_status": "needs_spec",
+   "source": "standard FIBA/European half-court action (generic coaching knowledge)"
+  },
+  {
+   "id": "wwyd-2on1",
+   "format": "challenge",
+   "family": "transition 2-on-1",
+   "variant": "2-on-1: pass or finish against the stunt",
+   "concepts": [
+    "transition",
+    "2 on 1",
+    "stunt",
+    "finish"
+   ],
+   "question": "Pass or finish? You decide.",
+   "cta": "Answer PASS or FINISH before the reveal.",
+   "play": null,
+   "play_status": "needs_spec",
+   "source": "standard FIBA/European half-court action (generic coaching knowledge)"
+  },
+  {
+   "id": "wwyd-corner-help",
+   "format": "challenge",
+   "family": "corner help",
+   "variant": "help comes from the corner: kick or attack",
+   "concepts": [
+    "corner help",
+    "kick out",
+    "drive",
+    "rotation"
+   ],
+   "question": "Kick or keep attacking?",
+   "cta": "Comment KICK or ATTACK.",
+   "play": null,
+   "play_status": "needs_spec",
+   "source": "standard FIBA/European half-court action (generic coaching knowledge)"
+  },
+  {
+   "id": "wwyd-switch-guard",
+   "format": "challenge",
+   "family": "switch onto guard",
+   "variant": "big switched onto the guard: isolate or post",
+   "concepts": [
+    "switch",
+    "isolation",
+    "post",
+    "mismatch"
+   ],
+   "question": "Isolate the big or post the guard?",
+   "cta": "Comment ISO or POST.",
+   "play": null,
+   "play_status": "needs_spec",
+   "source": "standard FIBA/European half-court action (generic coaching knowledge)"
+  },
+  {
+   "id": "wwyd-low-man-lift",
+   "format": "challenge",
+   "family": "low man lifts",
+   "variant": "low man lifts to the roller: lob or corner kick",
+   "concepts": [
+    "low man",
+    "lob",
+    "corner three",
+    "roll"
+   ],
+   "question": "Lob or corner?",
+   "cta": "Comment LOB or CORNER.",
+   "play": null,
+   "play_status": "needs_spec",
+   "source": "standard FIBA/European half-court action (generic coaching knowledge)"
+  },
+  {
+   "id": "wwyd-late-clock",
+   "format": "challenge",
+   "family": "late clock",
+   "variant": "6 seconds left: drive, kick or reset screen",
+   "concepts": [
+    "shot clock",
+    "drive",
+    "kick out",
+    "ball screen"
+   ],
+   "question": "6 on the clock: what is the shot?",
+   "cta": "Comment your answer in one word.",
+   "play": null,
+   "play_status": "needs_spec",
+   "source": "standard FIBA/European half-court action (generic coaching knowledge)"
+  },
+  {
+   "id": "wwyd-press-break",
+   "format": "challenge",
+   "family": "press break",
+   "variant": "full-court trap: middle pass or sideline",
+   "concepts": [
+    "press break",
+    "trap",
+    "middle",
+    "sideline"
+   ],
+   "question": "Middle or sideline against the trap?",
+   "cta": "Comment MIDDLE or SIDELINE.",
+   "play": null,
+   "play_status": "needs_spec",
+   "source": "standard FIBA/European half-court action (generic coaching knowledge)"
+  }
+ ],
+ "pre_ledger_history": [
+  {
+   "cid": "pre-ledger",
+   "date": "2026-11-11",
+   "family": "elevator screen",
+   "variant": "chase or switch",
+   "concepts": [
+    "elevator screen",
+    "doors",
+    "shooter",
+    "chase",
+    "switch"
+   ],
+   "play_id": "elevator-screen"
+  },
+  {
+   "cid": "pre-ledger",
+   "date": "2026-11-13",
+   "family": "stagger screen",
+   "variant": "trail or backdoor",
+   "concepts": [
+    "stagger screen",
+    "trail",
+    "backdoor",
+    "curl"
+   ],
+   "play_id": "stagger-screen"
+  },
+  {
+   "cid": "pre-ledger",
+   "date": "2026-11-14",
+   "family": "ram screen",
+   "variant": "drop pull-up / blitz short roll",
+   "concepts": [
+    "ram screen",
+    "ball screen",
+    "drop",
+    "blitz",
+    "short roll",
+    "pull-up"
+   ],
+   "play_id": "ram-screen"
+  }
+ ]
+}

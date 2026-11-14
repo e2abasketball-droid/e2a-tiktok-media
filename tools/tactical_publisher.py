@@ -72,8 +72,8 @@ def check_delegation(deleg, sha, pinned_sha, now, cid=None, c=None):
     start = ts.parse_ts(deleg["granted_at"]) if deleg.get("granted_at") else frm
     if start > frm or not start <= now < until:
         raise PublishError(f"delegation not in force now ({start} – {until})")
-    want = {"brand": BRAND, "networks": sorted(ts.NETWORKS), "slots": sorted(c["slots"][k]["time"] for k in ("1", "2")),
-            "timezone": c["timezone"], "max_videos_per_day": 2, "engine": "Tactical3DV2", "format": "tactical basketball",
+    want = {"brand": BRAND, "networks": sorted(ts.NETWORKS), "slots": sorted(c["slots"][str(k)]["time"] for k in ts.slot_numbers(c)),
+            "timezone": c["timezone"], "max_videos_per_day": len(ts.slot_numbers(c)), "engine": "Tactical3DV2", "format": "tactical basketball",
             "duration_s": [c["duration_s"]["min"], c["duration_s"]["max"]], "write_tool": WRITE_TOOL,
             "accounts": ACCOUNTS, "qc_required": sorted(ts.QC_REQUIRED)}
     got = {"brand": str(s.get("brand")), "networks": sorted(s.get("networks", [])), "slots": sorted(s.get("slots", [])),
@@ -87,9 +87,12 @@ def check_delegation(deleg, sha, pinned_sha, now, cid=None, c=None):
         if c["budget_per_day"].get(k, 0) > v:
             raise PublishError(f"studio budget {k}={c['budget_per_day'][k]} exceeds the delegated {v}")
     if cid:
-        d, n = ts.parse_cid(cid)
-        if n not in (1, 2):
-            raise PublishError(f"{cid}: only V01 (10:00) and V02 (13:00) exist; at most 2 videos a day")
+        try:
+            d, n = ts.parse_cid(cid, c)  # live ids only (V<nn> of a configured slot); shadow S<nn> ids never pass
+        except ts.StudioError as e:
+            raise PublishError(str(e))
+        if n > s.get("max_videos_per_day", 0):
+            raise PublishError(f"{cid}: the delegation allows at most {s.get('max_videos_per_day')} videos a day")
         slot = ts.slot_instant(d, n, c)
         if not frm <= slot < until:
             raise PublishError(f"{cid} slot {slot} is outside the delegation")
@@ -251,7 +254,7 @@ def confirm(st, cid, readback, pkg, fetch=None):
 # ------------------------------------------------------------------ daily report
 def status(st, date):
     rows = []
-    for n in (1, 2):
+    for n in ts.slot_numbers():
         cid = ts.content_id(dt.date.fromisoformat(date), n)
         conf = {e["network"]: e for e in st.events(cid, "confirmation")}
         cr = (_events(st, cid, "created") or [{}])[-1]

@@ -1,0 +1,123 @@
+{
+ "source": "Metricool getScheduledPosts brand 7681319, 2026-11-15..17 Sydney, read 2026-11-14T16:50Z; text, media and creator fields removed",
+ "data": [
+  {
+   "id": 427791842,
+   "publicationDate": {
+    "dateTime": "2026-11-15T10:00:00",
+    "timezone": "Australia/Sydney"
+   },
+   "providers": [
+    {
+     "network": "instagram",
+     "status": "PENDING"
+    },
+    {
+     "network": "tiktok",
+     "status": "PENDING"
+    },
+    {
+     "network": "youtube",
+     "status": "PENDING"
+    }
+   ],
+   "instagramData": {
+    "type": "REEL"
+   },
+   "label": "Hammer V01"
+  },
+  {
+   "id": 427792201,
+   "publicationDate": {
+    "dateTime": "2026-11-15T13:00:00",
+    "timezone": "Australia/Sydney"
+   },
+   "providers": [
+    {
+     "network": "instagram",
+     "status": "PENDING"
+    },
+    {
+     "network": "tiktok",
+     "status": "PENDING"
+    },
+    {
+     "network": "youtube",
+     "status": "PENDING"
+    }
+   ],
+   "instagramData": {
+    "type": "REEL"
+   },
+   "label": "Spain V02"
+  },
+  {
+   "id": 427924636,
+   "publicationDate": {
+    "dateTime": "2026-11-15T05:30:00",
+    "timezone": "Australia/Sydney"
+   },
+   "providers": [
+    {
+     "network": "instagram",
+     "status": "PENDING"
+    }
+   ],
+   "instagramData": {
+    "type": "TRIAL_REEL"
+   },
+   "label": "RAM V1 trial"
+  },
+  {
+   "id": 427924714,
+   "publicationDate": {
+    "dateTime": "2026-11-15T05:35:00",
+    "timezone": "Australia/Sydney"
+   },
+   "providers": [
+    {
+     "network": "instagram",
+     "status": "PENDING"
+    }
+   ],
+   "instagramData": {
+    "type": "TRIAL_REEL"
+   },
+   "label": "Flare trial"
+  },
+  {
+   "id": 427925399,
+   "publicationDate": {
+    "dateTime": "2026-11-15T12:00:00",
+    "timezone": "Australia/Sydney"
+   },
+   "providers": [
+    {
+     "network": "instagram",
+     "status": "PENDING"
+    }
+   ],
+   "instagramData": {
+    "type": "TRIAL_REEL"
+   },
+   "label": "Hammer trial"
+  },
+  {
+   "id": 427925487,
+   "publicationDate": {
+    "dateTime": "2026-11-15T15:00:00",
+    "timezone": "Australia/Sydney"
+   },
+   "providers": [
+    {
+     "network": "instagram",
+     "status": "PENDING"
+    }
+   ],
+   "instagramData": {
+    "type": "TRIAL_REEL"
+   },
+   "label": "Spain trial"
+  }
+ ]
+}
