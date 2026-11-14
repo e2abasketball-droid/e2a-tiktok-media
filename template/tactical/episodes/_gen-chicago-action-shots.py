@@ -25,7 +25,8 @@ RED, WHITE, GOLD = "#E5483A", "#FFFFFF", "#C9A24D"
 TOP = orb([-2.55, 5.0, 0.0], 14.6, 4, 0, 42)          # near-vertical, basket at the top, whole left half visible
 TOP_IN = orb([-3.2, 5.6, 0.0], 12.4, 4, 0, 42)        # same axis, slightly closer for the exchange
 HOOK = orb([-4.0, 6.0, 0.9], 8.6, 48, -24, 44)        # medium-high on the wing: ball, receiver and his defender
-OBL = lambda tg, d=8.4: orb(tg, d, 56, -32, 44)       # three-quarter oblique, same side of the axis as TOP
+OBL = lambda tg, d=8.4, yaw=42: orb(tg, d, 50, yaw, 44)  # three-quarter oblique, same side of the axis as TOP;
+# yaw 42 looks ACROSS the passer-receiver line (yaw -32 put O1's back over the exchange: review fragment 2)
 SIDE = lambda tg, d=9.2: orb(tg, d, 64, 74, 44)       # lateral from the left sideline (backdoor cut + pass)
 
 shots = [
@@ -49,8 +50,8 @@ shots = [
   "sfx": []},
  {"id": "caseA", "name": "Case A — he trails: hand to hands to first dribble, turn the corner, big deep, pull-up", "at": "If he-0.15", "play": "A",
   "remap": [[0, 1.3], ["take", 2.35], ["tight.>", 2.8], ["deep.", 3.75], ["@end-0.35", 5.1], ["@end", 5.25]],
-  "camera": [key(0, OBL(fol(["O2", "O1"], 1.0), 8.6)), key("tight.>", OBL(fol(["O2", "O1"], 1.0, lead=0.15), 8.0), "inOut"),
-             key("deep.", OBL(fol(["O2", "X4"], 1.0), 9.0), "inOut"), key("@end", OBL([-1.2, 3.6, 1.6], 9.4), "linear")],
+  "camera": [key(0, OBL(fol(["O2", "O1", "X2"], 1.0), 8.8)), key("tight.>", OBL(fol(["O2", "O1", "X2"], 1.0, lead=0.15), 8.4), "inOut"),
+             key("deep.", OBL(fol(["O2", "X4"], 1.0), 9.2, 18), "inOut"), key("@end", OBL([-1.2, 3.6, 1.6], 9.6, 14), "linear")],
   "ov3": [{"type": "ring", "player": "X2", "color": RED, "from": 0, "to": "tight.>"},
           {"type": "separation", "a": "X2", "b": "O2", "from": "tight.>", "to": "deep."},
           {"type": "route", "player": "O2", "t0": 2.6, "t1": 3.85, "trail": True, "from": "Turn", "to": "@end-0.6"},
@@ -69,7 +70,7 @@ shots = [
           {"type": "route", "player": "O2", "t0": 2.15, "t1": 3.65, "dashed": True, "draw": 0.6, "from": "plants,", "to": "@end"}],
   "screen": [{"type": "title", "lines": ["JUMPS", "→ BACKDOOR"], "gold": [1], "from": "He jumps", "to": "@end", "y": 250, "size": 104},
              {"type": "freeze", "label": "BEFORE THE HANDOFF", "from": "exchange+0.15", "to": "Keep the ball.>"},
-             {"type": "pin", "player": "O1", "text": "KEEPS IT", "tone": "gold", "from": "Keep", "to": "@end", "size": 40}],
+             ],
   "sfx": []},
  {"id": "caseB2", "name": "Case B — lateral: backdoor cut, bounce pass to the hands, late help, finish", "at": "goes backdoor-0.05", "play": "B",
   "remap": [[0, 2.24], ["pass", 3.0], ["help.>", 3.75], ["@end", 4.6]],

@@ -319,13 +319,14 @@
       "target": {
        "follow": [
         "O2",
-        "O1"
+        "O1",
+        "X2"
        ],
        "z": 1.0
       },
-      "dist": 8.6,
-      "pitch": 56,
-      "yaw": -32,
+      "dist": 8.8,
+      "pitch": 50,
+      "yaw": 42,
       "fov": 44
      }
     },
@@ -336,14 +337,15 @@
       "target": {
        "follow": [
         "O2",
-        "O1"
+        "O1",
+        "X2"
        ],
        "z": 1.0,
        "lead": 0.15
       },
-      "dist": 8.0,
-      "pitch": 56,
-      "yaw": -32,
+      "dist": 8.4,
+      "pitch": 50,
+      "yaw": 42,
       "fov": 44
      },
      "ease": "inOut"
@@ -359,9 +361,9 @@
        ],
        "z": 1.0
       },
-      "dist": 9.0,
-      "pitch": 56,
-      "yaw": -32,
+      "dist": 9.2,
+      "pitch": 50,
+      "yaw": 18,
       "fov": 44
      },
      "ease": "inOut"
@@ -375,9 +377,9 @@
        3.6,
        1.6
       ],
-      "dist": 9.4,
-      "pitch": 56,
-      "yaw": -32,
+      "dist": 9.6,
+      "pitch": 50,
+      "yaw": 14,
       "fov": 44
      },
      "ease": "linear"
@@ -597,15 +599,6 @@
      "label": "BEFORE THE HANDOFF",
      "from": "exchange+0.15",
      "to": "Keep the ball.>"
-    },
-    {
-     "type": "pin",
-     "player": "O1",
-     "text": "KEEPS IT",
-     "tone": "gold",
-     "from": "Keep",
-     "to": "@end",
-     "size": 40
     }
    ],
    "sfx": []
