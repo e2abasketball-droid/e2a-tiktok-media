@@ -21,7 +21,7 @@ key = lambda at, rig, ease=None: {"at": at, "rig": rig, **({"ease": ease} if eas
 RED, GOLD = "#E5483A", "#C9A24D"
 T = lambda lines, frm, to, gold=(1,), **k: {"type": "title", "lines": lines, "gold": list(gold), "from": frm, "to": to, "y": 252, "size": 100, **k}
 
-HOOK = orb([-1.2, 8.0, 0.6], 8.8, 58, -48, 44)
+HOOK = orb([-0.6, 8.6, 0.0], 9.6, 58, -48, 44)
 HIGH = orb([-1.7, 4.1, 1.8], 11.8, 50, -4, 44)
 GHO = orb(fol(["O1", "X1", "O2", "X2"], 0.5, window=1.2), 8.6, 56, 28, 44)
 TACT = orb(fol(["O1", "X1", "O2", "X2"], 0.0, offset=[0.0, -1.2], window=1.4), 17.5, 28, 0, 42)
@@ -30,7 +30,7 @@ LOW = lambda tg, d=8.0, yaw=38: orb(tg, d, 68, yaw, 46)
 shots = [
  {"id": "hook", "name": "Hook - 3/4 high: O2 comes in to X1, X2 steps to the ball, plant and pop", "at": 0, "play": "A",
   "remap": [[0, 0.0], ["@end", 3.3]],
-  "camera": [key(0, HOOK), key("@end", {**HOOK, "dist": 8.0}, "linear")],
+  "camera": [key(0, HOOK), key("@end", {**HOOK, "dist": 8.8}, "linear")],
   "ov3": [], "screen": [T(["ZERO", "CONTACT"], 2.9, "@end")]},
  {"id": "triple", "name": "Elevated - the pass, the catch on the wing, the three to the net", "at": 3.3, "play": "A",
   "remap": [[0, 3.3], ["@end", 6.0]],
@@ -38,9 +38,9 @@ shots = [
   "ov3": [], "screen": [{"type": "stamp", "text": "OPEN THREE", "badge": "+3", "from": 2.0, "to": "@end", "y": 520}]},
  {"id": "ghost", "name": "Back to before the fake - the plant foot (the one slow motion)", "at": 6.0, "play": "A",
   "remap": [[0, 0.8], [1.65, 2.45], [3.05, 2.85], ["@end", 4.3]],
-  "camera": [key(0, GHO), key("@end", {**GHO, "dist": 8.2}, "linear")],
+  "camera": [key(0, orb([-1.6, 8.0, -0.2], 10.4, 46, -100, 44)), key("@end", orb([-2.0, 7.9, -0.2], 10.8, 46, -100, 44), "inOut")],
   "ov3": [{"type": "ring", "player": "O2", "color": GOLD, "size": 0.7, "from": 1.79, "to": 3.25}],
-  "screen": [{"type": "rewind", "from": 0, "to": 0.5}, T(["GHOST", "SCREEN"], 0.5, "@end", sub="Sell it. Pop before contact.")]},
+  "screen": [{"type": "rewind", "from": 0, "to": 0.5}, T(["GHOST", "SCREEN"], 0.5, 3.5, sub="Sell it. Pop before contact.")]},
  {"id": "caseA", "name": "Tactical - case A real time: X2 steps to the ball, two on the ball, pass, X1 late", "at": 10.5, "play": "A",
   "remap": [[0, 0.1], ["@end", 6.2]],
   "camera": [key(0, TACT)],
@@ -79,7 +79,8 @@ for sh in shots:
 ep["shots"] = shots
 ep["keywords"] = ["TWO DEFENDERS", "ghost screen", "WATCH HIS FEET", "Pop", "both defenders", "shooter", "Same fake",
                   "defender", "jumps", "OTHER WAY", "Who's got the shooter"]
-ep["subtitleGroups"] = [4, 4, 4, 3, 3, 3, 6, 3, 7, 5, 5, 4, 3, 6]
+ep["subtitleGroups"] = [4, 2, 2, 4, 3, 3, 3, 3, 3, 3, 2, 3, 2, 2, 3, 2, 3, 4, 3, 2, 2, 2]
+ep["subtitleY"] = 1420   # phone pass: below the players in every shot (feet, ball, hands stay clear)
 ep["subtitleHide"] = []
 ep["autoSfx"] = False
 ep["ambience"] = {"src": "sfx/arena.mp3", "volume": 0.06}

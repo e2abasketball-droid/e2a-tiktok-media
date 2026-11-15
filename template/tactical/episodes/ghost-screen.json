@@ -72,11 +72,11 @@
      "rig": {
       "type": "orbit",
       "target": [
-       -1.2,
-       8.0,
-       0.6
+       -0.6,
+       8.6,
+       0.0
       ],
-      "dist": 8.8,
+      "dist": 9.6,
       "pitch": 58,
       "yaw": -48,
       "fov": 44
@@ -87,11 +87,11 @@
      "rig": {
       "type": "orbit",
       "target": [
-       -1.2,
-       8.0,
-       0.6
+       -0.6,
+       8.6,
+       0.0
       ],
-      "dist": 8.0,
+      "dist": 8.8,
       "pitch": 58,
       "yaw": -48,
       "fov": 44
@@ -229,19 +229,14 @@
      "at": 0,
      "rig": {
       "type": "orbit",
-      "target": {
-       "follow": [
-        "O1",
-        "X1",
-        "O2",
-        "X2"
-       ],
-       "z": 0.5,
-       "window": 1.2
-      },
-      "dist": 8.6,
-      "pitch": 56,
-      "yaw": 28,
+      "target": [
+       -1.6,
+       8.0,
+       -0.2
+      ],
+      "dist": 10.4,
+      "pitch": 46,
+      "yaw": -100,
       "fov": 44
      }
     },
@@ -249,22 +244,17 @@
      "at": "@end",
      "rig": {
       "type": "orbit",
-      "target": {
-       "follow": [
-        "O1",
-        "X1",
-        "O2",
-        "X2"
-       ],
-       "z": 0.5,
-       "window": 1.2
-      },
-      "dist": 8.2,
-      "pitch": 56,
-      "yaw": 28,
+      "target": [
+       -2.0,
+       7.9,
+       -0.2
+      ],
+      "dist": 10.8,
+      "pitch": 46,
+      "yaw": -100,
       "fov": 44
      },
-     "ease": "linear"
+     "ease": "inOut"
     }
    ],
    "ov3": [
@@ -293,7 +283,7 @@
       1
      ],
      "from": 0.5,
-     "to": "@end",
+     "to": 3.5,
      "y": 252,
      "size": 100,
      "sub": "Sell it. Pop before contact."
@@ -700,11 +690,11 @@
      "rig": {
       "type": "orbit",
       "target": [
-       -1.2,
-       8.0,
-       0.6
+       -0.6,
+       8.6,
+       0.0
       ],
-      "dist": 8.8,
+      "dist": 9.6,
       "pitch": 58,
       "yaw": -48,
       "fov": 44
@@ -731,19 +721,27 @@
  ],
  "subtitleGroups": [
   4,
-  4,
-  4,
-  3,
-  3,
-  3,
-  6,
-  3,
-  7,
-  5,
-  5,
+  2,
+  2,
   4,
   3,
-  6
+  3,
+  3,
+  3,
+  3,
+  3,
+  2,
+  3,
+  2,
+  2,
+  3,
+  2,
+  3,
+  4,
+  3,
+  2,
+  2,
+  2
  ],
  "subtitleHide": [],
  "autoSfx": false,
@@ -754,5 +752,6 @@
  "music": {
   "src": "tactical/ghost/music-mix.mp3",
   "volume": 1
- }
+ },
+ "subtitleY": 1420
 }

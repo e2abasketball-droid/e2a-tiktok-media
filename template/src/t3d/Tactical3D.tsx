@@ -48,7 +48,7 @@ export type Episode3 = {
   keywords?: string[];
   subtitleHide?: [Anchor, Anchor][];
   /** optional explicit subtitle bursts: number of words per burst, in order (must add up to the word count) */
-  subtitleGroups?: number[];
+  subtitleGroups?: number[]; subtitleY?: number;
   /** sound by event (2026-11-13): bounces, catches, braking squeaks and the net, placed on their visible
    *  contact through each shot's remap (silent in freezes, rewinds and slow motion below 0.3x) */
   autoSfx?: boolean | {bounce?: number; catch?: number; squeak?: number; swish?: number; land?: number; players?: string[]};
@@ -257,7 +257,7 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
             return null;
         }
       })}
-      <PremiumSubtitles words={ep.words} t={t} keys={ep.keywords ?? []} hideRanges={subHide} sizes={ep.subtitleGroups} />
+      <PremiumSubtitles words={ep.words} t={t} keys={ep.keywords ?? []} hideRanges={subHide} sizes={ep.subtitleGroups} y={ep.subtitleY ?? 1290} />
       {qcProbe && <BoundsProbe frame={frame} />}
       {!qcProbe && <Audio src={staticFile(ep.voiceMix ?? ep.voice)} />}
       {!qcProbe && ep.music?.src && <Audio src={staticFile(ep.music.src)} volume={ep.music.volume ?? 1} />}
