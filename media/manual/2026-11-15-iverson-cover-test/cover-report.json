@@ -1,0 +1,63 @@
+{
+ "video": "e2a-iverson-catch-or-backdoor.mp4",
+ "video_sha256": "9cc9d3226b40a9055569175a4cbf82586ef8a4bc7f1b31fe98cd8c79e74ebdca",
+ "at_s": 2.5,
+ "band": [
+  480,
+  1180
+ ],
+ "zoom": 1.2,
+ "title": "Catch or Backdoor?",
+ "lines": [
+  "CATCH OR",
+  "BACKDOOR?"
+ ],
+ "font_px": 190,
+ "title_box": [
+  80,
+  1020,
+  906,
+  1472
+ ],
+ "logo_box": [
+  474,
+  1536,
+  606,
+  1635
+ ],
+ "crops": {
+  "grid_3x4": [
+   0,
+   240,
+   1080,
+   1680
+  ],
+  "square_1x1": [
+   0,
+   420,
+   1080,
+   1500
+  ],
+  "feed_4x5": [
+   0,
+   285,
+   1080,
+   1635
+  ]
+ },
+ "checks": {
+  "size_1080x1920": true,
+  "title_2_to_5_words": true,
+  "title_lines_le_2": true,
+  "title_in_square_1x1": true,
+  "title_in_grid_3x4": true,
+  "title_in_feed_4x5": true,
+  "logo_in_grid_3x4": true,
+  "logo_clear_of_title": true,
+  "jpeg_le_8MB": true
+ },
+ "ok": true,
+ "out": "cover.jpg",
+ "bytes": 262838,
+ "sha256": "29dc6ccf7e4f88c120c836bf4a2e3f41cc4337df5e88230e80b1c9dc14b0ed0c"
+}
