@@ -99,6 +99,6 @@ ep["keywords"] = ["UNDER", "wide open", "Floppy", "screen", "defender", "back hi
 ep["subtitleHide"] = []
 ep["autoSfx"] = False   # brief: at most 4 SFX accents -> explicit per-shot cues only
 ep["ambience"] = {"src": "sfx/arena.mp3", "volume": 0.06}
-ep["music"] = {"src": "tactical/floppy/music.mp3", "volume": 1}
+ep["music"] = {"src": "tactical/floppy/music-mix.mp3", "volume": 1}
 json.dump(ep, open(P, "w"), indent=1, ensure_ascii=False)
 print("shots", len(shots))

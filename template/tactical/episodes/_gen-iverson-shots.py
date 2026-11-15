@@ -20,8 +20,8 @@ fol = lambda ids, z=1.0, **k: {"follow": ids, "z": z, **k}
 key = lambda at, rig, ease=None: {"at": at, "rig": rig, **({"ease": ease} if ease else {})}
 RED, GOLD = "#E5483A", "#C9A24D"
 
-TOP = orb(fol(["O2", "X2"], 0.0, offset=[0.0, 0.7], window=1.2), 15.5, 4, 0, 42)   # pans with the cutter, basket at the top
-TOP_IN = orb(fol(["O2", "X2"], 0.0, offset=[0.0, 0.7], window=1.2), 14.0, 4, 0, 42)
+TOP = orb(fol(["O2", "X2", "O4", "O5"], 0.0, offset=[0.0, 0.7], window=1.2), 15.5, 4, 0, 42)   # pans with the cutter, basket at the top
+TOP_IN = orb(fol(["O2", "X2", "O4", "O5"], 0.0, offset=[0.0, 0.7], window=1.2), 14.0, 4, 0, 42)
 CTA = orb(fol(["O2", "X2"], 0.0, offset=[0.0, -0.7], window=1.2), 15.5, 4, 0, 42)   # players below the question
 HOOK = orb(fol(["O2", "X2", "O1"], 0.2, window=0.8), 9.6, 48, 24, 44)
 OBL = lambda tg, d=8.6, yaw=30: orb(tg, d, 50, yaw, 44)
@@ -52,7 +52,7 @@ shots = [
   "camera": [key(0, OBL(fol(["O2", "X2"], 0.3), 7.6, 36)), key("@end", OBL(fol(["O2"], 0.3), 7.0, 40), "inOut")],
   "ov3": [{"type": "passLane", "src": "O1", "dst": "O2", "from": 0, "to": "far elbow.>"}],
   "screen": [T(["TRAIL", "→ CATCH"], 0, "@end"),
-             {"type": "stamp", "text": "FACE UP", "from": "face up", "to": "@end", "y": 330}], "sfx": []},
+             {"type": "stamp", "text": "FACE UP", "from": "face up", "to": "@end", "y": 500}], "sfx": []},
  {"id": "caseB1", "name": "Case B — SAME overhead, same start: X2 cheats over the top into the lane", "at": "Same cut-0.15", "play": "B",
   "remap": [[0, 0.0], ["changes", 0.0], ["@end", 2.43]],
   "camera": [key(0, TOP), key("@end", TOP_IN, "inOut")],
@@ -103,6 +103,6 @@ ep["keywords"] = ["DENY", "gone", "Iverson cut", "elbow screens", "TRAILS", "sho
 ep["subtitleHide"] = []
 ep["autoSfx"] = False   # brief: at most 4 SFX accents -> explicit per-shot cues only
 ep["ambience"] = {"src": "sfx/arena.mp3", "volume": 0.06}
-ep["music"] = {"src": "tactical/iverson/music.mp3", "volume": 1}
+ep["music"] = {"src": "tactical/iverson/music-mix.mp3", "volume": 1}
 json.dump(ep, open(P, "w"), indent=1, ensure_ascii=False)
 print("shots", len(shots))

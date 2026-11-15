@@ -173,7 +173,9 @@
       "target": {
        "follow": [
         "O2",
-        "X2"
+        "X2",
+        "O4",
+        "O5"
        ],
        "z": 0.0,
        "offset": [
@@ -195,7 +197,9 @@
       "target": {
        "follow": [
         "O2",
-        "X2"
+        "X2",
+        "O4",
+        "O5"
        ],
        "z": 0.0,
        "offset": [
@@ -415,7 +419,7 @@
      "text": "FACE UP",
      "from": "face up",
      "to": "@end",
-     "y": 330
+     "y": 500
     }
    ],
    "sfx": [
@@ -453,7 +457,9 @@
       "target": {
        "follow": [
         "O2",
-        "X2"
+        "X2",
+        "O4",
+        "O5"
        ],
        "z": 0.0,
        "offset": [
@@ -475,7 +481,9 @@
       "target": {
        "follow": [
         "O2",
-        "X2"
+        "X2",
+        "O4",
+        "O5"
        ],
        "z": 0.0,
        "offset": [
@@ -779,7 +787,9 @@
       "target": {
        "follow": [
         "O2",
-        "X2"
+        "X2",
+        "O4",
+        "O5"
        ],
        "z": 0.0,
        "offset": [
@@ -845,7 +855,9 @@
       "target": {
        "follow": [
         "O2",
-        "X2"
+        "X2",
+        "O4",
+        "O5"
        ],
        "z": 0.0,
        "offset": [
@@ -1061,7 +1073,7 @@
   "volume": 0.06
  },
  "music": {
-  "src": "tactical/iverson/music.mp3",
+  "src": "tactical/iverson/music-mix.mp3",
   "volume": 1
  }
 }
