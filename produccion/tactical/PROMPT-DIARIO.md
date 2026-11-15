@@ -22,6 +22,13 @@ Reglas que no puedes saltarte:
 3. Solo medios con licencia comercial oficial (`config/asset_licences.json`). La voz nueva lleva sidecar con
    `licence_key: voice/elevenlabs-creator/<CID>` y la fecha de generación en `source`. El MP4 se sube a la rama
    `tactical-media` y se usa la URL raw FIJADA AL COMMIT; `tactical_studio.py asset` debe aceptarla.
+3b. Portada de Instagram (dueño, 2026-11-15): tras QC_PASS, `python3 tools/make_cover.py <MP4> --at <s> --title "<2–5
+   palabras en inglés>" --out cover.jpg --report cover-report.json --previews <dir>` (ver «Portada» en
+   FORMATO-CHICAGO.md). Mira `previews/profile-grid-mock.png` y `crop-grid_3x4.png`: la acción debe entenderse.
+   `cover.jpg` va en el MISMO commit de `tactical-media` que el MP4 y su URL raw fijada al commit se pasa a
+   `package … --cover-url <URL> --cover-report cover-report.json` (comprueba los bytes). Si la portada falla sus
+   comprobaciones o no se entiende, programa el vídeo SIN portada (sin `--cover-*`) y anótalo como incidencia:
+   la portada nunca bloquea un hueco.
 4. Programar (por vídeo, en este orden y sin saltos):
    `tactical_publisher.py authorise CID --sha $DELEGATION_SHA256 --op …` → `tactical_studio.py package …` →
    `getScheduledPosts` de TODO el día (Australia/Sydney) → `tactical_publisher.py prepare CID --package … --readback …

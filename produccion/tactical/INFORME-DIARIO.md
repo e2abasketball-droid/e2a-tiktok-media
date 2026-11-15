@@ -9,6 +9,7 @@ Fuente: `python3 tools/tactical_publisher.py status <fecha>` (registro encadenad
 | Duración | s | s |
 | QC | QC_PASS / QC_FAIL (motivo) | |
 | URL del MP4 | raw fijada a commit | |
+| Portada | segundo del fotograma · título · sí/no en Metricool (motivo si no) | |
 | Instagram / TikTok / YouTube | pending · published · error · - | |
 | ID de Metricool | | |
 | Horario | fecha 10:00 Sydney | fecha 13:00 Sydney |

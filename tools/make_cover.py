@@ -10,7 +10,7 @@ Rules it enforces (so a cover never reaches Metricool broken):
 - logo: small, inside the 3:4 grid crop, outside the title box;
 - output: baseline JPEG, sRGB, no alpha, ≤ 8 MB (Metricool videoThumbnailUrl accepts jpg/jpeg/png only).
 The reel burns its own titles (top) and captions (bottom) into every frame: only the action band between them is
-used, enlarged and set on navy, so the cover shows one title only. Fonts: Anton (titles) from template/public, read with fontTools when given as woff2.
+used, enlarged and set on navy, so the cover shows one title only. Font: Anton (SIL OFL) as tools/fonts/anton.ttf, converted from template/public/anton.woff2.
 """
 import argparse, hashlib, io, json, os, re, subprocess, sys, tempfile
 
@@ -82,7 +82,7 @@ def inside(box, rect):
 
 def make_cover(video, at, title, out, title_font=None, logo=None, band=(480, 1180), zoom=1.2, focus_x=0.55, place_y=250):
     words = check_title(title)
-    title_font = title_font or os.path.join(ROOT, "template/public/anton.woff2")
+    title_font = title_font or os.path.join(ROOT, "tools/fonts/anton.ttf")  # TTF: Pillow needs no fontTools
     logo = logo or os.path.join(ROOT, "template/public/e2a_logo_white.png")
     frame = grab_frame(video, at)
     # the reel burns its own title in the top band and captions in the bottom band: keep only the action band

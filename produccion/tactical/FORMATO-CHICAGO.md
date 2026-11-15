@@ -41,3 +41,12 @@ Voz ≈ 1.100 créditos (2 tomas); render ≈ 25 min; más la revisión de fragm
 - **Tamaño y encuadre:** en las cenitales, el grupo de jugadores implicados debe ocupar al menos la mitad del ancho (usa `TOP_IN` o acerca `dist`); en el CTA, los 10 jugadores visibles o, si no caben, un encuadre que no corte a ninguno por el borde.
 - **Revisión final a tamaño de móvil** (fotogramas a 360 px de ancho) del vídeo completo antes de `package`.
 - Todo lo demás (puertas, QC, licencias, publicación, delegación) sigue `PROCEDIMIENTO.md` sin cambios.
+
+## Portada (desde el 15 nov 2026, decisión del dueño)
+- **Herramienta:** `tools/make_cover.py`. Usa un fotograma del propio vídeo (nunca imágenes externas ni generadas), 1080×1920, fondo navy #0B1C3D, título blanco/dorado #C9A24D en Anton y el logo blanco pequeño.
+- **Fotograma:** del gancho (0,5–3 s), cuando se ven a la vez el atacante que decide y su defensor en la franja central. El vídeo lleva títulos y subtítulos grabados: la herramienta usa solo la franja de acción (por defecto y 480–1180, zoom 1,2; ajusta `--band`/`--focus-x` si la acción queda fuera).
+- **Título:** la pregunta del CTA en 2–5 palabras en inglés (p. ej. «Catch or Backdoor?», «Curl or Fade?»).
+- **Recorte de perfil:** la herramienta falla si el título sale del recorte 1:1 o 3:4, o el logo del 3:4. Revisa además `profile-grid-mock.png` a tamaño de móvil.
+- **Publicación:** `cover.jpg` en el mismo commit de `tactical-media` que el MP4; `package --cover-url --cover-report`. Si falla, se programa sin portada y se anota en el informe.
+- Primera prueba: Iverson «Catch or Backdoor?», borrador de Metricool 429067806 (miniatura guardada idéntica byte a byte).
+
