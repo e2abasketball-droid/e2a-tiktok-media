@@ -747,6 +747,23 @@ class TestPackageAndRepetition(Base):
         with self.assertRaises(ts.StudioError):
             ts.package(self.st, CID, "c", {"tiktok": "t", "youtube": "no hashtag"})
 
+    def test_package_cover(self):
+        self.drive(CID, "asset_ready")
+        rep = {"ok": True, "checks": {"a": True}, "sha256": "c" * 64, "bytes": 10, "at_s": 2.5, "title": "Catch or Backdoor?"}
+        url = "https://raw.githubusercontent.com/x/y/abc/cover.jpg"
+        cov = ts.cover_ref(url, rep, fetch=lambda u: ("c" * 64, 10))
+        p = ts.package(self.st, CID, "c", {"tiktok": "t", "youtube": "y #shorts"}, cover=cov)
+        self.assertEqual(p["info"]["videoThumbnailUrl"], url)
+        self.assertEqual(p["info"]["media"], ["https://raw.githubusercontent.com/x/y/abc/v.mp4"])
+        self.assertEqual(p["cover"]["sha256"], "c" * 64)
+        self.assertNotIn("videoThumbnailUrl", self.pkg()["info"])            # no cover: field absent
+        with self.assertRaises(ts.StudioError):                               # bytes differ
+            ts.cover_ref(url, rep, fetch=lambda u: ("d" * 64, 10))
+        with self.assertRaises(ts.StudioError):                               # failed checks
+            ts.cover_ref(url, dict(rep, ok=False), fetch=lambda u: ("c" * 64, 10))
+        with self.assertRaises(ts.StudioError):                               # not a jpg
+            ts.cover_ref(url[:-3] + "webp", rep, fetch=lambda u: ("c" * 64, 10))
+
     def test_repeat_window(self):
         plays = [{"play_id": "a", "family": "pin-down", "variant": "curl", "concepts": ["curl", "pin-down"], "date": "2026-11-01"}]
         self.assertFalse(ts.repeat_check("pin-down", "curl", ["x"], "2026-11-20", plays=plays)["ok"])

@@ -903,8 +903,22 @@ def authorise(st, cid, op, verifier=None):
 
 
 # ------------------------------------------------------------------ package
-def package(st, cid, caption, titles, c=None):
-    """ONE Metricool post per video, three networks; media = the verified asset URL and its hash."""
+def cover_ref(url, report, fetch=None):
+    """Optional custom cover (tools/make_cover.py): the public URL must serve EXACTLY the checked JPEG.
+    Metricool sends it as videoThumbnailUrl (IG Reel, TikTok Business, YouTube Short), separate from the video."""
+    if not url.startswith("https://") or not url.lower().split("?")[0].endswith((".jpg", ".jpeg")):
+        raise StudioError("the cover URL must be an https .jpg")
+    if not report.get("ok") or not all(report.get("checks", {}).values()):
+        raise StudioError("the cover did not pass make_cover checks (size, title words, profile crops)")
+    got, n = (fetch or fetch_sha)(url)
+    if got != report["sha256"] or n != report["bytes"]:
+        raise StudioError(f"cover URL serves different bytes ({n} B, {got[:12]}) than the checked cover ({report['bytes']} B)")
+    return {"url": url, "sha256": got, "bytes": n, "at_s": report.get("at_s"), "title": report.get("title")}
+
+
+def package(st, cid, caption, titles, c=None, cover=None):
+    """ONE Metricool post per video, three networks; media = the verified asset URL and its hash.
+    `cover` (from cover_ref) adds videoThumbnailUrl; without it Metricool keeps the network's default frame."""
     c = c or cfg()
     st.require(cid, "asset_ready", "authorised", "scheduled_partial")
     date, n = parse_cid(cid)
@@ -924,9 +938,12 @@ def package(st, cid, caption, titles, c=None):
                         "madeForKids": False, "isAiGeneratedContent": lab["youtube_isAiGeneratedContent"],
                         "tags": titles.get("tags", [])},
     }
+    if cover:
+        info["videoThumbnailUrl"] = cover["url"]
     pkg = {"cid": cid, "mode": c["publishing"]["mode"], "date": date.isoformat(), "info": info,
            "media_sha256": ar["sha256"], "media_bytes": ar["bytes"],
            "text_sha256": hashlib.sha256(caption.encode()).hexdigest(),
+           **({"cover": cover} if cover else {}),
            "keys": [f"{cid}:{x}:{date.isoformat()}:{c['slots'][str(n)]['time']}" for x in NETWORKS]}
     pkg["package_sha256"] = hashlib.sha256(canon(pkg).encode()).hexdigest()
     return pkg
@@ -1154,6 +1171,7 @@ def main(argv=None):
     p = sp.add_parser("asset"); p.add_argument("cid"); p.add_argument("url"); p.add_argument("--op", required=True)
     p = sp.add_parser("authorise"); p.add_argument("cid"); p.add_argument("--op", required=True)
     p = sp.add_parser("package"); p.add_argument("cid"); p.add_argument("--caption", required=True); p.add_argument("--titles", required=True)
+    p.add_argument("--cover-url", help="public URL of cover.jpg (tools/make_cover.py)"); p.add_argument("--cover-report", help="make_cover report JSON")
     p.add_argument("--out", required=True)
     p = sp.add_parser("schedule-check"); p.add_argument("cid"); p.add_argument("--readback", required=True); p.add_argument("--package", required=True)
     p.add_argument("--op", required=True)
@@ -1207,7 +1225,10 @@ def main(argv=None):
     elif a.cmd == "authorise":
         out = authorise(s, a.cid, a.op)
     elif a.cmd == "package":
-        out = package(s, a.cid, open(a.caption, encoding="utf-8").read().strip(), _j(a.titles), c)
+        if bool(a.cover_url) != bool(a.cover_report):
+            raise StudioError("--cover-url and --cover-report go together")
+        cov = cover_ref(a.cover_url, _j(a.cover_report)) if a.cover_url else None
+        out = package(s, a.cid, open(a.caption, encoding="utf-8").read().strip(), _j(a.titles), c, cover=cov)
         with open(a.out, "w", encoding="utf-8") as f:
             json.dump(out, f, indent=1, ensure_ascii=False)
     elif a.cmd == "schedule-check":
