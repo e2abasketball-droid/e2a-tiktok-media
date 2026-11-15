@@ -18,7 +18,7 @@ export type PlayerSpec = {
 export type Waypoint = [number, number, number];
 
 export type BallEvent =
-  | {type: 'hold'; player: string; from: number; to: number; dribble?: boolean}
+  | {type: 'hold'; player: string; from: number; to: number; dribble?: boolean; hand?: 1 | -1; cross?: number[]}
   | {type: 'pass'; from: string; to: string; t0: number; t1: number; style?: 'chest' | 'bounce' | 'overhead' | 'handoff'; side?: number}
   | {type: 'shot'; player: string; t0: number; t1: number; make?: boolean}
   | {type: 'layup'; player: string; t0: number; t1: number; make?: boolean};
@@ -173,6 +173,18 @@ const RIM: V3 = [FIBA.basket[0], FIBA.basket[1], FIBA.rimZ];
 /** the ball sits in the hand of a body that turns smoothly: facing averaged over the last 0.15 s (a raw facing
  *  that snaps from "rest" to "running" swung the ball sideways at 15+ m/s). Used by holds AND pass ends, so a
  *  pass leaves from / arrives at exactly the hand the hold uses. */
+/** dribble hand (2026-11-15, crossover): +1 = right hand, -1 = left. `hand` is the starting hand (default right) and
+ *  every time in `cross` switches it; the switch is spread over ±0.12 s (the ball crosses low in front of the body). */
+export const dribbleSide = (e: {hand?: 1 | -1; cross?: number[]}, t: number): number => {
+  let s = e.hand ?? 1;
+  for (const c of e.cross ?? []) {
+    const u = Math.max(0, Math.min(1, (t - (c - 0.12)) / 0.24));
+    const k = u * u * (3 - 2 * u);
+    s = s * (1 - 2 * k);
+  }
+  return s;
+};
+
 const smoothHand = (play: Play, id: string, t: number): V3 => {
   let cx = 0, cy = 0;
   for (let k = 0; k < 6; k++) {
@@ -183,6 +195,27 @@ const smoothHand = (play: Play, id: string, t: number): V3 => {
   return hand({...stateOf(play, id, t), facing: Math.atan2(cy, cx)});
 };
 
+/** where a held ball sits: in the dribbling hand for a handed dribble (crossover plays), else the classic hand spot */
+const isHanded = (e: BallEvent): boolean => e.type === 'hold' && !!e.dribble && (e.hand !== undefined || !!e.cross?.length);
+const handedSpot = (play: Play, e: Extract<BallEvent, {type: 'hold'}>, t: number, z = 1.15): V3 => {
+  const st = stateOf(play, e.player, t);
+  let cx = 0, cy = 0;
+  for (let k = 0; k < 6; k++) {
+    const f = stateOf(play, e.player, Math.max(0, t - k * 0.03)).facing;
+    cx += Math.cos(f);
+    cy += Math.sin(f);
+  }
+  const fa = Math.atan2(cy, cx);
+  const fx = Math.cos(fa), fy = Math.sin(fa);
+  const sd = dribbleSide(e, t);
+  const lat = 0.27 * sd, fw = 0.3 + 0.08 * (1 - Math.abs(sd));
+  return [st.pos[0] + fx * fw + fy * lat, st.pos[1] + fy * fw - fx * lat, z];
+};
+const heldPos = (play: Play, id: string, t: number): V3 => {
+  const e = play.ball.find((x) => x.type === 'hold' && x.player === id && t >= x.from - 1e-6 && t <= x.to + 1e-6);
+  return e && e.type === 'hold' && isHanded(e) ? handedSpot(play, e, Math.min(Math.max(t, e.from), e.to)) : smoothHand(play, id, t);
+};
+
 const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallState => {
   const ev = play.ball;
   const cur = ev.find((e) => (e.type === 'hold' ? t >= e.from && t <= e.to : t >= e.t0 && t <= e.t1));
@@ -190,7 +223,7 @@ const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallSta
     if (cur.type === 'hold') {
       // the ball sits in the hand of a body that turns smoothly: average the facing over the last 0.15 s
       // (a raw facing that snaps from "rest" to "running" swung the ball sideways at 15+ m/s)
-      const h = smoothHand(play, cur.player, t);
+      const h = isHanded(cur) ? handedSpot(play, cur, t) : smoothHand(play, cur.player, t);
       // gather: the ball rises into the shooting pocket before a shot or layup
       const next = play.ball.find((e): e is Extract<BallEvent, {type: 'shot' | 'layup'}> => (e.type === 'shot' || e.type === 'layup') && e.player === cur.player && Math.abs(e.t0 - cur.to) < 1e-6);
       // gather window never longer than the hold itself (2026-11-15: a 0.25 s catch-and-finish started the
@@ -238,10 +271,19 @@ const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallSta
         // ...and starts from the hand height of a held ball (catch -> first dribble without a jump)
         const startW = 1 - Math.max(0, Math.min(1, (t - cur.from) / 0.2));
         hz += (h[2] - hz) * startW;
-        const down = Math.abs(Math.cos(Math.PI * c)); // 1 = in the hand, 0 = on the floor
+        let down = Math.abs(Math.cos(Math.PI * c)); // 1 = in the hand, 0 = on the floor
         const push = 0.12 * sp * (1 - down);
         const v = velAt(wp, t);
         const vl = Math.hypot(v[0], v[1]) || 1;
+        if (cur.hand !== undefined || cur.cross?.length) {
+          // handed dribble (crossover): the ball is beside the dribbling hand, and each crossover is a low bounce
+          // in front of the body that hits the floor at the switch time
+          for (const x of cur.cross ?? []) down = Math.min(down, Math.min(1, Math.abs(t - x) / 0.14));
+          const hs = handedSpot(play, cur, t);
+          const px = hs[0] + (v[0] / vl) * push;
+          const py = hs[1] + (v[1] / vl) * push;
+          return {pos: [px, py, 0.12 + (hz - 0.12) * down], holder: cur.player, event: cur};
+        }
         return {pos: [h[0] + (v[0] / vl) * push, h[1] + (v[1] / vl) * push, 0.12 + (hz - 0.12) * down], holder: cur.player, event: cur};
       }
       return {pos: h, holder: cur.player, event: cur};
@@ -250,7 +292,7 @@ const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallSta
     if (cur.type === 'pass') {
       const a = hand(ps[cur.from]);
       // the passer's release follows him at t0, the catch point follows the receiver at t1
-      const a0 = smoothHand(play, cur.from, cur.t0);
+      const a0 = heldPos(play, cur.from, cur.t0);
       const loaded = cur.style === 'overhead' && play.ball.some((e) => e.type === 'hold' && e.player === cur.from && !e.dribble && Math.abs(e.to - cur.t0) < 1e-6);
       if (loaded) a0[2] = 2.05;
       const b1 = smoothHand(play, cur.to, cur.t1);

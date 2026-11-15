@@ -11,7 +11,7 @@
 // World units: metres on the FIBA half court (x across, y from the baseline, z up), as play.ts.
 import type {V2, V3} from '../tactical/geometry.ts';
 import type {Play} from '../tactical/play.ts';
-import {posAt, stateOf} from '../tactical/play.ts';
+import {dribbleSide, posAt, stateOf} from '../tactical/play.ts';
 
 export type ActionType = 'screen' | 'stance' | 'topLock' | 'catchReady' | 'shoot' | 'layup' | 'pass' | 'dribble' | 'contest' | 'seal' | 'celebrate' | 'blitz' | 'bump' | 'gather';
 /** face: a player id, an angle (rad) or 'ball' (whoever holds it / the pass receiver).
@@ -542,8 +542,12 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
     // dribble: right hand on top of the ball, left arm protects
     if (dribble.w > 0 && isBallHolder) {
       // the hand meets the ball in the top of its bounce and waits at hip height while it hits the floor
-      if (i === 1) blend(dribble.w, add(ball.pos, [0, 0, 0.11]).map((v, k) => (k === 2 ? Math.max(v, 0.62 * D.H / 2) : v)) as V3, norm(add(mul(chestF, -1), [0, 0, 0.2])));
-      else blend(dribble.w, L(0.3, 0.32, -0.28), norm(add(mul(chestR, -1), [0, 0, -0.5])));
+      // handed dribble (crossover, 2026-11-15): the hand on the ball's side dribbles, the other arm protects
+      const hev = play.ball.find((e) => e.type === 'hold' && e.player === id && e.dribble && tc >= e.from && tc <= e.to);
+      const dSide = hev && hev.type === 'hold' && (hev.hand !== undefined || hev.cross?.length) ? dribbleSide(hev, tc) : 1;
+      const dHand = dSide >= 0 ? 1 : 0;
+      if (i === dHand) blend(dribble.w, add(ball.pos, [0, 0, 0.11]).map((v, k) => (k === 2 ? Math.max(v, 0.62 * D.H / 2) : v)) as V3, norm(add(mul(chestF, -1), [0, 0, 0.2])));
+      else blend(dribble.w, L(0.3, 0.32, -0.28), norm(add(mul(chestR, side), [0, 0, -0.5])));
     }
     // pass: hands follow the ball and push forward
     // 2026-11-15: a picked-up ball (held, not dribbled) stays in both hands until the release; the push below

@@ -1,0 +1,96 @@
+{
+ "source": "public/tactical/ghost/voice-raw.mp3",
+ "source_sec": 21.2,
+ "preroll": 0.12,
+ "output": "public/tactical/ghost/voice.wav",
+ "output_sec": 30.0,
+ "inserted_total_sec": 8.68,
+ "last_word_end": 30.08,
+ "gaps": [
+  {
+   "after": "either one.",
+   "natural_silence": [
+    2.83,
+    3.24
+   ],
+   "natural_sec": 0.41,
+   "target_sec": 3.2,
+   "inserted_sec": 2.79,
+   "cut_at_source": 3.125,
+   "why": "0:03.3-0:06: the pass, the catch and the three to the net, no voice"
+  },
+  {
+   "after": "HIS FEET.",
+   "natural_silence": [
+    5.08,
+    5.46
+   ],
+   "natural_sec": 0.38,
+   "target_sec": 2.4,
+   "inserted_sec": 2.02,
+   "cut_at_source": 5.265,
+   "why": "the slow motion on the plant foot, back to real speed on the pop"
+  },
+  {
+   "after": "hit the shooter.",
+   "natural_silence": [
+    10.35,
+    10.77
+   ],
+   "natural_sec": 0.42,
+   "target_sec": 1.2,
+   "inserted_sec": 0.78,
+   "cut_at_source": 10.655,
+   "why": "the release and X1 closing out late"
+  },
+  {
+   "after": "this time.",
+   "natural_silence": [
+    13.06,
+    13.46
+   ],
+   "natural_sec": 0.4,
+   "target_sec": 0.35,
+   "inserted_sec": 0.0,
+   "cut_at_source": 13.185,
+   "why": "X2's shoulder stays on the shooter"
+  },
+  {
+   "after": "stays with him.",
+   "natural_silence": [
+    14.83,
+    15.1
+   ],
+   "natural_sec": 0.27,
+   "target_sec": 0.45,
+   "inserted_sec": 0.18,
+   "cut_at_source": 15.015,
+   "why": "X2 follows the shooter all the way out"
+  },
+  {
+   "after": "toward the screen.",
+   "natural_silence": [
+    16.65,
+    17.0
+   ],
+   "natural_sec": 0.35,
+   "target_sec": 0.45,
+   "inserted_sec": 0.1,
+   "cut_at_source": 16.905,
+   "why": "X1 has jumped: the other shoulder is open"
+  },
+  {
+   "after": "OTHER WAY.",
+   "natural_silence": [
+    18.86,
+    19.35
+   ],
+   "natural_sec": 0.49,
+   "target_sec": 3.3,
+   "inserted_sec": 2.81,
+   "cut_at_source": 19.105,
+   "why": "the layup, the late help, the net"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}

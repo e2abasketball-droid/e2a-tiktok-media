@@ -147,8 +147,13 @@ type W = {text: string; start: number; end: number};
 const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
 
 /** premium subtitles: max two short lines, words appear exactly when spoken, key words in gold */
-export const PremiumSubtitles: React.FC<{words: W[]; t: number; keys: string[]; y?: number; size?: number; hideRanges?: [number, number][]}> = ({words, t, keys, y = 1290, size = 56, hideRanges = []}) => {
+export const PremiumSubtitles: React.FC<{words: W[]; t: number; keys: string[]; y?: number; size?: number; hideRanges?: [number, number][]; sizes?: number[]}> = ({words, t, keys, y = 1290, size = 56, hideRanges = [], sizes}) => {
   const groups = React.useMemo(() => {
+    // explicit burst sizes (2026-11-15, Ghost Screen brief: 3-7 words per burst) when the episode gives them
+    if (sizes && sizes.reduce((a, b) => a + b, 0) === words.length) {
+      let k = 0;
+      return sizes.map((n) => words.slice(k, (k += n)));
+    }
     const out: W[][] = [];
     let cur: W[] = [];
     const len = (c: W[]) => c.reduce((n, w) => n + w.text.length + 1, 0);
@@ -166,7 +171,7 @@ export const PremiumSubtitles: React.FC<{words: W[]; t: number; keys: string[]; 
     });
     if (cur.length) out.push(cur);
     return out;
-  }, [words]);
+  }, [words, sizes]);
   if (hideRanges.some(([a, b]) => t >= a && t < b)) return null;
   const kset = keys.map((k) => k.split(/\s+/).map(norm));
   const g = groups.find((c, i) => t >= c[0].start - 0.03 && t < Math.min(c[c.length - 1].end + 0.35, groups[i + 1]?.[0].start ?? 1e9));

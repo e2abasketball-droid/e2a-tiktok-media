@@ -1,0 +1,417 @@
+{
+ "id": "ghost-b-reject",
+ "title": "Ghost screen B: X2 stays home, X1 jumps the screen, reject the other way",
+ "duration": 10.8,
+ "concept": "ghost-screen",
+ "source": "original E2A play (standard ghost screen / slip-out read, generic coaching knowledge)",
+ "squareUp": true,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Ball handler, top (a step left), ball in the right hand"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Shooter: right wing, ghost screen"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Left corner"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Right corner"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Right dunker spot"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the ball",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "On the shooter: steps to the ball (A) / stays (B)",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Left corner",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "Right corner",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "Help from the right block",
+   "guards": "O5"
+  }
+ ],
+ "start": {
+  "O1": [
+   0.9,
+   9.0
+  ],
+  "X1": [
+   0.75,
+   8.15
+  ],
+  "O2": [
+   -4.95,
+   6.6
+  ],
+  "X2": [
+   -4.25,
+   7.25
+  ],
+  "O3": [
+   6.6,
+   1.4
+  ],
+  "X3": [
+   5.65,
+   2.15
+  ],
+  "O4": [
+   -6.6,
+   1.4
+  ],
+  "X4": [
+   -5.7,
+   2.15
+  ],
+  "O5": [
+   -2.55,
+   1.15
+  ],
+  "X5": [
+   -1.95,
+   2.0
+  ]
+ },
+ "legs": {
+  "O1": [
+   {
+    "at": 1.25,
+    "to": [
+     0.6,
+     8.8
+    ],
+    "dur": 0.45
+   },
+   {
+    "at": 4.2,
+    "to": [
+     -0.45,
+     8.6
+    ],
+    "dur": 0.85
+   },
+   {
+    "at": 6.6,
+    "via": [
+     [
+      0.5,
+      8.2
+     ],
+     [
+      1.75,
+      6.6
+     ],
+     [
+      1.7,
+      4.4
+     ]
+    ],
+    "to": [
+     0.7,
+     2.6
+    ],
+    "speed": 6.4
+   }
+  ],
+  "O2": [
+   {
+    "at": 0.5,
+    "via": [
+     [
+      -3.4,
+      7.3
+     ]
+    ],
+    "to": [
+     -0.5,
+     8.0
+    ],
+    "speed": 3.4
+   },
+   {
+    "at": "+0.17",
+    "via": [
+     [
+      -2.2,
+      7.8
+     ]
+    ],
+    "to": [
+     -4.85,
+     7.25
+    ],
+    "speed": 6.0
+   }
+  ],
+  "X2": [
+   {
+    "at": 0.8,
+    "via": [
+     [
+      -2.9,
+      8.05
+     ]
+    ],
+    "to": [
+     -1.45,
+     8.55
+    ],
+    "speed": 3.6
+   },
+   {
+    "at": 2.75,
+    "via": [
+     [
+      -2.8,
+      8.45
+     ]
+    ],
+    "to": [
+     -4.05,
+     8.0
+    ],
+    "dur": 1.45
+   }
+  ],
+  "X1": [
+   {
+    "at": 4.85,
+    "to": [
+     -1.05,
+     7.95
+    ],
+    "dur": 0.72
+   },
+   {
+    "at": 6.85,
+    "via": [
+     [
+      0.3,
+      7.6
+     ],
+     [
+      1.4,
+      6.0
+     ]
+    ],
+    "to": [
+     1.55,
+     4.6
+    ],
+    "speed": 5.6
+   }
+  ],
+  "X5": [
+   {
+    "at": 7.7,
+    "to": [
+     -0.3,
+     2.45
+    ],
+    "speed": 5.2
+   }
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 8.3,
+   "dribble": true,
+   "hand": 1,
+   "cross": [
+    6.55
+   ]
+  },
+  {
+   "type": "layup",
+   "player": "O1",
+   "t0": 8.3,
+   "t1": 8.700000000000001,
+   "make": true
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "approach": 0.5,
+  "jab": 1.25,
+  "plant": 2.56,
+  "pop": 2.73,
+  "follow": 2.75,
+  "sell": 4.2,
+  "jump": 4.85,
+  "cross": 6.55,
+  "drive": 6.6,
+  "beat": 7.335,
+  "help": 7.7,
+  "finish": 8.3,
+  "make": 8.700000000000001,
+  "end": 10.8
+ },
+ "actions": {
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 10.8,
+    "face": "O3"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 10.8,
+    "face": "O4"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6.85,
+    "face": "O1"
+   }
+  ],
+  "O2": [
+   {
+    "type": "gather",
+    "from": 2.5,
+    "to": 2.7600000000000002
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 2.75,
+    "to": 10.8,
+    "face": "O2"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 7.7,
+    "face": "O5"
+   },
+   {
+    "type": "contest",
+    "from": 8.25,
+    "to": 8.8
+   }
+  ],
+  "O1": [
+   {
+    "type": "celebrate",
+    "from": 9.200000000000001,
+    "to": 9.4
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "far",
+   "a": "O2",
+   "b": "X1",
+   "at": "plant",
+   "min": 1.0,
+   "says": "Same fake."
+  },
+  {
+   "type": "near",
+   "a": "X2",
+   "b": "O2",
+   "at": "cross",
+   "max": 2.0,
+   "says": "His defender stays with him."
+  },
+  {
+   "type": "far",
+   "a": "X1",
+   "b": "O1",
+   "at": "beat",
+   "min": 0.9,
+   "says": "Cross back and attack the other way."
+  },
+  {
+   "type": "near_rim",
+   "player": "O1",
+   "at": "finish",
+   "max": 1.6,
+   "says": "...attack the other way."
+  },
+  {
+   "type": "far",
+   "a": "X5",
+   "b": "O1",
+   "at": "finish",
+   "min": 0.8,
+   "says": "The help is late."
+  },
+  {
+   "type": "near",
+   "a": "X1",
+   "b": "O1",
+   "at": "cross",
+   "max": 1.2,
+   "says": "Yours jumps toward the screen."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "approach",
+    "jab",
+    "plant",
+    "follow",
+    "sell",
+    "jump",
+    "cross",
+    "drive",
+    "help",
+    "finish",
+    "make"
+   ],
+   "says": "follow, sell, jump, cross back, layup"
+  }
+ ],
+ "notes": [
+  "Same start, same approach, same dribble as ghost-a-three.",
+  "O1 keeps selling with two dribbles to the screen side; X1 jumps over to cut him off.",
+  "X2 keeps his shoulder to the shooter and follows him out; X1 jumps toward the screen side.",
+  "O1 crosses to his left hand, wins X1's hip and attacks the left lane; X5 helps late from the right block."
+ ]
+}

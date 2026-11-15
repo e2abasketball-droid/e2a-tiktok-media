@@ -4,7 +4,7 @@
 //   node --experimental-strip-types scripts/test-motion.mts tactical/plays/<id>.json [...]
 import fs from 'node:fs';
 import {FIBA} from '../src/tactical/geometry.ts';
-import {sample} from '../src/tactical/play.ts';
+import {dribbleSide, sample} from '../src/tactical/play.ts';
 import {poseAt, PLAYER_BUILD} from '../src/t3d/rig.ts';
 
 type V3 = [number, number, number];
@@ -44,9 +44,10 @@ for (const f of process.argv.slice(2)) {
     for (let t = e.from + 1 / 240; t <= e.to; t += 1 / 240) {
       const z = sample(p, t).ball.pos[2];
       if (prev > z && prev >= prev2 && prev > 0.6) {
-        // top of a bounce: the dribbling (right) hand is on the ball
+        // top of a bounce: the dribbling hand (right, or the left after a crossover) is on the ball
         const ps = poseOf(p, e.player, t - 1 / 240);
-        const g = d3(ps.hand[1], sample(p, t - 1 / 240).ball.pos) - 0.121;
+        const hi = (e.hand !== undefined || e.cross?.length) && dribbleSide(e, t - 1 / 240) < 0 ? 0 : 1;
+        const g = d3(ps.hand[hi], sample(p, t - 1 / 240).ball.pos) - 0.121;
         if (g > worstTop) [worstTop, topWho] = [g, `${e.player}@${t.toFixed(2)}`];
       }
       prev2 = prev;

@@ -1,0 +1,503 @@
+{
+ "id": "ghost-b-reject",
+ "title": "Ghost screen B: X2 stays home, X1 jumps the screen, reject the other way",
+ "duration": 10.8,
+ "concept": "ghost-screen",
+ "source": "original E2A play (standard ghost screen / slip-out read, generic coaching knowledge)",
+ "squareUp": true,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Ball handler, top (a step left), ball in the right hand"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Shooter: right wing, ghost screen"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Left corner"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Right corner"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Right dunker spot"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the ball",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "On the shooter: steps to the ball (A) / stays (B)",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Left corner",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "Right corner",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "Help from the right block",
+   "guards": "O5"
+  }
+ ],
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 8.3,
+   "dribble": true,
+   "hand": 1,
+   "cross": [
+    6.55
+   ]
+  },
+  {
+   "type": "layup",
+   "player": "O1",
+   "t0": 8.3,
+   "t1": 8.700000000000001,
+   "make": true
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "approach": 0.5,
+  "jab": 1.25,
+  "plant": 2.56,
+  "pop": 2.73,
+  "follow": 2.75,
+  "sell": 4.2,
+  "jump": 4.85,
+  "cross": 6.55,
+  "drive": 6.6,
+  "beat": 7.335,
+  "help": 7.7,
+  "finish": 8.3,
+  "make": 8.700000000000001,
+  "end": 10.8
+ },
+ "actions": {
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 10.8,
+    "face": "O3"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 10.8,
+    "face": "O4"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6.85,
+    "face": "O1"
+   }
+  ],
+  "O2": [
+   {
+    "type": "gather",
+    "from": 2.5,
+    "to": 2.7600000000000002
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 2.75,
+    "to": 10.8,
+    "face": "O2"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 7.7,
+    "face": "O5"
+   },
+   {
+    "type": "contest",
+    "from": 8.25,
+    "to": 8.8
+   }
+  ],
+  "O1": [
+   {
+    "type": "celebrate",
+    "from": 9.200000000000001,
+    "to": 9.4
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "far",
+   "a": "O2",
+   "b": "X1",
+   "at": "plant",
+   "min": 1,
+   "says": "Same fake."
+  },
+  {
+   "type": "near",
+   "a": "X2",
+   "b": "O2",
+   "at": "cross",
+   "max": 2,
+   "says": "His defender stays with him."
+  },
+  {
+   "type": "far",
+   "a": "X1",
+   "b": "O1",
+   "at": "beat",
+   "min": 0.9,
+   "says": "Cross back and attack the other way."
+  },
+  {
+   "type": "near_rim",
+   "player": "O1",
+   "at": "finish",
+   "max": 1.6,
+   "says": "...attack the other way."
+  },
+  {
+   "type": "far",
+   "a": "X5",
+   "b": "O1",
+   "at": "finish",
+   "min": 0.8,
+   "says": "The help is late."
+  },
+  {
+   "type": "near",
+   "a": "X1",
+   "b": "O1",
+   "at": "cross",
+   "max": 1.2,
+   "says": "Yours jumps toward the screen."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "approach",
+    "jab",
+    "plant",
+    "follow",
+    "sell",
+    "jump",
+    "cross",
+    "drive",
+    "help",
+    "finish",
+    "make"
+   ],
+   "says": "follow, sell, jump, cross back, layup"
+  }
+ ],
+ "notes": [
+  "Same start, same approach, same dribble as ghost-a-three.",
+  "O1 keeps selling with two dribbles to the screen side; X1 jumps over to cut him off.",
+  "X2 keeps his shoulder to the shooter and follows him out; X1 jumps toward the screen side.",
+  "O1 crosses to his left hand, wins X1's hip and attacks the left lane; X5 helps late from the right block."
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0,
+    0.9,
+    9
+   ],
+   [
+    1.25,
+    0.9,
+    9
+   ],
+   [
+    1.7,
+    0.6,
+    8.8
+   ],
+   [
+    4.2,
+    0.6,
+    8.8
+   ],
+   [
+    5.05,
+    -0.45,
+    8.6
+   ],
+   [
+    6.6,
+    -0.45,
+    8.6
+   ],
+   [
+    7.018,
+    0.5,
+    8.2
+   ],
+   [
+    7.389,
+    1.75,
+    6.6
+   ],
+   [
+    7.752,
+    1.7,
+    4.4
+   ],
+   [
+    8.371,
+    0.7,
+    2.6
+   ],
+   [
+    10.8,
+    0.7,
+    2.6
+   ]
+  ],
+  "O2": [
+   [
+    0,
+    -4.95,
+    6.6
+   ],
+   [
+    0.5,
+    -4.95,
+    6.6
+   ],
+   [
+    1.342,
+    -3.4,
+    7.3
+   ],
+   [
+    2.566,
+    -0.5,
+    8
+   ],
+   [
+    2.736,
+    -0.5,
+    8
+   ],
+   [
+    3.32,
+    -2.2,
+    7.8
+   ],
+   [
+    4.113,
+    -4.85,
+    7.25
+   ],
+   [
+    10.8,
+    -4.85,
+    7.25
+   ]
+  ],
+  "O3": [
+   [
+    0,
+    6.6,
+    1.4
+   ],
+   [
+    10.8,
+    6.6,
+    1.4
+   ]
+  ],
+  "O4": [
+   [
+    0,
+    -6.6,
+    1.4
+   ],
+   [
+    10.8,
+    -6.6,
+    1.4
+   ]
+  ],
+  "O5": [
+   [
+    0,
+    -2.55,
+    1.15
+   ],
+   [
+    10.8,
+    -2.55,
+    1.15
+   ]
+  ],
+  "X1": [
+   [
+    0,
+    0.75,
+    8.15
+   ],
+   [
+    4.85,
+    0.75,
+    8.15
+   ],
+   [
+    5.57,
+    -1.05,
+    7.95
+   ],
+   [
+    6.85,
+    -1.05,
+    7.95
+   ],
+   [
+    7.362,
+    0.3,
+    7.6
+   ],
+   [
+    7.761,
+    1.4,
+    6
+   ],
+   [
+    8.276,
+    1.55,
+    4.6
+   ],
+   [
+    10.8,
+    1.55,
+    4.6
+   ]
+  ],
+  "X2": [
+   [
+    0,
+    -4.25,
+    7.25
+   ],
+   [
+    0.8,
+    -4.25,
+    7.25
+   ],
+   [
+    1.451,
+    -2.9,
+    8.05
+   ],
+   [
+    2.093,
+    -1.45,
+    8.55
+   ],
+   [
+    2.75,
+    -1.45,
+    8.55
+   ],
+   [
+    3.48,
+    -2.8,
+    8.45
+   ],
+   [
+    4.2,
+    -4.05,
+    8
+   ],
+   [
+    10.8,
+    -4.05,
+    8
+   ]
+  ],
+  "X3": [
+   [
+    0,
+    5.65,
+    2.15
+   ],
+   [
+    10.8,
+    5.65,
+    2.15
+   ]
+  ],
+  "X4": [
+   [
+    0,
+    -5.7,
+    2.15
+   ],
+   [
+    10.8,
+    -5.7,
+    2.15
+   ]
+  ],
+  "X5": [
+   [
+    0,
+    -1.95,
+    2
+   ],
+   [
+    7.7,
+    -1.95,
+    2
+   ],
+   [
+    8.556,
+    -0.3,
+    2.45
+   ],
+   [
+    10.8,
+    -0.3,
+    2.45
+   ]
+  ]
+ },
+ "screens": []
+}
