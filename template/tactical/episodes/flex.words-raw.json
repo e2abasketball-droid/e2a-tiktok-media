@@ -1,0 +1,278 @@
+[
+{
+"text": "Watch",
+"type": "word",
+"start": 0.0,
+"end": 0.32
+},
+{
+"text": "the",
+"type": "word",
+"start": 0.36,
+"end": 0.4
+},
+{
+"text": "first",
+"type": "word",
+"start": 0.48,
+"end": 0.72
+},
+{
+"text": "screener.",
+"type": "word",
+"start": 0.76,
+"end": 1.4
+},
+{
+"text": "He's",
+"type": "word",
+"start": 1.6,
+"end": 1.84
+},
+{
+"text": "the",
+"type": "word",
+"start": 1.88,
+"end": 1.92
+},
+{
+"text": "one",
+"type": "word",
+"start": 2.0,
+"end": 2.08
+},
+{
+"text": "who",
+"type": "word",
+"start": 2.16,
+"end": 2.24
+},
+{
+"text": "gets",
+"type": "word",
+"start": 2.36,
+"end": 2.48
+},
+{
+"text": "the",
+"type": "word",
+"start": 2.52,
+"end": 2.56
+},
+{
+"text": "shot.",
+"type": "word",
+"start": 2.64,
+"end": 3.04
+},
+{
+"text": "First,",
+"type": "word",
+"start": 3.52,
+"end": 4.16
+},
+{
+"text": "the",
+"type": "word",
+"start": 4.2,
+"end": 4.24
+},
+{
+"text": "baseline",
+"type": "word",
+"start": 4.32,
+"end": 4.72
+},
+{
+"text": "screen",
+"type": "word",
+"start": 4.8,
+"end": 5.12
+},
+{
+"text": "pulls",
+"type": "word",
+"start": 5.2,
+"end": 5.44
+},
+{
+"text": "help",
+"type": "word",
+"start": 5.52,
+"end": 5.76
+},
+{
+"text": "toward",
+"type": "word",
+"start": 5.8,
+"end": 6.0
+},
+{
+"text": "the",
+"type": "word",
+"start": 6.04,
+"end": 6.08
+},
+{
+"text": "rim.",
+"type": "word",
+"start": 6.16,
+"end": 6.76
+},
+{
+"text": "Then",
+"type": "word",
+"start": 7.04,
+"end": 7.28
+},
+{
+"text": "the",
+"type": "word",
+"start": 7.44,
+"end": 7.52
+},
+{
+"text": "passer",
+"type": "word",
+"start": 7.6,
+"end": 8.0
+},
+{
+"text": "screens",
+"type": "word",
+"start": 8.2,
+"end": 8.4
+},
+{
+"text": "for",
+"type": "word",
+"start": 8.48,
+"end": 8.56
+},
+{
+"text": "the",
+"type": "word",
+"start": 8.6,
+"end": 8.64
+},
+{
+"text": "screener.",
+"type": "word",
+"start": 8.72,
+"end": 9.28
+},
+{
+"text": "Now",
+"type": "word",
+"start": 9.76,
+"end": 9.92
+},
+{
+"text": "he's",
+"type": "word",
+"start": 9.96,
+"end": 10.16
+},
+{
+"text": "OPEN",
+"type": "word",
+"start": 10.28,
+"end": 10.4
+},
+{
+"text": "at",
+"type": "word",
+"start": 10.44,
+"end": 10.48
+},
+{
+"text": "the",
+"type": "word",
+"start": 10.56,
+"end": 10.6
+},
+{
+"text": "elbow.",
+"type": "word",
+"start": 10.64,
+"end": 11.28
+},
+{
+"text": "If",
+"type": "word",
+"start": 11.52,
+"end": 11.6
+},
+{
+"text": "the",
+"type": "word",
+"start": 11.68,
+"end": 11.72
+},
+{
+"text": "cutter's",
+"type": "word",
+"start": 11.76,
+"end": 12.08
+},
+{
+"text": "open",
+"type": "word",
+"start": 12.2,
+"end": 12.32
+},
+{
+"text": "first,",
+"type": "word",
+"start": 12.4,
+"end": 13.04
+},
+{
+"text": "hit",
+"type": "word",
+"start": 13.12,
+"end": 13.2
+},
+{
+"text": "him",
+"type": "word",
+"start": 13.24,
+"end": 13.28
+},
+{
+"text": "at",
+"type": "word",
+"start": 13.36,
+"end": 13.44
+},
+{
+"text": "the",
+"type": "word",
+"start": 13.48,
+"end": 13.52
+},
+{
+"text": "rim.",
+"type": "word",
+"start": 13.6,
+"end": 13.92
+},
+{
+"text": "Rim",
+"type": "word",
+"start": 14.48,
+"end": 14.8
+},
+{
+"text": "or",
+"type": "word",
+"start": 14.96,
+"end": 15.04
+},
+{
+"text": "elbow?",
+"type": "word",
+"start": 15.12,
+"end": 15.84
+}
+]
