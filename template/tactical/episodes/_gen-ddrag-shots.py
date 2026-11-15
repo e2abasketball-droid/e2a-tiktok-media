@@ -6,8 +6,8 @@ re-checked frame by frame with scripts/frame-fit.mts.
   hook    0-5.7    high 3/4 from half court, play A real time (0.3->6.0): both drags, the split, X4 sinks, the pass to
                    the pop, the three, the net. The frame opens before the ball leaves it.
   replay  5.7-11.3 near-overhead, play A from the screens: 1 and 2 on the screeners, pop, roll, X4's route (slowed).
-  readB   11.3-15.1 same high 3/4 frame, play B real time from the same start: X4 stays with the shooter.
-  finish  15.1-17.5 lower: the bounce pass inside, the catch, the layup, the late corner help.
+  readB   11.3-14.95 same high 3/4 frame, play B real time from the same start: X4 stays with the shooter.
+  finish  14.95-17.5 lower: the bounce pass inside, the catch, the layup, the late corner help.
   cta     17.5-21.9 back to the split (play A ~1.9-2.4 almost frozen).   ROLL OR POP?
   loop    21.9-end play A 0->0.3 into the first frame."""
 import json, os
@@ -44,15 +44,15 @@ shots = [
              {"type": "pin", "player": "O4", "text": "1", "tone": "gold", "from": 0.05, "to": 0.85, "size": 44},
              {"type": "pin", "player": "O5", "text": "2", "tone": "gold", "from": 0.05, "to": 0.85, "size": 44}]},
  {"id": "readB", "name": "Variant B - same frame: X4 stays with the shooter", "at": 11.3, "play": "B",
-  "remap": [[0, 0.3], ["@end", 4.1]],
+  "remap": [[0, 0.3], ["@end", 3.95]],
   "camera": [key(0, HB)],
   "ov3": [{"type": "ring", "player": "X4", "color": RED, "from": 1.9, "to": 3.3},
           {"type": "ring", "player": "O5", "color": GOLD, "from": 2.4, "to": "@end"}],
   "screen": []},
- {"id": "finish", "name": "Lower - the inside pass, the catch, the finish", "at": 15.1, "play": "B",
-  "remap": [[0, 4.1], ["@end", 6.0]],
+ {"id": "finish", "name": "Lower - the inside pass, the catch, the finish", "at": 14.95, "play": "B",
+  "remap": [[0, 3.95], ["@end", 6.0]],
   "camera": [key(0, LOWB), key("@end", {**LOWB, "dist": 9.5}, "linear")],
-  "ov3": [], "screen": [{"type": "pin", "player": "X2", "text": "HELP: LATE", "tone": "red", "from": 0.35, "to": 1.2, "size": 40}]},
+  "ov3": [], "screen": [{"type": "pin", "player": "X2", "text": "HELP: LATE", "tone": "red", "from": 0.5, "to": 1.35, "size": 40}]},
  {"id": "cta", "name": "CTA - back to the split: roll or pop?", "at": 17.5, "play": "A",
   "remap": [[0, 1.85], [1.0, 2.25], ["@end", 2.4]],
   "camera": [key(0, CTA), key("@end", {**CTA, "dist": 9.4}, "linear")],
@@ -68,7 +68,7 @@ SFX = {"hook": [{"at": 0.1, "name": "bounce", "volume": 0.09}, {"at": 0.75, "nam
                 {"at": 3.82, "name": "bounce", "volume": 0.08}, {"at": 5.22, "name": "swish", "volume": 0.16}],
        "replay": [{"at": 1.0, "name": "squeak", "volume": 0.07}],
        "readB": [{"at": 1.6, "name": "squeak", "volume": 0.07}],
-       "finish": [{"at": 0.1, "name": "bounce", "volume": 0.09}, {"at": 1.1, "name": "swish", "volume": 0.15}]}
+       "finish": [{"at": 0.25, "name": "bounce", "volume": 0.09}, {"at": 1.25, "name": "swish", "volume": 0.15}]}
 for sh in shots:
     sh["sfx"] = SFX.get(sh["id"], [])
 ep["shots"] = shots
