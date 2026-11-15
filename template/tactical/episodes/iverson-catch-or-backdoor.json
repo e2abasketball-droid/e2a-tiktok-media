@@ -1,0 +1,1067 @@
+{
+ "id": "iverson-catch-or-backdoor",
+ "title": "IVERSON CUT: Catch or Backdoor? (private review)",
+ "fps": 30,
+ "voiceRaw": "tactical/iverson/voice-raw.mp3",
+ "wordsRaw": "iverson-catch-or-backdoor.words-raw.json",
+ "voice": "tactical/iverson/voice.wav",
+ "voiceMix": "tactical/iverson/voice.mix.wav",
+ "preroll": 0.12,
+ "tail": 2.2,
+ "gaps": [
+  {
+   "after": "he's gone.",
+   "sec": 0.75,
+   "why": "hook: the deny holds, cut on the plant"
+  },
+  {
+   "after": "elbow screens.",
+   "sec": 1.3,
+   "why": "overhead: O2 clears the second screen"
+  },
+  {
+   "after": "you can face up.",
+   "sec": 1.6,
+   "why": "the catch, the face-up"
+  },
+  {
+   "after": "what changes.",
+   "sec": 0.65,
+   "why": "same overhead, same start"
+  },
+  {
+   "after": "sell the catch.",
+   "sec": 0.6,
+   "why": "the plant"
+  },
+  {
+   "after": "your BACKDOOR.",
+   "sec": 2.1,
+   "why": "catch, layup, make"
+  },
+  {
+   "after": "trails, catch.",
+   "sec": 0.6,
+   "why": "repeat A lands"
+  },
+  {
+   "after": "denies, cut.",
+   "sec": 0.75,
+   "why": "repeat B lands"
+  }
+ ],
+ "plays": {
+  "A": "iverson-a-catch",
+  "B": "iverson-b-backdoor"
+ },
+ "pinV2": true,
+ "shots": [
+  {
+   "id": "hook",
+   "name": "Hook — X2 denies at the top (cut on the plant)",
+   "at": 0,
+   "play": "B",
+   "remap": [
+    [
+     0,
+     1.0
+    ],
+    [
+     "@end",
+     3.0
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X2",
+        "O1"
+       ],
+       "z": 0.2,
+       "window": 0.8
+      },
+      "dist": 9.6,
+      "pitch": 48,
+      "yaw": 24,
+      "fov": 44
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X2",
+        "O1"
+       ],
+       "z": 0.2,
+       "window": 0.8
+      },
+      "dist": 8.8,
+      "pitch": 48,
+      "yaw": 24,
+      "fov": 44
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "color": "#E5483A",
+     "from": 0.1,
+     "to": "@end"
+    },
+    {
+     "type": "passLane",
+     "src": "O1",
+     "dst": "O2",
+     "from": "top",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "DENY",
+      "THE CATCH?"
+     ],
+     "gold": [
+      0
+     ],
+     "from": 0.25,
+     "to": "@end",
+     "y": 252,
+     "size": 100
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "setup",
+   "name": "Overhead — Iverson cut from the start: wing, both elbow screens, X2 marked first",
+   "at": "This is-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "Start",
+     0.0
+    ],
+    [
+     "@end",
+     2.95
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X2"
+       ],
+       "z": 0.0,
+       "offset": [
+        0.0,
+        0.7
+       ],
+       "window": 1.2
+      },
+      "dist": 15.5,
+      "pitch": 4,
+      "yaw": 0,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X2"
+       ],
+       "z": 0.0,
+       "offset": [
+        0.0,
+        0.7
+       ],
+       "window": 1.2
+      },
+      "dist": 14.0,
+      "pitch": 4,
+      "yaw": 0,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "color": "#E5483A",
+     "from": 0.1,
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 0.45,
+     "t1": 2.9,
+     "trail": true,
+     "from": "Start",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "IVERSON CUT"
+     ],
+     "gold": [
+      0
+     ],
+     "from": "Iverson",
+     "to": "@end",
+     "y": 252,
+     "size": 100,
+     "sub": "Wing, over both elbow screens"
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "caseA1",
+   "name": "Case A — X2 trails over the screens, the pass leaves (oblique, same side)",
+   "at": "If your-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.6
+    ],
+    [
+     "@end",
+     2.45
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X2"
+       ],
+       "z": 0.3
+      },
+      "dist": 9.0,
+      "pitch": 50,
+      "yaw": 30,
+      "fov": 44
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X2",
+        "O1"
+       ],
+       "z": 0.3
+      },
+      "dist": 9.4,
+      "pitch": 50,
+      "yaw": 30,
+      "fov": 44
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "color": "#E5483A",
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "separation",
+     "a": "X2",
+     "b": "O2",
+     "from": "TRAILS",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "TRAIL",
+      "→ CATCH"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "TRAILS",
+     "to": "@end",
+     "y": 252,
+     "size": 100
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "caseA2",
+   "name": "Case A — closer: hands shown, catch outside the far elbow, face up",
+   "at": "catch just-0.1",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     2.0
+    ],
+    [
+     "@end",
+     5.6
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X2"
+       ],
+       "z": 0.3
+      },
+      "dist": 7.6,
+      "pitch": 50,
+      "yaw": 36,
+      "fov": 44
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2"
+       ],
+       "z": 0.3
+      },
+      "dist": 7.0,
+      "pitch": 50,
+      "yaw": 40,
+      "fov": 44
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "passLane",
+     "src": "O1",
+     "dst": "O2",
+     "from": 0,
+     "to": "far elbow.>"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "TRAIL",
+      "→ CATCH"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0,
+     "to": "@end",
+     "y": 252,
+     "size": 100
+    },
+    {
+     "type": "stamp",
+     "text": "FACE UP",
+     "from": "face up",
+     "to": "@end",
+     "y": 330
+    }
+   ],
+   "sfx": [
+    {
+     "at": 1.2,
+     "name": "bounce",
+     "volume": 0.09
+    }
+   ]
+  },
+  {
+   "id": "caseB1",
+   "name": "Case B — SAME overhead, same start: X2 cheats over the top into the lane",
+   "at": "Same cut-0.15",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "changes",
+     0.0
+    ],
+    [
+     "@end",
+     2.43
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X2"
+       ],
+       "z": 0.0,
+       "offset": [
+        0.0,
+        0.7
+       ],
+       "window": 1.2
+      },
+      "dist": 15.5,
+      "pitch": 4,
+      "yaw": 0,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X2"
+       ],
+       "z": 0.0,
+       "offset": [
+        0.0,
+        0.7
+       ],
+       "window": 1.2
+      },
+      "dist": 14.0,
+      "pitch": 4,
+      "yaw": 0,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "color": "#E5483A",
+     "pulse": true,
+     "from": "Watch",
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "X2",
+     "t0": 0.55,
+     "t1": 2.43,
+     "color": "#E5483A",
+     "trail": true,
+     "from": "jumps",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "DENY",
+      "→ BACKDOOR"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "jumps",
+     "to": "@end",
+     "y": 252,
+     "size": 100
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "caseB2",
+   "name": "Case B — oblique: sell the catch, the plant (slow motion), the cut behind him",
+   "at": "sell the catch>-0.6",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     2.25
+    ],
+    [
+     "Plant",
+     2.82
+    ],
+    [
+     "Plant>+0.15",
+     3.0,
+     "inOut"
+    ],
+    [
+     "@end",
+     3.85
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X2"
+       ],
+       "z": 0.3,
+       "offset": [
+        0.3,
+        1.3
+       ]
+      },
+      "dist": 7.8,
+      "pitch": 50,
+      "yaw": 36,
+      "fov": 44
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X2"
+       ],
+       "z": 0.3,
+       "offset": [
+        0.3,
+        1.3
+       ]
+      },
+      "dist": 8.4,
+      "pitch": 50,
+      "yaw": 36,
+      "fov": 44
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "color": "#E5483A",
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 2.88,
+     "t1": 4.4,
+     "dashed": true,
+     "draw": 0.6,
+     "from": "Plant",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "DENY",
+      "→ BACKDOOR"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0,
+     "to": "@end",
+     "y": 252,
+     "size": 100
+    }
+   ],
+   "sfx": [
+    {
+     "at": "Plant",
+     "name": "squeak",
+     "volume": 0.07
+    }
+   ]
+  },
+  {
+   "id": "caseB3",
+   "name": "Case B — lateral: lead him to the rim, bounce pass, finish",
+   "at": "Lead-0.1",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     3.6
+    ],
+    [
+     "@end",
+     6.0
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "O1"
+       ],
+       "z": 0.3
+      },
+      "dist": 10.0,
+      "pitch": 60,
+      "yaw": 74,
+      "fov": 44
+     }
+    },
+    {
+     "at": "rim.",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2"
+       ],
+       "z": 0.3,
+       "lead": 0.2
+      },
+      "dist": 8.8,
+      "pitch": 60,
+      "yaw": 74,
+      "fov": 44
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       2.4,
+       1.6
+      ],
+      "dist": 8.6,
+      "pitch": 60,
+      "yaw": 74,
+      "fov": 44
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "passLane",
+     "src": "O1",
+     "dst": "O2",
+     "from": 0.1,
+     "to": "rim."
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "DENY",
+      "→ BACKDOOR"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0,
+     "to": "BACKDOOR.",
+     "y": 252,
+     "size": 100
+    },
+    {
+     "type": "stamp",
+     "text": "BACKDOOR",
+     "badge": "+2",
+     "from": "BACKDOOR.>+0.3",
+     "to": "@end",
+     "y": 330
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0.95,
+     "name": "bounce",
+     "volume": 0.1
+    },
+    {
+     "at": 2.8,
+     "name": "swish",
+     "volume": 0.16
+    }
+   ]
+  },
+  {
+   "id": "cmpA",
+   "name": "Repeat — TOP_IN, A: trail -> catch",
+   "at": "If he trails-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     1.4
+    ],
+    [
+     "@end",
+     2.95
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X2"
+       ],
+       "z": 0.0,
+       "offset": [
+        0.0,
+        0.7
+       ],
+       "window": 1.2
+      },
+      "dist": 14.0,
+      "pitch": 4,
+      "yaw": 0,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "color": "#E5483A",
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "TRAIL",
+      "→ CATCH"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 252,
+     "size": 100
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "cmpB",
+   "name": "Repeat — TOP_IN, B: deny -> backdoor",
+   "at": "If he denies-0.15",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     1.3
+    ],
+    [
+     "@end",
+     2.95
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X2"
+       ],
+       "z": 0.0,
+       "offset": [
+        0.0,
+        0.7
+       ],
+       "window": 1.2
+      },
+      "dist": 14.0,
+      "pitch": 4,
+      "yaw": 0,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "color": "#E5483A",
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "DENY",
+      "→ BACKDOOR"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 252,
+     "size": 100
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "cta",
+   "name": "CTA — TOP, play B in motion: CATCH OR BACKDOOR?",
+   "at": "Could-0.2",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "@end",
+     2.4
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X2"
+       ],
+       "z": 0.0,
+       "offset": [
+        0.0,
+        -0.7
+       ],
+       "window": 1.2
+      },
+      "dist": 15.5,
+      "pitch": 4,
+      "yaw": 0,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X2"
+       ],
+       "z": 0.0,
+       "offset": [
+        0.0,
+        -0.7
+       ],
+       "window": 1.2
+      },
+      "dist": 15.0,
+      "pitch": 4,
+      "yaw": 0,
+      "fov": 42
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O2",
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "X2",
+     "color": "#E5483A",
+     "pulse": true,
+     "from": 0.1,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "scrim",
+     "opacity": 0.28,
+     "from": "Could-0.1",
+     "to": "@end"
+    },
+    {
+     "type": "title",
+     "lines": [
+      "CATCH",
+      "OR BACKDOOR?"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "Could",
+     "to": "@end",
+     "y": 600,
+     "size": 116
+    },
+    {
+     "type": "logo",
+     "big": false,
+     "from": "@end-1.2",
+     "to": "@end"
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "loop",
+   "name": "Loop — back to the hook frame (play B 0.6 -> 1.0)",
+   "at": 35.36,
+   "play": "B",
+   "remap": [
+    [
+     0,
+     0.6
+    ],
+    [
+     "@end",
+     1.0
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X2",
+        "O1"
+       ],
+       "z": 0.2,
+       "window": 0.8
+      },
+      "dist": 9.6,
+      "pitch": 48,
+      "yaw": 24,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": [],
+   "sfx": []
+  }
+ ],
+ "keywords": [
+  "DENY",
+  "gone",
+  "Iverson cut",
+  "elbow screens",
+  "TRAILS",
+  "show your hands",
+  "catch",
+  "face up",
+  "jumps the passing lane",
+  "sell the catch",
+  "Plant",
+  "cut behind him",
+  "BACKDOOR",
+  "denies",
+  "full speed"
+ ],
+ "subtitleHide": [],
+ "autoSfx": false,
+ "ambience": {
+  "src": "sfx/arena.mp3",
+  "volume": 0.06
+ },
+ "music": {
+  "src": "tactical/iverson/music.mp3",
+  "volume": 1
+ }
+}
