@@ -65,7 +65,7 @@ shots = [
              T(["REJECT", "THE SCREEN"], 7.05, "@end")]},
  {"id": "layup", "name": "Layup - lower, same direction: gather, layup, late help, net", "at": 21.9, "play": "B",
   "remap": [[0, 8.67], ["@end", 10.62]],
-  "camera": [key(0, LOW([0.9, 4.4, 1.2], 9.6)), key("@end", LOW([0.4, 2.6, 1.6], 8.6), "inOut")],
+  "camera": [key(0, LOW([1.4, 5.8, 1.1], 10.2)), key("@end", LOW([0.4, 2.6, 1.6], 8.6), "inOut")],
   "ov3": [], "screen": [{"type": "pin", "player": "X5", "text": "HELP: LATE", "tone": "red", "from": 1.0, "to": 1.75, "size": 40, "dy": -150}]},
  {"id": "cta", "name": "CTA - back to play A at X2's step: who's got the shooter?", "at": 23.85, "play": "A",
   "remap": [[0, 2.2], [1.0, 2.7], ["@end", 2.86]],
@@ -92,7 +92,7 @@ ep["keywords"] = ["ghost screen", "BEFORE CONTACT", "steps toward", "hit the pop
 # sense units; the hook title, GHOST SCREEN and the closing question replace the subtitle while they say the same words
 ep["subtitleGroups"] = [4, 5, 2, 4, 3, 4, 4, 4, 3, 2, 5, 3, 6, 4, 4, 5, 4]
 ep["subtitleBlock"] = True
-ep["subtitleHide"] = [[0, "HAPPENS.>+0.3"], [5.5, 10.0], ["Who's-0.15", 40]]
+ep["subtitleHide"] = [[0, "HAPPENS.>+0.3"], [5.5, 10.32], ["Who's-0.15", 40]]
 ep["subtitleY"] = 1330
 ep["gradeBottom"] = 0.38
 ep["autoSfx"] = False
