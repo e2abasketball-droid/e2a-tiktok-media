@@ -37,5 +37,7 @@ Voz ≈ 1.100 créditos (2 tomas); render ≈ 25 min; más la revisión de fragm
 - **Voz:** UNA sola toma por vídeo (`generations_count` 1), para que dos vídeos quepan en `budget_per_day` (1.200 créditos, 2 tomas). Etiquetas de tono como en `ENTREGA` del piloto.
 - **Fragmentos antes del render final:** renderiza con `--frames` los primeros 3 s, la acción del caso A y el paso + corte del caso B; mira los fotogramas y corrige (oclusiones, etiquetas sobre títulos o subtítulos, encuadre) antes del render completo.
 - **Cámara:** oblicua cruzando la línea pasador-receptor (nunca por la espalda del pasador); cenital de A y B con el MISMO encuadre; QC del motor 12/12 obligatorio.
+- **`qc-bounds` ANTES del render final** (lección del 15 nov: los dos vídeos del 16 nov se perdieron por un título 15 px dentro de la franja superior): `node --experimental-strip-types scripts/qc-bounds.mts <props.json> <informe.json>` sobre las props definitivas (modo sonda, sin render 3D, unos minutos). Solo con 0 violaciones se lanza el render final. Títulos: `y` ≥ 250 con `size` 104 (la plantilla ya usa 252).
+- **Tamaño y encuadre:** en las cenitales, el grupo de jugadores implicados debe ocupar al menos la mitad del ancho (usa `TOP_IN` o acerca `dist`); en el CTA, los 10 jugadores visibles o, si no caben, un encuadre que no corte a ninguno por el borde.
 - **Revisión final a tamaño de móvil** (fotogramas a 360 px de ancho) del vídeo completo antes de `package`.
 - Todo lo demás (puertas, QC, licencias, publicación, delegación) sigue `PROCEDIMIENTO.md` sin cambios.
