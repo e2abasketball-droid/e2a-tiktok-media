@@ -1,0 +1,487 @@
+{
+ "id": "iverson-b-backdoor",
+ "title": "Iverson cut B: he denies, backdoor",
+ "duration": 6,
+ "concept": "iverson-cut",
+ "source": "original E2A play (standard FIBA/European Iverson cut, generic coaching knowledge)",
+ "squareUp": true,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Passer, top (a step to the right)"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Cutter: left wing to the far elbow"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Left corner"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Screener, left elbow"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Screener, right elbow"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the passer",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "On the cutter: trails (A) / denies (B)",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Left corner",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "On the left-elbow screener",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "On the right-elbow screener",
+   "guards": "O5"
+  }
+ ],
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 3.85
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O2",
+   "t0": 3.85,
+   "t1": 4.4,
+   "style": "bounce"
+  },
+  {
+   "type": "hold",
+   "player": "O2",
+   "from": 4.4,
+   "to": 4.76
+  },
+  {
+   "type": "layup",
+   "player": "O2",
+   "t0": 4.76,
+   "t1": 5.16,
+   "make": true
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "screen1": 1.27,
+  "screen2": 1.71,
+  "deny": 2.43,
+  "sell": 2.58,
+  "plant": 2.88,
+  "pass": 3.85,
+  "catch": 4.4,
+  "finish": 4.76,
+  "make": 5.16,
+  "end": 6
+ },
+ "actions": {
+  "O4": [
+   {
+    "type": "screen",
+    "from": 0.3,
+    "to": 1.6,
+    "face": "X2"
+   }
+  ],
+  "O5": [
+   {
+    "type": "screen",
+    "from": 0.3,
+    "to": 2.2,
+    "face": "X2"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6,
+    "face": "O1"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6,
+    "face": "O1"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6,
+    "face": "O1"
+   }
+  ],
+  "X2": [
+   {
+    "type": "topLock",
+    "from": 2.23,
+    "to": 3.03,
+    "face": "O2"
+   }
+  ],
+  "O2": [
+   {
+    "type": "celebrate",
+    "from": 5.46,
+    "to": 6
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "O2",
+   "b": "O4",
+   "at": "screen1",
+   "max": 1.4,
+   "says": "Sprint over both elbow screens."
+  },
+  {
+   "type": "near",
+   "a": "X2",
+   "b": "O2",
+   "at": "deny",
+   "max": 1.4,
+   "says": "If he jumps the passing lane..."
+  },
+  {
+   "type": "far",
+   "a": "X2",
+   "b": "O2",
+   "at": "catch",
+   "min": 1.6,
+   "says": "Cut behind him."
+  },
+  {
+   "type": "far",
+   "a": "X4",
+   "b": "O2",
+   "at": "catch",
+   "min": 2.5,
+   "says": "Lead him to the rim."
+  },
+  {
+   "type": "near_rim",
+   "player": "O2",
+   "at": "finish",
+   "max": 1.6,
+   "says": "That's your backdoor."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "screen1",
+    "screen2",
+    "deny",
+    "sell",
+    "plant",
+    "pass",
+    "catch",
+    "finish"
+   ],
+   "says": "deny, sell, plant, backdoor"
+  }
+ ],
+ "notes": [
+  "Same start as iverson-a-catch.",
+  "X2 cheats over the top and steps into the passing lane near the second screen.",
+  "O2 sells the catch, plants and cuts backdoor behind X2's hip; O1 leads him with a bounce pass."
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0,
+    -1,
+    9.3
+   ],
+   [
+    6,
+    -1,
+    9.3
+   ]
+  ],
+  "O2": [
+   [
+    0,
+    5.3,
+    6.7
+   ],
+   [
+    0.45,
+    5.3,
+    6.7
+   ],
+   [
+    1.028,
+    3.9,
+    6.95
+   ],
+   [
+    1.339,
+    2.35,
+    6.95
+   ],
+   [
+    1.765,
+    0,
+    7
+   ],
+   [
+    2.612,
+    -2.75,
+    7.05
+   ],
+   [
+    2.912,
+    -3.15,
+    7.25
+   ],
+   [
+    2.972,
+    -3.15,
+    7.25
+   ],
+   [
+    3.577,
+    -2.6,
+    5.5
+   ],
+   [
+    4.399,
+    -1.1,
+    3
+   ],
+   [
+    4.459,
+    -1.1,
+    3
+   ],
+   [
+    5.091,
+    -0.55,
+    2.25
+   ],
+   [
+    6,
+    -0.55,
+    2.25
+   ]
+  ],
+  "O3": [
+   [
+    0,
+    6.6,
+    1.3
+   ],
+   [
+    6,
+    6.6,
+    1.3
+   ]
+  ],
+  "O4": [
+   [
+    0,
+    2.35,
+    6.05
+   ],
+   [
+    1.7,
+    2.35,
+    6.05
+   ],
+   [
+    2.764,
+    3.4,
+    7.9
+   ],
+   [
+    6,
+    3.4,
+    7.9
+   ]
+  ],
+  "O5": [
+   [
+    0,
+    -2.35,
+    6.05
+   ],
+   [
+    2.25,
+    -2.35,
+    6.05
+   ],
+   [
+    3.829,
+    0.9,
+    8
+   ],
+   [
+    6,
+    0.9,
+    8
+   ]
+  ],
+  "X1": [
+   [
+    0,
+    0.05,
+    8.75
+   ],
+   [
+    6,
+    0.05,
+    8.75
+   ]
+  ],
+  "X2": [
+   [
+    0,
+    4.5,
+    7.6
+   ],
+   [
+    0.55,
+    4.5,
+    7.6
+   ],
+   [
+    1.025,
+    3.4,
+    7.75
+   ],
+   [
+    1.385,
+    1.6,
+    7.85
+   ],
+   [
+    1.788,
+    -0.6,
+    7.95
+   ],
+   [
+    2.443,
+    -2.55,
+    8
+   ],
+   [
+    2.543,
+    -2.55,
+    8
+   ],
+   [
+    2.893,
+    -2.75,
+    7.95
+   ],
+   [
+    3.143,
+    -2.75,
+    7.95
+   ],
+   [
+    4.017,
+    -2.4,
+    6.2
+   ],
+   [
+    6,
+    -2.4,
+    6.2
+   ]
+  ],
+  "X3": [
+   [
+    0,
+    5.75,
+    2
+   ],
+   [
+    6,
+    5.75,
+    2
+   ]
+  ],
+  "X4": [
+   [
+    0,
+    1.75,
+    5.35
+   ],
+   [
+    1.8,
+    1.75,
+    5.35
+   ],
+   [
+    2.61,
+    2.6,
+    6.6
+   ],
+   [
+    6,
+    2.6,
+    6.6
+   ]
+  ],
+  "X5": [
+   [
+    0,
+    -1.75,
+    5.35
+   ],
+   [
+    2.3,
+    -1.75,
+    5.35
+   ],
+   [
+    3.575,
+    0.55,
+    7.1
+   ],
+   [
+    6,
+    0.55,
+    7.1
+   ]
+  ]
+ },
+ "screens": []
+}
