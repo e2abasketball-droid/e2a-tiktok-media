@@ -1,0 +1,132 @@
+{
+ "source": "public/tactical/ram-v2/voice-raw.mp3",
+ "source_sec": 17.12,
+ "preroll": 0.15,
+ "output": "public/tactical/ram-v2/voice.wav",
+ "output_sec": 31.61,
+ "inserted_total_sec": 14.34,
+ "last_word_end": 31.45,
+ "gaps": [
+  {
+   "after": "get there first?",
+   "natural_silence": [
+    1.74,
+    2.06
+   ],
+   "natural_sec": 0.32,
+   "target_sec": 1.6,
+   "inserted_sec": 1.28,
+   "cut_at_source": 1.885,
+   "why": "hook: O5 escapes, cut before the result"
+  },
+  {
+   "after": "the first screen.",
+   "natural_silence": [
+    3.05,
+    3.39
+   ],
+   "natural_sec": 0.34,
+   "target_sec": 1.3,
+   "inserted_sec": 0.96,
+   "cut_at_source": 3.165,
+   "why": "O4 plants, X5 goes around"
+  },
+  {
+   "after": "a head start.",
+   "natural_silence": [
+    4.71,
+    5.23
+   ],
+   "natural_sec": 0.52,
+   "target_sec": 2.2,
+   "inserted_sec": 1.68,
+   "cut_at_source": 4.895,
+   "why": "O5's half step visible, RAM SCREEN title"
+  },
+  {
+   "after": "big's defender.",
+   "natural_silence": [
+    6.53,
+    6.94
+   ],
+   "natural_sec": 0.41,
+   "target_sec": 1.3,
+   "inserted_sec": 0.89,
+   "cut_at_source": 6.775,
+   "why": "X5 highlighted, his first step"
+  },
+  {
+   "after": "He backs up.",
+   "natural_silence": [
+    7.53,
+    7.98
+   ],
+   "natural_sec": 0.45,
+   "target_sec": 1.0,
+   "inserted_sec": 0.55,
+   "cut_at_source": 7.855,
+   "why": "drop: the gap to O1"
+  },
+  {
+   "after": "for the pull-up.",
+   "natural_silence": [
+    9.31,
+    9.82
+   ],
+   "natural_sec": 0.51,
+   "target_sec": 3.3,
+   "inserted_sec": 2.79,
+   "cut_at_source": 9.525,
+   "why": "brake, rise, release, swish, landing"
+  },
+  {
+   "after": "Same setup.",
+   "natural_silence": [
+    10.45,
+    10.86
+   ],
+   "natural_sec": 0.41,
+   "target_sec": 1.0,
+   "inserted_sec": 0.59,
+   "cut_at_source": 10.575,
+   "why": "back to the same instant"
+  },
+  {
+   "after": "go to the ball.",
+   "natural_silence": [
+    12.46,
+    12.87
+   ],
+   "natural_sec": 0.41,
+   "target_sec": 1.2,
+   "inserted_sec": 0.79,
+   "cut_at_source": 12.635,
+   "why": "the passing gap opens"
+  },
+  {
+   "after": "the short roll.",
+   "natural_silence": [
+    14.38,
+    14.93
+   ],
+   "natural_sec": 0.55,
+   "target_sec": 3.4,
+   "inserted_sec": 2.85,
+   "cut_at_source": 14.685,
+   "why": "catch, steps, finish, net"
+  },
+  {
+   "after": "Same play.",
+   "natural_silence": [
+    15.5,
+    15.94
+   ],
+   "natural_sec": 0.44,
+   "target_sec": 2.4,
+   "inserted_sec": 1.96,
+   "cut_at_source": 15.785,
+   "why": "matched cut big back / big up"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}

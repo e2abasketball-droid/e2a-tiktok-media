@@ -75,7 +75,7 @@ export const SAFE = {left: 40, right: 1080 - 40, top: 220, bottom: 1920 - 420, r
 /** label pinned to a player (projected from 3D), with a short leader line. The label box is kept inside
  *  the safe area (it slides sideways / down when the player is near an edge); the leader line keeps
  *  pointing at the player. Script, play and edit timing are untouched. */
-export const PinLabel: React.FC<{x: number; y: number; text: string; age: number; dur: number; tone?: 'gold' | 'red' | 'white'; dy?: number; size?: number}> = ({x, y, text, age, dur, tone = 'gold', dy = -70, size = 40}) => {
+export const PinLabel: React.FC<{x: number; y: number; text: string; age: number; dur: number; tone?: 'gold' | 'red' | 'white'; dy?: number; dx?: number; size?: number}> = ({x, y, text, age, dur, tone = 'gold', dy = -70, dx = 0, size = 40}) => {
   // the player itself is out of shot: no label (it was never visible before either)
   if (x < 0 || x > 1080 || y < 0 || y > 1920) return null;
   const a = inOut(age, dur, 0.25, 0.2);
@@ -85,11 +85,22 @@ export const PinLabel: React.FC<{x: number; y: number; text: string; age: number
   // full-scale box (the pop-in scale only shrinks it): text + horizontal padding 2x16 + safety 6
   const half = (textWidth(text, `900 ${size}px ${BODY}`, 1.5) + 32 + 6) / 2;
   const right = ty > SAFE.railY0 ? SAFE.railX : SAFE.right; // ty = bottom edge of the label box
-  const cx = Math.min(Math.max(x, SAFE.left + half), right - half);
+  const cx = Math.min(Math.max(x + dx, SAFE.left + half), right - half);
   const lead = Math.abs(y - ty);
+  // side placement (V2): the leader runs diagonally from the player to the near edge of the label
+  const side = Math.abs(cx - x) > half;
+  const ex = side ? (cx > x ? cx - half : cx + half) : x;
+  const ey = side ? ty - size * 0.7 : ty;
+  const grow = eo(age / 0.25);
   return (
     <>
-      <div style={{position: 'absolute', left: x - 1.5, top: Math.min(y, ty), width: 3, height: lead * eo(age / 0.25), background: bg, opacity: a * 0.9}} />
+      {side ? (
+        <svg width={1080} height={1920} style={{position: 'absolute', left: 0, top: 0, opacity: a * 0.9}}>
+          <line x1={x} y1={y} x2={x + (ex - x) * grow} y2={y + (ey - y) * grow} stroke={bg} strokeWidth={3} />
+        </svg>
+      ) : (
+        <div style={{position: 'absolute', left: x - 1.5, top: Math.min(y, ty), width: 3, height: lead * grow, background: bg, opacity: a * 0.9}} />
+      )}
       <div style={{position: 'absolute', left: cx, top: ty, transform: `translate(-50%, -100%) scale(${0.85 + 0.15 * eo(age / 0.25)})`, opacity: a}}>
         <div data-qc="pin" style={{fontFamily: BODY, fontWeight: 900, fontSize: size, letterSpacing: 1.5, color: fg, background: bg, padding: '6px 16px', borderRadius: 10, whiteSpace: 'nowrap', boxShadow: '0 8px 24px rgba(0,0,0,0.45)'}}>{text}</div>
       </div>

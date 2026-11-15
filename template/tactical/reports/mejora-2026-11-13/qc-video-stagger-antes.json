@@ -1,0 +1,226 @@
+{
+ "episode": "stagger-screen",
+ "mp4": "/mnt/project-files/stagger-screen-pilot02/v2/e2a-stagger-screen-pilot02-premium-v2.mp4",
+ "result": "PASS",
+ "checks": {
+  "technical": {
+   "pass": true,
+   "width": 1080,
+   "height": 1920,
+   "fps": 30.0,
+   "vcodec": "h264",
+   "acodec": "aac",
+   "duration": 33.344,
+   "mb": 52.112857
+  },
+  "audio": {
+   "pass": true,
+   "I": -14.3,
+   "TP": -2.2,
+   "margin_lu": 0.7,
+   "tp_headroom_db": 1.2
+  }
+ },
+ "warnings": [
+  {
+   "check": "transient",
+   "why": "1\u20133 frame pop (near-camera occluder or flash)",
+   "items": [
+    {
+     "frame": 96,
+     "frames": 1,
+     "t": 3.2,
+     "enter": 35.5,
+     "leave": 45.2,
+     "motion_per_frame": 6.5,
+     "back_to_path": 17.4
+    }
+   ]
+  },
+  {
+   "check": "flat_band",
+   "why": "wide flat bright band in front of the lens",
+   "items": [
+    {
+     "frame": 96,
+     "t": 3.2,
+     "width_pct": 31.9
+    }
+   ]
+  }
+ ],
+ "planned_shots": [
+  {
+   "shot": "reveal",
+   "start": 4.421,
+   "hard_cut": false
+  },
+  {
+   "shot": "caseA",
+   "start": 9.391,
+   "hard_cut": false
+  },
+  {
+   "shot": "rewind2",
+   "start": 16.511,
+   "hard_cut": false
+  },
+  {
+   "shot": "toplock",
+   "start": 17.311,
+   "hard_cut": false
+  },
+  {
+   "shot": "backdoor",
+   "start": 21.331,
+   "hard_cut": false
+  },
+  {
+   "shot": "chase",
+   "start": 25.721,
+   "hard_cut": true
+  },
+  {
+   "shot": "overplay",
+   "start": 27.421,
+   "hard_cut": true
+  },
+  {
+   "shot": "close",
+   "start": 29.301,
+   "hard_cut": true
+  }
+ ],
+ "moments": [
+  {
+   "t": 0.5,
+   "label": "hook: screen1",
+   "shot": "hook",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 1.3333333333333333,
+   "label": "hook: screen2",
+   "shot": "hook",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 2,
+   "label": "hook: hit2",
+   "shot": "hook",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 2.5,
+   "label": "hook: freeze FREEZE",
+   "shot": "hook",
+   "kind": "freeze",
+   "prio": 1
+  },
+  {
+   "t": 3.2,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 9.657666666666668,
+   "label": "caseA: jab",
+   "shot": "caseA",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 11.257666666666667,
+   "label": "caseA: screen1",
+   "shot": "caseA",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 12.357666666666667,
+   "label": "caseA: screen2",
+   "shot": "caseA",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 12.957666666666666,
+   "label": "caseA: hit2",
+   "shot": "caseA",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 14.161,
+   "label": "caseA: freeze FREEZE",
+   "shot": "caseA",
+   "kind": "freeze",
+   "prio": 1
+  },
+  {
+   "t": 14.724333333333334,
+   "label": "caseA: catch",
+   "shot": "caseA",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 15.924333333333333,
+   "label": "caseA: make",
+   "shot": "caseA",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 18.044333333333334,
+   "label": "toplock: lock",
+   "shot": "toplock",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 18.651,
+   "label": "toplock: freeze FREEZE",
+   "shot": "toplock",
+   "kind": "freeze",
+   "prio": 1
+  },
+  {
+   "t": 21.597666666666665,
+   "label": "backdoor: plant",
+   "shot": "backdoor",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 22.131,
+   "label": "backdoor: pass",
+   "shot": "backdoor",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 23.131,
+   "label": "backdoor: catch",
+   "shot": "backdoor",
+   "kind": "mark",
+   "prio": 1
+  }
+ ],
+ "timing": {
+  "moments_s": 0.26,
+  "probe_loudness_s": 0.68,
+  "frame_analysis_s": 8.05,
+  "contact_sheet_s": 18.72,
+  "total_s": 27.71
+ },
+ "contact_sheet": "/tmp/claude-0/occ/qcv-before/contact-sheet.png",
+ "not_measured": [
+  "player-on-player occlusion (needs depth or an ID pass)",
+  "text over a key player (needs projected player boxes per frame: see qc-tactical3d rays)"
+ ]
+}

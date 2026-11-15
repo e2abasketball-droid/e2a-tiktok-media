@@ -1,0 +1,505 @@
+{
+ "id": "chicago-b-backdoor",
+ "title": "Chicago action B: he jumps the hand-off, backdoor",
+ "duration": 6,
+ "concept": "chicago-dho",
+ "source": "original E2A play (standard FIBA/European Chicago action: pin-down into dribble hand-off, generic coaching knowledge)",
+ "squareUp": true,
+ "notes": [
+  "Same start as chicago-a-take.",
+  "X2 jumps into the exchange line before the ball changes hands; O1 keeps the ball.",
+  "O2 plants and cuts backdoor. O4 popped to the corner with X4, so the lane is empty;",
+  "X5 leaves the weak side only on the pass: the bounce pass beats the help."
+ ],
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Handler: the hand-off passer"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Shooter: comes off the pin-down"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Right wing"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Big: pin-down screener"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Big, right block"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the handler",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "On the shooter: trails (A) / jumps the hand-off (B)",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Right wing",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "On the screener (the big)",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "Weak-side big: the late help",
+   "guards": "O5"
+  }
+ ],
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 2.45,
+   "dribble": true
+  },
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 2.45,
+   "to": 3.05
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O2",
+   "t0": 3.05,
+   "t1": 3.62,
+   "style": "bounce"
+  },
+  {
+   "type": "hold",
+   "player": "O2",
+   "from": 3.62,
+   "to": 3.84
+  },
+  {
+   "type": "layup",
+   "player": "O2",
+   "t0": 3.84,
+   "t1": 4.24,
+   "make": true,
+   "contested": true
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "pindown": 1.05,
+  "jump": 1.75,
+  "plant": 2.05,
+  "keep": 2.45,
+  "cut": 2.4,
+  "pass": 3.05,
+  "catch": 3.62,
+  "help": 3.62,
+  "finish": 3.84,
+  "make": 4.24,
+  "end": 6
+ },
+ "actions": {
+  "O4": [
+   {
+    "type": "screen",
+    "from": 1.05,
+    "to": 1.75,
+    "face": "X2"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 7,
+    "face": "O1"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 7,
+    "face": "O1"
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 1.9,
+    "to": 2.4,
+    "face": "O1"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 2,
+    "to": 6,
+    "face": "O4"
+   }
+  ],
+  "O2": [
+   {
+    "type": "celebrate",
+    "from": 4.3,
+    "to": 5.4
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "O4",
+   "b": "X2",
+   "at": "pindown",
+   "max": 1.3,
+   "says": "A pin-down for the shooter."
+  },
+  {
+   "type": "near",
+   "a": "X2",
+   "b": "O1",
+   "at": "keep",
+   "max": 1.6,
+   "says": "He jumps the exchange before the ball changes hands."
+  },
+  {
+   "type": "far",
+   "a": "O2",
+   "b": "O1",
+   "at": "keep",
+   "min": 1.6,
+   "says": "Keep the ball: no hand-off."
+  },
+  {
+   "type": "far",
+   "a": "X4",
+   "b": "O2",
+   "at": "catch",
+   "min": 2.5,
+   "says": "The big went with the screener: the lane is empty."
+  },
+  {
+   "type": "far",
+   "a": "X5",
+   "b": "O2",
+   "at": "catch",
+   "min": 1,
+   "says": "The pass beats the help."
+  },
+  {
+   "type": "near_rim",
+   "player": "O2",
+   "at": "finish",
+   "max": 1.5,
+   "says": "Backdoor to the rim."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "pindown",
+    "jump",
+    "plant",
+    "pass",
+    "catch",
+    "finish"
+   ],
+   "says": "jump, plant, backdoor, pass"
+  }
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0,
+    -1.2,
+    8.7
+   ],
+   [
+    0.35,
+    -1.2,
+    8.7
+   ],
+   [
+    1.782,
+    -3.45,
+    7.65
+   ],
+   [
+    6,
+    -3.45,
+    7.65
+   ]
+  ],
+  "O2": [
+   [
+    0,
+    -3.7,
+    1.7
+   ],
+   [
+    0.75,
+    -3.7,
+    1.7
+   ],
+   [
+    1.256,
+    -4.75,
+    2.55
+   ],
+   [
+    1.655,
+    -4.85,
+    4.4
+   ],
+   [
+    2.117,
+    -4.75,
+    5.55
+   ],
+   [
+    2.197,
+    -4.75,
+    5.55
+   ],
+   [
+    2.755,
+    -3.85,
+    4.2
+   ],
+   [
+    3.131,
+    -2.55,
+    2.85
+   ],
+   [
+    3.653,
+    -1.25,
+    2.2
+   ],
+   [
+    6,
+    -1.25,
+    2.2
+   ]
+  ],
+  "O3": [
+   [
+    0,
+    5.6,
+    6.4
+   ],
+   [
+    6,
+    5.6,
+    6.4
+   ]
+  ],
+  "O4": [
+   [
+    0,
+    -2.3,
+    5.5
+   ],
+   [
+    1,
+    -3.95,
+    3.15
+   ],
+   [
+    1.85,
+    -3.95,
+    3.15
+   ],
+   [
+    3.014,
+    -6.55,
+    1.35
+   ],
+   [
+    6,
+    -6.55,
+    1.35
+   ]
+  ],
+  "O5": [
+   [
+    0,
+    3.1,
+    2
+   ],
+   [
+    6,
+    3.1,
+    2
+   ]
+  ],
+  "X1": [
+   [
+    0,
+    -0.9,
+    7.9
+   ],
+   [
+    0.45,
+    -0.9,
+    7.9
+   ],
+   [
+    1.489,
+    -2.45,
+    7.3
+   ],
+   [
+    3.2,
+    -2.45,
+    7.3
+   ],
+   [
+    4.033,
+    -2.6,
+    6.2
+   ],
+   [
+    6,
+    -2.6,
+    6.2
+   ]
+  ],
+  "X2": [
+   [
+    0,
+    -3.2,
+    2.35
+   ],
+   [
+    0.85,
+    -3.2,
+    2.35
+   ],
+   [
+    1.382,
+    -3.4,
+    3.8
+   ],
+   [
+    1.716,
+    -3.8,
+    5.3
+   ],
+   [
+    2.206,
+    -4.05,
+    6.55
+   ],
+   [
+    2.306,
+    -4.05,
+    6.55
+   ],
+   [
+    2.737,
+    -4.05,
+    5.6
+   ],
+   [
+    3.377,
+    -3.2,
+    4.1
+   ],
+   [
+    6,
+    -3.2,
+    4.1
+   ]
+  ],
+  "X3": [
+   [
+    0,
+    4.8,
+    5.8
+   ],
+   [
+    6,
+    4.8,
+    5.8
+   ]
+  ],
+  "X4": [
+   [
+    0,
+    -1.75,
+    4.9
+   ],
+   [
+    0.15,
+    -1.75,
+    4.9
+   ],
+   [
+    1.48,
+    -2.6,
+    2.95
+   ],
+   [
+    1.95,
+    -2.6,
+    2.95
+   ],
+   [
+    3.189,
+    -5.75,
+    1.95
+   ],
+   [
+    6,
+    -5.75,
+    1.95
+   ]
+  ],
+  "X5": [
+   [
+    0,
+    2.2,
+    2.5
+   ],
+   [
+    3.1,
+    2.2,
+    2.5
+   ],
+   [
+    4.186,
+    -0.55,
+    2.55
+   ],
+   [
+    6,
+    -0.55,
+    2.55
+   ]
+  ]
+ },
+ "screens": []
+}

@@ -1,0 +1,175 @@
+diff -ruN a/config/delegation.tactical-studio.json b/config/delegation.tactical-studio.json
+--- a/config/delegation.tactical-studio.json	2026-11-14 16:44:16.633133572 +0000
++++ b/config/delegation.tactical-studio.json	2026-11-14 16:43:58.695669177 +0000
+@@ -1,11 +1,11 @@
+ {
+- "status": "granted",
++ "status": "draft",
+  "revoked": false,
+  "what": "Delegation of the owner of E2A Basketball to the Tactical Studio scheduled task to schedule, WITHOUT per-video review, the tactical videos defined in scope. Only valid when status is 'granted', it is on main, and its sha256 equals the one pinned in the scheduled task's prompt.",
+- "granted_by": "owner (E2A), decision card 2026-11-13T00:07:36Z: 'Sí, pero desde el 14 nov'",
+- "granted_at": "2026-11-13T11:07:36+11:00",
+- "valid_from": "2026-11-14T00:00:00+11:00",
+- "valid_until": "2026-11-21T00:00:00+11:00",
++ "granted_by": null,
++ "granted_at": null,
++ "valid_from": "<owner sets>",
++ "valid_until": "<= valid_from + 7 days>",
+  "scope": {
+   "brand": "7681319",
+   "accounts": {
+@@ -18,10 +18,12 @@
+    "tiktok",
+    "youtube"
+   ],
+-  "max_videos_per_day": 2,
++  "max_videos_per_day": 4,
+   "slots": [
+-   "10:00",
+-   "13:00"
++   "08:30",
++   "12:00",
++   "15:30",
++   "19:00"
+   ],
+   "timezone": "Australia/Sydney",
+   "format": "tactical basketball",
+@@ -41,19 +43,20 @@
+    "bounds"
+   ],
+   "budget_per_day": {
+-   "voice_takes": 2,
+-   "voice_credits": 1200,
+-   "final_renders": 4,
+-   "create_calls": 4
++   "voice_takes": 4,
++   "voice_credits": 2100,
++   "scribe_credits": 700,
++   "final_renders": 6,
++   "create_calls": 6
+   }
+  },
+  "never": [
+   "updateScheduledPost",
+   "delete or move posts",
+   "Trial Reels",
+-  "posts outside the two slots",
++  "posts outside the four slots",
+   "other brands or accounts",
+   "content that is not a Tactical3DV2 episode"
+  ],
+  "revocation": "Immediate and hard: disable or delete the scheduled task 'E2A — TACTICAL STUDIO' on claude.ai. Also: any edit of this file on main (e.g. revoked=true) changes its sha256 and stops publishing at the next check. The task's cron only fires inside these dates."
+-}
++}
+\ No newline at end of file
+diff -ruN a/config/routine.tactical-studio.json b/config/routine.tactical-studio.json
+--- a/config/routine.tactical-studio.json	2026-11-14 16:43:58.676289036 +0000
++++ b/config/routine.tactical-studio.json	2026-11-14 16:44:16.663052474 +0000
+@@ -1,10 +1,10 @@
+ {
+- "status": "PILOT 2026-11-14..20 authorised by the owner 2026-11-13T00:07Z. Tasks created from this file.",
++ "status": "V4 PROPOSAL: 4 videos/day. Dates set by the owner at activation.",
+  "tasks": [
+   {
+    "name": "E2A — TACTICAL STUDIO",
+-   "cron": "CRON_TZ=Australia/Sydney 0 17 13-19 11 *",
+-   "cron_note": "17:00 Sydney the day BEFORE each post date: posts 14–20 Nov → runs 13–19 Nov. Stops by itself; an extension needs the owner.",
++   "cron": "CRON_TZ=Australia/Sydney 0 17 <dd-dd> <mm> *",
++   "cron_note": "17:00 Sydney the day before; 4 renders ≈ 4×1960 s ≈ 2 h 11 min of render per run (measured max).",
+    "repositories": [
+     {
+      "repo": "e2abasketball-droid/e2a-tiktok-media",
+@@ -13,7 +13,7 @@
+    ],
+    "prompt_file": "produccion/tactical/PROMPT-DIARIO.md",
+    "prompt_pins": {
+-    "DELEGATION_SHA256": "<sha256 of config/delegation.tactical-studio.json on main, status granted>"
++    "DELEGATION_SHA256": "<sha256 of the NEW config/delegation.tactical-studio.json on main (V4 grant, status granted)>"
+    },
+    "connectors": {
+     "Metricool-Social-Media-Management": {
+@@ -43,8 +43,8 @@
+   },
+   {
+    "name": "E2A — TACTICAL CHECK",
+-   "cron": "CRON_TZ=Australia/Sydney 30 8 14-20 11 *",
+-   "cron_note": "08:30 Sydney on each post date of the delegation window. Read-only.",
++   "cron": "CRON_TZ=Australia/Sydney 30 7 <dd-dd> <mm> *",
++   "cron_note": "07:30 Sydney: one hour before the first V4 slot (08:30). Read-only.",
+    "repositories": [
+     {
+      "repo": "e2abasketball-droid/e2a-tiktok-media",
+@@ -81,4 +81,4 @@
+  "allowed_write_tool": "createScheduledPost",
+  "allowed_write_tool_only_in": "E2A — TACTICAL STUDIO, step 'publisher' (tools/tactical_publisher.py prepare → one call → record)",
+  "revocation": "Immediate: disable or delete 'E2A — TACTICAL STUDIO' on claude.ai (Scheduled tasks). The routines cannot re-enable or extend themselves: they have no Claude_Code_Remote connector. Already scheduled posts stay in Metricool; the owner deletes them there if wanted."
+-}
++}
+\ No newline at end of file
+diff -ruN a/config/tactical_studio.json b/config/tactical_studio.json
+--- a/config/tactical_studio.json	2026-11-14 16:43:58.676266679 +0000
++++ b/config/tactical_studio.json	2026-11-14 16:43:58.695449904 +0000
+@@ -1,18 +1,32 @@
+ {
+- "version": "0.3.0",
++ "version": "0.4.0",
+  "status": "PILOT: direct_delegated, posts 2026-11-14..20 Sydney. Publishing still requires the granted delegation on main whose sha is pinned in the scheduled task.",
+  "timezone": "Australia/Sydney",
+  "content_id": "E2A-TACTICAL-{date}-V{n:02d}",
+  "slots": {
+   "1": {
+-   "time": "10:00",
+-   "label": "TACTICAL VIDEO A",
++   "time": "08:30",
++   "label": "V01 OFFENSIVE EXECUTION",
++   "format": "execution",
+    "brief": "offensive action, visually strong"
+   },
+   "2": {
+-   "time": "13:00",
+-   "label": "TACTICAL VIDEO B",
++   "time": "12:00",
++   "label": "V02 DEFENSIVE READ",
++   "format": "defensive_read",
+    "brief": "a different read: defence, counter or another action"
++  },
++  "3": {
++   "time": "15:30",
++   "label": "V03 COUNTER",
++   "format": "counter",
++   "brief": "the defence takes away the first option; the offence counters it"
++  },
++  "4": {
++   "time": "19:00",
++   "label": "V04 WHAT WOULD YOU DO?",
++   "format": "challenge",
++   "brief": "freeze on the decision, ask, reveal both outcomes"
+   }
+  },
+  "networks": [
+@@ -48,12 +62,13 @@
+  },
+  "budget_per_day": {
+   "status": "ENFORCED in code per post date: voice-permit charges voice_takes/voice_credits, render charges final_renders, publisher prepare charges create_calls; values PROPOSED, owner approval pending",
+-  "voice_takes": 2,
+-  "voice_credits": 1200,
+-  "final_renders": 4,
++  "voice_takes": 4,
++  "voice_credits": 2100,
++  "final_renders": 6,
+   "music_generations": 0,
+-  "publications": 6,
+-  "create_calls": 4
++  "publications": 12,
++  "create_calls": 6,
++  "scribe_credits": 700
+  },
+  "retries_per_phase": 1,
+  "ai_labels": {
+@@ -110,4 +125,4 @@
+   "lease_ttl_min": 240,
+   "branch_note": "owner accepted name 2026-11-12; protection (no force-push, no deletion) must be set by the owner in GitHub rulesets"
+  }
+-}
++}
+\ No newline at end of file
