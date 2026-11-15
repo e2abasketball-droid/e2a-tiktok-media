@@ -147,7 +147,7 @@ type W = {text: string; start: number; end: number};
 const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
 
 /** premium subtitles: max two short lines, words appear exactly when spoken, key words in gold */
-export const PremiumSubtitles: React.FC<{words: W[]; t: number; keys: string[]; y?: number; size?: number; hideRanges?: [number, number][]; sizes?: number[]}> = ({words, t, keys, y = 1290, size = 56, hideRanges = [], sizes}) => {
+export const PremiumSubtitles: React.FC<{words: W[]; t: number; keys: string[]; y?: number; size?: number; hideRanges?: [number, number][]; sizes?: number[]; block?: boolean}> = ({words, t, keys, y = 1290, size = 56, hideRanges = [], sizes, block = false}) => {
   const groups = React.useMemo(() => {
     // explicit burst sizes (2026-11-15, Ghost Screen brief: 3-7 words per burst) when the episode gives them
     if (sizes && sizes.reduce((a, b) => a + b, 0) === words.length) {
@@ -191,8 +191,10 @@ export const PremiumSubtitles: React.FC<{words: W[]; t: number; keys: string[]; 
   return (
     <div style={{position: 'absolute', left: 90, right: 170, top: y, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: `4px ${size * 0.26}px`, opacity: outA}}>
       {g.map((w, i) => {
-        const on = t >= w.start - 0.03;
-        const a = eo((t - w.start + 0.03) / 0.12);
+        // block mode (Ghost V2 brief: no word-by-word reveal): the whole sense unit appears at once
+        const t0 = block ? g[0].start : w.start;
+        const on = t >= t0 - 0.03;
+        const a = eo((t - t0 + 0.03) / 0.12);
         const k = isKey(i);
         return (
           <span

@@ -1,0 +1,868 @@
+{
+ "id": "ghost-screen-v2",
+ "title": "GHOST SCREEN V2: who fakes, who reacts, what opens",
+ "fps": 30,
+ "voiceRaw": "tactical/ghost2/voice-raw.mp3",
+ "wordsRaw": "ghost-screen-v2.words-raw.json",
+ "voice": "tactical/ghost2/voice.wav",
+ "voiceMix": "tactical/ghost2/voice.mix.wav",
+ "preroll": 0.1,
+ "tail": 1.45,
+ "gaps": [
+  {
+   "after": "hit the pop.",
+   "sec": 1.3,
+   "why": "the release and the late close-out, then the cut back to the same start"
+  },
+  {
+   "after": "STAYS WITH HIM.",
+   "sec": 0.74,
+   "why": "X2 rides the pop; the eye moves to X1 before he jumps"
+  },
+  {
+   "after": "and drive.",
+   "sec": 0.44,
+   "why": "the layup and the net before the question"
+  }
+ ],
+ "plays": {
+  "A": "ghost2-a-three",
+  "B": "ghost2-b-reject"
+ },
+ "pinV2": true,
+ "shots": [
+  {
+   "id": "hook",
+   "name": "Hook - the screener comes in, X2 steps to the ball, pop, pass, three (one shot)",
+   "at": 0,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     1.35
+    ],
+    [
+     "@end",
+     4.75
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.5,
+       8.2,
+       0.4
+      ],
+      "dist": 10.8,
+      "pitch": 58,
+      "yaw": 62,
+      "fov": 44
+     }
+    },
+    {
+     "at": 1.25,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.5,
+       8.2,
+       0.4
+      ],
+      "dist": 10.8,
+      "pitch": 58,
+      "yaw": 62,
+      "fov": 44
+     }
+    },
+    {
+     "at": 2.6,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.6,
+       7.6,
+       0.8
+      ],
+      "dist": 9.0,
+      "pitch": 56,
+      "yaw": 66,
+      "fov": 44
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.6,
+       7.6,
+       0.8
+      ],
+      "dist": 9.0,
+      "pitch": 56,
+      "yaw": 66,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O2",
+     "color": "#C9A24D",
+     "size": 0.8,
+     "from": 0,
+     "to": 0.45
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "THIS SCREEN",
+      "NEVER HAPPENS"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0,
+     "to": 2.35,
+     "y": 252,
+     "size": 100
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0.05,
+     "name": "bounce",
+     "volume": 0.1
+    },
+    {
+     "at": 1.2,
+     "name": "squeak",
+     "volume": 0.09
+    },
+    {
+     "at": 2.72,
+     "name": "bounce",
+     "volume": 0.08
+    }
+   ]
+  },
+  {
+   "id": "rim",
+   "name": "The ball to the net",
+   "at": 3.4,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     4.75
+    ],
+    [
+     "@end",
+     6.85
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.6,
+       3.2,
+       2.2
+      ],
+      "dist": 10.6,
+      "pitch": 58,
+      "yaw": 54,
+      "fov": 44
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.6,
+       3.2,
+       2.2
+      ],
+      "dist": 9.8,
+      "pitch": 58,
+      "yaw": 54,
+      "fov": 44
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [],
+   "screen": [],
+   "sfx": [
+    {
+     "at": 0.8,
+     "name": "swish",
+     "volume": 0.16
+    }
+   ]
+  },
+  {
+   "id": "name",
+   "name": "Name it - closer, same side: plant foot and gap to X1, 0.8x on the turn",
+   "at": 5.5,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     1.3
+    ],
+    [
+     0.6,
+     1.9
+    ],
+    [
+     1.9125,
+     2.95
+    ],
+    [
+     "@end",
+     5.54
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.7,
+       8.6,
+       0.3
+      ],
+      "dist": 7.8,
+      "pitch": 52,
+      "yaw": 62,
+      "fov": 44
+     }
+    },
+    {
+     "at": 1.9,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.7,
+       8.6,
+       0.3
+      ],
+      "dist": 7.8,
+      "pitch": 52,
+      "yaw": 62,
+      "fov": 44
+     }
+    },
+    {
+     "at": 3.0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.0,
+       7.7,
+       0.5
+      ],
+      "dist": 7.8,
+      "pitch": 50,
+      "yaw": 66,
+      "fov": 44
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.0,
+       7.7,
+       0.5
+      ],
+      "dist": 7.8,
+      "pitch": 50,
+      "yaw": 66,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O2",
+     "color": "#C9A24D",
+     "size": 0.7,
+     "from": 1.1,
+     "to": 2.3
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "GHOST SCREEN"
+     ],
+     "gold": [
+      0
+     ],
+     "from": 0,
+     "to": "Sell-0.1",
+     "y": 252,
+     "size": 100
+    },
+    {
+     "type": "title",
+     "lines": [
+      "SELL THE BLOCK"
+     ],
+     "gold": [
+      0
+     ],
+     "from": "Sell-0.1",
+     "to": "pop-0.1",
+     "y": 252,
+     "size": 88
+    },
+    {
+     "type": "title",
+     "lines": [
+      "POP BEFORE CONTACT"
+     ],
+     "gold": [
+      0
+     ],
+     "from": "pop-0.1",
+     "to": "@end",
+     "y": 252,
+     "size": 80
+    }
+   ],
+   "sfx": [
+    {
+     "at": 1.43,
+     "name": "squeak",
+     "volume": 0.08
+    }
+   ]
+  },
+  {
+   "id": "read1",
+   "name": "Read 1 - X2 steps to the ball (short arrow), hit the pop",
+   "at": 10.0,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     1.07
+    ],
+    [
+     "@end",
+     5.37
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.6,
+       8.0,
+       0.0
+      ],
+      "dist": 13.0,
+      "pitch": 26,
+      "yaw": 62,
+      "fov": 42
+     }
+    },
+    {
+     "at": 2.6,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.6,
+       8.0,
+       0.0
+      ],
+      "dist": 13.0,
+      "pitch": 26,
+      "yaw": 62,
+      "fov": 42
+     }
+    },
+    {
+     "at": 3.4,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.6,
+       7.8,
+       0.0
+      ],
+      "dist": 13.0,
+      "pitch": 26,
+      "yaw": 62,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "route",
+     "player": "X2",
+     "t0": 2.45,
+     "t1": 3.17,
+     "trail": true,
+     "color": "#E5483A",
+     "from": 1.35,
+     "to": 2.38
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "HIT THE POP"
+     ],
+     "gold": [
+      0
+     ],
+     "from": 2.1,
+     "to": "@end",
+     "y": 252,
+     "size": 100
+    },
+    {
+     "type": "pin",
+     "player": "X1",
+     "text": "LATE",
+     "tone": "red",
+     "from": 3.35,
+     "to": "@end",
+     "size": 40
+    }
+   ],
+   "sfx": [
+    {
+     "at": 3.0,
+     "name": "bounce",
+     "volume": 0.07
+    }
+   ]
+  },
+  {
+   "id": "read2",
+   "name": "Read 2 - same frame, same start: X2 stays, X1 jumps, reject",
+   "at": 14.3,
+   "play": "B",
+   "remap": [
+    [
+     0,
+     1.07
+    ],
+    [
+     "@end",
+     8.67
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.6,
+       8.0,
+       0.0
+      ],
+      "dist": 13.0,
+      "pitch": 26,
+      "yaw": 62,
+      "fov": 42
+     }
+    },
+    {
+     "at": 5.6,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.6,
+       8.0,
+       0.0
+      ],
+      "dist": 13.0,
+      "pitch": 26,
+      "yaw": 62,
+      "fov": 42
+     }
+    },
+    {
+     "at": 7.0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O1",
+        "X1"
+       ],
+       "z": 0.0,
+       "window": 0.9
+      },
+      "dist": 12.5,
+      "pitch": 26,
+      "yaw": 62,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O1",
+        "X1"
+       ],
+       "z": 0.0,
+       "window": 0.9
+      },
+      "dist": 12.5,
+      "pitch": 26,
+      "yaw": 62,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "color": "#E5483A",
+     "from": 1.65,
+     "to": 3.3
+    },
+    {
+     "type": "route",
+     "player": "X1",
+     "t0": 6.4,
+     "t1": 7.12,
+     "trail": true,
+     "color": "#E5483A",
+     "from": 5.3,
+     "to": 6.9
+    },
+    {
+     "type": "route",
+     "player": "O1",
+     "t0": 8.1,
+     "t1": 9.2,
+     "trail": true,
+     "color": "#C9A24D",
+     "from": 7.05,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "SAME FAKE"
+     ],
+     "gold": [
+      0
+     ],
+     "from": 0.1,
+     "to": 1.5,
+     "y": 252,
+     "size": 100
+    },
+    {
+     "type": "title",
+     "lines": [
+      "REJECT",
+      "THE SCREEN"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 7.05,
+     "to": "@end",
+     "y": 252,
+     "size": 100
+    }
+   ],
+   "sfx": [
+    {
+     "at": 7.05,
+     "name": "bounce",
+     "volume": 0.09
+    }
+   ]
+  },
+  {
+   "id": "layup",
+   "name": "Layup - lower, same direction: gather, layup, late help, net",
+   "at": 21.9,
+   "play": "B",
+   "remap": [
+    [
+     0,
+     8.67
+    ],
+    [
+     "@end",
+     10.62
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.9,
+       4.4,
+       1.2
+      ],
+      "dist": 9.6,
+      "pitch": 64,
+      "yaw": 62,
+      "fov": 46
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.4,
+       2.6,
+       1.6
+      ],
+      "dist": 8.6,
+      "pitch": 64,
+      "yaw": 62,
+      "fov": 46
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [],
+   "screen": [
+    {
+     "type": "pin",
+     "player": "X5",
+     "text": "HELP: LATE",
+     "tone": "red",
+     "from": 1.0,
+     "to": 1.75,
+     "size": 40,
+     "dy": -150
+    }
+   ],
+   "sfx": [
+    {
+     "at": 1.6,
+     "name": "swish",
+     "volume": 0.14
+    }
+   ]
+  },
+  {
+   "id": "cta",
+   "name": "CTA - back to play A at X2's step: who's got the shooter?",
+   "at": 23.85,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     2.2
+    ],
+    [
+     1.0,
+     2.7
+    ],
+    [
+     "@end",
+     2.86
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       8.3,
+       0.0
+      ],
+      "dist": 11.0,
+      "pitch": 26,
+      "yaw": 62,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       8.3,
+       0.0
+      ],
+      "dist": 10.4,
+      "pitch": 26,
+      "yaw": 62,
+      "fov": 42
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O2",
+     "color": "#C9A24D",
+     "from": 0.9,
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "X2",
+     "color": "#E5483A",
+     "from": 0.9,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "WHO'S GOT",
+      "THE SHOOTER?"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "Who's-0.15",
+     "to": "@end",
+     "y": 252,
+     "size": 104
+    },
+    {
+     "type": "logo",
+     "big": false,
+     "from": "@end-1.3",
+     "to": "@end"
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "loop",
+   "name": "Loop - the screener's approach into the first frame",
+   "at": 27.1,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.75
+    ],
+    [
+     "@end",
+     1.35
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.5,
+       8.2,
+       0.4
+      ],
+      "dist": 10.8,
+      "pitch": 58,
+      "yaw": 62,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": [],
+   "sfx": []
+  }
+ ],
+ "keywords": [
+  "ghost screen",
+  "BEFORE CONTACT",
+  "steps toward",
+  "hit the pop",
+  "STAYS WITH HIM",
+  "jumps",
+  "REJECT IT"
+ ],
+ "subtitleGroups": [
+  4,
+  5,
+  2,
+  4,
+  3,
+  4,
+  4,
+  4,
+  3,
+  2,
+  5,
+  3,
+  6,
+  4,
+  4,
+  5,
+  4
+ ],
+ "subtitleBlock": true,
+ "subtitleHide": [
+  [
+   0,
+   "HAPPENS.>+0.3"
+  ],
+  [
+   5.5,
+   10.0
+  ],
+  [
+   "Who's-0.15",
+   40
+  ]
+ ],
+ "subtitleY": 1330,
+ "gradeBottom": 0.38,
+ "autoSfx": false,
+ "ambience": {
+  "src": "sfx/arena.mp3",
+  "volume": 0.05
+ },
+ "music": {
+  "src": "tactical/ghost2/music-mix.mp3",
+  "volume": 1
+ }
+}

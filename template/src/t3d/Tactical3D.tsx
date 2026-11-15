@@ -48,7 +48,7 @@ export type Episode3 = {
   keywords?: string[];
   subtitleHide?: [Anchor, Anchor][];
   /** optional explicit subtitle bursts: number of words per burst, in order (must add up to the word count) */
-  subtitleGroups?: number[]; subtitleY?: number;
+  subtitleGroups?: number[]; subtitleY?: number; subtitleBlock?: boolean; subtitleYAt?: [Anchor, Anchor, number][]; gradeBottom?: number;
   /** sound by event (2026-11-13): bounces, catches, braking squeaks and the net, placed on their visible
    *  contact through each shot's remap (silent in freezes, rewinds and slow motion below 0.3x) */
   autoSfx?: boolean | {bounce?: number; catch?: number; squeak?: number; swish?: number; land?: number; players?: string[]};
@@ -220,7 +220,7 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
       </AbsoluteFill>
       {/* cinematic grade: vignette + top/bottom falloff that also protects text */}
       <AbsoluteFill style={{background: 'radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 55%, rgba(3,8,20,0.55) 100%)'}} />
-      <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(5,10,21,0.55) 0%, rgba(5,10,21,0) 22%, rgba(5,10,21,0) 62%, rgba(5,10,21,0.6) 100%)'}} />
+      <AbsoluteFill style={{background: `linear-gradient(180deg, rgba(5,10,21,0.55) 0%, rgba(5,10,21,0) 22%, rgba(5,10,21,0) 62%, rgba(5,10,21,${ep.gradeBottom ?? 0.6}) 100%)`}} />
       {scr.map((s, i) => {
         switch (s.type) {
           case 'title':
@@ -257,7 +257,7 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
             return null;
         }
       })}
-      <PremiumSubtitles words={ep.words} t={t} keys={ep.keywords ?? []} hideRanges={subHide} sizes={ep.subtitleGroups} y={ep.subtitleY ?? 1290} />
+      <PremiumSubtitles words={ep.words} t={t} keys={ep.keywords ?? []} hideRanges={subHide} sizes={ep.subtitleGroups} block={ep.subtitleBlock} y={(ep.subtitleYAt ?? []).map(([a, b, yy]) => [T(a), T(b), yy] as [number, number, number]).find(([a, b]) => t >= a && t < b)?.[2] ?? ep.subtitleY ?? 1290} />
       {qcProbe && <BoundsProbe frame={frame} />}
       {!qcProbe && <Audio src={staticFile(ep.voiceMix ?? ep.voice)} />}
       {!qcProbe && ep.music?.src && <Audio src={staticFile(ep.music.src)} volume={ep.music.volume ?? 1} />}
