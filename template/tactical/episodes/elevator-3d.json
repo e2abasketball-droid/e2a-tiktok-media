@@ -1,0 +1,1317 @@
+{
+ "id": "elevator-3d",
+ "title": "The Elevator Screen: Two Ways to Punish the Defense (3D)",
+ "fps": 30,
+ "voiceRaw": "tactical/elevator/voice-raw.mp3",
+ "wordsRaw": "elevator-3d.words-raw.json",
+ "voice": "tactical/elevator3d/voice.wav",
+ "voiceMix": "tactical/elevator3d/voice.mix.wav",
+ "preroll": 0.15,
+ "tail": 1.4,
+ "gaps": [
+  {
+   "after": "an entire defense.",
+   "sec": 0.85,
+   "why": "hook -> rewind: dramatic beat on the freeze (TRAPPED.)"
+  },
+  {
+   "after": "This is the elevator screen.",
+   "sec": 0.55,
+   "why": "title lands before the explanation"
+  },
+  {
+   "after": "close the gap like elevator doors.",
+   "sec": 0.6,
+   "why": "block change: setup -> Case A"
+  },
+  {
+   "after": "Watch what happens.",
+   "sec": 0.55,
+   "why": "the play starts at real speed"
+  },
+  {
+   "after": "Catch. Shoot. Three points.",
+   "sec": 0.85,
+   "why": "the ball drops through the rim, OPEN THREE"
+  },
+  {
+   "after": "a layup opportunity instead.",
+   "sec": 0.75,
+   "why": "layup lands; block change -> comparison"
+  },
+  {
+   "after": "slip to the rim.",
+   "sec": 0.75,
+   "why": "side-by-side summary holds before the conclusion"
+  }
+ ],
+ "plays": {
+  "A": "elev3d-a-chase",
+  "B": "elev3d-b-switch"
+ },
+ "shots": [
+  {
+   "id": "hook",
+   "name": "Hook - two screens, one tiny gap, the doors close on the chaser: TRAPPED",
+   "at": 0,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.5
+    ],
+    [
+     "gap.>",
+     1.7
+    ],
+    [
+     "decision",
+     2.05
+    ],
+    [
+     "defense.>",
+     2.45
+    ],
+    [
+     "@end",
+     2.5
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       6.4,
+       0.9
+      ],
+      "dist": 9.0,
+      "pitch": 60,
+      "yaw": 0,
+      "fov": 44
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       6.6,
+       0.9
+      ],
+      "dist": 10.0,
+      "pitch": 60,
+      "yaw": 0,
+      "fov": 44
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O4",
+     "from": "Two",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "O5",
+     "from": "Two",
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 0.6,
+     "t1": 2.4,
+     "trail": true,
+     "from": "One tiny",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "X2",
+     "color": "#E5483A",
+     "from": "defense.>-0.3",
+     "to": "@end",
+     "pulse": true
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "TWO SCREENS."
+     ],
+     "gold": [],
+     "from": 0.05,
+     "to": "One tiny-0.05",
+     "y": 252,
+     "size": 118
+    },
+    {
+     "type": "title",
+     "lines": [
+      "ONE TINY GAP."
+     ],
+     "gold": [
+      0
+     ],
+     "from": "One tiny",
+     "to": "And one-0.05",
+     "y": 252,
+     "size": 118
+    },
+    {
+     "type": "title",
+     "lines": [
+      "ONE DECISION."
+     ],
+     "gold": [
+      0
+     ],
+     "from": "And one",
+     "to": "defense.>-0.35",
+     "y": 252,
+     "size": 118
+    },
+    {
+     "type": "freeze",
+     "label": "FREEZE",
+     "from": "defense.>-0.3",
+     "to": "@end"
+    },
+    {
+     "type": "title",
+     "lines": [
+      "TRAPPED."
+     ],
+     "gold": [],
+     "from": "defense.>-0.3",
+     "to": "@end",
+     "y": 252,
+     "size": 140
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.12
+    },
+    {
+     "at": "One tiny",
+     "name": "tick",
+     "volume": 0.15
+    },
+    {
+     "at": "defense.>-0.3",
+     "name": "impact",
+     "volume": 0.1
+    }
+   ]
+  },
+  {
+   "id": "reveal",
+   "name": "Reveal - the elevator screen",
+   "at": "This is the elevator-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "@end",
+     0.0
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       1.5,
+       7.6,
+       0
+      ],
+      "dist": 13.5,
+      "pitch": 62,
+      "yaw": 0,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       1.3,
+       8.0,
+       0
+      ],
+      "dist": 13.5,
+      "pitch": 60,
+      "yaw": 0,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O4",
+     "from": "elevator",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "O5",
+     "from": "elevator",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "THE ELEVATOR SCREEN"
+     ],
+     "gold": [
+      0
+     ],
+     "from": "elevator",
+     "to": "@end",
+     "y": 252,
+     "size": 100,
+     "sub": "Two ways to punish the defense"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "reverse_cymbal",
+     "volume": 0.12
+    }
+   ]
+  },
+  {
+   "id": "setup",
+   "name": "Setup - side by side, the narrow gap, the cut, the doors close",
+   "at": "Here's how-0.1",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "cuts straight",
+     0.7
+    ],
+    [
+     "through,>",
+     1.95
+    ],
+    [
+     "close the gap",
+     1.95
+    ],
+    [
+     "doors.>",
+     2.35
+    ],
+    [
+     "@end",
+     2.4
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       1.3,
+       8.0,
+       0
+      ],
+      "dist": 13.5,
+      "pitch": 60,
+      "yaw": 0,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "screen",
+     "player": "O4",
+     "n": 1,
+     "facing": -1.5708,
+     "from": "side by side",
+     "to": "@end"
+    },
+    {
+     "type": "screen",
+     "player": "O5",
+     "n": 2,
+     "facing": -1.5708,
+     "from": "side by side",
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 0.6,
+     "t1": 2.4,
+     "draw": 1.0,
+     "from": "cuts straight",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "O2",
+     "from": "The shooter cuts",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "TWO SCREENERS",
+      "SIDE BY SIDE"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "Two players",
+     "to": "narrow-0.05",
+     "y": 252,
+     "size": 96
+    },
+    {
+     "type": "title",
+     "lines": [
+      "A NARROW GAP"
+     ],
+     "gold": [
+      0
+     ],
+     "from": "narrow",
+     "to": "The shooter cuts-0.05",
+     "y": 252,
+     "size": 100
+    },
+    {
+     "type": "title",
+     "lines": [
+      "THE SHOOTER",
+      "CUTS THROUGH"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "The shooter cuts",
+     "to": "close the gap-0.05",
+     "y": 252,
+     "size": 96
+    },
+    {
+     "type": "title",
+     "lines": [
+      "THE DOORS CLOSE"
+     ],
+     "gold": [
+      0
+     ],
+     "from": "close the gap",
+     "to": "@end",
+     "y": 252,
+     "size": 100
+    }
+   ],
+   "sfx": [
+    {
+     "at": "close the gap",
+     "name": "tick",
+     "volume": 0.17
+    }
+   ]
+  },
+  {
+   "id": "caseA",
+   "name": "Case A - he chases: caught behind the screens, pass on time, catch, shoot, three",
+   "at": "First scenario-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.45
+    ],
+    [
+     "Watch",
+     0.6
+    ],
+    [
+     "escapes",
+     1.55
+    ],
+    [
+     "middle,>",
+     1.9
+    ],
+    [
+     "caught",
+     2.15
+    ],
+    [
+     "behind the screens,>",
+     2.35,
+     "out"
+    ],
+    [
+     "delivers",
+     2.35
+    ],
+    [
+     "time.>",
+     2.6
+    ],
+    [
+     "Catch",
+     2.65
+    ],
+    [
+     "Shoot",
+     3.05
+    ],
+    [
+     "Three points",
+     3.6
+    ],
+    [
+     "points.>",
+     4.15
+    ],
+    [
+     "@end",
+     4.6
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       1.3,
+       8.0,
+       0
+      ],
+      "dist": 13.5,
+      "pitch": 60,
+      "yaw": 0,
+      "fov": 42
+     }
+    },
+    {
+     "at": "time.>-0.2",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       1.3,
+       8.0,
+       0
+      ],
+      "dist": 13.5,
+      "pitch": 60,
+      "yaw": 0,
+      "fov": 42
+     }
+    },
+    {
+     "at": "Shoot",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.3,
+       8.4,
+       1.2
+      ],
+      "dist": 6.8,
+      "pitch": 60,
+      "yaw": -5,
+      "fov": 46
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.3,
+       8.4,
+       1.3
+      ],
+      "dist": 6.2,
+      "pitch": 62,
+      "yaw": -5,
+      "fov": 46
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "color": "#E5483A",
+     "from": "follows",
+     "to": "delivers"
+    },
+    {
+     "type": "route",
+     "player": "X2",
+     "t0": 0.6,
+     "t1": 2.4,
+     "trail": true,
+     "width": 0.14,
+     "color": "#E5483A",
+     "from": "follows",
+     "to": "delivers"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 0.6,
+     "t1": 2.4,
+     "trail": true,
+     "from": "escapes",
+     "to": "@end"
+    },
+    {
+     "type": "passLane",
+     "src": "O1",
+     "dst": "O2",
+     "from": "delivers",
+     "to": "time.>"
+    },
+    {
+     "type": "ring",
+     "player": "O2",
+     "from": "Catch",
+     "to": "@end",
+     "pulse": true
+    },
+    {
+     "type": "separation",
+     "a": "O2",
+     "b": "X2",
+     "from": "Shoot",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "CASE A: HE CHASES"
+     ],
+     "gold": [],
+     "from": "First scenario",
+     "to": "caught-0.05",
+     "y": 252,
+     "size": 96
+    },
+    {
+     "type": "title",
+     "lines": [
+      "CAUGHT BEHIND",
+      "THE SCREENS"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "caught",
+     "to": "delivers-0.05",
+     "y": 252,
+     "size": 96
+    },
+    {
+     "type": "freeze",
+     "label": "FREEZE",
+     "from": "behind the screens,>-0.25",
+     "to": "delivers-0.05"
+    },
+    {
+     "type": "stamp",
+     "text": "RIGHT ON TIME",
+     "from": "delivers",
+     "to": "Catch-0.1",
+     "y": 300
+    },
+    {
+     "type": "stamp",
+     "text": "OPEN THREE",
+     "badge": "+3",
+     "from": "points.>-0.2",
+     "to": "@end",
+     "y": 330
+    }
+   ],
+   "sfx": [
+    {
+     "at": "caught",
+     "name": "whip",
+     "volume": 0.1
+    },
+    {
+     "at": "points.>-0.25",
+     "name": "swish",
+     "volume": 0.16
+    }
+   ]
+  },
+  {
+   "id": "caseB",
+   "name": "Case B - the early switch: the screener slips, one quick pass, layup",
+   "at": "But what if-0.15",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     0.3
+    ],
+    [
+     "switches",
+     0.95
+    ],
+    [
+     "early?>",
+     1.15
+    ],
+    [
+     "reads",
+     1.3
+    ],
+    [
+     "switch.>",
+     1.4
+    ],
+    [
+     "jumps",
+     1.45
+    ],
+    [
+     "perimeter,>",
+     1.7
+    ],
+    [
+     "slips",
+     1.8
+    ],
+    [
+     "lane.>",
+     1.95
+    ],
+    [
+     "One quick",
+     2.0
+    ],
+    [
+     "quick pass,>",
+     2.45
+    ],
+    [
+     "layup",
+     2.75
+    ],
+    [
+     "instead.>",
+     3.05
+    ],
+    [
+     "@end",
+     3.9
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       1.5,
+       5.6,
+       0
+      ],
+      "dist": 14.0,
+      "pitch": 60,
+      "yaw": -10,
+      "fov": 42
+     }
+    },
+    {
+     "at": "quick pass,>-0.2",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       1.5,
+       5.6,
+       0
+      ],
+      "dist": 14.0,
+      "pitch": 60,
+      "yaw": -10,
+      "fov": 42
+     }
+    },
+    {
+     "at": "instead.>-0.3",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.4,
+       2.6,
+       1.2
+      ],
+      "dist": 6.8,
+      "pitch": 64,
+      "yaw": 15,
+      "fov": 46
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.4,
+       2.4,
+       1.4
+      ],
+      "dist": 6.2,
+      "pitch": 66,
+      "yaw": 15,
+      "fov": 46
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X5",
+     "color": "#E5483A",
+     "from": "switches",
+     "to": "One quick"
+    },
+    {
+     "type": "route",
+     "player": "X5",
+     "t0": 1.0,
+     "t1": 2.35,
+     "trail": true,
+     "width": 0.14,
+     "color": "#E5483A",
+     "from": "jumps",
+     "to": "One quick"
+    },
+    {
+     "type": "route",
+     "player": "O5",
+     "t0": 1.3,
+     "t1": 2.5,
+     "trail": true,
+     "from": "slips",
+     "to": "@end"
+    },
+    {
+     "type": "passLane",
+     "src": "O1",
+     "dst": "O5",
+     "from": "One quick",
+     "to": "quick pass,>"
+    },
+    {
+     "type": "ring",
+     "player": "O5",
+     "from": "layup",
+     "to": "@end",
+     "pulse": true
+    }
+   ],
+   "screen": [
+    {
+     "type": "rewind",
+     "from": 0,
+     "to": 0.35
+    },
+    {
+     "type": "title",
+     "lines": [
+      "WHAT IF",
+      "THEY SWITCH?"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "switches",
+     "to": "slips-0.05",
+     "y": 252,
+     "size": 100
+    },
+    {
+     "type": "title",
+     "lines": [
+      "THE SCREENER SLIPS"
+     ],
+     "gold": [
+      0
+     ],
+     "from": "slips",
+     "to": "One quick-0.05",
+     "y": 252,
+     "size": 96
+    },
+    {
+     "type": "stamp",
+     "text": "ONE QUICK PASS",
+     "from": "One quick",
+     "to": "layup-0.1",
+     "y": 300
+    },
+    {
+     "type": "stamp",
+     "text": "LAYUP",
+     "badge": "+2",
+     "from": "instead.>-0.2",
+     "to": "@end",
+     "y": 330
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whip",
+     "volume": 0.1
+    },
+    {
+     "at": "instead.>-0.25",
+     "name": "swish",
+     "volume": 0.16
+    }
+   ]
+  },
+  {
+   "id": "cmpA",
+   "name": "Compare A - chase the shooter: open three",
+   "at": "That's what-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.6
+    ],
+    [
+     "Chase the",
+     1.4
+    ],
+    [
+     "@end",
+     4.2
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       1.3,
+       8.0,
+       0
+      ],
+      "dist": 13.5,
+      "pitch": 60,
+      "yaw": 0,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "color": "#E5483A",
+     "from": "Chase the",
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 0.6,
+     "t1": 2.4,
+     "trail": true,
+     "from": "Chase the",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "SO DANGEROUS."
+     ],
+     "gold": [
+      0
+     ],
+     "from": 0.05,
+     "to": "Chase the-0.05",
+     "y": 252,
+     "size": 110
+    },
+    {
+     "type": "title",
+     "lines": [
+      "CHASE → OPEN THREE"
+     ],
+     "gold": [
+      0
+     ],
+     "from": "Chase the",
+     "to": "@end",
+     "y": 252,
+     "size": 92
+    }
+   ],
+   "sfx": [
+    {
+     "at": "Chase the",
+     "name": "whoosh",
+     "volume": 0.06
+    }
+   ]
+  },
+  {
+   "id": "cmpB",
+   "name": "Compare B - switch too aggressively: the slip",
+   "at": "Switch too-0.15",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     0.9
+    ],
+    [
+     "@end",
+     3.1
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       1.5,
+       5.6,
+       0
+      ],
+      "dist": 14.0,
+      "pitch": 60,
+      "yaw": -10,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X5",
+     "color": "#E5483A",
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O5",
+     "t0": 1.3,
+     "t1": 2.5,
+     "trail": true,
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "SWITCH → SLIP"
+     ],
+     "gold": [
+      0
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 252,
+     "size": 96
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.06
+    }
+   ]
+  },
+  {
+   "id": "read",
+   "name": "Read the defense - both answers on one picture",
+   "at": "The best-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.65
+    ],
+    [
+     "@end",
+     0.75
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       1.3,
+       8.0,
+       0
+      ],
+      "dist": 13.5,
+      "pitch": 60,
+      "yaw": 0,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       1.76,
+       8.3,
+       0
+      ],
+      "dist": 14.2,
+      "pitch": 62,
+      "yaw": 0,
+      "fov": 42
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "screen",
+     "player": "O4",
+     "n": 1,
+     "facing": -1.5708,
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "screen",
+     "player": "O5",
+     "n": 2,
+     "facing": -1.5708,
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 0.6,
+     "t1": 2.4,
+     "draw": 0.6,
+     "from": "offenses",
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O5",
+     "fromPlay": "B",
+     "t0": 1.3,
+     "t1": 2.5,
+     "draw": 0.6,
+     "color": "#FFFFFF",
+     "from": "offenses",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "THE BEST OFFENSES",
+      "DON'T JUST RUN IT."
+     ],
+     "gold": [],
+     "from": 0.05,
+     "to": "They read-0.05",
+     "y": 252,
+     "size": 92
+    },
+    {
+     "type": "title",
+     "lines": [
+      "THEY READ",
+      "THE DEFENSE."
+     ],
+     "gold": [
+      1
+     ],
+     "from": "They read",
+     "to": "@end",
+     "y": 252,
+     "size": 110
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "tick",
+     "volume": 0.17
+    }
+   ]
+  },
+  {
+   "id": "close",
+   "name": "CTA",
+   "at": "How would you-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.75
+    ],
+    [
+     "@end",
+     0.8
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       1.76,
+       8.3,
+       0
+      ],
+      "dist": 14.2,
+      "pitch": 62,
+      "yaw": 0,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       1.76,
+       8.3,
+       0
+      ],
+      "dist": 13.4,
+      "pitch": 60,
+      "yaw": 0,
+      "fov": 42
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [],
+   "screen": [
+    {
+     "type": "scrim",
+     "opacity": 0.55,
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "title",
+     "lines": [
+      "HOW WOULD",
+      "YOU GUARD IT?"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 600,
+     "size": 140
+    },
+    {
+     "type": "logo",
+     "big": true,
+     "from": 0.4,
+     "to": "@end"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "impact",
+     "volume": 0.08
+    }
+   ]
+  }
+ ],
+ "pinV2": true,
+ "musicDrop": "First scenario-0.2",
+ "musicPayoff": "That's what-0.3",
+ "keywords": [
+  "elevator",
+  "screen",
+  "gap",
+  "doors",
+  "chase",
+  "switch",
+  "slip",
+  "three",
+  "layup",
+  "read",
+  "defense"
+ ],
+ "subtitleHide": [
+  [
+   0,
+   "This is the elevator-0.2"
+  ],
+  [
+   "How would you-0.05",
+   99
+  ]
+ ],
+ "music": {
+  "src": "tactical/elevator3d/music-mix.mp3",
+  "volume": 1
+ }
+}
