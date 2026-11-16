@@ -1,0 +1,446 @@
+{
+ "id": "gortat-a-seal",
+ "title": "Gortat A: the drop big gets sealed, layup",
+ "duration": 7.380000000000001,
+ "concept": "gortat-screen",
+ "source": "original E2A play (generic high pick-and-roll vs drop + 'Gortat' seal screen on the drop big, generic coaching knowledge)",
+ "squareUp": true,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Ball handler: comes off the ball screen, attacks the lane"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Strong-side corner"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Weak-side wing"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Weak-side corner shooter"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Big: ball screen, then the Gortat screen on his own man"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the ball: chases over, stuck on the back hip",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "Strong-side corner",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Weak-side wing",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "Low man: stays home or helps",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "On the big: drop coverage",
+   "guards": "O5"
+  }
+ ],
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 4.98,
+   "dribble": true
+  },
+  {
+   "type": "layup",
+   "player": "O1",
+   "t0": 4.98,
+   "t1": 5.380000000000001,
+   "make": true
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "screen": 1.25,
+  "over": 1.9,
+  "drop": 2.2,
+  "seal": 3.91,
+  "drive": 4.11,
+  "finish": 4.98,
+  "make": 5.380000000000001,
+  "end": 7.380000000000001
+ },
+ "actions": {
+  "O5": [
+   {
+    "type": "screen",
+    "from": 1.25,
+    "to": 1.8,
+    "face": "X1"
+   },
+   {
+    "type": "screen",
+    "from": 3.91,
+    "to": 5.3100000000000005,
+    "face": "X5"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 8,
+    "face": "O1"
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 8,
+    "face": "O1"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 8,
+    "face": "O1"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 8,
+    "face": "O1"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 1.2,
+    "face": "O1"
+   }
+  ],
+  "O1": [
+   {
+    "type": "celebrate",
+    "from": 6.28,
+    "to": 7.380000000000001
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "O5",
+   "b": "X1",
+   "at": "screen",
+   "max": 1,
+   "says": "The big sets a high ball screen..."
+  },
+  {
+   "type": "far",
+   "a": "X5",
+   "b": "O1",
+   "at": "drop",
+   "min": 2.5,
+   "says": "...and his defender drops back to protect the rim."
+  },
+  {
+   "type": "near",
+   "a": "O5",
+   "b": "X5",
+   "at": "seal",
+   "max": 1,
+   "says": "The big turns and screens his own defender in the paint."
+  },
+  {
+   "type": "far",
+   "a": "X5",
+   "b": "O1",
+   "at": "finish",
+   "min": 1.5,
+   "says": "The big defender is sealed: the lane is open."
+  },
+  {
+   "type": "near_rim",
+   "player": "O1",
+   "at": "finish",
+   "max": 1.5,
+   "says": "Drive. Finish. Two points."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "screen",
+    "over",
+    "drop",
+    "seal",
+    "drive",
+    "finish",
+    "make"
+   ],
+   "says": "ball screen, drop, seal, layup"
+  }
+ ],
+ "notes": [
+  "High ball screen; X5 drops; X1 chases over and trails.",
+  "O5 rolls and screens X5 in the paint (stationary); X4 stays home; O1 layup."
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0,
+    -0.35,
+    9.6
+   ],
+   [
+    1.05,
+    -0.35,
+    9.6
+   ],
+   [
+    1.747,
+    0.9,
+    9.9
+   ],
+   [
+    2.664,
+    2,
+    8.3
+   ],
+   [
+    3.741,
+    1.8,
+    5.6
+   ],
+   [
+    4.348,
+    1.7,
+    3.9
+   ],
+   [
+    4.928,
+    0.95,
+    2.5
+   ],
+   [
+    7.380000000000001,
+    0.95,
+    2.5
+   ]
+  ],
+  "O2": [
+   [
+    0,
+    6.75,
+    1.3
+   ],
+   [
+    7.380000000000001,
+    6.75,
+    1.3
+   ]
+  ],
+  "O3": [
+   [
+    0,
+    -5,
+    7.2
+   ],
+   [
+    7.380000000000001,
+    -5,
+    7.2
+   ]
+  ],
+  "O4": [
+   [
+    0,
+    -6.8,
+    1.2
+   ],
+   [
+    7.380000000000001,
+    -6.8,
+    1.2
+   ]
+  ],
+  "O5": [
+   [
+    0,
+    1.4,
+    6.3
+   ],
+   [
+    0.2,
+    1.4,
+    6.3
+   ],
+   [
+    1.33,
+    0.35,
+    8.8
+   ],
+   [
+    2.45,
+    0.35,
+    8.8
+   ],
+   [
+    3.064,
+    0.75,
+    7
+   ],
+   [
+    3.807,
+    0.85,
+    4.55
+   ],
+   [
+    7.380000000000001,
+    0.85,
+    4.55
+   ]
+  ],
+  "X1": [
+   [
+    0,
+    -0.3,
+    8.75
+   ],
+   [
+    1.25,
+    -0.3,
+    8.75
+   ],
+   [
+    1.912,
+    -0.1,
+    9.75
+   ],
+   [
+    2.421,
+    1.4,
+    10.15
+   ],
+   [
+    3.45,
+    2.6,
+    8.4
+   ],
+   [
+    4.489,
+    2.3,
+    5.9
+   ],
+   [
+    5.135,
+    2.25,
+    4.1
+   ],
+   [
+    5.612,
+    1.95,
+    3
+   ],
+   [
+    7.380000000000001,
+    1.95,
+    3
+   ]
+  ],
+  "X2": [
+   [
+    0,
+    5.8,
+    2
+   ],
+   [
+    7.380000000000001,
+    5.8,
+    2
+   ]
+  ],
+  "X3": [
+   [
+    0,
+    -4.2,
+    6.5
+   ],
+   [
+    7.380000000000001,
+    -4.2,
+    6.5
+   ]
+  ],
+  "X4": [
+   [
+    0,
+    -4.6,
+    2.3
+   ],
+   [
+    2,
+    -4.6,
+    2.3
+   ],
+   [
+    2.556,
+    -5.2,
+    1.9
+   ],
+   [
+    7.380000000000001,
+    -5.2,
+    1.9
+   ]
+  ],
+  "X5": [
+   [
+    0,
+    0.95,
+    5.6
+   ],
+   [
+    1,
+    0.95,
+    5.6
+   ],
+   [
+    1.914,
+    0.12,
+    4.25
+   ],
+   [
+    7.380000000000001,
+    0.12,
+    4.25
+   ]
+  ]
+ },
+ "screens": []
+}
