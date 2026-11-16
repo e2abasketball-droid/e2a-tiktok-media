@@ -1,0 +1,386 @@
+[
+{
+"text": "Who",
+"type": "word",
+"start": 0.08,
+"end": 0.24
+},
+{
+"text": "got",
+"type": "word",
+"start": 0.32,
+"end": 0.48
+},
+{
+"text": "him",
+"type": "word",
+"start": 0.6,
+"end": 0.72
+},
+{
+"text": "THIS",
+"type": "word",
+"start": 0.8,
+"end": 1.04
+},
+{
+"text": "open?",
+"type": "word",
+"start": 1.12,
+"end": 1.56
+},
+{
+"text": "Watch",
+"type": "word",
+"start": 2.16,
+"end": 2.4
+},
+{
+"text": "the",
+"type": "word",
+"start": 2.48,
+"end": 2.6
+},
+{
+"text": "big",
+"type": "word",
+"start": 2.72,
+"end": 2.96
+},
+{
+"text": "after",
+"type": "word",
+"start": 3.04,
+"end": 3.28
+},
+{
+"text": "the",
+"type": "word",
+"start": 3.32,
+"end": 3.36
+},
+{
+"text": "pick.",
+"type": "word",
+"start": 3.44,
+"end": 3.96
+},
+{
+"text": "He",
+"type": "word",
+"start": 4.16,
+"end": 4.32
+},
+{
+"text": "screens",
+"type": "word",
+"start": 4.48,
+"end": 4.64
+},
+{
+"text": "for",
+"type": "word",
+"start": 4.72,
+"end": 4.76
+},
+{
+"text": "the",
+"type": "word",
+"start": 4.8,
+"end": 4.84
+},
+{
+"text": "guard.",
+"type": "word",
+"start": 4.88,
+"end": 5.52
+},
+{
+"text": "The",
+"type": "word",
+"start": 5.56,
+"end": 5.6
+},
+{
+"text": "corner",
+"type": "word",
+"start": 5.68,
+"end": 5.84
+},
+{
+"text": "defender",
+"type": "word",
+"start": 5.92,
+"end": 6.32
+},
+{
+"text": "steps",
+"type": "word",
+"start": 6.4,
+"end": 6.64
+},
+{
+"text": "in",
+"type": "word",
+"start": 6.72,
+"end": 6.8
+},
+{
+"text": "to",
+"type": "word",
+"start": 6.84,
+"end": 6.88
+},
+{
+"text": "help.",
+"type": "word",
+"start": 6.96,
+"end": 7.28
+},
+{
+"text": "The",
+"type": "word",
+"start": 7.68,
+"end": 7.76
+},
+{
+"text": "big",
+"type": "word",
+"start": 7.84,
+"end": 8.08
+},
+{
+"text": "TURNS",
+"type": "word",
+"start": 8.16,
+"end": 8.64
+},
+{
+"text": "and",
+"type": "word",
+"start": 8.72,
+"end": 8.8
+},
+{
+"text": "screens",
+"type": "word",
+"start": 8.96,
+"end": 9.44
+},
+{
+"text": "him.",
+"type": "word",
+"start": 9.56,
+"end": 9.88
+},
+{
+"text": "That's",
+"type": "word",
+"start": 10.08,
+"end": 10.4
+},
+{
+"text": "the",
+"type": "word",
+"start": 10.48,
+"end": 10.56
+},
+{
+"text": "Veer.",
+"type": "word",
+"start": 10.64,
+"end": 11.16
+},
+{
+"text": "Now",
+"type": "word",
+"start": 11.44,
+"end": 11.52
+},
+{
+"text": "watch",
+"type": "word",
+"start": 11.6,
+"end": 11.76
+},
+{
+"text": "what",
+"type": "word",
+"start": 11.84,
+"end": 11.92
+},
+{
+"text": "happens",
+"type": "word",
+"start": 12.0,
+"end": 12.24
+},
+{
+"text": "when",
+"type": "word",
+"start": 12.28,
+"end": 12.32
+},
+{
+"text": "he",
+"type": "word",
+"start": 12.4,
+"end": 12.48
+},
+{
+"text": "chases.",
+"type": "word",
+"start": 12.52,
+"end": 13.44
+},
+{
+"text": "Where's",
+"type": "word",
+"start": 13.52,
+"end": 13.68
+},
+{
+"text": "the",
+"type": "word",
+"start": 13.72,
+"end": 13.76
+},
+{
+"text": "pass",
+"type": "word",
+"start": 13.84,
+"end": 14.0
+},
+{
+"text": "going?",
+"type": "word",
+"start": 14.08,
+"end": 14.427
+},
+{
+"text": "He",
+"type": "word",
+"start": 15.253,
+"end": 15.28
+},
+{
+"text": "curls",
+"type": "word",
+"start": 15.4,
+"end": 15.56
+},
+{
+"text": "inside.",
+"type": "word",
+"start": 15.6,
+"end": 16.32
+},
+{
+"text": "The",
+"type": "word",
+"start": 16.36,
+"end": 16.4
+},
+{
+"text": "guard",
+"type": "word",
+"start": 16.48,
+"end": 16.72
+},
+{
+"text": "hits",
+"type": "word",
+"start": 16.8,
+"end": 16.88
+},
+{
+"text": "him",
+"type": "word",
+"start": 16.96,
+"end": 17.04
+},
+{
+"text": "in",
+"type": "word",
+"start": 17.12,
+"end": 17.2
+},
+{
+"text": "stride.",
+"type": "word",
+"start": 17.4,
+"end": 17.92
+},
+{
+"text": "Help?",
+"type": "word",
+"start": 18.08,
+"end": 18.56
+},
+{
+"text": "Kick",
+"type": "word",
+"start": 18.64,
+"end": 18.72
+},
+{
+"text": "it",
+"type": "word",
+"start": 18.76,
+"end": 18.8
+},
+{
+"text": "out.",
+"type": "word",
+"start": 18.88,
+"end": 19.36
+},
+{
+"text": "Chase?",
+"type": "word",
+"start": 19.44,
+"end": 20.08
+},
+{
+"text": "Hit",
+"type": "word",
+"start": 20.16,
+"end": 20.24
+},
+{
+"text": "the",
+"type": "word",
+"start": 20.28,
+"end": 20.32
+},
+{
+"text": "curl.",
+"type": "word",
+"start": 20.4,
+"end": 21.12
+},
+{
+"text": "For",
+"type": "word",
+"start": 21.326,
+"end": 21.36
+},
+{
+"text": "more",
+"type": "word",
+"start": 21.48,
+"end": 21.6
+},
+{
+"text": "European",
+"type": "word",
+"start": 21.68,
+"end": 22.16
+},
+{
+"text": "basketball.",
+"type": "word",
+"start": 22.36,
+"end": 23.04
+}
+]

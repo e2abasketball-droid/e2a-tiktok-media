@@ -1,0 +1,108 @@
+{
+ "source": "public/tactical/veer/voice-raw.wav",
+ "source_sec": 22.96,
+ "preroll": 0.12,
+ "output": "public/tactical/veer/voice.wav",
+ "output_sec": 30.88,
+ "inserted_total_sec": 7.8,
+ "last_word_end": 30.96,
+ "gaps": [
+  {
+   "after": "open?",
+   "natural_silence": [
+    1.61,
+    2.17
+   ],
+   "natural_sec": 0.56,
+   "target_sec": 0.62,
+   "inserted_sec": 0.06,
+   "cut_at_source": 1.755,
+   "why": "the catch lands, cut back to the start"
+  },
+  {
+   "after": "after the pick.",
+   "natural_silence": [
+    3.79,
+    4.25
+   ],
+   "natural_sec": 0.46,
+   "target_sec": 1.05,
+   "inserted_sec": 0.59,
+   "cut_at_source": 4.115,
+   "why": "the big walks up and sets the ball screen"
+  },
+  {
+   "after": "steps in to help.",
+   "natural_silence": [
+    7.16,
+    7.67
+   ],
+   "natural_sec": 0.51,
+   "target_sec": 1.15,
+   "inserted_sec": 0.64,
+   "cut_at_source": 7.385,
+   "why": "the help step lands, the big starts to veer"
+  },
+  {
+   "after": "That's the Veer.",
+   "natural_silence": [
+    10.95,
+    11.42
+   ],
+   "natural_sec": 0.47,
+   "target_sec": 2.55,
+   "inserted_sec": 2.08,
+   "cut_at_source": 11.195,
+   "why": "pass, catch and the three in the same frame"
+  },
+  {
+   "after": "Where's the pass going?",
+   "natural_silence": [
+    14.4,
+    15.18
+   ],
+   "natural_sec": 0.78,
+   "target_sec": 1.15,
+   "inserted_sec": 0.37,
+   "cut_at_source": 14.875,
+   "why": "the viewer anticipates the pass"
+  },
+  {
+   "after": "in stride.",
+   "natural_silence": [
+    17.56,
+    17.94
+   ],
+   "natural_sec": 0.38,
+   "target_sec": 2.6,
+   "inserted_sec": 2.22,
+   "cut_at_source": 17.825,
+   "why": "layup and net"
+  },
+  {
+   "after": "Kick it out.",
+   "natural_silence": [
+    19.03,
+    19.36
+   ],
+   "natural_sec": 0.33,
+   "target_sec": 1.2,
+   "inserted_sec": 0.87,
+   "cut_at_source": 19.235,
+   "why": "replay A lands before replay B"
+  },
+  {
+   "after": "Hit the curl.",
+   "natural_silence": [
+    20.72,
+    21.15
+   ],
+   "natural_sec": 0.43,
+   "target_sec": 1.4,
+   "inserted_sec": 0.97,
+   "cut_at_source": 21.035,
+   "why": "replay B lands"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}

@@ -1,5 +1,5 @@
 // Camera fit search: smallest orbit distance that keeps the listed players (feet+head) and the ball inside the safe
-// frame over a play window. Usage: node --experimental-strip-types scripts/fit-search.mts <play> <t0> <t1> <ids> [--fov 50 --top 260 --bottom 1280 --yaws ... --pitches ... --noball]
+// frame over a play window. Usage: node --experimental-strip-types scripts/fit-search.mts <play> <t0> <t1> <ids> [--fov 50 --top 260 --bottom 1280 --yaws ... --pitches ... --noball --rim]
 // grid search for a static orbit that keeps ids (feet+head) and the ball inside the safe frame over a play window
 import fs from 'node:fs';
 import {toCam} from '../src/t3d/camera3d.ts';
@@ -24,6 +24,7 @@ for (let t = t0; t <= t1 + 1e-6; t += 0.1) {
   const fr = sample(play, t); const pts: number[][] = [];
   for (const id of ids) { const p = fr.players[id].pos; pts.push([p[0], p[1], 0], [p[0], p[1], 2.0]); }
   if (ball) pts.push(fr.ball.pos as number[]);
+  if (rest.includes('--rim')) pts.push([0, 1.575, 3.05], [0, 1.2, 3.6]); // rim + backboard top: the reads keep the basket in frame
   frames.push(pts);
 }
 const all = frames.flat();

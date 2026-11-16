@@ -1,0 +1,1045 @@
+{
+ "id": "veer-action",
+ "title": "VEER ACTION: who got him open, where does the pass go",
+ "fps": 30,
+ "voiceRaw": "tactical/veer/voice-raw.wav",
+ "wordsRaw": "veer-action.words-raw.json",
+ "voice": "tactical/veer/voice.wav",
+ "voiceMix": "tactical/veer/voice.mix.wav",
+ "preroll": 0.12,
+ "tail": 1.6,
+ "gaps": [
+  {
+   "after": "open?",
+   "sec": 0.62,
+   "why": "the catch lands, cut back to the start"
+  },
+  {
+   "after": "after the pick.",
+   "sec": 1.05,
+   "why": "the big walks up and sets the ball screen"
+  },
+  {
+   "after": "steps in to help.",
+   "sec": 1.15,
+   "why": "the help step lands, the big starts to veer"
+  },
+  {
+   "after": "That's the Veer.",
+   "sec": 2.55,
+   "why": "pass, catch and the three in the same frame"
+  },
+  {
+   "after": "Where's the pass going?",
+   "sec": 1.15,
+   "why": "the viewer anticipates the pass"
+  },
+  {
+   "after": "in stride.",
+   "sec": 2.6,
+   "why": "layup and net"
+  },
+  {
+   "after": "Kick it out.",
+   "sec": 1.2,
+   "why": "replay A lands before replay B"
+  },
+  {
+   "after": "Hit the curl.",
+   "sec": 1.4,
+   "why": "replay B lands"
+  }
+ ],
+ "plays": {
+  "A": "veer-a-kick",
+  "B": "veer-b-curl"
+ },
+ "pinV2": true,
+ "shots": [
+  {
+   "id": "hook",
+   "name": "Hook - the kick-out already in the air, cut on the catch",
+   "at": 0,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     5.03
+    ],
+    [
+     1.3,
+     5.33
+    ],
+    [
+     "@end",
+     "catch"
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.61,
+       6.91,
+       0.6
+      ],
+      "dist": 11.5,
+      "pitch": 56,
+      "yaw": 10,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "color": "#E5483A",
+     "size": 0.75,
+     "from": 0.35,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "WHO GOT",
+      "HIM OPEN?"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0,
+     "to": "@end",
+     "y": 252,
+     "size": 110
+    }
+   ],
+   "sfx": [
+    {
+     "at": 1.95,
+     "name": "bounce",
+     "volume": 0.09
+    }
+   ]
+  },
+  {
+   "id": "loop1",
+   "name": "Loop 1 - back to the start: the big walks up and screens, the shooter waits low",
+   "at": "Watch-0.3",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     0.75,
+     0.0
+    ],
+    [
+     "@end",
+     "screen1",
+     "in"
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.88,
+       6.02,
+       0.6
+      ],
+      "dist": 17.5,
+      "pitch": 56,
+      "yaw": -10,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O5",
+     "color": "#C9A24D",
+     "pulse": true,
+     "from": "big-0.1",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "pin",
+     "player": "O5",
+     "text": "THE BIG",
+     "tone": "gold",
+     "from": "big-0.1",
+     "to": "pick.>",
+     "size": 42
+    },
+    {
+     "type": "pin",
+     "player": "O2",
+     "text": "SHOOTER",
+     "tone": "white",
+     "from": "after",
+     "to": "@end",
+     "size": 38
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.08
+    }
+   ]
+  },
+  {
+   "id": "dev",
+   "name": "Development - tight off the ball screen, the corner defender's help step",
+   "at": "He-0.1",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     "screen1"
+    ],
+    [
+     "guard.>",
+     1.55
+    ],
+    [
+     "help",
+     2.05
+    ],
+    [
+     "help.>",
+     2.25
+    ],
+    [
+     "@end",
+     2.45
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.88,
+       6.02,
+       0.6
+      ],
+      "dist": 17.5,
+      "pitch": 56,
+      "yaw": -10,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "screen",
+     "player": "O5",
+     "n": 1,
+     "facing": 0.6,
+     "from": 0,
+     "to": "guard.>"
+    },
+    {
+     "type": "route",
+     "player": "X2",
+     "t0": 1.5,
+     "t1": 2.2,
+     "trail": true,
+     "color": "#E5483A",
+     "width": 0.16,
+     "from": "corner",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "X2",
+     "color": "#E5483A",
+     "from": "corner",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "pin",
+     "player": "X2",
+     "text": "HELP STEP",
+     "tone": "red",
+     "from": "steps",
+     "to": "@end",
+     "size": 42
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0.35,
+     "name": "bounce",
+     "volume": 0.07
+    },
+    {
+     "at": "steps",
+     "name": "squeak",
+     "volume": 0.11
+    }
+   ]
+  },
+  {
+   "id": "resp1",
+   "name": "Answer 1 - the big turns and plants the veer screen, shoulder to shoulder, kick-out three",
+   "at": "The big TURNS-0.2",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     2.45
+    ],
+    [
+     "TURNS",
+     2.7
+    ],
+    [
+     "screens him.>",
+     "set"
+    ],
+    [
+     "That's",
+     "go"
+    ],
+    [
+     "Veer.>",
+     5.2
+    ],
+    [
+     "@end",
+     7.15
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.88,
+       6.02,
+       0.6
+      ],
+      "dist": 17.5,
+      "pitch": 56,
+      "yaw": -10,
+      "fov": 42
+     }
+    },
+    {
+     "at": "TURNS+0.2",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.63,
+       5.88,
+       0.6
+      ],
+      "dist": 16.5,
+      "pitch": 56,
+      "yaw": -10,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "screens him.>-0.2",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.2,
+       4.4,
+       0.6
+      ],
+      "dist": 15.7,
+      "pitch": 56,
+      "yaw": 5,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "Veer.>-0.25",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.2,
+       4.4,
+       0.6
+      ],
+      "dist": 15.7,
+      "pitch": 56,
+      "yaw": 5,
+      "fov": 42
+     }
+    },
+    {
+     "at": "Veer.>+0.15",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.61,
+       6.91,
+       0.6
+      ],
+      "dist": 11.5,
+      "pitch": 56,
+      "yaw": 10,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "Veer.>+0.85",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.61,
+       6.91,
+       0.6
+      ],
+      "dist": 11.5,
+      "pitch": 56,
+      "yaw": 10,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end-0.8",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.95,
+       4.68,
+       0.6
+      ],
+      "dist": 15.75,
+      "pitch": 56,
+      "yaw": 0,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "route",
+     "player": "O5",
+     "t0": 2.4,
+     "t1": 4.17,
+     "trail": true,
+     "color": "#C9A24D",
+     "from": "TURNS-0.15",
+     "to": "That's"
+    },
+    {
+     "type": "screen",
+     "player": "O5",
+     "n": 2,
+     "facing": 2.6,
+     "from": "screens him.>-0.15",
+     "to": "Veer.>"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 4.29,
+     "t1": 5.6,
+     "trail": true,
+     "color": "#C9A24D",
+     "from": "That's",
+     "to": "Veer.>+0.2"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "VEER ACTION"
+     ],
+     "gold": [
+      0
+     ],
+     "from": "screens him.>-0.15",
+     "to": "Veer.>+0.1",
+     "y": 252,
+     "size": 112
+    }
+   ],
+   "sfx": [
+    {
+     "at": "TURNS",
+     "name": "squeak",
+     "volume": 0.13
+    },
+    {
+     "at": "screens him.>-0.15",
+     "name": "impact_big",
+     "volume": 0.16
+    },
+    {
+     "at": "Veer.>+0.55",
+     "name": "bounce",
+     "volume": 0.07
+    },
+    {
+     "at": "@end-0.35",
+     "name": "swish",
+     "volume": 0.17
+    }
+   ]
+  },
+  {
+   "id": "hook2",
+   "name": "Hook 2 - same spot, he chases: hold on the plant foot",
+   "at": "Now-0.2",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     3.85
+    ],
+    [
+     "chases",
+     4.3
+    ],
+    [
+     "going?>",
+     "plant"
+    ],
+    [
+     "@end",
+     5.4
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.2,
+       4.4,
+       0.6
+      ],
+      "dist": 15.7,
+      "pitch": 56,
+      "yaw": 5,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "screen",
+     "player": "O5",
+     "n": 2,
+     "facing": 2.6,
+     "from": 0.3,
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "X2",
+     "color": "#E5483A",
+     "pulse": true,
+     "from": "chases-0.3",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "HE CHASES…"
+     ],
+     "gold": [
+      0
+     ],
+     "from": "chases-0.1",
+     "to": "@end",
+     "y": 252,
+     "size": 104
+    },
+    {
+     "type": "pin",
+     "player": "X2",
+     "text": "ON HIS BACK",
+     "tone": "red",
+     "from": "Where's",
+     "to": "@end",
+     "size": 38
+    }
+   ],
+   "sfx": [
+    {
+     "at": "going?>",
+     "name": "squeak",
+     "volume": 0.12
+    }
+   ]
+  },
+  {
+   "id": "resp2",
+   "name": "Answer 2 - the curl, the pass in front of him, catch in stride, layup",
+   "at": "He curls-0.15",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     5.4
+    ],
+    [
+     "inside.>",
+     5.75
+    ],
+    [
+     "hits",
+     "pass"
+    ],
+    [
+     "stride.>",
+     6.45
+    ],
+    [
+     "@end",
+     7.85
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.2,
+       4.4,
+       0.6
+      ],
+      "dist": 15.7,
+      "pitch": 56,
+      "yaw": 5,
+      "fov": 42
+     }
+    },
+    {
+     "at": "hits",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.2,
+       4.4,
+       0.6
+      ],
+      "dist": 15.7,
+      "pitch": 56,
+      "yaw": 5,
+      "fov": 42
+     }
+    },
+    {
+     "at": "stride.>",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.76,
+       3.93,
+       0.6
+      ],
+      "dist": 15.5,
+      "pitch": 56,
+      "yaw": 0,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.76,
+       3.93,
+       0.6
+      ],
+      "dist": 15.5,
+      "pitch": 56,
+      "yaw": 0,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 5.3,
+     "t1": 6.6,
+     "trail": true,
+     "color": "#C9A24D",
+     "from": "curls-0.1",
+     "to": "stride.>"
+    }
+   ],
+   "screen": [
+    {
+     "type": "pin",
+     "player": "O2",
+     "text": "CURL INSIDE",
+     "tone": "gold",
+     "from": "curls-0.1",
+     "to": "hits-0.1",
+     "size": 42
+    }
+   ],
+   "sfx": [
+    {
+     "at": "hits",
+     "name": "bounce",
+     "volume": 0.07
+    },
+    {
+     "at": "@end-0.45",
+     "name": "swish",
+     "volume": 0.16
+    }
+   ]
+  },
+  {
+   "id": "cmpA",
+   "name": "Compare A - from the second screen: he helps, kick it out",
+   "at": "Help? Kick-0.25",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     4.1
+    ],
+    [
+     "@end",
+     6.15
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.2,
+       4.4,
+       0.6
+      ],
+      "dist": 15.7,
+      "pitch": 56,
+      "yaw": 5,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "color": "#E5483A",
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 4.29,
+     "t1": 5.6,
+     "trail": true,
+     "color": "#C9A24D",
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "HELP → KICK-OUT"
+     ],
+     "gold": [
+      0
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 252,
+     "size": 96
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.06
+    }
+   ]
+  },
+  {
+   "id": "cmpB",
+   "name": "Compare B - from the second screen: he chases, hit the curl",
+   "at": "Chase?-0.3",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     4.1
+    ],
+    [
+     "@end",
+     6.75
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.2,
+       4.4,
+       0.6
+      ],
+      "dist": 15.7,
+      "pitch": 56,
+      "yaw": 5,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "color": "#E5483A",
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 4.29,
+     "t1": 6.6,
+     "trail": true,
+     "color": "#C9A24D",
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "CHASE → CURL"
+     ],
+     "gold": [
+      0
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 252,
+     "size": 96
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.06
+    }
+   ]
+  },
+  {
+   "id": "cta",
+   "name": "CTA - over the play, back to the opening pass, last frame before the hook's first",
+   "at": "For more-0.3",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.3
+    ],
+    [
+     2.61,
+     4.8
+    ],
+    [
+     "@end",
+     5.03
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.39,
+       4.61,
+       0.6
+      ],
+      "dist": 15.0,
+      "pitch": 56,
+      "yaw": -10,
+      "fov": 42
+     }
+    },
+    {
+     "at": 1.6,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.39,
+       4.61,
+       0.6
+      ],
+      "dist": 15.0,
+      "pitch": 56,
+      "yaw": -10,
+      "fov": 42
+     }
+    },
+    {
+     "at": 2.61,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.61,
+       6.91,
+       0.6
+      ],
+      "dist": 11.5,
+      "pitch": 56,
+      "yaw": 10,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.61,
+       6.91,
+       0.6
+      ],
+      "dist": 11.5,
+      "pitch": 56,
+      "yaw": 10,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "FOR MORE",
+      "EUROPEAN BASKETBALL"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0.2,
+     "to": "@end-0.25",
+     "y": 252,
+     "size": 92
+    },
+    {
+     "type": "logo",
+     "big": false,
+     "from": 0.6,
+     "to": "@end-0.25"
+    }
+   ],
+   "sfx": []
+  }
+ ],
+ "keywords": [
+  "big",
+  "pick",
+  "guard",
+  "corner defender",
+  "help",
+  "TURNS",
+  "screens him",
+  "Veer",
+  "watch",
+  "chases",
+  "pass going",
+  "curls inside",
+  "hits him",
+  "stride",
+  "Kick it out",
+  "Hit the curl",
+  "European"
+ ],
+ "subtitleGroups": [
+  5,
+  3,
+  3,
+  2,
+  3,
+  3,
+  4,
+  3,
+  3,
+  3,
+  2,
+  2,
+  3,
+  4,
+  3,
+  4,
+  2,
+  4,
+  4,
+  4
+ ],
+ "subtitleBlock": true,
+ "subtitleHide": [
+  [
+   0,
+   "open?>+0.2"
+  ],
+  [
+   "For more-0.3",
+   40
+  ]
+ ],
+ "subtitleY": 1400,
+ "gradeBottom": 0.38,
+ "autoSfx": false,
+ "ambience": {
+  "src": "sfx/arena.mp3",
+  "volume": 0.05
+ },
+ "music": {
+  "src": "tactical/veer/music-mix.mp3",
+  "volume": 1
+ }
+}
