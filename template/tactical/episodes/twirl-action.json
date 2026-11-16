@@ -1,0 +1,1077 @@
+{
+ "id": "twirl-action",
+ "title": "TWIRL ACTION: the first screener gets the shot",
+ "fps": 30,
+ "voiceRaw": "tactical/twirl/voice-raw.wav",
+ "wordsRaw": "twirl-action.words-raw.json",
+ "voice": "tactical/twirl/voice.wav",
+ "voiceMix": "tactical/twirl/voice.mix.wav",
+ "preroll": 0.12,
+ "tail": 1.4,
+ "gaps": [
+  {
+   "after": "wrong shooter.",
+   "sec": 0.55,
+   "why": "cut back to the formation"
+  },
+  {
+   "after": "the first screener.",
+   "sec": 0.5,
+   "why": "the cutter starts"
+  },
+  {
+   "after": "the first screen.",
+   "sec": 0.6,
+   "why": "the curl turns"
+  },
+  {
+   "after": "defender inside.",
+   "sec": 0.6,
+   "why": "the help step lands"
+  },
+  {
+   "after": "That's the Twirl.",
+   "sec": 1.8,
+   "why": "pass, catch and the three"
+  },
+  {
+   "after": "Who gets it?",
+   "sec": 1.05,
+   "why": "let the movement answer first"
+  },
+  {
+   "after": "on the move.",
+   "sec": 1.7,
+   "why": "catch on the move, layup"
+  },
+  {
+   "after": "Hit the shooter.",
+   "sec": 0.75,
+   "why": "replay A lands"
+  },
+  {
+   "after": "Hit the cutter.",
+   "sec": 0.9,
+   "why": "replay B lands"
+  }
+ ],
+ "plays": {
+  "A": "twirl-a-three",
+  "B": "twirl-b-curl"
+ },
+ "pinV2": true,
+ "shots": [
+  {
+   "id": "hook",
+   "name": "Hook - the cutter turns to the rim, the first screener starts out; cut before the pass",
+   "at": 0,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     2.1
+    ],
+    [
+     "shooter.>",
+     3.1
+    ],
+    [
+     "@end",
+     3.35
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.76,
+       6.69,
+       0.6
+      ],
+      "dist": 13.5,
+      "pitch": 48,
+      "yaw": -10,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O2",
+     "color": "#C9A24D",
+     "size": 0.75,
+     "pulse": true,
+     "from": 0.1,
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 1.0,
+     "t1": 3.0,
+     "trail": true,
+     "color": "#C9A24D",
+     "from": 0.1,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "WRONG",
+      "SHOOTER?"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0,
+     "to": "@end",
+     "y": 252,
+     "size": 110
+    }
+   ],
+   "sfx": [
+    {
+     "at": 1.2,
+     "name": "squeak",
+     "volume": 0.1
+    }
+   ]
+  },
+  {
+   "id": "loop1",
+   "name": "Loop 1 - back to the stagger: ring on the first screener, ball with the passer",
+   "at": "It starts-0.25",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "Watch",
+     0.15
+    ],
+    [
+     "@end",
+     0.9
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.34,
+       6.69,
+       0.6
+      ],
+      "dist": 17.25,
+      "pitch": 48,
+      "yaw": -10,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "screen",
+     "player": "O4",
+     "n": 1,
+     "facing": -2.62,
+     "from": "stagger-0.2",
+     "to": "@end"
+    },
+    {
+     "type": "screen",
+     "player": "O5",
+     "n": 2,
+     "facing": -0.49,
+     "from": "stagger",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "O4",
+     "color": "#C9A24D",
+     "size": 0.6,
+     "from": "first screener-0.1",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "STAGGER"
+     ],
+     "gold": [
+      0
+     ],
+     "from": "starts",
+     "to": "@end",
+     "y": 252,
+     "size": 104
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.08
+    }
+   ]
+  },
+  {
+   "id": "dev",
+   "name": "Development - the curl around screen 1, X4 steps in to stop it before O4 leaves",
+   "at": "The cutter-0.1",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.9
+    ],
+    [
+     "curls",
+     1.55
+    ],
+    [
+     "first screen.>",
+     2.3
+    ],
+    [
+     "inside",
+     2.6
+    ],
+    [
+     "@end",
+     2.82
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.34,
+       6.69,
+       0.6
+      ],
+      "dist": 17.25,
+      "pitch": 48,
+      "yaw": -10,
+      "fov": 42
+     }
+    },
+    {
+     "at": "curls",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.06,
+       6.44,
+       0.6
+      ],
+      "dist": 16.0,
+      "pitch": 48,
+      "yaw": -10,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.06,
+       6.44,
+       0.6
+      ],
+      "dist": 16.0,
+      "pitch": 48,
+      "yaw": -10,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "screen",
+     "player": "O4",
+     "n": 1,
+     "facing": -2.62,
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "O4",
+     "color": "#C9A24D",
+     "size": 0.6,
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 0.9,
+     "t1": 2.9,
+     "trail": true,
+     "color": "#C9A24D",
+     "from": "curls-0.2",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "X4",
+     "color": "#E5483A",
+     "pulse": true,
+     "from": "pulls-0.1",
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "X4",
+     "t0": 2.4,
+     "t1": 2.95,
+     "trail": true,
+     "color": "#E5483A",
+     "width": 0.16,
+     "from": "pulls",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "pin",
+     "player": "O2",
+     "text": "CURL",
+     "tone": "gold",
+     "from": "curls-0.1",
+     "to": "pulls",
+     "size": 42
+    },
+    {
+     "type": "pin",
+     "player": "X4",
+     "text": "HELP",
+     "tone": "red",
+     "from": "pulls",
+     "to": "@end",
+     "size": 42
+    }
+   ],
+   "sfx": [
+    {
+     "at": "curls",
+     "name": "squeak",
+     "volume": 0.1
+    },
+    {
+     "at": "pulls",
+     "name": "squeak",
+     "volume": 0.1
+    }
+   ]
+  },
+  {
+   "id": "resp1",
+   "name": "Answer 1 - the first screener twirls off screen 2 to the wing; pass and the three",
+   "at": "And the first-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     2.82
+    ],
+    [
+     "TAKES",
+     2.95
+    ],
+    [
+     "second screen.>",
+     3.4
+    ],
+    [
+     "Twirl.>",
+     4.25
+    ],
+    [
+     "@end",
+     6.0
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.06,
+       6.44,
+       0.6
+      ],
+      "dist": 16.0,
+      "pitch": 48,
+      "yaw": -10,
+      "fov": 42
+     }
+    },
+    {
+     "at": "TAKES+0.2",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.84,
+       6.68,
+       0.6
+      ],
+      "dist": 16.5,
+      "pitch": 48,
+      "yaw": -10,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.84,
+       6.68,
+       0.6
+      ],
+      "dist": 16.5,
+      "pitch": 48,
+      "yaw": -10,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 0.9,
+     "t1": 2.9,
+     "trail": true,
+     "color": "#C9A24D",
+     "from": 0,
+     "to": "That's"
+    },
+    {
+     "type": "route",
+     "player": "O4",
+     "t0": 2.85,
+     "t1": 4.2,
+     "trail": true,
+     "color": "#C9A24D",
+     "from": "TAKES-0.1",
+     "to": "Twirl.>+0.3"
+    },
+    {
+     "type": "screen",
+     "player": "O5",
+     "n": 2,
+     "facing": -0.49,
+     "from": "TAKES-0.1",
+     "to": "Twirl.>"
+    },
+    {
+     "type": "ring",
+     "player": "X4",
+     "color": "#E5483A",
+     "from": 0,
+     "to": "Twirl.>"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "TWIRL ACTION"
+     ],
+     "gold": [
+      0
+     ],
+     "from": "second screen.>-0.2",
+     "to": "Twirl.>+0.2",
+     "y": 252,
+     "size": 112
+    },
+    {
+     "type": "pin",
+     "player": "O4",
+     "text": "1ST SCREENER",
+     "tone": "gold",
+     "from": 0,
+     "to": "TAKES+0.4",
+     "size": 38
+    }
+   ],
+   "sfx": [
+    {
+     "at": "TAKES-0.1",
+     "name": "squeak",
+     "volume": 0.14
+    },
+    {
+     "at": "second screen.>-0.2",
+     "name": "impact_big",
+     "volume": 0.16
+    },
+    {
+     "at": "@end-0.55",
+     "name": "swish",
+     "volume": 0.17
+    }
+   ]
+  },
+  {
+   "id": "hook2",
+   "name": "Hook 2 - same frame and start; X4 stays up with his man; hold just before the pass",
+   "at": "Same setup-0.25",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     1.2
+    ],
+    [
+     "stays",
+     2.0
+    ],
+    [
+     "up.>",
+     2.35
+    ],
+    [
+     "gets it?>",
+     2.5
+    ],
+    [
+     "@end",
+     2.54
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.06,
+       6.44,
+       0.6
+      ],
+      "dist": 16.0,
+      "pitch": 48,
+      "yaw": -10,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "screen",
+     "player": "O4",
+     "n": 1,
+     "facing": -2.62,
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "screen",
+     "player": "O5",
+     "n": 2,
+     "facing": -0.49,
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "X4",
+     "color": "#E5483A",
+     "pulse": true,
+     "from": "defender stays-0.2",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "WHO GETS IT?"
+     ],
+     "gold": [
+      0
+     ],
+     "from": "Who-0.05",
+     "to": "@end",
+     "y": 252,
+     "size": 104
+    },
+    {
+     "type": "pin",
+     "player": "X4",
+     "text": "STAYS UP",
+     "tone": "red",
+     "from": "stays",
+     "to": "@end",
+     "size": 40
+    }
+   ],
+   "sfx": [
+    {
+     "at": "it?>",
+     "name": "tick",
+     "volume": 0.08
+    }
+   ]
+  },
+  {
+   "id": "resp2",
+   "name": "Answer 2 - pass in front of the cutter, catch on the move, layup",
+   "at": "Now the-0.15",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     2.54
+    ],
+    [
+     "Hit him",
+     2.6
+    ],
+    [
+     "move.>",
+     3.25
+    ],
+    [
+     "@end",
+     4.75
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.06,
+       6.44,
+       0.6
+      ],
+      "dist": 16.0,
+      "pitch": 48,
+      "yaw": -10,
+      "fov": 42
+     }
+    },
+    {
+     "at": "move.>-0.3",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.06,
+       6.44,
+       0.6
+      ],
+      "dist": 16.0,
+      "pitch": 48,
+      "yaw": -10,
+      "fov": 42
+     }
+    },
+    {
+     "at": "move.>+0.7",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.94,
+       2.94,
+       0.6
+      ],
+      "dist": 12.25,
+      "pitch": 48,
+      "yaw": -10,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.94,
+       2.94,
+       0.6
+      ],
+      "dist": 12.25,
+      "pitch": 48,
+      "yaw": -10,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 0.9,
+     "t1": 3.95,
+     "trail": true,
+     "color": "#C9A24D",
+     "from": 0,
+     "to": "move.>+0.4"
+    },
+    {
+     "type": "ring",
+     "player": "X4",
+     "color": "#E5483A",
+     "from": 0,
+     "to": "move.>"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "HIT THE CURL"
+     ],
+     "gold": [
+      0
+     ],
+     "from": "Hit him-0.05",
+     "to": "move.>+0.3",
+     "y": 252,
+     "size": 104
+    }
+   ],
+   "sfx": [
+    {
+     "at": "Hit him",
+     "name": "bounce",
+     "volume": 0.07
+    },
+    {
+     "at": "@end-0.5",
+     "name": "swish",
+     "volume": 0.16
+    }
+   ]
+  },
+  {
+   "id": "cmpA",
+   "name": "Compare A - from the cutter's turn: X4 helps, hit the shooter",
+   "at": "Help on-0.25",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     2.15
+    ],
+    [
+     "@end",
+     4.45
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.84,
+       6.68,
+       0.6
+      ],
+      "dist": 16.5,
+      "pitch": 48,
+      "yaw": -10,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X4",
+     "color": "#E5483A",
+     "pulse": true,
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "HELP → THREE"
+     ],
+     "gold": [
+      0
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 252,
+     "size": 96
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.06
+    }
+   ]
+  },
+  {
+   "id": "cmpB",
+   "name": "Compare B - from the cutter's turn: X4 stays up, hit the cutter",
+   "at": "Stay up?-0.3",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     2.15
+    ],
+    [
+     "@end",
+     3.95
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.84,
+       6.68,
+       0.6
+      ],
+      "dist": 16.5,
+      "pitch": 48,
+      "yaw": -10,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X4",
+     "color": "#E5483A",
+     "pulse": true,
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "STAY UP → CURL"
+     ],
+     "gold": [
+      0
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 252,
+     "size": 96
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.06
+    }
+   ]
+  },
+  {
+   "id": "cta",
+   "name": "CTA - over the court, back to the instant before the hook's first frame",
+   "at": "For more-0.3",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.3
+    ],
+    [
+     2.4,
+     1.8
+    ],
+    [
+     "@end",
+     2.09
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.34,
+       6.69,
+       0.6
+      ],
+      "dist": 17.25,
+      "pitch": 48,
+      "yaw": -10,
+      "fov": 42
+     }
+    },
+    {
+     "at": 1.6,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.34,
+       6.69,
+       0.6
+      ],
+      "dist": 17.25,
+      "pitch": 48,
+      "yaw": -10,
+      "fov": 42
+     }
+    },
+    {
+     "at": 2.6,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.76,
+       6.69,
+       0.6
+      ],
+      "dist": 13.5,
+      "pitch": 48,
+      "yaw": -10,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.76,
+       6.69,
+       0.6
+      ],
+      "dist": 13.5,
+      "pitch": 48,
+      "yaw": -10,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "FOR MORE",
+      "EUROPEAN BASKETBALL"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0.2,
+     "to": "@end-0.25",
+     "y": 252,
+     "size": 92
+    },
+    {
+     "type": "logo",
+     "big": false,
+     "from": 0.6,
+     "to": "@end-0.25"
+    }
+   ],
+   "sfx": []
+  }
+ ],
+ "keywords": [
+  "WRONG",
+  "stagger",
+  "first screener",
+  "curls",
+  "inside",
+  "TAKES",
+  "second screen",
+  "Twirl",
+  "stays up",
+  "gets it",
+  "open",
+  "move",
+  "shooter",
+  "cutter",
+  "European"
+ ],
+ "subtitleGroups": [
+  5,
+  5,
+  2,
+  2,
+  3,
+  3,
+  2,
+  2,
+  2,
+  4,
+  2,
+  2,
+  3,
+  2,
+  2,
+  4,
+  3,
+  4,
+  5,
+  4,
+  3,
+  2,
+  3,
+  4
+ ],
+ "subtitleBlock": true,
+ "subtitleHide": [
+  [
+   0,
+   "shooter.>+0.4"
+  ],
+  [
+   "For more-0.3",
+   40
+  ]
+ ],
+ "subtitleY": 1400,
+ "gradeBottom": 0.38,
+ "autoSfx": false,
+ "ambience": {
+  "src": "sfx/arena.mp3",
+  "volume": 0.05
+ },
+ "music": {
+  "src": "tactical/twirl/music-mix.mp3",
+  "volume": 1
+ }
+}

@@ -1,0 +1,420 @@
+{
+ "id": "twirl-a-three",
+ "title": "Twirl A: the screener's defender helps on the curl, the screener twirls out for three",
+ "duration": 7.6,
+ "concept": "twirl-action",
+ "source": "original E2A play (standard twirl action: stagger screens, first screener uses the second screen; generic coaching knowledge)",
+ "squareUp": true,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Passer at the top: reads the first screener's defender"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Cutter: curls the first screen to the rim"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Left corner"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "First screener: screens for the cutter, then twirls off the second screen to the wing"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Second screener, high"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the ball",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "On the cutter: trails",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Left corner",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "On the first screener: helps (A) / stays up (B)",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "On the second screener: stays high",
+   "guards": "O5"
+  }
+ ],
+ "start": {
+  "O1": [
+   1.4,
+   8.6
+  ],
+  "X1": [
+   1.15,
+   7.8
+  ],
+  "O2": [
+   -6.3,
+   1.4
+  ],
+  "X2": [
+   -5.55,
+   1.3
+  ],
+  "O4": [
+   -3.5,
+   3.0
+  ],
+  "X4": [
+   -2.8,
+   3.2
+  ],
+  "O5": [
+   -4.3,
+   5.3
+  ],
+  "X5": [
+   -2.95,
+   6.2
+  ],
+  "O3": [
+   6.3,
+   1.5
+  ],
+  "X3": [
+   5.5,
+   2.1
+  ]
+ },
+ "legs": {
+  "O1": [
+   {
+    "at": 0.15,
+    "to": [
+     -0.9,
+     8.6
+    ],
+    "dur": 1.6
+   }
+  ],
+  "X1": [
+   {
+    "at": 0.25,
+    "to": [
+     0.05,
+     7.95
+    ],
+    "dur": 1.6
+   }
+  ],
+  "O2": [
+   {
+    "at": 0.9,
+    "via": [
+     [
+      -5.75,
+      2.5
+     ],
+     [
+      -4.2,
+      3.6
+     ],
+     [
+      -3.5,
+      4.2
+     ],
+     [
+      -2.6,
+      4.3
+     ],
+     [
+      -1.3,
+      4.55
+     ],
+     [
+      0.3,
+      4.45
+     ]
+    ],
+    "to": [
+     1.9,
+     3.8
+    ],
+    "speed": 3.6
+   }
+  ],
+  "O4": [
+   {
+    "at": 2.85,
+    "via": [
+     [
+      -4.35,
+      3.9
+     ],
+     [
+      -4.95,
+      4.85
+     ],
+     [
+      -5.35,
+      5.7
+     ]
+    ],
+    "to": [
+     -5.9,
+     6.7
+    ],
+    "speed": 5.6
+   }
+  ],
+  "X2": [
+   {
+    "at": 1.35,
+    "via": [
+     [
+      -5.3,
+      2.25
+     ],
+     [
+      -4.65,
+      3.15
+     ],
+     [
+      -4.2,
+      4.15
+     ],
+     [
+      -3.3,
+      4.75
+     ],
+     [
+      -2.2,
+      4.85
+     ]
+    ],
+    "to": [
+     -0.6,
+     5.0
+    ],
+    "speed": 3.6
+   }
+  ],
+  "X4": [
+   {
+    "at": 2.4,
+    "to": [
+     -2.05,
+     3.5
+    ],
+    "dur": 0.55
+   },
+   {
+    "at": 3.23,
+    "via": [
+     [
+      -3.0,
+      4.65
+     ],
+     [
+      -3.55,
+      5.75
+     ]
+    ],
+    "to": [
+     -4.4,
+     6.35
+    ],
+    "speed": 3.7
+   }
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 3.53,
+   "dribble": true,
+   "hand": 1
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O4",
+   "t0": 3.53,
+   "t1": 4.15,
+   "style": "chest"
+  },
+  {
+   "type": "hold",
+   "player": "O4",
+   "from": 4.15,
+   "to": 4.51
+  },
+  {
+   "type": "shot",
+   "player": "O4",
+   "t0": 4.51,
+   "t1": 5.609999999999999,
+   "make": true,
+   "three": true
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "cut": 0.9,
+  "turn": 2.38,
+  "help": 2.4,
+  "twirl": 2.85,
+  "pass": 3.53,
+  "catch": 4.15,
+  "release": 4.51,
+  "make": 5.609999999999999,
+  "end": 7.6
+ },
+ "actions": {
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 8,
+    "face": "O3"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 8,
+    "face": "O1"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 8,
+    "face": "O1"
+   }
+  ],
+  "O4": [
+   {
+    "type": "screen",
+    "from": 0.0,
+    "to": 2.8000000000000003,
+    "face": "X2"
+   },
+   {
+    "type": "gather",
+    "from": 4.07,
+    "to": 4.51
+   },
+   {
+    "type": "celebrate",
+    "from": 5.81,
+    "to": 7.6
+   }
+  ],
+  "O5": [
+   {
+    "type": "screen",
+    "from": 0.0,
+    "to": 4.15,
+    "face": "X4"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 3.23,
+    "face": "O2"
+   },
+   {
+    "type": "bump",
+    "from": 3.68,
+    "to": 3.98
+   },
+   {
+    "type": "contest",
+    "from": 4.56,
+    "to": 5.31
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 8,
+    "face": "O2"
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "X4",
+   "b": "O2",
+   "at": "twirl",
+   "max": 2.2,
+   "says": "That pulls the screener's defender inside."
+  },
+  {
+   "type": "far",
+   "a": "X4",
+   "b": "O4",
+   "at": "pass",
+   "min": 1.6,
+   "says": "That's the Twirl."
+  },
+  {
+   "type": "behind_arc",
+   "player": "O4",
+   "at": "catch",
+   "says": "Help on the curl? Hit the shooter."
+  },
+  {
+   "type": "open",
+   "player": "O4",
+   "at": "release",
+   "min": 1.3,
+   "says": "open three"
+  },
+  {
+   "type": "order",
+   "marks": [
+    "cut",
+    "turn",
+    "help",
+    "twirl",
+    "pass",
+    "catch",
+    "release",
+    "make"
+   ],
+   "says": "curl, help, twirl, three"
+  }
+ ],
+ "notes": [
+  "O2 curls O4 tight; X4 steps in to stop the curl.",
+  "O4 pivots, uses O5's screen and flares to the wing; O1 hits him, three."
+ ]
+}

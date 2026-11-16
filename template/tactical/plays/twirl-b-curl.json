@@ -1,0 +1,508 @@
+{
+ "id": "twirl-b-curl",
+ "title": "Twirl B: the screener's defender stays up, the cutter is open on the curl",
+ "duration": 7.4,
+ "concept": "twirl-action",
+ "source": "original E2A play (standard twirl action: stagger screens, first screener uses the second screen; generic coaching knowledge)",
+ "squareUp": true,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Passer at the top: reads the first screener's defender"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Cutter: curls the first screen to the rim"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Left corner"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "First screener: screens for the cutter, then twirls off the second screen to the wing"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Second screener, high"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the ball",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "On the cutter: trails",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Left corner",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "On the first screener: helps (A) / stays up (B)",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "On the second screener: stays high",
+   "guards": "O5"
+  }
+ ],
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 2.595,
+   "dribble": true,
+   "hand": 1
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O2",
+   "t0": 2.595,
+   "t1": 3.045,
+   "style": "chest"
+  },
+  {
+   "type": "hold",
+   "player": "O2",
+   "from": 3.045,
+   "to": 3.9
+  },
+  {
+   "type": "layup",
+   "player": "O2",
+   "t0": 3.9,
+   "t1": 4.3,
+   "make": true
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "cut": 0.9,
+  "turn": 2.38,
+  "up": 2.08,
+  "twirl": 2.85,
+  "pass": 2.595,
+  "catch": 3.045,
+  "finish": 3.9,
+  "make": 4.3,
+  "end": 7.4
+ },
+ "actions": {
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 8,
+    "face": "O3"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 8,
+    "face": "O1"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 8,
+    "face": "O1"
+   }
+  ],
+  "O4": [
+   {
+    "type": "screen",
+    "from": 0,
+    "to": 2.8000000000000003,
+    "face": "X2"
+   }
+  ],
+  "O5": [
+   {
+    "type": "screen",
+    "from": 0,
+    "to": 4.15,
+    "face": "X4"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 8,
+    "face": "O4"
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 8,
+    "face": "O2"
+   }
+  ],
+  "O2": [
+   {
+    "type": "celebrate",
+    "from": 4.8,
+    "to": 7.4
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "X4",
+   "b": "O4",
+   "at": "twirl",
+   "max": 1.3,
+   "says": "This time, the defender stays up."
+  },
+  {
+   "type": "far",
+   "a": "X2",
+   "b": "O2",
+   "at": "catch",
+   "min": 0.9,
+   "says": "Now the cutter's open."
+  },
+  {
+   "type": "near_rim",
+   "player": "O2",
+   "at": "finish",
+   "max": 1.6,
+   "says": "Hit him on the move."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "cut",
+    "up",
+    "turn",
+    "pass",
+    "catch",
+    "finish",
+    "make"
+   ],
+   "says": "curl, stay up, pass to the cutter, layup"
+  }
+ ],
+ "notes": [
+  "Same stagger and curl as twirl-a-three.",
+  "X4 stays up with O4 over the second screen; O1 leads O2 on the curl, layup."
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0,
+    1.4,
+    8.6
+   ],
+   [
+    0.15,
+    1.4,
+    8.6
+   ],
+   [
+    1.75,
+    -0.9,
+    8.6
+   ],
+   [
+    7.4,
+    -0.9,
+    8.6
+   ]
+  ],
+  "O2": [
+   [
+    0,
+    -6.3,
+    1.4
+   ],
+   [
+    0.9,
+    -6.3,
+    1.4
+   ],
+   [
+    1.706,
+    -5.75,
+    2.5
+   ],
+   [
+    2.295,
+    -4.2,
+    3.6
+   ],
+   [
+    2.552,
+    -3.5,
+    4.2
+   ],
+   [
+    2.808,
+    -2.6,
+    4.3
+   ],
+   [
+    3.103,
+    -1.75,
+    3.85
+   ],
+   [
+    3.41,
+    -1.3,
+    3.15
+   ],
+   [
+    4.055,
+    -0.8,
+    2.5
+   ],
+   [
+    7.4,
+    -0.8,
+    2.5
+   ]
+  ],
+  "O3": [
+   [
+    0,
+    6.3,
+    1.5
+   ],
+   [
+    7.4,
+    6.3,
+    1.5
+   ]
+  ],
+  "O4": [
+   [
+    0,
+    -3.5,
+    3
+   ],
+   [
+    2.85,
+    -3.5,
+    3
+   ],
+   [
+    3.33,
+    -4.35,
+    3.9
+   ],
+   [
+    3.569,
+    -4.95,
+    4.85
+   ],
+   [
+    3.772,
+    -5.35,
+    5.7
+   ],
+   [
+    4.23,
+    -5.9,
+    6.7
+   ],
+   [
+    7.4,
+    -5.9,
+    6.7
+   ]
+  ],
+  "O5": [
+   [
+    0,
+    -4.3,
+    5.3
+   ],
+   [
+    7.4,
+    -4.3,
+    5.3
+   ]
+  ],
+  "X1": [
+   [
+    0,
+    1.15,
+    7.8
+   ],
+   [
+    0.25,
+    1.15,
+    7.8
+   ],
+   [
+    1.85,
+    0.05,
+    7.95
+   ],
+   [
+    7.4,
+    0.05,
+    7.95
+   ]
+  ],
+  "X2": [
+   [
+    0,
+    -5.55,
+    1.3
+   ],
+   [
+    1.35,
+    -5.55,
+    1.3
+   ],
+   [
+    1.996,
+    -5.3,
+    2.25
+   ],
+   [
+    2.351,
+    -4.65,
+    3.15
+   ],
+   [
+    2.66,
+    -4.2,
+    4.15
+   ],
+   [
+    2.969,
+    -3.3,
+    4.75
+   ],
+   [
+    3.27,
+    -2.4,
+    4.6
+   ],
+   [
+    3.894,
+    -1.7,
+    4
+   ],
+   [
+    7.4,
+    -1.7,
+    4
+   ]
+  ],
+  "X3": [
+   [
+    0,
+    5.5,
+    2.1
+   ],
+   [
+    7.4,
+    5.5,
+    2.1
+   ]
+  ],
+  "X4": [
+   [
+    0,
+    -2.8,
+    3.2
+   ],
+   [
+    2.08,
+    -2.8,
+    3.2
+   ],
+   [
+    2.5,
+    -3,
+    3.5
+   ],
+   [
+    2.85,
+    -3,
+    3.5
+   ],
+   [
+    3.165,
+    -3.3,
+    4
+   ],
+   [
+    3.371,
+    -3.6,
+    4.75
+   ],
+   [
+    3.584,
+    -3.75,
+    5.7
+   ],
+   [
+    3.798,
+    -4.35,
+    6.35
+   ],
+   [
+    4.152,
+    -5.05,
+    6.5
+   ],
+   [
+    7.4,
+    -5.05,
+    6.5
+   ]
+  ],
+  "X5": [
+   [
+    0,
+    -2.95,
+    6.2
+   ],
+   [
+    2.845,
+    -2.95,
+    6.2
+   ],
+   [
+    3.645,
+    -2.3,
+    5.2
+   ],
+   [
+    7.4,
+    -2.3,
+    5.2
+   ]
+  ]
+ },
+ "screens": []
+}
