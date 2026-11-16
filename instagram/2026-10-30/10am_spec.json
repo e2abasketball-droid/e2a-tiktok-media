@@ -1,0 +1,335 @@
+{
+ "pillar": "Inside the European Game",
+ "slides": [
+  {
+   "type": "cover",
+   "kicker": "Basketball IQ · Spacing",
+   "title": "Space the floor. Free your teammates.",
+   "body": "Great spacing creates room before the first pass is thrown. Here's the idea in four slides."
+  },
+  {
+   "type": "diagram",
+   "kicker": "The problem",
+   "title": "Bunched up = easy to guard",
+   "body": "When teammates crowd the same area, one defender can guard two players and help is always close.",
+   "diagram": {
+    "players": [
+     {
+      "n": 1,
+      "at": [
+       25,
+       30
+      ]
+     },
+     {
+      "n": 2,
+      "at": [
+       31,
+       26
+      ]
+     },
+     {
+      "n": 3,
+      "at": [
+       34,
+       21
+      ]
+     },
+     {
+      "n": 4,
+      "at": [
+       19,
+       19
+      ]
+     },
+     {
+      "n": 5,
+      "at": [
+       27,
+       17
+      ]
+     },
+     {
+      "d": 1,
+      "at": [
+       28,
+       23
+      ]
+     },
+     {
+      "d": 1,
+      "at": [
+       25,
+       26
+      ]
+     },
+     {
+      "d": 1,
+      "at": [
+       22,
+       22
+      ]
+     },
+     {
+      "d": 1,
+      "at": [
+       30,
+       18
+      ]
+     },
+     {
+      "d": 1,
+      "at": [
+       25,
+       34
+      ]
+     }
+    ],
+    "zones": [
+     [
+      29,
+      23,
+      7
+     ]
+    ],
+    "ball": [
+     25,
+     30
+    ]
+   }
+  },
+  {
+   "type": "diagram",
+   "kicker": "The fix",
+   "title": "Five players. Five spots.",
+   "body": "A common coaching guide: keep about 12–15 feet (roughly 4 m) between perimeter teammates. Every defender now has one job, and the lanes open up.",
+   "diagram": {
+    "players": [
+     {
+      "n": 1,
+      "at": [
+       25,
+       31
+      ]
+     },
+     {
+      "n": 2,
+      "at": [
+       11,
+       26
+      ]
+     },
+     {
+      "n": 3,
+      "at": [
+       39,
+       26
+      ]
+     },
+     {
+      "n": 4,
+      "at": [
+       14,
+       10
+      ]
+     },
+     {
+      "n": 5,
+      "at": [
+       36,
+       10
+      ]
+     },
+     {
+      "d": 1,
+      "at": [
+       25,
+       34
+      ]
+     },
+     {
+      "d": 1,
+      "at": [
+       14,
+       29
+      ]
+     },
+     {
+      "d": 1,
+      "at": [
+       36,
+       29
+      ]
+     },
+     {
+      "d": 1,
+      "at": [
+       18,
+       13
+      ]
+     },
+     {
+      "d": 1,
+      "at": [
+       32,
+       13
+      ]
+     }
+    ],
+    "arrows": [
+     {
+      "kind": "measure",
+      "from": [
+       25,
+       31
+      ],
+      "to": [
+       11,
+       26
+      ],
+      "label": "~4 m"
+     },
+     {
+      "kind": "measure",
+      "from": [
+       25,
+       31
+      ],
+      "to": [
+       39,
+       26
+      ]
+     }
+    ],
+    "ball": [
+     25,
+     31
+    ]
+   }
+  },
+  {
+   "type": "diagram",
+   "kicker": "Keep it alive",
+   "title": "Move when the ball moves",
+   "body": "After a pass, cut or slide into the next open spot. Spacing is not a shape you hold, it is a habit you repeat.",
+   "diagram": {
+    "players": [
+     {
+      "n": 1,
+      "at": [
+       25,
+       31
+      ]
+     },
+     {
+      "n": 2,
+      "at": [
+       11,
+       26
+      ]
+     },
+     {
+      "n": 3,
+      "at": [
+       39,
+       26
+      ]
+     },
+     {
+      "n": 4,
+      "at": [
+       14,
+       10
+      ]
+     },
+     {
+      "n": 5,
+      "at": [
+       36,
+       10
+      ]
+     },
+     {
+      "d": 1,
+      "at": [
+       25,
+       34
+      ]
+     },
+     {
+      "d": 1,
+      "at": [
+       14,
+       29
+      ]
+     },
+     {
+      "d": 1,
+      "at": [
+       36,
+       29
+      ]
+     },
+     {
+      "d": 1,
+      "at": [
+       18,
+       13
+      ]
+     },
+     {
+      "d": 1,
+      "at": [
+       32,
+       13
+      ]
+     }
+    ],
+    "arrows": [
+     {
+      "kind": "pass",
+      "from": [
+       25,
+       31
+      ],
+      "to": [
+       11,
+       26
+      ]
+     },
+     {
+      "kind": "gold",
+      "from": [
+       14,
+       10
+      ],
+      "to": [
+       22,
+       14
+      ]
+     },
+     {
+      "kind": "gold",
+      "from": [
+       39,
+       26
+      ],
+      "to": [
+       33,
+       20
+      ]
+     }
+    ],
+    "ball": [
+     11,
+     26
+    ]
+   }
+  },
+  {
+   "type": "cta",
+   "title": "Master the European game",
+   "body": "Save this for your next session and send it to the player who needs more room."
+  }
+ ]
+}
