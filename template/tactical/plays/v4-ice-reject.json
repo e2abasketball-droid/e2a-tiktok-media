@@ -1,0 +1,408 @@
+{
+ "id": "v4-ice-reject",
+ "title": "Counter to ICE: reject the screen before the big drops",
+ "duration": 4.8,
+ "concept": "reject-vs-ice",
+ "source": "original E2A play (standard FIBA/European half-court concept, generic coaching knowledge)",
+ "notes": [
+  "Same setup as v4-ice-contain. X1 jumps to the top (ICE), but X5 has stepped up with the screener.",
+  "O1 rejects at once, baseline, before X5 can drop: the lane is open for the layup."
+ ],
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Ball handler, right wing"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Left corner"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Left wing"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Top, left slot"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Side ball screener"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the ball: ICE (jumps to the top side)",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "Left corner",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Left wing",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "Top",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "On the screener: drops to the baseline side",
+   "guards": "O5"
+  }
+ ],
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 3.05,
+   "dribble": true
+  },
+  {
+   "type": "layup",
+   "player": "O1",
+   "t0": 3.05,
+   "t1": 3.45,
+   "make": true
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "screen": 1.05,
+  "ice": 1.1,
+  "reject": 1.15,
+  "beat": 1.9,
+  "finish": 3.05,
+  "make": 3.45,
+  "end": 4.8
+ },
+ "actions": {
+  "X2": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 5,
+    "face": "O1"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 5,
+    "face": "O1"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 5,
+    "face": "O1"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 1.6,
+    "face": "O1"
+   }
+  ],
+  "O5": [
+   {
+    "type": "screen",
+    "from": 1.05,
+    "to": 2.35,
+    "face": "X1"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0.6,
+    "to": 1.9,
+    "face": "O5"
+   }
+  ],
+  "O1": [
+   {
+    "type": "celebrate",
+    "from": 3.7,
+    "to": 4.6
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "X1",
+   "b": "O5",
+   "at": "ice",
+   "max": 1.2,
+   "says": "They ICE the screen."
+  },
+  {
+   "type": "far",
+   "a": "X5",
+   "b": "O1",
+   "at": "beat",
+   "min": 2,
+   "says": "The big is still up with the screener: he has not dropped yet."
+  },
+  {
+   "type": "far",
+   "a": "X5",
+   "b": "O1",
+   "at": "finish",
+   "min": 1,
+   "says": "The big arrives late."
+  },
+  {
+   "type": "near_rim",
+   "player": "O1",
+   "at": "finish",
+   "max": 1.5,
+   "says": "Baseline, before the big gets there: layup."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "screen",
+    "ice",
+    "reject",
+    "beat",
+    "finish"
+   ],
+   "says": "ice, reject, baseline layup"
+  }
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0,
+    5.5,
+    6.8
+   ],
+   [
+    1.15,
+    5.5,
+    6.8
+   ],
+   [
+    1.733,
+    6.15,
+    5.2
+   ],
+   [
+    2.202,
+    4.6,
+    2.9
+   ],
+   [
+    3.108,
+    1.05,
+    2.35
+   ],
+   [
+    4.8,
+    1.05,
+    2.35
+   ]
+  ],
+  "O2": [
+   [
+    0,
+    -6.85,
+    1.2
+   ],
+   [
+    4.8,
+    -6.85,
+    1.2
+   ]
+  ],
+  "O3": [
+   [
+    0,
+    -5.2,
+    6.4
+   ],
+   [
+    4.8,
+    -5.2,
+    6.4
+   ]
+  ],
+  "O4": [
+   [
+    0,
+    -1.8,
+    8.8
+   ],
+   [
+    4.8,
+    -1.8,
+    8.8
+   ]
+  ],
+  "O5": [
+   [
+    0,
+    2.2,
+    5.6
+   ],
+   [
+    1,
+    4.55,
+    7.65
+   ],
+   [
+    2.4,
+    4.55,
+    7.65
+   ],
+   [
+    3.159,
+    3.6,
+    8.6
+   ],
+   [
+    4.8,
+    3.6,
+    8.6
+   ]
+  ],
+  "X1": [
+   [
+    0,
+    4.9,
+    6
+   ],
+   [
+    0.55,
+    4.9,
+    6
+   ],
+   [
+    1.201,
+    5,
+    6.95
+   ],
+   [
+    1.45,
+    5,
+    6.95
+   ],
+   [
+    2.188,
+    6.5,
+    5.2
+   ],
+   [
+    2.874,
+    5.2,
+    3.6
+   ],
+   [
+    4.8,
+    5.2,
+    3.6
+   ]
+  ],
+  "X2": [
+   [
+    0,
+    -5.8,
+    1.9
+   ],
+   [
+    4.8,
+    -5.8,
+    1.9
+   ]
+  ],
+  "X3": [
+   [
+    0,
+    -4.5,
+    5.6
+   ],
+   [
+    4.8,
+    -4.5,
+    5.6
+   ]
+  ],
+  "X4": [
+   [
+    0,
+    -1.4,
+    7.8
+   ],
+   [
+    0.8,
+    -1.4,
+    7.8
+   ],
+   [
+    2.082,
+    0.2,
+    7.2
+   ],
+   [
+    4.8,
+    0.2,
+    7.2
+   ]
+  ],
+  "X5": [
+   [
+    0,
+    1.8,
+    4.8
+   ],
+   [
+    1.55,
+    3.7,
+    6.7
+   ],
+   [
+    1.9,
+    3.7,
+    6.7
+   ],
+   [
+    2.619,
+    3.9,
+    4.6
+   ],
+   [
+    3.196,
+    2.8,
+    3.55
+   ],
+   [
+    4.8,
+    2.8,
+    3.55
+   ]
+  ]
+ },
+ "screens": []
+}

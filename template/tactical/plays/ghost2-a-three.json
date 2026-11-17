@@ -1,0 +1,450 @@
+{
+ "id": "ghost2-a-three",
+ "title": "Ghost screen A: both defenders take the ball, the shooter pops for three",
+ "duration": 7.2,
+ "concept": "ghost-screen",
+ "source": "original E2A play (standard ghost screen / slip-out read, generic coaching knowledge)",
+ "squareUp": true,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Ball handler, top (a step left), ball in the right hand"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Shooter: right wing, ghost screen"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Left corner"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Right corner"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Right dunker spot"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the ball",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "On the shooter: steps to the ball (A) / stays (B)",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Left corner",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "Right corner",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "Help from the right block",
+   "guards": "O5"
+  }
+ ],
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 3.45,
+   "dribble": true,
+   "hand": 1
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O2",
+   "t0": 3.45,
+   "t1": 4.07,
+   "style": "chest"
+  },
+  {
+   "type": "hold",
+   "player": "O2",
+   "from": 4.07,
+   "to": 4.45
+  },
+  {
+   "type": "shot",
+   "player": "O2",
+   "t0": 4.45,
+   "t1": 5.550000000000001,
+   "make": true,
+   "three": true
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "approach": 0.5,
+  "jab": 1.25,
+  "step": 2.45,
+  "plant": 2.56,
+  "pop": 2.73,
+  "pass": 3.45,
+  "catch": 4.07,
+  "release": 4.45,
+  "make": 5.550000000000001,
+  "end": 7.2
+ },
+ "actions": {
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 7.2,
+    "face": "O3"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 7.2,
+    "face": "O4"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 3.5500000000000003,
+    "face": "O1"
+   },
+   {
+    "type": "contest",
+    "from": 4.5,
+    "to": 5.2
+   }
+  ],
+  "O2": [
+   {
+    "type": "gather",
+    "from": 2.5,
+    "to": 2.7600000000000002
+   },
+   {
+    "type": "celebrate",
+    "from": 5.7,
+    "to": 7.2
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 2.45,
+    "to": 3.6500000000000004,
+    "face": "O1"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 7.2,
+    "face": "O5"
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "far",
+   "a": "O2",
+   "b": "X1",
+   "at": "plant",
+   "min": 1,
+   "says": "Pop before contact."
+  },
+  {
+   "type": "near",
+   "a": "X2",
+   "b": "O1",
+   "at": "pass",
+   "max": 1.3,
+   "says": "When both defenders take the ball..."
+  },
+  {
+   "type": "near",
+   "a": "X1",
+   "b": "O1",
+   "at": "pass",
+   "max": 1.3,
+   "says": "When both defenders take the ball..."
+  },
+  {
+   "type": "behind_arc",
+   "player": "O2",
+   "at": "catch",
+   "says": "...hit the shooter."
+  },
+  {
+   "type": "open",
+   "player": "O2",
+   "at": "release",
+   "min": 1.5,
+   "says": "He beat two defenders without touching either one."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "approach",
+    "jab",
+    "step",
+    "plant",
+    "pass",
+    "catch",
+    "release",
+    "make"
+   ],
+   "says": "sell, step, pop, pass, three"
+  }
+ ],
+ "notes": [
+  "O2 sells a ball screen on X1's screen-side shoulder, plants ~1.2 m short and pops to the right wing.",
+  "X2 steps to the ball before the pass; X1 stays on the ball and closes out late.",
+  "Chest pass, catch behind the arc, three."
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0,
+    0.9,
+    9
+   ],
+   [
+    1.25,
+    0.9,
+    9
+   ],
+   [
+    1.7,
+    0.6,
+    8.8
+   ],
+   [
+    7.2,
+    0.6,
+    8.8
+   ]
+  ],
+  "O2": [
+   [
+    0,
+    -4.95,
+    6.6
+   ],
+   [
+    0.5,
+    -4.95,
+    6.6
+   ],
+   [
+    1.342,
+    -3.4,
+    7.3
+   ],
+   [
+    2.566,
+    -0.5,
+    8
+   ],
+   [
+    2.736,
+    -0.5,
+    8
+   ],
+   [
+    3.32,
+    -2.2,
+    7.8
+   ],
+   [
+    4.113,
+    -4.85,
+    7.25
+   ],
+   [
+    7.2,
+    -4.85,
+    7.25
+   ]
+  ],
+  "O3": [
+   [
+    0,
+    6.6,
+    1.4
+   ],
+   [
+    7.2,
+    6.6,
+    1.4
+   ]
+  ],
+  "O4": [
+   [
+    0,
+    -6.6,
+    1.4
+   ],
+   [
+    7.2,
+    -6.6,
+    1.4
+   ]
+  ],
+  "O5": [
+   [
+    0,
+    -2.55,
+    1.15
+   ],
+   [
+    7.2,
+    -2.55,
+    1.15
+   ]
+  ],
+  "X1": [
+   [
+    0,
+    0.75,
+    8.15
+   ],
+   [
+    2.15,
+    0.75,
+    8.15
+   ],
+   [
+    2.55,
+    0.62,
+    8.12
+   ],
+   [
+    3.57,
+    0.62,
+    8.12
+   ],
+   [
+    4.215,
+    -1.4,
+    8
+   ],
+   [
+    4.976,
+    -3.95,
+    7.55
+   ],
+   [
+    7.2,
+    -3.95,
+    7.55
+   ]
+  ],
+  "X2": [
+   [
+    0,
+    -4.25,
+    7.25
+   ],
+   [
+    0.8,
+    -4.25,
+    7.25
+   ],
+   [
+    1.451,
+    -2.9,
+    8.05
+   ],
+   [
+    2.093,
+    -1.45,
+    8.55
+   ],
+   [
+    2.45,
+    -1.45,
+    8.55
+   ],
+   [
+    3.17,
+    0,
+    9.65
+   ],
+   [
+    3.9,
+    0,
+    9.65
+   ],
+   [
+    4.8,
+    -1.9,
+    9
+   ],
+   [
+    7.2,
+    -1.9,
+    9
+   ]
+  ],
+  "X3": [
+   [
+    0,
+    5.65,
+    2.15
+   ],
+   [
+    7.2,
+    5.65,
+    2.15
+   ]
+  ],
+  "X4": [
+   [
+    0,
+    -5.7,
+    2.15
+   ],
+   [
+    7.2,
+    -5.7,
+    2.15
+   ]
+  ],
+  "X5": [
+   [
+    0,
+    -1.95,
+    2
+   ],
+   [
+    7.2,
+    -1.95,
+    2
+   ]
+  ]
+ },
+ "screens": []
+}

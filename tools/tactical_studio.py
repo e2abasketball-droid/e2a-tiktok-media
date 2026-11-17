@@ -50,7 +50,10 @@ from zoneinfo import ZoneInfo
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 TEMPLATE = os.path.join(ROOT, "template")
-CONFIG = os.path.join(ROOT, "config", "tactical_studio.json")
+OFFICIAL_CONFIG = os.path.join(ROOT, "config", "tactical_studio.json")
+# E2A_STUDIO_CONFIG selects another profile (V4 shadow: config/tactical_studio.v4-shadow.json). The publisher
+# still checks every scope field against the pinned delegation, so a profile that differs from it can never publish.
+CONFIG = os.environ.get("E2A_STUDIO_CONFIG", OFFICIAL_CONFIG)
 OFFICIAL_LICENCES = os.path.join(ROOT, "config", "asset_licences.json")
 # A TEST override (E2A_LICENCES) can let a shadow render through, but an MP4 rendered under it can never
 # become asset_ready: the asset gate requires the official licence file.
@@ -140,11 +143,22 @@ def slot_instant(date, n, c=None):
     return dt.datetime(d.year, d.month, d.day, hh, mm, tzinfo=sydney(c))
 
 
-def parse_cid(cid):
-    m = re.fullmatch(r"E2A-TACTICAL-(\d{4}-\d{2}-\d{2})-V(\d{2})", cid)
-    if not m:
+def slot_numbers(c=None):
+    """The configured slots, in order. V3 config: (1, 2). The V4 shadow profile: (1, 2, 3, 4). Every loop over
+    the day's videos goes through here, so the number of videos per day comes from ONE place (config)."""
+    return tuple(sorted(int(k) for k in (c or cfg())["slots"]))
+
+
+def parse_cid(cid, c=None):
+    """E2A-TACTICAL-<date>-V<nn> (live) or E2A-TACTICAL-<date>-S<nn> (V4 shadow production, never publishable).
+    With `c`, the id must also be exactly the one that config would produce for a configured slot."""
+    m = re.fullmatch(r"E2A-TACTICAL-(\d{4}-\d{2}-\d{2})-([VS])(\d{2})", str(cid))
+    if not m or int(m.group(3)) < 1:
         raise StudioError(f"bad content id {cid!r}")
-    return dt.date.fromisoformat(m.group(1)), int(m.group(2))
+    d, n = dt.date.fromisoformat(m.group(1)), int(m.group(3))
+    if c is not None and (n not in slot_numbers(c) or content_id(d, n, c) != cid):
+        raise StudioError(f"{cid}: not a slot of this config ({c['content_id']}, slots {list(slot_numbers(c))})")
+    return d, n
 
 
 # ------------------------------------------------------------------ append-only, hash-chained log
@@ -958,7 +972,7 @@ def collisions(readback, date, c=None, ignore_ids=()):
             out.append({"slot": "?", "metricool_id": p.get("id"), "why": "post without a readable date: blocks (uncertain)", "blocks": True})
             continue
         nets = sorted(x.get("network") for x in p.get("providers", []))
-        for n in (1, 2):
+        for n in slot_numbers(c):
             s = slot_instant(d, n, c)
             if abs((t - s).total_seconds()) <= win and set(nets) & set(NETWORKS):
                 kind = (p.get("instagramData") or {}).get("type") or ("VIDEO" if {"tiktok", "youtube"} & set(nets) else "POST")
@@ -1169,7 +1183,7 @@ def main(argv=None):
     if a.cmd == "plan":
         d = dt.date.fromisoformat(a.date) if a.date else target_date(parse_ts(a.now) if a.now else None, c)
         vids = []
-        for n in (1, 2):
+        for n in slot_numbers(c):
             cid = content_id(d, n, c)
             vids.append({"cid": cid, "slot_sydney": c["slots"][str(n)]["time"], "slot_utc": slot_instant(d, n, c).astimezone(dt.timezone.utc).isoformat(),
                          "label": c["slots"][str(n)]["label"], "state": s.state(cid), "next": s.next_phase(cid, c),
@@ -1222,7 +1236,7 @@ def main(argv=None):
         out = s.verify_chain()
     elif a.cmd == "report":
         out = {"date": a.date, "log": s.verify_chain(), "videos": []}
-        for n in (1, 2):
+        for n in slot_numbers(c):
             cid = content_id(a.date, n, c)
             out["videos"].append({"cid": cid, "slot": c["slots"][str(n)]["time"], "state": s.state(cid),
                                   "confirmations": [{k: e.get(k) for k in ("network", "metricool_id", "status", "public_url")} for e in s.events(cid, "confirmation")],

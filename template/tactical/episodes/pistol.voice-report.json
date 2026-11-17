@@ -1,0 +1,108 @@
+{
+ "source": "public/tactical/pistol/voice-raw.mp3",
+ "source_sec": 24.48,
+ "preroll": 0.12,
+ "output": "public/tactical/pistol/voice.wav",
+ "output_sec": 29.13,
+ "inserted_total_sec": 4.53,
+ "last_word_end": 29.21,
+ "gaps": [
+  {
+   "after": "One screen.",
+   "natural_silence": [
+    1.96,
+    2.28
+   ],
+   "natural_sec": 0.32,
+   "target_sec": 0.7,
+   "inserted_sec": 0.38,
+   "cut_at_source": 2.145,
+   "why": "hook titles land"
+  },
+  {
+   "after": "ball screen right away.",
+   "natural_silence": [
+    5.99,
+    6.47
+   ],
+   "natural_sec": 0.48,
+   "target_sec": 1.0,
+   "inserted_sec": 0.52,
+   "cut_at_source": 6.125,
+   "why": "hand-off and screen in the same breath"
+  },
+  {
+   "after": "stops behind it.",
+   "natural_silence": [
+    9.4,
+    9.83
+   ],
+   "natural_sec": 0.43,
+   "target_sec": 0.5,
+   "inserted_sec": 0.07,
+   "cut_at_source": 9.675,
+   "why": "he rises"
+  },
+  {
+   "after": "Pull-up three.",
+   "natural_silence": [
+    10.46,
+    10.95
+   ],
+   "natural_sec": 0.49,
+   "target_sec": 1.8,
+   "inserted_sec": 1.31,
+   "cut_at_source": 10.625,
+   "why": "ball flight to the swish + OPEN THREE"
+  },
+  {
+   "after": "has to step up.",
+   "natural_silence": [
+    14.47,
+    14.53
+   ],
+   "natural_sec": 0.06,
+   "target_sec": 0.8,
+   "inserted_sec": 0.74,
+   "cut_at_source": 14.495,
+   "why": "freeze: the roller is alone"
+  },
+  {
+   "after": "Easy two at the rim.",
+   "natural_silence": [
+    16.31,
+    16.84
+   ],
+   "natural_sec": 0.53,
+   "target_sec": 1.5,
+   "inserted_sec": 0.97,
+   "cut_at_source": 16.495,
+   "why": "layup lands + EASY TWO"
+  },
+  {
+   "after": "one second apart.",
+   "natural_silence": [
+    18.7,
+    19.19
+   ],
+   "natural_sec": 0.49,
+   "target_sec": 0.5,
+   "inserted_sec": 0.01,
+   "cut_at_source": 18.855,
+   "why": "title lands"
+  },
+  {
+   "after": "give something up.",
+   "natural_silence": [
+    20.8,
+    21.27
+   ],
+   "natural_sec": 0.47,
+   "target_sec": 1.0,
+   "inserted_sec": 0.53,
+   "cut_at_source": 21.025,
+   "why": "title holds before the CTA"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}

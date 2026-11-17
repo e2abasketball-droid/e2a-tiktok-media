@@ -1,0 +1,411 @@
+{
+ "id": "elev3d-a-chase",
+ "title": "Elevator screen A: he chases, the doors close, catch and shoot",
+ "duration": 4.8,
+ "concept": "elevator",
+ "source": "original E2A play (elevator screen, generic coaching knowledge); same possession as the E2A 2.5D pilot 01",
+ "squareUp": true,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Passer"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Shooter"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Spacer"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Left screener"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Right screener"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the passer",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "On the shooter",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "On the spacer",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "On the left screener",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "On the right screener",
+   "guards": "O5"
+  }
+ ],
+ "start": {
+  "O1": [
+   4.6,
+   7.0
+  ],
+  "O2": [
+   -1.9,
+   2.2
+  ],
+  "O3": [
+   -6.9,
+   1.0
+  ],
+  "O4": [
+   -0.85,
+   5.8
+  ],
+  "O5": [
+   0.85,
+   5.8
+  ],
+  "X1": [
+   4.0,
+   6.3
+  ],
+  "X2": [
+   -1.6,
+   2.8
+  ],
+  "X3": [
+   -5.2,
+   2.6
+  ],
+  "X4": [
+   -1.25,
+   4.9
+  ],
+  "X5": [
+   1.25,
+   4.9
+  ]
+ },
+ "legs": {
+  "O1": [
+   {
+    "at": 0,
+    "to": [
+     4.0,
+     7.9
+    ],
+    "dur": 1.4
+   }
+  ],
+  "O2": [
+   {
+    "at": 0,
+    "to": [
+     -1.15,
+     1.4
+    ],
+    "dur": 0.55
+   },
+   {
+    "at": 0.68,
+    "via": [
+     [
+      -0.75,
+      1.7
+     ],
+     [
+      -0.4,
+      2.85
+     ],
+     [
+      -0.15,
+      4.5
+     ],
+     [
+      0,
+      5.8
+     ],
+     [
+      0,
+      6.7
+     ],
+     [
+      -0.15,
+      7.9
+     ]
+    ],
+    "to": [
+     -0.25,
+     8.75
+    ],
+    "dur": 1.72
+   }
+  ],
+  "O3": [],
+  "O4": [
+   {
+    "at": 1.85,
+    "to": [
+     -0.3,
+     5.8
+    ],
+    "dur": 0.45
+   }
+  ],
+  "O5": [
+   {
+    "at": 1.85,
+    "to": [
+     0.3,
+     5.8
+    ],
+    "dur": 0.45
+   }
+  ],
+  "X1": [
+   {
+    "at": 0,
+    "to": [
+     3.5,
+     7.15
+    ],
+    "dur": 1.4
+   },
+   {
+    "at": 2.4,
+    "to": [
+     3.1,
+     7.4
+    ],
+    "dur": 0.6
+   }
+  ],
+  "X2": [
+   {
+    "at": 0,
+    "to": [
+     -1.45,
+     1.95
+    ],
+    "dur": 0.5
+   },
+   {
+    "at": 0.78,
+    "via": [
+     [
+      -1.1,
+      2.3
+     ],
+     [
+      -0.65,
+      3.6
+     ],
+     [
+      -0.4,
+      4.4
+     ]
+    ],
+    "to": [
+     0.0,
+     5.1
+    ],
+    "dur": 1.6
+   },
+   {
+    "at": 2.4,
+    "via": [
+     [
+      -0.7,
+      5.3
+     ],
+     [
+      -1.05,
+      6.2
+     ]
+    ],
+    "to": [
+     -0.95,
+     7.0
+    ],
+    "dur": 1.0
+   }
+  ],
+  "X3": [
+   {
+    "at": 3.1,
+    "to": [
+     -4.6,
+     2.4
+    ],
+    "dur": 0.7
+   }
+  ],
+  "X4": [],
+  "X5": []
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 2.2,
+   "dribble": true
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O2",
+   "t0": 2.2,
+   "t1": 2.6,
+   "style": "chest"
+  },
+  {
+   "type": "hold",
+   "player": "O2",
+   "from": 2.6,
+   "to": 3.05
+  },
+  {
+   "type": "shot",
+   "player": "O2",
+   "t0": 3.05,
+   "t1": 4.15,
+   "make": true
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "jab": 0.45,
+  "cut": 0.7,
+  "inGap": 1.75,
+  "through": 1.9,
+  "doorsClosed": 2.32,
+  "contact": 2.4,
+  "pass": 2.2,
+  "exit": 2.25,
+  "catch": 2.6,
+  "release": 3.05,
+  "make": 4.15,
+  "end": 4.8
+ },
+ "notes": [
+  "FIBA half court in metres: x across (basket at x=0), y from the baseline (basket at y=1.575).",
+  "O4 and O5 stand shoulder-width apart on the free-throw line (y=5.8), leaving a 1.1 m corridor.",
+  "O2 jabs toward the baseline, sprints up the middle through the corridor and fades to the top of the arc.",
+  "O4 and O5 step together only after O2 is through (doors close 1.75-2.0 s) and are stationary before X2 arrives (legal screen).",
+  "X2 chases on the same path, meets the closed doors at 2.2 s and has to go around O4 and through X4's space.",
+  "O1 dribbles from the wing to the right slot to open the passing angle; pass leaves at 2.2 s, O2 catches at 2.6 s and shoots at 3.05 s."
+ ],
+ "actions": {
+  "O4": [
+   {
+    "type": "screen",
+    "from": 2.35,
+    "to": 3.2,
+    "face": "X2"
+   }
+  ],
+  "O5": [
+   {
+    "type": "screen",
+    "from": 2.35,
+    "to": 3.2,
+    "face": "X2"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 4.8,
+    "face": "O1"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 4.8,
+    "face": "O3"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 3.3,
+    "face": "O4"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 3.3,
+    "face": "O5"
+   }
+  ],
+  "O2": [
+   {
+    "type": "celebrate",
+    "from": 4.2,
+    "to": 4.8
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "O4",
+   "b": "O5",
+   "at": "doorsClosed",
+   "max": 0.8,
+   "says": "the doors close"
+  },
+  {
+   "type": "far",
+   "a": "X2",
+   "b": "O2",
+   "at": "release",
+   "min": 1.8,
+   "says": "Catch. Shoot."
+  },
+  {
+   "type": "behind_arc",
+   "player": "O2",
+   "at": "catch",
+   "says": "Three points."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "cut",
+    "inGap",
+    "through",
+    "doorsClosed",
+    "catch",
+    "release",
+    "make"
+   ],
+   "says": "cut, through, doors, pass, three"
+  }
+ ]
+}

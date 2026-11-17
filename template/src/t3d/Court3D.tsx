@@ -291,7 +291,9 @@ export const ArenaLights: React.FC<{focus?: [number, number, number]}> = ({focus
       <spotLight position={[focus[0] - 7, 9, focus[2] - 6]} target={target} angle={0.7} penumbra={0.9} intensity={260} decay={2} color="#cdd9ff" />
       {/* back/rim light for silhouette separation */}
       <directionalLight position={[2, 6, -18]} intensity={1.1} color="#ffd9a0" />
-      <ambientLight intensity={0.12} />
+      {/* V2: low side light — models arms, knees and fabric folds from the side, reads weight on the feet */}
+      <directionalLight position={[focus[0] + 14, 3.2, focus[2] + 2]} intensity={0.85} color="#ffe6c8" />
+      <ambientLight intensity={0.1} />
     </>
   );
 };

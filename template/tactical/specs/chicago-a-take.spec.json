@@ -1,0 +1,425 @@
+{
+ "id": "chicago-a-take",
+ "title": "Chicago action A: he trails, take it tight",
+ "duration": 6.4,
+ "concept": "chicago-dho",
+ "source": "original E2A play (standard FIBA/European Chicago action: pin-down into dribble hand-off, generic coaching knowledge)",
+ "squareUp": true,
+ "notes": [
+  "O4 pins down for O2; O2 comes up to O1 for the dribble hand-off.",
+  "X2 trails over the top. O2 takes the ball off O1's hip and turns the corner; O1's body screens X2.",
+  "X4 stays deep in the lane: the pull-up in the paint is open."
+ ],
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Handler: the hand-off passer"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Shooter: comes off the pin-down"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Right wing"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Big: pin-down screener"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Big, right block"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the handler",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "On the shooter: trails (A) / jumps the hand-off (B)",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Right wing",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "On the screener (the big)",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "Weak-side big: the late help",
+   "guards": "O5"
+  }
+ ],
+ "start": {
+  "O1": [
+   -1.2,
+   8.7
+  ],
+  "X1": [
+   -0.9,
+   7.9
+  ],
+  "O2": [
+   -3.7,
+   1.7
+  ],
+  "X2": [
+   -3.2,
+   2.35
+  ],
+  "O4": [
+   -2.3,
+   5.5
+  ],
+  "X4": [
+   -1.75,
+   4.9
+  ],
+  "O3": [
+   5.6,
+   6.4
+  ],
+  "X3": [
+   4.8,
+   5.8
+  ],
+  "O5": [
+   3.1,
+   2.0
+  ],
+  "X5": [
+   2.2,
+   2.5
+  ]
+ },
+ "legs": {
+  "O3": [],
+  "X3": [],
+  "O5": [],
+  "X5": [],
+  "O1": [
+   {
+    "at": 0.35,
+    "to": [
+     -3.45,
+     7.65
+    ],
+    "speed": 2.6
+   }
+  ],
+  "O4": [
+   {
+    "at": 0.0,
+    "to": [
+     -3.95,
+     3.15
+    ],
+    "dur": 1.0
+   },
+   {
+    "at": 2.0,
+    "to": [
+     -4.4,
+     2.0
+    ],
+    "speed": 2.0
+   }
+  ],
+  "X4": [
+   {
+    "at": 0.15,
+    "to": [
+     -2.6,
+     2.95
+    ],
+    "speed": 2.4
+   },
+   {
+    "at": 2.25,
+    "to": [
+     -1.75,
+     2.75
+    ],
+    "speed": 2.6
+   }
+  ],
+  "X1": [
+   {
+    "at": 0.45,
+    "to": [
+     -2.45,
+     7.3
+    ],
+    "speed": 2.4
+   },
+   {
+    "at": 3.0,
+    "to": [
+     -2.95,
+     6.95
+    ],
+    "speed": 2.0
+   }
+  ],
+  "O2": [
+   {
+    "at": 0.75,
+    "via": [
+     [
+      -4.75,
+      2.55
+     ],
+     [
+      -4.85,
+      4.4
+     ],
+     [
+      -4.45,
+      6.25
+     ]
+    ],
+    "to": [
+     -4.05,
+     7.05
+    ],
+    "speed": 5.2
+   },
+   {
+    "at": "+0.12",
+    "via": [
+     [
+      -3.25,
+      6.5
+     ],
+     [
+      -2.45,
+      5.55
+     ]
+    ],
+    "to": [
+     -1.75,
+     4.6
+    ],
+    "speed": 5.4
+   }
+  ],
+  "X2": [
+   {
+    "at": 1.0,
+    "via": [
+     [
+      -4.55,
+      2.35
+     ],
+     [
+      -5.05,
+      3.7
+     ],
+     [
+      -5.0,
+      5.4
+     ]
+    ],
+    "to": [
+     -4.7,
+     6.55
+    ],
+    "speed": 5.0
+   },
+   {
+    "at": "+0.1",
+    "via": [
+     [
+      -4.4,
+      8.0
+     ],
+     [
+      -3.45,
+      8.6
+     ]
+    ],
+    "to": [
+     -2.45,
+     8.05
+    ],
+    "speed": 4.0
+   },
+   {
+    "at": "+0.0",
+    "to": [
+     -1.85,
+     5.75
+    ],
+    "speed": 4.4
+   }
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 2.1679999999999997,
+   "dribble": true
+  },
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 2.1679999999999997,
+   "to": 2.518
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O2",
+   "t0": 2.518,
+   "t1": 2.738,
+   "style": "handoff"
+  },
+  {
+   "type": "hold",
+   "player": "O2",
+   "from": 2.738,
+   "to": 3.924,
+   "dribble": true
+  },
+  {
+   "type": "shot",
+   "player": "O2",
+   "t0": 3.924,
+   "t1": 4.824,
+   "make": true,
+   "three": false
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "pindown": 1.05,
+  "trail": 1.6,
+  "pickup": 2.1679999999999997,
+  "handoff": 2.518,
+  "firstStep": 2.9179999999999997,
+  "turn": 3.268,
+  "pullup": 3.924,
+  "make": 4.824,
+  "end": 6.4
+ },
+ "actions": {
+  "O4": [
+   {
+    "type": "screen",
+    "from": 1.05,
+    "to": 1.75,
+    "face": "X2"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 7.0,
+    "face": "O1"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 7.0,
+    "face": "O1"
+   }
+  ],
+  "O1": [
+   {
+    "type": "screen",
+    "from": 2.6679999999999997,
+    "to": 3.518,
+    "face": "X2"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 2.4,
+    "to": 6.4,
+    "face": "O2"
+   }
+  ],
+  "O2": [
+   {
+    "type": "celebrate",
+    "from": 5.3,
+    "to": 6.2
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "O4",
+   "b": "X2",
+   "at": "pindown",
+   "max": 1.3,
+   "says": "A pin-down for the shooter."
+  },
+  {
+   "type": "far",
+   "a": "X2",
+   "b": "O1",
+   "at": "trail",
+   "min": 4.0,
+   "says": "If he trails..."
+  },
+  {
+   "type": "near",
+   "a": "O2",
+   "b": "O1",
+   "at": "handoff",
+   "max": 0.95,
+   "says": "take it tight, off the passer's hip."
+  },
+  {
+   "type": "far",
+   "a": "X2",
+   "b": "O2",
+   "at": "turn",
+   "min": 1.6,
+   "says": "The trailer is caught behind the hand-off."
+  },
+  {
+   "type": "far",
+   "a": "X4",
+   "b": "O2",
+   "at": "pullup",
+   "min": 1.8,
+   "says": "The big stays deep: room to turn the corner."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "pindown",
+    "handoff",
+    "turn",
+    "pullup"
+   ],
+   "says": "pin-down, hand-off, turn the corner"
+  }
+ ]
+}

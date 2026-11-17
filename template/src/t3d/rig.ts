@@ -11,10 +11,14 @@
 // World units: metres on the FIBA half court (x across, y from the baseline, z up), as play.ts.
 import type {V2, V3} from '../tactical/geometry.ts';
 import type {Play} from '../tactical/play.ts';
-import {posAt, stateOf} from '../tactical/play.ts';
+import {dribbleSide, posAt, stateOf} from '../tactical/play.ts';
 
-export type ActionType = 'screen' | 'stance' | 'topLock' | 'catchReady' | 'shoot' | 'layup' | 'pass' | 'dribble' | 'contest' | 'seal' | 'celebrate';
-export type Action = {type: ActionType; from: number; to: number; face?: string | number; side?: number};
+export type ActionType = 'screen' | 'stance' | 'topLock' | 'catchReady' | 'shoot' | 'layup' | 'pass' | 'dribble' | 'contest' | 'seal' | 'celebrate' | 'blitz' | 'bump' | 'gather';
+/** face: a player id, an angle (rad) or 'ball' (whoever holds it / the pass receiver).
+ *  V2 (2026-11-13): 'bump' = defender absorbing a screen (recoil, half step lost); 'gather' = two-foot brake before a pull-up. */
+export type Action = {type: ActionType; from: number; to: number; face?: string | number; side?: number; pose?: 'low' | 'overhead'};
+/** topLock pose 'low' (prototype 2026-11-13, opt-in per action): deeper, more upright, hips open to the
+ *  screen side, weight over the inside foot, denial arm straighter into the lane. Without `pose` nothing changes. */
 
 export type PlayWithActions = Play & {actions?: Record<string, Action[]>};
 
@@ -35,14 +39,16 @@ export type Pose = {
   wrist: [V3, V3];
   hand: [V3, V3];
   airborne: number; // metres above the floor (jumps)
+  headYaw: number; // where the head looks (radians): eyes on the ball, within the neck's range
   dims: Dims;
 };
 
-export type Dims = {H: number; thigh: number; shin: number; ankleH: number; foot: number; upper: number; fore: number; hand: number; hipW: number; shW: number; trunk: number; neck: number; headR: number};
+export type Dims = {H: number; build: number; thigh: number; shin: number; ankleH: number; foot: number; upper: number; fore: number; hand: number; hipW: number; shW: number; trunk: number; neck: number; headR: number};
 
-export const dimsFor = (H: number): Dims => {
+/** build = girth factor (1 = the reference 2.00 m athlete): a lighter guard ~0.92, a strong big ~1.14 */
+export const dimsFor = (H: number, build = 1): Dims => {
   const k = H / 2.0;
-  return {H, thigh: 0.5 * k, shin: 0.49 * k, ankleH: 0.085 * k, foot: 0.27 * k, upper: 0.34 * k, fore: 0.29 * k, hand: 0.17 * k, hipW: 0.105 * k, shW: 0.215 * k, trunk: 0.55 * k, neck: 0.075 * k, headR: 0.112 * k};
+  return {H, build, thigh: 0.5 * k, shin: 0.49 * k, ankleH: 0.085 * k, foot: 0.27 * k, upper: 0.34 * k, fore: 0.29 * k, hand: 0.17 * k, hipW: 0.105 * k * (0.6 + 0.4 * build), shW: 0.215 * k * (0.55 + 0.45 * build), trunk: 0.55 * k, neck: 0.075 * k, headR: 0.112 * k};
 };
 
 // ---------- small vector helpers ----------
@@ -112,7 +118,12 @@ export const actionsOf = (play: PlayWithActions, id: string): Action[] => {
   for (const e of play.ball) {
     if (e.type === 'shot' && e.player === id) out.push({type: 'shoot', from: e.t0 - 0.5, to: e.t0 + 0.75});
     if (e.type === 'layup' && e.player === id) out.push({type: 'layup', from: e.t0 - 0.38, to: e.t0 + 0.55});
-    if (e.type === 'pass' && e.from === id) out.push({type: 'pass', from: e.t0 - 0.22, to: e.t0 + 0.18});
+    if (e.type === 'pass' && e.from === id && e.style === 'handoff') continue; // hand-off: hands stay on the ball (below)
+    if (e.type === 'pass' && e.from === id) {
+      // overhead arms only when the pass is loaded from a held ball (play.ts raises it above the head)
+      const loaded = e.style === 'overhead' && play.ball.some((h) => h.type === 'hold' && h.player === id && !h.dribble && Math.abs(h.to - e.t0) < 1e-6);
+      out.push({type: 'pass', from: e.t0 - (loaded ? 0.4 : 0.22), to: e.t0 + 0.18, ...(loaded ? {pose: 'overhead' as const} : {})});
+    }
     if (e.type === 'pass' && e.to === id && !own.some((a) => a.type === 'catchReady' && a.to >= e.t1 - 0.05 && a.from <= e.t1)) out.push({type: 'catchReady', from: e.t1 - 0.45, to: e.t1 + 0.1});
     if (e.type === 'hold' && e.player === id && e.dribble) out.push({type: 'dribble', from: e.from, to: e.to});
   }
@@ -139,13 +150,29 @@ const activeW = (acts: Action[], type: ActionType, t: number, blend?: number) =>
   return {w, a: hit};
 };
 
+/** floor spot of the ball: holder, or the receiver/shooter of the event in flight */
+export const ballSpot = (play: Play, t: number): V2 => {
+  for (const e of play.ball) {
+    if (e.type === 'hold' && t >= e.from && t <= e.to) return posAt(play.tracks[e.player], t);
+    if (e.type === 'pass' && t >= e.t0 && t <= e.t1) {
+      const a = posAt(play.tracks[e.from], t), b = posAt(play.tracks[e.to], t), u = (t - e.t0) / Math.max(1e-3, e.t1 - e.t0);
+      return [a[0] + (b[0] - a[0]) * u, a[1] + (b[1] - a[1]) * u];
+    }
+    if ((e.type === 'shot' || e.type === 'layup') && t >= e.t0 && t <= e.t1) return posAt(play.tracks[e.player], e.t0);
+  }
+  const last = [...play.ball].reverse().find((e) => (e.type === 'hold' ? e.to : e.t1) <= t);
+  if (last?.type === 'hold') return posAt(play.tracks[last.player], t);
+  if (last?.type === 'pass') return posAt(play.tracks[last.to], t);
+  return [0, 1.575];
+};
+
 /** where the player looks / faces when not running: ball, man, or an explicit target */
 const lookAngle = (play: PlayWithActions, id: string, t: number, acts: Action[]): number | undefined => {
   for (const a of acts) {
     if (a.face !== undefined && t >= a.from - 0.1 && t <= a.to + 0.1) {
       if (typeof a.face === 'number') return a.face;
       const me = posAt(play.tracks[id], t);
-      const q = posAt(play.tracks[a.face], t);
+      const q = a.face === 'ball' ? ballSpot(play, t) : posAt(play.tracks[a.face], t);
       return Math.atan2(q[1] - me[1], q[0] - me[0]);
     }
   }
@@ -204,9 +231,14 @@ const simulate = (play: PlayWithActions, id: string, dims: Dims): Sim => {
     // ----- stance width by action
     const screenW = activeW(acts, 'screen', tc).w;
     const stanceW0 = activeW(acts, 'stance', tc).w;
-    const lockW = activeW(acts, 'topLock', tc).w;
+    const lockA = activeW(acts, 'topLock', tc);
+    const lockW = lockA.w;
+    const lowW = lockA.a?.pose === 'low' ? lockW : 0;
     const sealW = activeW(acts, 'seal', tc).w;
-    const stanceW = lerp(0.36, 0.62, Math.max(screenW, stanceW0, lockW * 0.9, sealW));
+    const blitzW = activeW(acts, 'blitz', tc).w;
+    const gatherW = activeW(acts, 'gather', tc).w;
+    const bumpW = activeW(acts, 'bump', tc).w;
+    const stanceW = lerp(0.36, 0.62, Math.max(screenW, stanceW0, lockW * 0.9, sealW, blitzW, gatherW * 0.8, bumpW * 0.7)) + 0.08 * lowW + 0.06 * blitzW;
     // ----- gait phase from distance (stride grows with speed)
     const cycleLen = clamp(0.8 + 0.5 * speed, 0.9, 3.4);
     let rate = speed / cycleLen;
@@ -295,7 +327,10 @@ const avg = (sim: Sim, t: number, pick: (r: SimRow) => number, w = 0.12) => {
   return s / n;
 };
 
-export const PLAYER_HEIGHTS: Record<string, number> = {O1: 1.9, O2: 1.98, O3: 2.0, O4: 2.06, O5: 2.1, X1: 1.91, X2: 1.99, X3: 2.01, X4: 2.05, X5: 2.09};
+export const PLAYER_HEIGHTS: Record<string, number> = {O1: 1.88, O2: 1.98, O3: 2.0, O4: 2.06, O5: 2.11, X1: 1.91, X2: 1.99, X3: 2.01, X4: 2.05, X5: 2.09};
+/** silhouettes (2026-11-13): the point guard lighter and compact, the bigs stronger — readable in close shots */
+export const PLAYER_BUILD: Record<string, number> = {O1: 0.92, O2: 0.97, O3: 1.0, O4: 1.07, O5: 1.14, X1: 0.95, X2: 0.98, X3: 1.0, X4: 1.06, X5: 1.12};
+const dimsOf = (id: string) => dimsFor(PLAYER_HEIGHTS[id] ?? 2.0, PLAYER_BUILD[id] ?? 1);
 
 /** jump height for shots and layups */
 const jumpAt = (acts: Action[], t: number) => {
@@ -322,6 +357,18 @@ const jumpAt = (acts: Action[], t: number) => {
   return z;
 };
 
+/** landing: the knees absorb the fall for ~0.3 s after a shot or a layup (negative = pelvis drops) */
+const landAt = (acts: Action[], t: number) => {
+  let d = 0;
+  for (const a of acts) {
+    const land = a.type === 'shoot' ? 0.8 : a.type === 'layup' ? 0.84 : -1;
+    if (land < 0) continue;
+    const tt = t - a.from - land;
+    if (tt > 0 && tt < 0.34) d = Math.max(d, (a.type === 'shoot' ? 0.12 : 0.15) * Math.sin((Math.PI * tt) / 0.34) * (1 - 0.35 * tt / 0.34));
+  }
+  return d;
+};
+
 export type BallHint = {holder?: string; pos: V3};
 
 /**
@@ -329,8 +376,7 @@ export type BallHint = {holder?: string; pos: V3};
  * hands can hold it, `rim` is the basket for shooting arms.
  */
 export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallHint, rim: V3): Pose => {
-  const H = PLAYER_HEIGHTS[id] ?? 2.0;
-  const D = dimsFor(H);
+  const D = dimsOf(id);
   const sim = simulate(play, id, D);
   const r = rowAt(sim, t);
   const acts = actionsOf(play, id);
@@ -348,6 +394,7 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
   const screen = w('screen');
   const stance = w('stance');
   const lock = w('topLock');
+  const low = lock.a?.pose === 'low' ? lock.w : 0;
   const seal = w('seal');
   const catchR = w('catchReady', 0.15);
   const shoot = w('shoot', 0.12);
@@ -356,7 +403,16 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
   const dribble = w('dribble');
   const contest = w('contest', 0.12);
   const celebrate = w('celebrate', 0.2);
-  const crouchAmt = Math.max(stance.w, lock.w, screen.w * 0.5, seal.w * 0.7, catchR.w * 0.5) * (1 - run * 0.6);
+  const blitz = w('blitz', 0.15);
+  const bump = w('bump', 0.08);
+  const gather = w('gather', 0.1);
+  // anticipation (V2): before a burst the player loads — sinks, leans in and turns the hips toward the exit
+  const fut = rowAt(sim, t + 0.24);
+  const load = clamp((fut.speed - speed - 1.2) / 2.5) * clamp(1 - speed / 2.2);
+  const loadTurn = load * clamp(wrap(fut.heading - h), -0.9, 0.9);
+  // braking (V2): a hard deceleration lowers the hips and sets the weight back
+  const brake = clamp((-acc - 3) / 7) * clamp(speed / 1.2 + 0.3);
+  const crouchAmt = Math.max(stance.w, lock.w, screen.w * 0.5, seal.w * 0.7, catchR.w * 0.5, blitz.w * 0.75, bump.w * 0.6, gather.w * 0.7, load * 0.55, brake * 0.5) * (1 - run * 0.6);
 
   // ----- pelvis
   const legLen = D.thigh + D.shin + D.ankleH;
@@ -372,16 +428,19 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
     if (tt > 0 && tt < 0.22) dip = Math.max(dip, 0.08 * Math.sin((Math.PI * tt) / 0.22));
   }
   const bob = run * 0.035 * Math.cos(4 * Math.PI * r.phase);
-  const pelvisZ = legLen * (0.955 - 0.1 * run - 0.13 * crouchAmt) - dip + bob + air;
+  const absorb = air > 0.001 ? 0 : landAt(acts, tc);
+  const pelvisZ = legLen * (0.955 - 0.1 * run - 0.13 * crouchAmt) - dip - absorb + bob + air - 0.06 * low;
   // the hips sit slightly behind/ahead of the feet midpoint depending on speed; use the track position
-  const pelvis: V3 = [p2[0], p2[1], pelvisZ];
+  // (low top-lock: weight shifted 5 cm over the inside foot, toward the lock side)
+  const pelvis: V3 = low > 0 ? add([p2[0], p2[1], pelvisZ], mul(R, 0.05 * low * (lock.a?.side ?? 1))) : [p2[0], p2[1], pelvisZ];
 
   // ----- trunk orientation
-  const lean = clamp(0.06 + 0.05 * speed + 0.025 * acc, -0.12, 0.42) * (1 - Math.max(shoot.w, layup.w) * 0.7) + crouchAmt * 0.28 + catchR.w * 0.06 - celebrate.w * 0.05;
+  const lean = clamp(0.06 + 0.05 * speed + 0.025 * acc, -0.12, 0.42) * (1 - Math.max(shoot.w, layup.w) * 0.7) + crouchAmt * 0.28 + catchR.w * 0.06 - celebrate.w * 0.05 - 0.12 * low + absorb * 1.4 - blitz.w * 0.1 + load * 0.14 - brake * 0.12 - bump.w * 0.32 + gather.w * 0.05;
   const roll = clamp(speed * turn * 0.035, -0.28, 0.28);
   const counter = run * 0.16 * Math.sin(2 * Math.PI * r.phase);
-  const sideTurn = lock.w * 0.5 * (lock.a?.side ?? 1) + seal.w * 0.6 * (seal.a?.side ?? 1);
-  const chestYaw = h + counter + sideTurn * 0.35;
+  const sideTurn = (lock.w * 0.5 + 0.35 * low) * (lock.a?.side ?? 1) + seal.w * 0.6 * (seal.a?.side ?? 1);
+  // bump: the shoulders are knocked back toward the screener's side for a beat
+  const chestYaw = h + counter + sideTurn * 0.35 + loadTurn * 0.55 + bump.w * 0.25 * Math.sin(Math.PI * clamp((tc - (bump.a?.from ?? 0)) / 0.35));
   const up: V3 = [0, 0, 1];
   // trunk direction: up tilted forward by lean and sideways by roll
   const trunkDir = norm(add(add(mul(up, Math.cos(lean)), mul(fwd(chestYaw), Math.sin(lean))), mul(right(h), -Math.sin(roll))));
@@ -389,8 +448,9 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
   const head = add(chest, mul(norm(add(trunkDir, mul(up, 0.6))), D.neck + D.headR * 0.85));
 
   // ----- legs
-  const hipL = add(pelvis, mul(right(h + counter * -0.6), -D.hipW));
-  const hipR = add(pelvis, mul(right(h + counter * -0.6), D.hipW));
+  const hipYaw = h + counter * -0.6 + loadTurn * 0.4;
+  const hipL = add(pelvis, mul(right(hipYaw), -D.hipW));
+  const hipR = add(pelvis, mul(right(hipYaw), D.hipW));
   const hips: [V3, V3] = [hipL, hipR];
   const knee: V3[] = [];
   const ankle: V3[] = [];
@@ -425,6 +485,7 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
   const hand: V3[] = [];
   const elbowPoles: V3[] = [];
   const isBallHolder = ball.holder === id;
+  const inDribble = acts.some((a) => a.type === 'dribble' && tc >= a.from && tc <= a.to);
   for (let i = 0; i < 2; i++) {
     const side = i === 0 ? -1 : 1;
     const sh = shoulder[i];
@@ -445,8 +506,14 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
     if (lock.w > 0) {
       const lockSide = lock.a?.side ?? 1;
       const deny = side === lockSide;
-      blend(lock.w, deny ? L(0.5, 0.42, 0.1) : L(0.22, 0.38, -0.25), norm(add(mul(chestR, side), [0, 0, -0.4])));
+      const denyT = low > 0 ? L(0.58, 0.36, 0.16) : L(0.5, 0.42, 0.1);
+      const feelT = low > 0 ? L(0.2, 0.26, -0.22) : L(0.22, 0.38, -0.25);
+      blend(lock.w, deny ? denyT : feelT, norm(add(mul(chestR, side), [0, 0, -0.4])));
     }
+    // blitz / trap: both hands high and wide, walling off the passing angles over the top
+    blend(blitz.w * (1 - run * 0.5), L(0.42, 0.3, 0.18 + (i === 1 ? 0.08 : 0)), norm(add(mul(chestR, side), [0, 0, -0.3])));
+    // bump: forearms up in front of the chest, absorbing the contact
+    blend(bump.w, L(0.12, 0.3, -0.12 + (i === 1 ? 0.06 : 0)), norm(add(mul(chestR, side), [0, 0, -0.5])));
     // screen: arms crossed low in front of the body (legal screen posture)
     blend(screen.w, L(-0.06, 0.24, -0.38), norm(add(mul(chestR, side), [0, 0, -0.6])));
     // seal: forearm and back against the defender
@@ -455,21 +522,47 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
     blend(contest.w, i === 1 ? L(0.08, 0.32, 0.55) : L(0.35, 0.15, -0.35), norm(add(mul(chestF, -0.3), [0, 0, -1])));
     // catch ready: hands showing a target at chest height
     blend(catchR.w * (isBallHolder ? 0.3 : 1), L(-0.02, 0.4, -0.12), norm(add(mul(chestR, side), [0, 0, -0.8])));
+    // reaching for an incoming pass (V2): over the last 0.22 s the hands meet the ball, not a fixed target
+    const incoming = play.ball.find((e) => e.type === 'pass' && e.to === id && tc >= e.t1 - 0.22 && tc <= e.t1);
+    if (incoming && incoming.type === 'pass') {
+      const wr = smooth((tc - (incoming.t1 - 0.22)) / 0.18);
+      blend(wr, add(ball.pos, mul(chestR, side * 0.11)), norm(add(mul(chestR, side), [0, 0, -0.7])));
+    }
+    // dribble hand-off (2026-11-15): the passer's hands ride the ball until the receiver's hands have it
+    const ho = play.ball.find((e) => e.type === 'pass' && e.style === 'handoff' && e.from === id && tc >= e.t0 - 0.02 && tc <= e.t1 + 0.2);
+    if (ho && ho.type === 'pass') {
+      const wh = 0.95 * (1 - smooth((tc - (ho.t1 - 0.04)) / 0.2));
+      blend(wh, add(add(ball.pos, mul(chestR, side * 0.115)), mul(chestF, -0.03)), norm(add(mul(chestR, side), [0, 0, -0.7])));
+    }
     // holding the ball: both hands on it
-    if (isBallHolder && dribble.w < 0.5 && shoot.w < 0.01 && layup.w < 0.01) {
+    if (isBallHolder && !inDribble && shoot.w < 0.01 && layup.w < 0.01) {
       const ballSide: V3 = add(ball.pos, mul(chestR, side * 0.115));
       blend(0.95, add(ballSide, mul(chestF, -0.03)), norm(add(mul(chestR, side), [0, 0, -0.7])));
     }
     // dribble: right hand on top of the ball, left arm protects
     if (dribble.w > 0 && isBallHolder) {
-      if (i === 1) blend(dribble.w, add(ball.pos, [0, 0, 0.11]), norm(add(mul(chestF, -1), [0, 0, 0.2])));
-      else blend(dribble.w, L(0.3, 0.32, -0.28), norm(add(mul(chestR, -1), [0, 0, -0.5])));
+      // the hand meets the ball in the top of its bounce and waits at hip height while it hits the floor
+      // handed dribble (crossover, 2026-11-15): the hand on the ball's side dribbles, the other arm protects
+      const hev = play.ball.find((e) => e.type === 'hold' && e.player === id && e.dribble && tc >= e.from && tc <= e.to);
+      const dSide = hev && hev.type === 'hold' && (hev.hand !== undefined || hev.cross?.length) ? dribbleSide(hev, tc) : 1;
+      const dHand = dSide >= 0 ? 1 : 0;
+      if (i === dHand) blend(dribble.w, add(ball.pos, [0, 0, 0.11]).map((v, k) => (k === 2 ? Math.max(v, 0.62 * D.H / 2) : v)) as V3, norm(add(mul(chestF, -1), [0, 0, 0.2])));
+      else blend(dribble.w, L(0.3, 0.32, -0.28), norm(add(mul(chestR, side), [0, 0, -0.5])));
     }
     // pass: hands follow the ball and push forward
-    if (pass.a && pass.w > 0) {
+    // 2026-11-15: a picked-up ball (held, not dribbled) stays in both hands until the release; the push below
+    // is the throw itself (it pulled the hands 15 cm off a held ball before t0)
+    const preRelease = isBallHolder && !inDribble && pass.a !== undefined && tc < pass.a.to - 0.18;
+    if (pass.a && pass.w > 0 && !preRelease) {
       const tt = (tc - pass.a.from) / (pass.a.to - pass.a.from);
       const ext = smooth((tt - 0.4) / 0.4);
-      blend(pass.w, L(0.1, 0.25 + 0.4 * ext, -0.15 + 0.05 * ext), norm(add(mul(chestR, side), [0, 0, -0.6])));
+      if (pass.a.pose === 'overhead' && isBallHolder) {
+        // loading: the hands stay ON the ball while play.ts lifts it above the head (no arms ahead of the ball)
+      } else if (pass.a.pose === 'overhead') {
+        // two hands above the head, then snapped forward over the defenders
+        const up = smooth(tt / 0.45);
+        blend(pass.w, L(0.1, 0.12 + 0.35 * ext, lerp(-0.15, 0.42, up) - 0.08 * ext), norm(add(mul(chestR, side), [0, 0, -0.3])));
+      } else blend(pass.w, L(0.1, 0.25 + 0.4 * ext, -0.15 + 0.05 * ext), norm(add(mul(chestR, side), [0, 0, -0.6])));
     }
     // shooting: gather at chest -> set above the forehead -> release to the rim -> follow-through
     if (shoot.a && shoot.w > 0) {
@@ -484,6 +577,8 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
       else if (tt < 0.48) tg = lerp3(lerp3(gather, setSide, 0.4), setSide, smooth((tt - 0.22) / 0.26));
       else if (tt < 0.64) tg = i === 1 ? lerp3(setSide, follow, smooth((tt - 0.48) / 0.16)) : lerp3(setSide, add(setSide, [0, 0, 0.12]), smooth((tt - 0.48) / 0.16));
       else tg = i === 1 ? follow : add(setSide, mul(chestR, side * 0.12));
+      // V2: until the release the hands ride ON the ball (play.ts owns the ball path into the pocket)
+      if (isBallHolder) tg = add(add(ball.pos, mul(chestR, side * 0.1)), mul(chestF, -0.05));
       blend(shoot.w, tg, norm(add(mul(chestR, side * 0.8), [0, 0, -0.4])));
     }
     // layup: carry the ball up with the outside hand toward the rim
@@ -492,7 +587,8 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
       const toRim = norm(sub(rim, sh));
       const reach = add(sh, add(mul(toRim, armLen * 0.97), [0, 0, 0.0]));
       const carry = L(0.05, 0.3, -0.05);
-      const tg = i === 1 ? lerp3(carry, reach, smooth((tt - 0.12) / 0.38)) : lerp3(carry, L(0.3, 0.25, -0.15), smooth((tt - 0.3) / 0.2));
+      let tg = i === 1 ? lerp3(carry, reach, smooth((tt - 0.12) / 0.38)) : lerp3(carry, L(0.3, 0.25, -0.15), smooth((tt - 0.3) / 0.2));
+      if (isBallHolder) tg = add(add(ball.pos, mul(chestR, side * 0.1)), mul(chestF, -0.05));
       blend(layup.w, tg, norm(add(mul(chestR, side * 0.6), [0, 0, -0.6])));
     }
     // celebrate: small fist pump
@@ -510,6 +606,15 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
     const dir = norm(sub(s.end, s.mid));
     handTip.push(add(s.end, mul(dir, D.hand)));
   }
+  // head: eyes on the ball (the ball handler looks where he is going / at the rim), inside the neck's range
+  const holderSelf = ball.holder === id;
+  const toBall = Math.atan2(ball.pos[1] - pelvis[1], ball.pos[0] - pelvis[0]);
+  const toRim = Math.atan2(rim[1] - pelvis[1], rim[0] - pelvis[0]);
+  // the ball handler reads the play: eyes on the receiver for the last 0.6 s before a pass
+  const nextPass = holderSelf ? play.ball.find((e) => e.type === 'pass' && e.from === id && e.t0 >= tc && e.t0 - tc < 0.6) : undefined;
+  const recv = nextPass && nextPass.type === 'pass' ? posAt(play.tracks[nextPass.to], tc) : undefined;
+  const lookAt = recv ? Math.atan2(recv[1] - pelvis[1], recv[0] - pelvis[0]) : holderSelf || shoot.w > 0.3 || layup.w > 0.3 ? (speed > 1.5 && shoot.w < 0.3 && layup.w < 0.3 ? h : toRim) : toBall;
+  const headYaw = chestYaw + clamp(wrap(lookAt - chestYaw), -1.15, 1.15) * 0.85;
   void cross;
   return {
     pelvis,
@@ -528,12 +633,10 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
     wrist: [wrist[0], wrist[1]],
     hand: [handTip[0], handTip[1]],
     airborne: air,
+    headYaw,
     dims: D,
   };
 };
 
 /** feet positions over time — used by the QC (foot sliding test) */
-export const footTrack = (play: PlayWithActions, id: string) => {
-  const D = dimsFor(PLAYER_HEIGHTS[id] ?? 2);
-  return simulate(play, id, D);
-};
+export const footTrack = (play: PlayWithActions, id: string) => simulate(play, id, dimsOf(id));

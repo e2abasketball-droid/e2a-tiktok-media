@@ -1,0 +1,53 @@
+{
+ "schema": "e2a-tactical-master/1",
+ "play_id": "ram-v2-a-drop",
+ "play_sha256": "5718d805d66da2d311bae51af0949b53f7c53479b8d5f292163383300023918b",
+ "play_file": "template/tactical/plays/ram-v2-a-drop.json",
+ "engine_sha256": "076a69ad18f7468a2a67dbf5069b81b6983a33fff1218885f65c524346cf7c2c",
+ "profiles": {
+  "social": {
+   "id": "tactical3dv2-social",
+   "width": 1080,
+   "height": 1920,
+   "layers": "voice, subtitles, pins, titles, music"
+  },
+  "course": {
+   "id": "course3d-0.2",
+   "width": 1280,
+   "height": 720,
+   "layers": "court+athletes+ball only, mirrored x"
+  }
+ },
+ "outputs": {
+  "social_9x16": {
+   "file": "ram-screen-v2-social.mp4",
+   "sha256": "d9e7ecab1c42eecfb805a597b4e2b72c67930a9d875c35c9384b0945905b5f85",
+   "width": 1080,
+   "height": 1920,
+   "fps": 30.0,
+   "duration_s": 34.069,
+   "audio": true,
+   "profile": "tactical3dv2-social",
+   "profile_ok": true
+  },
+  "course_16x9": {
+   "file": "course3d-ram-v2-a-drop.mp4",
+   "sha256": "27118c80aaa554cc42d54a1f7d2cb8dd685cf9732fee614a57f0b96b7342d54d",
+   "width": 1280,
+   "height": 720,
+   "fps": 30.0,
+   "duration_s": 6.633,
+   "audio": false,
+   "profile": "course3d-0.2",
+   "profile_ok": true,
+   "segment": {
+    "from": 0.0,
+    "to": 6.6
+   }
+  }
+ },
+ "episode": {
+  "file": "template/tactical/episodes/ram-screen-v2.json",
+  "sha256": "b83375cc24b3dae9d3b46aef6d173b9135bd52500a9e41e35dc128ad14513907"
+ }
+}

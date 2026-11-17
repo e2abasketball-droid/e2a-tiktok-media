@@ -1,0 +1,39 @@
+{
+ "cid": "E2A-TACTICAL-2026-11-16-S03",
+ "format": "counter",
+ "label": "V03 COUNTER",
+ "slot_initial": "16:00",
+ "time": "17:00",
+ "moved": true,
+ "trial_reel": "19:00",
+ "concept": "reject-vs-ice",
+ "family": "reject",
+ "variant": "handler rejects the ICE screen to the middle",
+ "question": "Why does ICE invite the reject?",
+ "cta": "Tag a guard who rejects screens.",
+ "destinations": [
+  "E2A-TACTICAL-2026-11-16-S03:instagram",
+  "E2A-TACTICAL-2026-11-16-S03:tiktok",
+  "E2A-TACTICAL-2026-11-16-S03:youtube"
+ ],
+ "mode": "shadow (never publishable: S id, shadow profile)",
+ "script_words": 83,
+ "script_estimate_s": 33.3,
+ "point_reached": "concept selected (repeat check + calendar collision passed), script draft frozen for review",
+ "next_gate": "storyboard_ready: needs a play spec (tactical/specs) built with build-play.mts and test-play.mts 0 failures",
+ "blocked_because": [
+  "no play exists for this concept (play_status needs_spec); the 14 plays in tactical/plays are all used",
+  "voice not generated: V4 shadow has no approved credit budget (proposal 2100 voice + 700 Scribe per day) and the ElevenLabs balance could not be read (connector needs re-authorisation)",
+  "render not started: depends on the play and the voice"
+ ],
+ "cost_if_produced_max": {
+  "voice_credits": 508,
+  "scribe_credits": 166,
+  "render_s": 1960
+ },
+ "engine_flags": {
+  "pinV2": true,
+  "autoSfx": "light contact only (owner: no loud SFX)",
+  "camera": "open high and hold the axis until the reveal, if the RAM A/B confirms it"
+ }
+}

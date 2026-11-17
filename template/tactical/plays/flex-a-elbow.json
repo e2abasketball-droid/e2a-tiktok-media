@@ -1,0 +1,555 @@
+{
+ "id": "flex-a-elbow",
+ "title": "Flex A: help on the cut, the screener's screener gets the elbow shot",
+ "duration": 7.2,
+ "concept": "flex-action",
+ "source": "original E2A play (standard flex action / screen-the-screener read, generic coaching knowledge)",
+ "squareUp": true,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Ball handler, high left; passes, then screens the screener"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "High right: gets the reversal, reads"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Left corner: flex cutter"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Right wing: weak-side spacing"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Left block: first screener, then the shooter"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On O1",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "On O2",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "On the cutter",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "Weak side",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "On the first screener",
+   "guards": "O5"
+  }
+ ],
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 0.3,
+   "dribble": false
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O2",
+   "t0": 0.3,
+   "t1": 0.9,
+   "style": "chest"
+  },
+  {
+   "type": "hold",
+   "player": "O2",
+   "from": 0.9,
+   "to": 4
+  },
+  {
+   "type": "pass",
+   "from": "O2",
+   "to": "O5",
+   "t0": 4,
+   "t1": 4.6,
+   "style": "chest"
+  },
+  {
+   "type": "hold",
+   "player": "O5",
+   "from": 4.6,
+   "to": 4.95
+  },
+  {
+   "type": "shot",
+   "player": "O5",
+   "t0": 4.95,
+   "t1": 6,
+   "make": true,
+   "three": false
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "reverse": 0.3,
+  "flex": 0.95,
+  "cut": 1.45,
+  "help": 1.85,
+  "down": 1.45,
+  "set": 2.81,
+  "up": 3.05,
+  "bump": 3.5,
+  "pass": 4,
+  "catch": 4.6,
+  "release": 4.95,
+  "make": 6,
+  "end": 7.2
+ },
+ "actions": {
+  "X2": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 7.2,
+    "face": "O2"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 7.2,
+    "face": "O4"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 1.5,
+    "face": "O1"
+   }
+  ],
+  "O5": [
+   {
+    "type": "screen",
+    "from": 0.95,
+    "to": 2.35,
+    "face": "X3"
+   },
+   {
+    "type": "gather",
+    "from": 4.5,
+    "to": 4.75
+   },
+   {
+    "type": "celebrate",
+    "from": 6.3,
+    "to": 7.2
+   }
+  ],
+  "O1": [
+   {
+    "type": "screen",
+    "from": 2.81,
+    "to": 3.95,
+    "face": "X5"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 1.85,
+    "face": "O5"
+   },
+   {
+    "type": "stance",
+    "from": 1.85,
+    "to": 3.1,
+    "face": "O3"
+   },
+   {
+    "type": "bump",
+    "from": 3.5,
+    "to": 3.85
+   },
+   {
+    "type": "contest",
+    "from": 4.95,
+    "to": 5.6
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 1.5,
+    "face": "O3"
+   },
+   {
+    "type": "stance",
+    "from": 3.2,
+    "to": 7.2,
+    "face": "O3"
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "X5",
+   "b": "O3",
+   "at": "set",
+   "max": 2.2,
+   "says": "the baseline screen pulls help toward the rim"
+  },
+  {
+   "type": "near",
+   "a": "X3",
+   "b": "O3",
+   "at": "pass",
+   "max": 1.8,
+   "says": "X3 recovers on the cutter"
+  },
+  {
+   "type": "far",
+   "a": "X5",
+   "b": "O5",
+   "at": "catch",
+   "min": 1,
+   "says": "Now he's open at the elbow."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "reverse",
+    "flex",
+    "cut",
+    "help",
+    "set",
+    "up",
+    "pass",
+    "catch",
+    "release",
+    "make"
+   ],
+   "says": "reverse, flex cut, down screen, elbow"
+  }
+ ],
+ "notes": [
+  "O1 reverses to O2; O5 sets the baseline screen; O3 cuts over it to the right side of the rim.",
+  "X5 steps to the cut; O1 goes down and screens for O5; X5 is late around O1; O5 catches at the left elbow."
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0,
+    3.2,
+    8
+   ],
+   [
+    1.35,
+    3.2,
+    8
+   ],
+   [
+    1.999,
+    3.25,
+    6
+   ],
+   [
+    2.743,
+    3.05,
+    3.55
+   ],
+   [
+    7.2,
+    3.05,
+    3.55
+   ]
+  ],
+  "O2": [
+   [
+    0,
+    -3.2,
+    8
+   ],
+   [
+    7.2,
+    -3.2,
+    8
+   ]
+  ],
+  "O3": [
+   [
+    0,
+    6.6,
+    1.3
+   ],
+   [
+    1.45,
+    6.6,
+    1.3
+   ],
+   [
+    2.152,
+    4.55,
+    1.95
+   ],
+   [
+    2.362,
+    3.5,
+    2.25
+   ],
+   [
+    2.627,
+    2.2,
+    1.85
+   ],
+   [
+    2.875,
+    1.2,
+    1.55
+   ],
+   [
+    3.248,
+    0.5,
+    1.45
+   ],
+   [
+    4.048,
+    -0.95,
+    1.15
+   ],
+   [
+    7.2,
+    -0.95,
+    1.15
+   ]
+  ],
+  "O4": [
+   [
+    0,
+    -6.3,
+    4.8
+   ],
+   [
+    7.2,
+    -6.3,
+    4.8
+   ]
+  ],
+  "O5": [
+   [
+    0,
+    2.25,
+    2.35
+   ],
+   [
+    0.25,
+    2.25,
+    2.35
+   ],
+   [
+    0.95,
+    3.7,
+    1.35
+   ],
+   [
+    3.05,
+    3.7,
+    1.35
+   ],
+   [
+    3.701,
+    4.6,
+    3.3
+   ],
+   [
+    3.917,
+    4.35,
+    4.45
+   ],
+   [
+    4.62,
+    2.4,
+    5.9
+   ],
+   [
+    7.2,
+    2.4,
+    5.9
+   ]
+  ],
+  "X1": [
+   [
+    0,
+    2.75,
+    7.3
+   ],
+   [
+    1.4,
+    2.75,
+    7.3
+   ],
+   [
+    1.994,
+    2.55,
+    5.8
+   ],
+   [
+    2.637,
+    2.65,
+    4.1
+   ],
+   [
+    7.2,
+    2.65,
+    4.1
+   ]
+  ],
+  "X2": [
+   [
+    0,
+    -2.75,
+    7.15
+   ],
+   [
+    7.2,
+    -2.75,
+    7.15
+   ]
+  ],
+  "X3": [
+   [
+    0,
+    5.8,
+    1.85
+   ],
+   [
+    1.3,
+    5.8,
+    1.85
+   ],
+   [
+    1.75,
+    5.6,
+    2.4
+   ],
+   [
+    1.85,
+    5.6,
+    2.4
+   ],
+   [
+    2.315,
+    4.6,
+    2.55
+   ],
+   [
+    2.546,
+    3.6,
+    2.7
+   ],
+   [
+    2.858,
+    2.2,
+    2.05
+   ],
+   [
+    3.124,
+    1,
+    1.95
+   ],
+   [
+    3.616,
+    0,
+    2.45
+   ],
+   [
+    7.2,
+    0,
+    2.45
+   ]
+  ],
+  "X4": [
+   [
+    0,
+    -5.4,
+    4.6
+   ],
+   [
+    7.2,
+    -5.4,
+    4.6
+   ]
+  ],
+  "X5": [
+   [
+    0,
+    1.6,
+    2
+   ],
+   [
+    1.85,
+    1.6,
+    2
+   ],
+   [
+    2.35,
+    1.2,
+    2.55
+   ],
+   [
+    3.1,
+    1.2,
+    2.55
+   ],
+   [
+    3.8,
+    2.45,
+    3.1
+   ],
+   [
+    3.85,
+    2.45,
+    3.1
+   ],
+   [
+    4.326,
+    2,
+    3.8
+   ],
+   [
+    4.517,
+    2.05,
+    4
+   ],
+   [
+    7.2,
+    2.05,
+    4
+   ]
+  ]
+ },
+ "screens": []
+}

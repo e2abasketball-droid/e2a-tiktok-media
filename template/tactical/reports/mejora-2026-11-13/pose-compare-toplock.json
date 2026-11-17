@@ -1,0 +1,41 @@
+{
+ "player": "X2",
+ "window": [
+  0.6,
+  1.6
+ ],
+ "before": {
+  "play": "tactical/plays/stagger-b-backdoor.json",
+  "atLock": {
+   "pelvisZ": 0.871,
+   "kneeDeg": 110.8,
+   "leanDeg": 8.74,
+   "hipOpenDeg": 11.86,
+   "denyHandZ": 1.496,
+   "feetWidth": 0.53
+  },
+  "minArmGap": {
+   "m": -0.139,
+   "t": 1.067,
+   "vs": "O2"
+  },
+  "armIntersections": 14
+ },
+ "after": {
+  "play": "tactical/plays/stagger-b-backdoor-lowlock.json",
+  "atLock": {
+   "pelvisZ": 0.811,
+   "kneeDeg": 102.46,
+   "leanDeg": 1.86,
+   "hipOpenDeg": 18.86,
+   "denyHandZ": 1.506,
+   "feetWidth": 0.57
+  },
+  "minArmGap": {
+   "m": -0.1,
+   "t": 1.033,
+   "vs": "O2"
+  },
+  "armIntersections": 8
+ }
+}

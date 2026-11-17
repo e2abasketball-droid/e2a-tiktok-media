@@ -1,0 +1,572 @@
+{
+ "id": "double-drag",
+ "title": "DOUBLE DRAG: roll or pop?",
+ "fps": 30,
+ "voiceRaw": "tactical/ddrag/voice-raw.mp3",
+ "wordsRaw": "double-drag.words-raw.json",
+ "voice": "tactical/ddrag/voice.wav",
+ "voiceMix": "tactical/ddrag/voice.mix.wav",
+ "preroll": 0.1,
+ "tail": 3.0,
+ "gaps": [
+  {
+   "after": "is OPEN.",
+   "sec": 0.78,
+   "why": "the three to the net, then the cut to the overhead replay"
+  },
+  {
+   "after": "has to help.",
+   "sec": 0.72,
+   "why": "the pass to the pop, then the cut to the same start for B"
+  },
+  {
+   "after": "for the roll.",
+   "sec": 4.08,
+   "why": "the inside pass, the catch and the finish with court sound only"
+  }
+ ],
+ "plays": {
+  "A": "ddrag-a-pop",
+  "B": "ddrag-b-roll"
+ },
+ "pinV2": true,
+ "shots": [
+  {
+   "id": "hook",
+   "name": "Hook - two drags, the split, help takes the roll, the pop is open",
+   "at": 0,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.3
+    ],
+    [
+     "@end",
+     6.0
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.68,
+       10.47,
+       0.6
+      ],
+      "dist": 11.75,
+      "pitch": 60,
+      "yaw": 10,
+      "fov": 50
+     }
+    },
+    {
+     "at": 4.1,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.68,
+       10.47,
+       0.6
+      ],
+      "dist": 11.75,
+      "pitch": 60,
+      "yaw": 10,
+      "fov": 50
+     }
+    },
+    {
+     "at": 4.9,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.25,
+       7.17,
+       0.6
+      ],
+      "dist": 14.75,
+      "pitch": 60,
+      "yaw": 10,
+      "fov": 50
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.25,
+       7.17,
+       0.6
+      ],
+      "dist": 14.75,
+      "pitch": 60,
+      "yaw": 10,
+      "fov": 50
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": [],
+   "sfx": [
+    {
+     "at": 0.1,
+     "name": "bounce",
+     "volume": 0.09
+    },
+    {
+     "at": 0.75,
+     "name": "squeak",
+     "volume": 0.08
+    },
+    {
+     "at": 3.82,
+     "name": "bounce",
+     "volume": 0.08
+    },
+    {
+     "at": 5.22,
+     "name": "swish",
+     "volume": 0.16
+    }
+   ]
+  },
+  {
+   "id": "replay",
+   "name": "Overhead replay - screen order, pop, roll, X4 has to help",
+   "at": 5.7,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     1.0
+    ],
+    [
+     1.0,
+     2.0
+    ],
+    [
+     2.5,
+     2.6
+    ],
+    [
+     5.0,
+     3.3
+    ],
+    [
+     "@end",
+     3.75
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.77,
+       8.16,
+       0.6
+      ],
+      "dist": 17.75,
+      "pitch": 28,
+      "yaw": -10,
+      "fov": 46
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O4",
+     "color": "#C9A24D",
+     "from": 0.1,
+     "to": 1.6
+    },
+    {
+     "type": "route",
+     "player": "O4",
+     "t0": 1.95,
+     "t1": 2.8,
+     "trail": true,
+     "color": "#C9A24D",
+     "from": 0.6,
+     "to": 2.2
+    },
+    {
+     "type": "ring",
+     "player": "O5",
+     "color": "#C9A24D",
+     "from": 1.7,
+     "to": 3.2
+    },
+    {
+     "type": "route",
+     "player": "O5",
+     "t0": 2.25,
+     "t1": 3.3,
+     "trail": true,
+     "color": "#C9A24D",
+     "from": 1.9,
+     "to": 3.4
+    },
+    {
+     "type": "route",
+     "player": "X4",
+     "t0": 2.2,
+     "t1": 3.1,
+     "trail": true,
+     "color": "#E5483A",
+     "from": 3.4,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "DOUBLE DRAG"
+     ],
+     "gold": [
+      0
+     ],
+     "from": 0,
+     "to": "@end",
+     "y": 252,
+     "size": 100
+    },
+    {
+     "type": "pin",
+     "player": "O4",
+     "text": "1",
+     "tone": "gold",
+     "from": 0.05,
+     "to": 0.85,
+     "size": 44
+    },
+    {
+     "type": "pin",
+     "player": "O5",
+     "text": "2",
+     "tone": "gold",
+     "from": 0.05,
+     "to": 0.85,
+     "size": 44
+    }
+   ],
+   "sfx": [
+    {
+     "at": 1.0,
+     "name": "squeak",
+     "volume": 0.07
+    }
+   ]
+  },
+  {
+   "id": "readB",
+   "name": "Variant B - same frame: X4 stays with the shooter",
+   "at": 11.3,
+   "play": "B",
+   "remap": [
+    [
+     0,
+     0.3
+    ],
+    [
+     "@end",
+     3.95
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.91,
+       11.41,
+       0.6
+      ],
+      "dist": 11.25,
+      "pitch": 60,
+      "yaw": 10,
+      "fov": 50
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X4",
+     "color": "#E5483A",
+     "from": 1.9,
+     "to": 3.3
+    },
+    {
+     "type": "ring",
+     "player": "O5",
+     "color": "#C9A24D",
+     "from": 2.4,
+     "to": "@end"
+    }
+   ],
+   "screen": [],
+   "sfx": [
+    {
+     "at": 1.6,
+     "name": "squeak",
+     "volume": 0.07
+    }
+   ]
+  },
+  {
+   "id": "finish",
+   "name": "Lower - the inside pass, the catch, the finish",
+   "at": 14.95,
+   "play": "B",
+   "remap": [
+    [
+     0,
+     3.95
+    ],
+    [
+     "@end",
+     6.0
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.08,
+       5.23,
+       0.6
+      ],
+      "dist": 9.75,
+      "pitch": 66,
+      "yaw": -40,
+      "fov": 50
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.08,
+       5.23,
+       0.6
+      ],
+      "dist": 9.5,
+      "pitch": 66,
+      "yaw": -40,
+      "fov": 50
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [],
+   "screen": [
+    {
+     "type": "pin",
+     "player": "X2",
+     "text": "HELP: LATE",
+     "tone": "red",
+     "from": 0.5,
+     "to": 1.35,
+     "size": 40
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0.25,
+     "name": "bounce",
+     "volume": 0.09
+    },
+    {
+     "at": 1.25,
+     "name": "swish",
+     "volume": 0.15
+    }
+   ]
+  },
+  {
+   "id": "cta",
+   "name": "CTA - back to the split: roll or pop?",
+   "at": 17.5,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     1.85
+    ],
+    [
+     1.0,
+     2.25
+    ],
+    [
+     "@end",
+     2.4
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.85,
+       9.2,
+       0.6
+      ],
+      "dist": 9.75,
+      "pitch": 60,
+      "yaw": 10,
+      "fov": 50
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.85,
+       9.2,
+       0.6
+      ],
+      "dist": 9.4,
+      "pitch": 60,
+      "yaw": 10,
+      "fov": 50
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O4",
+     "color": "#C9A24D",
+     "from": 0.4,
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "O5",
+     "color": "#C9A24D",
+     "from": 0.4,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "ROLL",
+      "OR POP?"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0.5,
+     "to": "@end",
+     "y": 252,
+     "size": 108
+    },
+    {
+     "type": "logo",
+     "big": false,
+     "from": "@end-1.3",
+     "to": "@end"
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "loop",
+   "name": "Loop - the bigs come in, into the first frame",
+   "at": 21.9,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "@end",
+     0.3
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.68,
+       10.47,
+       0.6
+      ],
+      "dist": 11.75,
+      "pitch": 60,
+      "yaw": 10,
+      "fov": 50
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": [],
+   "sfx": []
+  }
+ ],
+ "keywords": [
+  "Two screens",
+  "split",
+  "Help",
+  "roll",
+  "pop",
+  "OPEN",
+  "pops",
+  "rolls",
+  "has to help",
+  "stays",
+  "shooter"
+ ],
+ "subtitleGroups": [
+  2,
+  4,
+  4,
+  4,
+  3,
+  3,
+  3,
+  4,
+  4,
+  3,
+  4,
+  3
+ ],
+ "subtitleBlock": true,
+ "subtitleHide": [
+  [
+   18.0,
+   40
+  ]
+ ],
+ "subtitleY": 1330,
+ "gradeBottom": 0.38,
+ "autoSfx": false,
+ "ambience": {
+  "src": "sfx/arena.mp3",
+  "volume": 0.05
+ },
+ "music": {
+  "src": "tactical/ddrag/music-mix.mp3",
+  "volume": 1
+ }
+}

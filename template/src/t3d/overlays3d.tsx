@@ -88,7 +88,7 @@ const cut = (pts: V2[], u: number): V2[] => {
 };
 
 export type Ov3 =
-  | {type: 'ring'; player: string; color?: string; pulse?: boolean}
+  | {type: 'ring'; player: string; color?: string; pulse?: boolean; size?: number}
   | {type: 'route'; player: string; t0: number; t1: number; color?: string; draw?: number; dashed?: boolean; width?: number; pts?: V2[]; trail?: boolean}
   | {type: 'screen'; player?: string; at?: V2; n: number; facing?: number}
   | {type: 'passLane'; src: string; dst: string | V2; color?: string}
@@ -134,7 +134,7 @@ export const Overlays3D: React.FC<{play: Play; pt: number; items: LiveOv3[]}> = 
           case 'ring': {
             const p = P(o.player);
             const pulse = o.pulse ? 1 + 0.12 * Math.sin(o.age * 7) : 1;
-            const grow = 0.6 + 0.4 * easeOut(o.age / 0.3);
+            const grow = (0.6 + 0.4 * easeOut(o.age / 0.3)) * (o.size ?? 1);
             const col = o.color ?? (o.player.startsWith('O') ? GOLD3 : RED3);
             return (
               <group key={i} position={W3([p[0], p[1], 0.015])} rotation={[-Math.PI / 2, 0, 0]} scale={grow * pulse}>

@@ -1,0 +1,449 @@
+{
+ "id": "stack-b-roll",
+ "title": "Stack pick-and-roll B: the shooter's defender stays home, the roller is alone",
+ "duration": 5,
+ "concept": "stack-pick-and-roll",
+ "source": "original E2A play (generic stack pick-and-roll read, generic coaching knowledge)",
+ "squareUp": true,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Ball handler"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Shooter stacked behind the screener"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Spacer, left corner"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Spacer, right corner"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Ball screener / roller"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the ball",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "On the stacked shooter: decides",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Left corner",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "Right corner",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "On the screener: shows high",
+   "guards": "O5"
+  }
+ ],
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 2.35,
+   "dribble": true
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O5",
+   "t0": 2.35,
+   "t1": 3,
+   "style": "bounce"
+  },
+  {
+   "type": "hold",
+   "player": "O5",
+   "from": 3,
+   "to": 3.3
+  },
+  {
+   "type": "layup",
+   "player": "O5",
+   "t0": 3.3,
+   "t1": 3.7,
+   "make": true
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "ballscreen": 0.85,
+  "lift": 1.15,
+  "stay": 1.3,
+  "roll": 1.5,
+  "pass": 2.35,
+  "catch": 3,
+  "release": 3.3,
+  "make": 3.7,
+  "end": 5
+ },
+ "actions": {
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6,
+    "face": "O1"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6,
+    "face": "O1"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6,
+    "face": "O1"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0.9,
+    "to": 2.6,
+    "face": "O1"
+   }
+  ],
+  "O5": [
+   {
+    "type": "screen",
+    "from": 0.85,
+    "to": 1.45,
+    "face": "X1"
+   },
+   {
+    "type": "celebrate",
+    "from": 4.1,
+    "to": 5
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6,
+    "face": "O2"
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "X2",
+   "b": "O2",
+   "at": "pass",
+   "max": 1.6,
+   "says": "if he stays home"
+  },
+  {
+   "type": "far",
+   "a": "X5",
+   "b": "O5",
+   "at": "catch",
+   "min": 2.5,
+   "says": "nobody stops the roll"
+  },
+  {
+   "type": "near_rim",
+   "player": "O5",
+   "at": "release",
+   "max": 1.5,
+   "says": "easy two at the rim"
+  },
+  {
+   "type": "open",
+   "player": "O5",
+   "at": "release",
+   "min": 1.2,
+   "says": "easy two at the rim"
+  },
+  {
+   "type": "order",
+   "marks": [
+    "ballscreen",
+    "lift",
+    "roll",
+    "pass",
+    "catch",
+    "release",
+    "make"
+   ],
+   "says": "screen, lift, roll, bounce pass, layup"
+  }
+ ],
+ "notes": [
+  "Same start as stack-a-three.",
+  "X2 follows O2 out; nobody between O5 and the rim: bounce pass, layup."
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0,
+    0,
+    9.1
+   ],
+   [
+    0.8,
+    0,
+    9.1
+   ],
+   [
+    1.376,
+    1.1,
+    9.8
+   ],
+   [
+    1.7,
+    2.35,
+    9.55
+   ],
+   [
+    2.324,
+    2.85,
+    8.15
+   ],
+   [
+    5,
+    2.85,
+    8.15
+   ]
+  ],
+  "O2": [
+   [
+    0,
+    0.55,
+    5.75
+   ],
+   [
+    1.15,
+    0.55,
+    5.75
+   ],
+   [
+    1.673,
+    -0.6,
+    6.55
+   ],
+   [
+    2.454,
+    -2,
+    8.7
+   ],
+   [
+    5,
+    -2,
+    8.7
+   ]
+  ],
+  "O3": [
+   [
+    0,
+    6.6,
+    1.3
+   ],
+   [
+    5,
+    6.6,
+    1.3
+   ]
+  ],
+  "O4": [
+   [
+    0,
+    -6.6,
+    1.3
+   ],
+   [
+    5,
+    -6.6,
+    1.3
+   ]
+  ],
+  "O5": [
+   [
+    0,
+    0.9,
+    6.85
+   ],
+   [
+    0.762,
+    0.8,
+    8.2
+   ],
+   [
+    1.5,
+    0.8,
+    8.2
+   ],
+   [
+    2.054,
+    0.55,
+    6.6
+   ],
+   [
+    3.023,
+    0.25,
+    2.85
+   ],
+   [
+    5,
+    0.25,
+    2.85
+   ]
+  ],
+  "X1": [
+   [
+    0,
+    0,
+    8.25
+   ],
+   [
+    1.4,
+    0,
+    8.25
+   ],
+   [
+    2.075,
+    1.1,
+    9.55
+   ],
+   [
+    2.611,
+    2.3,
+    9.45
+   ],
+   [
+    5,
+    2.3,
+    9.45
+   ]
+  ],
+  "X2": [
+   [
+    0,
+    0.05,
+    4.95
+   ],
+   [
+    1.3,
+    0.05,
+    4.95
+   ],
+   [
+    1.811,
+    -0.7,
+    6
+   ],
+   [
+    2.46,
+    -1.85,
+    7.45
+   ],
+   [
+    5,
+    -1.85,
+    7.45
+   ]
+  ],
+  "X3": [
+   [
+    0,
+    5.6,
+    2.1
+   ],
+   [
+    5,
+    5.6,
+    2.1
+   ]
+  ],
+  "X4": [
+   [
+    0,
+    -5.6,
+    2.1
+   ],
+   [
+    5,
+    -5.6,
+    2.1
+   ]
+  ],
+  "X5": [
+   [
+    0,
+    1.65,
+    6.35
+   ],
+   [
+    0.2,
+    1.65,
+    6.35
+   ],
+   [
+    0.937,
+    1.45,
+    7.6
+   ],
+   [
+    0.95,
+    1.45,
+    7.6
+   ],
+   [
+    1.615,
+    1.85,
+    8.55
+   ],
+   [
+    2.4,
+    1.85,
+    8.55
+   ],
+   [
+    3.619,
+    1.2,
+    5.2
+   ],
+   [
+    5,
+    1.2,
+    5.2
+   ]
+  ]
+ },
+ "screens": []
+}

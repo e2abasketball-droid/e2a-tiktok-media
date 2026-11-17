@@ -1,0 +1,84 @@
+{
+ "source": "public/tactical/shortroll/voice-raw.mp3",
+ "source_sec": 27.28,
+ "preroll": 0.12,
+ "output": "public/tactical/shortroll/voice.wav",
+ "output_sec": 31.39,
+ "inserted_total_sec": 3.99,
+ "last_word_end": 31.47,
+ "gaps": [
+  {
+   "after": "Two on the ball.",
+   "natural_silence": [
+    2.15,
+    2.61
+   ],
+   "natural_sec": 0.46,
+   "target_sec": 0.7,
+   "inserted_sec": 0.24,
+   "cut_at_source": 2.475,
+   "why": "hook titles land"
+  },
+  {
+   "after": "four on three.",
+   "natural_silence": [
+    8.34,
+    8.86
+   ],
+   "natural_sec": 0.52,
+   "target_sec": 1.0,
+   "inserted_sec": 0.48,
+   "cut_at_source": 8.545,
+   "why": "the big turns: 4 ON 3 lands"
+  },
+  {
+   "after": "the corner is empty.",
+   "natural_silence": [
+    11.86,
+    12.24
+   ],
+   "natural_sec": 0.38,
+   "target_sec": 0.9,
+   "inserted_sec": 0.52,
+   "cut_at_source": 12.115,
+   "why": "freeze: the corner shooter is alone"
+  },
+  {
+   "after": "Open three.",
+   "natural_silence": [
+    13.7,
+    14.2
+   ],
+   "natural_sec": 0.5,
+   "target_sec": 1.8,
+   "inserted_sec": 1.3,
+   "cut_at_source": 13.935,
+   "why": "ball flight to the swish + OPEN THREE"
+  },
+  {
+   "after": "Easy two.",
+   "natural_silence": [
+    18.74,
+    19.34
+   ],
+   "natural_sec": 0.6,
+   "target_sec": 1.5,
+   "inserted_sec": 0.9,
+   "cut_at_source": 19.095,
+   "why": "layup lands + EASY TWO"
+  },
+  {
+   "after": "give something up.",
+   "natural_silence": [
+    23.57,
+    24.02
+   ],
+   "natural_sec": 0.45,
+   "target_sec": 1.0,
+   "inserted_sec": 0.55,
+   "cut_at_source": 23.885,
+   "why": "title holds before the CTA"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}
