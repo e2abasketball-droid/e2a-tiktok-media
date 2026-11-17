@@ -1,0 +1,452 @@
+[
+ {
+  "text": "They",
+  "start": 0.08,
+  "end": 0.24
+ },
+ {
+  "text": "switched",
+  "start": 0.32,
+  "end": 0.64
+ },
+ {
+  "text": "to",
+  "start": 0.68,
+  "end": 0.72
+ },
+ {
+  "text": "stop",
+  "start": 0.88,
+  "end": 1.2
+ },
+ {
+  "text": "you.",
+  "start": 1.28,
+  "end": 1.64
+ },
+ {
+  "text": "Now",
+  "start": 1.947,
+  "end": 2.0
+ },
+ {
+  "text": "pick",
+  "start": 2.08,
+  "end": 2.24
+ },
+ {
+  "text": "your",
+  "start": 2.32,
+  "end": 2.4
+ },
+ {
+  "text": "mismatch.",
+  "start": 2.587,
+  "end": 3.16
+ },
+ {
+  "text": "Big",
+  "start": 3.493,
+  "end": 3.52
+ },
+ {
+  "text": "on",
+  "start": 3.56,
+  "end": 3.6
+ },
+ {
+  "text": "the",
+  "start": 3.68,
+  "end": 3.72
+ },
+ {
+  "text": "guard.",
+  "start": 3.76,
+  "end": 4.24
+ },
+ {
+  "text": "Small",
+  "start": 4.4,
+  "end": 4.64
+ },
+ {
+  "text": "on",
+  "start": 4.68,
+  "end": 4.72
+ },
+ {
+  "text": "the",
+  "start": 4.8,
+  "end": 4.84
+ },
+ {
+  "text": "big.",
+  "start": 4.88,
+  "end": 5.44
+ },
+ {
+  "text": "The",
+  "start": 5.52,
+  "end": 5.56
+ },
+ {
+  "text": "drive's",
+  "start": 5.6,
+  "end": 5.92
+ },
+ {
+  "text": "cut",
+  "start": 6.0,
+  "end": 6.08
+ },
+ {
+  "text": "off.",
+  "start": 6.16,
+  "end": 6.64
+ },
+ {
+  "text": "Now",
+  "start": 6.72,
+  "end": 6.8
+ },
+ {
+  "text": "what?",
+  "start": 6.88,
+  "end": 7.12
+ },
+ {
+  "text": "Look",
+  "start": 7.52,
+  "end": 7.6
+ },
+ {
+  "text": "inside",
+  "start": 7.68,
+  "end": 8.0
+ },
+ {
+  "text": "first.",
+  "start": 8.08,
+  "end": 8.8
+ },
+ {
+  "text": "Does",
+  "start": 8.88,
+  "end": 8.96
+ },
+ {
+  "text": "your",
+  "start": 9.04,
+  "end": 9.12
+ },
+ {
+  "text": "big",
+  "start": 9.2,
+  "end": 9.28
+ },
+ {
+  "text": "have",
+  "start": 9.36,
+  "end": 9.44
+ },
+ {
+  "text": "a",
+  "start": 9.493,
+  "end": 9.547
+ },
+ {
+  "text": "seal?",
+  "start": 9.6,
+  "end": 10.32
+ },
+ {
+  "text": "He's",
+  "start": 10.387,
+  "end": 10.48
+ },
+ {
+  "text": "got",
+  "start": 10.56,
+  "end": 10.64
+ },
+ {
+  "text": "the",
+  "start": 10.68,
+  "end": 10.72
+ },
+ {
+  "text": "guard",
+  "start": 10.88,
+  "end": 11.04
+ },
+ {
+  "text": "pinned.",
+  "start": 11.147,
+  "end": 11.68
+ },
+ {
+  "text": "Keep",
+  "start": 11.76,
+  "end": 11.84
+ },
+ {
+  "text": "your",
+  "start": 11.92,
+  "end": 12.0
+ },
+ {
+  "text": "dribble,",
+  "start": 12.04,
+  "end": 12.56
+ },
+ {
+  "text": "change",
+  "start": 12.72,
+  "end": 12.88
+ },
+ {
+  "text": "the",
+  "start": 12.96,
+  "end": 13.04
+ },
+ {
+  "text": "angle,",
+  "start": 13.12,
+  "end": 13.52
+ },
+ {
+  "text": "and",
+  "start": 13.6,
+  "end": 13.68
+ },
+ {
+  "text": "feed",
+  "start": 13.8,
+  "end": 13.92
+ },
+ {
+  "text": "him.",
+  "start": 14.0,
+  "end": 14.4
+ },
+ {
+  "text": "But",
+  "start": 14.48,
+  "end": 14.56
+ },
+ {
+  "text": "what",
+  "start": 14.6,
+  "end": 14.64
+ },
+ {
+  "text": "if",
+  "start": 14.72,
+  "end": 14.8
+ },
+ {
+  "text": "that",
+  "start": 14.88,
+  "end": 14.96
+ },
+ {
+  "text": "entry",
+  "start": 15.08,
+  "end": 15.2
+ },
+ {
+  "text": "pass",
+  "start": 15.28,
+  "end": 15.44
+ },
+ {
+  "text": "is",
+  "start": 15.52,
+  "end": 15.68
+ },
+ {
+  "text": "gone?",
+  "start": 15.88,
+  "end": 16.4
+ },
+ {
+  "text": "Same",
+  "start": 16.48,
+  "end": 16.64
+ },
+ {
+  "text": "switch.",
+  "start": 16.72,
+  "end": 17.44
+ },
+ {
+  "text": "Now",
+  "start": 17.52,
+  "end": 17.6
+ },
+ {
+  "text": "you've",
+  "start": 17.64,
+  "end": 17.76
+ },
+ {
+  "text": "got",
+  "start": 17.84,
+  "end": 17.92
+ },
+ {
+  "text": "the",
+  "start": 17.96,
+  "end": 18.0
+ },
+ {
+  "text": "big",
+  "start": 18.08,
+  "end": 18.16
+ },
+ {
+  "text": "in",
+  "start": 18.24,
+  "end": 18.32
+ },
+ {
+  "text": "space.",
+  "start": 18.52,
+  "end": 18.96
+ },
+ {
+  "text": "Change",
+  "start": 19.12,
+  "end": 19.28
+ },
+ {
+  "text": "pace.",
+  "start": 19.36,
+  "end": 19.84
+ },
+ {
+  "text": "Get",
+  "start": 19.92,
+  "end": 20.0
+ },
+ {
+  "text": "past",
+  "start": 20.12,
+  "end": 20.24
+ },
+ {
+  "text": "his",
+  "start": 20.32,
+  "end": 20.4
+ },
+ {
+  "text": "hip.",
+  "start": 20.52,
+  "end": 20.96
+ },
+ {
+  "text": "Deep",
+  "start": 21.04,
+  "end": 21.2
+ },
+ {
+  "text": "seal?",
+  "start": 21.28,
+  "end": 21.84
+ },
+ {
+  "text": "Feed",
+  "start": 21.96,
+  "end": 22.08
+ },
+ {
+  "text": "it.",
+  "start": 22.16,
+  "end": 22.48
+ },
+ {
+  "text": "Entry",
+  "start": 22.56,
+  "end": 22.8
+ },
+ {
+  "text": "denied",
+  "start": 22.88,
+  "end": 23.12
+ },
+ {
+  "text": "and",
+  "start": 23.2,
+  "end": 23.28
+ },
+ {
+  "text": "space",
+  "start": 23.4,
+  "end": 23.52
+ },
+ {
+  "text": "outside?",
+  "start": 23.6,
+  "end": 24.32
+ },
+ {
+  "text": "Attack",
+  "start": 24.52,
+  "end": 24.72
+ },
+ {
+  "text": "the",
+  "start": 24.76,
+  "end": 24.8
+ },
+ {
+  "text": "big.",
+  "start": 24.88,
+  "end": 25.52
+ },
+ {
+  "text": "What",
+  "start": 25.587,
+  "end": 25.6
+ },
+ {
+  "text": "did",
+  "start": 25.68,
+  "end": 25.76
+ },
+ {
+  "text": "you",
+  "start": 25.8,
+  "end": 25.84
+ },
+ {
+  "text": "see",
+  "start": 25.92,
+  "end": 26.08
+ },
+ {
+  "text": "first?",
+  "start": 26.28,
+  "end": 26.8
+ },
+ {
+  "text": "For",
+  "start": 26.933,
+  "end": 26.96
+ },
+ {
+  "text": "more",
+  "start": 27.04,
+  "end": 27.2
+ },
+ {
+  "text": "European",
+  "start": 27.28,
+  "end": 27.68
+ },
+ {
+  "text": "basketball.",
+  "start": 27.76,
+  "end": 28.64
+ }
+]
