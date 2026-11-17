@@ -20,7 +20,7 @@ MISS3Q, FLOOR, WIDE_P, CLOSE_R, MED_H = s2.MISS3Q, s2.FLOOR, s2.WIDE_P, s2.CLOSE
 base = json.load(open(os.path.join(D, "hide3.json")))
 
 MED_R3 = follow(*json.loads(os.environ.get("MR3", "[0.8, 2.6, 1.6, 1.35]")))            # reset: away from X8's arm
-READ = cam(*json.loads(os.environ.get("RD", "[[-8.6, -3.4, 5.4], [-4.4, 2.8, 1.0], 36]")))  # behind O4 in the corner
+READ = cam(*json.loads(os.environ.get("RD", "[[-9.0, -3.6, 5.6], [-4.75, 2.6, 1.0], 38]")))  # behind O4 in the corner
 COACH = cam(*json.loads(os.environ.get("CO", "[[2.6, 12.8, 7.6], [-3.6, 2.8, 0.4], 42]")))  # high coach angle, left side
 RELO = follow(*json.loads(os.environ.get("RL", "[5.0, 1.0, 2.1, 1.45, 28]")))            # tele medium on #8
 WIDE_F = follow(*json.loads(os.environ.get("WF", "[6.2, 0.9, 2.9, 1.25, 38]")))      # final: #8 relocating, eyes on the ball
@@ -108,7 +108,8 @@ if __name__ == "__main__":
                       "closes out", "teammate open", "one more pass", "what they do next", "read the play"]
     words = json.load(open(os.path.join(D, "hide3.words.json")))
     ep["subtitleGroups"] = groups(words)
-    ep["subtitleYAt"] = [["Next-0.15", "again?>+0.15", 1345], ["Breathe-0.15", "spot.>+0.4", 1345], ["Even-0.55", "of the game.>+0.3", 1345]]
+    ep["subtitleYAt"] = [["Next-0.15", "again?>+0.15", 1345], ["Breathe-0.15", "spot.>+0.4", 1345], ["Even-0.55", "of the game.>+0.3", 1345],
+                        ["Call for it.>+0.47", "One more pass.>+0.45", 330]]  # read: subtitles above the action (hands, ball, catch)
     ep["music"] = {"src": "tactical/hide3/music-mix.mp3", "volume": 1}
     json.dump(ep, open(os.path.join(D, "hide3-main.json"), "w"), indent=1, ensure_ascii=False)
     shutil.copyfile(os.path.join(D, "hide3.words.json"), os.path.join(D, "hide3-main.words.json"))
