@@ -136,13 +136,49 @@ SFX = {"hook": [{"at": 0, "name": "whoosh", "volume": 0.1}, {"at": "you.>-0.12",
        "recapB": [{"at": 0, "name": "tick", "volume": 0.15}],
        "question": [{"at": 0, "name": "whoosh", "volume": 0.08}],
        "close": [{"at": 0, "name": "impact", "volume": 0.07}]}
-VERSIONS = {"main": "switch-main", "trial": "switch-trial"}
+TXT2 = {"SWITCH!": "THEY SWITCHED", "LOOK INSIDE": "INSIDE FIRST", "DEEP SEAL": "SEALED", "FEED THE POST": "POST FEED",
+        "ENTRY DENIED": "FRONTED", "CHANGE PACE": "SLOW, THEN GO", "ATTACK THE BIG": "BEAT THE BIG", "BIG IN SPACE": "BIG ON AN ISLAND",
+        "FREEZE": "PAUSE"}
+
+
+def shots_trial2():
+    """Trial reel #2 (owner 2026-11-17 14:23Z: a bit different but clearly not the same reel): the trial copy's opening and
+    question, every camera from the OTHER side (yaw mirrored), the overheads tilted to 24 deg, a tighter frame, other words."""
+    sh = shots("trial")
+    for s_ in sh:
+        for k in s_.get("camera", []):
+            r = k["rig"]
+            if r.get("type") != "orbit":
+                continue
+            r = dict(r)
+            if r["pitch"] <= 14:
+                r["pitch"], r["yaw"] = 24, 10
+            else:
+                r["yaw"] = -r["yaw"] if r["yaw"] else 12
+            r["dist"] = round(r["dist"] * 0.94, 2)
+            k["rig"] = r
+        for g in s_.get("screen", []):
+            for f in ("text", "label"):
+                if g.get(f) in TXT2:
+                    g[f] = TXT2[g[f]]
+            if "lines" in g:
+                g["lines"] = [TXT2.get(x, x) for x in g["lines"]]
+    rep = next(x for x in sh if x["id"] == "replay")
+    rep["screen"] = [{"type": "title", "lines": ["BIG ON GUARD"], "from": "Big on the guard", "to": "Small on the big-0.05", "y": 262, "size": 104},
+                     {"type": "title", "lines": ["BIG ON GUARD", "SMALL ON BIG"], "gold": [1], "from": "Small on the big", "to": "@end", "y": 262, "size": 100}]
+    hook = sh[0]
+    hook["screen"][1]["lines"] = ["THEY SWITCHED.", "NOW WHAT?"]
+    sh[-2]["screen"][0]["lines"] = ["SEAL OR", "DRIVE?"]
+    return sh
+
+
+VERSIONS = {"main": "switch-main", "trial": "switch-trial", "trial2": "switch-trial2"}
 for v, eid in VERSIONS.items():
     ep = copy.deepcopy(base)
     ep["id"], ep["version"] = eid, v
-    ep["title"] = "How to Punish the Switch - " + ("Reel" if v == "main" else "trial-reel copy")
+    ep["title"] = "How to Punish the Switch - " + ("Reel" if v == "main" else "trial-reel copy" if v == "trial" else "trial reel 2 (other side)")
     ep.pop("wordsRaw", None)
-    ep["shots"] = shots(v)
+    ep["shots"] = shots_trial2() if v == "trial2" else shots(v)
     plays = {k: json.load(open(os.path.join(os.path.dirname(os.path.dirname(D)), "tactical", "plays", f"{n}.json"))) for k, n in ep["plays"].items()}
     for sh in ep["shots"]:
         rm = sh.get("remap", [])
