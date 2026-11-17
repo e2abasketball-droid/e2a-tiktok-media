@@ -1,0 +1,1415 @@
+{
+ "id": "gortat-screen-v3",
+ "title": "The Gortat Screen: How to Break the Drop Coverage",
+ "fps": 30,
+ "voiceRaw": "tactical/gortat3/voice-raw.wav",
+ "wordsRaw": "gortat-screen-v3.words-raw.json",
+ "voice": "tactical/gortat3/voice.wav",
+ "voiceMix": "tactical/gortat3/voice.mix.wav",
+ "preroll": 0.15,
+ "tail": 1.4,
+ "gaps": [
+  {
+   "after": "the drop coverage.",
+   "sec": 0.85,
+   "why": "hook -> title: dramatic beat on the freeze (SEALED.)"
+  },
+  {
+   "after": "This is the Gortat screen.",
+   "sec": 0.55,
+   "why": "title lands before the explanation"
+  },
+  {
+   "after": "stuck on his back.",
+   "sec": 0.6,
+   "why": "block change: setup -> Case A"
+  },
+  {
+   "after": "Watch what happens.",
+   "sec": 0.55,
+   "why": "the play starts at real speed"
+  },
+  {
+   "after": "Drive. Finish. Two points.",
+   "sec": 0.85,
+   "why": "layup drops, LAYUP +2"
+  },
+  {
+   "after": "an open three instead.",
+   "sec": 0.75,
+   "why": "three drops; block change -> comparison"
+  },
+  {
+   "after": "corner is wide open.",
+   "sec": 0.75,
+   "why": "side-by-side summary holds before the rule"
+  }
+ ],
+ "plays": {
+  "A": "gortat3-a-seal",
+  "B": "gortat3-b-kick"
+ },
+ "shots": [
+  {
+   "id": "hook",
+   "name": "Hook - ball screen, roll, the big seals his own man: SEALED",
+   "at": 0,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     1.0
+    ],
+    [
+     "big man",
+     2.0
+    ],
+    [
+     "move",
+     2.9
+    ],
+    [
+     "drop coverage",
+     4.05
+    ],
+    [
+     "coverage.>",
+     4.15
+    ],
+    [
+     "@end",
+     4.2
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.6,
+       5.6,
+       0.9
+      ],
+      "dist": 12.0,
+      "pitch": 60,
+      "yaw": 30,
+      "fov": 44
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.4,
+       4.8,
+       0.9
+      ],
+      "dist": 11.0,
+      "pitch": 60,
+      "yaw": 30,
+      "fov": 44
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O5",
+     "from": "One big",
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O5",
+     "t0": 2.65,
+     "t1": 4.17,
+     "trail": true,
+     "from": "move",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "X5",
+     "color": "#E5483A",
+     "from": "coverage.>-0.3",
+     "to": "@end",
+     "pulse": true
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "TWO SCREENS."
+     ],
+     "gold": [],
+     "from": 0.05,
+     "to": "One big-0.05",
+     "y": 252,
+     "size": 118
+    },
+    {
+     "type": "title",
+     "lines": [
+      "ONE BIG MAN."
+     ],
+     "gold": [
+      0
+     ],
+     "from": "One big",
+     "to": "And one-0.05",
+     "y": 252,
+     "size": 118
+    },
+    {
+     "type": "title",
+     "lines": [
+      "ONE MOVE."
+     ],
+     "gold": [
+      0
+     ],
+     "from": "And one",
+     "to": "coverage.>-0.35",
+     "y": 252,
+     "size": 118
+    },
+    {
+     "type": "freeze",
+     "label": "FREEZE",
+     "from": "coverage.>-0.3",
+     "to": "@end"
+    },
+    {
+     "type": "title",
+     "lines": [
+      "SEALED."
+     ],
+     "gold": [],
+     "from": "coverage.>-0.3",
+     "to": "@end",
+     "y": 252,
+     "size": 140
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.12
+    },
+    {
+     "at": "One big",
+     "name": "tick",
+     "volume": 0.15
+    },
+    {
+     "at": "coverage.>-0.3",
+     "name": "impact",
+     "volume": 0.1
+    }
+   ]
+  },
+  {
+   "id": "reveal",
+   "name": "Reveal - the Gortat screen",
+   "at": "This is the Gortat-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "@end",
+     0.0
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.2,
+       5.8,
+       0
+      ],
+      "dist": 14.5,
+      "pitch": 62,
+      "yaw": 30,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.0,
+       5.2,
+       0
+      ],
+      "dist": 13.5,
+      "pitch": 60,
+      "yaw": 30,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O5",
+     "from": "Gortat",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "O1",
+     "from": "Gortat",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "THE GORTAT SCREEN"
+     ],
+     "gold": [
+      0
+     ],
+     "from": "Gortat",
+     "to": "@end",
+     "y": 252,
+     "size": 100,
+     "sub": "How to break the drop"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "reverse_cymbal",
+     "volume": 0.12
+    }
+   ]
+  },
+  {
+   "id": "setup",
+   "name": "Setup - right wing at 45, ball screen to his right, the drop, the big rolls and screens his own man FIRST, then the guard snakes to the middle",
+   "at": "Here's how-0.1",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "The big sets",
+     0.0
+    ],
+    [
+     "sets a ball",
+     0.3
+    ],
+    [
+     "uses it",
+     1.5
+    ],
+    [
+     "to his right,>",
+     2.55
+    ],
+    [
+     "drops back",
+     2.6
+    ],
+    [
+     "rim.>",
+     2.65
+    ],
+    [
+     "instead of rolling",
+     2.7
+    ],
+    [
+     "the big turns",
+     3.55
+    ],
+    [
+     "screens his own",
+     4.1
+    ],
+    [
+     "paint.>",
+     4.25
+    ],
+    [
+     "snakes back",
+     4.32
+    ],
+    [
+     "stuck on his back.>",
+     5.75
+    ],
+    [
+     "@end",
+     5.8
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.0,
+       5.2,
+       0
+      ],
+      "dist": 13.5,
+      "pitch": 60,
+      "yaw": 30,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O1",
+     "from": "The guard starts",
+     "to": "The big sets"
+    },
+    {
+     "type": "ring",
+     "player": "O5",
+     "from": "The big sets",
+     "to": "drops back"
+    },
+    {
+     "type": "route",
+     "player": "O1",
+     "t0": 1.45,
+     "t1": 3.0,
+     "draw": 1.0,
+     "from": "uses it",
+     "to": "snakes back"
+    },
+    {
+     "type": "ring",
+     "player": "X5",
+     "color": "#E5483A",
+     "from": "drops back",
+     "to": "instead of rolling"
+    },
+    {
+     "type": "route",
+     "player": "X5",
+     "t0": 1.2,
+     "t1": 1.8,
+     "trail": true,
+     "width": 0.14,
+     "color": "#E5483A",
+     "from": "drops back",
+     "to": "instead of rolling"
+    },
+    {
+     "type": "route",
+     "player": "O5",
+     "t0": 2.65,
+     "t1": 4.17,
+     "trail": true,
+     "from": "instead of rolling",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "X5",
+     "color": "#E5483A",
+     "from": "screens his own",
+     "to": "@end",
+     "pulse": true
+    },
+    {
+     "type": "ring",
+     "player": "O5",
+     "from": "screens his own",
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O1",
+     "t0": 4.32,
+     "t1": 5.75,
+     "draw": 1.0,
+     "from": "snakes back",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "X1",
+     "color": "#E5483A",
+     "from": "stuck on his back",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "RIGHT WING,",
+      "45 DEGREES"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "The guard starts",
+     "to": "The big sets-0.05",
+     "y": 252,
+     "size": 100
+    },
+    {
+     "type": "title",
+     "lines": [
+      "BALL SCREEN.",
+      "HE GOES RIGHT"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "The big sets",
+     "to": "drops back-0.05",
+     "y": 252,
+     "size": 96
+    },
+    {
+     "type": "title",
+     "lines": [
+      "HIS DEFENDER",
+      "DROPS"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "drops back",
+     "to": "instead of rolling-0.05",
+     "y": 252,
+     "size": 100
+    },
+    {
+     "type": "title",
+     "lines": [
+      "FIRST: THE BIG",
+      "SCREENS HIS OWN MAN"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "instead of rolling",
+     "to": "snakes back-0.05",
+     "y": 252,
+     "size": 90
+    },
+    {
+     "type": "title",
+     "lines": [
+      "THEN: SNAKE BACK",
+      "TO THE MIDDLE"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "snakes back",
+     "to": "@end",
+     "y": 252,
+     "size": 92
+    }
+   ],
+   "sfx": [
+    {
+     "at": "the big turns",
+     "name": "tick",
+     "volume": 0.17
+    }
+   ]
+  },
+  {
+   "id": "caseA",
+   "name": "Case A - the low man stays home: the seal opens the lane, layup",
+   "at": "First scenario-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.6
+    ],
+    [
+     "Watch",
+     2.2
+    ],
+    [
+     "attacks the middle",
+     4.35
+    ],
+    [
+     "left hand,>",
+     5.4
+    ],
+    [
+     "seals his man",
+     5.75
+    ],
+    [
+     "his man,>",
+     5.9,
+     "out"
+    ],
+    [
+     "lane opens",
+     5.95
+    ],
+    [
+     "up.>",
+     6.25
+    ],
+    [
+     "Drive",
+     6.55
+    ],
+    [
+     "Finish",
+     7.07
+    ],
+    [
+     "Two points",
+     7.45
+    ],
+    [
+     "points.>",
+     7.95
+    ],
+    [
+     "@end",
+     8.65
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.0,
+       5.2,
+       0
+      ],
+      "dist": 13.5,
+      "pitch": 60,
+      "yaw": 30,
+      "fov": 42
+     }
+    },
+    {
+     "at": "lane opens",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.0,
+       5.2,
+       0
+      ],
+      "dist": 13.5,
+      "pitch": 60,
+      "yaw": 30,
+      "fov": 42
+     }
+    },
+    {
+     "at": "Finish",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       2.9,
+       1.2
+      ],
+      "dist": 6.8,
+      "pitch": 64,
+      "yaw": 0,
+      "fov": 46
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       2.7,
+       1.4
+      ],
+      "dist": 6.2,
+      "pitch": 66,
+      "yaw": 0,
+      "fov": 46
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "route",
+     "player": "O1",
+     "t0": 4.32,
+     "t1": 7.07,
+     "trail": true,
+     "from": "attacks the middle",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "X5",
+     "color": "#E5483A",
+     "from": "seals his man",
+     "to": "Drive",
+     "pulse": true
+    },
+    {
+     "type": "ring",
+     "player": "O5",
+     "from": "seals his man",
+     "to": "Drive"
+    },
+    {
+     "type": "ring",
+     "player": "O1",
+     "from": "Finish",
+     "to": "@end",
+     "pulse": true
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "CASE A:",
+      "HELP STAYS HOME"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "First scenario",
+     "to": "attacks the middle-0.05",
+     "y": 252,
+     "size": 96
+    },
+    {
+     "type": "title",
+     "lines": [
+      "ATTACK THE MIDDLE",
+      "LEFT HAND"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "attacks the middle",
+     "to": "seals his man-0.05",
+     "y": 252,
+     "size": 96
+    },
+    {
+     "type": "title",
+     "lines": [
+      "THE BIG",
+      "SEALS HIS MAN"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "seals his man",
+     "to": "lane opens-0.05",
+     "y": 252,
+     "size": 96
+    },
+    {
+     "type": "freeze",
+     "label": "FREEZE",
+     "from": "his man,>-0.25",
+     "to": "lane opens-0.05"
+    },
+    {
+     "type": "stamp",
+     "text": "LANE OPEN",
+     "from": "lane opens",
+     "to": "Finish-0.1",
+     "y": 300
+    },
+    {
+     "type": "stamp",
+     "text": "LAYUP",
+     "badge": "+2",
+     "from": "points.>-0.2",
+     "to": "@end",
+     "y": 330
+    }
+   ],
+   "sfx": [
+    {
+     "at": "seals his man",
+     "name": "whip",
+     "volume": 0.1
+    },
+    {
+     "at": "points.>-0.25",
+     "name": "swish",
+     "volume": 0.16
+    }
+   ]
+  },
+  {
+   "id": "caseB",
+   "name": "Case B - the low man helps early: kick-out to the corner, open three",
+   "at": "But what if-0.15",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     0.6
+    ],
+    [
+     "helps early",
+     5.46
+    ],
+    [
+     "early?>",
+     5.66
+    ],
+    [
+     "Now the lane",
+     5.76
+    ],
+    [
+     "closed.>",
+     6.16
+    ],
+    [
+     "reads the help",
+     6.26
+    ],
+    [
+     "reads the help.>",
+     6.46
+    ],
+    [
+     "steps in",
+     6.56
+    ],
+    [
+     "stop the drive,>",
+     6.86
+    ],
+    [
+     "shooter in the corner",
+     6.89
+    ],
+    [
+     "alone.>",
+     6.92
+    ],
+    [
+     "One quick",
+     6.94
+    ],
+    [
+     "and the offense",
+     7.59
+    ],
+    [
+     "open three",
+     7.96
+    ],
+    [
+     "three instead.>",
+     9.06
+    ],
+    [
+     "@end",
+     9.96
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       3.0,
+       4.4,
+       0
+      ],
+      "dist": 20.0,
+      "pitch": 60,
+      "yaw": 0,
+      "fov": 42
+     }
+    },
+    {
+     "at": "and the offense",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       3.0,
+       4.4,
+       0
+      ],
+      "dist": 20.0,
+      "pitch": 60,
+      "yaw": 0,
+      "fov": 42
+     }
+    },
+    {
+     "at": "three instead.>-0.5",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       6.3,
+       1.9,
+       1.2
+      ],
+      "dist": 7.4,
+      "pitch": 60,
+      "yaw": 0,
+      "fov": 46
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       6.3,
+       1.8,
+       1.4
+      ],
+      "dist": 6.9,
+      "pitch": 62,
+      "yaw": 0,
+      "fov": 46
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X4",
+     "color": "#E5483A",
+     "from": "corner defender",
+     "to": "One quick"
+    },
+    {
+     "type": "route",
+     "player": "X4",
+     "t0": 5.67,
+     "t1": 6.96,
+     "trail": true,
+     "width": 0.14,
+     "color": "#E5483A",
+     "from": "steps in",
+     "to": "One quick"
+    },
+    {
+     "type": "ring",
+     "player": "O4",
+     "from": "shooter in the corner",
+     "to": "@end",
+     "pulse": true
+    },
+    {
+     "type": "passLane",
+     "src": "O1",
+     "dst": "O4",
+     "from": "One quick",
+     "to": "and the offense"
+    }
+   ],
+   "screen": [
+    {
+     "type": "rewind",
+     "from": 0,
+     "to": 0.35
+    },
+    {
+     "type": "title",
+     "lines": [
+      "WHAT IF",
+      "HE HELPS EARLY?"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "corner defender",
+     "to": "So the guard-0.05",
+     "y": 252,
+     "size": 100
+    },
+    {
+     "type": "title",
+     "lines": [
+      "READ",
+      "THE HELP"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "So the guard",
+     "to": "shooter in the corner-0.05",
+     "y": 252,
+     "size": 100
+    },
+    {
+     "type": "title",
+     "lines": [
+      "CORNER",
+      "LEFT ALONE"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "shooter in the corner",
+     "to": "One quick-0.05",
+     "y": 252,
+     "size": 100
+    },
+    {
+     "type": "stamp",
+     "text": "ONE QUICK KICK-OUT",
+     "from": "One quick",
+     "to": "open three-0.1",
+     "y": 300
+    },
+    {
+     "type": "stamp",
+     "text": "OPEN THREE",
+     "badge": "+3",
+     "from": "three instead.>-0.2",
+     "to": "@end",
+     "y": 330
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whip",
+     "volume": 0.1
+    },
+    {
+     "at": "three instead.>-0.25",
+     "name": "swish",
+     "volume": 0.16
+    }
+   ]
+  },
+  {
+   "id": "cmpA",
+   "name": "Compare A - stay home: layup",
+   "at": "That's what-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     2.4
+    ],
+    [
+     "Stay home",
+     4.2
+    ],
+    [
+     "@end",
+     7.75
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.0,
+       5.2,
+       0
+      ],
+      "dist": 13.5,
+      "pitch": 60,
+      "yaw": 30,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X5",
+     "color": "#E5483A",
+     "from": "Stay home",
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O1",
+     "t0": 4.32,
+     "t1": 7.07,
+     "trail": true,
+     "from": "Stay home",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "SO DANGEROUS."
+     ],
+     "gold": [
+      0
+     ],
+     "from": 0.05,
+     "to": "Stay home-0.05",
+     "y": 252,
+     "size": 110
+    },
+    {
+     "type": "title",
+     "lines": [
+      "STAY HOME → LAYUP"
+     ],
+     "gold": [
+      0
+     ],
+     "from": "Stay home",
+     "to": "@end",
+     "y": 252,
+     "size": 92
+    }
+   ],
+   "sfx": [
+    {
+     "at": "Stay home",
+     "name": "whoosh",
+     "volume": 0.06
+    }
+   ]
+  },
+  {
+   "id": "cmpB",
+   "name": "Compare B - help too early: corner three",
+   "at": "Help too-0.15",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     4.8
+    ],
+    [
+     "@end",
+     8.66
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       3.0,
+       4.4,
+       0
+      ],
+      "dist": 20.0,
+      "pitch": 60,
+      "yaw": 0,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X4",
+     "color": "#E5483A",
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "X4",
+     "t0": 5.67,
+     "t1": 6.96,
+     "trail": true,
+     "width": 0.14,
+     "color": "#E5483A",
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "O4",
+     "from": "corner is wide",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "HELP → CORNER THREE"
+     ],
+     "gold": [
+      0
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 252,
+     "size": 88
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.06
+    }
+   ]
+  },
+  {
+   "id": "read",
+   "name": "The rule - the screen has to be set: feet still, no holding",
+   "at": "Just remember-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     4.6
+    ],
+    [
+     "Feet still",
+     5.2
+    ],
+    [
+     "@end",
+     5.3
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.0,
+       4.4,
+       0.9
+      ],
+      "dist": 7.6,
+      "pitch": 70,
+      "yaw": 0,
+      "fov": 44
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.0,
+       4.4,
+       0.9
+      ],
+      "dist": 7.0,
+      "pitch": 70,
+      "yaw": 0,
+      "fov": 44
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O5",
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "X5",
+     "color": "#E5483A",
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "THE SCREEN",
+      "HAS TO BE SET."
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0.05,
+     "to": "Feet still-0.05",
+     "y": 252,
+     "size": 100
+    },
+    {
+     "type": "title",
+     "lines": [
+      "FEET STILL.",
+      "NO HOLDING."
+     ],
+     "gold": [
+      1
+     ],
+     "from": "Feet still",
+     "to": "@end",
+     "y": 252,
+     "size": 110
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "tick",
+     "volume": 0.17
+    }
+   ]
+  },
+  {
+   "id": "close",
+   "name": "CTA",
+   "at": "How would you-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     6.0
+    ],
+    [
+     "@end",
+     6.05
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.0,
+       5.2,
+       0
+      ],
+      "dist": 13.5,
+      "pitch": 60,
+      "yaw": 30,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.0,
+       5.2,
+       0
+      ],
+      "dist": 12.8,
+      "pitch": 60,
+      "yaw": 30,
+      "fov": 42
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [],
+   "screen": [
+    {
+     "type": "scrim",
+     "opacity": 0.55,
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "title",
+     "lines": [
+      "HOW WOULD",
+      "YOU GUARD IT?"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 600,
+     "size": 140
+    },
+    {
+     "type": "logo",
+     "big": true,
+     "from": 0.4,
+     "to": "@end"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "impact",
+     "volume": 0.08
+    }
+   ]
+  }
+ ],
+ "pinV2": true,
+ "musicDrop": "First scenario-0.2",
+ "musicPayoff": "That's what-0.3",
+ "keywords": [
+  "gortat",
+  "screen",
+  "drop",
+  "seal",
+  "seals",
+  "lane",
+  "help",
+  "corner",
+  "three",
+  "layup",
+  "set",
+  "holding"
+ ],
+ "subtitleHide": [
+  [
+   0,
+   "This is the Gortat-0.2"
+  ],
+  [
+   "How would you-0.05",
+   99
+  ]
+ ],
+ "music": {
+  "src": "tactical/gortat3/music-mix.mp3",
+  "volume": 1
+ }
+}
