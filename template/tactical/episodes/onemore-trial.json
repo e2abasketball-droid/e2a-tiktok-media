@@ -1,0 +1,1628 @@
+{
+ "id": "onemore-trial",
+ "title": "One More Dribble - trial-reel copy",
+ "fps": 30,
+ "voiceRaw": "tactical/onemore/voice-raw.mp3",
+ "voice": "tactical/onemore/voice.wav",
+ "voiceMix": "tactical/onemore/voice.mix.wav",
+ "preroll": 0.12,
+ "tail": 2.4,
+ "gaps": [
+  {
+   "after": "a mistake?",
+   "sec": 1.6,
+   "why": "the play runs into the decision"
+  },
+  {
+   "after": "Freeze it here.",
+   "sec": 0.5,
+   "why": "freeze lands"
+  },
+  {
+   "after": "one more dribble?",
+   "sec": 1.5,
+   "why": "freeze held ~1 s after the question, both options drawn"
+  },
+  {
+   "after": "the early pass.",
+   "sec": 0.45,
+   "why": "pass leaves"
+  },
+  {
+   "after": "ball leaves.",
+   "sec": 1.9,
+   "why": "pass flight, the catch"
+  },
+  {
+   "after": "to cover.",
+   "sec": 0.45,
+   "why": "overhead route grows"
+  },
+  {
+   "after": "on the catch.",
+   "sec": 2.0,
+   "why": "CATCH CONTESTED"
+  },
+  {
+   "after": "Same setup.",
+   "sec": 0.45,
+   "why": "rewind lands"
+  },
+  {
+   "after": "One more dribble.",
+   "sec": 0.7,
+   "why": "the full extra dribble"
+  },
+  {
+   "after": "his feet.",
+   "sec": 0.6,
+   "why": "cut to the low shot"
+  },
+  {
+   "after": "toward the ball.",
+   "sec": 1.4,
+   "why": "his weight shifts"
+  },
+  {
+   "after": "into the space.",
+   "sec": 3.6,
+   "why": "pass, catch, layup"
+  },
+  {
+   "after": "with the pass?",
+   "sec": 1.6,
+   "why": "second hook, scene clean"
+  },
+  {
+   "after": "Same dribble.",
+   "sec": 0.5,
+   "why": "X10 stays"
+  },
+  {
+   "after": "is yours.",
+   "sec": 0.5,
+   "why": "penetration arrow"
+  },
+  {
+   "after": "Go finish.",
+   "sec": 3.1,
+   "why": "gather, steps, layup"
+  },
+  {
+   "after": "Steps up? Pass.",
+   "sec": 1.8,
+   "why": "recap fragment 1"
+  },
+  {
+   "after": "pass? Finish.",
+   "sec": 2.4,
+   "why": "recap fragment 2 + PASS NOW OR ONE MORE?"
+  }
+ ],
+ "plays": {
+  "A": "onemore-a-early",
+  "B": "onemore-b-commit",
+  "C": "onemore-c-stay"
+ },
+ "shots": [
+  {
+   "id": "hook",
+   "name": "Hook - the 2-on-1 in motion, #8 looks open",
+   "at": 0,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.75
+    ],
+    [
+     "mistake?>+0.1",
+     3.0
+    ],
+    [
+     "@end",
+     3.26,
+     "out"
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       7.6,
+       0
+      ],
+      "dist": 21.0,
+      "pitch": 14,
+      "yaw": 0,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       6.6,
+       0.2
+      ],
+      "dist": 19.5,
+      "pitch": 43,
+      "yaw": -22,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O8",
+     "color": "#C9A24D",
+     "from": "wide",
+     "to": "mistake?>",
+     "pulse": true
+    },
+    {
+     "type": "ring",
+     "player": "X10",
+     "color": "#E5483A",
+     "from": "mistake?>+0.3",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "WIDE OPEN?"
+     ],
+     "gold": [
+      0
+     ],
+     "from": "wide",
+     "to": "@end",
+     "y": 262,
+     "size": 108
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.1
+    }
+   ]
+  },
+  {
+   "id": "freeze",
+   "name": "Freeze before the decision: pass now or one more dribble?",
+   "at": "Freeze-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.26
+    ],
+    [
+     "@end",
+     3.26
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       6.6,
+       0.2
+      ],
+      "dist": 19.5,
+      "pitch": 43,
+      "yaw": -22,
+      "fov": 42
+     }
+    },
+    {
+     "at": "here.>",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.7,
+       6.1,
+       0
+      ],
+      "dist": 18.5,
+      "pitch": 42,
+      "yaw": -22,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.7,
+       6.1,
+       0
+      ],
+      "dist": 18.5,
+      "pitch": 42,
+      "yaw": -22,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X10",
+     "color": "#E5483A",
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "passLane",
+     "src": "O4",
+     "dst": "O8",
+     "color": "#FFFFFF",
+     "from": "Pass now",
+     "to": "dribble?>+1.0"
+    },
+    {
+     "type": "passLane",
+     "src": "O4",
+     "dst": [
+      1.5,
+      5.75
+     ],
+     "color": "#C9A24D",
+     "from": "one more",
+     "to": "dribble?>+1.0"
+    }
+   ],
+   "screen": [
+    {
+     "type": "freeze",
+     "label": "FREEZE",
+     "from": 0.05,
+     "to": "@end"
+    },
+    {
+     "type": "title",
+     "lines": [
+      "PASS NOW?"
+     ],
+     "from": "Pass now",
+     "to": "one more-0.05",
+     "y": 262,
+     "size": 108
+    },
+    {
+     "type": "title",
+     "lines": [
+      "PASS NOW?",
+      "ONE MORE DRIBBLE?"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "one more",
+     "to": "dribble?>+1.0",
+     "y": 262,
+     "size": 96
+    }
+   ],
+   "sfx": [
+    {
+     "at": "here.>-0.2",
+     "name": "impact",
+     "volume": 0.08
+    }
+   ]
+  },
+  {
+   "id": "earlyA",
+   "name": "A - the early pass: still central when the ball leaves",
+   "at": "Watch-0.2",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.26
+    ],
+    [
+     "early",
+     3.3
+    ],
+    [
+     "early pass>",
+     "release"
+    ],
+    [
+     "leaves.>",
+     3.62
+    ],
+    [
+     "@end",
+     4.35
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.7,
+       6.1,
+       0
+      ],
+      "dist": 18.5,
+      "pitch": 42,
+      "yaw": -22,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.9,
+       6.2,
+       0
+      ],
+      "dist": 16.0,
+      "pitch": 40,
+      "yaw": 0,
+      "fov": 42
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X10",
+     "color": "#E5483A",
+     "from": "The defender's",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "O8",
+     "from": "leaves.>+0.6",
+     "to": "@end",
+     "pulse": true
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "THE EARLY PASS"
+     ],
+     "from": "Watch",
+     "to": "The defender's-0.05",
+     "y": 262,
+     "size": 104
+    },
+    {
+     "type": "pin",
+     "player": "X10",
+     "text": "STILL CENTRAL",
+     "tone": "red",
+     "from": "still",
+     "to": "leaves.>+0.5"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whip",
+     "volume": 0.08
+    }
+   ]
+  },
+  {
+   "id": "topA",
+   "name": "A - overhead replay: how little ground he covers, catch contested",
+   "at": "From-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.3
+    ],
+    [
+     "how",
+     "release"
+    ],
+    [
+     "cover.>",
+     3.95
+    ],
+    [
+     "catch.>",
+     "contest"
+    ],
+    [
+     "@end",
+     4.75
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.7,
+       4.7,
+       0
+      ],
+      "dist": 16.5,
+      "pitch": 7,
+      "yaw": 0,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.0,
+       4.7,
+       0
+      ],
+      "dist": 16.0,
+      "pitch": 7,
+      "yaw": 0,
+      "fov": 42
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "route",
+     "player": "X10",
+     "t0": 3.51,
+     "t1": 4.29,
+     "trail": true,
+     "width": 0.14,
+     "color": "#E5483A",
+     "from": "how",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "X10",
+     "color": "#E5483A",
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "FROM UP HERE"
+     ],
+     "from": 0.05,
+     "to": "He's-0.05",
+     "y": 262,
+     "size": 104
+    },
+    {
+     "type": "stamp",
+     "text": "CATCH CONTESTED",
+     "from": "catch",
+     "to": "@end",
+     "y": 330
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "tick",
+     "volume": 0.15
+    }
+   ]
+  },
+  {
+   "id": "rew",
+   "name": "Rewind 9 frames on the tactical axis",
+   "at": "Same-0.5",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     4.75
+    ],
+    [
+     "@end",
+     3.26
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.7,
+       6.1,
+       0
+      ],
+      "dist": 18.5,
+      "pitch": 42,
+      "yaw": -22,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.7,
+       6.1,
+       0
+      ],
+      "dist": 18.5,
+      "pitch": 42,
+      "yaw": -22,
+      "fov": 42
+     }
+    }
+   ],
+   "screen": [
+    {
+     "type": "rewind",
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "reverse_cymbal",
+     "volume": 0.11
+    }
+   ]
+  },
+  {
+   "id": "dribbleB",
+   "name": "B - same setup, one more dribble, watch his feet",
+   "at": "Same-0.2",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     3.26
+    ],
+    [
+     "One more dribble. Watch his",
+     3.26
+    ],
+    [
+     "@end",
+     3.47
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.7,
+       6.1,
+       0
+      ],
+      "dist": 18.5,
+      "pitch": 42,
+      "yaw": -22,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.2,
+       6.2,
+       0.3
+      ],
+      "dist": 14.2,
+      "pitch": 44,
+      "yaw": -6,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X10",
+     "color": "#E5483A",
+     "from": "Watch his",
+     "to": "@end",
+     "pulse": true
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "SAME SETUP"
+     ],
+     "from": 0.05,
+     "to": "One more dribble. Watch his-0.05",
+     "y": 262,
+     "size": 108
+    },
+    {
+     "type": "title",
+     "lines": [
+      "ONE MORE DRIBBLE"
+     ],
+     "gold": [
+      0
+     ],
+     "from": "One more dribble. Watch his",
+     "to": "@end",
+     "y": 262,
+     "size": 104
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "lowB",
+   "name": "B - low shot behind X10: the first step toward the ball",
+   "at": "feet.>+0.15",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     3.5
+    ],
+    [
+     "There. That",
+     3.93
+    ],
+    [
+     "toward the ball>",
+     4.08
+    ],
+    [
+     "@end",
+     4.12
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "pov",
+      "behind": "X10",
+      "look": "O4",
+      "back": 4.4,
+      "height": 1.7,
+      "side": -1.9,
+      "fov": 46,
+      "lookZ": 0.45
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "pov",
+      "behind": "X10",
+      "look": "O4",
+      "back": 4.4,
+      "height": 1.7,
+      "side": -1.9,
+      "fov": 46,
+      "lookZ": 0.45
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "openSpace",
+     "at": [
+      1.19,
+      4.79
+     ],
+     "r": 0.3,
+     "color": "#E5483A",
+     "from": "There. That",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "FIRST STEP"
+     ],
+     "gold": [
+      0
+     ],
+     "from": "There. That",
+     "to": "@end",
+     "y": 262,
+     "size": 108
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.07
+    }
+   ]
+  },
+  {
+   "id": "laneB",
+   "name": "B - overhead: the lane opens, lead pass, catch, layup",
+   "at": "Now the lane-0.15",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     4.12
+    ],
+    [
+     "opens.>",
+     "pass"
+    ],
+    [
+     "space.>",
+     5.15
+    ],
+    [
+     "space.>+1.9",
+     "make"
+    ],
+    [
+     "@end",
+     6.6
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.7,
+       4.7,
+       0
+      ],
+      "dist": 16.5,
+      "pitch": 7,
+      "yaw": 0,
+      "fov": 42
+     }
+    },
+    {
+     "at": "space.>",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.7,
+       4.7,
+       0
+      ],
+      "dist": 16.5,
+      "pitch": 7,
+      "yaw": 0,
+      "fov": 42
+     }
+    },
+    {
+     "at": "space.>+1.9",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.9,
+       3.4,
+       0.9
+      ],
+      "dist": 9.4,
+      "pitch": 58,
+      "yaw": 6,
+      "fov": 44
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.9,
+       3.4,
+       0.9
+      ],
+      "dist": 9.4,
+      "pitch": 58,
+      "yaw": 6,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "passLane",
+     "src": "O4",
+     "dst": [
+      -2.45,
+      4.85
+     ],
+     "color": "#FFFFFF",
+     "from": "lane",
+     "to": "opens.>"
+    },
+    {
+     "type": "route",
+     "player": "O8",
+     "t0": 4.12,
+     "t1": 5.7,
+     "trail": true,
+     "from": "Lead",
+     "to": "space.>+1.2"
+    },
+    {
+     "type": "route",
+     "player": "X10",
+     "t0": 3.52,
+     "t1": 4.271,
+     "color": "#E5483A",
+     "width": 0.14,
+     "from": 0,
+     "to": "opens.>"
+    },
+    {
+     "type": "ring",
+     "player": "O8",
+     "from": "space.>+1.2",
+     "to": "@end",
+     "pulse": true
+    }
+   ],
+   "screen": [
+    {
+     "type": "stamp",
+     "text": "LANE OPEN",
+     "from": "opens",
+     "to": "space.>+0.6",
+     "y": 330
+    },
+    {
+     "type": "stamp",
+     "text": "PASS + LAYUP",
+     "badge": "+2",
+     "from": "space.>+1.4",
+     "to": "@end",
+     "y": 330
+    }
+   ],
+   "sfx": [
+    {
+     "at": "opens",
+     "name": "tick",
+     "volume": 0.15
+    }
+   ]
+  },
+  {
+   "id": "hook2",
+   "name": "C - second hook: what if he stays with the pass?",
+   "at": "But-0.15",
+   "play": "C",
+   "remap": [
+    [
+     0,
+     3.26
+    ],
+    [
+     "stays",
+     3.26
+    ],
+    [
+     "@end",
+     3.72
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.7,
+       6.1,
+       0
+      ],
+      "dist": 18.5,
+      "pitch": 42,
+      "yaw": -22,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.7,
+       6.1,
+       0
+      ],
+      "dist": 18.5,
+      "pitch": 42,
+      "yaw": -22,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X10",
+     "color": "#E5483A",
+     "from": "with the pass>",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "O8",
+     "from": "with the pass>",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "rewind",
+     "from": 0,
+     "to": 0.3
+    },
+    {
+     "type": "title",
+     "lines": [
+      "DEFENDER STAYS"
+     ],
+     "from": "with the pass>",
+     "to": "@end",
+     "y": 262,
+     "size": 104
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "reverse_cymbal",
+     "volume": 0.1
+    }
+   ]
+  },
+  {
+   "id": "laneC",
+   "name": "C - same dribble, he stays, the lane is yours: finish",
+   "at": "Same dribble-0.15",
+   "play": "C",
+   "remap": [
+    [
+     0,
+     3.72
+    ],
+    [
+     "with your teammate>",
+     "stay"
+    ],
+    [
+     "yours.>",
+     4.42
+    ],
+    [
+     "Go finish>",
+     "layup"
+    ],
+    [
+     "@end",
+     6.6
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.7,
+       6.1,
+       0
+      ],
+      "dist": 18.5,
+      "pitch": 42,
+      "yaw": -22,
+      "fov": 42
+     }
+    },
+    {
+     "at": "yours.>",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       5.3,
+       0.3
+      ],
+      "dist": 14.0,
+      "pitch": 42,
+      "yaw": -4,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "Go finish>-0.1",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.4,
+       3.2,
+       0.9
+      ],
+      "dist": 9.0,
+      "pitch": 58,
+      "yaw": -8,
+      "fov": 44
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.4,
+       3.2,
+       0.9
+      ],
+      "dist": 9.0,
+      "pitch": 58,
+      "yaw": -8,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X10",
+     "color": "#E5483A",
+     "from": 0,
+     "to": "yours.>"
+    },
+    {
+     "type": "route",
+     "player": "O4",
+     "t0": 4.0,
+     "t1": 4.982,
+     "from": "The lane is",
+     "to": "Go finish>"
+    },
+    {
+     "type": "ring",
+     "player": "O4",
+     "from": "Go finish>",
+     "to": "@end",
+     "pulse": true
+    }
+   ],
+   "screen": [
+    {
+     "type": "pin",
+     "player": "X10",
+     "text": "STAYS WITH THE PASS",
+     "tone": "red",
+     "from": "stays with your",
+     "to": "yours.>"
+    },
+    {
+     "type": "stamp",
+     "text": "THE LANE IS YOURS",
+     "from": "The lane is",
+     "to": "Go finish>+0.3",
+     "y": 330
+    },
+    {
+     "type": "stamp",
+     "text": "FINISH",
+     "badge": "+2",
+     "from": "Go finish>+0.6",
+     "to": "@end",
+     "y": 330
+    }
+   ],
+   "sfx": [
+    {
+     "at": "The lane is",
+     "name": "tick",
+     "volume": 0.15
+    }
+   ]
+  },
+  {
+   "id": "recapB",
+   "name": "Recap B - steps up: pass (same overhead)",
+   "at": "Steps-0.15",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     3.35
+    ],
+    [
+     "up? Pass>",
+     4.45
+    ],
+    [
+     "@end",
+     4.85
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.7,
+       4.7,
+       0
+      ],
+      "dist": 16.5,
+      "pitch": 7,
+      "yaw": 0,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.7,
+       4.7,
+       0
+      ],
+      "dist": 16.5,
+      "pitch": 7,
+      "yaw": 0,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "route",
+     "player": "X10",
+     "t0": 3.52,
+     "t1": 3.85,
+     "trail": true,
+     "color": "#E5483A",
+     "width": 0.14,
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "passLane",
+     "src": "O4",
+     "dst": [
+      -2.45,
+      4.85
+     ],
+     "color": "#FFFFFF",
+     "from": "up? Pass",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "STEPS UP",
+      "→ PASS"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 262,
+     "size": 104
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "tick",
+     "volume": 0.15
+    }
+   ]
+  },
+  {
+   "id": "recapC",
+   "name": "Recap C - stays with the pass: finish (same overhead)",
+   "at": "Takes away-0.15",
+   "play": "C",
+   "remap": [
+    [
+     0,
+     3.35
+    ],
+    [
+     "pass? Finish>",
+     4.9
+    ],
+    [
+     "@end",
+     5.05
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.7,
+       4.7,
+       0
+      ],
+      "dist": 16.5,
+      "pitch": 7,
+      "yaw": 0,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.7,
+       4.7,
+       0
+      ],
+      "dist": 16.5,
+      "pitch": 7,
+      "yaw": 0,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "route",
+     "player": "X10",
+     "t0": 3.5,
+     "t1": 4.3,
+     "trail": true,
+     "color": "#E5483A",
+     "width": 0.14,
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O4",
+     "t0": 3.4,
+     "t1": 4.982,
+     "trail": true,
+     "from": "pass? Finish",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "STAYS WITH THE PASS",
+      "→ FINISH"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 262,
+     "size": 84
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "tick",
+     "volume": 0.15
+    }
+   ]
+  },
+  {
+   "id": "question",
+   "name": "Back to the opening frame: pass now or one more?",
+   "at": "pass? Finish>+0.7",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.6
+    ],
+    [
+     "@end",
+     2.75
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       6.6,
+       0.2
+      ],
+      "dist": 19.5,
+      "pitch": 43,
+      "yaw": -22,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.7,
+       6.1,
+       0
+      ],
+      "dist": 18.5,
+      "pitch": 42,
+      "yaw": -22,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X10",
+     "color": "#E5483A",
+     "from": 0.3,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "READ",
+      "THE DEFENDER."
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 262,
+     "size": 104
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.08
+    }
+   ]
+  },
+  {
+   "id": "close",
+   "name": "E2A sign-off, ends on the hook's first frame (loop)",
+   "at": "For more-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.25
+    ],
+    [
+     "basketball.>+0.5",
+     0.7
+    ],
+    [
+     "@end",
+     0.75
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.7,
+       6.1,
+       0
+      ],
+      "dist": 18.5,
+      "pitch": 42,
+      "yaw": -22,
+      "fov": 42
+     }
+    },
+    {
+     "at": "basketball.>+0.5",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       7.6,
+       0
+      ],
+      "dist": 21.0,
+      "pitch": 14,
+      "yaw": 0,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       7.6,
+       0
+      ],
+      "dist": 21.0,
+      "pitch": 14,
+      "yaw": 0,
+      "fov": 42
+     }
+    }
+   ],
+   "screen": [
+    {
+     "type": "scrim",
+     "opacity": 0.55,
+     "from": 0,
+     "to": "basketball.>+0.45"
+    },
+    {
+     "type": "title",
+     "lines": [
+      "FOR MORE",
+      "EUROPEAN",
+      "BASKETBALL"
+     ],
+     "gold": [
+      1,
+      2
+     ],
+     "from": 0.05,
+     "to": "basketball.>+0.45",
+     "y": 560,
+     "size": 132
+    },
+    {
+     "type": "logo",
+     "big": true,
+     "from": "European",
+     "to": "basketball.>+0.45"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "impact",
+     "volume": 0.07
+    }
+   ]
+  }
+ ],
+ "version": "trial",
+ "pinV2": true,
+ "autoSfx": {
+  "bounce": 0.16,
+  "catch": 0.12,
+  "squeak": 0.09,
+  "swish": 0.26,
+  "land": 0.07,
+  "players": [
+   "O4",
+   "O8",
+   "X10"
+  ]
+ },
+ "keywords": [
+  "wide open",
+  "mistake",
+  "Freeze",
+  "one more dribble",
+  "early pass",
+  "in the middle",
+  "ball leaves",
+  "up here",
+  "on the catch",
+  "his feet",
+  "first step",
+  "toward the ball",
+  "lane opens",
+  "into the space",
+  "what if",
+  "with the pass",
+  "stays with",
+  "Go finish",
+  "Steps up",
+  "Finish"
+ ],
+ "subtitleHide": [
+  [
+   "For more-0.05",
+   "basketball.>+3"
+  ]
+ ],
+ "subtitleGroups": [
+  4,
+  7,
+  3,
+  7,
+  4,
+  6,
+  4,
+  6,
+  7,
+  5,
+  5,
+  3,
+  4,
+  5,
+  4,
+  6,
+  5,
+  3,
+  7,
+  6,
+  3,
+  5,
+  4
+ ],
+ "music": {
+  "src": "tactical/onemore/music-mix.mp3",
+  "volume": 1
+ }
+}

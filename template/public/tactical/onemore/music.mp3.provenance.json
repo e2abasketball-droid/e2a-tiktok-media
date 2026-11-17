@@ -1,0 +1,5 @@
+{
+ "licence_key": "music/synth/tactical",
+ "source": "E2A in-house synth engine music/e2a_music.py --story tactical (no samples)",
+ "sha256": "f76d8ed0c8228160e69f57289b88d983d389199c913792db72bd3cd696373ebe"
+}

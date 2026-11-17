@@ -1,0 +1,202 @@
+{
+ "id": "onemore-a-early",
+ "title": "One more dribble A: early pass, catch contested",
+ "duration": 5.949999999999999,
+ "concept": "onemore",
+ "source": "original E2A play (2-on-1 read of the last defender; generic coaching knowledge, no copied possession)",
+ "squareUp": true,
+ "players": [
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Ball handler: pass now or one more dribble"
+  },
+  {
+   "id": "O8",
+   "team": "O",
+   "role": "Wide teammate on the right"
+  },
+  {
+   "id": "X10",
+   "team": "X",
+   "role": "The only defender: steps up or stays with the pass",
+   "guards": "O4"
+  }
+ ],
+ "start": {
+  "O4": [
+   3.0,
+   12.3
+  ],
+  "O8": [
+   -4.1,
+   11.4
+  ],
+  "X10": [
+   0.35,
+   5.7
+  ]
+ },
+ "legs": {
+  "O4": [
+   {
+    "at": 0.0,
+    "via": [
+     [
+      2.85,
+      10.6
+     ]
+    ],
+    "to": [
+     2.05,
+     7.45
+    ],
+    "dur": 3.3
+   },
+   {
+    "at": 4.25,
+    "to": [
+     1.55,
+     6.5
+    ],
+    "speed": 2.2
+   }
+  ],
+  "O8": [
+   {
+    "at": 0.0,
+    "via": [
+     [
+      -4.2,
+      9.2
+     ]
+    ],
+    "to": [
+     -3.65,
+     6.0
+    ],
+    "dur": 3.3
+   },
+   {
+    "at": 3.32,
+    "to": [
+     -3.1,
+     5.45
+    ],
+    "dur": 0.75
+   }
+  ],
+  "X10": [
+   {
+    "at": 0.9,
+    "to": [
+     0.05,
+     4.65
+    ],
+    "dur": 2.4
+   },
+   {
+    "at": 3.4899999999999998,
+    "to": [
+     -2.2,
+     4.95
+    ],
+    "dur": 0.8
+   }
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O4",
+   "from": 0,
+   "to": 3.3,
+   "dribble": true
+  },
+  {
+   "type": "hold",
+   "player": "O4",
+   "from": 3.3,
+   "to": 3.4499999999999997
+  },
+  {
+   "type": "pass",
+   "from": "O4",
+   "to": "O8",
+   "t0": 3.4499999999999997,
+   "t1": 4.05,
+   "style": "chest"
+  },
+  {
+   "type": "hold",
+   "player": "O8",
+   "from": 4.05,
+   "to": 5.949999999999999
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "decision": 3.3,
+  "release": 3.4499999999999997,
+  "slide": 3.51,
+  "catch": 4.05,
+  "contest": 4.29,
+  "end": 5.949999999999999
+ },
+ "actions": {
+  "X10": [
+   {
+    "type": "stance",
+    "from": 0.0,
+    "to": 3.5,
+    "face": "O4"
+   },
+   {
+    "type": "contest",
+    "from": 4.2,
+    "to": 5.65
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "far",
+   "a": "O8",
+   "b": "X10",
+   "at": "decision",
+   "min": 3.2,
+   "says": "He looks wide open."
+  },
+  {
+   "type": "far",
+   "a": "X10",
+   "b": "O8",
+   "at": "release",
+   "min": 3.2,
+   "says": "The defender's still in the middle when the ball leaves."
+  },
+  {
+   "type": "near",
+   "a": "X10",
+   "b": "O8",
+   "at": "contest",
+   "max": 1.1,
+   "says": "He's there on the catch."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "decision",
+    "release",
+    "slide",
+    "catch",
+    "contest"
+   ],
+   "says": "pass, slide, catch contested"
+  }
+ ],
+ "notes": [
+  "Shared decision point at T; O4 picks up and passes early.",
+  "X10 is still central at the release and slides to contest the catch."
+ ]
+}
