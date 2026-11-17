@@ -258,7 +258,15 @@ const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallSta
     if (cur.type === 'hold') {
       // the ball sits in the hand of a body that turns smoothly: average the facing over the last 0.15 s
       // (a raw facing that snaps from "rest" to "running" swung the ball sideways at 15+ m/s)
-      const h = isHanded(cur) ? handedSpot(play, cur, t) : smoothHand(play, cur.player, t);
+      let h = isHanded(cur) ? handedSpot(play, cur, t) : smoothHand(play, cur.player, t);
+      // catch (2026-11-17 V3): both hands give on contact, the ball comes back toward the chest and a little down
+      const fromPass = !cur.dribble && play.ball.some((e) => e.type === 'pass' && e.to === cur.player && Math.abs(e.t1 - cur.from) < 1e-6);
+      const gu = (t - cur.from) / 0.34;
+      if (fromPass && gu > 0 && gu < 1) {
+        const g = Math.sin(Math.PI * gu) * (1 - 0.3 * gu);
+        const fa = stateOf(play, cur.player, t).facing;
+        h = [h[0] - Math.cos(fa) * 0.1 * g, h[1] - Math.sin(fa) * 0.1 * g, h[2] - 0.06 * g];
+      }
       // gather: the ball rises into the shooting pocket before a shot or layup
       const next = play.ball.find((e): e is Extract<BallEvent, {type: 'shot' | 'layup'}> => (e.type === 'shot' || e.type === 'layup') && e.player === cur.player && Math.abs(e.t0 - cur.to) < 1e-6);
       // gather window never longer than the hold itself (2026-11-15: a 0.25 s catch-and-finish started the

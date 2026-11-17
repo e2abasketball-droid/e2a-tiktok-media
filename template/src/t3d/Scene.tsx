@@ -16,13 +16,26 @@ import type {Cam3} from './camera3d.ts';
 
 const RIM: V3 = [FIBA.basket[0], FIBA.basket[1], FIBA.rimZ];
 
-const faceOf = (play: PlayWithActions, id: string, i: number, pt: number, ballPos: V3, head: V3, cfg: FaceCfg): FaceState => {
-  const e = exprAt((play as PlayWithActions & {expr?: Record<string, ExprKey[]>}).expr?.[id], pt);
-  let gaze: V3 = ballPos;
-  if (e.look && e.look !== 'ball' && play.tracks[e.look]) {
-    const q = posAt(play.tracks[e.look], Math.max(0, Math.min(play.duration, pt)));
-    gaze = [q[0], q[1], head[2]];
+/** where an expression's `look` points (2026-11-17 V3): 'ball' (default), a player id (his head), 'rim', or 'down'
+ *  (the floor a metre in front, between the player and the ball). Undefined = the ball. */
+const lookPoint = (play: PlayWithActions, look: string | undefined, pt: number, ballPos: V3, head: V3): V3 | undefined => {
+  if (!look || look === 'ball') return undefined;
+  if (look === 'rim') return RIM;
+  if (look === 'down') {
+    const dx = ballPos[0] - head[0];
+    const dy = ballPos[1] - head[1];
+    const d = Math.max(0.3, Math.hypot(dx, dy));
+    return [head[0] + (dx / d) * 1.0, head[1] + (dy / d) * 1.0, 0.05];
   }
+  if (!play.tracks[look]) return undefined;
+  const q = posAt(play.tracks[look], Math.max(0, Math.min(play.duration, pt)));
+  return [q[0], q[1], head[2]];
+};
+const exprOf = (play: PlayWithActions, id: string, t: number) => exprAt((play as PlayWithActions & {expr?: Record<string, ExprKey[]>}).expr?.[id], t);
+
+const faceOf = (play: PlayWithActions, id: string, i: number, pt: number, ballPos: V3, head: V3, cfg: FaceCfg): FaceState => {
+  const e = exprOf(play, id, pt);
+  const gaze: V3 = lookPoint(play, e.look, pt, ballPos, head) ?? ballPos;
   return {gaze, brow: e.brow, smile: e.smile, open: e.open, blink: Math.max(e.blink, autoBlink(i, pt)), headScale: cfg.headScale ?? 1.3, hair: cfg.hair?.[id] ?? '#2B1A10'};
 };
 
@@ -227,7 +240,29 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
       <Court3D logo={logo} swish={swish} env={env} />
       {play.players.map((p, i) => {
         if (hide.includes(p.id)) return null;
-        const pose = poseAt(play, p.id, pt, {holder: ball.holder, pos: ball.pos, lag: ballLag}, RIM);
+        // the head follows an explicit look target after the eyes (eyes first, head after): the target is averaged over
+        // 0.06-0.30 s ago, so a new look turns the head smoothly instead of snapping it
+        let lookP: V3 | undefined;
+        let down = 0;
+        if (faces) {
+          const acc: V3 = [0, 0, 0];
+          let nLook = 0;
+          const LAGS = [0.06, 0.12, 0.18, 0.24, 0.3];
+          for (const lag of LAGS) {
+            const tl = Math.max(0, pt - lag);
+            const lk = exprOf(play, p.id, tl).look;
+            const fr = sample(play, tl);
+            const pp = fr.players[p.id]?.pos ?? [0, 0];
+            const q = lookPoint(play, lk, tl, fr.ball.pos, [pp[0], pp[1], 1.7]) ?? fr.ball.pos;
+            if (lk && lk !== 'ball') nLook++;
+            if (lk === 'down') down += 1 / LAGS.length;
+            acc[0] += q[0] / LAGS.length;
+            acc[1] += q[1] / LAGS.length;
+            acc[2] += q[2] / LAGS.length;
+          }
+          if (nLook) lookP = acc;
+        }
+        const pose = poseAt(play, p.id, pt, {holder: ball.holder, pos: ball.pos, lag: ballLag, look: lookP, down}, RIM);
         return (
           <React.Fragment key={p.id}>
             <Athlete pose={pose} team={p.team} num={faces?.nums?.[p.id] ?? p.id.slice(1)} skin={faces?.skin?.[p.id] ?? SKINS[i % SKINS.length]} face={faces ? faceOf(play, p.id, i, pt, ball.pos, pose.head, faces) : undefined} />

@@ -1,0 +1,412 @@
+{
+ "id": "h3-hide",
+ "title": "Hide V3: possession 2, he hides",
+ "duration": 9.6,
+ "source": "original E2A character episode V3 (generic coaching knowledge)",
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Passer"
+  },
+  {
+   "id": "O8",
+   "team": "O",
+   "role": "#8"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Top"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Weak-side corner"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the ball",
+   "guards": "O1"
+  },
+  {
+   "id": "X8",
+   "team": "X",
+   "role": "In the lane",
+   "guards": "O8"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Top",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "Help, closes out",
+   "guards": "O4"
+  }
+ ],
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 6.3,
+   "dribble": true
+  },
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 6.3,
+   "to": 6.5
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O3",
+   "t0": 6.5,
+   "t1": 6.9,
+   "style": "chest"
+  },
+  {
+   "type": "hold",
+   "player": "O3",
+   "from": 6.9,
+   "to": 9.6,
+   "dribble": true
+  }
+ ],
+ "actions": {
+  "O1": [
+   {
+    "type": "dribble",
+    "from": 0,
+    "to": 6.3,
+    "face": "O8"
+   }
+  ],
+  "O3": [
+   {
+    "type": "catchReady",
+    "from": 6.1,
+    "to": 6.9,
+    "face": "O1"
+   }
+  ],
+  "O4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 9.6,
+    "face": "O1",
+    "pose": "high"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 9.6,
+    "face": "O1"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 9.6,
+    "face": "O3"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 9.6,
+    "face": "O1"
+   }
+  ],
+  "X8": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6,
+    "face": "O8"
+   },
+   {
+    "type": "topLock",
+    "from": 6,
+    "to": 9.6,
+    "face": "O8",
+    "side": 1
+   }
+  ],
+  "O8": [
+   {
+    "type": "hide",
+    "from": 0,
+    "to": 4.9,
+    "face": "O1"
+   },
+   {
+    "type": "call",
+    "from": 4.9,
+    "to": 5.95,
+    "face": "O1",
+    "amt": 0.45
+   },
+   {
+    "type": "hide",
+    "from": 5.9,
+    "to": 9.6,
+    "face": "O1"
+   }
+  ]
+ },
+ "expr": {
+  "O8": [
+   {
+    "t": 0,
+    "brow": -0.5,
+    "look": "ball"
+   },
+   {
+    "t": 1.3,
+    "brow": -0.2,
+    "look": "O1"
+   },
+   {
+    "t": 2.25,
+    "brow": -0.75,
+    "look": "down"
+   },
+   {
+    "t": 2.85,
+    "look": "ball"
+   },
+   {
+    "t": 3.4,
+    "brow": -0.8
+   },
+   {
+    "t": 4.8,
+    "brow": -0.25,
+    "look": "O1"
+   },
+   {
+    "t": 5,
+    "open": 0.12
+   },
+   {
+    "t": 5.6,
+    "brow": -0.4
+   },
+   {
+    "t": 5.9,
+    "brow": -0.85,
+    "open": 0,
+    "look": "down"
+   },
+   {
+    "t": 6.35,
+    "look": "ball"
+   },
+   {
+    "t": 9.6,
+    "brow": -0.85
+   }
+  ],
+  "X8": [
+   {
+    "t": 0,
+    "brow": 0.6,
+    "look": "O8"
+   }
+  ],
+  "O1": [
+   {
+    "t": 0,
+    "brow": 0,
+    "look": "O8"
+   },
+   {
+    "t": 5.95,
+    "brow": 0.2,
+    "look": "O3"
+   }
+  ],
+  "X1": [
+   {
+    "t": 0,
+    "brow": 0.4,
+    "look": "O1"
+   }
+  ],
+  "O3": [
+   {
+    "t": 0,
+    "brow": 0.3,
+    "smile": 0.2
+   }
+  ],
+  "X3": [
+   {
+    "t": 0,
+    "brow": 0.3
+   }
+  ],
+  "O4": [
+   {
+    "t": 0,
+    "brow": 0.2
+   }
+  ],
+  "X4": [
+   {
+    "t": 0,
+    "brow": 0.4
+   }
+  ]
+ },
+ "marks": {
+  "doubt": 1.3,
+  "down": 2.25,
+  "half": 4.9,
+  "drop": 5.9,
+  "pop": 5.6,
+  "pass": 6.5,
+  "catch": 6.9
+ },
+ "tracks": {
+  "O1": [
+   [
+    0,
+    3.3,
+    7.7
+   ],
+   [
+    9.6,
+    3.3,
+    7.7
+   ]
+  ],
+  "O8": [
+   [
+    0,
+    -4.3,
+    5.9
+   ],
+   [
+    9.6,
+    -4.3,
+    5.9
+   ]
+  ],
+  "O3": [
+   [
+    0,
+    0.6,
+    10.3
+   ],
+   [
+    5.6,
+    0.6,
+    10.3
+   ],
+   [
+    6.5,
+    -0.9,
+    10
+   ],
+   [
+    9.6,
+    -0.9,
+    10
+   ]
+  ],
+  "O4": [
+   [
+    0,
+    -6.75,
+    1.25
+   ],
+   [
+    9.6,
+    -6.75,
+    1.25
+   ]
+  ],
+  "X1": [
+   [
+    0,
+    2.7,
+    6.5
+   ],
+   [
+    9.6,
+    2.7,
+    6.5
+   ]
+  ],
+  "X8": [
+   [
+    0,
+    -3,
+    5.98
+   ],
+   [
+    7.2,
+    -3,
+    5.98
+   ],
+   [
+    8.2,
+    -2.6,
+    5.4
+   ],
+   [
+    9.6,
+    -2.6,
+    5.4
+   ]
+  ],
+  "X3": [
+   [
+    0,
+    0.7,
+    9.4
+   ],
+   [
+    5.85,
+    0.7,
+    9.4
+   ],
+   [
+    6.75,
+    -0.7,
+    8.85
+   ],
+   [
+    9.6,
+    -0.7,
+    8.85
+   ]
+  ],
+  "X4": [
+   [
+    0,
+    -1.9,
+    1.95
+   ],
+   [
+    9.6,
+    -1.9,
+    1.95
+   ]
+  ]
+ },
+ "screens": []
+}

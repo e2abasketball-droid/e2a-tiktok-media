@@ -294,6 +294,8 @@ export const ArenaLights: React.FC<{focus?: [number, number, number]; env?: 'pra
       {/* back/rim light for silhouette separation */}
       <directionalLight position={[2, 6, -18]} intensity={(L as {backI?: number}).backI ?? 1.1} color={L.back} />
       {env === 'game' && <directionalLight position={[-12, 5, 14]} intensity={0.9} color="#C9D8FF" />}
+      {/* V3: soft warm side light at face height (faces read in medium shots, players separate from the stands) */}
+      {env === 'game' && <directionalLight position={[focus[0] - 9, 2.2, focus[2] + 9]} intensity={0.32} color="#FFE2C8" />}
       {/* V2: low side light — models arms, knees and fabric folds from the side, reads weight on the feet */}
       <directionalLight position={[focus[0] + 14, 3.2, focus[2] + 2]} intensity={0.85} color={L.side} />
       <ambientLight intensity={L.amb} />

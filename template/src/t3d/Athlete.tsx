@@ -236,6 +236,7 @@ const FACE_G = (() => ({
   brow: new THREE.CapsuleGeometry(1, 2.2, 4, 8),
   mouth: new THREE.TorusGeometry(1, 0.2, 8, 20, Math.PI),
   cap: new THREE.SphereGeometry(1, 28, 16, 0, Math.PI * 2, 0, Math.PI * 0.56),
+  lid: new THREE.SphereGeometry(1, 20, 10, 0, Math.PI * 2, 0, Math.PI / 2),
 }))();
 const faceM = (c: string, r = 0.5) => mat(`face${c}${r}`, () => new THREE.MeshStandardMaterial({color: c, roughness: r}));
 
@@ -256,17 +257,23 @@ const Face: React.FC<{f: FaceState; rx: number; ry: number; rz: number; skinM: T
   const brow = faceM(f.hair, 0.8);
   const lip = faceM('#5A2A22', 0.6);
   const open = Math.max(0, Math.min(1, f.open));
-  const lid = Math.max(0.06, 1 - Math.max(0, Math.min(1, f.blink)));
+  // upper eyelids (2026-11-17 V3): a skin dome over each eye that rotates down from behind the eye. At rest it covers the
+  // top ~third (soft, relaxed lids instead of round staring eyes); worry adds a little weight; a blink closes it.
+  const blink = Math.max(0, Math.min(1, f.blink));
+  const rest = 0.3 + 0.08 * Math.max(0, -f.brow) + Math.max(0, -gy) * 0.12;
+  const closure = rest + (1 - rest) * blink;
+  const lidRot = -Math.PI / 2 + closure * (Math.PI / 2 + 0.95);
   const parts: React.ReactNode[] = [];
   for (const s of [-1, 1]) {
     const ex = s * 0.36 * rx;
     const ey = 0.1 * ry;
     const ez = 0.86 * rz;
     parts.push(
-      <group key={`eye${s}`} position={[ex, ey, ez]} scale={[1, lid, 1]}>
+      <group key={`eye${s}`} position={[ex, ey, ez]}>
         <mesh geometry={FACE_G.eye} material={white} scale={[0.2 * rx, 0.24 * ry, 0.12 * rz]} />
-        <mesh geometry={FACE_G.eye} material={iris} position={[gx * 0.07 * rx, gy * 0.07 * ry, 0.09 * rz]} scale={[0.105 * rx, 0.125 * ry, 0.05 * rz]} />
-        <mesh geometry={FACE_G.eye} material={white} position={[gx * 0.07 * rx + 0.035 * rx, gy * 0.07 * ry + 0.045 * ry, 0.13 * rz]} scale={[0.03 * rx, 0.03 * ry, 0.015 * rz]} />
+        <mesh geometry={FACE_G.lid} material={skinM} rotation={[lidRot, 0, 0]} scale={[0.208 * rx, 0.248 * ry, 0.136 * rz]} />
+        <mesh geometry={FACE_G.eye} material={iris} position={[gx * 0.07 * rx, gy * 0.07 * ry, 0.078 * rz]} scale={[0.105 * rx, 0.125 * ry, 0.045 * rz]} />
+        <mesh geometry={FACE_G.eye} material={white} position={[gx * 0.07 * rx + 0.035 * rx, gy * 0.07 * ry + 0.045 * ry, 0.112 * rz]} scale={[0.03 * rx, 0.03 * ry, 0.014 * rz]} />
       </group>,
     );
     // brow: worried = inner end up (rotation toward the centre), determined = inner end down
@@ -281,7 +288,7 @@ const Face: React.FC<{f: FaceState; rx: number; ry: number; rz: number; skinM: T
   const curve = 0.12 + 0.9 * Math.max(0, f.smile);
   parts.push(<mesh key="ml" geometry={FACE_G.mouth} material={lip} position={[0, my + 0.04 * ry * curve, 0.88 * rz]} rotation={[0, 0, Math.PI]} scale={[0.17 * rx * (1 - 0.3 * open), 0.17 * ry * curve, 0.06 * rz]} />);
   // hair cap (young, full on top)
-  parts.push(<mesh key="hair" geometry={FACE_G.cap} material={brow} position={[0, 0.06 * ry, -0.04 * rz]} rotation={[-0.32, 0, 0]} scale={[1.07 * rx, 1.04 * ry, 1.08 * rz]} castShadow />);
+  parts.push(<mesh key="hair" geometry={FACE_G.cap} material={brow} position={[0, 0.07 * ry, -0.05 * rz]} rotation={[-0.62, 0, 0]} scale={[1.07 * rx, 1.05 * ry, 1.08 * rz]} castShadow />);
   return <group position={at} quaternion={q}>{parts}</group>;
 };
 
@@ -366,9 +373,15 @@ export const Athlete: React.FC<Props> = ({pose: P, team, num, skin, face}) => {
     parts.push(<mesh key={`shoe${sfx}`} geometry={G.shoe} material={shoeM} position={mid} quaternion={shoeQ} scale={[0.052 * k, S.len * 0.42, 0.06 * k]} castShadow receiveShadow />);
     parts.push(<mesh key={`sole${sfx}`} geometry={G.shoe} material={soleM} position={[mid[0], mid[1] - 0.026 * k, mid[2]]} quaternion={shoeQ} scale={[0.056 * k, S.len * 0.45, 0.03 * k]} castShadow />);
     // arms: deltoid, upper arm, elbow, forearm, hand
-    parts.push(<mesh key={`dl${sfx}`} geometry={G.sphere} material={skinM} position={W3(P.shoulder[i])} scale={[0.066 * kb, 0.064 * kb, 0.064 * kb]} castShadow />);
+    {
+      // deltoid (2026-11-17 V3): an ellipsoid along the upper arm, centred a little down the arm, so the shoulder flows
+      // into the arm instead of reading as a ball on a stick
+      const DS = seg(P.shoulder[i], P.elbow[i]);
+      const dc: V3 = [P.shoulder[i][0] + (P.elbow[i][0] - P.shoulder[i][0]) * 0.16, P.shoulder[i][1] + (P.elbow[i][1] - P.shoulder[i][1]) * 0.16, P.shoulder[i][2] + (P.elbow[i][2] - P.shoulder[i][2]) * 0.16];
+      parts.push(<mesh key={`dl${sfx}`} geometry={G.sphere} material={skinM} position={W3(dc)} quaternion={DS.quat} scale={[0.058 * kb, 0.1 * kb, 0.055 * kb]} castShadow />);
+    }
     // trapezius: shoulder joined to the base of the neck (reads as one torso, not a pinned arm)
-    parts.push(<Limb key={`tr${sfx}`} a={[P.chest[0], P.chest[1], P.chest[2] - 0.02 * k]} b={P.shoulder[i]} geo={G.upper} m={jerseyM} s={kb * 1.15} to={0.9} />);
+    parts.push(<Limb key={`tr${sfx}`} a={[P.chest[0], P.chest[1], P.chest[2] - 0.02 * k]} b={P.shoulder[i]} geo={G.upper} m={jerseyM} s={kb * 1.15} to={1.0} />);
     parts.push(<Limb key={`ua${sfx}`} a={P.shoulder[i]} b={P.elbow[i]} geo={G.upper} m={skinM} s={kb} />);
     parts.push(<mesh key={`el${sfx}`} geometry={G.sphere} material={skinM} position={W3(P.elbow[i])} scale={[0.036 * kb, 0.036 * kb, 0.036 * kb]} castShadow />);
     parts.push(<Limb key={`fa${sfx}`} a={P.elbow[i]} b={P.wrist[i]} geo={G.fore} m={skinM} s={kb} />);

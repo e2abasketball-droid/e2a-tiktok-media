@@ -1,0 +1,110 @@
+{
+ "id": "hide3",
+ "title": "Hide in games V3",
+ "fps": 30,
+ "voiceRaw": "tactical/hide3/voice-raw.mp3",
+ "wordsRaw": "hide3.words-raw.json",
+ "voice": "tactical/hide3/voice.wav",
+ "voiceMix": "tactical/hide3/voice.mix.wav",
+ "preroll": 0.0,
+ "tail": 0.6,
+ "gaps": [
+  {
+   "after": "want the ball.",
+   "sec": 1.2,
+   "why": "reaction: the arm comes down"
+  },
+  {
+   "after": "without thinking.",
+   "sec": 1.1,
+   "why": "practice: catch, square up"
+  },
+  {
+   "after": "game starts.",
+   "sec": 2.2,
+   "why": "match cut on the rise, the shot leaves"
+  },
+  {
+   "after": "hits the rim.",
+   "sec": 3.8,
+   "why": "no narration around the impact and the first reaction; rebound, the game goes on"
+  },
+  {
+   "after": "thinking is,",
+   "sec": 0.7,
+   "why": "doubt: looks at the passer, then down"
+  },
+  {
+   "after": "miss again?",
+   "sec": 1.3,
+   "why": "passer framing: half a hand comes up"
+  },
+  {
+   "after": "hands drop.",
+   "sec": 0.45,
+   "why": "the hand goes back, the defender keeps covering"
+  },
+  {
+   "after": "somewhere else.",
+   "sec": 1.55,
+   "why": "the pass goes to O3"
+  },
+  {
+   "after": "Breathe out.",
+   "sec": 1.1,
+   "why": "exhale, light jersey tap"
+  },
+  {
+   "after": "next spot.",
+   "sec": 2.1,
+   "why": "eyes back on the ball"
+  },
+  {
+   "after": "can see you.",
+   "sec": 1.3,
+   "why": "plant, hip, slide: the lane opens"
+  },
+  {
+   "after": "your hands.",
+   "sec": 0.8,
+   "why": "hands up"
+  },
+  {
+   "after": "Call for it.",
+   "sec": 1.0,
+   "why": "the pass and the catch, ready to shoot"
+  },
+  {
+   "after": "closes out.",
+   "sec": 0.4,
+   "why": "the closeout, high hand"
+  },
+  {
+   "after": "teammate open.",
+   "sec": 0.55,
+   "why": "eyes to the corner, the extra pass leaves"
+  },
+  {
+   "after": "One more pass.",
+   "sec": 4.2,
+   "why": "the teammate controls, players keep moving"
+  },
+  {
+   "after": "players miss.",
+   "sec": 0.7,
+   "why": "a breath before the lesson"
+  },
+  {
+   "after": "of the game.",
+   "sec": 1.0,
+   "why": "the possession keeps running"
+  },
+  {
+   "after": "do next.",
+   "sec": 1.4,
+   "why": "back to #8 relocating, eyes on the ball"
+  }
+ ],
+ "plays": {},
+ "shots": []
+}

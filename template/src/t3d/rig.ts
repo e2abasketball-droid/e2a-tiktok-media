@@ -13,7 +13,7 @@ import type {V2, V3} from '../tactical/geometry.ts';
 import type {Play} from '../tactical/play.ts';
 import {dribbleSide, posAt, stateOf} from '../tactical/play.ts';
 
-export type ActionType = 'screen' | 'stance' | 'topLock' | 'catchReady' | 'shoot' | 'layup' | 'pass' | 'dribble' | 'contest' | 'seal' | 'celebrate' | 'blitz' | 'bump' | 'gather' | 'call' | 'hide' | 'tap' | 'exhale';
+export type ActionType = 'screen' | 'stance' | 'topLock' | 'catchReady' | 'shoot' | 'layup' | 'pass' | 'dribble' | 'contest' | 'seal' | 'celebrate' | 'blitz' | 'bump' | 'gather' | 'call' | 'hide' | 'tap' | 'exhale' | 'closeout';
 /** character actions (2026-11-17, 'hide in games' episode): 'call' = both hands open in front at head height asking
  *  for the ball; 'hide' = hands drop, shoulders sink and narrow, head down on the ball; 'tap' = right hand taps the
  *  chest twice; 'exhale' = shoulders drop on a breath out. All opt-in per action: plays without them are unchanged. */
@@ -242,7 +242,8 @@ const simulate = (play: PlayWithActions, id: string, dims: Dims): Sim => {
     const blitzW = activeW(acts, 'blitz', tc).w;
     const gatherW = activeW(acts, 'gather', tc).w;
     const bumpW = activeW(acts, 'bump', tc).w;
-    const stanceW = lerp(0.36, 0.62, Math.max(screenW, stanceW0, lockW * 0.9, sealW, blitzW, gatherW * 0.8, bumpW * 0.7)) + 0.08 * lowW + 0.06 * blitzW;
+    const closeW = activeW(acts, 'closeout', tc).w;
+    const stanceW = lerp(0.36, 0.62, Math.max(screenW, stanceW0, lockW * 0.9, sealW, blitzW, gatherW * 0.8, bumpW * 0.7, closeW * 0.85)) + 0.08 * lowW + 0.06 * blitzW;
     // ----- gait phase from distance (stride grows with speed)
     const cycleLen = clamp(0.8 + 0.5 * speed, 0.9, 3.4);
     let rate = speed / cycleLen;
@@ -374,7 +375,7 @@ const landAt = (acts: Action[], t: number) => {
   return d;
 };
 
-export type BallHint = {holder?: string; pos: V3; lag?: V3};
+export type BallHint = {holder?: string; pos: V3; lag?: V3; look?: V3; down?: number};
 
 /**
  * Full pose of player `id` at play time t. `ball` is the ball state (from play.ts) so the
@@ -407,6 +408,8 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
   const pass = w('pass', 0.1);
   const dribble = w('dribble');
   const contest = w('contest', 0.12);
+  // closeout (2026-11-17 V3): the help defender sprints, shortens his steps and brakes with one hand high, no jump
+  const closeout = w('closeout', 0.15);
   const celebrate = w('celebrate', 0.2);
   const blitz = w('blitz', 0.15);
   const bump = w('bump', 0.08);
@@ -422,7 +425,7 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
   const loadTurn = load * clamp(wrap(fut.heading - h), -0.9, 0.9);
   // braking (V2): a hard deceleration lowers the hips and sets the weight back
   const brake = clamp((-acc - 3) / 7) * clamp(speed / 1.2 + 0.3);
-  const crouchAmt = Math.max(stance.w, lock.w, screen.w * 0.5, seal.w * 0.7, catchR.w * 0.5, blitz.w * 0.75, bump.w * 0.6, gather.w * 0.7, load * 0.55, brake * 0.5) * (1 - run * 0.6);
+  const crouchAmt = Math.max(stance.w, lock.w, screen.w * 0.5, seal.w * 0.7, catchR.w * 0.5, blitz.w * 0.75, bump.w * 0.6, gather.w * 0.7, load * 0.55, brake * 0.5, closeout.w * 0.8) * (1 - run * 0.45 * (1 - closeout.w));
 
   // ----- pelvis
   const legLen = D.thigh + D.shin + D.ankleH;
@@ -531,6 +534,8 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
     blend(seal.w, L(0.3, 0.12, -0.18), norm(add(mul(chestR, side), [0, 0, -0.4])));
     // contest: one hand high
     blend(contest.w, i === 1 ? L(0.08, 0.32, 0.55) : L(0.35, 0.15, -0.35), norm(add(mul(chestF, -0.3), [0, 0, -1])));
+    // closeout: the hand on the shooter's side goes up while braking (from the last steps), the other one guards the drive
+    blend(closeout.w, i === 1 ? L(0.24, 0.24, 0.5) : L(0.08, 0.36, -0.36), norm(add(mul(chestF, -0.3), [0, 0, -1])));
     // catch ready: hands showing a target at chest height
     blend(catchR.w * (isBallHolder ? 0.3 : 1), L(-0.02, 0.4, -0.12), norm(add(mul(chestR, side), [0, 0, -0.8])));
     // reaching for an incoming pass (V2): over the last 0.22 s the hands meet the ball, not a fixed target
@@ -646,9 +651,9 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
   // the ball handler reads the play: eyes on the receiver for the last 0.6 s before a pass
   const nextPass = holderSelf ? play.ball.find((e) => e.type === 'pass' && e.from === id && e.t0 >= tc && e.t0 - tc < 0.6) : undefined;
   const recv = nextPass && nextPass.type === 'pass' ? posAt(play.tracks[nextPass.to], tc) : undefined;
-  const lookAt = recv ? Math.atan2(recv[1] - pelvis[1], recv[0] - pelvis[0]) : holderSelf || shoot.w > 0.3 || layup.w > 0.3 ? (speed > 1.5 && shoot.w < 0.3 && layup.w < 0.3 ? h : toRim) : toBall;
+  const lookAt = ball.look ? Math.atan2(ball.look[1] - pelvis[1], ball.look[0] - pelvis[0]) : recv ? Math.atan2(recv[1] - pelvis[1], recv[0] - pelvis[0]) : holderSelf || shoot.w > 0.3 || layup.w > 0.3 ? (speed > 1.5 && shoot.w < 0.3 && layup.w < 0.3 ? h : toRim) : toBall;
   const headYaw = chestYaw + clamp(wrap(lookAt - chestYaw), -1.15, 1.15) * 0.85;
-  const headPitch = 0.38 * hide.w + 0.22 * exhale.w - 0.08 * call.w;
+  const headPitch = 0.38 * hide.w + 0.22 * exhale.w - 0.08 * call.w + 0.3 * (ball.down ?? 0);
   void cross;
   return {
     pelvis,
