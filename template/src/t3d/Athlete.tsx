@@ -366,12 +366,14 @@ export const Athlete: React.FC<Props> = ({pose: P, team, num, skin, face}) => {
     parts.push(<mesh key={`shoe${sfx}`} geometry={G.shoe} material={shoeM} position={mid} quaternion={shoeQ} scale={[0.052 * k, S.len * 0.42, 0.06 * k]} castShadow receiveShadow />);
     parts.push(<mesh key={`sole${sfx}`} geometry={G.shoe} material={soleM} position={[mid[0], mid[1] - 0.026 * k, mid[2]]} quaternion={shoeQ} scale={[0.056 * k, S.len * 0.45, 0.03 * k]} castShadow />);
     // arms: deltoid, upper arm, elbow, forearm, hand
-    parts.push(<mesh key={`dl${sfx}`} geometry={G.sphere} material={skinM} position={W3(P.shoulder[i])} scale={[0.06 * kb, 0.058 * kb, 0.058 * kb]} castShadow />);
+    parts.push(<mesh key={`dl${sfx}`} geometry={G.sphere} material={skinM} position={W3(P.shoulder[i])} scale={[0.066 * kb, 0.064 * kb, 0.064 * kb]} castShadow />);
     // trapezius: shoulder joined to the base of the neck (reads as one torso, not a pinned arm)
     parts.push(<Limb key={`tr${sfx}`} a={[P.chest[0], P.chest[1], P.chest[2] - 0.02 * k]} b={P.shoulder[i]} geo={G.upper} m={jerseyM} s={kb * 1.15} to={0.9} />);
     parts.push(<Limb key={`ua${sfx}`} a={P.shoulder[i]} b={P.elbow[i]} geo={G.upper} m={skinM} s={kb} />);
     parts.push(<mesh key={`el${sfx}`} geometry={G.sphere} material={skinM} position={W3(P.elbow[i])} scale={[0.036 * kb, 0.036 * kb, 0.036 * kb]} castShadow />);
     parts.push(<Limb key={`fa${sfx}`} a={P.elbow[i]} b={P.wrist[i]} geo={G.fore} m={skinM} s={kb} />);
+    // wrist joint: closes the forearm-to-hand break seen in close shots (2026-11-17 V2)
+    parts.push(<mesh key={`wr${sfx}`} geometry={G.sphere} material={skinM} position={W3(P.wrist[i])} scale={[0.029 * kb, 0.029 * kb, 0.029 * kb]} castShadow />);
     const hm: V3 = [(P.wrist[i][0] + P.hand[i][0]) / 2, (P.wrist[i][1] + P.hand[i][1]) / 2, (P.wrist[i][2] + P.hand[i][2]) / 2];
     const HS = seg(P.wrist[i], P.hand[i]);
     parts.push(<mesh key={`hd${sfx}`} geometry={G.sphere} material={skinM} position={W3(hm)} quaternion={HS.quat} scale={[0.046 * k, 0.074 * k, 0.034 * k]} castShadow />);

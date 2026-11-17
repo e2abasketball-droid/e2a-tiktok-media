@@ -177,6 +177,8 @@ const autoBlink = (i: number, t: number) => {
 export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], children, logo, env, faces}) => {
   const f = sample(play, pt);
   const ball = f.ball;
+  // eyes first, head after (2026-11-17 V2): heads turn toward where the ball was 0.2 s ago, the eyes (faceOf) to where it is
+  const ballLag = sample(play, Math.max(0, pt - 0.2)).ball.pos;
   // ball spin (2026-11-13): backspin in the air (shots, layups, passes), rolling forward when dribbled or
   // carried. Axis from the ball's real horizontal velocity, angle from the time spent in the event.
   const spin = ((): [V3, number] | undefined => {
@@ -184,8 +186,18 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
     const v: V3 = [(ball.pos[0] - prev[0]) * 60, (ball.pos[1] - prev[1]) * 60, 0];
     const sp = Math.hypot(v[0], v[1]);
     if (sp < 0.05) return undefined;
-    const ev = ball.event as {t0?: number; from?: number} | undefined;
+    const ev = ball.event as {t0?: number; t1?: number; from?: number; make?: boolean; type?: string} | undefined;
     const since = pt - (ev?.t0 ?? ev?.from ?? 0);
+    if (!ball.inFlight && ev?.type === 'shot' && ev.make === false && ev.t1 !== undefined && ev.t0 !== undefined) {
+      // missed shot (2026-11-17 V2): one fixed axis from the kick-out direction; the backspin carried into the ring
+      // keeps turning and slowly dies (no angle jumps at each floor bounce)
+      const a = sample(play, ev.t1 + 0.01).ball.pos;
+      const b = sample(play, ev.t1 + 0.05).ball.pos;
+      const kv: V3 = [b[0] - a[0], b[1] - a[1], 0];
+      const th1 = (ev.t1 - ev.t0) * 2 * Math.PI * 2.3;
+      const dt = pt - ev.t1;
+      return [[-kv[1], kv[0], 0], th1 + (14 / 0.7) * (1 - Math.exp(-0.7 * dt))];
+    }
     const up: V3 = [0, 0, 1];
     const cr = (a: V3, b: V3): V3 => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
     if (ball.inFlight) return [cr(v, up), since * 2 * Math.PI * (ball.inFlight === 'pass' ? 3 : 2.3)];
@@ -215,7 +227,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
       <Court3D logo={logo} swish={swish} env={env} />
       {play.players.map((p, i) => {
         if (hide.includes(p.id)) return null;
-        const pose = poseAt(play, p.id, pt, {holder: ball.holder, pos: ball.pos}, RIM);
+        const pose = poseAt(play, p.id, pt, {holder: ball.holder, pos: ball.pos, lag: ballLag}, RIM);
         return (
           <React.Fragment key={p.id}>
             <Athlete pose={pose} team={p.team} num={faces?.nums?.[p.id] ?? p.id.slice(1)} skin={faces?.skin?.[p.id] ?? SKINS[i % SKINS.length]} face={faces ? faceOf(play, p.id, i, pt, ball.pos, pose.head, faces) : undefined} />

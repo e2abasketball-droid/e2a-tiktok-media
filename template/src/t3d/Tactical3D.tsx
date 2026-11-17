@@ -54,7 +54,7 @@ export type Episode3 = {
   subtitleGroups?: number[]; subtitleY?: number; subtitleBlock?: boolean; subtitleYAt?: [Anchor, Anchor, number][]; gradeBottom?: number;
   /** sound by event (2026-11-13): bounces, catches, braking squeaks and the net, placed on their visible
    *  contact through each shot's remap (silent in freezes, rewinds and slow motion below 0.3x) */
-  autoSfx?: boolean | {bounce?: number; catch?: number; squeak?: number; swish?: number; land?: number; players?: string[]};
+  autoSfx?: boolean | {bounce?: number; catch?: number; squeak?: number; swish?: number; land?: number; rim?: number; players?: string[]};
   /** V2 pins: anchored to the posed head, flipped below the feet when they would cover another player */
   pinV2?: boolean;
   /** arena room tone under everything (looped) */
@@ -113,7 +113,7 @@ const playEvents = (play: PlayWithActions, players: string[]) => {
 const autoCues = (ep: Episode3, laid: {shot: Shot3; start: number; end: number}[], T: (a: Anchor, off?: number) => number, fps: number): Cue[] => {
   if (!ep.autoSfx) return [];
   const cfg = typeof ep.autoSfx === 'object' ? ep.autoSfx : {};
-  const vol: Record<string, [string, number]> = {bounce: ['bounce', cfg.bounce ?? 0.2], catch: ['bounce', cfg.catch ?? 0.13], squeak: ['squeak', cfg.squeak ?? 0.1], swish: ['swish', cfg.swish ?? 0.3], land: ['bounce', cfg.land ?? 0.08], rim: ['rim', cfg.swish ?? 0.3]};
+  const vol: Record<string, [string, number]> = {bounce: ['bounce', cfg.bounce ?? 0.2], catch: ['bounce', cfg.catch ?? 0.13], squeak: ['squeak', cfg.squeak ?? 0.1], swish: ['swish', cfg.swish ?? 0.3], land: ['bounce', cfg.land ?? 0.08], rim: ['rim', cfg.rim ?? cfg.swish ?? 0.3]};
   const out: Cue[] = [];
   for (const l of laid) {
     const play = ep.plays[l.shot.play];

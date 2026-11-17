@@ -19,7 +19,7 @@ export type ActionType = 'screen' | 'stance' | 'topLock' | 'catchReady' | 'shoot
  *  chest twice; 'exhale' = shoulders drop on a breath out. All opt-in per action: plays without them are unchanged. */
 /** face: a player id, an angle (rad) or 'ball' (whoever holds it / the pass receiver).
  *  V2 (2026-11-13): 'bump' = defender absorbing a screen (recoil, half step lost); 'gather' = two-foot brake before a pull-up. */
-export type Action = {type: ActionType; from: number; to: number; face?: string | number; side?: number; pose?: 'low' | 'overhead'};
+export type Action = {type: ActionType; from: number; to: number; face?: string | number; side?: number; pose?: 'low' | 'overhead'; amt?: number};
 /** topLock pose 'low' (prototype 2026-11-13, opt-in per action): deeper, more upright, hips open to the
  *  screen side, weight over the inside foot, denial arm straighter into the lane. Without `pose` nothing changes. */
 
@@ -368,12 +368,13 @@ const landAt = (acts: Action[], t: number) => {
     const land = a.type === 'shoot' ? 0.8 : a.type === 'layup' ? 0.84 : -1;
     if (land < 0) continue;
     const tt = t - a.from - land;
-    if (tt > 0 && tt < 0.34) d = Math.max(d, (a.type === 'shoot' ? 0.12 : 0.15) * Math.sin((Math.PI * tt) / 0.34) * (1 - 0.35 * tt / 0.34));
+    const L_ = a.type === 'shoot' ? 0.44 : 0.34;
+    if (tt > 0 && tt < L_) d = Math.max(d, (a.type === 'shoot' ? 0.17 : 0.15) * Math.sin((Math.PI * tt) / L_) * (1 - 0.35 * tt / L_));
   }
   return d;
 };
 
-export type BallHint = {holder?: string; pos: V3};
+export type BallHint = {holder?: string; pos: V3; lag?: V3};
 
 /**
  * Full pose of player `id` at play time t. `ball` is the ball state (from play.ts) so the
@@ -605,7 +606,10 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
     blend(hide.w * (1 - call.w), L(0.04, 0.05, -armLen * 0.97), norm(add(mul(chestF, -1), mul(chestR, side * 0.2))));
     if (call.w > 0) {
       const ask = call.a ? 0.035 * Math.sin(Math.max(0, tc - call.a.from) * 10) * Math.exp(-Math.max(0, tc - call.a.from) * 1.5) : 0;
-      blend(call.w, L(0.17, 0.44, -0.04 + ask + (i === 1 ? 0.03 : 0)), norm(add(mul(chestR, side), [0, 0, -0.7])));
+      // amt < 1 (2026-11-17 V2): a half gesture, only the right hand comes up to the belly and goes back
+      const amt = call.a?.amt ?? 1;
+      if (amt >= 1) blend(call.w, L(0.17, 0.44, -0.04 + ask + (i === 1 ? 0.03 : 0)), norm(add(mul(chestR, side), [0, 0, -0.7])));
+      else if (i === 1) blend(call.w, L(0.12, 0.3, -0.04 - 0.32 * (1 - amt)), norm(add(mul(chestR, side), [0, 0, -0.8])));
     }
     if (tap.w > 0 && i === 1) {
       const tt = tc - (tap.a?.from ?? tc);
@@ -624,12 +628,20 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
     const s = ik2(shoulder[i], hand[i], D.upper, D.fore, elbowPoles[i]);
     elbow.push(s.mid);
     wrist.push(s.end);
-    const dir = norm(sub(s.end, s.mid));
+    let dir = norm(sub(s.end, s.mid));
+    // wrist (2026-11-17 V2): cocked back under the ball at the set, snapped down through the release, held in the follow-through
+    if (i === 1 && shoot.a && shoot.w > 0.05) {
+      const tt = tc - shoot.a.from;
+      const fwd = norm(sub(rim, s.end));
+      const cock = smooth(tt / 0.3) * (1 - smooth((tt - 0.46) / 0.06));
+      const flick = smooth((tt - 0.46) / 0.1);
+      dir = norm(add(add(mul(dir, 1 - 0.75 * cock - 0.8 * flick), mul(add(mul(fwd, -0.6), [0, 0, 0.6]), 0.75 * cock)), mul(add(mul(fwd, 0.35), [0, 0, -1]), 0.8 * flick * shoot.w)));
+    }
     handTip.push(add(s.end, mul(dir, D.hand)));
   }
   // head: eyes on the ball (the ball handler looks where he is going / at the rim), inside the neck's range
   const holderSelf = ball.holder === id;
-  const toBall = Math.atan2(ball.pos[1] - pelvis[1], ball.pos[0] - pelvis[0]);
+  const toBall = Math.atan2((ball.lag ?? ball.pos)[1] - pelvis[1], (ball.lag ?? ball.pos)[0] - pelvis[0]);
   const toRim = Math.atan2(rim[1] - pelvis[1], rim[0] - pelvis[0]);
   // the ball handler reads the play: eyes on the receiver for the last 0.6 s before a pass
   const nextPass = holderSelf ? play.ball.find((e) => e.type === 'pass' && e.from === id && e.t0 >= tc && e.t0 - tc < 0.6) : undefined;

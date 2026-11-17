@@ -268,7 +268,7 @@ export const Court3D: React.FC<{logo?: HTMLImageElement; swish?: number; env?: '
 /** arena light rig: overhead key light with soft shadows, fill, rim/back light, ambient */
 export const ArenaLights: React.FC<{focus?: [number, number, number]; env?: 'practice' | 'game'}> = ({focus = [0, 0, -5], env}) => {
   // practice: warm and soft; game: colder key, bluer fill, more contrast; default: as before
-  const L = env === 'practice' ? {hemi: ['#FFD9A8', '#3A2410', 0.95], key: '#FFD3A0', keyI: 700, fill: '#FFE2C2', fillI: 300, back: '#FFD9A0', side: '#FFDDB8', amb: 0.22} : env === 'game' ? {hemi: ['#8FB0E8', '#0E1626', 0.42], key: '#E6EEFF', keyI: 860, fill: '#9DB6FF', fillI: 220, back: '#BFD4FF', side: '#D8E4FF', amb: 0.06} : {hemi: ['#9fb4dc', '#2a1a0e', 0.55], key: '#fff3e2', keyI: 760, fill: '#cdd9ff', fillI: 260, back: '#ffd9a0', side: '#ffe6c8', amb: 0.1};
+  const L = env === 'practice' ? {hemi: ['#FFD9A8', '#3A2410', 0.95], key: '#FFD3A0', keyI: 700, fill: '#FFE2C2', fillI: 300, back: '#FFD9A0', side: '#FFDDB8', amb: 0.22} : env === 'game' ? {hemi: ['#8FB0E8', '#0E1626', 0.42], key: '#E6EEFF', keyI: 860, fill: '#9DB6FF', fillI: 220, back: '#BFD4FF', side: '#D8E4FF', amb: 0.06, backI: 1.7} : {hemi: ['#9fb4dc', '#2a1a0e', 0.55], key: '#fff3e2', keyI: 760, fill: '#cdd9ff', fillI: 260, back: '#ffd9a0', side: '#ffe6c8', amb: 0.1};
   const target = React.useMemo(() => new THREE.Object3D(), []);
   target.position.set(...focus);
   return (
@@ -292,7 +292,8 @@ export const ArenaLights: React.FC<{focus?: [number, number, number]; env?: 'pra
       />
       <spotLight position={[focus[0] - 7, 9, focus[2] - 6]} target={target} angle={0.7} penumbra={0.9} intensity={L.fillI} decay={2} color={L.fill} />
       {/* back/rim light for silhouette separation */}
-      <directionalLight position={[2, 6, -18]} intensity={1.1} color={L.back} />
+      <directionalLight position={[2, 6, -18]} intensity={(L as {backI?: number}).backI ?? 1.1} color={L.back} />
+      {env === 'game' && <directionalLight position={[-12, 5, 14]} intensity={0.9} color="#C9D8FF" />}
       {/* V2: low side light — models arms, knees and fabric folds from the side, reads weight on the feet */}
       <directionalLight position={[focus[0] + 14, 3.2, focus[2] + 2]} intensity={0.85} color={L.side} />
       <ambientLight intensity={L.amb} />

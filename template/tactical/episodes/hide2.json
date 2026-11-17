@@ -1,0 +1,100 @@
+{
+ "id": "hide2",
+ "title": "Hide in games V2",
+ "fps": 30,
+ "voiceRaw": "tactical/hide2/voice-raw.mp3",
+ "wordsRaw": "hide2.words-raw.json",
+ "voice": "tactical/hide2/voice.wav",
+ "voiceMix": "tactical/hide2/voice.mix.wav",
+ "preroll": 0.0,
+ "tail": 1.6,
+ "gaps": [
+  {
+   "after": "want the ball.",
+   "sec": 1.2,
+   "why": "reaction: the arm comes down"
+  },
+  {
+   "after": "without thinking.",
+   "sec": 1.1,
+   "why": "practice: catch, square up"
+  },
+  {
+   "after": "game starts.",
+   "sec": 2.2,
+   "why": "match cut on the rise, the shot leaves"
+  },
+  {
+   "after": "hits the rim.",
+   "sec": 3.8,
+   "why": "no narration around the impact and the first reaction; rebound, the game goes on"
+  },
+  {
+   "after": "thinking is,",
+   "sec": 0.7,
+   "why": "half a hand comes up and goes back"
+  },
+  {
+   "after": "miss again?",
+   "sec": 1.3,
+   "why": "short pause before the story resumes"
+  },
+  {
+   "after": "hands drop.",
+   "sec": 0.45,
+   "why": "behind the passer"
+  },
+  {
+   "after": "somewhere else.",
+   "sec": 2.2,
+   "why": "the pass goes to O3"
+  },
+  {
+   "after": "one job.",
+   "sec": 0.7,
+   "why": "pause between actions"
+  },
+  {
+   "after": "Breathe out.",
+   "sec": 1.6,
+   "why": "exhale, short tap on the jersey"
+  },
+  {
+   "after": "next spot.",
+   "sec": 2.0,
+   "why": "eyes back on the passer"
+  },
+  {
+   "after": "can see you.",
+   "sec": 1.2,
+   "why": "plant and slide, the lane opens"
+  },
+  {
+   "after": "your hands.",
+   "sec": 0.8,
+   "why": "hands up"
+  },
+  {
+   "after": "Call for it.",
+   "sec": 3.3,
+   "why": "the pass and the two-hand catch"
+  },
+  {
+   "after": "still nervous.",
+   "sec": 0.5,
+   "why": "the ask from the other angle"
+  },
+  {
+   "after": "it anyway.",
+   "sec": 0.8,
+   "why": "back to the catch"
+  },
+  {
+   "after": "he shoots.",
+   "sec": 2.4,
+   "why": "ball in flight"
+  }
+ ],
+ "plays": {},
+ "shots": []
+}
