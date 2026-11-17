@@ -1,0 +1,192 @@
+{
+ "source": "public/tactical/hide/voice-raw.mp3",
+ "source_sec": 25.84,
+ "preroll": 0.12,
+ "output": "public/tactical/hide/voice.wav",
+ "output_sec": 37.71,
+ "inserted_total_sec": 11.75,
+ "last_word_end": 37.79,
+ "gaps": [
+  {
+   "after": "drop in games?",
+   "natural_silence": [
+    3.75,
+    4.18
+   ],
+   "natural_sec": 0.43,
+   "target_sec": 1.2,
+   "inserted_sec": 0.77,
+   "cut_at_source": 4.055,
+   "why": "match cut lands, hands drop"
+  },
+  {
+   "after": "messing up,",
+   "natural_silence": [
+    5.66,
+    5.99
+   ],
+   "natural_sec": 0.33,
+   "target_sec": 0.32,
+   "inserted_sec": 0.0,
+   "cut_at_source": 5.885,
+   "why": "eyes follow the ball"
+  },
+  {
+   "after": "teammate a target.",
+   "natural_silence": [
+    7.61,
+    8.15
+   ],
+   "natural_sec": 0.54,
+   "target_sec": 2.6,
+   "inserted_sec": 2.06,
+   "cut_at_source": 7.975,
+   "why": "passer's view: #8 hidden, the ball goes the other way"
+  },
+  {
+   "after": "One.",
+   "natural_silence": [
+    8.52,
+    9.03
+   ],
+   "natural_sec": 0.51,
+   "target_sec": 0.7,
+   "inserted_sec": 0.19,
+   "cut_at_source": 8.855,
+   "why": "the shot hits the rim"
+  },
+  {
+   "after": "a miss,",
+   "natural_silence": [
+    9.82,
+    10.1
+   ],
+   "natural_sec": 0.28,
+   "target_sec": 0.45,
+   "inserted_sec": 0.17,
+   "cut_at_source": 9.955,
+   "why": "ball off the rim"
+  },
+  {
+   "after": "breathe out.",
+   "natural_silence": [
+    10.67,
+    11.13
+   ],
+   "natural_sec": 0.46,
+   "target_sec": 0.9,
+   "inserted_sec": 0.44,
+   "cut_at_source": 10.995,
+   "why": "shoulders drop on the exhale"
+  },
+  {
+   "after": "your jersey.",
+   "natural_silence": [
+    12.52,
+    12.58
+   ],
+   "natural_sec": 0.06,
+   "target_sec": 0.55,
+   "inserted_sec": 0.49,
+   "cut_at_source": 12.555,
+   "why": "1 RESET on the tap"
+  },
+  {
+   "after": "Get back.",
+   "natural_silence": [
+    12.89,
+    13.27
+   ],
+   "natural_sec": 0.38,
+   "target_sec": 1.4,
+   "inserted_sec": 1.02,
+   "cut_at_source": 13.165,
+   "why": "turns and runs back"
+  },
+  {
+   "after": "Two.",
+   "natural_silence": [
+    13.62,
+    13.93
+   ],
+   "natural_sec": 0.31,
+   "target_sec": 0.45,
+   "inserted_sec": 0.14,
+   "cut_at_source": 13.825,
+   "why": "2 SHOW A TARGET"
+  },
+  {
+   "after": "yourself a target.",
+   "natural_silence": [
+    15.15,
+    15.61
+   ],
+   "natural_sec": 0.46,
+   "target_sec": 0.6,
+   "inserted_sec": 0.14,
+   "cut_at_source": 15.295,
+   "why": "first offer"
+  },
+  {
+   "after": "and call for it.",
+   "natural_silence": [
+    19.41,
+    19.69
+   ],
+   "natural_sec": 0.28,
+   "target_sec": 3.4,
+   "inserted_sec": 3.12,
+   "cut_at_source": 19.605,
+   "why": "offers 2 and 3, 3/3, full catch"
+  },
+  {
+   "after": "for it. Three.",
+   "natural_silence": [
+    20.08,
+    20.45
+   ],
+   "natural_sec": 0.37,
+   "target_sec": 0.45,
+   "inserted_sec": 0.08,
+   "cut_at_source": 20.315,
+   "why": "3 ASK AGAIN"
+  },
+  {
+   "after": "an open shot?",
+   "natural_silence": [
+    21.41,
+    21.72
+   ],
+   "natural_sec": 0.31,
+   "target_sec": 0.9,
+   "inserted_sec": 0.59,
+   "cut_at_source": 21.625,
+   "why": "the miss again"
+  },
+  {
+   "after": "next possession,",
+   "natural_silence": [
+    22.69,
+    22.83
+   ],
+   "natural_sec": 0.14,
+   "target_sec": 0.25,
+   "inserted_sec": 0.11,
+   "cut_at_source": 22.785,
+   "why": "back to the hook framing"
+  },
+  {
+   "after": "for it again.",
+   "natural_silence": [
+    23.76,
+    24.13
+   ],
+   "natural_sec": 0.37,
+   "target_sec": 2.8,
+   "inserted_sec": 2.43,
+   "cut_at_source": 24.005,
+   "why": "hands up, catch at the chest"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}

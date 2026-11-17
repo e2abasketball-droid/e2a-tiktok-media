@@ -20,7 +20,7 @@ export type Waypoint = [number, number, number];
 export type BallEvent =
   | {type: 'hold'; player: string; from: number; to: number; dribble?: boolean; hand?: 1 | -1; cross?: number[]}
   | {type: 'pass'; from: string; to: string; t0: number; t1: number; style?: 'chest' | 'bounce' | 'overhead' | 'handoff'; side?: number}
-  | {type: 'shot'; player: string; t0: number; t1: number; make?: boolean}
+  | {type: 'shot'; player: string; t0: number; t1: number; make?: boolean; side?: 1 | -1}
   | {type: 'layup'; player: string; t0: number; t1: number; make?: boolean};
 
 export type Screen = {
@@ -169,6 +169,41 @@ const hand = (p: PlayerState, side = 1): V3 => {
 const release = (p: PlayerState, type: 'shot' | 'layup'): V3 => [p.pos[0] + Math.cos(p.facing) * 0.2, p.pos[1] + Math.sin(p.facing) * 0.2, type === 'shot' ? 2.6 : 2.5];
 
 const RIM: V3 = [FIBA.basket[0], FIBA.basket[1], FIBA.rimZ];
+
+/** missed shot (2026-11-17): the ball meets the back of the ring, not the centre, then kicks out to the side
+ *  (`side` +1/-1, seen from the shooter) and bounces on the floor. Made shots keep the original path. */
+const missHit = (r0: V3): {hit: V3; dir: V2; perp: V2} => {
+  const dx = RIM[0] - r0[0];
+  const dy = RIM[1] - r0[1];
+  const n = Math.hypot(dx, dy) || 1;
+  const dir: V2 = [dx / n, dy / n];
+  return {hit: [RIM[0] + dir[0] * 0.2, RIM[1] + dir[1] * 0.2, RIM[2] + 0.13], dir, perp: [-dir[1], dir[0]]};
+};
+export const missPos = (r0: V3, side: number, dt: number): V3 => {
+  const {hit, dir, perp} = missHit(r0);
+  const vx = -dir[0] * 1.3 + perp[0] * side * 1.9;
+  const vy = -dir[1] * 1.3 + perp[1] * side * 1.9;
+  let vz = 2.1;
+  let z0 = hit[2];
+  let t = dt;
+  let x = hit[0];
+  let y = hit[1];
+  const R = 0.121;
+  // piecewise parabolas, restitution 0.62 on the floor, horizontal speed bled 20 % per bounce
+  let k = 1;
+  for (let i = 0; i < 8; i++) {
+    const tf = (vz + Math.sqrt(vz * vz + 2 * 9.8 * (z0 - R))) / 9.8;
+    if (t <= tf) return [x + vx * k * t, y + vy * k * t, z0 + vz * t - 4.9 * t * t];
+    x += vx * k * tf;
+    y += vy * k * tf;
+    t -= tf;
+    z0 = R;
+    vz = 0.62 * Math.abs(vz - 9.8 * tf);
+    k *= 0.8;
+    if (vz < 0.4) break;
+  }
+  return [x + vx * k * Math.min(t, 1.5) * 0.5, y + vy * k * Math.min(t, 1.5) * 0.5, R];
+};
 
 /** the ball sits in the hand of a body that turns smoothly: facing averaged over the last 0.15 s (a raw facing
  *  that snaps from "rest" to "running" swung the ball sideways at 15+ m/s). Used by holds AND pass ends, so a
@@ -323,15 +358,20 @@ const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallSta
     // shot or layup: release above the head, parabola into the rim
     const r0 = release(stateOf(play, cur.player, cur.t0), cur.type);
     const apex = cur.type === 'shot' ? 4.75 : 3.45;
-    const x = r0[0] + (RIM[0] - r0[0]) * u;
-    const y = r0[1] + (RIM[1] - r0[1]) * u;
+    const aim: V3 = cur.make === false ? missHit(r0).hit : [RIM[0], RIM[1], RIM[2] + 0.05];
+    const x = r0[0] + (aim[0] - r0[0]) * u;
+    const y = r0[1] + (aim[1] - r0[1]) * u;
     // quadratic through r0 (u=0), apex-ish (u~0.55), rim (u=1)
-    const zLin = r0[2] + (RIM[2] + 0.05 - r0[2]) * u;
+    const zLin = r0[2] + (aim[2] - r0[2]) * u;
     const bump = (apex - (r0[2] + RIM[2]) / 2) * 4 * u * (1 - u);
     return {pos: [x, y, zLin + bump], inFlight: cur.type, event: cur, progress: u};
   }
   // between events: after a made basket the ball drops through the net and bounces under it
   const done = [...ev].reverse().find((e) => (e.type === 'hold' ? e.to : e.t1) <= t);
+  if (done && (done.type === 'shot' || done.type === 'layup') && done.make === false) {
+    const r0 = release(stateOf(play, done.player, done.t0), done.type);
+    return {pos: missPos(r0, done.type === 'shot' ? done.side ?? 1 : 1, t - done.t1), event: done};
+  }
   if (done && (done.type === 'shot' || done.type === 'layup')) {
     const dt = t - done.t1;
     // V2: the ball leaves the rim with the arc's own downward speed, braked by the net (no stop-and-drop jump)

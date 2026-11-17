@@ -6,14 +6,25 @@ import {useThree} from '@react-three/fiber';
 import * as THREE from 'three';
 import {FIBA} from '../tactical/geometry.ts';
 import type {V3} from '../tactical/geometry.ts';
-import {sample} from '../tactical/play.ts';
+import {posAt, sample} from '../tactical/play.ts';
 import {Athlete, SKINS, W3} from './Athlete';
+import type {FaceState} from './Athlete';
 import {ArenaLights, Court3D} from './Court3D';
 import type {PlayWithActions} from './rig.ts';
 import {poseAt} from './rig.ts';
 import type {Cam3} from './camera3d.ts';
 
 const RIM: V3 = [FIBA.basket[0], FIBA.basket[1], FIBA.rimZ];
+
+const faceOf = (play: PlayWithActions, id: string, i: number, pt: number, ballPos: V3, head: V3, cfg: FaceCfg): FaceState => {
+  const e = exprAt((play as PlayWithActions & {expr?: Record<string, ExprKey[]>}).expr?.[id], pt);
+  let gaze: V3 = ballPos;
+  if (e.look && e.look !== 'ball' && play.tracks[e.look]) {
+    const q = posAt(play.tracks[e.look], Math.max(0, Math.min(play.duration, pt)));
+    gaze = [q[0], q[1], head[2]];
+  }
+  return {gaze, brow: e.brow, smile: e.smile, open: e.open, blink: Math.max(e.blink, autoBlink(i, pt)), headScale: cfg.headScale ?? 1.3, hair: cfg.hair?.[id] ?? '#2B1A10'};
+};
 
 const CameraSync: React.FC<{cam: Cam3}> = ({cam}) => {
   const camera = useThree((s) => s.camera) as THREE.PerspectiveCamera;
@@ -126,9 +137,44 @@ export type SceneProps = {
   children?: React.ReactNode; // world-space graphics (overlays3d)
   dimTeam?: 'O' | 'X';
   logo?: HTMLImageElement;
+  /** 2026-11-17 character episodes: warm open practice gym vs cold full game arena (default: the arena as before) */
+  env?: 'practice' | 'game';
+  faces?: FaceCfg;
 };
 
-export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], children, logo}) => {
+/** expression keys in PLAY time (so freezes and rewinds carry the face with the body) */
+export type ExprKey = {t: number; brow?: number; smile?: number; open?: number; blink?: number; look?: string};
+export type FaceCfg = {headScale?: number; hair?: Record<string, string>; skin?: Record<string, string>; nums?: Record<string, string>};
+const EXPR_DEF = {brow: 0, smile: 0, open: 0, blink: 0};
+const exprAt = (keys: ExprKey[] | undefined, t: number) => {
+  const out = {...EXPR_DEF, look: undefined as string | undefined};
+  if (!keys?.length) return out;
+  for (const f of ['brow', 'smile', 'open', 'blink'] as const) {
+    const ks = keys.filter((k) => k[f] !== undefined);
+    if (!ks.length) continue;
+    let v = ks[0][f] as number;
+    for (let i = 0; i < ks.length; i++) {
+      const a = ks[i];
+      const b = ks[i + 1];
+      if (t >= a.t && (!b || t < b.t)) {
+        v = !b ? (a[f] as number) : (a[f] as number) + ((b[f] as number) - (a[f] as number)) * Math.min(1, Math.max(0, (t - a.t) / Math.max(1e-3, b.t - a.t)));
+        break;
+      }
+    }
+    out[f] = v;
+  }
+  const lk = keys.filter((k) => k.look !== undefined && k.t <= t);
+  out.look = lk.length ? lk[lk.length - 1].look : undefined;
+  return out;
+};
+/** automatic blinks: deterministic per player (period 2.6-3.8 s, 0.13 s each) */
+const autoBlink = (i: number, t: number) => {
+  const P = 2.6 + ((i * 0.37) % 1.2);
+  const ph = (t + i * 0.83) % P;
+  return ph < 0.13 ? Math.sin((Math.PI * ph) / 0.13) : 0;
+};
+
+export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], children, logo, env, faces}) => {
   const f = sample(play, pt);
   const ball = f.ball;
   // ball spin (2026-11-13): backspin in the air (shots, layups, passes), rolling forward when dribbled or
@@ -146,7 +192,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
     return [cr(up, v), (since * sp) / 0.121];
   })();
   const swish = (() => {
-    const shot = play.ball.find((e) => e.type === 'shot' || e.type === 'layup') as {t1: number} | undefined;
+    const shot = play.ball.find((e) => (e.type === 'shot' || e.type === 'layup') && e.make !== false) as {t1: number} | undefined;
     if (!shot) return 0;
     const u = (pt - shot.t1) / 0.6;
     return u > 0 && u < 1 ? u : 0;
@@ -163,16 +209,16 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
       camera={{fov: cam.fov, near: 0.1, far: 120}}
     >
       <CameraSync cam={cam} />
-      <color attach="background" args={['#050A15']} />
-      <fog attach="fog" args={['#050A15', 14, 40]} />
-      <ArenaLights focus={W3([cam.target[0] * 0.5, Math.max(2, cam.target[1] * 0.7 + 1.5), 0])} />
-      <Court3D logo={logo} swish={swish} />
+      <color attach="background" args={[env === 'practice' ? '#1B140E' : '#050A15']} />
+      <fog attach="fog" args={[env === 'practice' ? '#1B140E' : '#050A15', 14, 40]} />
+      <ArenaLights focus={W3([cam.target[0] * 0.5, Math.max(2, cam.target[1] * 0.7 + 1.5), 0])} env={env} />
+      <Court3D logo={logo} swish={swish} env={env} />
       {play.players.map((p, i) => {
         if (hide.includes(p.id)) return null;
         const pose = poseAt(play, p.id, pt, {holder: ball.holder, pos: ball.pos}, RIM);
         return (
           <React.Fragment key={p.id}>
-            <Athlete pose={pose} team={p.team} num={p.id.slice(1)} skin={SKINS[i % SKINS.length]} />
+            <Athlete pose={pose} team={p.team} num={faces?.nums?.[p.id] ?? p.id.slice(1)} skin={faces?.skin?.[p.id] ?? SKINS[i % SKINS.length]} face={faces ? faceOf(play, p.id, i, pt, ball.pos, pose.head, faces) : undefined} />
             <ContactShadows pose={pose} />
           </React.Fragment>
         );

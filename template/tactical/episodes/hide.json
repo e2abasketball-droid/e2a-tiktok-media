@@ -1,0 +1,90 @@
+{
+ "id": "hide",
+ "title": "Hide in games",
+ "fps": 30,
+ "voiceRaw": "tactical/hide/voice-raw.mp3",
+ "wordsRaw": "hide.words-raw.json",
+ "voice": "tactical/hide/voice.wav",
+ "voiceMix": "tactical/hide/voice.mix.wav",
+ "preroll": 0.12,
+ "tail": 1.8,
+ "gaps": [
+  {
+   "after": "drop in games?",
+   "sec": 1.2,
+   "why": "match cut lands, hands drop"
+  },
+  {
+   "after": "messing up,",
+   "sec": 0.32,
+   "why": "eyes follow the ball"
+  },
+  {
+   "after": "teammate a target.",
+   "sec": 2.6,
+   "why": "passer's view: #8 hidden, the ball goes the other way"
+  },
+  {
+   "after": "One.",
+   "sec": 0.7,
+   "why": "the shot hits the rim"
+  },
+  {
+   "after": "a miss,",
+   "sec": 0.45,
+   "why": "ball off the rim"
+  },
+  {
+   "after": "breathe out.",
+   "sec": 0.9,
+   "why": "shoulders drop on the exhale"
+  },
+  {
+   "after": "your jersey.",
+   "sec": 0.55,
+   "why": "1 RESET on the tap"
+  },
+  {
+   "after": "Get back.",
+   "sec": 1.4,
+   "why": "turns and runs back"
+  },
+  {
+   "after": "Two.",
+   "sec": 0.45,
+   "why": "2 SHOW A TARGET"
+  },
+  {
+   "after": "yourself a target.",
+   "sec": 0.6,
+   "why": "first offer"
+  },
+  {
+   "after": "and call for it.",
+   "sec": 3.4,
+   "why": "offers 2 and 3, 3/3, full catch"
+  },
+  {
+   "after": "for it. Three.",
+   "sec": 0.45,
+   "why": "3 ASK AGAIN"
+  },
+  {
+   "after": "an open shot?",
+   "sec": 0.9,
+   "why": "the miss again"
+  },
+  {
+   "after": "next possession,",
+   "sec": 0.25,
+   "why": "back to the hook framing"
+  },
+  {
+   "after": "for it again.",
+   "sec": 2.8,
+   "why": "hands up, catch at the chest"
+  }
+ ],
+ "plays": {},
+ "shots": []
+}

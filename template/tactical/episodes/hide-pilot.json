@@ -1,0 +1,229 @@
+{
+ "id": "hide-pilot",
+ "title": "Hide in games - pilot",
+ "fps": 30,
+ "voice": "tactical/hide/silence.wav",
+ "words": [
+  {
+   "text": "pilot",
+   "start": 0.0,
+   "end": 9.0
+  }
+ ],
+ "tail": 0.0,
+ "plays": {
+  "P": "hide-pilot-practice",
+  "G": "hide-pilot-game"
+ },
+ "shots": [
+  {
+   "id": "practice",
+   "name": "Practice: #8 calls for it (warm open gym)",
+   "at": 0,
+   "play": "P",
+   "env": "practice",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "@end",
+     3.0
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.75,
+       5.72,
+       1.28
+      ],
+      "dist": 2.719,
+      "pitch": 82.82,
+      "yaw": -105.48,
+      "fov": 40
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.75,
+       5.72,
+       1.28
+      ],
+      "dist": 2.719,
+      "pitch": 82.82,
+      "yaw": -105.48,
+      "fov": 40
+     }
+    }
+   ]
+  },
+  {
+   "id": "game",
+   "name": "Match cut: same gesture, the defender steps in, hands drop",
+   "at": 3.0,
+   "play": "G",
+   "env": "game",
+   "remap": [
+    [
+     0,
+     3.0
+    ],
+    [
+     "@end",
+     6.0
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.75,
+       5.72,
+       1.28
+      ],
+      "dist": 2.719,
+      "pitch": 82.82,
+      "yaw": -105.48,
+      "fov": 40
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.75,
+       5.72,
+       1.28
+      ],
+      "dist": 2.719,
+      "pitch": 82.82,
+      "yaw": -105.48,
+      "fov": 40
+     }
+    }
+   ]
+  },
+  {
+   "id": "open",
+   "name": "Plant, slide to the open line, show hands, catch",
+   "at": 6.0,
+   "play": "G",
+   "env": "game",
+   "remap": [
+    [
+     0,
+     6.0
+    ],
+    [
+     "@end",
+     9.0
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.75,
+       5.72,
+       1.28
+      ],
+      "dist": 2.719,
+      "pitch": 82.82,
+      "yaw": -105.48,
+      "fov": 40
+     }
+    },
+    {
+     "at": 0.85,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       6.1,
+       0.8
+      ],
+      "dist": 11.866,
+      "pitch": 66.14,
+      "yaw": -73.4,
+      "fov": 40
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       6.1,
+       0.8
+      ],
+      "dist": 11.866,
+      "pitch": 66.14,
+      "yaw": -73.4,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "passLane",
+     "src": "O1",
+     "dst": "O8",
+     "color": "#C9A24D",
+     "from": 0.95,
+     "to": 2.1
+    }
+   ]
+  }
+ ],
+ "subtitleHide": [
+  [
+   0,
+   9.5
+  ]
+ ],
+ "faces": {
+  "headScale": 1.38,
+  "nums": {
+   "X8": "14",
+   "X1": "5",
+   "X3": "21"
+  },
+  "hair": {
+   "O8": "#3A2414",
+   "O1": "#1A120C",
+   "X8": "#2B1A10",
+   "X1": "#4A3020"
+  },
+  "skin": {
+   "O8": "#D9A27A",
+   "O1": "#8D5A3B",
+   "X8": "#C68E63",
+   "X1": "#6B4630"
+  }
+ },
+ "pinV2": true,
+ "autoSfx": {
+  "bounce": 0.18,
+  "catch": 0.14,
+  "squeak": 0.09,
+  "players": [
+   "O8",
+   "X8"
+  ]
+ }
+}

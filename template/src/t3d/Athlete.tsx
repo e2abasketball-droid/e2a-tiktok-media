@@ -120,8 +120,8 @@ export const headGeo = (skin: string, hair = '#16100B') => {
 
 // ---------- jersey texture (per team + number) ----------
 const texCache = new Map<string, THREE.Texture>();
-const jerseyTex = (kit: Kit, num: string, kind: 'jersey' | 'shorts') => {
-  const key = `${kind}|${kit.jersey}|${kit.trim}|${num}`;
+const jerseyTex = (kit: Kit, num: string, kind: 'jersey' | 'shorts', wide = false) => {
+  const key = `${kind}|${kit.jersey}|${kit.trim}|${num}|${wide}`;
   const hit = texCache.get(key);
   if (hit) return hit;
   const W = 1024;
@@ -171,7 +171,7 @@ const jerseyTex = (kit: Kit, num: string, kind: 'jersey' | 'shorts') => {
       g.fillText(num, 0, 0);
       g.restore();
     };
-    drawNum(W * 0.5, 1);
+    drawNum(W * 0.5, wide ? 1.7 : 1);
     drawNum(0, 1.2);
     drawNum(W, 1.2);
     // hem
@@ -224,7 +224,66 @@ const frameQuat = (upDir: V3, fwdDir: V3) => {
   return new THREE.Quaternion().setFromRotationMatrix(m);
 };
 
-type Props = {pose: Pose; team: 'O' | 'X'; num: string; skin: string; opacity?: number; highlight?: number};
+/** stylised character face (2026-11-17, opt-in per episode): everything resolved from scene time, so renders repeat.
+ *  gaze = world point the eyes look at; brow -1 worried (inner ends up) .. +1 determined (inner ends down);
+ *  blink 0..1; smile 0..1 (neutral .. slight smile); open 0..1 (mouth open, calling for the ball). */
+export type FaceState = {gaze?: V3; brow: number; blink: number; smile: number; open: number; headScale: number; hair: string};
+
+type Props = {pose: Pose; team: 'O' | 'X'; num: string; skin: string; opacity?: number; highlight?: number; face?: FaceState};
+
+const FACE_G = (() => ({
+  eye: new THREE.SphereGeometry(1, 20, 14),
+  brow: new THREE.CapsuleGeometry(1, 2.2, 4, 8),
+  mouth: new THREE.TorusGeometry(1, 0.2, 8, 20, Math.PI),
+  cap: new THREE.SphereGeometry(1, 28, 16, 0, Math.PI * 2, 0, Math.PI * 0.56),
+}))();
+const faceM = (c: string, r = 0.5) => mat(`face${c}${r}`, () => new THREE.MeshStandardMaterial({color: c, roughness: r}));
+
+/** eyes, brows, nose, mouth and a hair cap on a head group (local frame: +Z front, +Y up, radii rx/ry/rz) */
+const Face: React.FC<{f: FaceState; rx: number; ry: number; rz: number; skinM: THREE.Material; q: THREE.Quaternion; at: [number, number, number]}> = ({f, rx, ry, rz, skinM, q, at}) => {
+  // gaze in the head frame
+  let gx = 0;
+  let gy = 0;
+  if (f.gaze) {
+    const d = new THREE.Vector3(...W3(f.gaze)).sub(new THREE.Vector3(...at)).applyQuaternion(q.clone().invert());
+    if (d.z > 0.05) {
+      gx = Math.max(-1, Math.min(1, d.x / d.z / 0.9));
+      gy = Math.max(-1, Math.min(1, d.y / d.z / 0.7));
+    } else gx = Math.sign(d.x) * 1;
+  }
+  const white = faceM('#F7F4EE', 0.35);
+  const iris = faceM('#2A1A10', 0.3);
+  const brow = faceM(f.hair, 0.8);
+  const lip = faceM('#5A2A22', 0.6);
+  const open = Math.max(0, Math.min(1, f.open));
+  const lid = Math.max(0.06, 1 - Math.max(0, Math.min(1, f.blink)));
+  const parts: React.ReactNode[] = [];
+  for (const s of [-1, 1]) {
+    const ex = s * 0.36 * rx;
+    const ey = 0.1 * ry;
+    const ez = 0.86 * rz;
+    parts.push(
+      <group key={`eye${s}`} position={[ex, ey, ez]} scale={[1, lid, 1]}>
+        <mesh geometry={FACE_G.eye} material={white} scale={[0.2 * rx, 0.24 * ry, 0.12 * rz]} />
+        <mesh geometry={FACE_G.eye} material={iris} position={[gx * 0.07 * rx, gy * 0.07 * ry, 0.09 * rz]} scale={[0.105 * rx, 0.125 * ry, 0.05 * rz]} />
+        <mesh geometry={FACE_G.eye} material={white} position={[gx * 0.07 * rx + 0.035 * rx, gy * 0.07 * ry + 0.045 * ry, 0.13 * rz]} scale={[0.03 * rx, 0.03 * ry, 0.015 * rz]} />
+      </group>,
+    );
+    // brow: worried = inner end up (rotation toward the centre), determined = inner end down
+    const tilt = s * 0.42 * f.brow;
+    parts.push(<mesh key={`brow${s}`} geometry={FACE_G.brow} material={brow} position={[s * 0.36 * rx, (0.4 + 0.06 * Math.max(0, -f.brow)) * ry, 0.9 * rz]} rotation={[0, 0, Math.PI / 2 + tilt]} scale={[0.045 * ry, 0.075 * rx, 0.04 * rz]} />);
+  }
+  // nose
+  parts.push(<mesh key="nose" geometry={FACE_G.eye} material={skinM} position={[0, -0.12 * ry, 0.98 * rz]} scale={[0.1 * rx, 0.11 * ry, 0.08 * rz]} />);
+  // mouth: an arc (smile) or an open oval when calling for the ball
+  const my = -0.46 * ry;
+  if (open > 0.05) parts.push(<mesh key="mo" geometry={FACE_G.eye} material={lip} position={[0, my, 0.86 * rz]} scale={[0.14 * rx, 0.14 * ry * open + 0.02 * ry, 0.06 * rz]} />);
+  const curve = 0.12 + 0.9 * Math.max(0, f.smile);
+  parts.push(<mesh key="ml" geometry={FACE_G.mouth} material={lip} position={[0, my + 0.04 * ry * curve, 0.88 * rz]} rotation={[0, 0, Math.PI]} scale={[0.17 * rx * (1 - 0.3 * open), 0.17 * ry * curve, 0.06 * rz]} />);
+  // hair cap (young, full on top)
+  parts.push(<mesh key="hair" geometry={FACE_G.cap} material={brow} position={[0, 0.06 * ry, -0.04 * rz]} rotation={[-0.32, 0, 0]} scale={[1.07 * rx, 1.04 * ry, 1.08 * rz]} castShadow />);
+  return <group position={at} quaternion={q}>{parts}</group>;
+};
 
 const Limb: React.FC<{a: V3; b: V3; geo: THREE.BufferGeometry; m: THREE.Material; s: number; from?: number; to?: number}> = ({a, b, geo, m, s, from = 0, to = 1}) => {
   const S = seg(a, b);
@@ -234,7 +293,7 @@ const Limb: React.FC<{a: V3; b: V3; geo: THREE.BufferGeometry; m: THREE.Material
   );
 };
 
-export const Athlete: React.FC<Props> = ({pose: P, team, num, skin}) => {
+export const Athlete: React.FC<Props> = ({pose: P, team, num, skin, face}) => {
   const kit = KITS[team];
   const k = P.dims.H / 2;
   // girth: limbs and trunk thicken with the build (lean guard ~0.92, strong big ~1.14); length stays with height
@@ -242,7 +301,7 @@ export const Athlete: React.FC<Props> = ({pose: P, team, num, skin}) => {
   const kb = k * b;
   // V2 materials (2026-11-13): matte skin with a soft sheen instead of a plastic clearcoat; fabric = rough + sheen
   const skinM = mat(`skinV2${skin}`, () => new THREE.MeshPhysicalMaterial({color: skin, roughness: 0.64, metalness: 0.0, clearcoat: 0.04, clearcoatRoughness: 0.7, sheen: 0.25, sheenRoughness: 0.6, sheenColor: new THREE.Color('#f3d9c4')}));
-  const jerseyM = mat(`jerseyV2b${team}${num}`, () => new THREE.MeshPhysicalMaterial({map: jerseyTex(kit, num, 'jersey'), roughness: 0.86, metalness: 0.0, sheen: 0.3, sheenRoughness: 0.8, sheenColor: new THREE.Color(kit.jersey).lerp(new THREE.Color('#ffffff'), 0.3), side: THREE.DoubleSide}));
+  const jerseyM = mat(`jerseyV2b${team}${num}${face ? 'w' : ''}`, () => new THREE.MeshPhysicalMaterial({map: jerseyTex(kit, num, 'jersey', !!face), roughness: 0.86, metalness: 0.0, sheen: 0.3, sheenRoughness: 0.8, sheenColor: new THREE.Color(kit.jersey).lerp(new THREE.Color('#ffffff'), 0.3), side: THREE.DoubleSide}));
   const shortsM = mat(`shortsV2b${team}`, () => new THREE.MeshPhysicalMaterial({map: jerseyTex(kit, num, 'shorts'), roughness: 0.88, sheen: 0.3, sheenRoughness: 0.8, sheenColor: new THREE.Color(kit.shorts).lerp(new THREE.Color('#ffffff'), 0.3), side: THREE.DoubleSide}));
   const shoeM = mat(`shoe${team}`, () => new THREE.MeshStandardMaterial({color: kit.shoe, roughness: 0.42}));
   const soleM = mat(`sole${team}`, () => new THREE.MeshStandardMaterial({color: kit.sole, roughness: 0.6}));
@@ -262,6 +321,7 @@ export const Athlete: React.FC<Props> = ({pose: P, team, num, skin}) => {
   const headYaw = P.headYaw ?? P.chestYaw;
   const headFwd: V3 = [Math.cos(headYaw), Math.sin(headYaw), 0];
   const headQ = frameQuat([P.head[0] - P.chest[0], P.head[1] - P.chest[1], P.head[2] - P.chest[2]], headFwd);
+  if (P.headPitch) headQ.multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), P.headPitch));
 
   const parts: React.ReactNode[] = [];
   // torso (jersey) — elliptical: wide across the shoulders, shallow front-to-back
@@ -271,11 +331,22 @@ export const Athlete: React.FC<Props> = ({pose: P, team, num, skin}) => {
   parts.push(<mesh key="shorts" geometry={G.shortsBody} material={shortsM} position={W3(sb)} quaternion={hipQ} scale={[1.04 * k * (0.6 + 0.4 * b), 0.25 * k, 0.98 * k * (0.6 + 0.4 * b)]} castShadow receiveShadow />);
   // neck + head + hair
   parts.push(<Limb key="neck" a={[neckBase[0], neckBase[1], neckBase[2] - 0.04 * k]} b={P.head} geo={G.neck} m={skinM} s={k * (0.7 + 0.3 * b)} to={0.62} />);
-  parts.push(<mesh key="head" geometry={headGeo(skin)} material={headM} position={headW} quaternion={headQ} scale={[0.082 * k, 0.112 * k, 0.098 * k]} castShadow />);
+  if (face) {
+    // stylised young head: rounder and bigger, lifted so the bigger skull sits on the neck
+    const hs = face.headScale;
+    const up = new THREE.Vector3(0, 1, 0).applyQuaternion(headQ).multiplyScalar(0.1 * k * (hs - 1));
+    const at: [number, number, number] = [headW[0] + up.x, headW[1] + up.y, headW[2] + up.z];
+    const rx = 0.092 * k * hs;
+    const ry = 0.108 * k * hs;
+    const rz = 0.1 * k * hs;
+    parts.push(<mesh key="head" geometry={G.sphere} material={skinM} position={at} quaternion={headQ} scale={[rx, ry, rz]} castShadow />);
+    parts.push(<Face key="face" f={face} rx={rx} ry={ry} rz={rz} skinM={skinM} q={headQ} at={at} />);
+  } else parts.push(<mesh key="head" geometry={headGeo(skin)} material={headM} position={headW} quaternion={headQ} scale={[0.082 * k, 0.112 * k, 0.098 * k]} castShadow />);
   // ears / jaw hint (gives the head a readable orientation without a face)
   for (const s of [-1, 1]) {
     const r: V3 = [Math.sin(headYaw) * s, -Math.cos(headYaw) * s, 0];
-    const e: V3 = [P.head[0] + r[0] * 0.08 * k, P.head[1] + r[1] * 0.08 * k, P.head[2] - 0.0];
+    const eo = face ? 0.094 * face.headScale : 0.08;
+    const e: V3 = [P.head[0] + r[0] * eo * k, P.head[1] + r[1] * eo * k, P.head[2] + (face ? 0.1 * k * (face.headScale - 1) : 0)];
     parts.push(<mesh key={`ear${s}`} geometry={G.sphere} material={skinM} position={W3(e)} scale={[0.018 * k, 0.03 * k, 0.022 * k]} />);
   }
   for (let i = 0; i < 2; i++) {

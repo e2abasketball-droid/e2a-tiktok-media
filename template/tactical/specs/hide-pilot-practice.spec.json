@@ -1,0 +1,86 @@
+{
+ "id": "hide-pilot-practice",
+ "title": "Hide in games pilot: practice",
+ "duration": 9.0,
+ "source": "original E2A character episode (generic coaching knowledge; only the reference's practice/game contrast structure is reused)",
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Passer"
+  },
+  {
+   "id": "O8",
+   "team": "O",
+   "role": "#8, the protagonist"
+  }
+ ],
+ "start": {
+  "O1": [
+   3.3,
+   7.7
+  ],
+  "O8": [
+   -4.0,
+   5.7
+  ]
+ },
+ "legs": {},
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 9.0,
+   "dribble": true
+  }
+ ],
+ "actions": {
+  "O1": [
+   {
+    "type": "dribble",
+    "from": 0,
+    "to": 9.0,
+    "face": "O8"
+   }
+  ],
+  "O8": [
+   {
+    "type": "call",
+    "from": 0.35,
+    "to": 9.0,
+    "face": "O1"
+   }
+  ]
+ },
+ "expr": {
+  "O8": [
+   {
+    "t": 0,
+    "brow": 0.55,
+    "smile": 0.35,
+    "open": 0.0,
+    "look": "O1"
+   },
+   {
+    "t": 0.45,
+    "open": 0.65
+   },
+   {
+    "t": 1.3,
+    "open": 0.15
+   },
+   {
+    "t": 1.9,
+    "open": 0.6
+   },
+   {
+    "t": 2.6,
+    "open": 0.2
+   }
+  ]
+ },
+ "marks": {
+  "call": 0.35
+ }
+}

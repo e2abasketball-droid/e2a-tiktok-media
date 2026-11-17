@@ -1,0 +1,180 @@
+{
+ "id": "hide-miss",
+ "title": "Hide in games: the miss and the reset",
+ "duration": 7.8,
+ "source": "original E2A character episode (generic coaching knowledge; only the reference's practice/game contrast structure is reused)",
+ "players": [
+  {
+   "id": "O8",
+   "team": "O",
+   "role": "#8 shoots"
+  },
+  {
+   "id": "X8",
+   "team": "X",
+   "role": "Late closeout",
+   "guards": "O8"
+  }
+ ],
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O8",
+   "from": 0,
+   "to": 0.45
+  },
+  {
+   "type": "shot",
+   "player": "O8",
+   "t0": 0.45,
+   "t1": 1.6,
+   "make": false,
+   "side": -1
+  }
+ ],
+ "actions": {
+  "O8": [
+   {
+    "type": "shoot",
+    "from": 0.15000000000000002,
+    "to": 1.2,
+    "face": 0.25
+   },
+   {
+    "type": "exhale",
+    "from": 2.15,
+    "to": 3.6,
+    "face": 0.25
+   },
+   {
+    "type": "tap",
+    "from": 3.65,
+    "to": 4.75,
+    "face": 0.25
+   }
+  ],
+  "X8": [
+   {
+    "type": "contest",
+    "from": 0.35,
+    "to": 1.2,
+    "face": "O8"
+   }
+  ]
+ },
+ "expr": {
+  "O8": [
+   {
+    "t": 0,
+    "brow": 0.4,
+    "smile": 0,
+    "look": "ball"
+   },
+   {
+    "t": 1.65,
+    "brow": 0.4
+   },
+   {
+    "t": 1.9,
+    "brow": -0.75
+   },
+   {
+    "t": 2.15,
+    "blink": 0
+   },
+   {
+    "t": 2.45,
+    "blink": 1
+   },
+   {
+    "t": 3.25,
+    "blink": 1
+   },
+   {
+    "t": 3.5,
+    "blink": 0,
+    "brow": -0.2
+   },
+   {
+    "t": 4.3,
+    "brow": 0.6,
+    "smile": 0.15
+   }
+  ],
+  "X8": [
+   {
+    "t": 0,
+    "brow": 0.6,
+    "look": "O8"
+   },
+   {
+    "t": 1.7,
+    "look": "ball"
+   }
+  ]
+ },
+ "marks": {
+  "release": 0.45,
+  "rim": 1.6,
+  "exhale": 2.15,
+  "tap": 3.65,
+  "back": 4.95
+ },
+ "tracks": {
+  "O8": [
+   [
+    0,
+    -6.25,
+    4.35
+   ],
+   [
+    4.95,
+    -6.25,
+    4.35
+   ],
+   [
+    5.742,
+    -5.6,
+    6.3
+   ],
+   [
+    6.912,
+    -4.4,
+    9.8
+   ],
+   [
+    7.8,
+    -4.4,
+    9.8
+   ]
+  ],
+  "X8": [
+   [
+    0,
+    -2.7,
+    5.9
+   ],
+   [
+    0.75,
+    -4.6,
+    5.95
+   ],
+   [
+    1.75,
+    -4.6,
+    5.95
+   ],
+   [
+    2.85,
+    -1.9,
+    3.2
+   ],
+   [
+    7.8,
+    -1.9,
+    3.2
+   ]
+  ]
+ },
+ "screens": []
+}

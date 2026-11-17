@@ -1,0 +1,3 @@
+{"voice": {"provider": "ElevenLabs", "voice": "Deuce (E2A English narrator)", "takes": 1, "credits": 456, "flow": "dxowr1e1rHlDBVRjudg9", "node": "LxRaTTmRqo99aU14nNSl", "transcription": "Scribe, 0 credits", "files": ["voice-raw.mp3", "voice.wav (gaps)", "voice.mix.wav (HPF 80, EQ +2 dB 3.2 kHz, comp 2.5:1, loudnorm -16)"]},
+ "music": {"generator": "music/e2a_music.py --story psychology --duration 39.59 --drop-at 28.3 --payoff-at 32.3", "gain_db": 10, "under_voice_db": "12-17 (6 windows)", "file": "music-mix.mp3"},
+ "sfx": {"rim.mp3": "synthesized with ffmpeg aevalsrc (E2A original)"}}

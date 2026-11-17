@@ -14,13 +14,14 @@ import type {LiveOv3, Ov3} from './overlays3d';
 import {Overlays3D, projector} from './overlays3d';
 import type {PlayWithActions} from './rig.ts';
 import {Scene3D} from './Scene';
+import type {FaceCfg} from './Scene';
 import {choosePin, placePin} from './pinPlace';
-import {FreezeFrame, KineticTitle, Logo, PinLabel, PremiumSubtitles, RewindTag, Stamp} from './screen3d';
+import {FreezeFrame, KineticTitle, Logo, OfferCounter, PinLabel, PremiumSubtitles, RewindTag, Stamp, StepBadge} from './screen3d';
 import '../theme';
 
 type Word = {text: string; start: number; end: number};
 type Timed = {from: Anchor; to?: Anchor};
-type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: number; gold?: number[]; sub?: string} | {type: 'stamp'; text: string; y?: number; tone?: 'gold' | 'white'; badge?: string} | {type: 'pin'; player: string; text: string; tone?: 'gold' | 'red' | 'white'; dy?: number; z?: number; size?: number} | {type: 'freeze'; label?: string} | {type: 'rewind'} | {type: 'logo'; big?: boolean} | {type: 'grade'} | {type: 'scrim'; opacity?: number});
+type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: number; gold?: number[]; sub?: string} | {type: 'stamp'; text: string; y?: number; tone?: 'gold' | 'white'; badge?: string} | {type: 'pin'; player: string; text: string; tone?: 'gold' | 'red' | 'white'; dy?: number; z?: number; size?: number} | {type: 'freeze'; label?: string} | {type: 'rewind'} | {type: 'logo'; big?: boolean} | {type: 'grade'} | {type: 'scrim'; opacity?: number} | {type: 'step'; n: number; text: string; y?: number} | {type: 'counter'; steps: Anchor[]; total?: number; y?: number; base?: number});
 type CamKeyA = Omit<CamKey3, 'at'> & {at: Anchor};
 export type Shot3 = {
   id: string;
@@ -33,6 +34,8 @@ export type Shot3 = {
   screen?: ScreenItem[];
   sfx?: {at: Anchor; name: string; volume?: number}[];
   hide?: string[];
+  /** 2026-11-17: warm practice gym or cold game arena (default: the arena as before) */
+  env?: 'practice' | 'game';
 };
 export type Episode3 = {
   id: string;
@@ -56,6 +59,8 @@ export type Episode3 = {
   pinV2?: boolean;
   /** arena room tone under everything (looped) */
   ambience?: {src: string; volume?: number};
+  /** stylised character heads with faces (expressions keyed per play in play.expr) */
+  faces?: FaceCfg;
 };
 
 type Cue = {t: number; name: string; volume: number};
@@ -80,6 +85,7 @@ const playEvents = (play: PlayWithActions, players: string[]) => {
   for (const e of play.ball) {
     if (e.type === 'pass') ev.push({pt: e.t1, name: 'catch', key: 'catch'});
     if ((e.type === 'shot' || e.type === 'layup') && e.make !== false) ev.push({pt: e.t1, name: 'swish', key: 'swish'});
+    if ((e.type === 'shot' || e.type === 'layup') && e.make === false) ev.push({pt: e.t1, name: 'rim', key: 'rim'});
     if (e.type === 'shot') ev.push({pt: e.t0 + 0.32, name: 'land', key: 'land'});
     if (e.type === 'layup') ev.push({pt: e.t0 + 0.48, name: 'land', key: 'land'});
   }
@@ -107,7 +113,7 @@ const playEvents = (play: PlayWithActions, players: string[]) => {
 const autoCues = (ep: Episode3, laid: {shot: Shot3; start: number; end: number}[], T: (a: Anchor, off?: number) => number, fps: number): Cue[] => {
   if (!ep.autoSfx) return [];
   const cfg = typeof ep.autoSfx === 'object' ? ep.autoSfx : {};
-  const vol: Record<string, [string, number]> = {bounce: ['bounce', cfg.bounce ?? 0.2], catch: ['bounce', cfg.catch ?? 0.13], squeak: ['squeak', cfg.squeak ?? 0.1], swish: ['swish', cfg.swish ?? 0.3], land: ['bounce', cfg.land ?? 0.08]};
+  const vol: Record<string, [string, number]> = {bounce: ['bounce', cfg.bounce ?? 0.2], catch: ['bounce', cfg.catch ?? 0.13], squeak: ['squeak', cfg.squeak ?? 0.1], swish: ['swish', cfg.swish ?? 0.3], land: ['bounce', cfg.land ?? 0.08], rim: ['rim', cfg.swish ?? 0.3]};
   const out: Cue[] = [];
   for (const l of laid) {
     const play = ep.plays[l.shot.play];
@@ -213,7 +219,7 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
     <AbsoluteFill style={{background: '#050A15'}}>
       <AbsoluteFill style={{filter: freezeOn ? 'saturate(0.72) brightness(0.94) contrast(1.04)' : undefined}}>
         {!qcProbe && (
-          <Scene3D play={play} pt={pt} cam={cam} W={W} H={H} hide={shot.hide} logo={logo}>
+          <Scene3D play={play} pt={pt} cam={cam} W={W} H={H} hide={shot.hide} logo={logo} env={shot.env} faces={ep.faces}>
             <Overlays3D play={play} pt={pt} items={ov} />
           </Scene3D>
         )}
@@ -251,6 +257,10 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
           case 'scrim':
             // navy veil that lifts a closing question off the court
             return <AbsoluteFill key={i} style={{background: '#050A15', opacity: (s.opacity ?? 0.5) * Math.min(1, s.age / 0.3)}} />;
+          case 'step':
+            return <StepBadge key={i} n={s.n} text={s.text} age={s.age} dur={s.dur} y={s.y} />;
+          case 'counter':
+            return <OfferCounter key={i} steps={s.steps.map((a) => toLocal(a) - (lt - s.age))} total={s.total ?? 3} base={s.base} age={s.age} dur={s.dur} y={s.y} />;
           case 'logo':
             return <Logo key={i} age={s.age} big={s.big} />;
           default:

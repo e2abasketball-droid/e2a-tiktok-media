@@ -220,3 +220,40 @@ export const PremiumSubtitles: React.FC<{words: W[]; t: number; keys: string[]; 
     </div>
   );
 };
+
+/** numbered step (2026-11-17, character episodes): gold disc with the navy number + navy plate with gold words,
+ *  top-left inside the safe area. data-qc="stamp" so the bounds QC measures it. */
+export const StepBadge: React.FC<{n: number; text: string; age: number; dur: number; y?: number}> = ({n, text, age, dur, y = 262}) => {
+  const a = inOut(age, dur, 0.25, 0.2);
+  const pop = eo(age / 0.35);
+  return (
+    <div style={{position: 'absolute', left: 60, top: y, display: 'flex', alignItems: 'center', gap: 0, opacity: a, transform: `translateX(${(1 - pop) * -14}px)`}}>
+      <div data-qc="stamp" style={{display: 'flex', alignItems: 'center', boxShadow: '0 14px 44px rgba(0,0,0,0.5)', borderRadius: 60}}>
+        <div style={{width: 112, height: 112, borderRadius: 56, background: GOLD, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: DISPLAY, fontSize: 78, color: NAVY, transform: `scale(${0.6 + 0.4 * eo(age / 0.25)})`, zIndex: 1}}>{n}</div>
+        <div style={{marginLeft: -26, paddingLeft: 44, paddingRight: 30, height: 86, display: 'flex', alignItems: 'center', background: 'rgba(11,28,61,0.94)', border: `3px solid ${GOLD}`, borderLeft: 'none', borderRadius: '0 18px 18px 0', fontFamily: DISPLAY, fontSize: 60, letterSpacing: 2, color: GOLD, clipPath: `inset(0 ${(1 - eo((age - 0.1) / 0.35)) * 100}% 0 0)`}}>{text}</div>
+      </div>
+    </div>
+  );
+};
+
+/** offers counter: open-hand icon + k/total; the number pops when it changes (`steps` = local times of +1) */
+export const OfferCounter: React.FC<{steps: number[]; total: number; age: number; dur: number; y?: number; base?: number}> = ({steps, total, age, dur, y = 392, base = 0}) => {
+  const a = inOut(age, dur, 0.25, 0.2);
+  const n = steps.filter((s) => age >= s).length;
+  const k = base + n;
+  const last = n > 0 ? age - steps[n - 1] : 9;
+  const pop = last < 0.35 ? 1 + 0.28 * Math.sin((Math.PI * last) / 0.35) : 1;
+  const full = k >= total;
+  return (
+    <div style={{position: 'absolute', left: 60, top: y, opacity: a}}>
+      <div data-qc="stamp" style={{display: 'flex', alignItems: 'center', gap: 16, background: full ? GOLD : 'rgba(11,28,61,0.94)', border: `3px solid ${GOLD}`, borderRadius: 18, padding: '8px 26px 8px 18px', boxShadow: '0 12px 40px rgba(0,0,0,0.5)'}}>
+        <svg width="58" height="58" viewBox="0 0 24 24">
+          <path d="M7 11V5.5a1.5 1.5 0 0 1 3 0V10m0-5.5V4a1.5 1.5 0 0 1 3 0v6m0-5a1.5 1.5 0 0 1 3 0v6m0-3.5a1.5 1.5 0 0 1 3 0V15a7 7 0 0 1-7 7h-1.2a6 6 0 0 1-4.8-2.4l-3.2-4.3a1.6 1.6 0 0 1 2.5-2L7 15" fill="none" stroke={full ? NAVY : GOLD} strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        <span style={{fontFamily: DISPLAY, fontSize: 66, color: full ? NAVY : WHITE, display: 'inline-block', transform: `scale(${pop})`, lineHeight: 1.1}}>
+          {k}<span style={{color: full ? NAVY : GOLD}}>/{total}</span>
+        </span>
+      </div>
+    </div>
+  );
+};
