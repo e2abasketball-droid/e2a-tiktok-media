@@ -257,3 +257,40 @@ export const OfferCounter: React.FC<{steps: number[]; total: number; age: number
     </div>
   );
 };
+
+/** Eurostep step counter (2026-11-18), driven by PLAY time so it follows the real contacts (slow motion, rewinds):
+ *  GATHER chip lights at the gather; circle k fills (gold, with its number) on the frame its step lands; the label
+ *  of the last counted step ("1 · LEFT") slides in beside. Hollow vs filled, so colour is not the only signal. */
+export const StepCounter: React.FC<{pt: number; gather: number; lands: number[]; labels: string[]; age: number; dur: number; y?: number; gatherLabel?: boolean}> = ({pt, gather, lands, labels, age, dur, y = 330, gatherLabel = true}) => {
+  const a = inOut(age, dur, 0.25, 0.2);
+  const g = pt >= gather - 1 / 60;
+  const k = lands.filter((l) => pt >= l - 1 / 60).length;
+  const since = k > 0 ? pt - lands[k - 1] : g ? pt - gather : -1;
+  const pop = since >= 0 && since < 0.25 ? 1 + 0.3 * Math.sin((Math.PI * since) / 0.25) : 1;
+  const label = k > 0 ? labels[k - 1] : g && gatherLabel ? 'GATHER' : '';
+  return (
+    <div style={{position: 'absolute', left: 60, top: y, opacity: a, display: 'flex', alignItems: 'center', gap: 18}}>
+      <div data-qc="stamp" style={{display: 'flex', alignItems: 'center', gap: 14, background: 'rgba(11,28,61,0.94)', border: `3px solid ${GOLD}`, borderRadius: 18, padding: '10px 18px', boxShadow: '0 12px 40px rgba(0,0,0,0.5)'}}>
+        <span style={{fontFamily: DISPLAY, fontSize: 40, letterSpacing: 2, color: g ? GOLD : 'rgba(255,255,255,0.45)', marginRight: 4}}>GATHER</span>
+        {lands.map((_, i) => {
+          const on = i < k;
+          const s = on && i === k - 1 ? pop : 1;
+          return (
+            <div key={i} style={{width: 58, height: 58, borderRadius: 29, border: `4px solid ${on ? GOLD : 'rgba(255,255,255,0.7)'}`, background: on ? GOLD : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: DISPLAY, fontSize: 40, color: on ? NAVY : 'rgba(255,255,255,0.0)', transform: `scale(${s})`}}>
+              {i + 1}
+            </div>
+          );
+        })}
+        <span style={{fontFamily: DISPLAY, fontSize: 40, color: WHITE, marginLeft: 4}}>
+          {k}
+          <span style={{color: GOLD}}>/{lands.length}</span>
+        </span>
+      </div>
+      {label && (
+        <div data-qc="stamp" key={label} style={{fontFamily: DISPLAY, fontSize: 64, letterSpacing: 2, color: k > 0 ? GOLD : WHITE, textShadow: '0 4px 18px rgba(0,0,0,0.75)', transform: `scale(${pop})`, transformOrigin: 'left center'}}>
+          {label}
+        </div>
+      )}
+    </div>
+  );
+};

@@ -108,6 +108,7 @@ export const Root: React.FC = () => (
       defaultProps={{play: euroA as never, view: 'side', t0: 1.0, t1: 3.4, rate: 0.5}}
       calculateMetadata={({props}) => ({durationInFrames: Math.ceil(((props.t1 - props.t0) / props.rate) * 30) + 1})}
     />
+    <Composition id="ChoreoLabV" component={ChoreoLab} durationInFrames={30} fps={30} width={1080} height={1920} defaultProps={{play: euroA as never, view: 'side', t0: 1.0, t1: 3.4, rate: 0.5}} />
     <Composition id="Probe3D" component={Probe} durationInFrames={300} fps={60} width={1080} height={1920} defaultProps={{cam: 'broadcast'}} />
   </>
 );

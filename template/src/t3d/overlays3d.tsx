@@ -8,6 +8,9 @@ import type {V2, V3} from '../tactical/geometry.ts';
 import type {Play} from '../tactical/play.ts';
 import {posAt, routeOf, sample} from '../tactical/play.ts';
 import {W3} from './Athlete';
+import {poseAt} from './rig.ts';
+import type {PlayWithActions} from './rig.ts';
+import type {ChoreoPlay} from './choreo.ts';
 
 export const GOLD3 = '#E0B455';
 export const RED3 = '#E5483A';
@@ -99,7 +102,64 @@ export type Ov3 =
   /** 2026-11-18 (Break the 3-2): defensive WALL tied to the real defenders (see wall3d below) */
   | WallOv
   /** floor light (radial) at a spot or under a player; hoop:true also lights the rim */
-  | {type: 'glow'; at?: V2; player?: string; r?: number; color?: string; hoop?: boolean; strength?: number};
+  | {type: 'glow'; at?: V2; player?: string; r?: number; color?: string; hoop?: boolean; strength?: number}
+  /** 2026-11-18 (Eurostep): shoe print pinned to the floor where a COUNTED step lands (n = 1, 2 after the gather);
+   *  it appears on the contact frame (play time), so rewinds and slow motion keep it honest. opacity dims it. */
+  | {type: 'print'; player: string; n: number; color?: string; opacity?: number}
+  /** coral hip axis at hip height (defender's hip signal) with a small arrow where the hips point */
+  | {type: 'hipMark'; player: string; color?: string};
+
+/** counted steps of a choreo player: the first plants after the gather, in order */
+export const countedSteps = (play: Play, id: string) => {
+  const c = (play as unknown as ChoreoPlay).choreo?.[id];
+  if (!c) return [];
+  return c.steps.filter((s) => s.land > c.ev.gather).sort((a, b) => a.land - b.land);
+};
+
+const printTex = (() => {
+  const cache = new Map<string, THREE.Texture>();
+  return (foot: number, label: string, color: string) => {
+    const key = `${foot}|${label}|${color}`;
+    const hit = cache.get(key);
+    if (hit) return hit;
+    const c = document.createElement('canvas');
+    c.width = 256;
+    c.height = 512;
+    const g = c.getContext('2d')!;
+    g.translate(128, 256);
+    if (foot === 1) g.scale(-1, 1);
+    // sole outline (toe up): wide forefoot, waist on the inside, round heel
+    const sole = () => {
+      g.beginPath();
+      g.moveTo(-8, -238);
+      g.bezierCurveTo(60, -240, 98, -170, 92, -80);
+      g.bezierCurveTo(88, -10, 66, 40, 62, 110);
+      g.bezierCurveTo(58, 190, 40, 236, -6, 238);
+      g.bezierCurveTo(-58, 238, -70, 190, -66, 120);
+      g.bezierCurveTo(-62, 60, -30, 20, -50, -60);
+      g.bezierCurveTo(-74, -150, -72, -236, -8, -238);
+      g.closePath();
+    };
+    sole();
+    g.fillStyle = color;
+    g.globalAlpha = 0.62;
+    g.fill();
+    g.globalAlpha = 1;
+    g.lineWidth = 16;
+    g.strokeStyle = '#FFF6DF';
+    g.stroke();
+    if (foot === 1) g.scale(-1, 1);
+    g.fillStyle = '#0B1C3D';
+    g.font = '900 190px Anton, Inter, sans-serif';
+    g.textAlign = 'center';
+    g.textBaseline = 'middle';
+    g.fillText(label, 0, -70);
+    const t = new THREE.CanvasTexture(c);
+    t.colorSpace = THREE.SRGBColorSpace;
+    cache.set(key, t);
+    return t;
+  };
+})();
 
 /** Zone wall: translucent panels between consecutive defenders (chain), floor to ~waist height, ice-white edges and
  *  a fine grid. Everything follows the engine's real positions at the current play time.
@@ -558,6 +618,40 @@ export const Overlays3D: React.FC<{play: Play; pt: number; items: LiveOv3[]}> = 
           }
           case 'wall':
             return <Wall3D key={i} play={play} pt={pt} o={o} a={a} />;
+          case 'print': {
+            const st = countedSteps(play, o.player)[o.n - 1];
+            if (!st || pt < st.land - 1 / 60) return null;
+            const since = pt - st.land;
+            const pop = since < 0.22 ? 1 + 0.35 * Math.sin((Math.PI * Math.max(0, since)) / 0.22) : 1;
+            const op = clamp((since + 1 / 60) / 0.06) * a * (o.opacity ?? 1);
+            return (
+              <group key={i} position={W3([st.at[0], st.at[1], 0.017])} rotation={[-Math.PI / 2, 0, st.yaw - Math.PI / 2]} scale={pop}>
+                <mesh material={new THREE.MeshBasicMaterial({map: printTex(st.foot, String(o.n), o.color ?? GOLD3), transparent: true, opacity: op, depthWrite: false, toneMapped: false})}>
+                  <planeGeometry args={[0.2, 0.4]} />
+                </mesh>
+                <mesh position={[0, 0, -0.002]} material={new THREE.MeshBasicMaterial({color: o.color ?? GOLD3, map: glowTex(), transparent: true, opacity: 0.55 * op, depthWrite: false, toneMapped: false, blending: THREE.AdditiveBlending})}>
+                  <planeGeometry args={[0.62, 0.8]} />
+                </mesh>
+              </group>
+            );
+          }
+          case 'hipMark': {
+            const b = sample(play, pt).ball;
+            const ps = poseAt(play as PlayWithActions, o.player, pt, {holder: b.holder, pos: b.pos}, [0, 1.575, 3.05]);
+            const col = o.color ?? '#F06A55';
+            const hz = ps.pelvis[2] + 0.02;
+            const fwdH: V2 = [Math.cos(ps.heading), Math.sin(ps.heading)];
+            const tip: V2 = [ps.pelvis[0] + fwdH[0] * 0.42, ps.pelvis[1] + fwdH[1] * 0.42];
+            return (
+              <group key={i}>
+                <mesh position={W3([ps.pelvis[0], ps.pelvis[1], hz])} rotation={[0, ps.heading - Math.PI / 2, 0]} material={basic(col, 0.95 * a)}>
+                  <boxGeometry args={[0.7, 0.05, 0.05]} />
+                </mesh>
+                <mesh geometry={ribbon([[ps.pelvis[0], ps.pelvis[1]], [tip[0] - fwdH[0] * 0.08, tip[1] - fwdH[1] * 0.08]], 0.05, hz)} material={basic(col, 0.95 * a)} />
+                <mesh geometry={arrowHead(tip, fwdH, 0.2, hz)} material={basic(col, 0.95 * a)} />
+              </group>
+            );
+          }
           case 'glow': {
             const at = o.player ? P(o.player) : o.at ?? [0, 1.575];
             const grow = easeOut(o.age / 0.4);

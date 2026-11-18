@@ -1,0 +1,1366 @@
+{
+ "id": "eurostep-main",
+ "title": "The Eurostep - Reel",
+ "fps": 30,
+ "voiceRaw": "tactical/eurostep/voice-raw.mp3",
+ "voice": "tactical/eurostep/voice.wav",
+ "voiceMix": "tactical/eurostep/voice.mix.wav",
+ "preroll": 0.1,
+ "tail": 2.4,
+ "gaps": [
+  {
+   "after": "wrong lane.",
+   "sec": 0.3,
+   "why": "hook cuts on the defender's load"
+  },
+  {
+   "after": "on the move.",
+   "sec": 0.55,
+   "why": "gather lands, GATHER + empty counter"
+  },
+  {
+   "after": "is step one.",
+   "sec": 1.1,
+   "why": "left foot lands: print 1, 1/2"
+  },
+  {
+   "after": "Plant left.",
+   "sec": 0.6,
+   "why": "the sell starts"
+  },
+  {
+   "after": "chest and eyes.",
+   "sec": 0.8,
+   "why": "chest/eyes to the left lane"
+  },
+  {
+   "after": "hips turn?",
+   "sec": 0.9,
+   "why": "defender's hips and first slide"
+  },
+  {
+   "after": "your opening.",
+   "sec": 0.6,
+   "why": "right side space"
+  },
+  {
+   "after": "off the left.",
+   "sec": 0.45,
+   "why": "push"
+  },
+  {
+   "after": "open lane.",
+   "sec": 1.2,
+   "why": "right foot lands: print 2, 2/2, gold lane"
+  },
+  {
+   "after": "off the right.",
+   "sec": 0.35,
+   "why": "take-off"
+  },
+  {
+   "after": "his reach.",
+   "sec": 1.5,
+   "why": "glass, net, landing"
+  },
+  {
+   "after": "stays square?",
+   "sec": 0.7,
+   "why": "same start, defender holds"
+  },
+  {
+   "after": "pick up the ball.",
+   "sec": 0.9,
+   "why": "reframe before the pick-up"
+  },
+  {
+   "after": "full speed.",
+   "sec": 0.35,
+   "why": "replay starts"
+  },
+  {
+   "after": "Sell left.",
+   "sec": 0.15,
+   "why": "replay beat"
+  },
+  {
+   "after": "Cut right.",
+   "sec": 0.15,
+   "why": "replay beat"
+  }
+ ],
+ "plays": {
+  "A": "euro-a",
+  "B": "euro-b"
+ },
+ "shots": [
+  {
+   "id": "hook",
+   "name": "Hook: high three-quarter behind O1; the fake lands, X1 loads toward the attacker's left; air on the right. Cut before step 2.",
+   "at": 0,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.85
+    ],
+    [
+     "He's",
+     1.5
+    ],
+    [
+     "wrong",
+     1.84
+    ],
+    [
+     "@end",
+     1.95
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O1",
+        "X1"
+       ],
+       "z": 0.7,
+       "window": 0.5
+      },
+      "dist": 5.6,
+      "pitch": 64,
+      "yaw": 20,
+      "fov": 46
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O1",
+        "X1"
+       ],
+       "z": 0.7,
+       "window": 0.5
+      },
+      "dist": 5.2,
+      "pitch": 64,
+      "yaw": 22,
+      "fov": 46
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "hipMark",
+     "player": "X1",
+     "color": "#F06A55",
+     "from": "wrong-0.1",
+     "to": "@end",
+     "fout": 0.001
+    },
+    {
+     "type": "route",
+     "player": "X1",
+     "t0": 1.7,
+     "t1": 1.95,
+     "trail": true,
+     "color": "#F06A55",
+     "width": 0.1,
+     "from": "about",
+     "to": "@end",
+     "fout": 0.001
+    },
+    {
+     "type": "glow",
+     "at": [
+      -0.85,
+      3.2
+     ],
+     "r": 0.9,
+     "strength": 0.7,
+     "from": "wrong lane>-0.4",
+     "to": "@end",
+     "fout": 0.001
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "WATCH",
+      "HIS FEET"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 262,
+     "size": 104
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "gather",
+   "name": "Short rewind, last dribble and the gather on the move: hands, ball and the right foot already down",
+   "at": "This is-0.08",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     1.95
+    ],
+    [
+     0.3,
+     0.55
+    ],
+    [
+     "Secure the",
+     1.15
+    ],
+    [
+     "move.",
+     1.46
+    ],
+    [
+     "move.>+0.1",
+     1.47
+    ],
+    [
+     "@end",
+     1.48
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O1",
+       "z": 0.8,
+       "window": 0.5
+      },
+      "dist": 4.6,
+      "pitch": 74,
+      "yaw": 60,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O1",
+       "z": 0.8,
+       "window": 0.5
+      },
+      "dist": 4.3,
+      "pitch": 74,
+      "yaw": 58,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [],
+   "screen": [
+    {
+     "type": "rewind",
+     "from": 0,
+     "to": 0.3
+    },
+    {
+     "type": "title",
+     "lines": [
+      "THE EUROSTEP"
+     ],
+     "gold": [
+      0
+     ],
+     "from": "Eurostep.",
+     "to": "@end",
+     "y": 262,
+     "size": 100
+    },
+    {
+     "type": "stepCount",
+     "player": "O1",
+     "labels": [
+      "1 · LEFT",
+      "2 · RIGHT"
+     ],
+     "y": 420,
+     "from": "move.-0.25",
+     "to": "@end"
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "count",
+   "name": "Gather -> the left foot lands: print 1 pinned on contact, 1/2, 1 · LEFT",
+   "at": "The next-0.1",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     1.44
+    ],
+    [
+     "land",
+     1.53
+    ],
+    [
+     "one.",
+     1.62
+    ],
+    [
+     "one.>+0.4",
+     1.655
+    ],
+    [
+     "@end",
+     1.67
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O1",
+       "z": 0.6,
+       "window": 0.5
+      },
+      "dist": 6.0,
+      "pitch": 56,
+      "yaw": 35,
+      "fov": 44
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O1",
+       "z": 0.7,
+       "window": 0.5
+      },
+      "dist": 5.6,
+      "pitch": 68,
+      "yaw": 50,
+      "fov": 44
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "print",
+     "player": "O1",
+     "n": 1,
+     "color": "#E0B455",
+     "opacity": 1.0,
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    }
+   ],
+   "screen": [
+    {
+     "type": "stepCount",
+     "player": "O1",
+     "labels": [
+      "1 · LEFT",
+      "2 · RIGHT"
+     ],
+     "y": 262,
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "sell",
+   "name": "Sell the left lane: chest and eyes, gold dashed guide from the left foot (the lane he shows)",
+   "at": "Plant left-0.1",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     1.57
+    ],
+    [
+     "Plant left",
+     1.62
+    ],
+    [
+     "left.>",
+     1.7
+    ],
+    [
+     "eyes.>",
+     1.8
+    ],
+    [
+     "@end",
+     1.82
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O1",
+       "z": 1.0,
+       "window": 0.5
+      },
+      "dist": 4.8,
+      "pitch": 68,
+      "yaw": 25,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O1",
+       "z": 1.0,
+       "window": 0.5
+      },
+      "dist": 4.6,
+      "pitch": 68,
+      "yaw": 22,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "print",
+     "player": "O1",
+     "n": 1,
+     "color": "#E0B455",
+     "opacity": 1.0,
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "route",
+     "player": "O1",
+     "t0": 0,
+     "t1": 0,
+     "pts": [
+      [
+       1.12,
+       4.58
+      ],
+      [
+       1.1,
+       3.4
+      ],
+      [
+       0.75,
+       2.3
+      ]
+     ],
+     "dashed": true,
+     "color": "#E0B455",
+     "width": 0.12,
+     "draw": 0.6,
+     "from": "Sell that",
+     "to": "@end",
+     "fout": 0.001
+    }
+   ],
+   "screen": [
+    {
+     "type": "stepCount",
+     "player": "O1",
+     "labels": [
+      "1 · LEFT",
+      "2 · RIGHT"
+     ],
+     "y": 262,
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "def",
+   "name": "Now the defender: hips turn after step 1 (coral hip axis), first slide traced; the right side stays open",
+   "at": "See his-0.08",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     1.66
+    ],
+    [
+     "hips",
+     1.74
+    ],
+    [
+     "turn?>",
+     1.86
+    ],
+    [
+     "opening.",
+     1.9
+    ],
+    [
+     "@end",
+     1.93
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O1",
+        "X1"
+       ],
+       "z": 0.7,
+       "window": 0.5
+      },
+      "dist": 5.5,
+      "pitch": 66,
+      "yaw": 10,
+      "fov": 44
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O1",
+        "X1"
+       ],
+       "z": 0.7,
+       "window": 0.5
+      },
+      "dist": 5.2,
+      "pitch": 64,
+      "yaw": 8,
+      "fov": 44
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "print",
+     "player": "O1",
+     "n": 1,
+     "color": "#E0B455",
+     "opacity": 1.0,
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "hipMark",
+     "player": "X1",
+     "color": "#F06A55",
+     "from": "hips-0.05",
+     "to": "@end",
+     "fout": 0.001
+    },
+    {
+     "type": "route",
+     "player": "X1",
+     "t0": 1.7,
+     "t1": 1.95,
+     "trail": true,
+     "color": "#F06A55",
+     "width": 0.1,
+     "from": "hips",
+     "to": "@end",
+     "fout": 0.001
+    },
+    {
+     "type": "glow",
+     "at": [
+      -0.75,
+      3.3
+     ],
+     "r": 1.0,
+     "strength": 0.8,
+     "from": "That's your",
+     "to": "@end",
+     "fout": 0.001
+    }
+   ],
+   "screen": [
+    {
+     "type": "stepCount",
+     "player": "O1",
+     "labels": [
+      "1 · LEFT",
+      "2 · RIGHT"
+     ],
+     "y": 262,
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "reveal",
+   "name": "Stable high axis: push off the left, the right foot travels to the open lane, print 2 + 2/2 on contact, gold lane to the rim",
+   "at": "Push off-0.1",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     1.8
+    ],
+    [
+     "Plant right",
+     1.93
+    ],
+    [
+     "right in",
+     1.98
+    ],
+    [
+     "open lane>",
+     2.07
+    ],
+    [
+     "@end",
+     2.1
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.1,
+       3.6,
+       0
+      ],
+      "dist": 8.5,
+      "pitch": 35,
+      "yaw": 0,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       3.5,
+       0
+      ],
+      "dist": 8.0,
+      "pitch": 36,
+      "yaw": 0,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "print",
+     "player": "O1",
+     "n": 1,
+     "color": "#E0B455",
+     "opacity": 1.0,
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "print",
+     "player": "O1",
+     "n": 2,
+     "color": "#E0B455",
+     "opacity": 1.0,
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "route",
+     "player": "X1",
+     "t0": 1.7,
+     "t1": 2.0,
+     "color": "#F06A55",
+     "width": 0.08,
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "route",
+     "player": "O1",
+     "t0": 0,
+     "t1": 0,
+     "pts": [
+      [
+       -0.68,
+       3.38
+      ],
+      [
+       -0.55,
+       2.6
+      ],
+      [
+       -0.2,
+       1.8
+      ]
+     ],
+     "color": "#E0B455",
+     "width": 0.16,
+     "draw": 0.5,
+     "from": "open lane",
+     "to": "@end",
+     "fout": 0.001
+    },
+    {
+     "type": "glow",
+     "at": [
+      0,
+      1.575
+     ],
+     "hoop": true,
+     "r": 0.7,
+     "strength": 0.6,
+     "from": "open lane",
+     "to": "@end",
+     "fout": 0.001
+    }
+   ],
+   "screen": [
+    {
+     "type": "stepCount",
+     "player": "O1",
+     "labels": [
+      "1 · LEFT",
+      "2 · RIGHT"
+     ],
+     "y": 262,
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "finish",
+   "name": "Lateral three-quarter on the take-off: right knee loads, right-hand release, off the glass, late contest",
+   "at": "Push up-0.12",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     2.08
+    ],
+    [
+     "off the right>",
+     2.3
+    ],
+    [
+     "Finish right-handed",
+     2.42
+    ],
+    [
+     "reach.",
+     3.02
+    ],
+    [
+     "@end",
+     3.5
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O1",
+       "z": 1.6,
+       "window": 0.5
+      },
+      "dist": 6.5,
+      "pitch": 80,
+      "yaw": 70,
+      "fov": 44
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O1",
+       "z": 1.8,
+       "window": 0.5
+      },
+      "dist": 6.8,
+      "pitch": 78,
+      "yaw": 62,
+      "fov": 44
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "print",
+     "player": "O1",
+     "n": 1,
+     "color": "#E0B455",
+     "opacity": 0.6,
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "print",
+     "player": "O1",
+     "n": 2,
+     "color": "#E0B455",
+     "opacity": 0.6,
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "glow",
+     "at": [
+      0,
+      1.575
+     ],
+     "hoop": true,
+     "r": 0.6,
+     "strength": 0.5,
+     "from": "Finish right-handed",
+     "to": "@end",
+     "fout": 0.001
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "RIGHT FOOT.",
+      "RIGHT HAND."
+     ],
+     "gold": [
+      1
+     ],
+     "from": "Finish right-handed",
+     "to": "@end-0.15",
+     "y": 262,
+     "size": 96
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "square",
+   "name": "Same start, same high axis: the defender keeps his chest between ball and rim; step 2 ends in balance",
+   "at": "But what-0.1",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     1.2
+    ],
+    [
+     "square?",
+     1.62
+    ],
+    [
+     "square?>",
+     1.98
+    ],
+    [
+     "@end",
+     2.25
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.1,
+       3.6,
+       0
+      ],
+      "dist": 8.5,
+      "pitch": 35,
+      "yaw": 0,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       3.7,
+       0
+      ],
+      "dist": 8.0,
+      "pitch": 36,
+      "yaw": 0,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "print",
+     "player": "O1",
+     "n": 1,
+     "color": "#E0B455",
+     "opacity": 1.0,
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "print",
+     "player": "O1",
+     "n": 2,
+     "color": "#E0B455",
+     "opacity": 1.0,
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "ring",
+     "player": "X1",
+     "color": "#F06A55",
+     "size": 0.8,
+     "from": "stays",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "stepCount",
+     "player": "O1",
+     "labels": [
+      "1 · LEFT",
+      "2 · RIGHT"
+     ],
+     "y": 262,
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "stamp",
+     "text": "DEFENDER HOLDS",
+     "tone": "white",
+     "from": "square?>",
+     "to": "@end",
+     "y": 420
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "read",
+   "name": "Reframe the moment BEFORE the pick-up: the defender is square, read him there",
+   "at": "Read his-0.1",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     2.25
+    ],
+    [
+     0.3,
+     1.05
+    ],
+    [
+     "position",
+     1.22
+    ],
+    [
+     "pick up",
+     1.4
+    ],
+    [
+     "pick up the ball>",
+     1.44
+    ],
+    [
+     "@end",
+     1.45
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O1",
+        "X1"
+       ],
+       "z": 0.7,
+       "window": 0.5
+      },
+      "dist": 5.6,
+      "pitch": 64,
+      "yaw": 20,
+      "fov": 46
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O1",
+        "X1"
+       ],
+       "z": 0.7,
+       "window": 0.5
+      },
+      "dist": 5.2,
+      "pitch": 64,
+      "yaw": 18,
+      "fov": 46
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X1",
+     "color": "#FFFFFF",
+     "size": 0.8,
+     "from": "position",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "rewind",
+     "from": 0,
+     "to": 0.3
+    },
+    {
+     "type": "title",
+     "lines": [
+      "READ HIM",
+      "BEFORE THE GATHER"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "Read his",
+     "to": "@end",
+     "y": 262,
+     "size": 88
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "replay",
+   "name": "Full speed, one wide stable camera: last dribble, gather, 1, 2, release, glass, net (prints at lower presence)",
+   "at": "Here it-0.06",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "Sell left>-0.56",
+     1.62
+    ],
+    [
+     "Sell left>+0.98",
+     3.16
+    ],
+    [
+     "@end",
+     4.0
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.2,
+       4.6,
+       0
+      ],
+      "dist": 12.0,
+      "pitch": 50,
+      "yaw": 10,
+      "fov": 40
+     }
+    },
+    {
+     "at": "Sell left",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.2,
+       4.6,
+       0
+      ],
+      "dist": 12.0,
+      "pitch": 50,
+      "yaw": 10,
+      "fov": 40
+     }
+    },
+    {
+     "at": "Finish#2",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       3.4,
+       0
+      ],
+      "dist": 10.5,
+      "pitch": 52,
+      "yaw": 8,
+      "fov": 40
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       3.4,
+       0
+      ],
+      "dist": 10.5,
+      "pitch": 52,
+      "yaw": 8,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "print",
+     "player": "O1",
+     "n": 1,
+     "color": "#E0B455",
+     "opacity": 0.55,
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "print",
+     "player": "O1",
+     "n": 2,
+     "color": "#E0B455",
+     "opacity": 0.55,
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    }
+   ],
+   "screen": [
+    {
+     "type": "stepCount",
+     "player": "O1",
+     "labels": [
+      "1 · LEFT",
+      "2 · RIGHT"
+     ],
+     "y": 262,
+     "from": 0,
+     "to": "Finish#2>+0.1"
+    },
+    {
+     "type": "title",
+     "lines": [
+      "WHICH SIDE",
+      "DO YOU TRUST?"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "Finish#2>+0.15",
+     "to": "@end",
+     "y": 262,
+     "size": 104
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "loop",
+   "name": "Match cut back to the hook's stance (loop): the question stays, short logo",
+   "at": "Finish#2>+1.55",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.62
+    ],
+    [
+     "@end",
+     0.85
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O1",
+        "X1"
+       ],
+       "z": 0.7,
+       "window": 0.5
+      },
+      "dist": 6.2,
+      "pitch": 62,
+      "yaw": 18,
+      "fov": 46
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O1",
+        "X1"
+       ],
+       "z": 0.7,
+       "window": 0.5
+      },
+      "dist": 5.6,
+      "pitch": 64,
+      "yaw": 20,
+      "fov": 46
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "WHICH SIDE",
+      "DO YOU TRUST?"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0,
+     "to": "@end",
+     "y": 262,
+     "size": 104
+    },
+    {
+     "type": "logo",
+     "from": 0.1,
+     "to": "@end"
+    }
+   ],
+   "sfx": []
+  }
+ ],
+ "version": "main",
+ "pinV2": true,
+ "autoSfx": false,
+ "keywords": [
+  "feet",
+  "wrong lane",
+  "Eurostep",
+  "on the move",
+  "next foot",
+  "step one",
+  "Plant left",
+  "chest and eyes",
+  "hips",
+  "opening",
+  "Push off",
+  "Plant right",
+  "open lane",
+  "Push up",
+  "right-handed",
+  "square",
+  "before you pick up",
+  "full speed",
+  "Sell left",
+  "Cut right",
+  "Finish"
+ ],
+ "subtitleY": 1350,
+ "music": {
+  "src": "tactical/eurostep/music.mp3",
+  "volume": 1
+ }
+}
