@@ -39,6 +39,12 @@ Motor de producción en `main` (`template/`):
 | Gráficos tácticos | `src/t3d/overlays3d.tsx` (en la escena), `src/t3d/screen3d.tsx` (en pantalla) | Anillos, rutas, bloqueos, pases, etiquetas ancladas, títulos, sellos, subtítulos. No son animación del cuerpo. |
 | Composición | `src/t3d/Tactical3D.tsx` (ids `Tactical3D` y `Tactical3DV2` en `src/Root.tsx`), `src/t3d/Probe.tsx` (`Probe3D`) | Planos anclados a palabras, remaps de tiempo, cámaras, audio. `Probe3D` sirve para aislar un jugador y una cámara. |
 
+Paquete de jugadores por defecto (rama `claude/lab-mpfb-default-player`, 2026-11-19, pendiente de merge):
+`src/t3d/player3d.ts` (plan por jugador y biblioteca de clips), `src/t3d/players/*.rig.json`,
+`public/players3d/*.glb`, `SkinnedAthlete.tsx`, `skelclip.ts` (`bonesFromPose`, `meshScale`), QC
+`scripts/qc-players3d.mts` y sección `players3d` de `qc-tactical3d`; generador `tools/blender/build_player.py`
+(+ `fix_head.py` para la calibración de cabeza de MediaPipe). Venv de Blender: `python3 -m venv` + `pip install bpy mediapipe`.
+
 Motor más avanzado **sin merge** (decide el propietario si se usa como base): rama
 `claude/project-thread-z2h3ja` (incluye `claude/project-thread-rray0k`): anticipación carga/freno, `bump`,
 `gather`, `face:'ball'`, `squareUp`, `pinV2`, caras (`face`: mirada, cejas, parpadeo), `call/hide/tap/exhale`,

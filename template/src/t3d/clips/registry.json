@@ -1,0 +1,192 @@
+{
+ "version": "2026-11-19",
+ "note": "Skeletal clip register (players3d e2a-player-v1). Times in seconds of the source take. Root motion: the clip's own root is kept for pose and local displacement, but PLACEMENT, clock and ball come from the play (skelclip.ts warps by milestones and rotates about the planted foot): root motion is resolved once, in the engine.",
+ "clips": [
+  {
+   "clip": "screen-roll-5452m",
+   "source": "E2A_26_BLOQUEO_GIRO_Y_ROLL_APROXIMACION_OPUESTA_T02.MOV",
+   "interval_s": [
+    1.001,
+    4.037
+   ],
+   "duration_s": 3.036,
+   "fps": 29.97,
+   "pattern": [
+    "screen",
+    "roll"
+   ],
+   "turn": "opens to his left",
+   "variant": "mirror of 5452 (= 5451's side)",
+   "contacts": [
+    {
+     "foot": "R",
+     "t0": 0.97,
+     "t1": 1.2,
+     "point": "ball",
+     "pivot": false
+    },
+    {
+     "foot": "L",
+     "t0": 1.3,
+     "t1": 1.64,
+     "point": "ball",
+     "pivot": false
+    },
+    {
+     "foot": "R",
+     "t0": 1.64,
+     "t1": 3.4,
+     "point": "ball",
+     "pivot": true
+    },
+    {
+     "foot": "L",
+     "t0": 1.84,
+     "t1": 2.78,
+     "point": "ball",
+     "pivot": false
+    },
+    {
+     "foot": "L",
+     "t0": 3.24,
+     "t1": 3.58,
+     "point": "ball",
+     "pivot": false
+    },
+    {
+     "foot": "R",
+     "t0": 3.6,
+     "t1": 3.94,
+     "point": "ball",
+     "pivot": false
+    },
+    {
+     "foot": "L",
+     "t0": 3.8,
+     "t1": 4.04,
+     "point": "ball",
+     "pivot": false
+    }
+   ],
+   "milestones": {
+    "approach": 0.97,
+    "brake_L": 1.3,
+    "plant_R": 1.64,
+    "plant_L": 1.84,
+    "set": 1.87,
+    "unweight_L": 2.77,
+    "pivot_start": 2.84,
+    "L_touch": 3.24,
+    "R_release": 3.44,
+    "R_land": 3.6,
+    "L_land": 3.8,
+    "end": 4.04,
+    "brake": 1.3,
+    "plant": 1.64,
+    "unweight": 2.77,
+    "release": 3.44
+   },
+   "head": "calibrated at the origin (fix_head.py, -22.2 deg)",
+   "displacement": "clip root path used for the approach/run warp by distance; engine track = authority",
+   "validated": "screen-roll-lab: qc-contact pinned drift 1.45 mm, qc-players3d PASS",
+   "needs": "5452/5451 from 90 deg profile for knee flexion and pelvis drop; a 60 fps lateral of the first strides"
+  },
+  {
+   "clip": "screen-roll-5452",
+   "source": "E2A_26_BLOQUEO_GIRO_Y_ROLL_APROXIMACION_OPUESTA_T02.MOV",
+   "interval_s": [
+    1.001,
+    4.037
+   ],
+   "duration_s": 3.036,
+   "fps": 29.97,
+   "pattern": [
+    "screen",
+    "roll"
+   ],
+   "turn": "opens to his right",
+   "variant": "original 5452",
+   "contacts": [
+    {
+     "foot": "L",
+     "t0": 0.97,
+     "t1": 1.2,
+     "point": "ball",
+     "pivot": false
+    },
+    {
+     "foot": "R",
+     "t0": 1.3,
+     "t1": 1.64,
+     "point": "ball",
+     "pivot": false
+    },
+    {
+     "foot": "L",
+     "t0": 1.64,
+     "t1": 3.4,
+     "point": "ball",
+     "pivot": true
+    },
+    {
+     "foot": "R",
+     "t0": 1.84,
+     "t1": 2.78,
+     "point": "ball",
+     "pivot": false
+    },
+    {
+     "foot": "R",
+     "t0": 3.24,
+     "t1": 3.58,
+     "point": "ball",
+     "pivot": false
+    },
+    {
+     "foot": "L",
+     "t0": 3.6,
+     "t1": 3.94,
+     "point": "ball",
+     "pivot": false
+    },
+    {
+     "foot": "R",
+     "t0": 3.8,
+     "t1": 4.04,
+     "point": "ball",
+     "pivot": false
+    }
+   ],
+   "milestones": {
+    "approach": 0.97,
+    "brake_R": 1.3,
+    "plant_L": 1.64,
+    "plant_R": 1.84,
+    "set": 1.87,
+    "unweight_R": 2.77,
+    "pivot_start": 2.84,
+    "R_touch": 3.24,
+    "L_release": 3.44,
+    "L_land": 3.6,
+    "R_land": 3.8,
+    "end": 4.04,
+    "brake": 1.3,
+    "plant": 1.64,
+    "unweight": 2.77,
+    "release": 3.44
+   },
+   "head": "calibrated at the origin (fix_head.py, -22.2 deg)",
+   "displacement": "clip root path used for the approach/run warp by distance; engine track = authority",
+   "validated": "placement only (no play rolls to that side yet)",
+   "needs": "5452/5451 from 90 deg profile for knee flexion and pelvis drop; a 60 fps lateral of the first strides"
+  }
+ ],
+ "fallback": {
+  "all other actions": "procedural rig (rig.ts) or authored choreography (choreo.ts) re-solved on the mesh (skelclip.bonesFromPose)",
+  "wanted takes": {
+   "closeout / defensive stop": "5431/5433 (two views)",
+   "handoff / dribble hand change": "60 fps detail of the hands + ball",
+   "layup / Eurostep release": "5413-5416"
+  }
+ }
+}

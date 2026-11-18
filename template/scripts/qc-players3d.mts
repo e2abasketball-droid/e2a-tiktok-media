@@ -16,7 +16,7 @@ import {PLAYER3D, registerPlayerRig} from '../src/t3d/player3d.ts';
 import {meshQC} from '../src/t3d/player3dqc.ts';
 
 for (const v of ['off', 'def'] as const) registerPlayerRig(v, JSON.parse(fs.readFileSync(`src/t3d/players/e2a-${v}.rig.json`, 'utf8')));
-for (const f of fs.readdirSync('src/t3d/clips')) if (f.endsWith('.json')) registerClip(f.replace('.json', ''), JSON.parse(fs.readFileSync(path.join('src/t3d/clips', f), 'utf8')) as SkelClip);
+for (const f of fs.readdirSync('src/t3d/clips')) if (f.endsWith('.json') && f !== 'registry.json') registerClip(f.replace('.json', ''), JSON.parse(fs.readFileSync(path.join('src/t3d/clips', f), 'utf8')) as SkelClip);
 const args = process.argv.slice(2);
 const file = args[0];
 const fps = Number(args[args.indexOf('--fps') + 1]) || 30;

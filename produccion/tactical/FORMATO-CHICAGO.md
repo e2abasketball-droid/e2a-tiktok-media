@@ -22,6 +22,16 @@ Este documento describe el formato. **No autoriza por sí solo publicar ni cambi
 ## Gráficos
 Una indicación por lectura; defensor marcado antes que el atacante; gráficos anclados a jugadores o a la pista; zonas seguras respetadas; ninguna etiqueta encima de un título o de los subtítulos.
 
+## Jugadores 3D y acabado por defecto (desde 2026-11-19, paquete `e2a-player-v1`)
+Rige en cuanto el propietario fusione la rama `claude/lab-mpfb-default-player`; antes de eso la tarea diaria (fijada a su commit) no lo ve.
+- **No hay que pedirlo ni activarlo.** Todo episodio Tactical3DV2 nuevo dibuja a los jugadores con el personaje deformable de E2A: ataque = azul marino `#0E2147` con dorado, defensa = blanco `#F3F1EC` con granate, complexión distinta; tono de piel y dorsal por jugador; escala por la longitud de pierna del motor (los pies plantados no deslizan).
+- **Animación por acción (automática):** si un jugador hace un patrón con clip validado (hoy `screen` + `roll` → clip de 5452 en espejo o sin espejo, elegido por el lado del giro) y la geometría de la jugada encaja (giro añadido ≤ 35°), se usa el clip; si no, la animación compatible del motor (rig procedural o coreografía `choreo`) aplicada a la malla. El motivo de cada elección sale en el registro del render (`[E2A players3d] …`) y en `qc-tactical3d` (sección `players3d`).
+- **Cómo comprobarlo antes de gastar render:** `node --experimental-strip-types scripts/players3d-plan.mts tactical/episodes/<ep>.json` y `qc-tactical3d` (incluye pies, manos sobre el balón, cabeza y determinismo de la malla).
+- **Excepciones por datos, nunca por recordatorio en el chat:** `"players3d": "A"` en el episodio (o en un plano) vuelve al atleta cápsula anterior; los episodios con `faces` (caras expresivas) siguen con cápsula porque la malla tiene cara neutra. Si un `.glb` no carga, el render sigue con cápsulas y lo registra como `FALLBACK`.
+- **Recursos:** `template/public/players3d/e2a_player_{off,def}.glb` (+ `.provenance.json`), `template/src/t3d/players/*.rig.json`, clips en `template/src/t3d/clips/`. Regeneración: `tools/blender/build_player.py` (informe `template/tactical/reports/3d-animation-mpfb-2026-11-19/INFORME.md`).
+- **Sonido:** cero sonido de bote por defecto (`autoSfx` ya no pone botes, recepciones ni caídas con la muestra de bote salvo que el episodio lo pida con un volumen explícito).
+- **Edición:** el clip validado está en el bloqueo y continuación: muestra al bloqueador y al defensor que lo sufre en el mismo encuadre cuando ocurre el apoyo (oblicua de tres cuartos), y la salida en la cenital.
+
 ## Control de calidad obligatorio
 - Táctica validada antes de generar la voz (test-play, test-ball con un solo dueño del balón, test-motion).
 - 3 fragmentos de revisión antes del render final (primeros 3 s, la acción de A, el paso + corte de B).

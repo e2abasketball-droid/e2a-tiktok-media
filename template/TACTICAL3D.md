@@ -40,3 +40,23 @@ La composición `Probe3D` sirve para probar jugadores y cámaras sin montar un e
 - Cámara: ≤ 0,9 m de desplazamiento por fotograma dentro de un plano y nunca por debajo de 0,8 m.
 - Jugadores resaltados dentro de la zona segura (x 60–1020, y 230–1560).
 - Rojo solo para la defensa; resto en azul marino, dorado y blanco.
+
+## Jugadores por defecto: paquete `e2a-player-v1` (2026-11-19)
+
+Todo `Tactical3D`/`Tactical3DV2` dibuja ahora a los jugadores con el personaje deformable de E2A (base MakeHuman CC0
+construida con `tools/blender/build_player.py`), sin campos nuevos en el episodio:
+
+| Pieza | Archivo |
+|---|---|
+| Mallas (ataque / defensa) | `public/players3d/e2a_player_{off,def}.glb` (+ `.provenance.json`) |
+| Esqueleto para el motor | `src/t3d/players/e2a-{off,def}.rig.json` (21 huesos, metros, z arriba, reposo mirando a −y) |
+| Elección por jugador | `src/t3d/player3d.ts` (`planPlayers3d`, `CLIP_LIBRARY`): clip validado por patrón de acciones si la geometría encaja; si no, rig procedural o `choreo` re-resuelto sobre la malla |
+| Pose → huesos | `src/t3d/skelclip.ts` `bonesFromPose` + `meshScale` (escala por longitud de pierna; piernas y brazos re-resueltos desde las caderas y hombros de la malla; cabeza por mirada) |
+| Dibujo | `src/t3d/SkinnedAthlete.tsx` (un clon con su esqueleto por jugador, piel y dorsal por jugador), `Scene.tsx` |
+| Clips y registro | `src/t3d/clips/*.json`, `src/t3d/clips/registry.json` |
+| QC | `scripts/qc-players3d.mts <play>`, sección `players3d` de `qc-tactical3d`, `scripts/players3d-plan.mts <ep|play>` |
+
+- Volver al aspecto anterior (comparativas, episodios antiguos): `"players3d": "A"` en el episodio o en un plano.
+- Episodios con `faces`: siguen en cápsula (la malla tiene cara neutra); se registra el motivo.
+- Si un `.glb` no carga: cápsulas y `FALLBACK` en el registro del render (no se cancela el render).
+- `autoSfx`: botes, recepciones y caídas a 0 por defecto (regla de cero sonido de bote).

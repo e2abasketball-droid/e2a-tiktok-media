@@ -4,6 +4,7 @@ import {registerClip} from '../skelclip.ts';
 import type {SkelClip} from '../skelclip.ts';
 import screenRoll5452 from './screen-roll-5452.json';
 import screenRoll5452m from './screen-roll-5452m.json';
+// registry.json = the clip register (duration, contacts, milestones, validation, wanted takes) — data only
 
 registerClip('screen-roll-5452', screenRoll5452 as unknown as SkelClip);
 // mirrored take (pivot on the right ball, opens to his left): matches the lab play geometry, see the lab INFORME
