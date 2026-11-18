@@ -243,6 +243,7 @@ export const Athlete: React.FC<Props> = ({pose: P, team, num, skin}) => {
   const shoeM = mat(`shoe${team}`, () => new THREE.MeshStandardMaterial({color: kit.shoe, roughness: 0.42}));
   const soleM = mat(`sole${team}`, () => new THREE.MeshStandardMaterial({color: kit.sole, roughness: 0.6}));
   const sockM = mat(`sock${team}`, () => new THREE.MeshStandardMaterial({color: kit.sock, roughness: 0.85}));
+  const hairM = mat('hairCap', () => new THREE.MeshStandardMaterial({color: '#15100C', roughness: 0.92, metalness: 0}));
   const headM = mat('headV', () => new THREE.MeshPhysicalMaterial({vertexColors: true, roughness: 0.5, clearcoat: 0.15, clearcoatRoughness: 0.5}));
 
   const up: V3 = [P.chest[0] - P.pelvis[0], P.chest[1] - P.pelvis[1], P.chest[2] - P.pelvis[2]];
@@ -262,14 +263,25 @@ export const Athlete: React.FC<Props> = ({pose: P, team, num, skin}) => {
   parts.push(<mesh key="torso" geometry={G.torso} material={jerseyM} position={Wp} quaternion={torsoQ} scale={[1.0 * k, torsoLen, 0.66 * k]} castShadow receiveShadow />);
   // shorts body around the hips
   const sb: V3 = [P.pelvis[0], P.pelvis[1], P.pelvis[2] - 0.2 * k];
-  parts.push(<mesh key="shorts" geometry={G.shortsBody} material={shortsM} position={W3(sb)} quaternion={hipQ} scale={[1.04 * k, 0.25 * k, 0.98 * k]} castShadow receiveShadow />);
+  // loose basketball shorts: wider than the hips (observed 5438 front/back, 5449–5452)
+  parts.push(<mesh key="shorts" geometry={G.shortsBody} material={shortsM} position={W3(sb)} quaternion={hipQ} scale={[1.1 * k, 0.25 * k, 1.02 * k]} castShadow receiveShadow />);
   // neck + head + hair
   parts.push(<Limb key="neck" a={[neckBase[0], neckBase[1], neckBase[2] - 0.04 * k]} b={P.head} geo={G.neck} m={skinM} s={k} to={0.62} />);
-  parts.push(<mesh key="head" geometry={headGeo(skin)} material={headM} position={headW} quaternion={headQ} scale={[0.082 * k, 0.112 * k, 0.098 * k]} castShadow />);
+  // head size follows dims.headR (0.12·k since 2026-11-18: head ≈ 1/7.6 of standing height in 5438/5440, was 1/8.6)
+  const hs = P.dims.headR / (0.112 * k);
+  parts.push(<mesh key="head" geometry={headGeo(skin)} material={headM} position={headW} quaternion={headQ} scale={[0.082 * k * hs, 0.112 * k * hs, 0.098 * k * hs]} castShadow />);
+  // hair volume on top, short at the sides and nape (observed 5440 frente 0.36–0.85, perfil 2.16–2.60, nuca 4.15–4.70)
+  {
+    const hu = new THREE.Vector3(0, 1, 0).applyQuaternion(headQ);
+    const hf = new THREE.Vector3(0, 0, 1).applyQuaternion(headQ);
+    const o = 0.048 * k * hs;
+    const b = -0.012 * k * hs;
+    parts.push(<mesh key="hair" geometry={G.hair} material={hairM} position={[headW[0] + hu.x * o + hf.x * b, headW[1] + hu.y * o + hf.y * b, headW[2] + hu.z * o + hf.z * b]} quaternion={headQ} scale={[0.08 * k * hs, 0.082 * k * hs, 0.094 * k * hs]} castShadow />);
+  }
   // ears / jaw hint (gives the head a readable orientation without a face)
   for (const s of [-1, 1]) {
     const r: V3 = [Math.sin(P.chestYaw) * s, -Math.cos(P.chestYaw) * s, 0];
-    const e: V3 = [P.head[0] + r[0] * 0.08 * k, P.head[1] + r[1] * 0.08 * k, P.head[2] - 0.0];
+    const e: V3 = [P.head[0] + r[0] * 0.08 * k * hs, P.head[1] + r[1] * 0.08 * k * hs, P.head[2] - 0.0];
     parts.push(<mesh key={`ear${s}`} geometry={G.sphere} material={skinM} position={W3(e)} scale={[0.018 * k, 0.03 * k, 0.022 * k]} />);
   }
   for (let i = 0; i < 2; i++) {

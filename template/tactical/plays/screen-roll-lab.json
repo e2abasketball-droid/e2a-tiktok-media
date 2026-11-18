@@ -1,0 +1,411 @@
+{
+ "id": "screen-roll-lab",
+ "title": "Lab — side pick-and-roll: plant, hold, open-step pivot and roll (rig calibration, not an episode)",
+ "duration": 5.5,
+ "notes": [
+  "O5 sprints up from the block and plants a wide, low screen on X1 (two-step brake).",
+  "O1 waits for the plant, then turns the corner over the top; X1 is held on the screen.",
+  "O5 opens on a pivot (open step 0.2 s), turns to the rim and rolls with short quick steps; bounce pass, layup."
+ ],
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Ball handler (right wing)"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Spacer, left wing"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Spacer, left corner"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Spacer, right corner"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Ball screener / roller"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the ball",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "Left wing",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Left corner",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "Right corner",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "On the screener (drop)",
+   "guards": "O5"
+  }
+ ],
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 3.65,
+   "dribble": true
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O5",
+   "t0": 3.65,
+   "t1": 4.1,
+   "style": "bounce"
+  },
+  {
+   "type": "hold",
+   "player": "O5",
+   "from": 4.1,
+   "to": 4.3
+  },
+  {
+   "type": "layup",
+   "player": "O5",
+   "t0": 4.3,
+   "t1": 4.7,
+   "make": true
+  }
+ ],
+ "screens": [],
+ "marks": {
+  "start": 0,
+  "approach": 0.4,
+  "plant": 1.42,
+  "use": 1.75,
+  "roll": 2.45,
+  "run": 2.55,
+  "pass": 3.65,
+  "catch": 4.1,
+  "release": 4.3,
+  "make": 4.7,
+  "end": 5.5
+ },
+ "actions": {
+  "O5": [
+   {
+    "type": "screen",
+    "from": 1.42,
+    "to": 2.42,
+    "face": "X1"
+   },
+   {
+    "type": "roll",
+    "from": 2.45,
+    "to": 4.1,
+    "face": "O1"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 1.9,
+    "face": "O1"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 5.5,
+    "face": "O1"
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 5.5,
+    "face": "O2"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 5.5,
+    "face": "O3"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 5.5,
+    "face": "O4"
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "O5",
+   "b": "X1",
+   "at": "use",
+   "max": 0.9,
+   "says": "the screen is set right on the defender"
+  },
+  {
+   "type": "near",
+   "a": "O1",
+   "b": "O5",
+   "at": 2.1,
+   "max": 1.3,
+   "says": "the handler comes off shoulder to shoulder"
+  },
+  {
+   "type": "near_rim",
+   "player": "O5",
+   "at": "release",
+   "max": 1.5,
+   "says": "the roller finishes at the rim"
+  },
+  {
+   "type": "open",
+   "player": "O5",
+   "at": "release",
+   "min": 1.2,
+   "says": "the roller is open"
+  },
+  {
+   "type": "order",
+   "marks": [
+    "approach",
+    "plant",
+    "use",
+    "roll",
+    "run",
+    "pass",
+    "catch",
+    "release",
+    "make"
+   ],
+   "says": "approach, plant, use, roll, pass, layup"
+  }
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0,
+    5.4,
+    8.3
+   ],
+   [
+    1.75,
+    5.4,
+    8.3
+   ],
+   [
+    2.343,
+    3.6,
+    8.55
+   ],
+   [
+    3.369,
+    1.4,
+    6.3
+   ],
+   [
+    5.5,
+    1.4,
+    6.3
+   ]
+  ],
+  "O2": [
+   [
+    0,
+    -5.6,
+    7.8
+   ],
+   [
+    5.5,
+    -5.6,
+    7.8
+   ]
+  ],
+  "O3": [
+   [
+    0,
+    -6.6,
+    1.3
+   ],
+   [
+    5.5,
+    -6.6,
+    1.3
+   ]
+  ],
+  "O4": [
+   [
+    0,
+    6.6,
+    1.3
+   ],
+   [
+    5.5,
+    6.6,
+    1.3
+   ]
+  ],
+  "O5": [
+   [
+    0,
+    3.4,
+    5.4
+   ],
+   [
+    0.4,
+    3.4,
+    5.4
+   ],
+   [
+    1.38,
+    4.45,
+    7.65
+   ],
+   [
+    2.55,
+    4.45,
+    7.65
+   ],
+   [
+    4.227,
+    0.8,
+    2.7
+   ],
+   [
+    5.5,
+    0.8,
+    2.7
+   ]
+  ],
+  "X1": [
+   [
+    0,
+    5,
+    7.55
+   ],
+   [
+    1.85,
+    5,
+    7.55
+   ],
+   [
+    2.376,
+    4.95,
+    8.25
+   ],
+   [
+    2.6,
+    4.95,
+    8.25
+   ],
+   [
+    3.374,
+    2.9,
+    8
+   ],
+   [
+    5.5,
+    2.9,
+    8
+   ]
+  ],
+  "X2": [
+   [
+    0,
+    -4.8,
+    7
+   ],
+   [
+    5.5,
+    -4.8,
+    7
+   ]
+  ],
+  "X3": [
+   [
+    0,
+    -5.6,
+    2.1
+   ],
+   [
+    5.5,
+    -5.6,
+    2.1
+   ]
+  ],
+  "X4": [
+   [
+    0,
+    5.6,
+    2.1
+   ],
+   [
+    5.5,
+    5.6,
+    2.1
+   ]
+  ],
+  "X5": [
+   [
+    0,
+    3,
+    4.7
+   ],
+   [
+    1,
+    3,
+    4.7
+   ],
+   [
+    1.956,
+    3.2,
+    5.7
+   ],
+   [
+    2.4,
+    3.2,
+    5.7
+   ],
+   [
+    3.041,
+    2.4,
+    6
+   ],
+   [
+    5.5,
+    2.4,
+    6
+   ]
+  ]
+ }
+}

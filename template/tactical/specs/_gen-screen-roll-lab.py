@@ -1,0 +1,73 @@
+# E2A 3D lab — side pick-and-roll used to calibrate and validate the screen + roll of the rig (not an episode).
+# Timings come from the owner's references (tactical/reports/3d-animation-2026-11-18/INFORME.md):
+#   approach to the screen  ~1.0 s       (5451 1.25–2.24, 5452 1.05–1.73, 5449 0.69–1.13 last part)
+#   plant on two steps      ~0.3 s       (5449 1.31–1.64, 5450 1.83–2.14)
+#   screen held             ~0.75–0.85 s (5451 2.39–3.13, 5452 1.89–2.74)   -> here 1.0 s incl. the plant
+#   open step + turn        0.2 s / ~0.6 s to face the run (5451 3.13–3.80, 5452 2.74–3.39)
+#   run to the rim          ~1.0–1.7 s   (5451 3.99–4.74, 5452 3.66–4.71)
+# Build: python3 tactical/specs/_gen-screen-roll-lab.py && node --experimental-strip-types scripts/build-play.mts \
+#        tactical/specs/screen-roll-lab.spec.json tactical/plays/screen-roll-lab.json
+import json, os
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+
+
+def P(i, t, r, g=None):
+    d = {"id": i, "team": t, "role": r}
+    if g:
+        d["guards"] = g
+    return d
+
+
+players = [P("O1", "O", "Ball handler (right wing)"), P("O2", "O", "Spacer, left wing"), P("O3", "O", "Spacer, left corner"),
+           P("O4", "O", "Spacer, right corner"), P("O5", "O", "Ball screener / roller"),
+           P("X1", "X", "On the ball", "O1"), P("X2", "X", "Left wing", "O2"), P("X3", "X", "Left corner", "O3"),
+           P("X4", "X", "Right corner", "O4"), P("X5", "X", "On the screener (drop)", "O5")]
+start = {"O1": [5.4, 8.3], "O2": [-5.6, 7.8], "O3": [-6.6, 1.3], "O4": [6.6, 1.3], "O5": [3.4, 5.4],
+         "X1": [5.0, 7.55], "X2": [-4.8, 7.0], "X3": [-5.6, 2.1], "X4": [5.6, 2.1], "X5": [3.0, 4.7]}
+SCREEN = [4.45, 7.65]  # beside X1, on the middle side; the screener faces X1 (sideline), back to the middle
+spec = {
+    "id": "screen-roll-lab",
+    "title": "Lab — side pick-and-roll: plant, hold, open-step pivot and roll (rig calibration, not an episode)",
+    "duration": 5.5,
+    "notes": ["O5 sprints up from the block and plants a wide, low screen on X1 (two-step brake).",
+              "O1 waits for the plant, then turns the corner over the top; X1 is held on the screen.",
+              "O5 opens on a pivot (open step 0.2 s), turns to the rim and rolls with short quick steps; bounce pass, layup."],
+    "players": players,
+    "start": start,
+    "legs": {
+        "O5": [{"at": 0.4, "to": SCREEN, "speed": 3.8},
+               {"at": 2.55, "to": [0.8, 2.7], "speed": 5.5}],
+        "O1": [{"at": 1.75, "via": [[3.6, 8.55]], "to": [1.4, 6.3], "speed": 4.6}],
+        "X1": [{"at": 1.85, "to": [4.95, 8.25], "speed": 2.0},
+               {"at": 2.6, "to": [2.9, 8.0], "speed": 4.0}],
+        "X5": [{"at": 1.0, "to": [3.2, 5.7], "speed": 1.6},
+               {"at": 2.4, "to": [2.4, 6.0], "speed": 2.0}],
+    },
+    "ball": [{"type": "hold", "player": "O1", "from": 0, "to": 3.65, "dribble": True},
+             {"type": "pass", "from": "O1", "to": "O5", "t0": 3.65, "t1": 4.1, "style": "bounce"},
+             {"type": "hold", "player": "O5", "from": 4.1, "to": 4.3},
+             {"type": "layup", "player": "O5", "t0": 4.3, "t1": 4.7, "make": True}],
+    "screens": [],
+    "marks": {"start": 0, "approach": 0.4, "plant": 1.42, "use": 1.75, "roll": 2.45, "run": 2.55, "pass": 3.65,
+              "catch": 4.1, "release": 4.3, "make": 4.7, "end": 5.5},
+    "actions": {
+        "O5": [{"type": "screen", "from": 1.42, "to": 2.42, "face": "X1"},
+               {"type": "roll", "from": 2.45, "to": 4.1, "face": "O1"}],
+        "X1": [{"type": "stance", "from": 0, "to": 1.9, "face": "O1"}],
+        "X5": [{"type": "stance", "from": 0, "to": 5.5, "face": "O1"}],
+        "X2": [{"type": "stance", "from": 0, "to": 5.5, "face": "O2"}],
+        "X3": [{"type": "stance", "from": 0, "to": 5.5, "face": "O3"}],
+        "X4": [{"type": "stance", "from": 0, "to": 5.5, "face": "O4"}],
+    },
+    "claims": [
+        {"type": "near", "a": "O5", "b": "X1", "at": "use", "max": 0.9, "says": "the screen is set right on the defender"},
+        {"type": "near", "a": "O1", "b": "O5", "at": 2.1, "max": 1.3, "says": "the handler comes off shoulder to shoulder"},
+        {"type": "near_rim", "player": "O5", "at": "release", "max": 1.5, "says": "the roller finishes at the rim"},
+        {"type": "open", "player": "O5", "at": "release", "min": 1.2, "says": "the roller is open"},
+        {"type": "order", "marks": ["approach", "plant", "use", "roll", "run", "pass", "catch", "release", "make"],
+         "says": "approach, plant, use, roll, pass, layup"},
+    ],
+}
+json.dump(spec, open(os.path.join(HERE, "screen-roll-lab.spec.json"), "w"), indent=1)
+print("spec:", os.path.join(HERE, "screen-roll-lab.spec.json"))
