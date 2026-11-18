@@ -495,7 +495,8 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
     if (tt > 0 && tt < 0.22) dip = Math.max(dip, 0.08 * Math.sin((Math.PI * tt) / 0.22));
   }
   const bob = run * 0.035 * Math.cos(4 * Math.PI * r.phase);
-  let pelvisZ = legLen * (0.955 - 0.1 * run - 0.13 * crouchAmt) - dip + bob + air;
+  // roll exit: the first strides are short and fairly upright (5452 3.24–3.66): less run-crouch while it lasts
+  let pelvisZ = legLen * (0.955 - 0.1 * run * (1 - 0.5 * rollA.w) - 0.13 * crouchAmt) - dip + bob + air;
   // reach cap (2026-11-18): the hips never rise above the height from which a planted foot can still be
   // reached — otherwise the leg IK clamps and the rendered foot slides along the floor. The cap is a smooth
   // lower envelope in time (min-filter then mean over ±0.07 s), so it is always ≤ the exact cap (no slide)
@@ -535,8 +536,9 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
   // ----- trunk orientation
   // roll exit: drive the chest forward over the first quick steps (observed 5451 3.43–4.30, 5452 3.04–3.66)
   const rollDrive = rollA.a ? rollA.w * smooth((rollU - 0.15) / 0.25) * (1 - smooth((rollU - 1.1) / 0.4)) : 0;
-  const lean = clamp(0.06 + 0.05 * speed + 0.025 * acc, -0.12, 0.42) * (1 - Math.max(shoot.w, layup.w) * 0.7) + crouchLean * 0.28 + catchR.w * 0.06 - celebrate.w * 0.05 + rollDrive * 0.12;
-  const roll = clamp(speed * turn * 0.035, -0.28, 0.28);
+  const lean = clamp(0.06 + 0.05 * speed + 0.025 * acc * (1 - 0.6 * rollA.w), -0.12, 0.42) * (1 - Math.max(shoot.w, layup.w) * 0.7) + crouchLean * 0.28 + catchR.w * 0.06 - celebrate.w * 0.05 + rollDrive * 0.05;
+  // bank into turns; damped during the roll pivot (observed 5451/5452: the trunk stays nearly upright while it turns)
+  const roll = clamp(speed * turn * 0.035, -0.28, 0.28) * (1 - 0.75 * rollA.w);
   const counter = run * 0.16 * Math.sin(2 * Math.PI * r.phase);
   const sideTurn = lock.w * 0.5 * (lock.a?.side ?? 1) + seal.w * 0.6 * (seal.a?.side ?? 1);
   // roll: the chest opens to the ball (face) during the turn, ahead of the hips
