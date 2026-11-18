@@ -1,0 +1,535 @@
+{
+ "id": "zone32-a-cut",
+ "title": "Break the 3-2 A: low defender steps up, cut behind him",
+ "duration": 6.828,
+ "concept": "zone",
+ "source": "original E2A play (generic high-post attack against a 3-2 zone: swing, flash to the nail, read the low defender; no copied possession)",
+ "squareUp": true,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Left guard: opens with the ball, swings it"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Right guard: receives the swing, hits the nail"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Right corner shooter, behind the arc"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Right short corner: cuts behind the low defender"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Big: waits low on the weak side, flashes to the nail"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "Middle of the top line",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "Top line, left wing",
+   "guards": "O1"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Top line, right wing",
+   "guards": "O2"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "Low line, right",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "Low line, left",
+   "guards": "O5"
+  }
+ ],
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 0.55
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O2",
+   "t0": 0.55,
+   "t1": 1.12,
+   "style": "chest"
+  },
+  {
+   "type": "hold",
+   "player": "O2",
+   "from": 1.12,
+   "to": 2.5
+  },
+  {
+   "type": "pass",
+   "from": "O2",
+   "to": "O5",
+   "t0": 2.5,
+   "t1": 3,
+   "style": "bounce"
+  },
+  {
+   "type": "hold",
+   "player": "O5",
+   "from": 3,
+   "to": 4.078
+  },
+  {
+   "type": "pass",
+   "from": "O5",
+   "to": "O4",
+   "t0": 4.078,
+   "t1": 4.548,
+   "style": "bounce"
+  },
+  {
+   "type": "hold",
+   "player": "O4",
+   "from": 4.548,
+   "to": 4.708
+  },
+  {
+   "type": "layup",
+   "player": "O4",
+   "t0": 4.708,
+   "t1": 5.128,
+   "make": true
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "swing": 0.55,
+  "swingCatch": 1.12,
+  "x1step": 0.6,
+  "x1set": 1.6,
+  "plant": 1.5,
+  "flash": 1.62,
+  "nail": 2.48,
+  "hands": 2.1,
+  "pass": 2.5,
+  "catch": 3,
+  "decision": 3.45,
+  "x4step": 3.02,
+  "x4set": 3.87,
+  "cut": 3.32,
+  "lead": 4.078,
+  "cutCatch": 4.548,
+  "x5help": 4.0280000000000005,
+  "layup": 4.708,
+  "make": 5.128,
+  "end": 6.828
+ },
+ "actions": {
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 0.6,
+    "face": "O1"
+   },
+   {
+    "type": "stance",
+    "from": 0.6,
+    "to": 2.95,
+    "face": "O2"
+   },
+   {
+    "type": "stance",
+    "from": 2.95,
+    "to": 9,
+    "face": "O5"
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 1.2,
+    "face": "O1"
+   },
+   {
+    "type": "stance",
+    "from": 1.2,
+    "to": 9,
+    "face": "O2"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 2.4,
+    "face": "O2"
+   },
+   {
+    "type": "stance",
+    "from": 2.4,
+    "to": 9,
+    "face": "O5"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 2.8,
+    "face": "O2"
+   },
+   {
+    "type": "stance",
+    "from": 2.8,
+    "to": 9,
+    "face": "O5"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 2.8,
+    "face": "O2"
+   },
+   {
+    "type": "stance",
+    "from": 2.8,
+    "to": 4.078,
+    "face": "O5"
+   },
+   {
+    "type": "stance",
+    "from": 4.078,
+    "to": 9,
+    "face": "O4"
+   }
+  ],
+  "O5": [
+   {
+    "type": "catchReady",
+    "from": 2.1,
+    "to": 3.05
+   }
+  ],
+  "O4": [
+   {
+    "type": "celebrate",
+    "from": 5.828,
+    "to": 6.628
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "X1",
+   "b": "O2",
+   "at": "x1set",
+   "max": 1.7,
+   "says": "The middle defender steps up."
+  },
+  {
+   "type": "far",
+   "a": "X1",
+   "b": "O5",
+   "at": "nail",
+   "min": 1.6,
+   "says": "Hit him before the gap closes (nail open)."
+  },
+  {
+   "type": "near",
+   "a": "X4",
+   "b": "O5",
+   "at": "x4set",
+   "max": 1.6,
+   "says": "If he steps up..."
+  },
+  {
+   "type": "near_rim",
+   "player": "O4",
+   "at": "layup",
+   "max": 1.5,
+   "says": "Lead the cutter to the rim."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "swing",
+    "x1set",
+    "flash",
+    "nail",
+    "pass",
+    "catch",
+    "x4step",
+    "cut",
+    "lead",
+    "layup",
+    "make"
+   ],
+   "says": "swing, step, flash, catch, step up, cut, layup"
+  }
+ ],
+ "notes": [
+  "Swing, X1 steps up, O5 flashes to the nail.",
+  "X4 steps up to O5; O4 cuts behind him; lead pass; X5 late; layup."
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0,
+    2.55,
+    9.15
+   ],
+   [
+    1.3,
+    2.55,
+    9.15
+   ],
+   [
+    2,
+    2.95,
+    9.05
+   ],
+   [
+    6.828,
+    2.95,
+    9.05
+   ]
+  ],
+  "O2": [
+   [
+    0,
+    -3.2,
+    9
+   ],
+   [
+    6.828,
+    -3.2,
+    9
+   ]
+  ],
+  "O3": [
+   [
+    0,
+    -6.85,
+    1.05
+   ],
+   [
+    6.828,
+    -6.85,
+    1.05
+   ]
+  ],
+  "O4": [
+   [
+    0,
+    -3.75,
+    1.1
+   ],
+   [
+    3.32,
+    -3.75,
+    1.1
+   ],
+   [
+    3.819,
+    -2.55,
+    1.6
+   ],
+   [
+    4.155,
+    -1.1,
+    2
+   ],
+   [
+    4.628,
+    0.05,
+    2.3
+   ],
+   [
+    6.828,
+    0.05,
+    2.3
+   ]
+  ],
+  "O5": [
+   [
+    0,
+    2.75,
+    3.35
+   ],
+   [
+    1.5,
+    2.75,
+    3.35
+   ],
+   [
+    1.938,
+    1.75,
+    4.45
+   ],
+   [
+    2.5,
+    0.1,
+    5.85
+   ],
+   [
+    6.828,
+    0.1,
+    5.85
+   ]
+  ],
+  "X1": [
+   [
+    0,
+    0.35,
+    7.35
+   ],
+   [
+    0.6,
+    0.35,
+    7.35
+   ],
+   [
+    1.16,
+    -1,
+    8.35
+   ],
+   [
+    1.6,
+    -2,
+    8.95
+   ],
+   [
+    2.65,
+    -2,
+    8.95
+   ],
+   [
+    3.4,
+    -1,
+    7.3
+   ],
+   [
+    6.828,
+    -1,
+    7.3
+   ]
+  ],
+  "X2": [
+   [
+    0,
+    3,
+    7.95
+   ],
+   [
+    0.85,
+    3,
+    7.95
+   ],
+   [
+    1.7,
+    2.15,
+    7.05
+   ],
+   [
+    6.828,
+    2.15,
+    7.05
+   ]
+  ],
+  "X3": [
+   [
+    0,
+    -4.05,
+    6.45
+   ],
+   [
+    0.9,
+    -4.05,
+    6.45
+   ],
+   [
+    1.6,
+    -3.85,
+    6.75
+   ],
+   [
+    6.828,
+    -3.85,
+    6.75
+   ]
+  ],
+  "X4": [
+   [
+    0,
+    -2.05,
+    2.85
+   ],
+   [
+    3.02,
+    -2.05,
+    2.85
+   ],
+   [
+    3.409,
+    -1.75,
+    3.75
+   ],
+   [
+    3.87,
+    -1.05,
+    4.75
+   ],
+   [
+    6.828,
+    -1.05,
+    4.75
+   ]
+  ],
+  "X5": [
+   [
+    0,
+    2,
+    2.95
+   ],
+   [
+    4.028,
+    2,
+    2.95
+   ],
+   [
+    4.706,
+    1.05,
+    2.45
+   ],
+   [
+    6.828,
+    1.05,
+    2.45
+   ]
+  ]
+ },
+ "screens": []
+}

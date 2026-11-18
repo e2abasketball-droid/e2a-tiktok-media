@@ -1,0 +1,1640 @@
+{
+ "id": "zone32-trial",
+ "title": "How to Break a 3-2 Zone - trial-reel copy",
+ "fps": 30,
+ "voiceRaw": "tactical/zone32/voice-raw.mp3",
+ "voice": "tactical/zone32/voice.wav",
+ "voiceMix": "tactical/zone32/voice.mix.wav",
+ "preroll": 0.1,
+ "tail": 2.0,
+ "gaps": [
+  {
+   "after": "does to it.",
+   "sec": 0.45,
+   "why": "cut on the pass, open to the tactical view"
+  },
+  {
+   "after": "Three up.",
+   "sec": 0.6,
+   "why": "top line builds"
+  },
+  {
+   "after": "Two down.",
+   "sec": 0.55,
+   "why": "low line builds"
+  },
+  {
+   "after": "in the middle.",
+   "sec": 0.85,
+   "why": "ring on X1"
+  },
+  {
+   "after": "either side.",
+   "sec": 0.55,
+   "why": "O1 and O2 either side of X1"
+  },
+  {
+   "after": "Swing the ball.",
+   "sec": 0.8,
+   "why": "swing pass travels"
+  },
+  {
+   "after": "steps up.",
+   "sec": 0.9,
+   "why": "X1 steps, panel opens, nail lights"
+  },
+  {
+   "after": "foul line.",
+   "sec": 0.6,
+   "why": "flash arrives"
+  },
+  {
+   "after": "gap closes.",
+   "sec": 2.3,
+   "why": "pass through the gap, crack, catch"
+  },
+  {
+   "after": "low defender.",
+   "sec": 2.0,
+   "why": "ring on X4, cutter/corner/rim visible"
+  },
+  {
+   "after": "behind him.",
+   "sec": 0.75,
+   "why": "cut starts"
+  },
+  {
+   "after": "to the rim.",
+   "sec": 2.9,
+   "why": "pass, catch, layup"
+  },
+  {
+   "after": "Same catch.",
+   "sec": 0.8,
+   "why": "6-10 frame rewind to the same catch"
+  },
+  {
+   "after": "corner opens.",
+   "sec": 0.75,
+   "why": "corner lights"
+  },
+  {
+   "after": "the kick-out.",
+   "sec": 3.0,
+   "why": "kick-out, catch, shot to the net"
+  },
+  {
+   "after": "the middle.",
+   "sec": 0.75,
+   "why": "replay beat 1"
+  },
+  {
+   "after": "the nail.",
+   "sec": 0.75,
+   "why": "replay beat 2"
+  },
+  {
+   "after": "defender Choose.",
+   "sec": 1.0,
+   "why": "replay beat 3"
+  }
+ ],
+ "plays": {
+  "A": "zone32-a-cut",
+  "B": "zone32-b-corner"
+ },
+ "shots": [
+  {
+   "id": "hook",
+   "name": "Hook: low three-quarter on the top line, ball in O2's hands, O5 behind; cut before the pass crosses",
+   "at": 0,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     1.15
+    ],
+    [
+     "Wall.",
+     1.6
+    ],
+    [
+     "it.>+0.2",
+     2.47
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       6.4,
+       0
+      ],
+      "dist": 17.0,
+      "pitch": 12,
+      "yaw": 0,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.5,
+       6.3,
+       0.6
+      ],
+      "dist": 10.6,
+      "pitch": 63,
+      "yaw": 18,
+      "fov": 46
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "wall",
+     "chain": [
+      "X2",
+      "X1",
+      "X3"
+     ],
+     "pass": {
+      "from": "O2",
+      "to": "O5"
+     },
+     "draw": 0.55,
+     "from": "Wall.-0.1",
+     "to": "@end",
+     "fout": 0.001
+    },
+    {
+     "type": "ring",
+     "player": "O5",
+     "color": "#E0B455",
+     "size": 0.8,
+     "from": "Watch what",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "CAN YOU",
+      "BREAK IT?"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 262,
+     "size": 124
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "shape",
+   "name": "Tactical: three up, two down, the defender in the middle",
+   "at": "Three up-0.2",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "@end",
+     0.4
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.0,
+       6.5,
+       0
+      ],
+      "dist": 24.0,
+      "pitch": 50,
+      "yaw": -10,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.0,
+       6.5,
+       0
+      ],
+      "dist": 24.0,
+      "pitch": 50,
+      "yaw": -10,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "wall",
+     "chain": [
+      "X2",
+      "X1",
+      "X3"
+     ],
+     "pass": {
+      "from": "O2",
+      "to": "O5"
+     },
+     "draw": 0.45,
+     "rise": 0.3,
+     "from": "Three up",
+     "to": "@end",
+     "fout": 0.001
+    },
+    {
+     "type": "wall",
+     "chain": [
+      "X4",
+      "X5"
+     ],
+     "draw": 0.35,
+     "rise": 0.3,
+     "from": "Two down",
+     "to": "@end",
+     "fout": 0.001
+    },
+    {
+     "type": "ring",
+     "player": "X1",
+     "color": "#FFFFFF",
+     "size": 0.85,
+     "from": "the defender in",
+     "to": "middle.>+0.6"
+    }
+   ],
+   "screen": [
+    {
+     "type": "stamp",
+     "text": "3 UP",
+     "from": "Three up",
+     "to": "Two down-0.05",
+     "y": 330
+    },
+    {
+     "type": "stamp",
+     "text": "2 LOW",
+     "from": "Two down",
+     "to": "Watch the defender-0.05",
+     "y": 330
+    },
+    {
+     "type": "pin",
+     "player": "X1",
+     "text": "MIDDLE",
+     "tone": "white",
+     "from": "the defender in",
+     "to": "@end"
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "swing",
+   "name": "Guards either side of X1, swing, X1 steps up, the panel opens, the nail lights after the step",
+   "at": "Put a guard-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.4
+    ],
+    [
+     "Swing the",
+     0.5
+    ],
+    [
+     "ball.>",
+     1.15
+    ],
+    [
+     "steps up.>",
+     1.62
+    ],
+    [
+     "@end",
+     1.66
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.0,
+       6.5,
+       0
+      ],
+      "dist": 24.0,
+      "pitch": 50,
+      "yaw": -10,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.75,
+       6.5,
+       0
+      ],
+      "dist": 19.5,
+      "pitch": 50,
+      "yaw": -3,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "wall",
+     "chain": [
+      "X2",
+      "X1",
+      "X3"
+     ],
+     "pass": {
+      "from": "O2",
+      "to": "O5"
+     },
+     "open": {
+      "pt0": 1.0,
+      "pt1": 1.62,
+      "w": 1.5
+     },
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "wall",
+     "chain": [
+      "X4",
+      "X5"
+     ],
+     "opacity": 0.8,
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "ring",
+     "player": "O1",
+     "color": "#E0B455",
+     "size": 0.85,
+     "from": "guard on",
+     "to": "Swing the"
+    },
+    {
+     "type": "ring",
+     "player": "O2",
+     "color": "#E0B455",
+     "size": 0.85,
+     "from": "either side",
+     "to": "Swing the"
+    },
+    {
+     "type": "passLane",
+     "src": "O1",
+     "dst": "O2",
+     "color": "#E0B455",
+     "from": "Swing the",
+     "to": "ball.>+0.2"
+    },
+    {
+     "type": "ring",
+     "player": "X1",
+     "color": "#FFFFFF",
+     "size": 0.85,
+     "from": "The middle defender",
+     "to": "@end"
+    },
+    {
+     "type": "glow",
+     "at": [
+      0.1,
+      5.85
+     ],
+     "r": 1.3,
+     "from": "steps up.>+0.05",
+     "to": "@end",
+     "fout": 0.001
+    }
+   ],
+   "screen": [
+    {
+     "type": "stamp",
+     "text": "SWING",
+     "from": "Swing the",
+     "to": "The middle defender-0.05",
+     "y": 330
+    },
+    {
+     "type": "stamp",
+     "text": "HE STEPS UP",
+     "from": "The middle defender",
+     "to": "@end",
+     "y": 330
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "flash",
+   "name": "O5 flashes to the nail (gold route as he runs), pass through the gap, crack, catch",
+   "at": "Now your big-0.1",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     1.5
+    ],
+    [
+     "line.>",
+     2.47
+    ],
+    [
+     "Hit him",
+     2.5
+    ],
+    [
+     "closes.>+0.55",
+     3.0
+    ],
+    [
+     "@end",
+     3.25
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.75,
+       6.5,
+       0
+      ],
+      "dist": 19.5,
+      "pitch": 50,
+      "yaw": -3,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.75,
+       6.5,
+       0
+      ],
+      "dist": 19.5,
+      "pitch": 50,
+      "yaw": -3,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "wall",
+     "chain": [
+      "X2",
+      "X1",
+      "X3"
+     ],
+     "pass": {
+      "from": "O2",
+      "to": "O5"
+     },
+     "open": {
+      "pt0": 1.0,
+      "pt1": 1.62,
+      "w": 1.5
+     },
+     "crack": {
+      "dur": 0.6
+     },
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "wall",
+     "chain": [
+      "X4",
+      "X5"
+     ],
+     "opacity": 0.8,
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "glow",
+     "at": [
+      0.1,
+      5.85
+     ],
+     "r": 1.3,
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "route",
+     "player": "O5",
+     "t0": 1.5,
+     "t1": 2.48,
+     "trail": true,
+     "color": "#E0B455",
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "passLane",
+     "src": "O2",
+     "dst": "O5",
+     "color": "#E0B455",
+     "from": "Hit him",
+     "to": "closes.>+0.5"
+    }
+   ],
+   "screen": [
+    {
+     "type": "stamp",
+     "text": "HIT THE NAIL",
+     "from": "Hit him",
+     "to": "@end",
+     "y": 330
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "lowfocus",
+   "name": "Ball in O5's hands: watch the low defender (white ring on X4); O4, corner and rim visible",
+   "at": "Now watch-0.1",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.0
+    ],
+    [
+     "@end",
+     3.04
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.75,
+       6.5,
+       0
+      ],
+      "dist": 19.5,
+      "pitch": 50,
+      "yaw": -3,
+      "fov": 42
+     }
+    },
+    {
+     "at": "defender.>",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.5,
+       2.8,
+       0
+      ],
+      "dist": 18.5,
+      "pitch": 50,
+      "yaw": -38,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.5,
+       2.8,
+       0
+      ],
+      "dist": 18.5,
+      "pitch": 50,
+      "yaw": -38,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "wall",
+     "chain": [
+      "X2",
+      "X1",
+      "X3"
+     ],
+     "pass": {
+      "from": "O2",
+      "to": "O5"
+     },
+     "opacity": 0.3,
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "wall",
+     "chain": [
+      "X4",
+      "X5"
+     ],
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "ring",
+     "player": "X4",
+     "color": "#FFFFFF",
+     "pulse": true,
+     "from": "low defender",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "O5",
+     "color": "#E0B455",
+     "size": 0.8,
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "pin",
+     "player": "X4",
+     "text": "LOW DEFENDER",
+     "tone": "white",
+     "from": "low defender",
+     "to": "@end"
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "stepA",
+   "name": "A: X4 steps up, O4 cuts behind him (route as he goes), lead pass",
+   "at": "If he steps-0.1",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.04
+    ],
+    [
+     "up,>",
+     3.55
+    ],
+    [
+     "him.>",
+     4.0
+    ],
+    [
+     "Lead the",
+     4.078
+    ],
+    [
+     "cutter>",
+     4.3
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.5,
+       2.8,
+       0
+      ],
+      "dist": 18.5,
+      "pitch": 50,
+      "yaw": -38,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.5,
+       2.8,
+       0
+      ],
+      "dist": 18.5,
+      "pitch": 50,
+      "yaw": -38,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "wall",
+     "chain": [
+      "X2",
+      "X1",
+      "X3"
+     ],
+     "pass": {
+      "from": "O2",
+      "to": "O5"
+     },
+     "opacity": 0.3,
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "wall",
+     "chain": [
+      "X4",
+      "X5"
+     ],
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "ring",
+     "player": "X4",
+     "color": "#FFFFFF",
+     "from": 0,
+     "to": "cut behind"
+    },
+    {
+     "type": "route",
+     "player": "O4",
+     "t0": 3.32,
+     "t1": 4.548,
+     "color": "#E0B455",
+     "draw": 0.6,
+     "from": "cut behind",
+     "to": "@end",
+     "fout": 0.001
+    },
+    {
+     "type": "passLane",
+     "src": "O5",
+     "dst": "O4",
+     "color": "#E0B455",
+     "from": "Lead the",
+     "to": "@end"
+    },
+    {
+     "type": "glow",
+     "at": [
+      0,
+      1.575
+     ],
+     "hoop": true,
+     "r": 1.0,
+     "from": "Lead the",
+     "to": "@end",
+     "fout": 0.001
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "STEP UP",
+      "→ CUT BEHIND"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "steps up,",
+     "to": "@end",
+     "y": 262,
+     "size": 100
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "finA",
+   "name": "A: low three-quarter: the catch on the move and the layup; X5 late",
+   "at": "cutter>-0.05",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     4.3
+    ],
+    [
+     "rim.>+0.2",
+     4.708
+    ],
+    [
+     "rim.>+0.6",
+     5.128
+    ],
+    [
+     "@end",
+     6.3
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       3.4,
+       0.9
+      ],
+      "dist": 8.6,
+      "pitch": 66,
+      "yaw": -24,
+      "fov": 46
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.4,
+       3.0,
+       1.0
+      ],
+      "dist": 8.0,
+      "pitch": 64,
+      "yaw": -20,
+      "fov": 46
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "wall",
+     "chain": [
+      "X4",
+      "X5"
+     ],
+     "opacity": 0.7,
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "glow",
+     "at": [
+      0,
+      1.575
+     ],
+     "hoop": true,
+     "r": 1.0,
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    }
+   ],
+   "screen": [],
+   "sfx": []
+  },
+  {
+   "id": "rew",
+   "name": "8-frame rewind to the same catch, same framing",
+   "at": "Same catch-0.3",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     5.2
+    ],
+    [
+     "@end",
+     3.0
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.5,
+       2.8,
+       0
+      ],
+      "dist": 18.5,
+      "pitch": 50,
+      "yaw": -38,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.5,
+       2.8,
+       0
+      ],
+      "dist": 18.5,
+      "pitch": 50,
+      "yaw": -38,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "wall",
+     "chain": [
+      "X2",
+      "X1",
+      "X3"
+     ],
+     "pass": {
+      "from": "O2",
+      "to": "O5"
+     },
+     "opacity": 0.3,
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "wall",
+     "chain": [
+      "X4",
+      "X5"
+     ],
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    }
+   ],
+   "screen": [
+    {
+     "type": "rewind",
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "sinkB",
+   "name": "B: same catch, the low line sinks, the corner lights, kick-out (dashed gold)",
+   "at": "Same catch-0.03",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     3.0
+    ],
+    [
+     "Same catch>",
+     3.05
+    ],
+    [
+     "If they sink",
+     3.08
+    ],
+    [
+     "rim,>",
+     3.65
+    ],
+    [
+     "opens.>",
+     3.95
+    ],
+    [
+     "Make the kick-out",
+     4.02
+    ],
+    [
+     "kick-out.>",
+     4.64
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.5,
+       2.8,
+       0
+      ],
+      "dist": 18.5,
+      "pitch": 50,
+      "yaw": -38,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.5,
+       2.8,
+       0
+      ],
+      "dist": 18.5,
+      "pitch": 50,
+      "yaw": -38,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "wall",
+     "chain": [
+      "X2",
+      "X1",
+      "X3"
+     ],
+     "pass": {
+      "from": "O2",
+      "to": "O5"
+     },
+     "opacity": 0.3,
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "wall",
+     "chain": [
+      "X4",
+      "X5"
+     ],
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "ring",
+     "player": "O5",
+     "color": "#E0B455",
+     "size": 0.8,
+     "from": 0,
+     "to": "If they sink"
+    },
+    {
+     "type": "glow",
+     "player": "O3",
+     "r": 1.1,
+     "from": "the corner",
+     "to": "@end",
+     "fout": 0.001
+    },
+    {
+     "type": "ring",
+     "player": "O3",
+     "color": "#E0B455",
+     "from": "the corner",
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "X3",
+     "t0": 4.07,
+     "t1": 4.64,
+     "color": "#E4F4FF",
+     "width": 0.12,
+     "trail": true,
+     "from": "kick-out",
+     "to": "@end",
+     "fout": 0.001
+    },
+    {
+     "type": "passLane",
+     "src": "O5",
+     "dst": "O3",
+     "color": "#E0B455",
+     "from": "Make the kick-out",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "SINK IN",
+      "→ CORNER"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "If they sink",
+     "to": "@end",
+     "y": 262,
+     "size": 100
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "shotB",
+   "name": "B: corner catch, feet behind the arc, shot to the net",
+   "at": "kick-out.>+0.02",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     4.64
+    ],
+    [
+     "@end-0.6",
+     6.04
+    ],
+    [
+     "@end",
+     6.5
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -4.8,
+       2.8,
+       1.3
+      ],
+      "dist": 8.8,
+      "pitch": 68,
+      "yaw": 125,
+      "fov": 48
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -4.4,
+       2.6,
+       1.6
+      ],
+      "dist": 8.2,
+      "pitch": 66,
+      "yaw": 120,
+      "fov": 48
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "glow",
+     "player": "O3",
+     "r": 1.0,
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "glow",
+     "at": [
+      0,
+      1.575
+     ],
+     "hoop": true,
+     "r": 0.6,
+     "strength": 0.6,
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    }
+   ],
+   "screen": [],
+   "sfx": []
+  },
+  {
+   "id": "replay",
+   "name": "Elevated replay in three beats: swing, nail catch, low defender's step",
+   "at": "Move the middle-0.1",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.5
+    ],
+    [
+     "the middle.>",
+     1.62
+    ],
+    [
+     "Touch",
+     2.3
+    ],
+    [
+     "nail.>",
+     3.0
+    ],
+    [
+     "Make the low",
+     3.02
+    ],
+    [
+     "Choose.>",
+     3.85
+    ],
+    [
+     "@end",
+     3.9
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.5,
+       5.5,
+       0
+      ],
+      "dist": 24.0,
+      "pitch": 30,
+      "yaw": -6,
+      "fov": 44
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.5,
+       5.5,
+       0
+      ],
+      "dist": 24.0,
+      "pitch": 30,
+      "yaw": -6,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "wall",
+     "chain": [
+      "X2",
+      "X1",
+      "X3"
+     ],
+     "pass": {
+      "from": "O2",
+      "to": "O5"
+     },
+     "open": {
+      "pt0": 1.0,
+      "pt1": 1.62,
+      "w": 1.5
+     },
+     "opacity": 0.85,
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "wall",
+     "chain": [
+      "X4",
+      "X5"
+     ],
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "ring",
+     "player": "X1",
+     "color": "#FFFFFF",
+     "size": 0.85,
+     "from": 0,
+     "to": "Touch"
+    },
+    {
+     "type": "route",
+     "player": "O5",
+     "t0": 1.5,
+     "t1": 2.48,
+     "trail": true,
+     "color": "#E0B455",
+     "from": "Touch",
+     "to": "@end",
+     "fout": 0.001
+    },
+    {
+     "type": "glow",
+     "at": [
+      0.1,
+      5.85
+     ],
+     "r": 1.2,
+     "from": "Touch",
+     "to": "Make the low"
+    },
+    {
+     "type": "ring",
+     "player": "X4",
+     "color": "#FFFFFF",
+     "pulse": true,
+     "from": "Make the low",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "MOVE THE MIDDLE"
+     ],
+     "gold": [
+      0
+     ],
+     "from": 0.05,
+     "to": "Touch-0.03",
+     "y": 262,
+     "size": 96
+    },
+    {
+     "type": "title",
+     "lines": [
+      "TOUCH THE NAIL"
+     ],
+     "gold": [
+      0
+     ],
+     "from": "Touch",
+     "to": "Make the low-0.03",
+     "y": 262,
+     "size": 96
+    },
+    {
+     "type": "title",
+     "lines": [
+      "MAKE HIM",
+      "CHOOSE"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "Make the low",
+     "to": "@end",
+     "y": 262,
+     "size": 100
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "close",
+   "name": "Back to the hook's low shot: the pending pass crosses, the panel breaks around the crossing, O5 catches",
+   "at": "For more-0.25",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     2.2
+    ],
+    [
+     "European>",
+     3.15
+    ],
+    [
+     "@end",
+     3.4
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.5,
+       6.4,
+       0.6
+      ],
+      "dist": 11.0,
+      "pitch": 64,
+      "yaw": 22,
+      "fov": 46
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.3,
+       6.0,
+       0.6
+      ],
+      "dist": 9.6,
+      "pitch": 63,
+      "yaw": 16,
+      "fov": 46
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "wall",
+     "chain": [
+      "X2",
+      "X1",
+      "X3"
+     ],
+     "pass": {
+      "from": "O2",
+      "to": "O5"
+     },
+     "shatter": {
+      "r": 0.55,
+      "n": 14,
+      "seed": 32,
+      "dur": 0.42
+     },
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    },
+    {
+     "type": "glow",
+     "at": [
+      0.1,
+      5.85
+     ],
+     "r": 1.1,
+     "from": 0,
+     "to": "@end",
+     "fin": 0.001,
+     "fout": 0.001
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "ONE PASS.",
+      "NO WALL."
+     ],
+     "gold": [
+      1
+     ],
+     "from": "more",
+     "to": "@end",
+     "y": 262,
+     "size": 124
+    },
+    {
+     "type": "logo",
+     "from": "European",
+     "to": "@end"
+    }
+   ],
+   "sfx": []
+  }
+ ],
+ "version": "trial",
+ "pinV2": true,
+ "autoSfx": false,
+ "keywords": [
+  "wall",
+  "one pass",
+  "Three up",
+  "Two down",
+  "in the middle",
+  "Swing the ball",
+  "steps up",
+  "flashes",
+  "foul line",
+  "gap closes",
+  "low defender",
+  "cut behind",
+  "to the rim",
+  "Same catch",
+  "sink",
+  "corner opens",
+  "kick-out",
+  "Touch the nail",
+  "choose"
+ ],
+ "subtitleGroups": [
+  6,
+  7,
+  4,
+  6,
+  6,
+  3,
+  5,
+  4,
+  4,
+  6,
+  5,
+  7,
+  6,
+  5,
+  4,
+  3,
+  3,
+  3,
+  3,
+  5,
+  4
+ ],
+ "subtitleY": 1500,
+ "subtitleHide": [
+  [
+   "For more-0.05",
+   "basketball.>+3"
+  ]
+ ],
+ "music": {
+  "src": "tactical/zone32/music.mp3",
+  "volume": 1
+ }
+}

@@ -1,0 +1,228 @@
+{
+ "source": "public/tactical/zone32/voice-raw.mp3",
+ "source_sec": 31.04,
+ "preroll": 0.1,
+ "output": "public/tactical/zone32/voice.wav",
+ "output_sec": 45.1,
+ "inserted_total_sec": 13.96,
+ "last_word_end": 44.89,
+ "gaps": [
+  {
+   "after": "does to it.",
+   "natural_silence": [
+    3.43,
+    3.89
+   ],
+   "natural_sec": 0.46,
+   "target_sec": 0.45,
+   "inserted_sec": 0.0,
+   "cut_at_source": 3.585,
+   "why": "cut on the pass, open to the tactical view"
+  },
+  {
+   "after": "Three up.",
+   "natural_silence": [
+    4.28,
+    4.71
+   ],
+   "natural_sec": 0.43,
+   "target_sec": 0.6,
+   "inserted_sec": 0.17,
+   "cut_at_source": 4.585,
+   "why": "top line builds"
+  },
+  {
+   "after": "Two down.",
+   "natural_silence": [
+    5.26,
+    5.6
+   ],
+   "natural_sec": 0.34,
+   "target_sec": 0.55,
+   "inserted_sec": 0.21,
+   "cut_at_source": 5.385,
+   "why": "low line builds"
+  },
+  {
+   "after": "the middle.",
+   "natural_silence": [
+    6.79,
+    7.25
+   ],
+   "natural_sec": 0.46,
+   "target_sec": 0.75,
+   "inserted_sec": 0.29,
+   "cut_at_source": 6.995,
+   "why": "replay beat 1"
+  },
+  {
+   "after": "in the middle.",
+   "natural_silence": [
+    6.79,
+    7.25
+   ],
+   "natural_sec": 0.46,
+   "target_sec": 0.85,
+   "inserted_sec": 0.39,
+   "cut_at_source": 6.995,
+   "why": "ring on X1"
+  },
+  {
+   "after": "either side.",
+   "natural_silence": [
+    8.58,
+    8.83
+   ],
+   "natural_sec": 0.25,
+   "target_sec": 0.55,
+   "inserted_sec": 0.3,
+   "cut_at_source": 8.705,
+   "why": "O1 and O2 either side of X1"
+  },
+  {
+   "after": "Swing the ball.",
+   "natural_silence": [
+    9.5,
+    9.92
+   ],
+   "natural_sec": 0.42,
+   "target_sec": 0.8,
+   "inserted_sec": 0.38,
+   "cut_at_source": 9.785,
+   "why": "swing pass travels"
+  },
+  {
+   "after": "steps up.",
+   "natural_silence": [
+    11.2,
+    11.56
+   ],
+   "natural_sec": 0.36,
+   "target_sec": 0.9,
+   "inserted_sec": 0.54,
+   "cut_at_source": 11.415,
+   "why": "X1 steps, panel opens, nail lights"
+  },
+  {
+   "after": "foul line.",
+   "natural_silence": [
+    13.55,
+    13.82
+   ],
+   "natural_sec": 0.27,
+   "target_sec": 0.6,
+   "inserted_sec": 0.33,
+   "cut_at_source": 13.635,
+   "why": "flash arrives"
+  },
+  {
+   "after": "gap closes.",
+   "natural_silence": [
+    15.27,
+    15.63
+   ],
+   "natural_sec": 0.36,
+   "target_sec": 2.3,
+   "inserted_sec": 1.94,
+   "cut_at_source": 15.385,
+   "why": "pass through the gap, crack, catch"
+  },
+  {
+   "after": "low defender.",
+   "natural_silence": [
+    16.93,
+    17.35
+   ],
+   "natural_sec": 0.42,
+   "target_sec": 2.0,
+   "inserted_sec": 1.58,
+   "cut_at_source": 17.075,
+   "why": "ring on X4, cutter/corner/rim visible"
+  },
+  {
+   "after": "behind him.",
+   "natural_silence": [
+    19.07,
+    19.4
+   ],
+   "natural_sec": 0.33,
+   "target_sec": 0.75,
+   "inserted_sec": 0.42,
+   "cut_at_source": 19.285,
+   "why": "cut starts"
+  },
+  {
+   "after": "to the rim.",
+   "natural_silence": [
+    20.53,
+    20.83
+   ],
+   "natural_sec": 0.3,
+   "target_sec": 2.9,
+   "inserted_sec": 2.6,
+   "cut_at_source": 20.635,
+   "why": "pass, catch, layup"
+  },
+  {
+   "after": "Same catch.",
+   "natural_silence": [
+    21.51,
+    21.81
+   ],
+   "natural_sec": 0.3,
+   "target_sec": 0.8,
+   "inserted_sec": 0.5,
+   "cut_at_source": 21.705,
+   "why": "6-10 frame rewind to the same catch"
+  },
+  {
+   "after": "corner opens.",
+   "natural_silence": [
+    24.23,
+    24.5
+   ],
+   "natural_sec": 0.27,
+   "target_sec": 0.75,
+   "inserted_sec": 0.48,
+   "cut_at_source": 24.415,
+   "why": "corner lights"
+  },
+  {
+   "after": "the kick-out.",
+   "natural_silence": [
+    25.21,
+    25.54
+   ],
+   "natural_sec": 0.33,
+   "target_sec": 3.0,
+   "inserted_sec": 2.67,
+   "cut_at_source": 25.415,
+   "why": "kick-out, catch, shot to the net"
+  },
+  {
+   "after": "the nail.",
+   "natural_silence": [
+    27.15,
+    27.41
+   ],
+   "natural_sec": 0.26,
+   "target_sec": 0.75,
+   "inserted_sec": 0.49,
+   "cut_at_source": 27.315,
+   "why": "replay beat 2"
+  },
+  {
+   "after": "defender Choose.",
+   "natural_silence": [
+    28.99,
+    29.32
+   ],
+   "natural_sec": 0.33,
+   "target_sec": 1.0,
+   "inserted_sec": 0.67,
+   "cut_at_source": 29.095,
+   "why": "replay beat 3"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}

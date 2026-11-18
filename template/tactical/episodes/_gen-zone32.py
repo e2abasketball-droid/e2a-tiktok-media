@@ -1,0 +1,40 @@
+#!/usr/bin/env python3
+"""HOW TO BREAK A 3-2 ZONE (owner brief 2026-11-18 02:54Z): base episode = master voice track (gaps) + word timings.
+  python3 scripts/tactical-voice.py tactical/episodes/zone32.json
+Shots: _gen-zone32-shots.py writes zone32-main / zone32-trial."""
+import json, os
+D = os.path.dirname(os.path.abspath(__file__))
+ep = {
+ "id": "zone32",
+ "title": "How to Break a 3-2 Zone",
+ "fps": 30,
+ "voiceRaw": "tactical/zone32/voice-raw.mp3",
+ "wordsRaw": "zone32.words-raw.json",
+ "voice": "tactical/zone32/voice.wav",
+ "voiceMix": "tactical/zone32/voice.mix.wav",
+ "preroll": 0.1,
+ "tail": 2.0,
+ "gaps": [
+  {"after": "does to it.", "sec": 0.45, "why": "cut on the pass, open to the tactical view"},
+  {"after": "Three up.", "sec": 0.6, "why": "top line builds"},
+  {"after": "Two down.", "sec": 0.55, "why": "low line builds"},
+  {"after": "in the middle.", "sec": 0.85, "why": "ring on X1"},
+  {"after": "either side.", "sec": 0.55, "why": "O1 and O2 either side of X1"},
+  {"after": "Swing the ball.", "sec": 0.8, "why": "swing pass travels"},
+  {"after": "steps up.", "sec": 0.9, "why": "X1 steps, panel opens, nail lights"},
+  {"after": "foul line.", "sec": 0.6, "why": "flash arrives"},
+  {"after": "gap closes.", "sec": 2.3, "why": "pass through the gap, crack, catch"},
+  {"after": "low defender.", "sec": 2.0, "why": "ring on X4, cutter/corner/rim visible"},
+  {"after": "behind him.", "sec": 0.75, "why": "cut starts"},
+  {"after": "to the rim.", "sec": 2.9, "why": "pass, catch, layup"},
+  {"after": "Same catch.", "sec": 0.8, "why": "6-10 frame rewind to the same catch"},
+  {"after": "corner opens.", "sec": 0.75, "why": "corner lights"},
+  {"after": "the kick-out.", "sec": 3.0, "why": "kick-out, catch, shot to the net"},
+  {"after": "the middle.", "sec": 0.75, "why": "replay beat 1"},
+  {"after": "the nail.", "sec": 0.75, "why": "replay beat 2"},
+  {"after": "defender choose.", "sec": 1.0, "why": "replay beat 3"}],
+ "plays": {"A": "zone32-a-cut", "B": "zone32-b-corner"},
+ "shots": [],
+}
+json.dump(ep, open(os.path.join(D, "zone32.json"), "w"), indent=1, ensure_ascii=False)
+print("base written")

@@ -6,7 +6,7 @@ import React from 'react';
 import * as THREE from 'three';
 import type {V2, V3} from '../tactical/geometry.ts';
 import type {Play} from '../tactical/play.ts';
-import {posAt, routeOf} from '../tactical/play.ts';
+import {posAt, routeOf, sample} from '../tactical/play.ts';
 import {W3} from './Athlete';
 
 export const GOLD3 = '#E0B455';
@@ -95,9 +95,292 @@ export type Ov3 =
   | {type: 'separation'; a: string; b: string; color?: string}
   | {type: 'openSpace'; at: V2; r: number; rx?: number; angle?: number; color?: string}
   | {type: 'deny'; player: string; toward: V2; color?: string}
-  | {type: 'blocked'; at: V2; color?: string};
+  | {type: 'blocked'; at: V2; color?: string}
+  /** 2026-11-18 (Break the 3-2): defensive WALL tied to the real defenders (see wall3d below) */
+  | WallOv
+  /** floor light (radial) at a spot or under a player; hoop:true also lights the rim */
+  | {type: 'glow'; at?: V2; player?: string; r?: number; color?: string; hoop?: boolean; strength?: number};
 
-export type LiveOv3 = Ov3 & {age: number; dur: number};
+/** Zone wall: translucent panels between consecutive defenders (chain), floor to ~waist height, ice-white edges and
+ *  a fine grid. Everything follows the engine's real positions at the current play time.
+ *  - draw: seconds to draw the top edge along the chain (the fill fades in after it); rise: seconds to raise the panels
+ *  - opacity: global multiplier (dim a wall while the focus is elsewhere)
+ *  - pass: the pass whose ball path defines WHERE the gap / crack / break happen (first crossing of the chain)
+ *  - open: hole that grows on the crossed panel, centred on the crossing point, from play time pt0 to pt1 (width w, m)
+ *  - crack: short glowing crack at the crossing (play time of the crossing), lasting `dur` s
+ *  - shatter: the panel breaks in a small zone (radius r) around the crossing; n seeded fragments fly for `dur` s */
+export type WallOv = {type: 'wall'; chain: string[]; h?: number; color?: string; draw?: number; rise?: number; opacity?: number;
+  pass?: {from: string; to: string}; open?: {pt0: number; pt1: number; w?: number}; crack?: {dur?: number};
+  shatter?: {r?: number; n?: number; seed?: number; dur?: number; at?: number}; grid?: boolean};
+
+export type LiveOv3 = Ov3 & {age: number; dur: number; fin?: number; fout?: number};
+
+export const ICE3 = '#C8ECFF';
+
+/** first crossing of a pass's ball path with a chain of defenders: segment index, fraction along it, play time, height */
+type Cross = {seg: number; u: number; pt: number; z: number; dir: V2};
+const crossCache = new Map<string, Cross | null>();
+export const wallCrossing = (play: Play, chain: string[], from: string, to: string): Cross | null => {
+  const key = `${play.id}|${chain.join(',')}|${from}>${to}`;
+  if (crossCache.has(key)) return crossCache.get(key)!;
+  const ev = play.ball.find((e) => e.type === 'pass' && e.from === from && e.to === to) as {t0: number; t1: number} | undefined;
+  let res: Cross | null = null;
+  if (ev) {
+    const P = (id: string, t: number) => posAt(play.tracks[id], t);
+    const side = (a: V2, b: V2, q: V2) => (b[0] - a[0]) * (q[1] - a[1]) - (b[1] - a[1]) * (q[0] - a[0]);
+    let prev = sample(play, ev.t0).ball.pos;
+    const step = 1 / 240;
+    for (let t = ev.t0 + step; t <= ev.t1 && !res; t += step) {
+      const cur = sample(play, t).ball.pos;
+      for (let i = 0; i + 1 < chain.length && !res; i++) {
+        const a = P(chain[i], t);
+        const b = P(chain[i + 1], t);
+        const s0 = side(a, b, [prev[0], prev[1]]);
+        const s1 = side(a, b, [cur[0], cur[1]]);
+        if (s0 === 0 || Math.sign(s0) === Math.sign(s1)) continue;
+        const f = s0 / (s0 - s1);
+        const q: V2 = [prev[0] + (cur[0] - prev[0]) * f, prev[1] + (cur[1] - prev[1]) * f];
+        const L2 = (b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2 || 1;
+        const u = ((q[0] - a[0]) * (b[0] - a[0]) + (q[1] - a[1]) * (b[1] - a[1])) / L2;
+        if (u < 0 || u > 1) continue;
+        const d: V2 = [cur[0] - prev[0], cur[1] - prev[1]];
+        const dl = Math.hypot(d[0], d[1]) || 1;
+        res = {seg: i, u, pt: t - step + step * f, z: prev[2] + (cur[2] - prev[2]) * f, dir: [d[0] / dl, d[1] / dl]};
+      }
+      prev = cur;
+    }
+  }
+  crossCache.set(key, res);
+  return res;
+};
+
+const gridTex = (() => {
+  let t: THREE.Texture | null = null;
+  return () => {
+    if (t) return t;
+    const c = document.createElement('canvas');
+    c.width = 64;
+    c.height = 64;
+    const g = c.getContext('2d')!;
+    g.clearRect(0, 0, 64, 64);
+    g.fillStyle = 'rgba(255,255,255,1)';
+    g.fillRect(0, 0, 64, 3);
+    g.fillRect(0, 0, 3, 64);
+    t = new THREE.CanvasTexture(c);
+    t.wrapS = t.wrapT = THREE.RepeatWrapping;
+    t.anisotropy = 4;
+    return t;
+  };
+})();
+
+const glowTex = (() => {
+  let t: THREE.Texture | null = null;
+  return () => {
+    if (t) return t;
+    const c = document.createElement('canvas');
+    c.width = 128;
+    c.height = 128;
+    const g = c.getContext('2d')!;
+    const gr = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+    gr.addColorStop(0, 'rgba(255,255,255,1)');
+    gr.addColorStop(0.45, 'rgba(255,255,255,0.55)');
+    gr.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = gr;
+    g.fillRect(0, 0, 128, 128);
+    t = new THREE.CanvasTexture(c);
+    return t;
+  };
+})();
+
+/** quad in the vertical plane of a panel: s along the panel (m from A), z height */
+const vquad = (A: V2, d: V2, s0: number, s1: number, z0: number, z1: number, grid = false) => {
+  const p = (s: number, z: number) => W3([A[0] + d[0] * s, A[1] + d[1] * s, z]);
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute([...p(s0, z0), ...p(s1, z0), ...p(s1, z1), ...p(s0, z1)], 3));
+  if (grid) {
+    const k = 1 / 0.26; // one grid cell every 26 cm
+    g.setAttribute('uv', new THREE.Float32BufferAttribute([s0 * k, z0 * k, s1 * k, z0 * k, s1 * k, z1 * k, s0 * k, z1 * k], 2));
+  }
+  g.setIndex([0, 1, 2, 0, 2, 3]);
+  return g;
+};
+
+/** thin strip along a polyline drawn in a panel's plane (local (s, z) coordinates) */
+const vstrip = (A: V2, d: V2, pts: [number, number][], w: number) => {
+  const pos: number[] = [];
+  const idx: number[] = [];
+  pts.forEach((q, i) => {
+    const a = pts[Math.max(0, i - 1)];
+    const b = pts[Math.min(pts.length - 1, i + 1)];
+    let ds = b[0] - a[0];
+    let dz = b[1] - a[1];
+    const L = Math.hypot(ds, dz) || 1;
+    ds /= L;
+    dz /= L;
+    const ns = -dz * (w / 2);
+    const nz = ds * (w / 2);
+    pos.push(...W3([A[0] + d[0] * (q[0] + ns), A[1] + d[1] * (q[0] + ns), q[1] + nz]));
+    pos.push(...W3([A[0] + d[0] * (q[0] - ns), A[1] + d[1] * (q[0] - ns), q[1] - nz]));
+    if (i > 0) {
+      const k = i * 2;
+      idx.push(k - 2, k - 1, k, k - 1, k + 1, k);
+    }
+  });
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  g.setIndex(idx);
+  return g;
+};
+
+const rng = (seed: number) => {
+  let x = seed >>> 0 || 1;
+  return () => {
+    x ^= x << 13;
+    x ^= x >>> 17;
+    x ^= x << 5;
+    return ((x >>> 0) % 100000) / 100000;
+  };
+};
+
+const Wall3D: React.FC<{play: Play; pt: number; o: WallOv & {age: number; dur: number}; a: number}> = ({play, pt, o, a}) => {
+  const ptc = Math.max(0, Math.min(play.duration, pt));
+  const H = o.h ?? 1.05;
+  const col = o.color ?? ICE3;
+  const op = (o.opacity ?? 1) * a;
+  const rise = o.rise ? easeOut(o.age / o.rise) : 1;
+  const draw = o.draw ? easeOut(o.age / o.draw) : 1;
+  const fillIn = o.draw ? clamp((o.age - o.draw * 0.55) / 0.35) : 1;
+  const pts = o.chain.map((id) => posAt(play.tracks[id], ptc));
+  const segs = pts.slice(1).map((b, i) => {
+    const A = pts[i];
+    const L = Math.hypot(b[0] - A[0], b[1] - A[1]) || 1e-3;
+    return {A, B: b, L, d: [(b[0] - A[0]) / L, (b[1] - A[1]) / L] as V2};
+  });
+  const total = segs.reduce((x, s) => x + s.L, 0);
+  const cr = o.pass ? wallCrossing(play, o.chain, o.pass.from, o.pass.to) : null;
+  // holes per segment, in metres along the segment
+  const holes: [number, number][][] = segs.map(() => []);
+  let hs = 0;
+  if (cr && o.open) {
+    const g = clamp((ptc - o.open.pt0) / Math.max(0.01, o.open.pt1 - o.open.pt0));
+    hs = easeOut(g);
+    const S = segs[cr.seg];
+    const w = (o.open.w ?? 1.2) * hs;
+    if (w > 0.01) holes[cr.seg].push([Math.max(0, cr.u * S.L - w / 2), Math.min(S.L, cr.u * S.L + w / 2)]);
+  }
+  const shT = o.shatter ? (o.shatter.at ?? cr?.pt ?? 1e9) : 1e9;
+  const shAge = ptc - shT;
+  if (cr && o.shatter && shAge >= 0) {
+    const S = segs[cr.seg];
+    const r = o.shatter.r ?? 0.6;
+    holes[cr.seg].push([Math.max(0, cr.u * S.L - r), Math.min(S.L, cr.u * S.L + r)]);
+  }
+  const pieces = (L: number, hl: [number, number][]) => {
+    let out: [number, number][] = [[0, L]];
+    for (const [h0, h1] of hl) out = out.flatMap(([p0, p1]) => (h1 <= p0 || h0 >= p1 ? [[p0, p1]] : ([[p0, h0], [h1, p1]] as [number, number][]).filter(([x, y]) => y - x > 0.02)));
+    return out;
+  };
+  const els: React.ReactNode[] = [];
+  let acc = 0;
+  const gridMat = (alpha: number) => new THREE.MeshBasicMaterial({color: col, map: gridTex(), transparent: true, opacity: alpha, depthWrite: false, toneMapped: false, side: THREE.DoubleSide});
+  segs.forEach((S, i) => {
+    const visTo = clamp((draw * total - acc) / S.L) * S.L; // drawn length of this segment
+    acc += S.L;
+    const zt = H * rise;
+    for (const [p0, p1raw] of pieces(S.L, holes[i])) {
+      const p1 = Math.min(p1raw, visTo);
+      if (p1 - p0 < 0.02) continue;
+      if (fillIn > 0) {
+        els.push(<mesh key={`f${i}-${p0}`} geometry={vquad(S.A, S.d, p0, p1, 0, zt)} material={basic(col, 0.2 * op * fillIn)} />);
+        if (o.grid !== false) els.push(<mesh key={`g${i}-${p0}`} geometry={vquad(S.A, S.d, p0, p1, 0, zt, true)} material={gridMat(0.32 * op * fillIn)} />);
+        // soft glow just under the top edge (gives the panel its volume)
+        els.push(<mesh key={`h${i}-${p0}`} geometry={vquad(S.A, S.d, p0, p1, zt * 0.72, zt)} material={basic(col, 0.22 * op * fillIn)} />);
+      }
+      // top edge: vertical strip (low cameras) + horizontal ribbon at the top (overhead cameras)
+      els.push(<mesh key={`t${i}-${p0}`} geometry={vquad(S.A, S.d, p0, p1, zt - 0.035, zt + 0.035)} material={basic('#F4FBFF', 1.0 * op)} />);
+      els.push(<mesh key={`r${i}-${p0}`} geometry={ribbon([[S.A[0] + S.d[0] * p0, S.A[1] + S.d[1] * p0], [S.A[0] + S.d[0] * p1, S.A[1] + S.d[1] * p1]], 0.07, zt)} material={basic('#F4FBFF', 0.95 * op)} />);
+      // floor line + floor glow
+      els.push(<mesh key={`b${i}-${p0}`} geometry={ribbon([[S.A[0] + S.d[0] * p0, S.A[1] + S.d[1] * p0], [S.A[0] + S.d[0] * p1, S.A[1] + S.d[1] * p1]], 0.07, 0.014)} material={basic('#F4FBFF', 0.9 * op)} />);
+      els.push(<mesh key={`bg${i}-${p0}`} geometry={ribbon([[S.A[0] + S.d[0] * p0, S.A[1] + S.d[1] * p0], [S.A[0] + S.d[0] * p1, S.A[1] + S.d[1] * p1]], 0.45, 0.012)} material={basic(col, 0.22 * op * fillIn)} />);
+    }
+  });
+  // the opening: gold jambs on both sides of the hole
+  if (cr && o.open && hs > 0.02 && shAge < 0) {
+    const S = segs[cr.seg];
+    const w = (o.open.w ?? 1.2) * hs;
+    for (const sg of [-1, 1]) {
+      const s = Math.max(0, Math.min(S.L, cr.u * S.L + (sg * w) / 2));
+      els.push(<mesh key={`j${sg}`} geometry={vquad(S.A, S.d, s - 0.02, s + 0.02, 0, H * rise)} material={basic(GOLD3, 0.95 * op)} />);
+    }
+  }
+  // crack: short branching gold-white lines from the crossing point (deterministic)
+  if (cr && o.crack) {
+    const ca = ptc - cr.pt;
+    const cd = o.crack.dur ?? 0.55;
+    if (ca >= -0.02 && ca < cd) {
+      const S = segs[cr.seg];
+      const sc = cr.u * S.L;
+      const zc = Math.max(0.25, Math.min(H * 0.8, cr.z));
+      const grow = easeOut(clamp((ca + 0.02) / 0.12));
+      const fadeC = 1 - clamp((ca - cd * 0.55) / (cd * 0.45));
+      const R = rng(7);
+      for (let k = 0; k < 8; k++) {
+        const ang = (k / 8) * Math.PI * 2 + (R() - 0.5) * 0.5;
+        let s = sc;
+        let z = zc;
+        const line: [number, number][] = [[s, z]];
+        const len = (0.35 + R() * 0.35) * grow;
+        for (let j = 0; j < 3; j++) {
+          const aj = ang + (R() - 0.5) * 0.9;
+          s += Math.cos(aj) * len / 3;
+          z = Math.max(0.01, Math.min(H, z + Math.sin(aj) * len / 3));
+          line.push([s, z]);
+        }
+        els.push(<mesh key={`c${k}`} geometry={vstrip(S.A, S.d, line, 0.028)} material={basic('#FFF3D6', 0.95 * fadeC * a)} />);
+      }
+      els.push(<mesh key="cg" position={W3([S.A[0] + S.d[0] * sc, S.A[1] + S.d[1] * sc, zc])} rotation={[0, Math.atan2(S.d[1], S.d[0]), 0]} material={new THREE.MeshBasicMaterial({color: GOLD3, map: glowTex(), transparent: true, opacity: 0.8 * fadeC * a, depthWrite: false, toneMapped: false, side: THREE.DoubleSide})}>
+        <planeGeometry args={[0.9 * grow + 0.05, 0.9 * grow + 0.05]} />
+      </mesh>);
+    }
+  }
+  // shatter: seeded fragments from the crossing zone, carried along the ball's direction, gravity, fade
+  if (cr && o.shatter && shAge >= 0 && shAge < (o.shatter.dur ?? 0.42)) {
+    const S = segs[cr.seg];
+    const sc = cr.u * S.L;
+    const r = o.shatter.r ?? 0.6;
+    const n = o.shatter.n ?? 14;
+    const R = rng(o.shatter.seed ?? 32);
+    const life = o.shatter.dur ?? 0.42;
+    const fa = 1 - clamp((shAge - life * 0.35) / (life * 0.65));
+    const nrm: V2 = [-S.d[1], S.d[0]];
+    const sideOfBall = Math.sign(nrm[0] * cr.dir[0] + nrm[1] * cr.dir[1]) || 1;
+    for (let k = 0; k < n; k++) {
+      const s0 = sc + (R() * 2 - 1) * r * 0.9;
+      const z0 = 0.08 + R() * (H - 0.12);
+      const sp = 1.4 + R() * 2.2;
+      const vN = sideOfBall * sp;
+      const vS = (s0 - sc) / r * (0.8 + R());
+      const vZ = 0.4 + R() * 1.6;
+      const tt = shAge;
+      const s = s0 + vS * tt;
+      const off = vN * tt;
+      const z = Math.max(0.02, z0 + vZ * tt - 4.9 * tt * tt);
+      const x = S.A[0] + S.d[0] * s + nrm[0] * off;
+      const y = S.A[1] + S.d[1] * s + nrm[1] * off;
+      const size = 0.07 + R() * 0.1;
+      const rot = R() * 6 + tt * (6 + R() * 10);
+      els.push(<mesh key={`s${k}`} position={W3([x, y, z])} rotation={[rot, rot * 0.7 + Math.atan2(S.d[0], S.d[1]), rot * 0.4]} material={basic(k % 4 === 0 ? '#FFE7AE' : col, 0.85 * fa * a)}>
+        <circleGeometry args={[size, 3]} />
+      </mesh>);
+    }
+    // brief flash at the break point
+    const fl = 1 - clamp(shAge / 0.25);
+    els.push(<mesh key="sf" position={W3([S.A[0] + S.d[0] * sc, S.A[1] + S.d[1] * sc, Math.max(0.3, Math.min(H * 0.8, cr.z))])} rotation={[0, Math.atan2(S.d[1], S.d[0]), 0]} material={new THREE.MeshBasicMaterial({color: GOLD3, map: glowTex(), transparent: true, opacity: 0.7 * fl * a, depthWrite: false, toneMapped: false, side: THREE.DoubleSide})}>
+      <planeGeometry args={[1.3, 1.3]} />
+    </mesh>);
+  }
+  return <group>{els}</group>;
+};
 
 const hatchTex = (() => {
   let t: THREE.Texture | null = null;
@@ -128,7 +411,7 @@ export const Overlays3D: React.FC<{play: Play; pt: number; items: LiveOv3[]}> = 
   return (
     <group>
       {items.map((o, i) => {
-        const a = fade(o.age, o.dur);
+        const a = fade(o.age, o.dur, o.fin ?? 0.25, o.fout ?? 0.25);
         if (a <= 0.001) return null;
         switch (o.type) {
           case 'ring': {
@@ -270,6 +553,31 @@ export const Overlays3D: React.FC<{play: Play; pt: number; items: LiveOv3[]}> = 
               <group key={i}>
                 <mesh geometry={ribbon([[o.at[0] - s, o.at[1] - s], [o.at[0] + s, o.at[1] + s]], 0.12, 0.016)} material={basic(c, a)} />
                 <mesh geometry={ribbon([[o.at[0] - s, o.at[1] + s], [o.at[0] + s, o.at[1] - s]], 0.12, 0.016)} material={basic(c, a)} />
+              </group>
+            );
+          }
+          case 'wall':
+            return <Wall3D key={i} play={play} pt={pt} o={o} a={a} />;
+          case 'glow': {
+            const at = o.player ? P(o.player) : o.at ?? [0, 1.575];
+            const grow = easeOut(o.age / 0.4);
+            const col = o.color ?? GOLD3;
+            const k = o.strength ?? 1;
+            return (
+              <group key={i}>
+                <mesh position={W3([at[0], at[1], 0.008])} rotation={[-Math.PI / 2, 0, 0]} scale={(o.r ?? 1.2) * (0.7 + 0.3 * grow)} material={new THREE.MeshBasicMaterial({color: col, map: glowTex(), transparent: true, opacity: 0.85 * k * a * grow, depthWrite: false, toneMapped: false, blending: THREE.AdditiveBlending})}>
+                  <planeGeometry args={[2, 2]} />
+                </mesh>
+                {o.hoop && (
+                  <group>
+                    <mesh position={W3([0, 1.575, 3.05])} rotation={[-Math.PI / 2, 0, 0]} material={basic(col, 0.95 * a * grow)}>
+                      <torusGeometry args={[0.235, 0.022, 10, 48]} />
+                    </mesh>
+                    <mesh position={W3([0, 1.575, 3.05])} rotation={[-Math.PI / 2, 0, 0]} material={new THREE.MeshBasicMaterial({color: col, map: glowTex(), transparent: true, opacity: 0.5 * a * grow, depthWrite: false, toneMapped: false, side: THREE.DoubleSide})}>
+                      <planeGeometry args={[1.1, 1.1]} />
+                    </mesh>
+                  </group>
+                )}
               </group>
             );
           }

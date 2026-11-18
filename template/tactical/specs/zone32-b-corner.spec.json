@@ -1,0 +1,458 @@
+{
+ "id": "zone32-b-corner",
+ "title": "Break the 3-2 B: low line sinks, kick to the corner",
+ "duration": 7.4399999999999995,
+ "concept": "zone",
+ "source": "original E2A play (generic high-post attack against a 3-2 zone: swing, flash to the nail, read the low defender; no copied possession)",
+ "squareUp": true,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Left guard: opens with the ball, swings it"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Right guard: receives the swing, hits the nail"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Right corner shooter, behind the arc"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Right short corner: cuts behind the low defender"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Big: waits low on the weak side, flashes to the nail"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "Middle of the top line",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "Top line, left wing",
+   "guards": "O1"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Top line, right wing",
+   "guards": "O2"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "Low line, right",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "Low line, left",
+   "guards": "O5"
+  }
+ ],
+ "start": {
+  "O1": [
+   2.55,
+   9.15
+  ],
+  "O2": [
+   -3.2,
+   9.0
+  ],
+  "O3": [
+   -6.85,
+   1.05
+  ],
+  "O4": [
+   -3.75,
+   1.1
+  ],
+  "O5": [
+   2.75,
+   3.35
+  ],
+  "X1": [
+   0.35,
+   7.35
+  ],
+  "X2": [
+   3.0,
+   7.95
+  ],
+  "X3": [
+   -4.05,
+   6.45
+  ],
+  "X4": [
+   -2.05,
+   2.85
+  ],
+  "X5": [
+   2.0,
+   2.95
+  ]
+ },
+ "legs": {
+  "X1": [
+   {
+    "at": 0.6,
+    "via": [
+     [
+      -1.0,
+      8.35
+     ]
+    ],
+    "to": [
+     -2.0,
+     8.95
+    ],
+    "dur": 1.0
+   },
+   {
+    "at": 2.65,
+    "to": [
+     -1.0,
+     7.3
+    ],
+    "dur": 0.75
+   }
+  ],
+  "X2": [
+   {
+    "at": 0.85,
+    "to": [
+     2.15,
+     7.05
+    ],
+    "dur": 0.85
+   }
+  ],
+  "X3": [
+   {
+    "at": 0.9,
+    "to": [
+     -3.85,
+     6.75
+    ],
+    "dur": 0.7
+   },
+   {
+    "at": 4.069999999999999,
+    "via": [
+     [
+      -4.9,
+      4.6
+     ]
+    ],
+    "to": [
+     -5.95,
+     2.35
+    ],
+    "speed": 5.6
+   }
+  ],
+  "O5": [
+   {
+    "at": 1.5,
+    "via": [
+     [
+      1.75,
+      4.45
+     ]
+    ],
+    "to": [
+     0.1,
+     5.85
+    ],
+    "dur": 1.0
+   }
+  ],
+  "O1": [
+   {
+    "at": 1.3,
+    "to": [
+     2.95,
+     9.05
+    ],
+    "dur": 0.7
+   }
+  ],
+  "X4": [
+   {
+    "at": 3.05,
+    "to": [
+     -1.45,
+     2.25
+    ],
+    "dur": 0.6
+   }
+  ],
+  "X5": [
+   {
+    "at": 3.05,
+    "to": [
+     0.85,
+     2.35
+    ],
+    "dur": 0.6
+   }
+  ],
+  "O4": [
+   {
+    "at": 3.32,
+    "to": [
+     -2.75,
+     1.45
+    ],
+    "dur": 0.55
+   },
+   {
+    "at": 4.3,
+    "to": [
+     -3.3,
+     1.3
+    ],
+    "dur": 0.6
+   }
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 0.55
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O2",
+   "t0": 0.55,
+   "t1": 1.12,
+   "style": "chest"
+  },
+  {
+   "type": "hold",
+   "player": "O2",
+   "from": 1.12,
+   "to": 2.5
+  },
+  {
+   "type": "pass",
+   "from": "O2",
+   "to": "O5",
+   "t0": 2.5,
+   "t1": 3.0,
+   "style": "bounce"
+  },
+  {
+   "type": "hold",
+   "player": "O5",
+   "from": 3.0,
+   "to": 4.02
+  },
+  {
+   "type": "pass",
+   "from": "O5",
+   "to": "O3",
+   "t0": 4.02,
+   "t1": 4.64,
+   "style": "chest"
+  },
+  {
+   "type": "hold",
+   "player": "O3",
+   "from": 4.64,
+   "to": 4.9399999999999995
+  },
+  {
+   "type": "shot",
+   "player": "O3",
+   "t0": 4.9399999999999995,
+   "t1": 6.039999999999999,
+   "make": true
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "swing": 0.55,
+  "swingCatch": 1.12,
+  "x1step": 0.6,
+  "x1set": 1.6,
+  "plant": 1.5,
+  "flash": 1.62,
+  "nail": 2.48,
+  "hands": 2.1,
+  "pass": 2.5,
+  "catch": 3.0,
+  "decision": 3.45,
+  "sink": 3.05,
+  "sunk": 3.65,
+  "cut": 3.32,
+  "kick": 4.02,
+  "x3rec": 4.069999999999999,
+  "cornerCatch": 4.64,
+  "shot": 4.9399999999999995,
+  "make": 6.039999999999999,
+  "end": 7.4399999999999995
+ },
+ "actions": {
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 0.6,
+    "face": "O1"
+   },
+   {
+    "type": "stance",
+    "from": 0.6,
+    "to": 2.95,
+    "face": "O2"
+   },
+   {
+    "type": "stance",
+    "from": 2.95,
+    "to": 9,
+    "face": "O5"
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 1.2,
+    "face": "O1"
+   },
+   {
+    "type": "stance",
+    "from": 1.2,
+    "to": 9,
+    "face": "O2"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 2.4,
+    "face": "O2"
+   },
+   {
+    "type": "stance",
+    "from": 2.4,
+    "to": 4.119999999999999,
+    "face": "O5"
+   },
+   {
+    "type": "contest",
+    "from": 5.09,
+    "to": 6.039999999999999,
+    "face": "O3"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 2.8,
+    "face": "O2"
+   },
+   {
+    "type": "stance",
+    "from": 2.8,
+    "to": 9,
+    "face": "O5"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 2.8,
+    "face": "O2"
+   },
+   {
+    "type": "stance",
+    "from": 2.8,
+    "to": 9,
+    "face": "O5"
+   }
+  ],
+  "O5": [
+   {
+    "type": "catchReady",
+    "from": 2.1,
+    "to": 3.05
+   }
+  ],
+  "O3": [
+   {
+    "type": "catchReady",
+    "from": 3.7199999999999998,
+    "to": 4.6899999999999995
+   },
+   {
+    "type": "celebrate",
+    "from": 6.64,
+    "to": 7.34
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "X1",
+   "b": "O2",
+   "at": "x1set",
+   "max": 1.7,
+   "says": "Same swing, same step."
+  },
+  {
+   "type": "near_rim",
+   "player": "X4",
+   "at": "sunk",
+   "max": 1.8,
+   "says": "They sink to protect the rim."
+  },
+  {
+   "type": "far",
+   "a": "X3",
+   "b": "O3",
+   "at": "cornerCatch",
+   "min": 2.0,
+   "says": "The ball beats the defender (corner open)."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "swing",
+    "x1set",
+    "nail",
+    "catch",
+    "sink",
+    "kick",
+    "cornerCatch",
+    "shot",
+    "make"
+   ],
+   "says": "catch, sink, kick-out, shot"
+  }
+ ],
+ "notes": [
+  "Same swing, step and flash.",
+  "X4 and X5 sink; kick-out to O3; X3 recovers late; corner three."
+ ]
+}
