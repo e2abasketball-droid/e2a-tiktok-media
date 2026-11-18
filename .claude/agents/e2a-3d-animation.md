@@ -78,8 +78,7 @@ Mira los fotogramas con `Read` (imágenes) antes de concluir nada sobre ellos.
 - **Drive (fuente de trabajo):** carpeta «Videos jugador» `1cXyEtC4_-ChH3wrZEr98x-MbsvaKawQj` del propietario
   (cuenta personal). Subcarpeta de modelo: `00_Modelo_3D`. Herramientas: `mcp__Google_Drive__search_files`
   (`parentId = '<id>'`, `'<id>' in ancestors`, `title contains '...'`), `get_file_metadata`,
-  `download_file_content` (devuelve base64 en la respuesta: solo sirve para archivos pequeños; para un `.MOV`
-  grande, no lo intentes a ciegas: registra tamaño y usa la carpeta local).
+  `download_file_content` (hasta 10 MB; ver límite abajo).
   El conector de esta sesión está autenticado con la cuenta de E2A; si `get_file_metadata` responde
   «Requested entity was not found.», la carpeta no está compartida con esa cuenta: dilo en el informe.
 - **Carpeta local (alternativa equivalente):** `tools/ref_frames.py` busca en
@@ -100,8 +99,11 @@ Mira los fotogramas con `Read` (imágenes) antes de concluir nada sobre ellos.
 - **Límite de descarga del conector:** `download_file_content` rechaza archivos de más de 10 MB con
   «File too large for download, over limit of 10 MB…». 42 de los 49 MOV están por debajo; para los demás
   (5438, 5440, 5404, 5405, 5439, 5446, 5448, y quizá 5457, 5406, 5407 en la frontera) usa la carpeta local.
-  Haz una sola llamada por archivo, decodifica el base64 con Python leyendo el archivo de resultados (sin
-  pasarlo por tu contexto) y comprueba bytes = fileSize.
+  Haz una sola llamada por archivo: el conector guarda el binario en un archivo `tool-results/…blob….bin`
+  (no pasa por tu contexto). Cópialo a `referencias-3d/<subcarpeta>/<nombre original>` y comprueba
+  bytes = fileSize (verificado 2026-11-18 con 5449, 4 812 020 B).
+- **Color:** los MOV son HEVC 10 bits HDR HLG (bt2020, arib-std-b67). Los fotogramas de `ref_frames.py` sirven
+  para pose y silueta; no saques colores de piel ni de equipación de ellos sin conversión de tono.
 
 ## Método para cada encargo (en este orden)
 
