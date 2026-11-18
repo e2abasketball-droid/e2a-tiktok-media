@@ -621,11 +621,20 @@ const adapterRest = (c: SkelRig) => {
   return a;
 };
 
-/** bone world rotations (play coords, rig skeleton) for an engine Pose, mesh scaled by `scale` (player height / rig
- *  height). Legs and arms are re-solved with the MESH segment lengths so the feet land where the engine puts them
- *  and the hands reach the engine's wrists (ball contact); the head is driven by the engine's gaze (headYaw) and
- *  headPitch around a neutral head that keeps the eyes level (2026-11-19: before, the head followed the
- *  chest->head vector of the capsule rig, ~12 deg behind the rest tilt, and the mesh looked up). */
+/** uniform scale that gives the mesh the engine's leg length (thigh + shin): the planted feet then reach exactly where
+ *  the engine puts them (no sliding); the mesh height follows (estimated within ±5 % of PLAYER_HEIGHTS) */
+export const meshScale = (c: SkelRig, P: Pose) => {
+  const R = c.restJoints;
+  const legRest = len(sub(R.kneeL, R.hipL)) + len(sub(R.ankleL, R.kneeL));
+  return (P.dims.thigh + P.dims.shin) / legRest;
+};
+
+/** bone world rotations (play coords, rig skeleton) for an engine Pose, mesh scaled by `scale` (see meshScale).
+ *  Legs and arms are re-solved with the MESH segment lengths: the ankles go to the engine ankles (raised by the
+ *  ankle-height difference so the soles stay on the floor) and the arms, from the mesh shoulders (FK), to the engine
+ *  wrists (ball contact). The head is driven by the engine's gaze (headYaw) and headPitch around a neutral head that
+ *  keeps the eyes level (2026-11-19: before, the head followed the chest->head vector of the capsule rig, ~12 deg behind
+ *  the rest tilt, and the mesh looked up). */
 export const bonesFromPose = (c: SkelRig, P: Pose, scale = 1): {bones: Record<string, Q>; hips: V3} => {
   const {rest, hinge0, headTilt} = adapterRest(c);
   const R0 = c.restJoints;
@@ -634,33 +643,105 @@ export const bonesFromPose = (c: SkelRig, P: Pose, scale = 1): {bones: Record<st
   const S = ['L', 'R'];
   const legRest = len(sub(Rj('kneeL'), Rj('hipL'))) + len(sub(Rj('ankleL'), Rj('kneeL')));
   const legEng = P.dims.thigh + P.dims.shin;
-  // the mesh pelvis sits higher by the leg-length difference (hips bone head = middle of the hip joints)
-  const lift: V3 = [0, 0, (legRest - legEng) * 0.9];
+  const ankleOff = Rj('ankleL')[2] - P.dims.ankleH; // mesh ankle joint height over the sole minus the engine's
+  // the mesh pelvis sits higher by the leg-length and ankle-height differences (hips bone head = middle of the hips)
+  const lift: V3 = [0, 0, legRest - legEng + ankleOff];
   for (let i = 0; i < 2; i++) {
     const s = S[i];
     J[`hip${s}`] = add(P.hip[i], lift);
     J[`shoulder${s}`] = add(P.shoulder[i], lift);
+    J[`elbow${s}`] = add(P.elbow[i], lift);
+    J[`wrist${s}`] = add(P.wrist[i], lift);
+    J[`hand${s}`] = add(P.hand[i], lift);
     const fwd = norm([P.toe[i][0] - P.ankle[i][0], P.toe[i][1] - P.ankle[i][1], 0]);
-    J[`toe${s}`] = P.toe[i];
-    J[`heel${s}`] = [P.ankle[i][0] - fwd[0] * 0.08, P.ankle[i][1] - fwd[1] * 0.08, Math.max(0, P.toe[i][2] - 0.01)];
-    // mesh leg lengths: knee from IK onto the engine ankle
+    const ank = add(P.ankle[i], [0, 0, ankleOff]);
+    J[`toe${s}`] = add(P.toe[i], [0, 0, ankleOff * 0.3]);
+    J[`heel${s}`] = [ank[0] - fwd[0] * 0.08, ank[1] - fwd[1] * 0.08, Math.max(0, P.toe[i][2] - 0.01)];
     const L1 = len(sub(Rj(`knee${s}`), Rj(`hip${s}`)));
     const L2 = len(sub(Rj(`ankle${s}`), Rj(`knee${s}`)));
-    const sol = ik2(J[`hip${s}`], P.ankle[i], L1, L2, sub(P.knee[i], P.hip[i]));
+    const sol = ik2(J[`hip${s}`], ank, L1, L2, sub(P.knee[i], P.hip[i]));
     J[`knee${s}`] = sol.mid;
     J[`ankle${s}`] = sol.end;
-    // mesh arm lengths: elbow from IK onto the engine wrist (the hands keep the ball), elbow pole from the engine
-    const A1 = len(sub(Rj(`elbow${s}`), Rj(`shoulder${s}`)));
-    const A2 = len(sub(Rj(`wrist${s}`), Rj(`elbow${s}`)));
-    const arm = ik2(J[`shoulder${s}`], P.wrist[i], A1, A2, sub(P.elbow[i], P.shoulder[i]));
-    J[`elbow${s}`] = arm.mid;
-    J[`wrist${s}`] = arm.end;
-    J[`hand${s}`] = add(arm.end, sub(P.hand[i], P.wrist[i]));
   }
   J.pelvis = add(J.pelvis, lift);
   J.chest = add(J.chest, lift);
   J.head = add(J.head, lift);
-  const F = framesOf(J, P.chestYaw, hinge0);
+  const by = Object.fromEntries(c.bones.map((b) => [b.name, b]));
+  const toBones = (F: Frames) => {
+    const out: Record<string, Q> = {};
+    for (const b of c.bones) {
+      const key = b.name === 'spine' || b.name === 'neck' ? null : b.name;
+      if (key && F[key]) out[b.name] = qmul(qmul(F[key], qconj(rest[key])), b.R);
+    }
+    out.spine = qslerp(out.hips, out.chest, 0.5);
+    return out;
+  };
+  let F = framesOf(J, P.chestYaw, hinge0);
+  let bones = toBones(F);
+  const hipsRest = mul(c.bones.find((b) => b.name === 'hips')!.head, scale);
+  const midRest = mul(add(Rj('hipL'), Rj('hipR')), 0.5);
+  const midNow = mul(add(J.hipL, J.hipR), 0.5);
+  const hips = add(midNow, qrot(bones.hips, qrot(qconj(c.bones[0].R), sub(hipsRest, midRest))));
+  // mesh shoulders by forward kinematics (hips -> spine -> chest -> clavicle -> upperarm head), then the arms are
+  // re-solved from there onto the engine wrists with the mesh arm lengths
+  const pos: Record<string, V3> = {hips};
+  const fkTo = (name: string): V3 => {
+    if (pos[name]) return pos[name];
+    const b = by[name];
+    const p = by[b.parent!];
+    const local = qrot(qconj(p.R), mul(sub(b.head, p.head), scale));
+    pos[name] = add(fkTo(p.name), qrot(bones[p.name], local));
+    return pos[name];
+  };
+  // reach guard: where a nearly straight engine leg cannot be matched by the mesh leg from the mesh hip joint (hip
+  // width / pelvis tilt differ slightly), the whole mesh sinks just enough (continuous in time, ≤ 8 cm) instead of
+  // letting the foot leave its planted spot
+  let drop = 0;
+  for (const s of S) {
+    const i = s === 'L' ? 0 : 1;
+    const v = sub(fkTo(`thigh.${s}`), add(P.ankle[i], [0, 0, ankleOff]));
+    const L = (len(sub(Rj(`knee${s}`), Rj(`hip${s}`))) + len(sub(Rj(`ankle${s}`), Rj(`knee${s}`)))) * 0.998;
+    const vh = Math.hypot(v[0], v[1]);
+    if (L > vh) drop = Math.max(drop, v[2] - Math.sqrt(L * L - vh * vh));
+  }
+  drop = Math.min(0.08, Math.max(0, drop));
+  if (drop > 0) {
+    for (const k of Object.keys(pos)) pos[k] = add(pos[k], [0, 0, -drop]);
+    for (const k of ['pelvis', 'chest', 'head']) J[k] = add(J[k], [0, 0, -drop]);
+  }
+  for (const s of S) {
+    // legs again from the MESH hip joints (mesh hip width), so the soles land exactly on the engine's feet
+    const i = s === 'L' ? 0 : 1;
+    const hp = fkTo(`thigh.${s}`);
+    const ank = add(P.ankle[i], [0, 0, ankleOff]);
+    const L1 = len(sub(Rj(`knee${s}`), Rj(`hip${s}`)));
+    const L2 = len(sub(Rj(`ankle${s}`), Rj(`knee${s}`)));
+    const sol = ik2(hp, ank, L1, L2, sub(P.knee[i], P.hip[i]));
+    J[`hip${s}`] = hp;
+    J[`knee${s}`] = sol.mid;
+    J[`ankle${s}`] = sol.end;
+  }
+  for (const s of S) {
+    const sh = fkTo(`upperarm.${s}`);
+    const A1 = len(sub(Rj(`elbow${s}`), Rj(`shoulder${s}`)));
+    const A2 = len(sub(Rj(`wrist${s}`), Rj(`elbow${s}`)));
+    const i = s === 'L' ? 0 : 1;
+    // the mesh hand is longer and the mesh forearm shorter than the capsule's: aim the mesh WRIST so the mesh
+    // FINGERTIPS land on the engine hand point (that is where the ball is held)
+    const A3 = len(sub(Rj(`hand${s}`), Rj(`wrist${s}`)));
+    const hd = norm(sub(P.hand[i], P.wrist[i]));
+    const arm = ik2(sh, sub(P.hand[i], mul(hd, A3)), A1, A2, sub(P.elbow[i], P.shoulder[i]));
+    J[`shoulder${s}`] = sh;
+    J[`elbow${s}`] = arm.mid;
+    J[`wrist${s}`] = arm.end;
+    J[`hand${s}`] = add(arm.end, mul(hd, A3));
+  }
+  const keep = {L: F['clavicle.L'], R: F['clavicle.R'], hips: F.hips, chest: F.chest};
+  F = framesOf(J, P.chestYaw, hinge0);
+  F['clavicle.L'] = keep.L; // keep the trunk and clavicles that placed the hips and shoulders
+  F['clavicle.R'] = keep.R;
+  F.hips = keep.hips;
+  F.chest = keep.chest;
   // head: neutral = between the world vertical and the trunk (eyes stay level when the trunk leans), turned to the
   // gaze yaw, pitched by headPitch (+ = chin down); the rest tilt of the head joint is added so the frame matches rest
   {
@@ -668,23 +749,14 @@ export const bonesFromPose = (c: SkelRig, P: Pose, scale = 1): {bones: Record<st
     const up = norm(add(mul([0, 0, 1], 0.65), mul(trunk, 0.35)));
     const yaw = P.headYaw ?? P.chestYaw;
     const left: V3 = [-Math.sin(yaw), Math.cos(yaw), 0];
-    const face = norm(cross(left, up)); // forward, perpendicular to up
+    const face = norm(cross(left, up));
     const tilt = headTilt + (P.headPitch ?? 0);
     const hv = add(mul(up, Math.cos(tilt)), mul(face, Math.sin(tilt)));
     F.head = twoVec(hv, left);
   }
-  const bones: Record<string, Q> = {};
-  for (const b of c.bones) {
-    const key = b.name === 'spine' || b.name === 'neck' ? null : b.name;
-    if (key && F[key]) bones[b.name] = qmul(qmul(F[key], qconj(rest[key])), b.R);
-  }
-  bones.spine = qslerp(bones.hips, bones.chest, 0.5);
+  bones = toBones(F);
   bones.neck = qslerp(bones.chest, bones.head, 0.5);
-  const hipsRest = mul(c.bones.find((b) => b.name === 'hips')!.head, scale);
-  const midRest = mul(add(Rj('hipL'), Rj('hipR')), 0.5);
-  const midNow = mul(add(J.hipL, J.hipR), 0.5);
-  const hips = add(midNow, qrot(bones.hips, qrot(qconj(c.bones[0].R), sub(hipsRest, midRest))));
-  return {bones, hips};
+  return {bones, hips: pos.hips};
 };
 
 // ---------------------------------------------------------------- public entry: pose of a player at play time t

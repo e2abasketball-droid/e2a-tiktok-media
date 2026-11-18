@@ -16,7 +16,7 @@ import type {Cam3} from './camera3d.ts';
 import {CLIP_GLB} from './clips/index.ts';
 import './players/index.ts'; // side effect: registers the player rigs
 import type {PlayWithSkel} from './skelclip.ts';
-import {bonesFromPose, getClip, skelPoseAt} from './skelclip.ts';
+import {bonesFromPose, getClip, meshScale, skelPoseAt} from './skelclip.ts';
 import {SkinnedAthlete, useGlbs} from './SkinnedAthlete';
 import {KITS} from './Athlete';
 import {PLAYER3D, describePlan, planPlayers3d, playWithPlan} from './player3d.ts';
@@ -297,7 +297,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
         }
         if (pp?.look === 'C' && glb && pkg.rig) {
           const pose = poseAt(play, p.id, pt, {holder: ball.holder, pos: ball.pos, lag: ballLag}, RIM);
-          const sc = pose.dims.H / pkg.rig.H;
+          const sc = meshScale(pkg.rig, pose);
           const r = bonesFromPose(pkg.rig, pose, sc);
           return (
             <React.Fragment key={p.id}>

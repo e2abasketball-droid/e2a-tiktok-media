@@ -240,6 +240,25 @@ for (const [k, play] of Object.entries(plays)) {
 check('planted feet never slide (max drift per 1/120 s)', drift < 1e-4, `${(drift * 1000).toFixed(3)} mm (${driftWho || 'none'})`);
 check('feet never go under the floor', under === 0, `${under} samples`);
 
+// ---- default player package (2026-11-19, player3d.ts): which character / animation each player gets and why, and
+// the mesh checks (feet, hands, head, seek) on every play of the episode
+{
+  const {registerPlayerRig, describePlan, PLAYER3D} = await import('../src/t3d/player3d.ts');
+  const {registerClip} = await import('../src/t3d/skelclip.ts');
+  const {meshQC} = await import('../src/t3d/player3dqc.ts');
+  for (const v of ['off', 'def'] as const) registerPlayerRig(v, JSON.parse(fs.readFileSync(`src/t3d/players/e2a-${v}.rig.json`, 'utf8')));
+  for (const f of fs.readdirSync('src/t3d/clips')) if (f.endsWith('.json')) registerClip(f.replace('.json', ''), JSON.parse(fs.readFileSync(path.join('src/t3d/clips', f), 'utf8')));
+  const opts = {force: ep.players3d === 'A' ? ('A' as const) : undefined, faces: !!ep.faces};
+  const glbOk = (['off', 'def'] as const).every((v) => fs.existsSync(path.join('public', PLAYER3D[v].glb)));
+  check(`players3d ${PLAYER3D.version}: player meshes present in public/`, glbOk || opts.force === 'A' || opts.faces, `${PLAYER3D.off.glb}, ${PLAYER3D.def.glb}`);
+  for (const [k, play] of Object.entries(plays)) {
+    const q = meshQC(play, fps, opts);
+    console.log(`INFO  players3d play ${k}: ${describePlan(q.plan).join(' | ')}`);
+    warnings.push({check: `players3d plan ${k}`, value: describePlan(q.plan).join(' | ')});
+    for (const [name, ok, v] of q.checks) check(`players3d ${k}: ${name}`, ok as boolean, v as string);
+  }
+}
+
 const failed = results.filter((r) => !r.ok).length;
 if (outFile) fs.writeFileSync(outFile, JSON.stringify({passed: results.length - failed, failed, results, warnings}, null, 1));
 console.log(`\n${results.length - failed}/${results.length} engine checks passed`);
