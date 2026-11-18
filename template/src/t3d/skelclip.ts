@@ -499,7 +499,8 @@ const clipPose = (plan: SkelPlan, play: PlayWithSkel, id: string, t: number) => 
     if (best && best.w >= 1) pins[i] = best.k.anchor;
   }
   // head pitch: the tracked head of the take tips back (MediaPipe face landmarks while he looks at the handler); the
-  // pitch relative to the chest is limited to [-6 deg back, +20 deg forward], yaw and roll stay as captured
+  // pitch relative to the chest is limited to [-8, +30] deg (2026-11-19: safety only, the clip data is calibrated by
+  // tools/blender/fix_head.py; the old [-6, +20] pulled the head down to -22 deg in the screen crouch)
   {
     const cUp = qrot(bones.chest, [0, 1, 0]);
     const hUp = qrot(bones.head, [0, 1, 0]);
@@ -507,7 +508,7 @@ const clipPose = (plan: SkelPlan, play: PlayWithSkel, id: string, t: number) => 
     const pc = Math.asin(clamp(dot(cUp, fwd), -1, 1));
     const ph = Math.asin(clamp(dot(hUp, fwd), -1, 1));
     const rel = ph - pc;
-    const lim = clamp(rel, (-6 * Math.PI) / 180, (20 * Math.PI) / 180);
+    const lim = clamp(rel, (-8 * Math.PI) / 180, (30 * Math.PI) / 180); // safety only: the head is calibrated in the data (fix_head.py)
     if (Math.abs(lim - rel) > 1e-4) {
       const side = norm(cross([0, 0, 1], fwd));
       const ang = lim - rel; // rotation about his left axis: positive tips the top of the head forward

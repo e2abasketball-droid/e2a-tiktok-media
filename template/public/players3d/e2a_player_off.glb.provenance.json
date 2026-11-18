@@ -1,5 +1,5 @@
 {
  "licence_key": "3d/e2a-player-makehuman-cc0",
  "source": "E2A player built by tools/blender/build_player.py (2026-11-19) from the MakeHuman base mesh and morph targets of ara3d-data 1.1.0 (CC0-1.0, npm), clothes, textures and rig made by E2A; no MPFB, no third-party asset packs",
- "sha256": "74204868b4b7929ffb431e557deee9472b1a6718ec64b29dd7e1b59ab7a8a53b"
+ "sha256": "8f967ca6f090d51f86a53c23dad2404d5ad279313c4404a04707b00d32497aa7"
 }

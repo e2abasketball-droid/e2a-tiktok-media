@@ -8,8 +8,9 @@ and the .glb still looked up. Fix:
   1. constant calibration: rotate the head about its own side axis so the MEDIAN face pitch over the take is
      `--target` deg (default -4: eyes level, slightly down on the ball handler);
   2. anatomical limit of the head relative to the chest: [-8, +24] deg (back / forward) — continuity with the trunk;
-  3. neck = halfway (slerp) between chest and head, so the bend is shared by neck and head;
-  4. the 'head' joint (Pose layout) is moved with the head rotation; headYaw unchanged (it is the gaze yaw).
+  3. absolute face pitch in [-12, +6] deg (MediaPipe nose-ear noise is not a gesture: eyes level in the take);
+  4. neck = halfway (slerp) between chest and head, so the bend is shared by neck and head;
+  5. the 'head' joint (Pose layout) is moved with the head rotation; headYaw unchanged (it is the gaze yaw).
   python -I tools/blender/fix_head.py motion.json motion_fixed.json [--target -4]
 """
 import json, os, sys
@@ -61,6 +62,12 @@ def fix(m, target_deg=-4.0, lim=(-8.0, 24.0)):
         want = np.clip(rel, lo, hi)
         if abs(want - rel) > 1e-5:
             R1 = axis_rot(R1[:, 0], sgn * (want - rel)) @ R1
+        # 3. absolute face pitch kept in [-12, +6] deg (eyes on the handler / defender, never at the floor or the sky):
+        #    MediaPipe's per-frame nose-ear noise (±10 deg) is not a gesture of the player (5452: eyes level throughout)
+        fp = face_pitch(R1)
+        want = np.clip(fp, np.radians(-12), np.radians(6))
+        if abs(want - fp) > 1e-5:
+            R1 = axis_rot(R1[:, 0], sgn * (want - fp)) @ R1
         rel_after.append(np.degrees(face_pitch(R1) - face_pitch(Rc[i])))
         out_h.append(R1)
         out_n.append(slerp_R(Rc[i], R1, 0.5))
@@ -80,7 +87,7 @@ def fix(m, target_deg=-4.0, lim=(-8.0, 24.0)):
     m['joints'] = J
     pa = np.degrees([face_pitch(R) for R in out_h])
     note = (f'head pitch calibrated at the origin (fix_head.py): constant {np.degrees(cal):+.1f} deg (median face pitch '
-            f'{np.degrees(np.median(p)):+.1f} -> {target_deg:+.1f}), head vs chest limited to [{lim[0]}, {lim[1]}] deg, neck = slerp(chest, head, 0.5)')
+            f'{np.degrees(np.median(p)):+.1f} -> {target_deg:+.1f}), head vs chest limited to [{lim[0]}, {lim[1]}] deg, face pitch in [-12, +6] deg, neck = slerp(chest, head, 0.5)')
     m['corrections'] = list(m.get('corrections', [])) + [note]
     m['head_fix'] = {'cal_deg': round(float(np.degrees(cal)), 2), 'face_pitch_deg_before': [round(float(np.degrees(p.min())), 1), round(float(np.degrees(np.median(p))), 1), round(float(np.degrees(p.max())), 1)],
                      'face_pitch_deg_after': [round(float(pa.min()), 1), round(float(np.median(pa)), 1), round(float(pa.max()), 1)],
