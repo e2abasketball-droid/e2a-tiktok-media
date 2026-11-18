@@ -180,7 +180,7 @@ for v, eid in VERSIONS.items():
                       "foul line", "gap closes", "low defender", "cut behind", "to the rim", "Same catch", "sink",
                       "corner opens", "kick-out", "Touch the nail", "choose"]
     ep["subtitleGroups"] = [6, 7, 4, 6, 6, 3, 5, 4, 4, 6, 5, 7, 6, 5, 4, 3, 3, 3, 3, 5, 4]
-    ep["subtitleY"] = 1500
+    ep["subtitleY"] = 1350
     ep["subtitleHide"] = [["For more-0.05", "basketball.>+3"]]
     ep["music"] = {"src": "tactical/zone32/music.mp3", "volume": 1}
     json.dump(ep, open(os.path.join(D, f"{eid}.json"), "w"), indent=1, ensure_ascii=False)

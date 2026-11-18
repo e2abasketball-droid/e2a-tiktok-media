@@ -94,7 +94,7 @@
    "why": "replay beat 2"
   },
   {
-   "after": "defender Choose.",
+   "after": "defender choose.",
    "sec": 1.0,
    "why": "replay beat 3"
   }
@@ -1626,7 +1626,7 @@
   5,
   4
  ],
- "subtitleY": 1500,
+ "subtitleY": 1350,
  "subtitleHide": [
   [
    "For more-0.05",
