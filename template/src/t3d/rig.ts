@@ -13,8 +13,19 @@ import type {V2, V3} from '../tactical/geometry.ts';
 import type {Play} from '../tactical/play.ts';
 import {posAt, stateOf} from '../tactical/play.ts';
 
-export type ActionType = 'screen' | 'stance' | 'topLock' | 'catchReady' | 'shoot' | 'layup' | 'pass' | 'dribble' | 'contest' | 'seal' | 'celebrate';
-export type Action = {type: ActionType; from: number; to: number; face?: string | number; side?: number};
+export type ActionType = 'screen' | 'stance' | 'topLock' | 'catchReady' | 'shoot' | 'layup' | 'pass' | 'dribble' | 'contest' | 'seal' | 'celebrate' | 'roll';
+/**
+ * A timed action. Optional tuning (2026-11-18, calibrated on the owner's screen-and-roll references
+ * 5449/5450/5451/5452 — see tactical/reports/3d-animation-2026-11-18/INFORME.md):
+ *   screen: `width` stance width in metres (default 1.2 x shoulder width, observed), `stagger` front/back
+ *           offset of the feet (default 0.08 m), `dip` 0..1 depth of the settle crouch after the plant.
+ *   roll:   `from` = the open step starts (screen over), `turn` seconds to face the run (default 0.62, observed
+ *           0.53–0.65 s), `side` +1 turns to the player's LEFT (counter-clockwise from above), -1 to his right
+ *           (default: the shorter way to the run direction), `pivot` 'L' | 'R' foot that stays planted
+ *           (default: the foot opposite to the turn, observed in 5451/5452), `face` whom the chest opens to
+ *           during the turn (usually the ball handler). The track (legs) supplies the run to the rim.
+ */
+export type Action = {type: ActionType; from: number; to: number; face?: string | number; side?: number; width?: number; stagger?: number; dip?: number; turn?: number; pivot?: 'L' | 'R'};
 
 export type PlayWithActions = Play & {actions?: Record<string, Action[]>};
 
@@ -42,7 +53,7 @@ export type Dims = {H: number; thigh: number; shin: number; ankleH: number; foot
 
 export const dimsFor = (H: number): Dims => {
   const k = H / 2.0;
-  return {H, thigh: 0.5 * k, shin: 0.49 * k, ankleH: 0.085 * k, foot: 0.27 * k, upper: 0.34 * k, fore: 0.29 * k, hand: 0.17 * k, hipW: 0.105 * k, shW: 0.215 * k, trunk: 0.55 * k, neck: 0.075 * k, headR: 0.112 * k};
+  return {H, thigh: 0.5 * k, shin: 0.49 * k, ankleH: 0.085 * k, foot: 0.27 * k, upper: 0.34 * k, fore: 0.29 * k, hand: 0.17 * k, hipW: 0.105 * k, shW: 0.205 * k, trunk: 0.55 * k, neck: 0.075 * k, headR: 0.12 * k};
 };
 
 // ---------- small vector helpers ----------
@@ -98,7 +109,7 @@ const fwd = (h: number): V3 => [Math.cos(h), Math.sin(h), 0];
 const right = (h: number): V3 => [Math.sin(h), -Math.cos(h), 0];
 
 // ---------- per-player simulation (footsteps, heading, speed) ----------
-type Foot = {planted: boolean; p: V3; from: V3; to: V3; t0: number; dur: number};
+type Foot = {planted: boolean; p: V3; from: V3; to: V3; t0: number; dur: number; forced?: boolean};
 type SimRow = {t: number; heading: number; speed: number; acc: number; turn: number; feet: [V3, V3]; phase: number; lift: [number, number]};
 type Sim = {dt: number; t0: number; rows: SimRow[]};
 
@@ -142,6 +153,7 @@ const activeW = (acts: Action[], type: ActionType, t: number, blend?: number) =>
 /** where the player looks / faces when not running: ball, man, or an explicit target */
 const lookAngle = (play: PlayWithActions, id: string, t: number, acts: Action[]): number | undefined => {
   for (const a of acts) {
+    if (a.type === 'roll') continue; // the roll steers the heading itself (simulate), its face only opens the chest
     if (a.face !== undefined && t >= a.from - 0.1 && t <= a.to + 0.1) {
       if (typeof a.face === 'number') return a.face;
       const me = posAt(play.tracks[id], t);
@@ -180,6 +192,24 @@ const simulate = (play: PlayWithActions, id: string, dims: Dims): Sim => {
   }) as [Foot, Foot];
   let prevVel: V2 = [0, 0];
   let prevHeading = heading;
+  // ----- stance width / stagger at any play time. The screen base is 1.2 x the shoulder width with a small
+  // stagger (observed 5449/5450/5451/5452: lateral foot spacing 1.15–1.25 x deltoid width, base escalonada).
+  const shoulderW = 2 * (dims.shW + 0.06 * (dims.H / 2));
+  const baseAt = (tt: number) => {
+    const sc = activeW(acts, 'screen', tt);
+    const other = Math.max(activeW(acts, 'stance', tt).w, activeW(acts, 'topLock', tt).w * 0.9, activeW(acts, 'seal', tt).w);
+    const W = Math.max(lerp(0.36, 0.62, other), lerp(0.36, sc.a?.width ?? 1.2 * shoulderW, sc.w));
+    const stagger = 0.05 + ((sc.a?.stagger ?? 0.08) - 0.05) * sc.w;
+    return {W, stagger};
+  };
+  // ----- roll (screen-and-roll): open step around a planted pivot foot, then short quick steps to the rim
+  type RollSt = {h0: number; delta: number; pivot: number; turnDur: number; stepDone: boolean; handed: boolean};
+  const rolls = acts.filter((a) => a.type === 'roll');
+  const rollSt = new Map<Action, RollSt>();
+  // horizontal reach of a leg from the hips' track point (2.0 m player: 0.5 m) — see the reach guard
+  const reachH = 0.5 * (dims.H / 2);
+  const OPEN_STEP = 0.2; // observed: open step lifts and lands in 0.20 s (5451 3.13–3.33, 5452 2.74–2.94)
+  const CROSS_AT = 0.3; // observed: the pivot foot leaves the floor ~0.30 s after the open step (5451 3.43, 5452 3.04)
   for (let t = T0; t <= T1 + 1e-9; t += DT) {
     const tc = clamp(t, 0, play.duration);
     const p = posAt(wp, tc);
@@ -192,9 +222,35 @@ const simulate = (play: PlayWithActions, id: string, dims: Dims): Sim => {
     // ----- heading: critically damped toward the desired facing
     const look = lookAngle(play, id, tc, acts);
     const base = stateOf(play, id, tc).facing;
-    let want = look ?? base;
+    const roll = rolls.find((a) => tc >= a.from && tc <= a.to);
+    let rs: RollSt | undefined;
+    let rollWant: number | undefined;
+    if (roll) {
+      rs = rollSt.get(roll);
+      if (!rs) {
+        const turnDur = roll.turn ?? 0.62;
+        const pA = posAt(wp, roll.from);
+        const pB = posAt(wp, Math.min(play.duration, roll.from + turnDur + 0.5));
+        const dx = pB[0] - pA[0];
+        const dy = pB[1] - pA[1];
+        const hEnd = Math.hypot(dx, dy) > 0.2 ? Math.atan2(dy, dx) : heading + (roll.side ?? 1) * Math.PI;
+        let delta = wrap(hEnd - heading);
+        const side = roll.side ?? (delta >= 0 ? 1 : -1);
+        if (side > 0 && delta < 0) delta += 2 * Math.PI;
+        if (side < 0 && delta > 0) delta -= 2 * Math.PI;
+        // pivot on the foot opposite to the turn (turning to his left -> right foot stays, left foot opens)
+        const pivot = roll.pivot ? (roll.pivot === 'L' ? 0 : 1) : side > 0 ? 1 : 0;
+        rs = {h0: heading, delta, pivot, turnDur, stepDone: false, handed: false};
+        rollSt.set(roll, rs);
+      }
+      const u = (tc - roll.from) / rs.turnDur;
+      // front-loaded turn: ~half of it during the open step (observed ~90° of 180° after 0.2 s)
+      if (u <= 1) rollWant = rs.h0 + rs.delta * (1 - (1 - u) ** 2);
+      else rollWant = speed > 0.5 ? Math.atan2(vel[1], vel[0]) : rs.h0 + rs.delta;
+    }
+    let want = rollWant ?? look ?? base;
     // when sprinting, the body points where it runs unless an action forces a facing
-    if (look === undefined && speed > 2.2) want = Math.atan2(vel[1], vel[0]);
+    if (rollWant === undefined && look === undefined && speed > 2.2) want = Math.atan2(vel[1], vel[0]);
     const k = 26; // stiffness
     const err = wrap(want - heading);
     headingVel += (k * k * err - 2 * k * headingVel) * DT;
@@ -202,18 +258,17 @@ const simulate = (play: PlayWithActions, id: string, dims: Dims): Sim => {
     const turn = wrap(heading - prevHeading) / DT;
     prevHeading = heading;
     // ----- stance width by action
-    const screenW = activeW(acts, 'screen', tc).w;
-    const stanceW0 = activeW(acts, 'stance', tc).w;
-    const lockW = activeW(acts, 'topLock', tc).w;
-    const sealW = activeW(acts, 'seal', tc).w;
-    const stanceW = lerp(0.36, 0.62, Math.max(screenW, stanceW0, lockW * 0.9, sealW));
+    const {W: stanceW, stagger} = baseAt(tc);
     // ----- gait phase from distance (stride grows with speed)
-    const cycleLen = clamp(0.8 + 0.5 * speed, 0.9, 3.4);
+    const rollOut = rs && roll ? tc - roll.from : -1; // seconds since the open step
+    const shortSteps = rollOut >= CROSS_AT && rollOut < CROSS_AT + 0.8; // first strides of the roll: short and quick
+    const cycleLen = clamp(0.8 + 0.5 * speed, 0.9, 3.4) * (shortSteps ? 0.72 : 1);
     let rate = speed / cycleLen;
+    if (shortSteps) rate = Math.max(rate, 2.3); // observed step every ~0.25–0.3 s right after the pivot
     // settle: if a foot is far from its rest spot while standing, keep stepping slowly
     const restDev = [0, 1].map((i) => {
       const side = i === 0 ? -1 : 1;
-      const o = restOff(side, heading, stanceW, 0.05);
+      const o = restOff(side, heading, stanceW, stagger);
       const r: V3 = [p[0] + o[0], p[1] + o[1], 0];
       return Math.hypot(feet[i].p[0] - r[0], feet[i].p[1] - r[1]);
     });
@@ -223,32 +278,83 @@ const simulate = (play: PlayWithActions, id: string, dims: Dims): Sim => {
     const beta = lerp(0.6, 0.3, clamp(speed / 6)); // stance fraction of the cycle
     const cycleDur = rate > 1e-3 ? 1 / rate : 1;
     const lift: [number, number] = [0, 0];
+    // roll: the open step is scripted (pivot planted, other foot steps round it), then hand back to the gait
+    const rollHold = !!(rs && roll && rollOut >= 0 && rollOut < CROSS_AT);
+    if (rs && roll && rollHold && !rs.stepDone) {
+      rs.stepDone = true;
+      const s = 1 - rs.pivot;
+      const f = feet[s];
+      const hm = rs.h0 + rs.delta * 0.75; // heading when the open step lands
+      const pv = feet[rs.pivot].p;
+      const sideS = s === 0 ? -1 : 1;
+      const tgt: V3 = [pv[0] + right(hm)[0] * sideS * 0.44 + fwd(hm)[0] * 0.1, pv[1] + right(hm)[1] * sideS * 0.44 + fwd(hm)[1] * 0.1, 0];
+      f.planted = false;
+      f.forced = true;
+      f.from = f.p;
+      f.to = tgt;
+      f.t0 = t;
+      f.dur = OPEN_STEP;
+    }
+    if (rs && roll && !rollHold && rollOut >= CROSS_AT && !rs.handed) {
+      rs.handed = true;
+      // the pivot foot is the next to leave the floor (cross-over first step)
+      phase = beta - (rs.pivot === 0 ? 0 : 0.5) + 1e-3;
+    }
+    const launch = (i: number, swingT: number, forced: boolean) => {
+      const f = feet[i];
+      const side = i === 0 ? -1 : 1;
+      // swings stay short (≤ 0.4 s): a slow cadence at the start of a run used to throw the foot 1 m+ ahead
+      const pf0 = posAt(wp, Math.min(play.duration, tc + 0.1));
+      const pf1 = posAt(wp, Math.min(play.duration, tc + 0.2));
+      const vFut = Math.hypot(pf1[0] - pf0[0], pf1[1] - pf0[1]) / 0.1; // speed the body is about to reach
+      const dur = clamp(swingT, 0.12, clamp(0.4 - 0.05 * vFut, 0.22, 0.4));
+      const tPlant = tc + dur;
+      const tMid = tPlant + Math.min((beta * cycleDur) / 2, 0.16);
+      const pm = posAt(wp, Math.min(play.duration, tMid));
+      const hFuture = heading + clamp(turn, -6, 6) * Math.min(0.25, dur);
+      const fb = baseAt(Math.min(play.duration, tMid)); // brake into the base the next plant will need
+      const o = restOff(side, hFuture, fb.W, fb.stagger);
+      const target: V3 = [pm[0] + o[0], pm[1] + o[1], 0];
+      // and land within reach of where the hips will be at touch-down
+      const pp = posAt(wp, Math.min(play.duration, tPlant));
+      const ex = target[0] - pp[0];
+      const ey = target[1] - pp[1];
+      const el = Math.hypot(ex, ey);
+      if (el > reachH * 0.85) {
+        target[0] = pp[0] + (ex / el) * reachH * 0.85;
+        target[1] = pp[1] + (ey / el) * reachH * 0.85;
+      }
+      f.planted = false;
+      f.forced = forced;
+      f.from = f.p;
+      f.to = target;
+      f.t0 = t;
+      f.dur = dur;
+    };
     for (let i = 0; i < 2; i++) {
       const side = i === 0 ? -1 : 1;
       const fp = (((phase + (i === 0 ? 0 : 0.5)) % 1) + 1) % 1;
       const inStance = fp < beta;
       const f = feet[i];
-      if (inStance) {
+      if (rollHold) {
+        // scripted: nothing lifts; a swing in progress (the open step) finishes below
+      } else if (inStance) {
         // a swing still in the air finishes its own arc (never snaps to the target)
-        if (!f.planted && t - f.t0 < f.dur - 0.08) {
+        if (!f.planted && !f.forced && t - f.t0 < f.dur - 0.08) {
           f.t0 = t - 0.5 * 0.16;
           f.dur = 0.16;
           f.from = [f.p[0] - (f.to[0] - f.p[0]), f.p[1] - (f.to[1] - f.p[1]), 0];
         }
       } else if (f.planted) {
         // lift off: commit the next plant, predicted at mid-stance of the next contact
-        const swingT = (1 - fp) * cycleDur;
-        const tPlant = tc + swingT;
-        const tMid = tPlant + (beta * cycleDur) / 2;
-        const pm = posAt(wp, Math.min(play.duration, tMid));
-        const hFuture = heading + clamp(turn, -6, 6) * Math.min(0.25, swingT);
-        const o = restOff(side, hFuture, stanceW, 0.05);
-        const target: V3 = [pm[0] + o[0], pm[1] + o[1], 0];
-        f.planted = false;
-        f.from = f.p;
-        f.to = target;
-        f.t0 = t;
-        f.dur = Math.max(0.12, swingT);
+        launch(i, (1 - fp) * cycleDur, false);
+      }
+      // reach guard (2026-11-18): a planted foot the hips have left behind (or that landed too far ahead) is
+      // lifted now instead of being dragged by the leg IK — the rendered ankle can then never slide
+      if (!rollHold && f.planted) {
+        const dx = f.p[0] - p[0];
+        const dy = f.p[1] - p[1];
+        if (Math.hypot(dx, dy) > reachH) launch(i, clamp(0.22 - 0.02 * speed, 0.14, 0.22), true);
       }
       if (!f.planted) {
         const u = clamp((t - f.t0) / f.dur);
@@ -356,7 +462,24 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
   const dribble = w('dribble');
   const contest = w('contest', 0.12);
   const celebrate = w('celebrate', 0.2);
-  const crouchAmt = Math.max(stance.w, lock.w, screen.w * 0.5, seal.w * 0.7, catchR.w * 0.5) * (1 - run * 0.6);
+  const rollA = w('roll', 0.12);
+  // screen crouch: drops into the plant, bottoms out ~0.2–0.45 s later and settles a little higher
+  // (observed 5449: plant 1.31 s, lowest 1.45–1.80 s, partly back up by 2.40 s; 5450 settles 1.98→2.60 s)
+  let screenCrouch = 0;
+  if (screen.a) {
+    const u = tc - screen.a.from;
+    const peak = smooth(u / 0.22) * (1 - smooth((u - 0.45) / 0.55));
+    screenCrouch = screen.w * (0.75 + 0.25 * (screen.a.dip ?? 1) * peak);
+  }
+  // roll: still low on the open step, rises through the first strides
+  let rollU = -1;
+  let rollCrouch = 0;
+  if (rollA.a) {
+    rollU = tc - rollA.a.from;
+    rollCrouch = rollA.w * 0.65 * (1 - smooth(rollU / 0.55));
+  }
+  const crouchAmt = Math.max(stance.w, lock.w, screenCrouch, rollCrouch, seal.w * 0.7, catchR.w * 0.5) * (1 - run * 0.6);
+  const crouchLean = Math.max(stance.w, lock.w, screen.w * 0.5, rollCrouch * 0.6, seal.w * 0.7, catchR.w * 0.5) * (1 - run * 0.6);
 
   // ----- pelvis
   const legLen = D.thigh + D.shin + D.ankleH;
@@ -372,16 +495,65 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
     if (tt > 0 && tt < 0.22) dip = Math.max(dip, 0.08 * Math.sin((Math.PI * tt) / 0.22));
   }
   const bob = run * 0.035 * Math.cos(4 * Math.PI * r.phase);
-  const pelvisZ = legLen * (0.955 - 0.1 * run - 0.13 * crouchAmt) - dip + bob + air;
-  // the hips sit slightly behind/ahead of the feet midpoint depending on speed; use the track position
+  // roll exit: the first strides are short and fairly upright (5452 3.24–3.66): less run-crouch while it lasts
+  let pelvisZ = legLen * (0.955 - 0.1 * run * (1 - 0.5 * rollA.w) - 0.13 * crouchAmt) - dip + bob + air;
+  // reach cap (2026-11-18): the hips never rise above the height from which a planted foot can still be
+  // reached — otherwise the leg IK clamps and the rendered foot slides along the floor. The cap is a smooth
+  // lower envelope in time (min-filter then mean over ±0.07 s), so it is always ≤ the exact cap (no slide)
+  // and it never pops when a foot lands or lifts.
+  if (air < 0.001) {
+    const L = (D.thigh + D.shin) * 0.985;
+    const capAt = (tt: number) => {
+      const rr = rowAt(sim, tt);
+      const pp = posAt(play.tracks[id], clamp(tt, 0, play.duration));
+      let c = Infinity;
+      for (let i = 0; i < 2; i++) {
+        const f = rr.feet[i];
+        if (f[2] > 0.004) continue;
+        const ho = right(rr.heading);
+        const side = i === 0 ? -1 : 1;
+        const hx = pp[0] + ho[0] * side * D.hipW - f[0];
+        const hy = pp[1] + ho[1] * side * D.hipW - f[1];
+        c = Math.min(c, D.ankleH + Math.sqrt(Math.max(0.04 * L * L, L * L - hx * hx - hy * hy)));
+      }
+      return c;
+    };
+    const w = 0.07;
+    const n = 4;
+    const caps: number[] = [];
+    for (let j = -2 * n; j <= 2 * n; j++) caps.push(capAt(t + (j * w) / n));
+    let capS = 0;
+    for (let j = 0; j <= 2 * n; j++) capS += Math.min(...caps.slice(j, j + 2 * n + 1));
+    capS /= 2 * n + 1;
+    if (Number.isFinite(capS)) {
+      const kSoft = 0.02;
+      const x = (capS - pelvisZ) / kSoft; // soft minimum of (pelvisZ, cap)
+      pelvisZ = x > 30 ? pelvisZ : capS - kSoft * Math.log1p(Math.exp(x));
+    }
+  }
   const pelvis: V3 = [p2[0], p2[1], pelvisZ];
 
   // ----- trunk orientation
-  const lean = clamp(0.06 + 0.05 * speed + 0.025 * acc, -0.12, 0.42) * (1 - Math.max(shoot.w, layup.w) * 0.7) + crouchAmt * 0.28 + catchR.w * 0.06 - celebrate.w * 0.05;
-  const roll = clamp(speed * turn * 0.035, -0.28, 0.28);
+  // roll exit: drive the chest forward over the first quick steps (observed 5451 3.43–4.30, 5452 3.04–3.66)
+  const rollDrive = rollA.a ? rollA.w * smooth((rollU - 0.15) / 0.25) * (1 - smooth((rollU - 1.1) / 0.4)) : 0;
+  const lean = clamp(0.06 + 0.05 * speed + 0.025 * acc * (1 - 0.6 * rollA.w), -0.12, 0.42) * (1 - Math.max(shoot.w, layup.w) * 0.7) + crouchLean * 0.28 + catchR.w * 0.06 - celebrate.w * 0.05 + rollDrive * 0.05;
+  // bank into turns; damped during the roll pivot (observed 5451/5452: the trunk stays nearly upright while it turns)
+  const roll = clamp(speed * turn * 0.035, -0.28, 0.28) * (1 - 0.75 * rollA.w);
   const counter = run * 0.16 * Math.sin(2 * Math.PI * r.phase);
   const sideTurn = lock.w * 0.5 * (lock.a?.side ?? 1) + seal.w * 0.6 * (seal.a?.side ?? 1);
-  const chestYaw = h + counter + sideTurn * 0.35;
+  // roll: the chest opens to the ball (face) during the turn, ahead of the hips
+  let rollOpen = 0;
+  let rollBallSide = 1;
+  if (rollA.a && rollA.a.face !== undefined && rollA.w > 0) {
+    const fa = rollA.a.face;
+    const q = typeof fa === 'number' ? undefined : posAt(play.tracks[fa], tc);
+    const ang = typeof fa === 'number' ? fa : Math.atan2(q![1] - p2[1], q![0] - p2[0]);
+    const d = wrap(ang - h);
+    rollBallSide = d >= 0 ? -1 : 1; // ball to the left of the hips -> left arm presents the target
+    const open = smooth((rollU + 0.1) / 0.2) * (1 - smooth((rollU - 0.55) / 0.35));
+    rollOpen = clamp(d, -0.7, 0.7) * open * rollA.w;
+  }
+  const chestYaw = h + counter + sideTurn * 0.35 + rollOpen;
   const up: V3 = [0, 0, 1];
   // trunk direction: up tilted forward by lean and sideways by roll
   const trunkDir = norm(add(add(mul(up, Math.cos(lean)), mul(fwd(chestYaw), Math.sin(lean))), mul(right(h), -Math.sin(roll))));
@@ -447,8 +619,15 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
       const deny = side === lockSide;
       blend(lock.w, deny ? L(0.5, 0.42, 0.1) : L(0.22, 0.38, -0.25), norm(add(mul(chestR, side), [0, 0, -0.4])));
     }
-    // screen: arms crossed low in front of the body (legal screen posture)
-    blend(screen.w, L(-0.06, 0.24, -0.38), norm(add(mul(chestR, side), [0, 0, -0.6])));
+    // screen: hands together low in front of the hips, elbows slightly out (legal screen posture;
+    // observed 5449 1.31–3.65 s, 5450 1.38–2.60 s, 5451 2.24–3.13 s: one hand over the other at the groin)
+    blend(screen.w, L(-(D.shW - 0.045 + (i === 1 ? 0.012 : 0)), 0.17 + (i === 1 ? 0.03 : 0), -0.52), norm(add(mul(chestR, side), [0, 0, -0.35])));
+    // roll: the ball-side hand shows a target while the chest opens, then goes up as he runs to the rim
+    // (observed 5451 3.50 arm out to the ball, 3.99–4.30 hand high; 5452 3.10 / 3.66)
+    if (rollA.a && rollA.w > 0 && side === rollBallSide) {
+      const up = smooth((rollU - 0.55) / 0.35);
+      blend(rollA.w * smooth((rollU + 0.05) / 0.2), lerp3(L(0.24, 0.36, -0.05), L(0.06, 0.18, 0.4), up), norm(add(mul(chestR, side), [0, 0, -0.6])));
+    }
     // seal: forearm and back against the defender
     blend(seal.w, L(0.3, 0.12, -0.18), norm(add(mul(chestR, side), [0, 0, -0.4])));
     // contest: one hand high
