@@ -1,0 +1,458 @@
+{
+ "id": "elev3d-b-switch",
+ "title": "Elevator screen B: the early switch, the screener slips, layup",
+ "duration": 3.9,
+ "concept": "elevator",
+ "source": "original E2A play (elevator screen, generic coaching knowledge); same possession as the E2A 2.5D pilot 01",
+ "squareUp": true,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Passer"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Shooter"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Spacer"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Left screener"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Right screener"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the passer",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "On the shooter",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "On the spacer",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "On the left screener",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "On the right screener",
+   "guards": "O5"
+  }
+ ],
+ "start": {
+  "O1": [
+   4.6,
+   7.0
+  ],
+  "O2": [
+   -1.9,
+   2.2
+  ],
+  "O3": [
+   -6.9,
+   1.0
+  ],
+  "O4": [
+   -0.85,
+   5.8
+  ],
+  "O5": [
+   0.85,
+   5.8
+  ],
+  "X1": [
+   4.0,
+   6.3
+  ],
+  "X2": [
+   -1.6,
+   2.8
+  ],
+  "X3": [
+   -5.2,
+   2.6
+  ],
+  "X4": [
+   -1.25,
+   4.9
+  ],
+  "X5": [
+   1.25,
+   4.9
+  ]
+ },
+ "legs": {
+  "O1": [
+   {
+    "at": 0,
+    "to": [
+     4.0,
+     7.9
+    ],
+    "dur": 1.4
+   },
+   {
+    "at": 1.7,
+    "to": [
+     4.12,
+     7.62
+    ],
+    "dur": 0.3
+   }
+  ],
+  "O2": [
+   {
+    "at": 0,
+    "to": [
+     -1.15,
+     1.4
+    ],
+    "dur": 0.55
+   },
+   {
+    "at": 0.68,
+    "via": [
+     [
+      -0.75,
+      1.7
+     ],
+     [
+      -0.4,
+      2.85
+     ],
+     [
+      -0.15,
+      4.5
+     ],
+     [
+      0,
+      5.8
+     ],
+     [
+      0,
+      6.7
+     ],
+     [
+      -0.15,
+      7.9
+     ]
+    ],
+    "to": [
+     -0.25,
+     8.75
+    ],
+    "dur": 1.72
+   }
+  ],
+  "O3": [],
+  "O4": [
+   {
+    "at": 1.45,
+    "via": [
+     [
+      -1.8,
+      6.5
+     ]
+    ],
+    "to": [
+     -2.9,
+     7.4
+    ],
+    "dur": 0.95
+   }
+  ],
+  "O5": [
+   {
+    "at": 1.3,
+    "via": [
+     [
+      1.35,
+      4.85
+     ],
+     [
+      1.3,
+      3.6
+     ]
+    ],
+    "to": [
+     0.6,
+     2.5
+    ],
+    "dur": 1.2
+   }
+  ],
+  "X1": [
+   {
+    "at": 0,
+    "via": [
+     [
+      3.5,
+      7.15
+     ]
+    ],
+    "to": [
+     3.3,
+     7.8
+    ],
+    "dur": 1.85
+   }
+  ],
+  "X2": [
+   {
+    "at": 0,
+    "to": [
+     -1.45,
+     1.95
+    ],
+    "dur": 0.5
+   },
+   {
+    "at": 0.78,
+    "via": [
+     [
+      -1.1,
+      2.3
+     ],
+     [
+      -0.65,
+      3.6
+     ],
+     [
+      -0.4,
+      4.4
+     ],
+     [
+      -0.1,
+      5.6
+     ],
+     [
+      -0.2,
+      7.1
+     ]
+    ],
+    "to": [
+     -0.35,
+     7.9
+    ],
+    "dur": 2.3
+   }
+  ],
+  "X3": [
+   {
+    "at": 2.1,
+    "via": [
+     [
+      -3.7,
+      2.45
+     ],
+     [
+      -2.5,
+      2.2
+     ]
+    ],
+    "to": [
+     -2.3,
+     2.2
+    ],
+    "dur": 1.8
+   }
+  ],
+  "X4": [
+   {
+    "at": 1.75,
+    "via": [
+     [
+      -2.2,
+      6.35
+     ],
+     [
+      -1.55,
+      5.1
+     ]
+    ],
+    "to": [
+     -1.4,
+     4.8
+    ],
+    "dur": 1.75
+   }
+  ],
+  "X5": [
+   {
+    "at": 1.0,
+    "via": [
+     [
+      1.65,
+      5.5
+     ],
+     [
+      1.6,
+      6.5
+     ],
+     [
+      0.95,
+      7.6
+     ]
+    ],
+    "to": [
+     0.45,
+     8.15
+    ],
+    "dur": 1.35
+   }
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 1.7,
+   "dribble": true
+  },
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 1.7,
+   "to": 2.0
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O5",
+   "t0": 2.0,
+   "t1": 2.45,
+   "style": "bounce"
+  },
+  {
+   "type": "hold",
+   "player": "O5",
+   "from": 2.45,
+   "to": 2.75
+  },
+  {
+   "type": "layup",
+   "player": "O5",
+   "t0": 2.75,
+   "t1": 3.05,
+   "make": true
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "jab": 0.45,
+  "cut": 0.7,
+  "x5Leaves": 1.0,
+  "read": 1.3,
+  "inGap": 1.6,
+  "decision": 1.45,
+  "pickup": 1.7,
+  "pass": 2.0,
+  "catch": 2.45,
+  "release": 2.75,
+  "make": 3.05,
+  "end": 3.9
+ },
+ "notes": [
+  "Same start as Case A (identical positions at t=0, verified by the tests).",
+  "X5 reads the cut and jumps out early (1.1 s) around O5 toward the top to take O2 away; X2 keeps chasing O2 through the corridor, so two defenders end up on the shooter.",
+  "X1 also overplays the perimeter pass (steps into the lane toward the top).",
+  "O5 reads X5 leaving BEFORE any screen contact (1.35 s) and slips down the right side of the lane; he never closes the door.",
+  "O4 pops to the left slot to keep X4 busy; O3 stays in the corner; X3 rotates from the weak side but arrives late.",
+  "O1 picks up the dribble, steps down with the ball and throws a bounce pass past X1's low hip (1.95-2.45 s); O5 finishes with a layup."
+ ],
+ "actions": {
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 3.9,
+    "face": "O1"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 3.9,
+    "face": "O1"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 3.9,
+    "face": "O4"
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 3.9,
+    "face": "O2"
+   }
+  ],
+  "O5": [
+   {
+    "type": "celebrate",
+    "from": 3.3,
+    "to": 3.9
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "near_rim",
+   "player": "O5",
+   "at": "release",
+   "max": 1.5,
+   "says": "a layup opportunity"
+  },
+  {
+   "type": "far",
+   "a": "X5",
+   "b": "O5",
+   "at": "catch",
+   "min": 2.5,
+   "says": "the screener slips into the open lane"
+  },
+  {
+   "type": "order",
+   "marks": [
+    "cut",
+    "x5Leaves",
+    "read",
+    "pass",
+    "catch",
+    "release",
+    "make"
+   ],
+   "says": "switch, slip, pass, layup"
+  }
+ ]
+}

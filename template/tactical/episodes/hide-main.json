@@ -1,0 +1,984 @@
+{
+ "id": "hide-main",
+ "title": "Hide in games",
+ "fps": 30,
+ "voiceRaw": "tactical/hide/voice-raw.mp3",
+ "voice": "tactical/hide/voice.wav",
+ "voiceMix": "tactical/hide/voice.mix.wav",
+ "preroll": 0.12,
+ "tail": 1.8,
+ "plays": {
+  "P": "hide-practice",
+  "G": "hide-pilot-game",
+  "S": "hide-poss",
+  "M": "hide-miss",
+  "F": "hide-offers"
+ },
+ "shots": [
+  {
+   "id": "hook",
+   "name": "Practice: #8 calls for it (warm open gym)",
+   "at": 0,
+   "play": "P",
+   "env": "practice",
+   "remap": [
+    [
+     0,
+     1.45
+    ],
+    [
+     "practice.>",
+     3.3
+    ],
+    [
+     "@end",
+     3.62
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.75,
+       5.72,
+       1.28
+      ],
+      "dist": 2.719,
+      "pitch": 82.82,
+      "yaw": -105.48,
+      "fov": 40
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.75,
+       5.72,
+       1.28
+      ],
+      "dist": 2.719,
+      "pitch": 82.82,
+      "yaw": -105.48,
+      "fov": 40
+     }
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "cut",
+   "name": "Match cut inside the gesture: the defender steps in, the hands drop",
+   "at": "So why",
+   "play": "G",
+   "env": "game",
+   "remap": [
+    [
+     0,
+     2.85
+    ],
+    [
+     "drop",
+     3.45
+    ],
+    [
+     "games?>",
+     4.05
+    ],
+    [
+     "@end",
+     4.4
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.75,
+       5.72,
+       1.28
+      ],
+      "dist": 2.719,
+      "pitch": 82.82,
+      "yaw": -105.48,
+      "fov": 40
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.75,
+       5.72,
+       1.28
+      ],
+      "dist": 2.719,
+      "pitch": 82.82,
+      "yaw": -105.48,
+      "fov": 40
+     }
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "impact",
+     "volume": 0.07
+    }
+   ]
+  },
+  {
+   "id": "eyes",
+   "name": "Close: his eyes follow the ball",
+   "at": "You're-0.12",
+   "play": "G",
+   "env": "game",
+   "remap": [
+    [
+     0,
+     4.4
+    ],
+    [
+     "@end",
+     5.85
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O8",
+       "z": 1.8,
+       "window": 0.6
+      },
+      "dist": 1.5,
+      "pitch": 86,
+      "yaw": -100,
+      "fov": 34
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O8",
+       "z": 1.8,
+       "window": 0.6
+      },
+      "dist": 1.3,
+      "pitch": 86,
+      "yaw": -100,
+      "fov": 34
+     }
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "poss",
+   "name": "Passer's view: #8 hidden behind the defender, the ball goes the other way",
+   "at": "you stop-0.1",
+   "play": "S",
+   "env": "game",
+   "remap": [
+    [
+     0,
+     0.6
+    ],
+    [
+     "teammate a",
+     2.25
+    ],
+    [
+     "target.>",
+     2.95
+    ],
+    [
+     "@end",
+     5.6
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "pov",
+      "behind": "O1",
+      "look": "O8",
+      "back": 2.3,
+      "height": 2.25,
+      "side": 0.55,
+      "fov": 44,
+      "lookZ": 1.1
+     }
+    },
+    {
+     "at": "target.",
+     "rig": {
+      "type": "pov",
+      "behind": "O1",
+      "look": "O8",
+      "back": 2.3,
+      "height": 2.25,
+      "side": 0.55,
+      "fov": 44,
+      "lookZ": 1.1
+     }
+    },
+    {
+     "at": "target.>+0.9",
+     "rig": {
+      "type": "pov",
+      "behind": "O1",
+      "look": "O3",
+      "back": 2.3,
+      "height": 2.25,
+      "side": 0.55,
+      "fov": 44,
+      "lookZ": 1.1
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "pov",
+      "behind": "O1",
+      "look": "O3",
+      "back": 2.3,
+      "height": 2.25,
+      "side": 0.55,
+      "fov": 44,
+      "lookZ": 1.1
+     }
+    }
+   ],
+   "sfx": [
+    {
+     "at": "target.",
+     "name": "whoosh",
+     "volume": 0.06
+    }
+   ]
+  },
+  {
+   "id": "miss",
+   "name": "The open shot hits the ring and kicks out",
+   "at": "One.-0.2",
+   "play": "M",
+   "env": "game",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "One.>",
+     0.62
+    ],
+    [
+     "miss,",
+     1.6
+    ],
+    [
+     "@end",
+     2.12
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.2,
+       3.2,
+       2.1
+      ],
+      "dist": 8.213,
+      "pitch": 83.71,
+      "yaw": 59.04,
+      "fov": 42
+     }
+    },
+    {
+     "at": "One.>",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.2,
+       3.2,
+       2.1
+      ],
+      "dist": 8.213,
+      "pitch": 83.71,
+      "yaw": 59.04,
+      "fov": 42
+     }
+    },
+    {
+     "at": "miss,-0.2",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.5,
+       2.0,
+       2.3
+      ],
+      "dist": 10.264,
+      "pitch": 86.09,
+      "yaw": 58.17,
+      "fov": 28
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.5,
+       2.0,
+       2.3
+      ],
+      "dist": 10.264,
+      "pitch": 86.09,
+      "yaw": 58.17,
+      "fov": 28
+     }
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "reset",
+   "name": "Breathe out, tap the jersey (1 RESET), get back",
+   "at": "breathe-0.3",
+   "play": "M",
+   "env": "game",
+   "remap": [
+    [
+     0,
+     2.12
+    ],
+    [
+     "breathe",
+     2.2
+    ],
+    [
+     "out.>",
+     3.5
+    ],
+    [
+     "Tap",
+     3.66
+    ],
+    [
+     "jersey.>",
+     4.75
+    ],
+    [
+     "Get",
+     4.95
+    ],
+    [
+     "@end",
+     6.55
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O8",
+       "z": 1.45,
+       "window": 0.6
+      },
+      "dist": 2.6,
+      "pitch": 84,
+      "yaw": -78,
+      "fov": 38
+     }
+    },
+    {
+     "at": "Get",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O8",
+       "z": 1.45,
+       "window": 0.6
+      },
+      "dist": 2.6,
+      "pitch": 84,
+      "yaw": -78,
+      "fov": 38
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O8",
+       "z": 1.45,
+       "window": 0.6
+      },
+      "dist": 4.2,
+      "pitch": 80,
+      "yaw": -78,
+      "fov": 38
+     },
+     "ease": "inOut"
+    }
+   ],
+   "screen": [
+    {
+     "type": "step",
+     "n": 1,
+     "text": "RESET",
+     "from": "Tap",
+     "to": "@end"
+    }
+   ],
+   "sfx": [
+    {
+     "at": "Tap",
+     "name": "tick",
+     "volume": 0.15
+    }
+   ]
+  },
+  {
+   "id": "offers",
+   "name": "2 SHOW A TARGET: offers 1 and 2 while the ball goes elsewhere",
+   "at": "Two.-0.2",
+   "play": "F",
+   "env": "game",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "yourself",
+     1.05
+    ],
+    [
+     "yourself a target.>",
+     1.85
+    ],
+    [
+     "Three times",
+     2.3
+    ],
+    [
+     "passing lane,",
+     3.45
+    ],
+    [
+     "@end",
+     4.3
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.8,
+       5.4,
+       0.4
+      ],
+      "dist": 19.824,
+      "pitch": 50.54,
+      "yaw": -88.5,
+      "fov": 44
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.8,
+       5.4,
+       0.4
+      ],
+      "dist": 19.824,
+      "pitch": 50.54,
+      "yaw": -88.5,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O8",
+     "size": 0.85,
+     "from": "yourself",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "step",
+     "n": 2,
+     "text": "SHOW A TARGET",
+     "from": "Two.",
+     "to": "@end"
+    },
+    {
+     "type": "counter",
+     "steps": [
+      "yourself a target",
+      "passing lane,"
+     ],
+     "total": 3,
+     "from": "Two.",
+     "to": "@end"
+    }
+   ],
+   "sfx": [
+    {
+     "at": "Two.",
+     "name": "whoosh",
+     "volume": 0.07
+    },
+    {
+     "at": "yourself a target",
+     "name": "tick",
+     "volume": 0.16
+    },
+    {
+     "at": "passing lane,",
+     "name": "tick",
+     "volume": 0.16
+    }
+   ]
+  },
+  {
+   "id": "offer3",
+   "name": "Offer 3: plant, slide to the open line, show the hands, the pass arrives",
+   "at": "show your-0.1",
+   "play": "G",
+   "env": "game",
+   "remap": [
+    [
+     0,
+     6.0
+    ],
+    [
+     "show your hands",
+     6.9
+    ],
+    [
+     "and call for it>+0.55",
+     8.1
+    ],
+    [
+     "@end",
+     8.95
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       6.1,
+       0.8
+      ],
+      "dist": 11.866,
+      "pitch": 66.14,
+      "yaw": -73.4,
+      "fov": 40
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       6.1,
+       0.8
+      ],
+      "dist": 11.866,
+      "pitch": 66.14,
+      "yaw": -73.4,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "passLane",
+     "src": "O1",
+     "dst": "O8",
+     "color": "#C9A24D",
+     "from": "show your hands",
+     "to": "and call for it>+0.55"
+    }
+   ],
+   "screen": [
+    {
+     "type": "step",
+     "n": 2,
+     "text": "SHOW A TARGET",
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "counter",
+     "steps": [
+      "show your hands"
+     ],
+     "base": 2,
+     "total": 3,
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "sfx": [
+    {
+     "at": "show your hands",
+     "name": "tick",
+     "volume": 0.18
+    }
+   ]
+  },
+  {
+   "id": "again1",
+   "name": "3 ASK AGAIN: the open miss again",
+   "at": "Three. Missed-0.2",
+   "play": "M",
+   "env": "game",
+   "remap": [
+    [
+     0,
+     0.15
+    ],
+    [
+     "shot?>",
+     1.75
+    ],
+    [
+     "@end",
+     2.2
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.2,
+       3.2,
+       2.1
+      ],
+      "dist": 8.213,
+      "pitch": 83.71,
+      "yaw": 59.04,
+      "fov": 42
+     }
+    },
+    {
+     "at": 0.5,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.2,
+       3.2,
+       2.1
+      ],
+      "dist": 8.213,
+      "pitch": 83.71,
+      "yaw": 59.04,
+      "fov": 42
+     }
+    },
+    {
+     "at": "shot?>-0.25",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.5,
+       2.0,
+       2.3
+      ],
+      "dist": 10.264,
+      "pitch": 86.09,
+      "yaw": 58.17,
+      "fov": 28
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.5,
+       2.0,
+       2.3
+      ],
+      "dist": 10.264,
+      "pitch": 86.09,
+      "yaw": 58.17,
+      "fov": 28
+     }
+    }
+   ],
+   "screen": [
+    {
+     "type": "step",
+     "n": 3,
+     "text": "ASK AGAIN",
+     "from": "Three. Missed",
+     "to": "@end"
+    }
+   ],
+   "sfx": [
+    {
+     "at": "Three. Missed",
+     "name": "whoosh",
+     "volume": 0.07
+    }
+   ]
+  },
+  {
+   "id": "again2",
+   "name": "Next possession, hook framing: out from behind the defender, hands up, catch at the chest",
+   "at": "On the-0.12",
+   "play": "G",
+   "env": "game",
+   "remap": [
+    [
+     0,
+     5.3
+    ],
+    [
+     "ask",
+     6.05
+    ],
+    [
+     "again.",
+     6.9
+    ],
+    [
+     "again.>+0.6",
+     8.1
+    ],
+    [
+     "@end",
+     8.95
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O8",
+       "z": 1.28,
+       "offset": [
+        0.25,
+        0.02
+       ],
+       "window": 0.5
+      },
+      "dist": 2.719,
+      "pitch": 82.82,
+      "yaw": -105.48,
+      "fov": 40
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O8",
+       "z": 1.28,
+       "offset": [
+        0.25,
+        0.02
+       ],
+       "window": 0.5
+      },
+      "dist": 2.719,
+      "pitch": 82.82,
+      "yaw": -105.48,
+      "fov": 40
+     }
+    }
+   ],
+   "screen": [
+    {
+     "type": "step",
+     "n": 3,
+     "text": "ASK AGAIN",
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "close",
+   "name": "E2A sign-off on the practice run-in, ends on the hook's first frame",
+   "at": "For more-0.15",
+   "play": "P",
+   "env": "practice",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "@end",
+     1.45
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.75,
+       5.72,
+       1.28
+      ],
+      "dist": 2.719,
+      "pitch": 82.82,
+      "yaw": -105.48,
+      "fov": 40
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.75,
+       5.72,
+       1.28
+      ],
+      "dist": 2.719,
+      "pitch": 82.82,
+      "yaw": -105.48,
+      "fov": 40
+     }
+    }
+   ],
+   "screen": [
+    {
+     "type": "logo",
+     "from": "European",
+     "to": "@end"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "impact",
+     "volume": 0.06
+    }
+   ]
+  }
+ ],
+ "faces": {
+  "headScale": 1.38,
+  "nums": {
+   "X8": "14",
+   "X1": "5",
+   "X3": "21"
+  },
+  "hair": {
+   "O8": "#3A2414",
+   "O1": "#1A120C",
+   "O3": "#2B1A10",
+   "X8": "#2B1A10",
+   "X1": "#4A3020",
+   "X3": "#1A120C"
+  },
+  "skin": {
+   "O8": "#D9A27A",
+   "O1": "#8D5A3B",
+   "O3": "#B57A52",
+   "X8": "#C68E63",
+   "X1": "#6B4630",
+   "X3": "#E0B08A"
+  }
+ },
+ "pinV2": true,
+ "autoSfx": {
+  "bounce": 0.16,
+  "catch": 0.13,
+  "squeak": 0.08,
+  "swish": 0.3,
+  "land": 0.07,
+  "players": [
+   "O8",
+   "X8"
+  ]
+ },
+ "keywords": [
+  "practice",
+  "your hands",
+  "games",
+  "messing up",
+  "target",
+  "breathe out",
+  "jersey",
+  "passing lane",
+  "open shot",
+  "next possession",
+  "again"
+ ],
+ "subtitleGroups": [
+  6,
+  5,
+  3,
+  6,
+  7,
+  6,
+  5,
+  5,
+  7,
+  7,
+  5,
+  4,
+  4,
+  4
+ ],
+ "subtitleHide": [
+  [
+   "For more-0.05",
+   "basketball.>+3"
+  ]
+ ],
+ "music": {
+  "src": "tactical/hide/music-mix.mp3",
+  "volume": 1
+ }
+}

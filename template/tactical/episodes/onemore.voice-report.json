@@ -1,0 +1,228 @@
+{
+ "source": "public/tactical/onemore/voice-raw.mp3",
+ "source_sec": 38.24,
+ "preroll": 0.12,
+ "output": "public/tactical/onemore/voice.wav",
+ "output_sec": 57.0,
+ "inserted_total_sec": 18.64,
+ "last_word_end": 56.77,
+ "gaps": [
+  {
+   "after": "a mistake?",
+   "natural_silence": [
+    3.15,
+    3.55
+   ],
+   "natural_sec": 0.4,
+   "target_sec": 1.6,
+   "inserted_sec": 1.2,
+   "cut_at_source": 3.425,
+   "why": "the play runs into the decision"
+  },
+  {
+   "after": "Freeze it here.",
+   "natural_silence": [
+    4.24,
+    4.71
+   ],
+   "natural_sec": 0.47,
+   "target_sec": 0.5,
+   "inserted_sec": 0.03,
+   "cut_at_source": 4.555,
+   "why": "freeze lands"
+  },
+  {
+   "after": "One more dribble.",
+   "natural_silence": [
+    7.23,
+    7.62
+   ],
+   "natural_sec": 0.39,
+   "target_sec": 0.7,
+   "inserted_sec": 0.31,
+   "cut_at_source": 7.375,
+   "why": "the full extra dribble"
+  },
+  {
+   "after": "one more dribble?",
+   "natural_silence": [
+    7.23,
+    7.62
+   ],
+   "natural_sec": 0.39,
+   "target_sec": 1.5,
+   "inserted_sec": 1.11,
+   "cut_at_source": 7.375,
+   "why": "freeze held ~1 s after the question, both options drawn"
+  },
+  {
+   "after": "the early pass.",
+   "natural_silence": [
+    8.82,
+    9.2
+   ],
+   "natural_sec": 0.38,
+   "target_sec": 0.45,
+   "inserted_sec": 0.07,
+   "cut_at_source": 8.925,
+   "why": "pass leaves"
+  },
+  {
+   "after": "ball leaves.",
+   "natural_silence": [
+    11.45,
+    11.86
+   ],
+   "natural_sec": 0.41,
+   "target_sec": 1.9,
+   "inserted_sec": 1.49,
+   "cut_at_source": 11.565,
+   "why": "pass flight, the catch"
+  },
+  {
+   "after": "to cover.",
+   "natural_silence": [
+    14.79,
+    15.18
+   ],
+   "natural_sec": 0.39,
+   "target_sec": 0.45,
+   "inserted_sec": 0.06,
+   "cut_at_source": 14.945,
+   "why": "overhead route grows"
+  },
+  {
+   "after": "on the catch.",
+   "natural_silence": [
+    16.24,
+    16.56
+   ],
+   "natural_sec": 0.32,
+   "target_sec": 2.0,
+   "inserted_sec": 1.68,
+   "cut_at_source": 16.465,
+   "why": "CATCH CONTESTED"
+  },
+  {
+   "after": "Same setup.",
+   "natural_silence": [
+    17.17,
+    17.54
+   ],
+   "natural_sec": 0.37,
+   "target_sec": 0.45,
+   "inserted_sec": 0.08,
+   "cut_at_source": 17.415,
+   "why": "rewind lands"
+  },
+  {
+   "after": "his feet.",
+   "natural_silence": [
+    19.36,
+    19.79
+   ],
+   "natural_sec": 0.43,
+   "target_sec": 0.6,
+   "inserted_sec": 0.17,
+   "cut_at_source": 19.585,
+   "why": "cut to the low shot"
+  },
+  {
+   "after": "toward the ball.",
+   "natural_silence": [
+    22.37,
+    22.82
+   ],
+   "natural_sec": 0.45,
+   "target_sec": 1.4,
+   "inserted_sec": 0.95,
+   "cut_at_source": 22.695,
+   "why": "his weight shifts"
+  },
+  {
+   "after": "into the space.",
+   "natural_silence": [
+    25.82,
+    26.2
+   ],
+   "natural_sec": 0.38,
+   "target_sec": 3.6,
+   "inserted_sec": 3.22,
+   "cut_at_source": 26.095,
+   "why": "pass, catch, layup"
+  },
+  {
+   "after": "with the pass?",
+   "natural_silence": [
+    28.03,
+    28.3
+   ],
+   "natural_sec": 0.27,
+   "target_sec": 1.6,
+   "inserted_sec": 1.33,
+   "cut_at_source": 28.215,
+   "why": "second hook, scene clean"
+  },
+  {
+   "after": "Same dribble.",
+   "natural_silence": [
+    28.98,
+    29.23
+   ],
+   "natural_sec": 0.25,
+   "target_sec": 0.5,
+   "inserted_sec": 0.25,
+   "cut_at_source": 29.145,
+   "why": "X10 stays"
+  },
+  {
+   "after": "is yours.",
+   "natural_silence": [
+    31.56,
+    31.74
+   ],
+   "natural_sec": 0.18,
+   "target_sec": 0.5,
+   "inserted_sec": 0.32,
+   "cut_at_source": 31.685,
+   "why": "penetration arrow"
+  },
+  {
+   "after": "Go finish.",
+   "natural_silence": [
+    32.37,
+    32.68
+   ],
+   "natural_sec": 0.31,
+   "target_sec": 3.1,
+   "inserted_sec": 2.79,
+   "cut_at_source": 32.585,
+   "why": "gather, steps, layup"
+  },
+  {
+   "after": "Steps up? Pass.",
+   "natural_silence": [
+    34.1,
+    34.39
+   ],
+   "natural_sec": 0.29,
+   "target_sec": 1.8,
+   "inserted_sec": 1.51,
+   "cut_at_source": 34.285,
+   "why": "recap fragment 1"
+  },
+  {
+   "after": "pass? Finish.",
+   "natural_silence": [
+    36.16,
+    36.49
+   ],
+   "natural_sec": 0.33,
+   "target_sec": 2.4,
+   "inserted_sec": 2.07,
+   "cut_at_source": 36.375,
+   "why": "recap fragment 2 + PASS NOW OR ONE MORE?"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}

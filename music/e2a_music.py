@@ -678,7 +678,8 @@ class Song:
                     if cfg['lead'] in ('string', 'stab') or self.style in ('cinematic', 'suspense'):
                         place('music', i_braam(mtof(self.degree(root, 2)), bar * 1.0, rng), t0, 0.45)
                     if cfg['crowd'] and name == 'drop2':
-                        place('fx', kit.crowd(bar * 2), t0, 0.35)
+                        if not NO_SFX:
+                            place('fx', kit.crowd(bar * 2), t0, 0.35)
                 if last and name in ('build', 'break'):
                     r = kit.riser(bar)
                     place('fx', r, t0, 0.35)
@@ -686,9 +687,9 @@ class Song:
                     place('fx', rc, t0 + bar / 2, 0.45)
         # basketball sound design woven into the bed
         first_bar = plan['sections'][0][1] * bar
-        if self.style in ('drive', 'trap', 'hype'):
-            for k, s in enumerate((0, 4, 8, 12, 16, 20, 24, 28)):
-                place('fx', kit.bounce, off + 0.05 + s * step, 0.55 - 0.03 * k, 0.45)
+        # owner rule 2026-11-18: NO ball-bounce sound in any E2A video, including bounces baked into the bed.
+        # The dribble one-shots are gone for good; the other basketball one-shots can be dropped with --no-sfx.
+        if self.style in ('drive', 'trap', 'hype') and not NO_SFX:
             place('fx', kit.squeak, off + 0.05 + 22 * step, 0.35, 0.65)
         for name, b0, b1 in plan['sections']:
             if name in ('drop', 'drop2'):
@@ -710,7 +711,8 @@ class Song:
             place('music', i_braam(mtof(self.degree(self.prog[0], 2)), 2.2, rng), end_t + off, 0.5)
         place('drums', kit.taiko if self.style == 'cinematic' else kit.kick, end_t + off, 0.9)
         place('fx', kit.bass_hit, end_t + off, 0.8)
-        place('fx', kit.swish, end_t + off - 0.28, 0.6, 0.55)
+        if not NO_SFX:
+            place('fx', kit.swish, end_t + off - 0.28, 0.6, 0.55)
         if self.style in ('hype', 'trap', 'cinematic', 'suspense'):
             place('fx', kit.crowd(2.2, swell=True), end_t + off + 0.05, 0.45)
         cut = ci
@@ -892,6 +894,9 @@ def make(words, story, out, duration=None, track=None, history=None, no_duck=Fal
     return info
 
 
+NO_SFX = False  # set by --no-sfx
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--words', required=True, help='ElevenLabs word timings JSON: [{text,start,end}]')
@@ -904,8 +909,11 @@ def main():
     ap.add_argument('--history', default=os.path.join(HERE, 'history.json'), help='rotation log ("" to disable)')
     ap.add_argument('--voice', help='the narration file (vo.mp3): sets the music level so the voice stays clear')
     ap.add_argument('--no-duck', action='store_true')
+    ap.add_argument('--no-sfx', action='store_true', help='no basketball one-shots (squeak, net swish, crowd) in the bed: music only')
     ap.add_argument('--mix-json', help='template/src/music-mix.json: set premixed=true so the template plays the bed at volume 1')
     a = ap.parse_args()
+    global NO_SFX
+    NO_SFX = a.no_sfx
     with open(a.words) as f:
         words = json.load(f)
     info = make(words, a.story, a.out, a.duration, a.track, a.history or None, a.no_duck, a.voice, a.drop_at, a.payoff_at)

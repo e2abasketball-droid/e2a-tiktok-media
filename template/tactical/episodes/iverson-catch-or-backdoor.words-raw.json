@@ -1,0 +1,512 @@
+[
+{
+"text": "DENY",
+"type": "word",
+"start": 0.08,
+"end": 0.4
+},
+{
+"text": "him",
+"type": "word",
+"start": 0.48,
+"end": 0.56
+},
+{
+"text": "at",
+"type": "word",
+"start": 0.6,
+"end": 0.64
+},
+{
+"text": "the",
+"type": "word",
+"start": 0.72,
+"end": 0.8
+},
+{
+"text": "top",
+"type": "word",
+"start": 0.96,
+"end": 1.12
+},
+{
+"text": "and",
+"type": "word",
+"start": 1.28,
+"end": 1.36
+},
+{
+"text": "he's",
+"type": "word",
+"start": 1.44,
+"end": 1.76
+},
+{
+"text": "gone.",
+"type": "word",
+"start": 2.0,
+"end": 2.44
+},
+{
+"text": "This",
+"type": "word",
+"start": 2.72,
+"end": 2.88
+},
+{
+"text": "is",
+"type": "word",
+"start": 2.96,
+"end": 3.04
+},
+{
+"text": "an",
+"type": "word",
+"start": 3.12,
+"end": 3.2
+},
+{
+"text": "Iverson",
+"type": "word",
+"start": 3.28,
+"end": 3.68
+},
+{
+"text": "cut.",
+"type": "word",
+"start": 3.76,
+"end": 4.24
+},
+{
+"text": "Start",
+"type": "word",
+"start": 4.48,
+"end": 4.72
+},
+{
+"text": "on",
+"type": "word",
+"start": 4.76,
+"end": 4.8
+},
+{
+"text": "the",
+"type": "word",
+"start": 4.84,
+"end": 4.88
+},
+{
+"text": "wing",
+"type": "word",
+"start": 4.96,
+"end": 5.28
+},
+{
+"text": "and",
+"type": "word",
+"start": 5.36,
+"end": 5.44
+},
+{
+"text": "sprint",
+"type": "word",
+"start": 5.52,
+"end": 5.84
+},
+{
+"text": "over",
+"type": "word",
+"start": 5.92,
+"end": 6.16
+},
+{
+"text": "both",
+"type": "word",
+"start": 6.24,
+"end": 6.48
+},
+{
+"text": "elbow",
+"type": "word",
+"start": 6.56,
+"end": 6.8
+},
+{
+"text": "screens.",
+"type": "word",
+"start": 6.88,
+"end": 7.52
+},
+{
+"text": "If",
+"type": "word",
+"start": 7.68,
+"end": 7.84
+},
+{
+"text": "your",
+"type": "word",
+"start": 7.88,
+"end": 7.92
+},
+{
+"text": "defender",
+"type": "word",
+"start": 8.0,
+"end": 8.32
+},
+{
+"text": "TRAILS,",
+"type": "word",
+"start": 8.4,
+"end": 9.12
+},
+{
+"text": "show",
+"type": "word",
+"start": 9.24,
+"end": 9.36
+},
+{
+"text": "your",
+"type": "word",
+"start": 9.44,
+"end": 9.52
+},
+{
+"text": "hands",
+"type": "word",
+"start": 9.68,
+"end": 9.84
+},
+{
+"text": "and",
+"type": "word",
+"start": 9.92,
+"end": 10.0
+},
+{
+"text": "catch",
+"type": "word",
+"start": 10.2,
+"end": 10.4
+},
+{
+"text": "just",
+"type": "word",
+"start": 10.48,
+"end": 10.64
+},
+{
+"text": "outside",
+"type": "word",
+"start": 10.72,
+"end": 11.12
+},
+{
+"text": "the",
+"type": "word",
+"start": 11.16,
+"end": 11.2
+},
+{
+"text": "far",
+"type": "word",
+"start": 11.28,
+"end": 11.44
+},
+{
+"text": "elbow.",
+"type": "word",
+"start": 11.52,
+"end": 12.24
+},
+{
+"text": "Now",
+"type": "word",
+"start": 12.36,
+"end": 12.48
+},
+{
+"text": "you",
+"type": "word",
+"start": 12.64,
+"end": 12.72
+},
+{
+"text": "can",
+"type": "word",
+"start": 12.8,
+"end": 12.88
+},
+{
+"text": "face",
+"type": "word",
+"start": 13.0,
+"end": 13.12
+},
+{
+"text": "up.",
+"type": "word",
+"start": 13.2,
+"end": 13.76
+},
+{
+"text": "Same",
+"type": "word",
+"start": 13.84,
+"end": 14.0
+},
+{
+"text": "cut.",
+"type": "word",
+"start": 14.08,
+"end": 14.72
+},
+{
+"text": "Watch",
+"type": "word",
+"start": 14.84,
+"end": 14.96
+},
+{
+"text": "what",
+"type": "word",
+"start": 15.04,
+"end": 15.12
+},
+{
+"text": "changes.",
+"type": "word",
+"start": 15.4,
+"end": 16.0
+},
+{
+"text": "If",
+"type": "word",
+"start": 16.069,
+"end": 16.08
+},
+{
+"text": "he",
+"type": "word",
+"start": 16.16,
+"end": 16.24
+},
+{
+"text": "jumps",
+"type": "word",
+"start": 16.32,
+"end": 16.48
+},
+{
+"text": "the",
+"type": "word",
+"start": 16.56,
+"end": 16.64
+},
+{
+"text": "passing",
+"type": "word",
+"start": 16.76,
+"end": 16.96
+},
+{
+"text": "lane,",
+"type": "word",
+"start": 17.04,
+"end": 17.52
+},
+{
+"text": "sell",
+"type": "word",
+"start": 17.6,
+"end": 17.76
+},
+{
+"text": "the",
+"type": "word",
+"start": 17.84,
+"end": 17.92
+},
+{
+"text": "catch.",
+"type": "word",
+"start": 18.12,
+"end": 18.64
+},
+{
+"text": "Plant,",
+"type": "word",
+"start": 18.84,
+"end": 19.28
+},
+{
+"text": "then",
+"type": "word",
+"start": 19.4,
+"end": 19.52
+},
+{
+"text": "cut",
+"type": "word",
+"start": 19.6,
+"end": 19.68
+},
+{
+"text": "behind",
+"type": "word",
+"start": 19.76,
+"end": 20.08
+},
+{
+"text": "him.",
+"type": "word",
+"start": 20.16,
+"end": 20.56
+},
+{
+"text": "Lead",
+"type": "word",
+"start": 20.64,
+"end": 20.8
+},
+{
+"text": "him",
+"type": "word",
+"start": 20.84,
+"end": 20.88
+},
+{
+"text": "to",
+"type": "word",
+"start": 20.96,
+"end": 21.04
+},
+{
+"text": "the",
+"type": "word",
+"start": 21.093,
+"end": 21.147
+},
+{
+"text": "rim.",
+"type": "word",
+"start": 21.2,
+"end": 21.76
+},
+{
+"text": "That's",
+"type": "word",
+"start": 21.84,
+"end": 22.0
+},
+{
+"text": "your",
+"type": "word",
+"start": 22.12,
+"end": 22.24
+},
+{
+"text": "BACKDOOR.",
+"type": "word",
+"start": 22.4,
+"end": 23.28
+},
+{
+"text": "If",
+"type": "word",
+"start": 23.347,
+"end": 23.36
+},
+{
+"text": "he",
+"type": "word",
+"start": 23.44,
+"end": 23.52
+},
+{
+"text": "trails,",
+"type": "word",
+"start": 23.56,
+"end": 24.24
+},
+{
+"text": "catch.",
+"type": "word",
+"start": 24.44,
+"end": 24.96
+},
+{
+"text": "If",
+"type": "word",
+"start": 25.0,
+"end": 25.04
+},
+{
+"text": "he",
+"type": "word",
+"start": 25.12,
+"end": 25.2
+},
+{
+"text": "denies,",
+"type": "word",
+"start": 25.28,
+"end": 26.0
+},
+{
+"text": "cut.",
+"type": "word",
+"start": 26.16,
+"end": 26.72
+},
+{
+"text": "Could",
+"type": "word",
+"start": 26.8,
+"end": 26.88
+},
+{
+"text": "you",
+"type": "word",
+"start": 26.96,
+"end": 27.04
+},
+{
+"text": "make",
+"type": "word",
+"start": 27.12,
+"end": 27.2
+},
+{
+"text": "that",
+"type": "word",
+"start": 27.28,
+"end": 27.36
+},
+{
+"text": "read",
+"type": "word",
+"start": 27.44,
+"end": 27.52
+},
+{
+"text": "at",
+"type": "word",
+"start": 27.6,
+"end": 27.68
+},
+{
+"text": "full",
+"type": "word",
+"start": 27.76,
+"end": 27.84
+},
+{
+"text": "speed?",
+"type": "word",
+"start": 27.92,
+"end": 28.56
+}
+]

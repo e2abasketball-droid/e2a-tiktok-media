@@ -7,6 +7,8 @@ import {Pro, proDuration} from './pro/Pro';
 import type {Episode} from './pro/types';
 import pilot from '../episodes/pilot.json';
 import {Probe} from './t3d/Probe';
+import {ChoreoLab} from './t3d/ChoreoLab';
+import euroA from '../tactical/plays/euro-a.json';
 import {Tactical3D, tactical3dDuration} from './t3d/Tactical3D';
 import {staggerEpisode, staggerEpisodeV2} from './t3d/episode';
 import {Tactical, tacticalDuration} from './tactical/Tactical';
@@ -96,6 +98,17 @@ export const Root: React.FC = () => (
         return {fps, durationInFrames: Math.ceil(tactical3dDuration(props.episode) * fps)};
       }}
     />
+    <Composition
+      id="ChoreoLab"
+      component={ChoreoLab}
+      durationInFrames={300}
+      fps={30}
+      width={1080}
+      height={1080}
+      defaultProps={{play: euroA as never, view: 'side', t0: 1.0, t1: 3.4, rate: 0.5}}
+      calculateMetadata={({props}) => ({durationInFrames: Math.ceil(((props.t1 - props.t0) / props.rate) * 30) + 1})}
+    />
+    <Composition id="ChoreoLabV" component={ChoreoLab} durationInFrames={30} fps={30} width={1080} height={1920} defaultProps={{play: euroA as never, view: 'side', t0: 1.0, t1: 3.4, rate: 0.5}} />
     <Composition id="Probe3D" component={Probe} durationInFrames={300} fps={60} width={1080} height={1920} defaultProps={{cam: 'broadcast'}} />
   </>
 );

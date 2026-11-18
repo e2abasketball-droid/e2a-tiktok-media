@@ -1,0 +1,300 @@
+{
+ "source": "public/tactical/hide4/voice-raw.mp3",
+ "source_sec": 44.035,
+ "preroll": 0.0,
+ "output": "public/tactical/hide4/voice.wav",
+ "output_sec": 52.845,
+ "inserted_total_sec": 8.81,
+ "last_word_end": 52.955,
+ "gaps": [
+  {
+   "after": "the ball.",
+   "natural_silence": [
+    3.27,
+    3.71
+   ],
+   "natural_sec": 0.44,
+   "target_sec": 0.3,
+   "inserted_sec": 0.0,
+   "cut_at_source": 3.545,
+   "why": "hook -> practice memory"
+  },
+  {
+   "after": "calls for it.",
+   "natural_silence": [
+    5.28,
+    5.71
+   ],
+   "natural_sec": 0.43,
+   "target_sec": 0.3,
+   "inserted_sec": 0.0,
+   "cut_at_source": 5.435,
+   "why": "warm practice -> game, same framing"
+  },
+  {
+   "after": "hearing that miss.",
+   "natural_silence": [
+    7.34,
+    7.44
+   ],
+   "natural_sec": 0.1,
+   "target_sec": 1.0,
+   "inserted_sec": 0.9,
+   "cut_at_source": 7.395,
+   "why": "brief rebound memory + short rim echo, #8 looks at the passer"
+  },
+  {
+   "after": "miss again?",
+   "natural_silence": [
+    8.79,
+    9.01
+   ],
+   "natural_sec": 0.22,
+   "target_sec": 0.45,
+   "inserted_sec": 0.23,
+   "cut_at_source": 8.945,
+   "why": "the hand comes back at the end of the question"
+  },
+  {
+   "after": "his hands.",
+   "natural_silence": [
+    10.32,
+    10.71
+   ],
+   "natural_sec": 0.39,
+   "target_sec": 0.45,
+   "inserted_sec": 0.06,
+   "cut_at_source": 10.605,
+   "why": "half a hand rises"
+  },
+  {
+   "after": "them back.",
+   "natural_silence": [
+    11.6,
+    12.06
+   ],
+   "natural_sec": 0.46,
+   "target_sec": 1.0,
+   "inserted_sec": 0.54,
+   "cut_at_source": 11.745,
+   "why": "the hand is back down; cut to the passer's POV, #14 in the line"
+  },
+  {
+   "after": "right at him.",
+   "natural_silence": [
+    13.48,
+    13.91
+   ],
+   "natural_sec": 0.43,
+   "target_sec": 0.25,
+   "inserted_sec": 0.0,
+   "cut_at_source": 13.755,
+   "why": ""
+  },
+  {
+   "after": "in the way.",
+   "natural_silence": [
+    14.86,
+    15.19
+   ],
+   "natural_sec": 0.33,
+   "target_sec": 0.25,
+   "inserted_sec": 0.0,
+   "cut_at_source": 15.095,
+   "why": ""
+  },
+  {
+   "after": "somewhere else.",
+   "natural_silence": [
+    16.37,
+    16.78
+   ],
+   "natural_sec": 0.41,
+   "target_sec": 2.3,
+   "inserted_sec": 1.89,
+   "cut_at_source": 16.655,
+   "why": "the pass travels to O3 and is caught, #8's eyes follow it; new possession"
+  },
+  {
+   "after": "about the shot.",
+   "natural_silence": [
+    18.29,
+    18.6
+   ],
+   "natural_sec": 0.31,
+   "target_sec": 0.3,
+   "inserted_sec": 0.0,
+   "cut_at_source": 18.385,
+   "why": ""
+  },
+  {
+   "after": "one job.",
+   "natural_silence": [
+    19.89,
+    20.28
+   ],
+   "natural_sec": 0.39,
+   "target_sec": 0.4,
+   "inserted_sec": 0.01,
+   "cut_at_source": 20.145,
+   "why": "exhale, eyes up to the passer"
+  },
+  {
+   "after": "open again.",
+   "natural_silence": [
+    21.56,
+    21.96
+   ],
+   "natural_sec": 0.4,
+   "target_sec": 0.75,
+   "inserted_sec": 0.35,
+   "cut_at_source": 21.855,
+   "why": "first step to the space, #14 moves with him"
+  },
+  {
+   "after": "get free.",
+   "natural_silence": [
+    22.93,
+    23.23
+   ],
+   "natural_sec": 0.3,
+   "target_sec": 0.3,
+   "inserted_sec": 0.0,
+   "cut_at_source": 23.125,
+   "why": ""
+  },
+  {
+   "after": "defender follows.",
+   "natural_silence": [
+    24.19,
+    24.45
+   ],
+   "natural_sec": 0.26,
+   "target_sec": 1.0,
+   "inserted_sec": 0.74,
+   "cut_at_source": 24.265,
+   "why": "#14 keeps the line closed: no window, #8 hesitates"
+  },
+  {
+   "after": "calls again.",
+   "natural_silence": [
+    27.11,
+    27.47
+   ],
+   "natural_sec": 0.36,
+   "target_sec": 0.45,
+   "inserted_sec": 0.09,
+   "cut_at_source": 27.375,
+   "why": "the pass leaves as the line opens"
+  },
+  {
+   "after": "pass comes.",
+   "natural_silence": [
+    28.91,
+    29.25
+   ],
+   "natural_sec": 0.34,
+   "target_sec": 0.35,
+   "inserted_sec": 0.01,
+   "cut_at_source": 29.005,
+   "why": "the catch"
+  },
+  {
+   "after": "ready to shoot.",
+   "natural_silence": [
+    30.03,
+    30.38
+   ],
+   "natural_sec": 0.35,
+   "target_sec": 0.3,
+   "inserted_sec": 0.0,
+   "cut_at_source": 30.145,
+   "why": ""
+  },
+  {
+   "after": "defender closes.",
+   "natural_silence": [
+    31.35,
+    31.56
+   ],
+   "natural_sec": 0.21,
+   "target_sec": 0.35,
+   "inserted_sec": 0.14,
+   "cut_at_source": 31.495,
+   "why": "eyes to the corner"
+  },
+  {
+   "after": "teammate's open.",
+   "natural_silence": [
+    32.5,
+    32.75
+   ],
+   "natural_sec": 0.25,
+   "target_sec": 0.3,
+   "inserted_sec": 0.05,
+   "cut_at_source": 32.675,
+   "why": ""
+  },
+  {
+   "after": "one more pass.",
+   "natural_silence": [
+    33.7,
+    33.85
+   ],
+   "natural_sec": 0.15,
+   "target_sec": 3.3,
+   "inserted_sec": 3.15,
+   "cut_at_source": 33.785,
+   "why": "the extra pass travels, #4 catches and attacks, #8 relocates"
+  },
+  {
+   "after": "best players miss.",
+   "natural_silence": [
+    35.42,
+    35.81
+   ],
+   "natural_sec": 0.39,
+   "target_sec": 0.5,
+   "inserted_sec": 0.11,
+   "cut_at_source": 35.705,
+   "why": ""
+  },
+  {
+   "after": "of the game.",
+   "natural_silence": [
+    36.76,
+    37.35
+   ],
+   "natural_sec": 0.59,
+   "target_sec": 0.5,
+   "inserted_sec": 0.0,
+   "cut_at_source": 36.945,
+   "why": ""
+  },
+  {
+   "after": "do next.",
+   "natural_silence": [
+    40.77,
+    41.35
+   ],
+   "natural_sec": 0.58,
+   "target_sec": 1.1,
+   "inserted_sec": 0.52,
+   "cut_at_source": 41.195,
+   "why": "callback: #8 plants and asks; back to the live possession"
+  },
+  {
+   "after": "it again.",
+   "natural_silence": [
+    42.35,
+    42.93
+   ],
+   "natural_sec": 0.58,
+   "target_sec": 0.6,
+   "inserted_sec": 0.02,
+   "cut_at_source": 42.745,
+   "why": "own short pause before the last line"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}

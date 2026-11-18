@@ -1,0 +1,48 @@
+{
+ "source": "public/tactical/ddrag/voice-raw.mp3",
+ "source_sec": 15.28,
+ "preroll": 0.1,
+ "output": "public/tactical/ddrag/voice.wav",
+ "output_sec": 19.28,
+ "inserted_total_sec": 3.9,
+ "last_word_end": 19.36,
+ "gaps": [
+  {
+   "after": "is OPEN.",
+   "natural_silence": [
+    5.1,
+    5.66
+   ],
+   "natural_sec": 0.56,
+   "target_sec": 0.78,
+   "inserted_sec": 0.22,
+   "cut_at_source": 5.345,
+   "why": "the three to the net, then the cut to the overhead replay"
+  },
+  {
+   "after": "has to help.",
+   "natural_silence": [
+    10.32,
+    10.86
+   ],
+   "natural_sec": 0.54,
+   "target_sec": 0.72,
+   "inserted_sec": 0.18,
+   "cut_at_source": 10.475,
+   "why": "the pass to the pop, then the cut to the same start for B"
+  },
+  {
+   "after": "for the roll.",
+   "natural_silence": [
+    13.59,
+    14.17
+   ],
+   "natural_sec": 0.58,
+   "target_sec": 4.08,
+   "inserted_sec": 3.5,
+   "cut_at_source": 13.845,
+   "why": "the inside pass, the catch and the finish with court sound only"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}

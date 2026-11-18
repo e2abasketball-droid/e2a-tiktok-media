@@ -7,19 +7,22 @@ import {AbsoluteFill, Audio, Sequence, continueRender, delayRender, staticFile, 
 import type {V2} from '../tactical/geometry.ts';
 import type {Anchor, RemapKey} from '../tactical/edit.ts';
 import {localResolver, makeTacticalResolver, remapAt, resolveRemap} from '../tactical/edit.ts';
-import {posAt, routeOf} from '../tactical/play.ts';
+import {posAt, routeOf, sample} from '../tactical/play.ts';
 import type {CamKey3} from './camera3d.ts';
 import {camera3At} from './camera3d.ts';
 import type {LiveOv3, Ov3} from './overlays3d';
 import {Overlays3D, projector} from './overlays3d';
 import type {PlayWithActions} from './rig.ts';
 import {Scene3D} from './Scene';
-import {FreezeFrame, KineticTitle, Logo, PinLabel, PremiumSubtitles, RewindTag, Stamp} from './screen3d';
+import type {FaceCfg} from './Scene';
+import {choosePin, placePin} from './pinPlace';
+import {FreezeFrame, KineticTitle, Logo, OfferCounter, PinLabel, PremiumSubtitles, RewindTag, Stamp, StepBadge, StepCounter} from './screen3d';
+import {countedSteps} from './overlays3d';
 import '../theme';
 
 type Word = {text: string; start: number; end: number};
 type Timed = {from: Anchor; to?: Anchor};
-type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: number; gold?: number[]; sub?: string} | {type: 'stamp'; text: string; y?: number; tone?: 'gold' | 'white'; badge?: string} | {type: 'pin'; player: string; text: string; tone?: 'gold' | 'red' | 'white'; dy?: number; z?: number; size?: number} | {type: 'freeze'; label?: string} | {type: 'rewind'} | {type: 'logo'; big?: boolean} | {type: 'grade'} | {type: 'scrim'; opacity?: number});
+type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: number; gold?: number[]; sub?: string} | {type: 'stamp'; text: string; y?: number; tone?: 'gold' | 'white'; badge?: string} | {type: 'pin'; player: string; text: string; tone?: 'gold' | 'red' | 'white'; dy?: number; z?: number; size?: number} | {type: 'freeze'; label?: string} | {type: 'rewind'} | {type: 'logo'; big?: boolean} | {type: 'grade'} | {type: 'scrim'; opacity?: number} | {type: 'step'; n: number; text: string; y?: number} | {type: 'counter'; steps: Anchor[]; total?: number; y?: number; base?: number} | {type: 'stepCount'; player: string; labels: string[]; y?: number; gatherLabel?: boolean});
 type CamKeyA = Omit<CamKey3, 'at'> & {at: Anchor};
 export type Shot3 = {
   id: string;
@@ -32,6 +35,10 @@ export type Shot3 = {
   screen?: ScreenItem[];
   sfx?: {at: Anchor; name: string; volume?: number}[];
   hide?: string[];
+  /** 2026-11-17: warm practice gym or cold game arena (default: the arena as before) */
+  env?: 'practice' | 'game';
+  /** 2026-11-18 (V4): gain on this shot's automatic sfx (0 = none, e.g. a quiet memory echo of the rim done by hand) */
+  autoGain?: number;
 };
 export type Episode3 = {
   id: string;
@@ -46,6 +53,86 @@ export type Episode3 = {
   shots: Shot3[];
   keywords?: string[];
   subtitleHide?: [Anchor, Anchor][];
+  /** optional explicit subtitle bursts: number of words per burst, in order (must add up to the word count) */
+  subtitleGroups?: number[]; subtitleY?: number; subtitleBlock?: boolean; subtitleYAt?: [Anchor, Anchor, number][]; gradeBottom?: number;
+  /** sound by event (2026-11-13): bounces, catches, braking squeaks and the net, placed on their visible
+   *  contact through each shot's remap (silent in freezes, rewinds and slow motion below 0.3x) */
+  autoSfx?: boolean | {bounce?: number; catch?: number; squeak?: number; swish?: number; land?: number; rim?: number; players?: string[]};
+  /** V2 pins: anchored to the posed head, flipped below the feet when they would cover another player */
+  pinV2?: boolean;
+  /** arena room tone under everything (looped) */
+  ambience?: {src: string; volume?: number};
+  /** stylised character heads with faces (expressions keyed per play in play.expr) */
+  faces?: FaceCfg;
+};
+
+type Cue = {t: number; name: string; volume: number};
+const eventCache = new Map<string, {pt: number; name: string; key: string}[]>();
+/** contact events of a play, in play time (cached per play) */
+const playEvents = (play: PlayWithActions, players: string[]) => {
+  const hit = eventCache.get(play.id);
+  if (hit) return hit;
+  const ev: {pt: number; name: string; key: string}[] = [];
+  // dribble bounces: local minima of the ball height while it is held and dribbled
+  const step = 1 / 240;
+  let z0 = Infinity;
+  let z1 = Infinity;
+  for (let t = 0; t <= play.duration; t += step) {
+    const b = sample(play, t).ball;
+    const dribbling = b.holder && b.event && b.event.type === 'hold' && (b.event as {dribble?: boolean}).dribble;
+    const z = dribbling ? b.pos[2] : Infinity;
+    if (z1 < 0.3 && z1 <= z0 && z1 < z) ev.push({pt: t - step, name: 'bounce', key: 'bounce'});
+    z0 = z1;
+    z1 = z;
+  }
+  for (const e of play.ball) {
+    if (e.type === 'pass') ev.push({pt: e.t1, name: 'catch', key: 'catch'});
+    if ((e.type === 'shot' || e.type === 'layup') && e.make !== false) ev.push({pt: e.t1, name: 'swish', key: 'swish'});
+    if ((e.type === 'shot' || e.type === 'layup') && e.make === false) ev.push({pt: e.t1, name: 'rim', key: 'rim'});
+    if (e.type === 'shot') ev.push({pt: e.t0 + 0.32, name: 'land', key: 'land'});
+    if (e.type === 'layup') ev.push({pt: e.t0 + 0.48, name: 'land', key: 'land'});
+  }
+  // braking plants: a key player decelerates hard from a run (sneaker squeak)
+  for (const id of players) {
+    const wp = play.tracks[id];
+    if (!wp) continue;
+    const sp = (t: number) => {
+      const a = posAt(wp, t - 0.01);
+      const b = posAt(wp, t + 0.01);
+      return Math.hypot(b[0] - a[0], b[1] - a[1]) / 0.02;
+    };
+    let last = -9;
+    for (let t = 0.1; t < play.duration - 0.3; t += 0.02) {
+      if (t - last > 0.6 && sp(t) > 3.4 && sp(t + 0.3) < 1.3) {
+        ev.push({pt: t + 0.2, name: 'squeak', key: `squeak-${id}`});
+        last = t;
+      }
+    }
+  }
+  eventCache.set(play.id, ev);
+  return ev;
+};
+
+const autoCues = (ep: Episode3, laid: {shot: Shot3; start: number; end: number}[], T: (a: Anchor, off?: number) => number, fps: number): Cue[] => {
+  if (!ep.autoSfx) return [];
+  const cfg = typeof ep.autoSfx === 'object' ? ep.autoSfx : {};
+  const vol: Record<string, [string, number]> = {bounce: ['bounce', cfg.bounce ?? 0.2], catch: ['bounce', cfg.catch ?? 0.13], squeak: ['squeak', cfg.squeak ?? 0.1], swish: ['swish', cfg.swish ?? 0.3], land: ['bounce', cfg.land ?? 0.08], rim: ['rim', cfg.rim ?? cfg.swish ?? 0.3]};
+  const out: Cue[] = [];
+  for (const l of laid) {
+    const g = l.shot.autoGain ?? 1;
+    if (g <= 0) continue;
+    const play = ep.plays[l.shot.play];
+    const evs = playEvents(play, cfg.players ?? ['O1', 'O5', 'X1', 'X5']);
+    const rm = resolveRemap(l.shot.remap, play, localResolver(T, l.start, l.end));
+    const n = Math.round((l.end - l.start) * fps);
+    for (let f = 0; f < n; f++) {
+      const p0 = remapAt(rm, f / fps);
+      const p1 = remapAt(rm, (f + 1) / fps);
+      if (p1 - p0 < 0.3 / fps) continue;
+      for (const e of evs) if (e.pt > p0 && e.pt <= p1) out.push({t: l.start + (f + (e.pt - p0) / (p1 - p0)) / fps, name: vol[e.name][0], volume: vol[e.name][1] * g});
+    }
+  }
+  return out;
 };
 
 export const tactical3dDuration = (ep: Episode3) => ep.words[ep.words.length - 1].end + ep.tail;
@@ -106,6 +193,7 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
   const t = frame / fps;
   const laid = React.useMemo(() => layout(ep), [ep]);
   const T = React.useMemo(() => makeTacticalResolver(ep.words), [ep]);
+  const cues = React.useMemo(() => autoCues(ep, laid, T, fps), [ep, laid, T, fps]);
   if (!logo) return null;
   const cur = laid.find((l) => t >= l.start && t < l.end) ?? laid[laid.length - 1];
   const {shot, start, end} = cur;
@@ -136,14 +224,14 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
     <AbsoluteFill style={{background: '#050A15'}}>
       <AbsoluteFill style={{filter: freezeOn ? 'saturate(0.72) brightness(0.94) contrast(1.04)' : undefined}}>
         {!qcProbe && (
-          <Scene3D play={play} pt={pt} cam={cam} W={W} H={H} hide={shot.hide} logo={logo}>
+          <Scene3D play={play} pt={pt} cam={cam} W={W} H={H} hide={shot.hide} logo={logo} env={shot.env} faces={ep.faces}>
             <Overlays3D play={play} pt={pt} items={ov} />
           </Scene3D>
         )}
       </AbsoluteFill>
       {/* cinematic grade: vignette + top/bottom falloff that also protects text */}
       <AbsoluteFill style={{background: 'radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 55%, rgba(3,8,20,0.55) 100%)'}} />
-      <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(5,10,21,0.55) 0%, rgba(5,10,21,0) 22%, rgba(5,10,21,0) 62%, rgba(5,10,21,0.6) 100%)'}} />
+      <AbsoluteFill style={{background: `linear-gradient(180deg, rgba(5,10,21,0.55) 0%, rgba(5,10,21,0) 22%, rgba(5,10,21,0) 62%, rgba(5,10,21,${ep.gradeBottom ?? 0.6}) 100%)`}} />
       {scr.map((s, i) => {
         switch (s.type) {
           case 'title':
@@ -151,6 +239,18 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
           case 'stamp':
             return <Stamp key={i} text={s.text} age={s.age} dur={s.dur} y={s.y} tone={s.tone} badge={s.badge} />;
           case 'pin': {
+            // V2: anchored to the posed head (or below the feet when the head spot covers another player)
+            if (ep.pinV2) {
+              const lt0 = lt - s.age;
+              const samples = [0, 0.2, 0.4, 0.6, 0.8, 1].map((u) => {
+                const l = lt0 + u * s.dur * 0.999;
+                const p2 = remapAt(rm, l);
+                return {pt: p2, proj: projector(camera3At(play, shot.camera.map((k) => ({...k, at: toLocal(k.at)})), l, p2), W, H)};
+              });
+              const pick = choosePin(play, s.player, samples, s.text, s.size ?? 40, s.dy, s.z);
+              const q = placePin(play, s.player, pt, proj, s.text, s.size ?? 40, s.dy, s.z, pick);
+              return <PinLabel key={i} x={q.x} y={q.y} text={s.text} age={s.age} dur={s.dur} tone={s.tone} dy={q.dy} dx={q.dx} size={s.size} />;
+            }
             const p = posAt(play.tracks[s.player], Math.max(0, Math.min(play.duration, pt))) as V2;
             const q = proj([p[0], p[1], s.z ?? 2.25]);
             return q.visible ? <PinLabel key={i} x={q.x} y={q.y} text={s.text} age={s.age} dur={s.dur} tone={s.tone} dy={s.dy} size={s.size} /> : null;
@@ -162,16 +262,31 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
           case 'scrim':
             // navy veil that lifts a closing question off the court
             return <AbsoluteFill key={i} style={{background: '#050A15', opacity: (s.opacity ?? 0.5) * Math.min(1, s.age / 0.3)}} />;
+          case 'step':
+            return <StepBadge key={i} n={s.n} text={s.text} age={s.age} dur={s.dur} y={s.y} />;
+          case 'counter':
+            return <OfferCounter key={i} steps={s.steps.map((a) => toLocal(a) - (lt - s.age))} total={s.total ?? 3} base={s.base} age={s.age} dur={s.dur} y={s.y} />;
           case 'logo':
             return <Logo key={i} age={s.age} big={s.big} />;
+          case 'stepCount': {
+            const cs = countedSteps(play, s.player).slice(0, s.labels.length);
+            const g = (play as unknown as {choreo: Record<string, {ev: {gather: number}}>}).choreo[s.player].ev.gather;
+            return <StepCounter key={i} pt={pt} gather={g} lands={cs.map((x) => x.land)} labels={s.labels} age={s.age} dur={s.dur} y={s.y} gatherLabel={s.gatherLabel} />;
+          }
           default:
             return null;
         }
       })}
-      <PremiumSubtitles words={ep.words} t={t} keys={ep.keywords ?? []} hideRanges={subHide} />
+      <PremiumSubtitles words={ep.words} t={t} keys={ep.keywords ?? []} hideRanges={subHide} sizes={ep.subtitleGroups} block={ep.subtitleBlock} y={(ep.subtitleYAt ?? []).map(([a, b, yy]) => [T(a), T(b), yy] as [number, number, number]).find(([a, b]) => t >= a && t < b)?.[2] ?? ep.subtitleY ?? 1290} />
       {qcProbe && <BoundsProbe frame={frame} />}
       {!qcProbe && <Audio src={staticFile(ep.voiceMix ?? ep.voice)} />}
       {!qcProbe && ep.music?.src && <Audio src={staticFile(ep.music.src)} volume={ep.music.volume ?? 1} />}
+      {!qcProbe && ep.ambience && <Audio src={staticFile(ep.ambience.src)} volume={ep.ambience.volume ?? 0.1} loop />}
+      {!qcProbe && cues.map((c, i) => (
+        <Sequence key={`cue-${i}`} from={Math.max(0, Math.round(c.t * fps))} durationInFrames={Math.round(1.2 * fps)}>
+          <Audio src={staticFile(`sfx/${c.name}.mp3`)} volume={c.volume} />
+        </Sequence>
+      ))}
       {!qcProbe && laid.flatMap((l) =>
         (l.shot.sfx ?? []).map((s, i) => {
           const at = l.start + localResolver(T, l.start, l.end)(s.at);

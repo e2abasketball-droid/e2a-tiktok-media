@@ -1,0 +1,216 @@
+{
+ "source": "public/tactical/hide2/voice-raw.mp3",
+ "source_sec": 32.4,
+ "preroll": 0.0,
+ "output": "public/tactical/hide2/voice.wav",
+ "output_sec": 51.65,
+ "inserted_total_sec": 19.25,
+ "last_word_end": 51.732,
+ "gaps": [
+  {
+   "after": "want the ball.",
+   "natural_silence": [
+    3.5,
+    3.95
+   ],
+   "natural_sec": 0.45,
+   "target_sec": 1.2,
+   "inserted_sec": 0.75,
+   "cut_at_source": 3.825,
+   "why": "reaction: the arm comes down"
+  },
+  {
+   "after": "without thinking.",
+   "natural_silence": [
+    6.51,
+    7.05
+   ],
+   "natural_sec": 0.54,
+   "target_sec": 1.1,
+   "inserted_sec": 0.56,
+   "cut_at_source": 6.685,
+   "why": "practice: catch, square up"
+  },
+  {
+   "after": "game starts.",
+   "natural_silence": [
+    7.99,
+    8.43
+   ],
+   "natural_sec": 0.44,
+   "target_sec": 2.2,
+   "inserted_sec": 1.76,
+   "cut_at_source": 8.305,
+   "why": "match cut on the rise, the shot leaves"
+  },
+  {
+   "after": "hits the rim.",
+   "natural_silence": [
+    10.19,
+    10.78
+   ],
+   "natural_sec": 0.59,
+   "target_sec": 3.8,
+   "inserted_sec": 3.21,
+   "cut_at_source": 10.385,
+   "why": "no narration around the impact and the first reaction; rebound, the game goes on"
+  },
+  {
+   "after": "thinking is,",
+   "natural_silence": [
+    12.92,
+    13.37
+   ],
+   "natural_sec": 0.45,
+   "target_sec": 0.7,
+   "inserted_sec": 0.25,
+   "cut_at_source": 13.185,
+   "why": "half a hand comes up and goes back"
+  },
+  {
+   "after": "miss again?",
+   "natural_silence": [
+    14.31,
+    15.08
+   ],
+   "natural_sec": 0.77,
+   "target_sec": 1.3,
+   "inserted_sec": 0.53,
+   "cut_at_source": 14.725,
+   "why": "short pause before the story resumes"
+  },
+  {
+   "after": "hands drop.",
+   "natural_silence": [
+    15.79,
+    16.19
+   ],
+   "natural_sec": 0.4,
+   "target_sec": 0.45,
+   "inserted_sec": 0.05,
+   "cut_at_source": 16.025,
+   "why": "behind the passer"
+  },
+  {
+   "after": "somewhere else.",
+   "natural_silence": [
+    17.46,
+    17.88
+   ],
+   "natural_sec": 0.42,
+   "target_sec": 2.2,
+   "inserted_sec": 1.78,
+   "cut_at_source": 17.755,
+   "why": "the pass goes to O3"
+  },
+  {
+   "after": "one job.",
+   "natural_silence": [
+    19.24,
+    19.74
+   ],
+   "natural_sec": 0.5,
+   "target_sec": 0.7,
+   "inserted_sec": 0.2,
+   "cut_at_source": 19.525,
+   "why": "pause between actions"
+  },
+  {
+   "after": "Breathe out.",
+   "natural_silence": [
+    20.23,
+    20.69
+   ],
+   "natural_sec": 0.46,
+   "target_sec": 1.6,
+   "inserted_sec": 1.14,
+   "cut_at_source": 20.545,
+   "why": "exhale, short tap on the jersey"
+  },
+  {
+   "after": "next spot.",
+   "natural_silence": [
+    21.68,
+    22.04
+   ],
+   "natural_sec": 0.36,
+   "target_sec": 2.0,
+   "inserted_sec": 1.64,
+   "cut_at_source": 21.935,
+   "why": "eyes back on the passer"
+  },
+  {
+   "after": "can see you.",
+   "natural_silence": [
+    23.71,
+    23.94
+   ],
+   "natural_sec": 0.23,
+   "target_sec": 1.2,
+   "inserted_sec": 0.97,
+   "cut_at_source": 23.845,
+   "why": "plant and slide, the lane opens"
+  },
+  {
+   "after": "your hands.",
+   "natural_silence": [
+    24.89,
+    25.12
+   ],
+   "natural_sec": 0.23,
+   "target_sec": 0.8,
+   "inserted_sec": 0.57,
+   "cut_at_source": 24.965,
+   "why": "hands up"
+  },
+  {
+   "after": "Call for it.",
+   "natural_silence": [
+    25.77,
+    26.13
+   ],
+   "natural_sec": 0.36,
+   "target_sec": 3.3,
+   "inserted_sec": 2.94,
+   "cut_at_source": 26.015,
+   "why": "the pass and the two-hand catch"
+  },
+  {
+   "after": "still nervous.",
+   "natural_silence": [
+    27.09,
+    27.28
+   ],
+   "natural_sec": 0.19,
+   "target_sec": 0.5,
+   "inserted_sec": 0.31,
+   "cut_at_source": 27.185,
+   "why": "the ask from the other angle"
+  },
+  {
+   "after": "it anyway.",
+   "natural_silence": [
+    28.4,
+    28.67
+   ],
+   "natural_sec": 0.27,
+   "target_sec": 0.8,
+   "inserted_sec": 0.53,
+   "cut_at_source": 28.485,
+   "why": "back to the catch"
+  },
+  {
+   "after": "he shoots.",
+   "natural_silence": [
+    30.3,
+    30.64
+   ],
+   "natural_sec": 0.34,
+   "target_sec": 2.4,
+   "inserted_sec": 2.06,
+   "cut_at_source": 30.535,
+   "why": "ball in flight"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}

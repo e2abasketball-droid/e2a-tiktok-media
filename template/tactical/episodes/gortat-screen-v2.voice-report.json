@@ -1,0 +1,96 @@
+{
+ "source": "public/tactical/gortat2/voice-raw.mp3",
+ "source_sec": 68.8,
+ "preroll": 0.15,
+ "output": "public/tactical/gortat2/voice.wav",
+ "output_sec": 70.24,
+ "inserted_total_sec": 1.29,
+ "last_word_end": 70.32,
+ "gaps": [
+  {
+   "after": "the drop coverage.",
+   "natural_silence": [
+    4.91,
+    5.26
+   ],
+   "natural_sec": 0.35,
+   "target_sec": 0.85,
+   "inserted_sec": 0.5,
+   "cut_at_source": 5.065,
+   "why": "hook -> title: dramatic beat on the freeze (SEALED.)"
+  },
+  {
+   "after": "This is the Gortat screen.",
+   "natural_silence": [
+    6.86,
+    7.35
+   ],
+   "natural_sec": 0.49,
+   "target_sec": 0.55,
+   "inserted_sec": 0.06,
+   "cut_at_source": 7.215,
+   "why": "title lands before the explanation"
+  },
+  {
+   "after": "own defender in the paint.",
+   "natural_silence": [
+    27.43,
+    28.16
+   ],
+   "natural_sec": 0.73,
+   "target_sec": 0.6,
+   "inserted_sec": 0.0,
+   "cut_at_source": 27.735,
+   "why": "block change: setup -> Case A"
+  },
+  {
+   "after": "Watch what happens.",
+   "natural_silence": [
+    31.6,
+    32.1
+   ],
+   "natural_sec": 0.5,
+   "target_sec": 0.55,
+   "inserted_sec": 0.05,
+   "cut_at_source": 31.735,
+   "why": "the play starts at real speed"
+  },
+  {
+   "after": "Drive. Finish. Two points.",
+   "natural_silence": [
+    39.78,
+    40.31
+   ],
+   "natural_sec": 0.53,
+   "target_sec": 0.85,
+   "inserted_sec": 0.32,
+   "cut_at_source": 40.105,
+   "why": "layup drops, LAYUP +2"
+  },
+  {
+   "after": "an open three instead.",
+   "natural_silence": [
+    54.46,
+    55.11
+   ],
+   "natural_sec": 0.65,
+   "target_sec": 0.75,
+   "inserted_sec": 0.1,
+   "cut_at_source": 54.695,
+   "why": "three drops; block change -> comparison"
+  },
+  {
+   "after": "corner is wide open.",
+   "natural_silence": [
+    62.56,
+    63.05
+   ],
+   "natural_sec": 0.49,
+   "target_sec": 0.75,
+   "inserted_sec": 0.26,
+   "cut_at_source": 62.775,
+   "why": "side-by-side summary holds before the rule"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}

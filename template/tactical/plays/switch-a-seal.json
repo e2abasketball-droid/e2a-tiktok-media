@@ -1,0 +1,521 @@
+{
+ "id": "switch-a-seal",
+ "title": "Punish the switch A: deep seal, feed the post",
+ "duration": 8.690000000000001,
+ "concept": "switch",
+ "source": "original E2A play (generic high pick-and-roll against a switch, punish the mismatch inside or outside; no copied possession)",
+ "squareUp": true,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Guard: uses the ball screen, then reads the switch"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Left wing spacing"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Right corner spacing"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Left corner spacing"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Big: ball screen, then posts the small"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "Starts on the guard, switches onto the big",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "Left wing",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Right corner",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "Left corner: low man, late help",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "Starts on the big, switches onto the guard",
+   "guards": "O5"
+  }
+ ],
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 3.6,
+   "dribble": true
+  },
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 3.6,
+   "to": 5.07,
+   "dribble": true
+  },
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 5.07,
+   "to": 5.220000000000001
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O5",
+   "t0": 5.220000000000001,
+   "t1": 5.640000000000001,
+   "style": "bounce"
+  },
+  {
+   "type": "hold",
+   "player": "O5",
+   "from": 5.640000000000001,
+   "to": 6.69
+  },
+  {
+   "type": "layup",
+   "player": "O5",
+   "t0": 6.69,
+   "t1": 7.090000000000001,
+   "make": true
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "screen": 1.15,
+  "switch": 1.85,
+  "x5step": 1.8,
+  "x1turn": 2.05,
+  "decision": 3.6,
+  "seal": 4.4,
+  "angle": 4.45,
+  "angled": 5.15,
+  "pass": 5.220000000000001,
+  "catch": 5.640000000000001,
+  "layup": 6.69,
+  "make": 7.090000000000001,
+  "end": 8.690000000000001
+ },
+ "actions": {
+  "O5": [
+   {
+    "type": "screen",
+    "from": 1.1,
+    "to": 1.9,
+    "face": "X1"
+   },
+   {
+    "type": "seal",
+    "from": 4.2,
+    "to": 6.2,
+    "face": "O1"
+   },
+   {
+    "type": "celebrate",
+    "from": 7.69,
+    "to": 8.49
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 1.3,
+    "face": "O1"
+   },
+   {
+    "type": "stance",
+    "from": 4.3,
+    "to": 6.6,
+    "face": "O5"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 1.8,
+    "to": 4.2,
+    "face": "O1"
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 12,
+    "face": "O2"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 12,
+    "face": "O3"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 12,
+    "face": "O1"
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "X5",
+   "b": "O1",
+   "at": "decision",
+   "max": 1.3,
+   "says": "Big on the guard. The drive's cut off."
+  },
+  {
+   "type": "near",
+   "a": "X1",
+   "b": "O5",
+   "at": "decision",
+   "max": 1.3,
+   "says": "Small on the big."
+  },
+  {
+   "type": "near",
+   "a": "X1",
+   "b": "O5",
+   "at": "seal",
+   "max": 1.2,
+   "says": "He's got the guard pinned."
+  },
+  {
+   "type": "near_rim",
+   "player": "O5",
+   "at": "layup",
+   "max": 1.5,
+   "says": "...and feed him (short finish)."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "screen",
+    "switch",
+    "decision",
+    "seal",
+    "angle",
+    "pass",
+    "catch",
+    "layup",
+    "make"
+   ],
+   "says": "screen, switch, seal, angle, pass, catch, finish"
+  }
+ ],
+ "notes": [
+  "Ball screen, switch: X5 on O1, X1 on O5.",
+  "O5 seals X1 behind him; O1 keeps the dribble, steps to a better angle, bounce pass, short finish."
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0,
+    1.55,
+    9.55
+   ],
+   [
+    0.75,
+    1.55,
+    9.55
+   ],
+   [
+    1.436,
+    0.6,
+    9.75
+   ],
+   [
+    1.894,
+    -0.6,
+    9.3
+   ],
+   [
+    3.05,
+    -1.95,
+    7.45
+   ],
+   [
+    4.45,
+    -1.95,
+    7.45
+   ],
+   [
+    5.15,
+    -3.15,
+    7.05
+   ],
+   [
+    8.690000000000001,
+    -3.15,
+    7.05
+   ]
+  ],
+  "O2": [
+   [
+    0,
+    5.4,
+    6.6
+   ],
+   [
+    8.690000000000001,
+    5.4,
+    6.6
+   ]
+  ],
+  "O3": [
+   [
+    0,
+    -6.7,
+    1.4
+   ],
+   [
+    8.690000000000001,
+    -6.7,
+    1.4
+   ]
+  ],
+  "O4": [
+   [
+    0,
+    6.6,
+    1.4
+   ],
+   [
+    8.690000000000001,
+    6.6,
+    1.4
+   ]
+  ],
+  "O5": [
+   [
+    0,
+    -1.6,
+    6.6
+   ],
+   [
+    0.587,
+    -0.4,
+    7.9
+   ],
+   [
+    1.05,
+    0.45,
+    8.8
+   ],
+   [
+    1.95,
+    0.45,
+    8.8
+   ],
+   [
+    2.62,
+    -0.4,
+    7.4
+   ],
+   [
+    3.5,
+    -0.95,
+    5
+   ],
+   [
+    3.65,
+    -0.95,
+    5
+   ],
+   [
+    4.4,
+    -1.15,
+    3.4
+   ],
+   [
+    5.94,
+    -1.15,
+    3.4
+   ],
+   [
+    6.69,
+    -1.25,
+    2.4
+   ],
+   [
+    8.690000000000001,
+    -1.25,
+    2.4
+   ]
+  ],
+  "X1": [
+   [
+    0,
+    1.2,
+    8.8
+   ],
+   [
+    1.25,
+    1.2,
+    8.8
+   ],
+   [
+    1.75,
+    0.95,
+    8.95
+   ],
+   [
+    2.05,
+    0.95,
+    8.95
+   ],
+   [
+    2.695,
+    0.2,
+    7.6
+   ],
+   [
+    3.5,
+    -0.45,
+    5.55
+   ],
+   [
+    3.6,
+    -0.45,
+    5.55
+   ],
+   [
+    4.101,
+    -0.3,
+    4.2
+   ],
+   [
+    4.65,
+    -0.45,
+    2.65
+   ],
+   [
+    5.89,
+    -0.45,
+    2.65
+   ],
+   [
+    6.39,
+    -0.15,
+    2.05
+   ],
+   [
+    8.690000000000001,
+    -0.15,
+    2.05
+   ]
+  ],
+  "X2": [
+   [
+    0,
+    4.6,
+    6.1
+   ],
+   [
+    8.690000000000001,
+    4.6,
+    6.1
+   ]
+  ],
+  "X3": [
+   [
+    0,
+    -5.7,
+    2
+   ],
+   [
+    8.690000000000001,
+    -5.7,
+    2
+   ]
+  ],
+  "X4": [
+   [
+    0,
+    3.6,
+    2.5
+   ],
+   [
+    1.5,
+    3.6,
+    2.5
+   ],
+   [
+    2.7,
+    3.1,
+    2.6
+   ],
+   [
+    8.690000000000001,
+    3.1,
+    2.6
+   ]
+  ],
+  "X5": [
+   [
+    0,
+    -1.1,
+    6
+   ],
+   [
+    0.2,
+    -1.1,
+    6
+   ],
+   [
+    1.1,
+    -0.55,
+    7.95
+   ],
+   [
+    1.75,
+    -0.55,
+    7.95
+   ],
+   [
+    2.85,
+    -1.55,
+    6.55
+   ],
+   [
+    8.690000000000001,
+    -1.55,
+    6.55
+   ]
+  ]
+ },
+ "screens": []
+}

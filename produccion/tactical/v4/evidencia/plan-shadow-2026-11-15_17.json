@@ -1,0 +1,540 @@
+[
+ {
+  "date": "2026-11-15",
+  "profile": "0.4.0-shadow",
+  "mode": "shadow",
+  "dry_run": true,
+  "writes": [],
+  "videos": [
+   {
+    "cid": "E2A-TACTICAL-2026-11-15-S01",
+    "n": 1,
+    "format": "execution",
+    "label": "V01 OFFENSIVE EXECUTION",
+    "slot_initial": "10:00",
+    "status": "live_v3",
+    "time": "10:00",
+    "metricool_id": "427791842",
+    "trial_reel": "12:00",
+    "why": "slot already holds the live V3 video (pilot keeps running); shadow does not duplicate it"
+   },
+   {
+    "cid": "E2A-TACTICAL-2026-11-15-S02",
+    "n": 2,
+    "format": "defensive_read",
+    "label": "V02 DEFENSIVE READ",
+    "slot_initial": "13:00",
+    "status": "live_v3",
+    "time": "13:00",
+    "metricool_id": "427792201",
+    "trial_reel": "15:00",
+    "why": "slot already holds the live V3 video (pilot keeps running); shadow does not duplicate it"
+   },
+   {
+    "cid": "E2A-TACTICAL-2026-11-15-S03",
+    "n": 3,
+    "format": "counter",
+    "label": "V03 COUNTER",
+    "slot_initial": "16:00",
+    "blocked_by": [
+     {
+      "slot": 3,
+      "metricool_id": 427925487,
+      "at": {
+       "dateTime": "2026-11-15T15:00:00",
+       "timezone": "Australia/Sydney"
+      },
+      "networks": [
+       "instagram"
+      ],
+      "type": "TRIAL_REEL",
+      "blocks": true
+     }
+    ],
+    "status": "planned",
+    "time": "16:30",
+    "moved": true,
+    "concept": "slip-vs-hedge",
+    "family": "slip screen",
+    "variant": "screener slips before contact against a hard hedge",
+    "question": "What does the hedge leave open?",
+    "cta": "Would your big slip it? Comment yes or no.",
+    "play": null,
+    "play_status": "needs_spec",
+    "skipped": [],
+    "trial_reel": "18:30",
+    "destinations": [
+     "E2A-TACTICAL-2026-11-15-S03:instagram",
+     "E2A-TACTICAL-2026-11-15-S03:tiktok",
+     "E2A-TACTICAL-2026-11-15-S03:youtube"
+    ]
+   },
+   {
+    "cid": "E2A-TACTICAL-2026-11-15-S04",
+    "n": 4,
+    "format": "challenge",
+    "label": "V04 WHAT WOULD YOU DO?",
+    "slot_initial": "19:00",
+    "blocked_by": [
+     {
+      "why": "own trial reel / another planned slot within the window"
+     }
+    ],
+    "status": "planned",
+    "time": "20:00",
+    "moved": true,
+    "concept": "wwyd-2on1",
+    "family": "transition 2-on-1",
+    "variant": "2-on-1: pass or finish against the stunt",
+    "question": "Pass or finish? You decide.",
+    "cta": "Answer PASS or FINISH before the reveal.",
+    "play": null,
+    "play_status": "needs_spec",
+    "skipped": [],
+    "trial_reel": "22:00",
+    "destinations": [
+     "E2A-TACTICAL-2026-11-15-S04:instagram",
+     "E2A-TACTICAL-2026-11-15-S04:tiktok",
+     "E2A-TACTICAL-2026-11-15-S04:youtube"
+    ]
+   }
+  ],
+  "rejected": [],
+  "destinations": [
+   "E2A-TACTICAL-2026-11-15-S03:instagram",
+   "E2A-TACTICAL-2026-11-15-S03:tiktok",
+   "E2A-TACTICAL-2026-11-15-S03:youtube",
+   "E2A-TACTICAL-2026-11-15-S04:instagram",
+   "E2A-TACTICAL-2026-11-15-S04:tiktok",
+   "E2A-TACTICAL-2026-11-15-S04:youtube"
+  ],
+  "n_destinations": 6,
+  "create_calls_planned": 2,
+  "budget": {
+   "need": {
+    "voice_takes": 2,
+    "voice_credits": 1016,
+    "scribe_credits": 332,
+    "final_renders": 2,
+    "create_calls": 2,
+    "publications": 6,
+    "render_s": 3920
+   },
+   "limit": {
+    "voice_takes": 4,
+    "voice_credits": 2100,
+    "scribe_credits": 700,
+    "final_renders": 6,
+    "create_calls": 6,
+    "publications": 12
+   },
+   "ok": true,
+   "over": {},
+   "credits_per_video_max": 674
+  }
+ },
+ {
+  "date": "2026-11-16",
+  "profile": "0.4.0-shadow",
+  "mode": "shadow",
+  "dry_run": true,
+  "writes": [],
+  "videos": [
+   {
+    "cid": "E2A-TACTICAL-2026-11-16-S01",
+    "n": 1,
+    "format": "execution",
+    "label": "V01 OFFENSIVE EXECUTION",
+    "slot_initial": "10:00",
+    "status": "planned",
+    "time": "10:00",
+    "moved": false,
+    "concept": "horns-twist",
+    "family": "horns",
+    "variant": "twist: wedge into second ball screen",
+    "question": "Why does the second screen beat the switch?",
+    "cta": "Comment TWIST if your team runs it.",
+    "play": null,
+    "play_status": "needs_spec",
+    "skipped": [],
+    "trial_reel": "12:00",
+    "destinations": [
+     "E2A-TACTICAL-2026-11-16-S01:instagram",
+     "E2A-TACTICAL-2026-11-16-S01:tiktok",
+     "E2A-TACTICAL-2026-11-16-S01:youtube"
+    ]
+   },
+   {
+    "cid": "E2A-TACTICAL-2026-11-16-S02",
+    "n": 2,
+    "format": "defensive_read",
+    "label": "V02 DEFENSIVE READ",
+    "slot_initial": "13:00",
+    "blocked_by": [
+     {
+      "why": "own trial reel / another planned slot within the window"
+     }
+    ],
+    "status": "planned",
+    "time": "13:30",
+    "moved": true,
+    "concept": "ice-side-pnr",
+    "family": "ice coverage",
+    "variant": "ice the side ball screen to the baseline",
+    "question": "Where does ICE send the ball?",
+    "cta": "Would you ICE this screen? Yes or no.",
+    "play": null,
+    "play_status": "needs_spec",
+    "skipped": [],
+    "trial_reel": "15:30",
+    "destinations": [
+     "E2A-TACTICAL-2026-11-16-S02:instagram",
+     "E2A-TACTICAL-2026-11-16-S02:tiktok",
+     "E2A-TACTICAL-2026-11-16-S02:youtube"
+    ]
+   },
+   {
+    "cid": "E2A-TACTICAL-2026-11-16-S03",
+    "n": 3,
+    "format": "counter",
+    "label": "V03 COUNTER",
+    "slot_initial": "16:00",
+    "blocked_by": [
+     {
+      "why": "own trial reel / another planned slot within the window"
+     }
+    ],
+    "status": "planned",
+    "time": "17:00",
+    "moved": true,
+    "concept": "reject-vs-ice",
+    "family": "reject",
+    "variant": "handler rejects the ICE screen to the middle",
+    "question": "Why does ICE invite the reject?",
+    "cta": "Tag a guard who rejects screens.",
+    "play": null,
+    "play_status": "needs_spec",
+    "skipped": [
+     {
+      "id": "slip-vs-hedge",
+      "why": [
+       {
+        "play_id": "slip-vs-hedge",
+        "date": "2026-11-15",
+        "why": "same family and variant"
+       }
+      ]
+     }
+    ],
+    "trial_reel": "19:00",
+    "destinations": [
+     "E2A-TACTICAL-2026-11-16-S03:instagram",
+     "E2A-TACTICAL-2026-11-16-S03:tiktok",
+     "E2A-TACTICAL-2026-11-16-S03:youtube"
+    ]
+   },
+   {
+    "cid": "E2A-TACTICAL-2026-11-16-S04",
+    "n": 4,
+    "format": "challenge",
+    "label": "V04 WHAT WOULD YOU DO?",
+    "slot_initial": "19:00",
+    "blocked_by": [
+     {
+      "why": "own trial reel / another planned slot within the window"
+     }
+    ],
+    "status": "planned",
+    "time": "20:30",
+    "moved": true,
+    "concept": "wwyd-corner-help",
+    "family": "corner help",
+    "variant": "help comes from the corner: kick or attack",
+    "question": "Kick or keep attacking?",
+    "cta": "Comment KICK or ATTACK.",
+    "play": null,
+    "play_status": "needs_spec",
+    "skipped": [
+     {
+      "id": "wwyd-2on1",
+      "why": [
+       {
+        "play_id": "wwyd-2on1",
+        "date": "2026-11-15",
+        "why": "same family and variant"
+       }
+      ]
+     }
+    ],
+    "trial_reel": "22:30",
+    "destinations": [
+     "E2A-TACTICAL-2026-11-16-S04:instagram",
+     "E2A-TACTICAL-2026-11-16-S04:tiktok",
+     "E2A-TACTICAL-2026-11-16-S04:youtube"
+    ]
+   }
+  ],
+  "rejected": [],
+  "destinations": [
+   "E2A-TACTICAL-2026-11-16-S01:instagram",
+   "E2A-TACTICAL-2026-11-16-S01:tiktok",
+   "E2A-TACTICAL-2026-11-16-S01:youtube",
+   "E2A-TACTICAL-2026-11-16-S02:instagram",
+   "E2A-TACTICAL-2026-11-16-S02:tiktok",
+   "E2A-TACTICAL-2026-11-16-S02:youtube",
+   "E2A-TACTICAL-2026-11-16-S03:instagram",
+   "E2A-TACTICAL-2026-11-16-S03:tiktok",
+   "E2A-TACTICAL-2026-11-16-S03:youtube",
+   "E2A-TACTICAL-2026-11-16-S04:instagram",
+   "E2A-TACTICAL-2026-11-16-S04:tiktok",
+   "E2A-TACTICAL-2026-11-16-S04:youtube"
+  ],
+  "n_destinations": 12,
+  "create_calls_planned": 4,
+  "budget": {
+   "need": {
+    "voice_takes": 4,
+    "voice_credits": 2032,
+    "scribe_credits": 664,
+    "final_renders": 4,
+    "create_calls": 4,
+    "publications": 12,
+    "render_s": 7840
+   },
+   "limit": {
+    "voice_takes": 4,
+    "voice_credits": 2100,
+    "scribe_credits": 700,
+    "final_renders": 6,
+    "create_calls": 6,
+    "publications": 12
+   },
+   "ok": true,
+   "over": {},
+   "credits_per_video_max": 674
+  }
+ },
+ {
+  "date": "2026-11-17",
+  "profile": "0.4.0-shadow",
+  "mode": "shadow",
+  "dry_run": true,
+  "writes": [],
+  "videos": [
+   {
+    "cid": "E2A-TACTICAL-2026-11-17-S01",
+    "n": 1,
+    "format": "execution",
+    "label": "V01 OFFENSIVE EXECUTION",
+    "slot_initial": "10:00",
+    "status": "planned",
+    "time": "10:00",
+    "moved": false,
+    "concept": "floppy-curl",
+    "family": "floppy",
+    "variant": "shooter reads the trail: curl or fade",
+    "question": "Curl or fade: who decides?",
+    "cta": "Tell us which read you teach first.",
+    "play": null,
+    "play_status": "needs_spec",
+    "skipped": [
+     {
+      "id": "horns-twist",
+      "why": [
+       {
+        "play_id": "horns-twist",
+        "date": "2026-11-16",
+        "why": "same family and variant"
+       }
+      ]
+     }
+    ],
+    "trial_reel": "12:00",
+    "destinations": [
+     "E2A-TACTICAL-2026-11-17-S01:instagram",
+     "E2A-TACTICAL-2026-11-17-S01:tiktok",
+     "E2A-TACTICAL-2026-11-17-S01:youtube"
+    ]
+   },
+   {
+    "cid": "E2A-TACTICAL-2026-11-17-S02",
+    "n": 2,
+    "format": "defensive_read",
+    "label": "V02 DEFENSIVE READ",
+    "slot_initial": "13:00",
+    "blocked_by": [
+     {
+      "why": "own trial reel / another planned slot within the window"
+     }
+    ],
+    "status": "planned",
+    "time": "13:30",
+    "moved": true,
+    "concept": "switch-post-seal",
+    "family": "switch coverage",
+    "variant": "switch and front the small-on-big post",
+    "question": "How do you stop the seal after the switch?",
+    "cta": "Comment FRONT or BEHIND.",
+    "play": null,
+    "play_status": "needs_spec",
+    "skipped": [
+     {
+      "id": "ice-side-pnr",
+      "why": [
+       {
+        "play_id": "ice-side-pnr",
+        "date": "2026-11-16",
+        "why": "same family and variant"
+       }
+      ]
+     }
+    ],
+    "trial_reel": "15:30",
+    "destinations": [
+     "E2A-TACTICAL-2026-11-17-S02:instagram",
+     "E2A-TACTICAL-2026-11-17-S02:tiktok",
+     "E2A-TACTICAL-2026-11-17-S02:youtube"
+    ]
+   },
+   {
+    "cid": "E2A-TACTICAL-2026-11-17-S03",
+    "n": 3,
+    "format": "counter",
+    "label": "V03 COUNTER",
+    "slot_initial": "16:00",
+    "blocked_by": [
+     {
+      "why": "own trial reel / another planned slot within the window"
+     }
+    ],
+    "status": "planned",
+    "time": "17:00",
+    "moved": true,
+    "concept": "ghost-vs-switch",
+    "family": "ghost screen",
+    "variant": "ghost the screen against a switching defence",
+    "question": "Why not set the screen at all?",
+    "cta": "Comment GHOST if you have seen it this season.",
+    "play": null,
+    "play_status": "needs_spec",
+    "skipped": [
+     {
+      "id": "slip-vs-hedge",
+      "why": [
+       {
+        "play_id": "slip-vs-hedge",
+        "date": "2026-11-15",
+        "why": "same family and variant"
+       }
+      ]
+     },
+     {
+      "id": "reject-vs-ice",
+      "why": [
+       {
+        "play_id": "reject-vs-ice",
+        "date": "2026-11-16",
+        "why": "same family and variant"
+       }
+      ]
+     }
+    ],
+    "trial_reel": "19:00",
+    "destinations": [
+     "E2A-TACTICAL-2026-11-17-S03:instagram",
+     "E2A-TACTICAL-2026-11-17-S03:tiktok",
+     "E2A-TACTICAL-2026-11-17-S03:youtube"
+    ]
+   },
+   {
+    "cid": "E2A-TACTICAL-2026-11-17-S04",
+    "n": 4,
+    "format": "challenge",
+    "label": "V04 WHAT WOULD YOU DO?",
+    "slot_initial": "19:00",
+    "blocked_by": [
+     {
+      "why": "own trial reel / another planned slot within the window"
+     }
+    ],
+    "status": "planned",
+    "time": "20:30",
+    "moved": true,
+    "concept": "wwyd-switch-guard",
+    "family": "switch onto guard",
+    "variant": "big switched onto the guard: isolate or post",
+    "question": "Isolate the big or post the guard?",
+    "cta": "Comment ISO or POST.",
+    "play": null,
+    "play_status": "needs_spec",
+    "skipped": [
+     {
+      "id": "wwyd-2on1",
+      "why": [
+       {
+        "play_id": "wwyd-2on1",
+        "date": "2026-11-15",
+        "why": "same family and variant"
+       }
+      ]
+     },
+     {
+      "id": "wwyd-corner-help",
+      "why": [
+       {
+        "play_id": "wwyd-corner-help",
+        "date": "2026-11-16",
+        "why": "same family and variant"
+       }
+      ]
+     }
+    ],
+    "trial_reel": "22:30",
+    "destinations": [
+     "E2A-TACTICAL-2026-11-17-S04:instagram",
+     "E2A-TACTICAL-2026-11-17-S04:tiktok",
+     "E2A-TACTICAL-2026-11-17-S04:youtube"
+    ]
+   }
+  ],
+  "rejected": [],
+  "destinations": [
+   "E2A-TACTICAL-2026-11-17-S01:instagram",
+   "E2A-TACTICAL-2026-11-17-S01:tiktok",
+   "E2A-TACTICAL-2026-11-17-S01:youtube",
+   "E2A-TACTICAL-2026-11-17-S02:instagram",
+   "E2A-TACTICAL-2026-11-17-S02:tiktok",
+   "E2A-TACTICAL-2026-11-17-S02:youtube",
+   "E2A-TACTICAL-2026-11-17-S03:instagram",
+   "E2A-TACTICAL-2026-11-17-S03:tiktok",
+   "E2A-TACTICAL-2026-11-17-S03:youtube",
+   "E2A-TACTICAL-2026-11-17-S04:instagram",
+   "E2A-TACTICAL-2026-11-17-S04:tiktok",
+   "E2A-TACTICAL-2026-11-17-S04:youtube"
+  ],
+  "n_destinations": 12,
+  "create_calls_planned": 4,
+  "budget": {
+   "need": {
+    "voice_takes": 4,
+    "voice_credits": 2032,
+    "scribe_credits": 664,
+    "final_renders": 4,
+    "create_calls": 4,
+    "publications": 12,
+    "render_s": 7840
+   },
+   "limit": {
+    "voice_takes": 4,
+    "voice_credits": 2100,
+    "scribe_credits": 700,
+    "final_renders": 6,
+    "create_calls": 6,
+    "publications": 12
+   },
+   "ok": true,
+   "over": {},
+   "credits_per_video_max": 674
+  }
+ }
+]

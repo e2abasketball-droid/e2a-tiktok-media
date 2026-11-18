@@ -1,0 +1,231 @@
+{
+ "id": "onemore-c-stay",
+ "title": "One more dribble C: he stays with the pass, finish",
+ "duration": 6.982,
+ "concept": "onemore",
+ "source": "original E2A play (2-on-1 read of the last defender; generic coaching knowledge, no copied possession)",
+ "squareUp": true,
+ "players": [
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Ball handler: pass now or one more dribble"
+  },
+  {
+   "id": "O8",
+   "team": "O",
+   "role": "Wide teammate on the right"
+  },
+  {
+   "id": "X10",
+   "team": "X",
+   "role": "The only defender: steps up or stays with the pass",
+   "guards": "O4"
+  }
+ ],
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O4",
+   "from": 0,
+   "to": 3.3,
+   "dribble": true
+  },
+  {
+   "type": "hold",
+   "player": "O4",
+   "from": 3.3,
+   "to": 4.532,
+   "dribble": true
+  },
+  {
+   "type": "hold",
+   "player": "O4",
+   "from": 4.532,
+   "to": 4.982
+  },
+  {
+   "type": "layup",
+   "player": "O4",
+   "t0": 4.982,
+   "t1": 5.382000000000001,
+   "make": true
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "decision": 3.3,
+  "stay": 4.24,
+  "lane": 4.05,
+  "gather": 4.532,
+  "layup": 4.982,
+  "make": 5.382000000000001,
+  "end": 6.982
+ },
+ "actions": {
+  "X10": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 5.8,
+    "face": "O4"
+   }
+  ],
+  "O4": [
+   {
+    "type": "celebrate",
+    "from": 5.982,
+    "to": 6.782
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "X10",
+   "b": "O8",
+   "at": "stay",
+   "max": 2.75,
+   "says": "He stays with your teammate."
+  },
+  {
+   "type": "far",
+   "a": "X10",
+   "b": "O4",
+   "at": "lane",
+   "min": 2.2,
+   "says": "The lane is yours."
+  },
+  {
+   "type": "near_rim",
+   "player": "O4",
+   "at": "layup",
+   "max": 1.5,
+   "says": "Go finish."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "decision",
+    "stay",
+    "gather",
+    "layup",
+    "make"
+   ],
+   "says": "dribble, defender stays, gather, layup"
+  }
+ ],
+ "notes": [
+  "Same start and the same extra dribble.",
+  "X10 shades to O8 to protect the pass; O4 keeps the dribble, gathers and lays up."
+ ],
+ "tracks": {
+  "O4": [
+   [
+    0,
+    3,
+    12.3
+   ],
+   [
+    1.302,
+    2.85,
+    10.6
+   ],
+   [
+    3.3,
+    2.05,
+    7.45
+   ],
+   [
+    3.932,
+    1.6,
+    5.95
+   ],
+   [
+    4.982,
+    0.55,
+    2.75
+   ],
+   [
+    6.982,
+    0.55,
+    2.75
+   ]
+  ],
+  "O8": [
+   [
+    0,
+    -4.1,
+    11.4
+   ],
+   [
+    1.438,
+    -4.2,
+    9.2
+   ],
+   [
+    3.3,
+    -3.65,
+    6
+   ],
+   [
+    3.6,
+    -3.65,
+    6
+   ],
+   [
+    4.131,
+    -3.75,
+    5.35
+   ],
+   [
+    6.982,
+    -3.75,
+    5.35
+   ]
+  ],
+  "X10": [
+   [
+    0,
+    0.35,
+    5.7
+   ],
+   [
+    0.9,
+    0.35,
+    5.7
+   ],
+   [
+    3.3,
+    0.05,
+    4.65
+   ],
+   [
+    3.52,
+    0.05,
+    4.65
+   ],
+   [
+    4.22,
+    -1.75,
+    4.85
+   ],
+   [
+    4.532,
+    -1.75,
+    4.85
+   ],
+   [
+    5.37,
+    -0.75,
+    3.55
+   ],
+   [
+    6.982,
+    -0.75,
+    3.55
+   ]
+  ]
+ },
+ "screens": []
+}

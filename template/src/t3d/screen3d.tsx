@@ -75,7 +75,7 @@ export const SAFE = {left: 40, right: 1080 - 40, top: 220, bottom: 1920 - 420, r
 /** label pinned to a player (projected from 3D), with a short leader line. The label box is kept inside
  *  the safe area (it slides sideways / down when the player is near an edge); the leader line keeps
  *  pointing at the player. Script, play and edit timing are untouched. */
-export const PinLabel: React.FC<{x: number; y: number; text: string; age: number; dur: number; tone?: 'gold' | 'red' | 'white'; dy?: number; size?: number}> = ({x, y, text, age, dur, tone = 'gold', dy = -70, size = 40}) => {
+export const PinLabel: React.FC<{x: number; y: number; text: string; age: number; dur: number; tone?: 'gold' | 'red' | 'white'; dy?: number; dx?: number; size?: number}> = ({x, y, text, age, dur, tone = 'gold', dy = -70, dx = 0, size = 40}) => {
   // the player itself is out of shot: no label (it was never visible before either)
   if (x < 0 || x > 1080 || y < 0 || y > 1920) return null;
   const a = inOut(age, dur, 0.25, 0.2);
@@ -85,11 +85,22 @@ export const PinLabel: React.FC<{x: number; y: number; text: string; age: number
   // full-scale box (the pop-in scale only shrinks it): text + horizontal padding 2x16 + safety 6
   const half = (textWidth(text, `900 ${size}px ${BODY}`, 1.5) + 32 + 6) / 2;
   const right = ty > SAFE.railY0 ? SAFE.railX : SAFE.right; // ty = bottom edge of the label box
-  const cx = Math.min(Math.max(x, SAFE.left + half), right - half);
+  const cx = Math.min(Math.max(x + dx, SAFE.left + half), right - half);
   const lead = Math.abs(y - ty);
+  // side placement (V2): the leader runs diagonally from the player to the near edge of the label
+  const side = Math.abs(cx - x) > half;
+  const ex = side ? (cx > x ? cx - half : cx + half) : x;
+  const ey = side ? ty - size * 0.7 : ty;
+  const grow = eo(age / 0.25);
   return (
     <>
-      <div style={{position: 'absolute', left: x - 1.5, top: Math.min(y, ty), width: 3, height: lead * eo(age / 0.25), background: bg, opacity: a * 0.9}} />
+      {side ? (
+        <svg width={1080} height={1920} style={{position: 'absolute', left: 0, top: 0, opacity: a * 0.9}}>
+          <line x1={x} y1={y} x2={x + (ex - x) * grow} y2={y + (ey - y) * grow} stroke={bg} strokeWidth={3} />
+        </svg>
+      ) : (
+        <div style={{position: 'absolute', left: x - 1.5, top: Math.min(y, ty), width: 3, height: lead * grow, background: bg, opacity: a * 0.9}} />
+      )}
       <div style={{position: 'absolute', left: cx, top: ty, transform: `translate(-50%, -100%) scale(${0.85 + 0.15 * eo(age / 0.25)})`, opacity: a}}>
         <div data-qc="pin" style={{fontFamily: BODY, fontWeight: 900, fontSize: size, letterSpacing: 1.5, color: fg, background: bg, padding: '6px 16px', borderRadius: 10, whiteSpace: 'nowrap', boxShadow: '0 8px 24px rgba(0,0,0,0.45)'}}>{text}</div>
       </div>
@@ -136,8 +147,13 @@ type W = {text: string; start: number; end: number};
 const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
 
 /** premium subtitles: max two short lines, words appear exactly when spoken, key words in gold */
-export const PremiumSubtitles: React.FC<{words: W[]; t: number; keys: string[]; y?: number; size?: number; hideRanges?: [number, number][]}> = ({words, t, keys, y = 1290, size = 56, hideRanges = []}) => {
+export const PremiumSubtitles: React.FC<{words: W[]; t: number; keys: string[]; y?: number; size?: number; hideRanges?: [number, number][]; sizes?: number[]; block?: boolean}> = ({words, t, keys, y = 1290, size = 56, hideRanges = [], sizes, block = false}) => {
   const groups = React.useMemo(() => {
+    // explicit burst sizes (2026-11-15, Ghost Screen brief: 3-7 words per burst) when the episode gives them
+    if (sizes && sizes.reduce((a, b) => a + b, 0) === words.length) {
+      let k = 0;
+      return sizes.map((n) => words.slice(k, (k += n)));
+    }
     const out: W[][] = [];
     let cur: W[] = [];
     const len = (c: W[]) => c.reduce((n, w) => n + w.text.length + 1, 0);
@@ -155,7 +171,7 @@ export const PremiumSubtitles: React.FC<{words: W[]; t: number; keys: string[]; 
     });
     if (cur.length) out.push(cur);
     return out;
-  }, [words]);
+  }, [words, sizes]);
   if (hideRanges.some(([a, b]) => t >= a && t < b)) return null;
   const kset = keys.map((k) => k.split(/\s+/).map(norm));
   const g = groups.find((c, i) => t >= c[0].start - 0.03 && t < Math.min(c[c.length - 1].end + 0.35, groups[i + 1]?.[0].start ?? 1e9));
@@ -175,8 +191,10 @@ export const PremiumSubtitles: React.FC<{words: W[]; t: number; keys: string[]; 
   return (
     <div style={{position: 'absolute', left: 90, right: 170, top: y, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: `4px ${size * 0.26}px`, opacity: outA}}>
       {g.map((w, i) => {
-        const on = t >= w.start - 0.03;
-        const a = eo((t - w.start + 0.03) / 0.12);
+        // block mode (Ghost V2 brief: no word-by-word reveal): the whole sense unit appears at once
+        const t0 = block ? g[0].start : w.start;
+        const on = t >= t0 - 0.03;
+        const a = eo((t - t0 + 0.03) / 0.12);
         const k = isKey(i);
         return (
           <span
@@ -199,6 +217,80 @@ export const PremiumSubtitles: React.FC<{words: W[]; t: number; keys: string[]; 
           </span>
         );
       })}
+    </div>
+  );
+};
+
+/** numbered step (2026-11-17, character episodes): gold disc with the navy number + navy plate with gold words,
+ *  top-left inside the safe area. data-qc="stamp" so the bounds QC measures it. */
+export const StepBadge: React.FC<{n: number; text: string; age: number; dur: number; y?: number}> = ({n, text, age, dur, y = 262}) => {
+  const a = inOut(age, dur, 0.25, 0.2);
+  const pop = eo(age / 0.35);
+  return (
+    <div style={{position: 'absolute', left: 60, top: y, display: 'flex', alignItems: 'center', gap: 0, opacity: a, transform: `translateX(${(1 - pop) * -14}px)`}}>
+      <div data-qc="stamp" style={{display: 'flex', alignItems: 'center', boxShadow: '0 14px 44px rgba(0,0,0,0.5)', borderRadius: 60}}>
+        <div style={{width: 112, height: 112, borderRadius: 56, background: GOLD, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: DISPLAY, fontSize: 78, color: NAVY, transform: `scale(${0.6 + 0.4 * eo(age / 0.25)})`, zIndex: 1}}>{n}</div>
+        <div style={{marginLeft: -26, paddingLeft: 44, paddingRight: 30, height: 86, display: 'flex', alignItems: 'center', background: 'rgba(11,28,61,0.94)', border: `3px solid ${GOLD}`, borderLeft: 'none', borderRadius: '0 18px 18px 0', fontFamily: DISPLAY, fontSize: 60, letterSpacing: 2, color: GOLD, clipPath: `inset(0 ${(1 - eo((age - 0.1) / 0.35)) * 100}% 0 0)`}}>{text}</div>
+      </div>
+    </div>
+  );
+};
+
+/** offers counter: open-hand icon + k/total; the number pops when it changes (`steps` = local times of +1) */
+export const OfferCounter: React.FC<{steps: number[]; total: number; age: number; dur: number; y?: number; base?: number}> = ({steps, total, age, dur, y = 392, base = 0}) => {
+  const a = inOut(age, dur, 0.25, 0.2);
+  const n = steps.filter((s) => age >= s).length;
+  const k = base + n;
+  const last = n > 0 ? age - steps[n - 1] : 9;
+  const pop = last < 0.35 ? 1 + 0.28 * Math.sin((Math.PI * last) / 0.35) : 1;
+  const full = k >= total;
+  return (
+    <div style={{position: 'absolute', left: 60, top: y, opacity: a}}>
+      <div data-qc="stamp" style={{display: 'flex', alignItems: 'center', gap: 16, background: full ? GOLD : 'rgba(11,28,61,0.94)', border: `3px solid ${GOLD}`, borderRadius: 18, padding: '8px 26px 8px 18px', boxShadow: '0 12px 40px rgba(0,0,0,0.5)'}}>
+        <svg width="58" height="58" viewBox="0 0 24 24">
+          <path d="M7 11V5.5a1.5 1.5 0 0 1 3 0V10m0-5.5V4a1.5 1.5 0 0 1 3 0v6m0-5a1.5 1.5 0 0 1 3 0v6m0-3.5a1.5 1.5 0 0 1 3 0V15a7 7 0 0 1-7 7h-1.2a6 6 0 0 1-4.8-2.4l-3.2-4.3a1.6 1.6 0 0 1 2.5-2L7 15" fill="none" stroke={full ? NAVY : GOLD} strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        <span style={{fontFamily: DISPLAY, fontSize: 66, color: full ? NAVY : WHITE, display: 'inline-block', transform: `scale(${pop})`, lineHeight: 1.1}}>
+          {k}<span style={{color: full ? NAVY : GOLD}}>/{total}</span>
+        </span>
+      </div>
+    </div>
+  );
+};
+
+/** Eurostep step counter (2026-11-18), driven by PLAY time so it follows the real contacts (slow motion, rewinds):
+ *  GATHER chip lights at the gather; circle k fills (gold, with its number) on the frame its step lands; the label
+ *  of the last counted step ("1 · LEFT") slides in beside. Hollow vs filled, so colour is not the only signal. */
+export const StepCounter: React.FC<{pt: number; gather: number; lands: number[]; labels: string[]; age: number; dur: number; y?: number; gatherLabel?: boolean}> = ({pt, gather, lands, labels, age, dur, y = 330, gatherLabel = true}) => {
+  const a = inOut(age, dur, 0.25, 0.2);
+  const g = pt >= gather - 1 / 60;
+  const k = lands.filter((l) => pt >= l - 1 / 60).length;
+  const since = k > 0 ? pt - lands[k - 1] : g ? pt - gather : -1;
+  const pop = since >= 0 && since < 0.25 ? 1 + 0.3 * Math.sin((Math.PI * since) / 0.25) : 1;
+  const label = k > 0 ? labels[k - 1] : g && gatherLabel ? 'GATHER' : '';
+  return (
+    <div style={{position: 'absolute', left: 60, top: y, opacity: a, display: 'flex', alignItems: 'center', gap: 18}}>
+      <div data-qc="stamp" style={{display: 'flex', alignItems: 'center', gap: 14, background: 'rgba(11,28,61,0.94)', border: `3px solid ${GOLD}`, borderRadius: 18, padding: '10px 18px', boxShadow: '0 12px 40px rgba(0,0,0,0.5)'}}>
+        <span style={{fontFamily: DISPLAY, fontSize: 40, letterSpacing: 2, color: g ? GOLD : 'rgba(255,255,255,0.45)', marginRight: 4}}>GATHER</span>
+        {lands.map((_, i) => {
+          const on = i < k;
+          const s = on && i === k - 1 ? pop : 1;
+          return (
+            <div key={i} style={{width: 58, height: 58, borderRadius: 29, border: `4px solid ${on ? GOLD : 'rgba(255,255,255,0.7)'}`, background: on ? GOLD : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: DISPLAY, fontSize: 40, color: on ? NAVY : 'rgba(255,255,255,0.0)', transform: `scale(${s})`}}>
+              {i + 1}
+            </div>
+          );
+        })}
+        <span style={{fontFamily: DISPLAY, fontSize: 40, color: WHITE, marginLeft: 4}}>
+          {k}
+          <span style={{color: GOLD}}>/{lands.length}</span>
+        </span>
+      </div>
+      {label && (
+        <div data-qc="stamp" key={label} style={{fontFamily: DISPLAY, fontSize: 64, letterSpacing: 2, color: k > 0 ? GOLD : WHITE, textShadow: '0 4px 18px rgba(0,0,0,0.75)', transform: `scale(${pop})`, transformOrigin: 'left center'}}>
+          {label}
+        </div>
+      )}
     </div>
   );
 };

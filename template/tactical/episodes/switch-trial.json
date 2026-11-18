@@ -1,0 +1,1395 @@
+{
+ "id": "switch-trial",
+ "title": "How to Punish the Switch - trial-reel copy",
+ "fps": 30,
+ "voiceRaw": "tactical/switch/voice-raw.mp3",
+ "voice": "tactical/switch/voice.wav",
+ "voiceMix": "tactical/switch/voice.mix.wav",
+ "preroll": 0.12,
+ "tail": 2.0,
+ "gaps": [
+  {
+   "after": "stop you.",
+   "sec": 0.55,
+   "why": "short pause after the hook"
+  },
+  {
+   "after": "your mismatch.",
+   "sec": 1.4,
+   "why": "matchups land, cut to the replay"
+  },
+  {
+   "after": "on the guard.",
+   "sec": 0.45,
+   "why": "BIG ON GUARD forms"
+  },
+  {
+   "after": "on the big.",
+   "sec": 0.45,
+   "why": "SMALL ON BIG forms"
+  },
+  {
+   "after": "Now what?",
+   "sec": 1.5,
+   "why": "freeze on the post-switch state"
+  },
+  {
+   "after": "inside first.",
+   "sec": 0.6,
+   "why": "ring toward O5"
+  },
+  {
+   "after": "have a seal?",
+   "sec": 1.4,
+   "why": "freeze held, then the seal starts"
+  },
+  {
+   "after": "guard pinned.",
+   "sec": 0.5,
+   "why": "DEEP SEAL"
+  },
+  {
+   "after": "feed him.",
+   "sec": 3.2,
+   "why": "pass, catch, short finish"
+  },
+  {
+   "after": "pass is gone?",
+   "sec": 1.6,
+   "why": "ENTRY DENIED"
+  },
+  {
+   "after": "Same switch.",
+   "sec": 0.5,
+   "why": "same state"
+  },
+  {
+   "after": "in space.",
+   "sec": 0.45,
+   "why": "space in front of O1"
+  },
+  {
+   "after": "Change pace.",
+   "sec": 0.5,
+   "why": "hesitation"
+  },
+  {
+   "after": "his hip.",
+   "sec": 3.4,
+   "why": "drive, X5 recovers, layup"
+  },
+  {
+   "after": "Feed it.",
+   "sec": 2.2,
+   "why": "recap A"
+  },
+  {
+   "after": "Attack the big.",
+   "sec": 2.2,
+   "why": "recap B"
+  },
+  {
+   "after": "see first?",
+   "sec": 1.4,
+   "why": "INSIDE OR OUTSIDE? readable"
+  }
+ ],
+ "plays": {
+  "A": "switch-a-seal",
+  "B": "switch-b-drive"
+ },
+ "shots": [
+  {
+   "id": "hook",
+   "name": "Hook - ball screen, the switch, SWITCH! on the swap",
+   "at": 0,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.5
+    ],
+    [
+     "you.>",
+     1.85
+    ],
+    [
+     "@end",
+     3.0,
+     "out"
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.4,
+       7.0,
+       0
+      ],
+      "dist": 21.0,
+      "pitch": 14,
+      "yaw": 0,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       6.6,
+       0.2
+      ],
+      "dist": 20.0,
+      "pitch": 44,
+      "yaw": -12,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O5",
+     "color": "#C9A24D",
+     "from": 0.2,
+     "to": "you.>"
+    }
+   ],
+   "screen": [
+    {
+     "type": "stamp",
+     "text": "SWITCH!",
+     "from": "you.>-0.12",
+     "to": "Now pick-0.05",
+     "y": 330
+    },
+    {
+     "type": "title",
+     "lines": [
+      "WHICH",
+      "MISMATCH?"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "Now pick",
+     "to": "@end",
+     "y": 262,
+     "size": 108
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.1
+    },
+    {
+     "at": "you.>-0.12",
+     "name": "impact",
+     "volume": 0.08
+    }
+   ]
+  },
+  {
+   "id": "replay",
+   "name": "Elevated replay: big on the guard, small on the big",
+   "at": "Big on the guard-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     1.55
+    ],
+    [
+     "Big on the guard>",
+     2.2
+    ],
+    [
+     "Small on the big>",
+     2.9
+    ],
+    [
+     "what?>",
+     3.56
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       6.4,
+       0.3
+      ],
+      "dist": 17.0,
+      "pitch": 50,
+      "yaw": -16,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.9,
+       5.6,
+       0
+      ],
+      "dist": 19.0,
+      "pitch": 42,
+      "yaw": -12,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X5",
+     "color": "#E5483A",
+     "from": "Big on the guard",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "X1",
+     "color": "#E5483A",
+     "from": "Small on the big",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "pin",
+     "player": "X5",
+     "text": "BIG ON GUARD",
+     "tone": "red",
+     "from": "Big on the guard",
+     "to": "@end"
+    },
+    {
+     "type": "pin",
+     "player": "X1",
+     "text": "SMALL ON BIG",
+     "tone": "red",
+     "from": "Small on the big",
+     "to": "@end"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whip",
+     "volume": 0.07
+    }
+   ]
+  },
+  {
+   "id": "freeze",
+   "name": "Freeze 0.95 s on the post-switch frame: inside or outside?",
+   "at": "what?>+0.05",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.56
+    ],
+    [
+     "@end",
+     3.56
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.9,
+       5.6,
+       0
+      ],
+      "dist": 19.0,
+      "pitch": 42,
+      "yaw": -12,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.9,
+       5.6,
+       0
+      ],
+      "dist": 19.0,
+      "pitch": 42,
+      "yaw": -12,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O5",
+     "color": "#C9A24D",
+     "size": 0.8,
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "freeze",
+     "label": "FREEZE",
+     "from": 0.03,
+     "to": "@end"
+    },
+    {
+     "type": "title",
+     "lines": [
+      "INSIDE",
+      "OR OUTSIDE?"
+     ],
+     "gold": [
+      0
+     ],
+     "from": 0.03,
+     "to": "@end",
+     "y": 262,
+     "size": 108
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "impact",
+     "volume": 0.08
+    }
+   ]
+  },
+  {
+   "id": "insideA",
+   "name": "A - look inside first: O5 seals the small behind him",
+   "at": "Look-0.45",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.56
+    ],
+    [
+     "inside first.>",
+     3.85
+    ],
+    [
+     "a seal?>",
+     4.3
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.9,
+       5.6,
+       0
+      ],
+      "dist": 19.0,
+      "pitch": 42,
+      "yaw": -12,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.0,
+       4.6,
+       0.4
+      ],
+      "dist": 13.5,
+      "pitch": 46,
+      "yaw": -14,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O5",
+     "color": "#C9A24D",
+     "size": 0.8,
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "LOOK INSIDE"
+     ],
+     "gold": [
+      0
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 262,
+     "size": 108
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "sealA",
+   "name": "A - deep seal, change the angle, feed him, short finish",
+   "at": "He's-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     4.3
+    ],
+    [
+     "pinned.>",
+     4.42
+    ],
+    [
+     "change the",
+     4.45
+    ],
+    [
+     "angle,>",
+     5.15
+    ],
+    [
+     "feed him",
+     5.22
+    ],
+    [
+     "him.>",
+     5.64
+    ],
+    [
+     "him.>+1.05",
+     6.69
+    ],
+    [
+     "him.>+1.5",
+     7.09
+    ],
+    [
+     "@end",
+     7.6
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.0,
+       4.6,
+       0.4
+      ],
+      "dist": 13.5,
+      "pitch": 46,
+      "yaw": -14,
+      "fov": 42
+     }
+    },
+    {
+     "at": "feed him",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.0,
+       4.6,
+       0.4
+      ],
+      "dist": 13.5,
+      "pitch": 46,
+      "yaw": -14,
+      "fov": 42
+     }
+    },
+    {
+     "at": "him.>+0.9",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.9,
+       3.2,
+       0.9
+      ],
+      "dist": 9.4,
+      "pitch": 56,
+      "yaw": -10,
+      "fov": 44
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.9,
+       3.2,
+       0.9
+      ],
+      "dist": 9.4,
+      "pitch": 56,
+      "yaw": -10,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X1",
+     "color": "#E5483A",
+     "from": 0,
+     "to": "change the"
+    },
+    {
+     "type": "route",
+     "player": "O1",
+     "t0": 4.45,
+     "t1": 5.15,
+     "trail": true,
+     "from": "change the",
+     "to": "him.>"
+    },
+    {
+     "type": "passLane",
+     "src": "O1",
+     "dst": "O5",
+     "color": "#FFFFFF",
+     "from": "feed him",
+     "to": "him.>"
+    },
+    {
+     "type": "ring",
+     "player": "O5",
+     "from": "him.>+1.0",
+     "to": "@end",
+     "pulse": true
+    }
+   ],
+   "screen": [
+    {
+     "type": "stamp",
+     "text": "DEEP SEAL",
+     "from": "He's",
+     "to": "him.>+0.9",
+     "y": 330
+    },
+    {
+     "type": "stamp",
+     "text": "FEED THE POST",
+     "badge": "+2",
+     "from": "him.>+1.5",
+     "to": "@end",
+     "y": 330
+    }
+   ],
+   "sfx": [
+    {
+     "at": "He's",
+     "name": "tick",
+     "volume": 0.15
+    }
+   ]
+  },
+  {
+   "id": "rew",
+   "name": "Rewind 9 frames to the post-switch frame",
+   "at": "But-0.45",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     7.6
+    ],
+    [
+     "@end",
+     3.56
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.9,
+       5.6,
+       0
+      ],
+      "dist": 19.0,
+      "pitch": 42,
+      "yaw": -12,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.9,
+       5.6,
+       0
+      ],
+      "dist": 19.0,
+      "pitch": 42,
+      "yaw": -12,
+      "fov": 42
+     }
+    }
+   ],
+   "screen": [
+    {
+     "type": "rewind",
+     "from": 0,
+     "to": "@end"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "reverse_cymbal",
+     "volume": 0.11
+    }
+   ]
+  },
+  {
+   "id": "denyB",
+   "name": "B - same frame, X1 fronts: the entry pass is gone",
+   "at": "But-0.15",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     3.56
+    ],
+    [
+     "what if",
+     3.56
+    ],
+    [
+     "gone?>",
+     4.6
+    ],
+    [
+     "@end",
+     4.64
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.9,
+       5.6,
+       0
+      ],
+      "dist": 19.0,
+      "pitch": 42,
+      "yaw": -12,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.0,
+       4.6,
+       0.4
+      ],
+      "dist": 13.5,
+      "pitch": 46,
+      "yaw": -14,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "passLane",
+     "src": "O1",
+     "dst": [
+      -1.2,
+      4.75
+     ],
+     "color": "#E5483A",
+     "from": "entry pass",
+     "to": "@end"
+    },
+    {
+     "type": "ring",
+     "player": "X1",
+     "color": "#E5483A",
+     "from": "gone?",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "stamp",
+     "text": "ENTRY DENIED",
+     "from": "gone?",
+     "to": "@end",
+     "y": 330
+    }
+   ],
+   "sfx": [
+    {
+     "at": "gone?",
+     "name": "tick",
+     "volume": 0.15
+    }
+   ]
+  },
+  {
+   "id": "driveB",
+   "name": "B - overhead: big in space, change pace, past his hip, layup",
+   "at": "Same-0.15",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     4.64
+    ],
+    [
+     "in space.>",
+     4.7
+    ],
+    [
+     "Change pace>",
+     5.22
+    ],
+    [
+     "Get past",
+     5.3
+    ],
+    [
+     "hip.>",
+     6.2
+    ],
+    [
+     "hip.>+0.75",
+     6.921
+    ],
+    [
+     "hip.>+1.15",
+     7.321
+    ],
+    [
+     "@end",
+     8.3
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.9,
+       5.2,
+       0
+      ],
+      "dist": 16.5,
+      "pitch": 7,
+      "yaw": 0,
+      "fov": 42
+     }
+    },
+    {
+     "at": "Get past",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.9,
+       5.2,
+       0
+      ],
+      "dist": 16.5,
+      "pitch": 7,
+      "yaw": 0,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.0,
+       4.0,
+       0
+      ],
+      "dist": 14.0,
+      "pitch": 12,
+      "yaw": 0,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X5",
+     "color": "#E5483A",
+     "from": "Same",
+     "to": "Get past"
+    },
+    {
+     "type": "route",
+     "player": "O1",
+     "t0": 5.3,
+     "t1": 6.921,
+     "from": "Change pace",
+     "to": "hip.>+0.75"
+    },
+    {
+     "type": "route",
+     "player": "X5",
+     "t0": 5.3,
+     "t1": 6.921,
+     "color": "#E5483A",
+     "width": 0.14,
+     "trail": true,
+     "from": "Get past",
+     "to": "hip.>+0.75"
+    },
+    {
+     "type": "ring",
+     "player": "O1",
+     "from": "hip.>+0.75",
+     "to": "@end",
+     "pulse": true
+    }
+   ],
+   "screen": [
+    {
+     "type": "pin",
+     "player": "X5",
+     "text": "BIG IN SPACE",
+     "tone": "red",
+     "from": "Now you've",
+     "to": "Change pace-0.05"
+    },
+    {
+     "type": "stamp",
+     "text": "CHANGE PACE",
+     "from": "Change pace",
+     "to": "hip.>+0.6",
+     "y": 330
+    },
+    {
+     "type": "stamp",
+     "text": "ATTACK THE BIG",
+     "badge": "+2",
+     "from": "hip.>+1.15",
+     "to": "@end",
+     "y": 330
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.07
+    },
+    {
+     "at": "Change pace",
+     "name": "tick",
+     "volume": 0.15
+    }
+   ]
+  },
+  {
+   "id": "recapA",
+   "name": "Recap A - deep seal: feed it (same overhead)",
+   "at": "Deep-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     4.0
+    ],
+    [
+     "Feed it",
+     5.22
+    ],
+    [
+     "Feed it>",
+     5.64
+    ],
+    [
+     "@end",
+     6.5
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.9,
+       5.2,
+       0
+      ],
+      "dist": 16.5,
+      "pitch": 7,
+      "yaw": 0,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.9,
+       5.2,
+       0
+      ],
+      "dist": 16.5,
+      "pitch": 7,
+      "yaw": 0,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O5",
+     "color": "#C9A24D",
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "passLane",
+     "src": "O1",
+     "dst": "O5",
+     "color": "#FFFFFF",
+     "from": "Feed it",
+     "to": "Feed it>+0.4"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "DEEP SEAL",
+      "→ FEED IT"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 262,
+     "size": 104
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "tick",
+     "volume": 0.15
+    }
+   ]
+  },
+  {
+   "id": "recapB",
+   "name": "Recap B - space outside: drive (same overhead)",
+   "at": "Entry denied-0.15",
+   "play": "B",
+   "remap": [
+    [
+     0,
+     4.3
+    ],
+    [
+     "outside?>",
+     4.9
+    ],
+    [
+     "Attack",
+     5.3
+    ],
+    [
+     "Attack the big>",
+     6.5
+    ],
+    [
+     "@end",
+     7.2
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.9,
+       5.2,
+       0
+      ],
+      "dist": 16.5,
+      "pitch": 7,
+      "yaw": 0,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.9,
+       5.2,
+       0
+      ],
+      "dist": 16.5,
+      "pitch": 7,
+      "yaw": 0,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X1",
+     "color": "#E5483A",
+     "from": 0,
+     "to": "Attack"
+    },
+    {
+     "type": "route",
+     "player": "O1",
+     "t0": 5.3,
+     "t1": 6.921,
+     "trail": true,
+     "from": "Attack",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "SPACE OUTSIDE",
+      "→ DRIVE"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 262,
+     "size": 100
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "tick",
+     "volume": 0.15
+    }
+   ]
+  },
+  {
+   "id": "question",
+   "name": "Back to the post-switch frame: inside or outside?",
+   "at": "What did-0.3",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.1
+    ],
+    [
+     "@end",
+     3.56
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       6.6,
+       0.2
+      ],
+      "dist": 20.0,
+      "pitch": 44,
+      "yaw": -12,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.9,
+       5.6,
+       0
+      ],
+      "dist": 19.0,
+      "pitch": 42,
+      "yaw": -12,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O5",
+     "color": "#C9A24D",
+     "size": 0.8,
+     "from": 0.2,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "WHAT DID",
+      "YOU SEE FIRST?"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 262,
+     "size": 96
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "whoosh",
+     "volume": 0.08
+    }
+   ]
+  },
+  {
+   "id": "close",
+   "name": "E2A sign-off, ends on the hook's first frame (loop)",
+   "at": "For more-0.15",
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.2
+    ],
+    [
+     "basketball.>+0.5",
+     0.45
+    ],
+    [
+     "@end",
+     0.5
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.9,
+       5.6,
+       0
+      ],
+      "dist": 19.0,
+      "pitch": 42,
+      "yaw": -12,
+      "fov": 42
+     }
+    },
+    {
+     "at": "basketball.>+0.5",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.4,
+       7.0,
+       0
+      ],
+      "dist": 21.0,
+      "pitch": 14,
+      "yaw": 0,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.4,
+       7.0,
+       0
+      ],
+      "dist": 21.0,
+      "pitch": 14,
+      "yaw": 0,
+      "fov": 42
+     }
+    }
+   ],
+   "screen": [
+    {
+     "type": "scrim",
+     "opacity": 0.55,
+     "from": 0,
+     "to": "basketball.>+0.45"
+    },
+    {
+     "type": "title",
+     "lines": [
+      "FOR MORE",
+      "EUROPEAN",
+      "BASKETBALL"
+     ],
+     "gold": [
+      1,
+      2
+     ],
+     "from": 0.05,
+     "to": "basketball.>+0.45",
+     "y": 560,
+     "size": 132
+    },
+    {
+     "type": "logo",
+     "big": true,
+     "from": "European",
+     "to": "basketball.>+0.45"
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0,
+     "name": "impact",
+     "volume": 0.07
+    }
+   ]
+  }
+ ],
+ "version": "trial",
+ "pinV2": true,
+ "autoSfx": {
+  "bounce": 0.16,
+  "catch": 0.12,
+  "squeak": 0.09,
+  "swish": 0.26,
+  "land": 0.07,
+  "players": [
+   "O1",
+   "O5",
+   "X1",
+   "X5"
+  ]
+ },
+ "keywords": [
+  "switched",
+  "mismatch",
+  "on the guard",
+  "on the big",
+  "cut off",
+  "inside",
+  "a seal",
+  "pinned",
+  "dribble",
+  "change the angle",
+  "entry pass",
+  "Same switch",
+  "in space",
+  "his hip",
+  "Deep seal",
+  "Entry denied",
+  "Attack the big",
+  "see first"
+ ],
+ "subtitleHide": [
+  [
+   "For more-0.05",
+   "basketball.>+3"
+  ]
+ ],
+ "subtitleGroups": [
+  5,
+  4,
+  4,
+  4,
+  6,
+  3,
+  6,
+  5,
+  3,
+  6,
+  3,
+  5,
+  5,
+  4,
+  6,
+  4,
+  5,
+  3,
+  5,
+  4
+ ],
+ "music": {
+  "src": "tactical/switch/music-mix.mp3",
+  "volume": 1
+ }
+}

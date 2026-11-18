@@ -1,0 +1,5 @@
+{
+ "licence_key": "music/synth/tactical",
+ "source": "E2A in-house synth engine music/e2a_music.py --story tactical --no-sfx (no samples, no ball bounces) track drive_a drop 18.97 payoff 32.1",
+ "sha256": "522d525c76cb386977b8046ed10447a8569756e011a89b376ed5e86e67b3be20"
+}

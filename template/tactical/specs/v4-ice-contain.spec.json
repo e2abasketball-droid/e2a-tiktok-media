@@ -1,0 +1,315 @@
+{
+ "id": "v4-ice-contain",
+ "title": "ICE the side ball screen: the big is waiting on the baseline",
+ "duration": 5.0,
+ "concept": "ice-side-pnr",
+ "source": "original E2A play (standard FIBA/European half-court concept, generic coaching knowledge)",
+ "notes": [
+  "Side ball screen on the right wing. X1 jumps to the top side (ICE): O1 cannot use the screen.",
+  "X5 drops to the baseline side in time; X1 trails; O1 is contained and passes back out to O5."
+ ],
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Ball handler, right wing"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Left corner"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Left wing"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Top, left slot"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Side ball screener"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the ball: ICE (jumps to the top side)",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "Left corner",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Left wing",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "Top",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "On the screener: drops to the baseline side",
+   "guards": "O5"
+  }
+ ],
+ "start": {
+  "O1": [
+   5.5,
+   6.8
+  ],
+  "X1": [
+   4.9,
+   6.0
+  ],
+  "O5": [
+   2.2,
+   5.6
+  ],
+  "X5": [
+   1.8,
+   4.8
+  ],
+  "O4": [
+   -1.8,
+   8.8
+  ],
+  "X4": [
+   -1.4,
+   7.8
+  ],
+  "O3": [
+   -5.2,
+   6.4
+  ],
+  "X3": [
+   -4.5,
+   5.6
+  ],
+  "O2": [
+   -6.85,
+   1.2
+  ],
+  "X2": [
+   -5.8,
+   1.9
+  ]
+ },
+ "legs": {
+  "O5": [
+   {
+    "at": 0.0,
+    "to": [
+     4.55,
+     7.65
+    ],
+    "dur": 1.0
+   },
+   {
+    "at": 2.3,
+    "to": [
+     3.4,
+     8.6
+    ],
+    "speed": 3.0
+   }
+  ],
+  "X1": [
+   {
+    "at": 0.55,
+    "to": [
+     5.0,
+     6.95
+    ],
+    "speed": 2.2
+   },
+   {
+    "at": 1.55,
+    "via": [
+     [
+      6.35,
+      5.6
+     ]
+    ],
+    "to": [
+     6.45,
+     4.55
+    ],
+    "speed": 4.0
+   }
+  ],
+  "O4": [],
+  "X4": [
+   {
+    "at": 0.8,
+    "to": [
+     0.2,
+     7.2
+    ],
+    "speed": 2.0
+   }
+  ],
+  "O3": [],
+  "X3": [],
+  "O2": [],
+  "X2": [],
+  "O1": [
+   {
+    "at": 1.25,
+    "via": [
+     [
+      6.1,
+      5.4
+     ]
+    ],
+    "to": [
+     5.9,
+     3.65
+    ],
+    "speed": 4.2
+   }
+  ],
+  "X5": [
+   {
+    "at": 0.6,
+    "to": [
+     4.55,
+     3.15
+    ],
+    "speed": 3.6
+   }
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 3.25,
+   "dribble": true
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O5",
+   "t0": 3.25,
+   "t1": 3.85,
+   "style": "chest"
+  },
+  {
+   "type": "hold",
+   "player": "O5",
+   "from": 3.85,
+   "to": 5.0
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "screen": 1.05,
+  "ice": 1.2,
+  "baseline": 1.6,
+  "contain": 2.75,
+  "pass": 3.25,
+  "catch": 3.85,
+  "end": 5.0
+ },
+ "actions": {
+  "X2": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 5.0,
+    "face": "O1"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 5.0,
+    "face": "O1"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 5.0,
+    "face": "O1"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 1.6,
+    "face": "O1"
+   }
+  ],
+  "O5": [
+   {
+    "type": "screen",
+    "from": 1.05,
+    "to": 2.2,
+    "face": "X1"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 1.6,
+    "to": 5.0,
+    "face": "O1"
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "X1",
+   "b": "O5",
+   "at": "ice",
+   "max": 1.2,
+   "says": "The guard's defender jumps to the top: the screen is taken away."
+  },
+  {
+   "type": "far",
+   "a": "O1",
+   "b": "O5",
+   "at": "contain",
+   "min": 3.0,
+   "says": "The guard can't use the screen; he goes baseline."
+  },
+  {
+   "type": "near",
+   "a": "X5",
+   "b": "O1",
+   "at": "contain",
+   "max": 1.6,
+   "says": "The big is already on the baseline side, waiting."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "screen",
+    "ice",
+    "baseline",
+    "contain",
+    "pass"
+   ],
+   "says": "ice, baseline, contain, ball out"
+  }
+ ]
+}

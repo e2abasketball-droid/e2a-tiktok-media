@@ -1,0 +1,5 @@
+{
+ "licence_key": "music/synth/tactical",
+ "source": "E2A in-house synth engine music/e2a_music.py --story tactical (no samples), ducked under voice.mix.wav, 34.05 s",
+ "sha256": "8f4397758323208f8ef1a1aace90f42367d8a3abb63150b3c6ca5f95a58db13b"
+}

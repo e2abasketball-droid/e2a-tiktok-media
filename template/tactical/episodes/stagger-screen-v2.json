@@ -36,7 +36,7 @@
  ],
  "plays": {
   "A": "stagger-a-trail",
-  "B": "stagger-b-backdoor"
+  "B": "stagger-b-backdoor-lowlock"
  },
  "shots": [
   {
@@ -96,7 +96,7 @@
        1.1
       ],
       "dist": 7.4,
-      "pitch": 70,
+      "pitch": 60,
       "yaw": 200,
       "fov": 46
      },

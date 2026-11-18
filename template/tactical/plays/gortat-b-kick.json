@@ -1,0 +1,457 @@
+{
+ "id": "gortat-b-kick",
+ "title": "Gortat B: the low man helps, kick-out corner three",
+ "duration": 8.04,
+ "concept": "gortat-screen",
+ "source": "original E2A play (generic high pick-and-roll vs drop + 'Gortat' seal screen on the drop big, generic coaching knowledge)",
+ "squareUp": true,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Ball handler: comes off the ball screen, attacks the lane"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Strong-side corner"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Weak-side wing"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Weak-side corner shooter"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Big: ball screen, then the Gortat screen on his own man"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the ball: chases over, stuck on the back hip",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "Strong-side corner",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Weak-side wing",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "Low man: stays home or helps",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "On the big: drop coverage",
+   "guards": "O5"
+  }
+ ],
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 4.64,
+   "dribble": true
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O4",
+   "t0": 4.64,
+   "t1": 5.29
+  },
+  {
+   "type": "hold",
+   "player": "O4",
+   "from": 5.29,
+   "to": 5.64
+  },
+  {
+   "type": "shot",
+   "player": "O4",
+   "t0": 5.64,
+   "t1": 6.74,
+   "make": true
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "screen": 1.25,
+  "over": 1.9,
+  "drop": 2.2,
+  "seal": 3.91,
+  "help": 4.54,
+  "pass": 4.64,
+  "catch": 5.29,
+  "shoot": 5.64,
+  "make": 6.74,
+  "end": 8.04
+ },
+ "actions": {
+  "O5": [
+   {
+    "type": "screen",
+    "from": 1.25,
+    "to": 1.8,
+    "face": "X1"
+   },
+   {
+    "type": "screen",
+    "from": 3.91,
+    "to": 5.3100000000000005,
+    "face": "X5"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 8,
+    "face": "O1"
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 8,
+    "face": "O1"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 4.9399999999999995,
+    "to": 8,
+    "face": "O4"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 8,
+    "face": "O1"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 1.2,
+    "face": "O1"
+   }
+  ],
+  "O4": [
+   {
+    "type": "celebrate",
+    "from": 7.14,
+    "to": 8.04
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "O5",
+   "b": "X5",
+   "at": "seal",
+   "max": 1,
+   "says": "Same seal on the drop big."
+  },
+  {
+   "type": "near",
+   "a": "X4",
+   "b": "O1",
+   "at": "help",
+   "max": 2.2,
+   "says": "The corner defender steps in to stop the drive."
+  },
+  {
+   "type": "open",
+   "player": "O4",
+   "at": "shoot",
+   "min": 1.8,
+   "says": "The shooter in the corner is left alone."
+  },
+  {
+   "type": "behind_arc",
+   "player": "O4",
+   "at": "shoot",
+   "says": "Open three."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "screen",
+    "drop",
+    "seal",
+    "help",
+    "pass",
+    "catch",
+    "shoot",
+    "make"
+   ],
+   "says": "seal, help, kick-out, three"
+  }
+ ],
+ "notes": [
+  "Same start as gortat-a-seal.",
+  "X4 rotates to stop the drive; O1 kicks to O4 in the corner: open three."
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0,
+    -0.35,
+    9.6
+   ],
+   [
+    1.05,
+    -0.35,
+    9.6
+   ],
+   [
+    1.747,
+    0.9,
+    9.9
+   ],
+   [
+    2.664,
+    2,
+    8.3
+   ],
+   [
+    3.741,
+    1.8,
+    5.6
+   ],
+   [
+    4.586,
+    1.55,
+    3.95
+   ],
+   [
+    8.04,
+    1.55,
+    3.95
+   ]
+  ],
+  "O2": [
+   [
+    0,
+    6.75,
+    1.3
+   ],
+   [
+    8.04,
+    6.75,
+    1.3
+   ]
+  ],
+  "O3": [
+   [
+    0,
+    -5,
+    7.2
+   ],
+   [
+    8.04,
+    -5,
+    7.2
+   ]
+  ],
+  "O4": [
+   [
+    0,
+    -6.8,
+    1.2
+   ],
+   [
+    8.04,
+    -6.8,
+    1.2
+   ]
+  ],
+  "O5": [
+   [
+    0,
+    1.4,
+    6.3
+   ],
+   [
+    0.2,
+    1.4,
+    6.3
+   ],
+   [
+    1.33,
+    0.35,
+    8.8
+   ],
+   [
+    2.45,
+    0.35,
+    8.8
+   ],
+   [
+    3.064,
+    0.75,
+    7
+   ],
+   [
+    3.807,
+    0.85,
+    4.55
+   ],
+   [
+    8.04,
+    0.85,
+    4.55
+   ]
+  ],
+  "X1": [
+   [
+    0,
+    -0.3,
+    8.75
+   ],
+   [
+    1.25,
+    -0.3,
+    8.75
+   ],
+   [
+    1.912,
+    -0.1,
+    9.75
+   ],
+   [
+    2.421,
+    1.4,
+    10.15
+   ],
+   [
+    3.45,
+    2.6,
+    8.4
+   ],
+   [
+    4.489,
+    2.3,
+    5.9
+   ],
+   [
+    5.144,
+    2.3,
+    4.9
+   ],
+   [
+    8.04,
+    2.3,
+    4.9
+   ]
+  ],
+  "X2": [
+   [
+    0,
+    5.8,
+    2
+   ],
+   [
+    8.04,
+    5.8,
+    2
+   ]
+  ],
+  "X3": [
+   [
+    0,
+    -4.2,
+    6.5
+   ],
+   [
+    4.94,
+    -4.2,
+    6.5
+   ],
+   [
+    5.962,
+    -5,
+    4.2
+   ],
+   [
+    8.04,
+    -5,
+    4.2
+   ]
+  ],
+  "X4": [
+   [
+    0,
+    -4.6,
+    2.3
+   ],
+   [
+    3,
+    -4.6,
+    2.3
+   ],
+   [
+    3.673,
+    -2.4,
+    2.5
+   ],
+   [
+    4.488,
+    0.55,
+    2.55
+   ],
+   [
+    8.04,
+    0.55,
+    2.55
+   ]
+  ],
+  "X5": [
+   [
+    0,
+    0.95,
+    5.6
+   ],
+   [
+    1,
+    0.95,
+    5.6
+   ],
+   [
+    1.914,
+    0.12,
+    4.25
+   ],
+   [
+    8.04,
+    0.12,
+    4.25
+   ]
+  ]
+ },
+ "screens": []
+}

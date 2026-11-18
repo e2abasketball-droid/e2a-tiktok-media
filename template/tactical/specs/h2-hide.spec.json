@@ -1,0 +1,278 @@
+{
+ "id": "h2-hide",
+ "title": "Hide V2: possession 2, he hides",
+ "duration": 8.4,
+ "source": "original E2A character episode V2 (generic coaching knowledge)",
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Passer"
+  },
+  {
+   "id": "O8",
+   "team": "O",
+   "role": "#8, hidden"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Offers the lane"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the ball",
+   "guards": "O1"
+  },
+  {
+   "id": "X8",
+   "team": "X",
+   "role": "In the lane",
+   "guards": "O8"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Other wing",
+   "guards": "O3"
+  }
+ ],
+ "start": {
+  "O1": [
+   3.3,
+   7.7
+  ],
+  "O8": [
+   -4.3,
+   5.9
+  ],
+  "O3": [
+   0.6,
+   10.3
+  ],
+  "X1": [
+   2.7,
+   6.5
+  ],
+  "X8": [
+   -3.0,
+   5.98
+  ],
+  "X3": [
+   0.7,
+   9.4
+  ]
+ },
+ "legs": {
+  "O3": [
+   {
+    "at": 3.6,
+    "to": [
+     -0.9,
+     10.0
+    ],
+    "dur": 0.9
+   }
+  ],
+  "X3": [
+   {
+    "at": 3.85,
+    "to": [
+     -0.7,
+     8.85
+    ],
+    "dur": 0.9
+   }
+  ],
+  "X8": [
+   {
+    "at": 5.8999999999999995,
+    "to": [
+     -2.6,
+     5.4
+    ],
+    "dur": 1.0
+   }
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 5.0,
+   "dribble": true
+  },
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 5.0,
+   "to": 5.2
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O3",
+   "t0": 5.2,
+   "t1": 5.6,
+   "style": "chest"
+  },
+  {
+   "type": "hold",
+   "player": "O3",
+   "from": 5.6,
+   "to": 8.4,
+   "dribble": true
+  }
+ ],
+ "actions": {
+  "O1": [
+   {
+    "type": "dribble",
+    "from": 0,
+    "to": 5.0,
+    "face": "O8"
+   }
+  ],
+  "O3": [
+   {
+    "type": "catchReady",
+    "from": 4.4,
+    "to": 5.6,
+    "face": "O1"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 8.4,
+    "face": "O1"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 8.4,
+    "face": "O3"
+   }
+  ],
+  "X8": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 3.05,
+    "face": "O8"
+   },
+   {
+    "type": "topLock",
+    "from": 3.05,
+    "to": 8.4,
+    "face": "O8",
+    "side": 1
+   }
+  ],
+  "O8": [
+   {
+    "type": "hide",
+    "from": 0,
+    "to": 1.85,
+    "face": "O1"
+   },
+   {
+    "type": "call",
+    "from": 1.9,
+    "to": 3.0,
+    "face": "O1",
+    "amt": 0.45
+   },
+   {
+    "type": "hide",
+    "from": 2.95,
+    "to": 8.4,
+    "face": "O1"
+   }
+  ]
+ },
+ "expr": {
+  "O8": [
+   {
+    "t": 0,
+    "brow": -0.6,
+    "look": "ball"
+   },
+   {
+    "t": 1.7,
+    "brow": -0.2,
+    "look": "O1"
+   },
+   {
+    "t": 2.0,
+    "open": 0.12
+   },
+   {
+    "t": 2.6,
+    "brow": -0.3
+   },
+   {
+    "t": 2.9,
+    "brow": -0.85,
+    "open": 0.0,
+    "look": "ball"
+   },
+   {
+    "t": 8.4,
+    "brow": -0.85
+   }
+  ],
+  "X8": [
+   {
+    "t": 0,
+    "brow": 0.6,
+    "look": "O8"
+   }
+  ],
+  "O1": [
+   {
+    "t": 0,
+    "brow": 0.0,
+    "look": "O8"
+   },
+   {
+    "t": 4.0,
+    "brow": 0.2,
+    "look": "O3"
+   }
+  ],
+  "X1": [
+   {
+    "t": 0,
+    "brow": 0.4,
+    "look": "O1"
+   }
+  ],
+  "O3": [
+   {
+    "t": 0,
+    "brow": 0.3,
+    "smile": 0.2
+   }
+  ],
+  "X3": [
+   {
+    "t": 0,
+    "brow": 0.3
+   }
+  ]
+ },
+ "marks": {
+  "half": 1.9,
+  "drop": 2.95,
+  "pop": 3.6,
+  "look": 4.0,
+  "pass": 5.2,
+  "catch": 5.6
+ }
+}

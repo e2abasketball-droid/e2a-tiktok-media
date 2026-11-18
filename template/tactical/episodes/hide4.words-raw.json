@@ -1,0 +1,662 @@
+[
+{
+"text": "One",
+"start": 0.16,
+"end": 0.32
+},
+{
+"text": "miss.",
+"start": 0.4,
+"end": 1.0
+},
+{
+"text": "Now",
+"start": 1.2,
+"end": 1.36
+},
+{
+"text": "he's",
+"start": 1.4,
+"end": 1.52
+},
+{
+"text": "hoping",
+"start": 1.6,
+"end": 1.92
+},
+{
+"text": "nobody",
+"start": 2.0,
+"end": 2.4
+},
+{
+"text": "passes",
+"start": 2.48,
+"end": 2.72
+},
+{
+"text": "him",
+"start": 2.8,
+"end": 2.88
+},
+{
+"text": "the",
+"start": 2.92,
+"end": 2.96
+},
+{
+"text": "ball.",
+"start": 3.04,
+"end": 3.48
+},
+{
+"text": "In",
+"start": 3.825,
+"end": 3.84
+},
+{
+"text": "practice,",
+"start": 4.12,
+"end": 4.48
+},
+{
+"text": "he",
+"start": 4.56,
+"end": 4.64
+},
+{
+"text": "calls",
+"start": 4.72,
+"end": 4.96
+},
+{
+"text": "for",
+"start": 5.04,
+"end": 5.12
+},
+{
+"text": "it.",
+"start": 5.2,
+"end": 5.72
+},
+{
+"text": "Now",
+"start": 5.76,
+"end": 5.84
+},
+{
+"text": "he",
+"start": 5.92,
+"end": 6.0
+},
+{
+"text": "keeps",
+"start": 6.08,
+"end": 6.32
+},
+{
+"text": "hearing",
+"start": 6.4,
+"end": 6.72
+},
+{
+"text": "that",
+"start": 6.84,
+"end": 6.96
+},
+{
+"text": "miss.",
+"start": 7.12,
+"end": 7.48
+},
+{
+"text": "What",
+"start": 7.524,
+"end": 7.54
+},
+{
+"text": "if",
+"start": 7.62,
+"end": 7.7
+},
+{
+"text": "I",
+"start": 7.78,
+"end": 7.86
+},
+{
+"text": "miss",
+"start": 7.94,
+"end": 8.1
+},
+{
+"text": "again?",
+"start": 8.18,
+"end": 8.98
+},
+{
+"text": "He",
+"start": 9.099,
+"end": 9.115
+},
+{
+"text": "starts",
+"start": 9.235,
+"end": 9.355
+},
+{
+"text": "to",
+"start": 9.435,
+"end": 9.515
+},
+{
+"text": "show",
+"start": 9.595,
+"end": 9.675
+},
+{
+"text": "his",
+"start": 9.755,
+"end": 9.835
+},
+{
+"text": "hands.",
+"start": 9.915,
+"end": 10.675
+},
+{
+"text": "Then",
+"start": 10.715,
+"end": 10.795
+},
+{
+"text": "he",
+"start": 10.835,
+"end": 10.875
+},
+{
+"text": "pulls",
+"start": 10.955,
+"end": 11.168
+},
+{
+"text": "them",
+"start": 11.222,
+"end": 11.275
+},
+{
+"text": "back.",
+"start": 11.355,
+"end": 11.995
+},
+{
+"text": "His",
+"start": 12.075,
+"end": 12.155
+},
+{
+"text": "teammate",
+"start": 12.235,
+"end": 12.555
+},
+{
+"text": "looks",
+"start": 12.715,
+"end": 12.875
+},
+{
+"text": "right",
+"start": 12.955,
+"end": 13.115
+},
+{
+"text": "at",
+"start": 13.195,
+"end": 13.275
+},
+{
+"text": "him.",
+"start": 13.355,
+"end": 13.875
+},
+{
+"text": "The",
+"start": 13.915,
+"end": 13.995
+},
+{
+"text": "defender's",
+"start": 14.075,
+"end": 14.395
+},
+{
+"text": "in",
+"start": 14.435,
+"end": 14.475
+},
+{
+"text": "the",
+"start": 14.515,
+"end": 14.555
+},
+{
+"text": "way.",
+"start": 14.635,
+"end": 15.155
+},
+{
+"text": "The",
+"start": 15.195,
+"end": 15.275
+},
+{
+"text": "ball",
+"start": 15.355,
+"end": 15.435
+},
+{
+"text": "goes",
+"start": 15.515,
+"end": 15.675
+},
+{
+"text": "somewhere",
+"start": 15.755,
+"end": 15.995
+},
+{
+"text": "else.",
+"start": 16.075,
+"end": 16.715
+},
+{
+"text": "He's",
+"start": 16.784,
+"end": 16.955
+},
+{
+"text": "still",
+"start": 17.035,
+"end": 17.275
+},
+{
+"text": "thinking",
+"start": 17.355,
+"end": 17.595
+},
+{
+"text": "about",
+"start": 17.675,
+"end": 17.835
+},
+{
+"text": "the",
+"start": 17.915,
+"end": 17.995
+},
+{
+"text": "shot.",
+"start": 18.315,
+"end": 18.688
+},
+{
+"text": "So",
+"start": 18.742,
+"end": 18.795
+},
+{
+"text": "give",
+"start": 18.875,
+"end": 18.955
+},
+{
+"text": "him",
+"start": 19.075,
+"end": 19.195
+},
+{
+"text": "one",
+"start": 19.275,
+"end": 19.435
+},
+{
+"text": "job.",
+"start": 19.515,
+"end": 20.235
+},
+{
+"text": "Get",
+"start": 20.315,
+"end": 20.475
+},
+{
+"text": "open",
+"start": 20.555,
+"end": 20.875
+},
+{
+"text": "again.",
+"start": 20.955,
+"end": 21.715
+},
+{
+"text": "He",
+"start": 22.055,
+"end": 22.075
+},
+{
+"text": "tries",
+"start": 22.195,
+"end": 22.315
+},
+{
+"text": "to",
+"start": 22.355,
+"end": 22.395
+},
+{
+"text": "get",
+"start": 22.475,
+"end": 22.635
+},
+{
+"text": "free.",
+"start": 22.915,
+"end": 23.222
+},
+{
+"text": "The",
+"start": 23.248,
+"end": 23.275
+},
+{
+"text": "defender",
+"start": 23.355,
+"end": 23.675
+},
+{
+"text": "follows.",
+"start": 23.755,
+"end": 24.502
+},
+{
+"text": "So",
+"start": 24.528,
+"end": 24.555
+},
+{
+"text": "he",
+"start": 24.635,
+"end": 24.715
+},
+{
+"text": "plants,",
+"start": 24.955,
+"end": 25.355
+},
+{
+"text": "changes",
+"start": 25.515,
+"end": 25.675
+},
+{
+"text": "direction,",
+"start": 25.955,
+"end": 26.288
+},
+{
+"text": "and",
+"start": 26.342,
+"end": 26.395
+},
+{
+"text": "calls",
+"start": 26.475,
+"end": 26.635
+},
+{
+"text": "again.",
+"start": 26.795,
+"end": 27.435
+},
+{
+"text": "This",
+"start": 27.515,
+"end": 27.675
+},
+{
+"text": "time,",
+"start": 27.875,
+"end": 28.102
+},
+{
+"text": "the",
+"start": 28.128,
+"end": 28.155
+},
+{
+"text": "pass",
+"start": 28.235,
+"end": 28.475
+},
+{
+"text": "comes.",
+"start": 28.555,
+"end": 29.222
+},
+{
+"text": "He's",
+"start": 29.248,
+"end": 29.435
+},
+{
+"text": "ready",
+"start": 29.555,
+"end": 29.675
+},
+{
+"text": "to",
+"start": 29.715,
+"end": 29.755
+},
+{
+"text": "shoot.",
+"start": 29.835,
+"end": 30.355
+},
+{
+"text": "The",
+"start": 30.395,
+"end": 30.475
+},
+{
+"text": "defender",
+"start": 30.555,
+"end": 30.795
+},
+{
+"text": "closes.",
+"start": 30.875,
+"end": 31.595
+},
+{
+"text": "His",
+"start": 31.675,
+"end": 31.755
+},
+{
+"text": "teammate's",
+"start": 31.795,
+"end": 32.155
+},
+{
+"text": "open.",
+"start": 32.475,
+"end": 32.835
+},
+{
+"text": "One",
+"start": 32.875,
+"end": 32.955
+},
+{
+"text": "more",
+"start": 33.035,
+"end": 33.195
+},
+{
+"text": "pass.",
+"start": 33.275,
+"end": 33.915
+},
+{
+"text": "Even",
+"start": 33.905,
+"end": 34.065
+},
+{
+"text": "the",
+"start": 34.145,
+"end": 34.225
+},
+{
+"text": "best",
+"start": 34.305,
+"end": 34.545
+},
+{
+"text": "players",
+"start": 34.625,
+"end": 34.945
+},
+{
+"text": "miss.",
+"start": 35.025,
+"end": 35.585
+},
+{
+"text": "That's",
+"start": 35.825,
+"end": 35.985
+},
+{
+"text": "part",
+"start": 36.065,
+"end": 36.145
+},
+{
+"text": "of",
+"start": 36.225,
+"end": 36.265
+},
+{
+"text": "the",
+"start": 36.305,
+"end": 36.385
+},
+{
+"text": "game.",
+"start": 36.545,
+"end": 37.265
+},
+{
+"text": "What",
+"start": 37.345,
+"end": 37.425
+},
+{
+"text": "separates",
+"start": 37.505,
+"end": 37.985
+},
+{
+"text": "good",
+"start": 38.065,
+"end": 38.225
+},
+{
+"text": "players",
+"start": 38.425,
+"end": 38.625
+},
+{
+"text": "from",
+"start": 38.745,
+"end": 38.865
+},
+{
+"text": "great",
+"start": 38.985,
+"end": 39.105
+},
+{
+"text": "ones",
+"start": 39.185,
+"end": 39.665
+},
+{
+"text": "is",
+"start": 39.745,
+"end": 39.825
+},
+{
+"text": "what",
+"start": 39.905,
+"end": 39.985
+},
+{
+"text": "they",
+"start": 40.065,
+"end": 40.145
+},
+{
+"text": "do",
+"start": 40.225,
+"end": 40.305
+},
+{
+"text": "next.",
+"start": 40.385,
+"end": 40.852
+},
+{
+"text": "Ask",
+"start": 41.425,
+"end": 41.585
+},
+{
+"text": "for",
+"start": 41.665,
+"end": 41.745
+},
+{
+"text": "it",
+"start": 41.825,
+"end": 41.905
+},
+{
+"text": "again.",
+"start": 42.145,
+"end": 42.405
+},
+{
+"text": "Make",
+"start": 43.089,
+"end": 43.105
+},
+{
+"text": "the",
+"start": 43.185,
+"end": 43.225
+},
+{
+"text": "next",
+"start": 43.265,
+"end": 43.505
+},
+{
+"text": "read.",
+"start": 43.585,
+"end": 44.145
+}
+]

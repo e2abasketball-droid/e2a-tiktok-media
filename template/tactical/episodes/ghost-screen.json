@@ -1,0 +1,757 @@
+{
+ "id": "ghost-screen",
+ "title": "GHOST SCREEN: two defenders, two outcomes",
+ "fps": 30,
+ "voiceRaw": "tactical/ghost/voice-raw.mp3",
+ "wordsRaw": "ghost-screen.words-raw.json",
+ "voice": "tactical/ghost/voice.wav",
+ "voiceMix": "tactical/ghost/voice.mix.wav",
+ "preroll": 0.12,
+ "tail": 3.0,
+ "gaps": [
+  {
+   "after": "either one.",
+   "sec": 3.2,
+   "why": "0:03.3-0:06: the pass, the catch and the three to the net, no voice"
+  },
+  {
+   "after": "HIS FEET.",
+   "sec": 2.4,
+   "why": "the slow motion on the plant foot, back to real speed on the pop"
+  },
+  {
+   "after": "hit the shooter.",
+   "sec": 1.2,
+   "why": "the release and X1 closing out late"
+  },
+  {
+   "after": "this time.",
+   "sec": 0.35,
+   "why": "X2's shoulder stays on the shooter"
+  },
+  {
+   "after": "stays with him.",
+   "sec": 0.45,
+   "why": "X2 follows the shooter all the way out"
+  },
+  {
+   "after": "toward the screen.",
+   "sec": 0.45,
+   "why": "X1 has jumped: the other shoulder is open"
+  },
+  {
+   "after": "OTHER WAY.",
+   "sec": 3.3,
+   "why": "the layup, the late help, the net"
+  }
+ ],
+ "plays": {
+  "A": "ghost-a-three",
+  "B": "ghost-b-reject"
+ },
+ "pinV2": true,
+ "shots": [
+  {
+   "id": "hook",
+   "name": "Hook - 3/4 high: O2 comes in to X1, X2 steps to the ball, plant and pop",
+   "at": 0,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "@end",
+     3.3
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       8.6,
+       0.0
+      ],
+      "dist": 9.6,
+      "pitch": 58,
+      "yaw": -48,
+      "fov": 44
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       8.6,
+       0.0
+      ],
+      "dist": 8.8,
+      "pitch": 58,
+      "yaw": -48,
+      "fov": 44
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "ZERO",
+      "CONTACT"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 2.9,
+     "to": "@end",
+     "y": 252,
+     "size": 100
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0.29,
+     "name": "bounce",
+     "volume": 0.1
+    },
+    {
+     "at": 2.55,
+     "name": "squeak",
+     "volume": 0.08
+    }
+   ]
+  },
+  {
+   "id": "triple",
+   "name": "Elevated - the pass, the catch on the wing, the three to the net",
+   "at": 3.3,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.3
+    ],
+    [
+     "@end",
+     6.0
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.7,
+       4.1,
+       1.8
+      ],
+      "dist": 11.8,
+      "pitch": 50,
+      "yaw": -4,
+      "fov": 44
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.7,
+       4.1,
+       1.8
+      ],
+      "dist": 10.4,
+      "pitch": 50,
+      "yaw": -4,
+      "fov": 44
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [],
+   "screen": [
+    {
+     "type": "stamp",
+     "text": "OPEN THREE",
+     "badge": "+3",
+     "from": 2.0,
+     "to": "@end",
+     "y": 520
+    }
+   ],
+   "sfx": [
+    {
+     "at": 0.77,
+     "name": "bounce",
+     "volume": 0.09
+    },
+    {
+     "at": 2.25,
+     "name": "swish",
+     "volume": 0.16
+    }
+   ]
+  },
+  {
+   "id": "ghost",
+   "name": "Back to before the fake - the plant foot (the one slow motion)",
+   "at": 6.0,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.8
+    ],
+    [
+     1.65,
+     2.45
+    ],
+    [
+     3.05,
+     2.85
+    ],
+    [
+     "@end",
+     4.3
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.6,
+       8.0,
+       -0.2
+      ],
+      "dist": 10.4,
+      "pitch": 46,
+      "yaw": -100,
+      "fov": 44
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.0,
+       7.9,
+       -0.2
+      ],
+      "dist": 10.8,
+      "pitch": 46,
+      "yaw": -100,
+      "fov": 44
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O2",
+     "color": "#C9A24D",
+     "size": 0.7,
+     "from": 1.79,
+     "to": 3.25
+    }
+   ],
+   "screen": [
+    {
+     "type": "rewind",
+     "from": 0,
+     "to": 0.5
+    },
+    {
+     "type": "title",
+     "lines": [
+      "GHOST",
+      "SCREEN"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 0.5,
+     "to": 3.5,
+     "y": 252,
+     "size": 100,
+     "sub": "Sell it. Pop before contact."
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "caseA",
+   "name": "Tactical - case A real time: X2 steps to the ball, two on the ball, pass, X1 late",
+   "at": 10.5,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.1
+    ],
+    [
+     "@end",
+     6.2
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O1",
+        "X1",
+        "O2",
+        "X2"
+       ],
+       "z": 0.0,
+       "offset": [
+        0.0,
+        -1.2
+       ],
+       "window": 1.4
+      },
+      "dist": 17.5,
+      "pitch": 28,
+      "yaw": 0,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "route",
+     "player": "X2",
+     "t0": 2.4,
+     "t1": 3.2,
+     "trail": true,
+     "color": "#E5483A",
+     "from": 2.3,
+     "to": 3.45
+    },
+    {
+     "type": "passLane",
+     "src": "O1",
+     "dst": "O2",
+     "from": 3.34,
+     "to": 4.0
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "TWO ON",
+      "THE BALL"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 2.85,
+     "to": 4.05,
+     "y": 252,
+     "size": 100
+    },
+    {
+     "type": "pin",
+     "player": "X1",
+     "text": "LATE",
+     "tone": "red",
+     "from": 4.05,
+     "to": 5.2,
+     "size": 40
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "caseB",
+   "name": "Tactical - case B, same frame, same bounce: X2 stays, X1 jumps, cross back",
+   "at": 16.6,
+   "play": "B",
+   "remap": [
+    [
+     0,
+     0.1
+    ],
+    [
+     "@end",
+     7.4
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O1",
+        "X1",
+        "O2",
+        "X2"
+       ],
+       "z": 0.0,
+       "offset": [
+        0.0,
+        -1.2
+       ],
+       "window": 1.4
+      },
+      "dist": 17.5,
+      "pitch": 28,
+      "yaw": 0,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "route",
+     "player": "X2",
+     "t0": 2.7,
+     "t1": 4.3,
+     "trail": true,
+     "color": "#E5483A",
+     "from": 2.75,
+     "to": 4.5
+    },
+    {
+     "type": "route",
+     "player": "X1",
+     "t0": 4.8,
+     "t1": 5.6,
+     "trail": true,
+     "color": "#E5483A",
+     "from": 4.75,
+     "to": 6.1
+    },
+    {
+     "type": "openSpace",
+     "at": [
+      1.7,
+      6.4
+     ],
+     "r": 1.1,
+     "from": 6.2,
+     "to": 6.95
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "REJECT"
+     ],
+     "gold": [
+      0
+     ],
+     "from": 6.85,
+     "to": "@end",
+     "y": 252,
+     "size": 100
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "finish",
+   "name": "Low 3/4 - the drive, the layup, the late help",
+   "at": 23.9,
+   "play": "B",
+   "remap": [
+    [
+     0,
+     7.4
+    ],
+    [
+     "@end",
+     10.8
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.5,
+       3.5,
+       1.5
+      ],
+      "dist": 10.6,
+      "pitch": 68,
+      "yaw": 26,
+      "fov": 46
+     }
+    },
+    {
+     "at": 1.2,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.2,
+       2.6,
+       1.7
+      ],
+      "dist": 9.2,
+      "pitch": 68,
+      "yaw": 30,
+      "fov": 46
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.1,
+       2.4,
+       1.6
+      ],
+      "dist": 8.8,
+      "pitch": 68,
+      "yaw": 32,
+      "fov": 46
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "REJECT"
+     ],
+     "gold": [
+      0
+     ],
+     "from": 0,
+     "to": 0.9,
+     "y": 252,
+     "size": 100
+    },
+    {
+     "type": "pin",
+     "player": "X5",
+     "text": "HELP: LATE",
+     "tone": "red",
+     "from": 0.05,
+     "to": 1.0,
+     "size": 40
+    }
+   ],
+   "sfx": [
+    {
+     "at": 1.3,
+     "name": "swish",
+     "volume": 0.14
+    }
+   ]
+  },
+  {
+   "id": "cta",
+   "name": "CTA - back to case A before the pass: both on the ball, the shooter alone",
+   "at": 27.3,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     2.2
+    ],
+    [
+     "@end",
+     7.2
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O1",
+        "X1",
+        "O2",
+        "X2"
+       ],
+       "z": 0.0,
+       "offset": [
+        0.0,
+        -1.2
+       ],
+       "window": 1.4
+      },
+      "dist": 18.2,
+      "pitch": 28,
+      "yaw": 0,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X1",
+        "X2"
+       ],
+       "z": 0.0,
+       "offset": [
+        0.0,
+        -1.2
+       ],
+       "window": 1.4
+      },
+      "dist": 18.2,
+      "pitch": 28,
+      "yaw": 0,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O2",
+     "color": "#C9A24D",
+     "from": 1.6,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "scrim",
+     "opacity": 0.24,
+     "from": 1.6,
+     "to": "@end"
+    },
+    {
+     "type": "title",
+     "lines": [
+      "WHO'S GOT",
+      "THE SHOOTER?"
+     ],
+     "gold": [
+      1
+     ],
+     "from": 1.7,
+     "to": "@end",
+     "y": 252,
+     "size": 108
+    },
+    {
+     "type": "logo",
+     "big": false,
+     "from": "@end-1.6",
+     "to": "@end"
+    }
+   ],
+   "sfx": []
+  },
+  {
+   "id": "loop",
+   "name": "Loop - back to the hook frame and the approach",
+   "at": 32.3,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "@end",
+     0.7
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       8.6,
+       0.0
+      ],
+      "dist": 9.6,
+      "pitch": 58,
+      "yaw": -48,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": [],
+   "sfx": []
+  }
+ ],
+ "keywords": [
+  "TWO DEFENDERS",
+  "ghost screen",
+  "WATCH HIS FEET",
+  "Pop",
+  "both defenders",
+  "shooter",
+  "Same fake",
+  "defender",
+  "jumps",
+  "OTHER WAY",
+  "Who's got the shooter"
+ ],
+ "subtitleGroups": [
+  4,
+  2,
+  2,
+  4,
+  3,
+  3,
+  3,
+  3,
+  3,
+  3,
+  2,
+  3,
+  2,
+  2,
+  3,
+  2,
+  3,
+  4,
+  3,
+  2,
+  2,
+  2
+ ],
+ "subtitleHide": [],
+ "autoSfx": false,
+ "ambience": {
+  "src": "sfx/arena.mp3",
+  "volume": 0.06
+ },
+ "music": {
+  "src": "tactical/ghost/music-mix.mp3",
+  "volume": 1
+ },
+ "subtitleY": 1420
+}

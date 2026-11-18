@@ -1,0 +1,239 @@
+{
+ "id": "hide-poss",
+ "title": "Hide in games: the ball goes the other way",
+ "duration": 6.0,
+ "source": "original E2A character episode (generic coaching knowledge; only the reference's practice/game contrast structure is reused)",
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Passer"
+  },
+  {
+   "id": "O8",
+   "team": "O",
+   "role": "#8, hidden"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Other wing"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the ball",
+   "guards": "O1"
+  },
+  {
+   "id": "X8",
+   "team": "X",
+   "role": "In the lane",
+   "guards": "O8"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Other wing",
+   "guards": "O3"
+  }
+ ],
+ "start": {
+  "O1": [
+   3.3,
+   7.7
+  ],
+  "O8": [
+   -4.3,
+   5.9
+  ],
+  "O3": [
+   5.2,
+   4.6
+  ],
+  "X1": [
+   2.75,
+   8.45
+  ],
+  "X8": [
+   -3.0,
+   5.98
+  ],
+  "X3": [
+   4.55,
+   3.7
+  ]
+ },
+ "legs": {
+  "O3": [
+   {
+    "at": 3.0500000000000003,
+    "to": [
+     5.4,
+     5.6
+    ],
+    "dur": 1.0
+   }
+  ],
+  "X3": [
+   {
+    "at": 2.85,
+    "to": [
+     4.6,
+     3.4
+    ],
+    "dur": 0.9
+   }
+  ],
+  "X8": [
+   {
+    "at": 3.15,
+    "to": [
+     -2.6,
+     5.4
+    ],
+    "dur": 1.0
+   }
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 2.0999999999999996,
+   "dribble": true
+  },
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 2.0999999999999996,
+   "to": 2.3
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O3",
+   "t0": 2.3,
+   "t1": 2.85,
+   "style": "chest"
+  },
+  {
+   "type": "hold",
+   "player": "O3",
+   "from": 2.85,
+   "to": 6.0,
+   "dribble": true
+  }
+ ],
+ "actions": {
+  "O1": [
+   {
+    "type": "dribble",
+    "from": 0,
+    "to": 2.0999999999999996,
+    "face": "O8"
+   },
+   {
+    "type": "pass",
+    "from": 2.05,
+    "to": 2.4499999999999997,
+    "face": "O3"
+   }
+  ],
+  "O3": [
+   {
+    "type": "catchReady",
+    "from": 1.4,
+    "to": 2.85,
+    "face": "O1"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6.0,
+    "face": "O1"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6.0,
+    "face": "O3"
+   }
+  ],
+  "X8": [
+   {
+    "type": "topLock",
+    "from": 0,
+    "to": 6.0,
+    "face": "O8",
+    "side": 1
+   }
+  ],
+  "O8": [
+   {
+    "type": "hide",
+    "from": 0,
+    "to": 6.0,
+    "face": "O1"
+   }
+  ]
+ },
+ "expr": {
+  "O8": [
+   {
+    "t": 0,
+    "brow": -0.8,
+    "look": "ball"
+   }
+  ],
+  "X8": [
+   {
+    "t": 0,
+    "brow": 0.6,
+    "look": "O8"
+   }
+  ],
+  "O1": [
+   {
+    "t": 0,
+    "brow": -0.2,
+    "look": "O8"
+   },
+   {
+    "t": 1.8,
+    "brow": 0.2,
+    "look": "O3"
+   }
+  ],
+  "X1": [
+   {
+    "t": 0,
+    "brow": 0.4,
+    "look": "O1"
+   }
+  ],
+  "O3": [
+   {
+    "t": 0,
+    "brow": 0.3,
+    "smile": 0.2
+   }
+  ],
+  "X3": [
+   {
+    "t": 0,
+    "brow": 0.3
+   }
+  ]
+ },
+ "marks": {
+  "look": 1.2,
+  "pass": 2.3,
+  "catch": 2.85
+ }
+}

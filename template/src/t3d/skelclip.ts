@@ -526,6 +526,7 @@ const poseFromJoints = (j: Record<string, V3>, heading: number, chestYaw: number
   head: j.head,
   heading,
   chestYaw,
+  headYaw: chestYaw,
   lean: 0,
   roll: 0,
   hip: [j.hipL, j.hipR],

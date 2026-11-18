@@ -120,8 +120,8 @@ export const headGeo = (skin: string, hair = '#16100B') => {
 
 // ---------- jersey texture (per team + number) ----------
 const texCache = new Map<string, THREE.Texture>();
-const jerseyTex = (kit: Kit, num: string, kind: 'jersey' | 'shorts') => {
-  const key = `${kind}|${kit.jersey}|${kit.trim}|${num}`;
+const jerseyTex = (kit: Kit, num: string, kind: 'jersey' | 'shorts', wide = false) => {
+  const key = `${kind}|${kit.jersey}|${kit.trim}|${num}|${wide}`;
   const hit = texCache.get(key);
   if (hit) return hit;
   const W = 1024;
@@ -171,7 +171,7 @@ const jerseyTex = (kit: Kit, num: string, kind: 'jersey' | 'shorts') => {
       g.fillText(num, 0, 0);
       g.restore();
     };
-    drawNum(W * 0.5, 1);
+    drawNum(W * 0.5, wide ? 1.7 : 1);
     drawNum(0, 1.2);
     drawNum(W, 1.2);
     // hem
@@ -224,7 +224,74 @@ const frameQuat = (upDir: V3, fwdDir: V3) => {
   return new THREE.Quaternion().setFromRotationMatrix(m);
 };
 
-type Props = {pose: Pose; team: 'O' | 'X'; num: string; skin: string; opacity?: number; highlight?: number};
+/** stylised character face (2026-11-17, opt-in per episode): everything resolved from scene time, so renders repeat.
+ *  gaze = world point the eyes look at; brow -1 worried (inner ends up) .. +1 determined (inner ends down);
+ *  blink 0..1; smile 0..1 (neutral .. slight smile); open 0..1 (mouth open, calling for the ball). */
+export type FaceState = {gaze?: V3; brow: number; blink: number; smile: number; open: number; headScale: number; hair: string};
+
+type Props = {pose: Pose; team: 'O' | 'X'; num: string; skin: string; opacity?: number; highlight?: number; face?: FaceState};
+
+const FACE_G = (() => ({
+  eye: new THREE.SphereGeometry(1, 20, 14),
+  brow: new THREE.CapsuleGeometry(1, 2.2, 4, 8),
+  mouth: new THREE.TorusGeometry(1, 0.2, 8, 20, Math.PI),
+  cap: new THREE.SphereGeometry(1, 28, 16, 0, Math.PI * 2, 0, Math.PI * 0.56),
+  lid: new THREE.SphereGeometry(1, 20, 10, 0, Math.PI * 2, 0, Math.PI / 2),
+}))();
+const faceM = (c: string, r = 0.5) => mat(`face${c}${r}`, () => new THREE.MeshStandardMaterial({color: c, roughness: r}));
+
+/** eyes, brows, nose, mouth and a hair cap on a head group (local frame: +Z front, +Y up, radii rx/ry/rz) */
+const Face: React.FC<{f: FaceState; rx: number; ry: number; rz: number; skinM: THREE.Material; q: THREE.Quaternion; at: [number, number, number]}> = ({f, rx, ry, rz, skinM, q, at}) => {
+  // gaze in the head frame
+  let gx = 0;
+  let gy = 0;
+  if (f.gaze) {
+    const d = new THREE.Vector3(...W3(f.gaze)).sub(new THREE.Vector3(...at)).applyQuaternion(q.clone().invert());
+    if (d.z > 0.05) {
+      gx = Math.max(-1, Math.min(1, d.x / d.z / 0.9));
+      gy = Math.max(-1, Math.min(1, d.y / d.z / 0.7));
+    } else gx = Math.sign(d.x) * 1;
+  }
+  const white = faceM('#F7F4EE', 0.35);
+  const iris = faceM('#2A1A10', 0.3);
+  const brow = faceM(f.hair, 0.8);
+  const lip = faceM('#5A2A22', 0.6);
+  const open = Math.max(0, Math.min(1, f.open));
+  // upper eyelids (2026-11-17 V3): a skin dome over each eye that rotates down from behind the eye. At rest it covers the
+  // top ~third (soft, relaxed lids instead of round staring eyes); worry adds a little weight; a blink closes it.
+  const blink = Math.max(0, Math.min(1, f.blink));
+  // V4: a little more lid at rest and smaller whites/irises so the eyes stop dominating the face
+  const rest = 0.36 + 0.08 * Math.max(0, -f.brow) + Math.max(0, -gy) * 0.12;
+  const closure = rest + (1 - rest) * blink;
+  const lidRot = -Math.PI / 2 + closure * (Math.PI / 2 + 0.95);
+  const parts: React.ReactNode[] = [];
+  for (const s of [-1, 1]) {
+    const ex = s * 0.36 * rx;
+    const ey = 0.1 * ry;
+    const ez = 0.86 * rz;
+    parts.push(
+      <group key={`eye${s}`} position={[ex, ey, ez]}>
+        <mesh geometry={FACE_G.eye} material={white} scale={[0.17 * rx, 0.2 * ry, 0.11 * rz]} />
+        <mesh geometry={FACE_G.lid} material={skinM} rotation={[lidRot, 0, 0]} scale={[0.178 * rx, 0.208 * ry, 0.126 * rz]} />
+        <mesh geometry={FACE_G.eye} material={iris} position={[gx * 0.06 * rx, gy * 0.06 * ry, 0.072 * rz]} scale={[0.088 * rx, 0.104 * ry, 0.042 * rz]} />
+        <mesh geometry={FACE_G.eye} material={white} position={[gx * 0.06 * rx + 0.028 * rx, gy * 0.06 * ry + 0.036 * ry, 0.104 * rz]} scale={[0.02 * rx, 0.02 * ry, 0.01 * rz]} />
+      </group>,
+    );
+    // brow: worried = inner end up (rotation toward the centre), determined = inner end down
+    const tilt = s * 0.42 * f.brow;
+    parts.push(<mesh key={`brow${s}`} geometry={FACE_G.brow} material={brow} position={[s * 0.36 * rx, (0.4 + 0.06 * Math.max(0, -f.brow)) * ry, 0.9 * rz]} rotation={[0, 0, Math.PI / 2 + tilt]} scale={[0.036 * ry, 0.072 * rx, 0.034 * rz]} />);
+  }
+  // nose
+  parts.push(<mesh key="nose" geometry={FACE_G.eye} material={skinM} position={[0, -0.12 * ry, 0.98 * rz]} scale={[0.1 * rx, 0.11 * ry, 0.08 * rz]} />);
+  // mouth: an arc (smile) or an open oval when calling for the ball
+  const my = -0.46 * ry;
+  if (open > 0.05) parts.push(<mesh key="mo" geometry={FACE_G.eye} material={lip} position={[0, my, 0.86 * rz]} scale={[0.14 * rx, 0.14 * ry * open + 0.02 * ry, 0.06 * rz]} />);
+  const curve = 0.12 + 0.9 * Math.max(0, f.smile);
+  parts.push(<mesh key="ml" geometry={FACE_G.mouth} material={lip} position={[0, my + 0.04 * ry * curve, 0.88 * rz]} rotation={[0, 0, Math.PI]} scale={[0.17 * rx * (1 - 0.3 * open), 0.17 * ry * curve, 0.06 * rz]} />);
+  // hair cap (young, full on top). V4: tilted back and a touch tighter so the fringe sits on the hairline, not over the brows
+  parts.push(<mesh key="hair" geometry={FACE_G.cap} material={brow} position={[0, 0.07 * ry, -0.06 * rz]} rotation={[-0.78, 0, 0]} scale={[1.055 * rx, 1.04 * ry, 1.065 * rz]} castShadow />);
+  return <group position={at} quaternion={q}>{parts}</group>;
+};
 
 const Limb: React.FC<{a: V3; b: V3; geo: THREE.BufferGeometry; m: THREE.Material; s: number; from?: number; to?: number}> = ({a, b, geo, m, s, from = 0, to = 1}) => {
   const S = seg(a, b);
@@ -234,17 +301,21 @@ const Limb: React.FC<{a: V3; b: V3; geo: THREE.BufferGeometry; m: THREE.Material
   );
 };
 
-export const Athlete: React.FC<Props> = ({pose: P, team, num, skin}) => {
+export const Athlete: React.FC<Props> = ({pose: P, team, num, skin, face}) => {
   const kit = KITS[team];
   const k = P.dims.H / 2;
-  const skinM = mat(`skin${skin}`, () => new THREE.MeshPhysicalMaterial({color: skin, roughness: 0.46, metalness: 0.0, clearcoat: 0.18, clearcoatRoughness: 0.45}));
-  const jerseyM = mat(`jersey${team}${num}`, () => new THREE.MeshStandardMaterial({map: jerseyTex(kit, num, 'jersey'), roughness: 0.72, metalness: 0.0, side: THREE.DoubleSide}));
-  const shortsM = mat(`shorts${team}`, () => new THREE.MeshStandardMaterial({map: jerseyTex(kit, num, 'shorts'), roughness: 0.75, side: THREE.DoubleSide}));
+  // girth: limbs and trunk thicken with the build (lean guard ~0.92, strong big ~1.14); length stays with height
+  const b = P.dims.build ?? 1;
+  const kb = k * b;
+  // V2 materials (2026-11-13): matte skin with a soft sheen instead of a plastic clearcoat; fabric = rough + sheen
+  const skinM = mat(`skinV2${skin}`, () => new THREE.MeshPhysicalMaterial({color: skin, roughness: 0.64, metalness: 0.0, clearcoat: 0.04, clearcoatRoughness: 0.7, sheen: 0.25, sheenRoughness: 0.6, sheenColor: new THREE.Color('#f3d9c4')}));
+  const jerseyM = mat(`jerseyV2b${team}${num}${face ? 'w' : ''}`, () => new THREE.MeshPhysicalMaterial({map: jerseyTex(kit, num, 'jersey', !!face), roughness: 0.86, metalness: 0.0, sheen: 0.3, sheenRoughness: 0.8, sheenColor: new THREE.Color(kit.jersey).lerp(new THREE.Color('#ffffff'), 0.3), side: THREE.DoubleSide}));
+  const shortsM = mat(`shortsV2b${team}`, () => new THREE.MeshPhysicalMaterial({map: jerseyTex(kit, num, 'shorts'), roughness: 0.88, sheen: 0.3, sheenRoughness: 0.8, sheenColor: new THREE.Color(kit.shorts).lerp(new THREE.Color('#ffffff'), 0.3), side: THREE.DoubleSide}));
   const shoeM = mat(`shoe${team}`, () => new THREE.MeshStandardMaterial({color: kit.shoe, roughness: 0.42}));
   const soleM = mat(`sole${team}`, () => new THREE.MeshStandardMaterial({color: kit.sole, roughness: 0.6}));
   const sockM = mat(`sock${team}`, () => new THREE.MeshStandardMaterial({color: kit.sock, roughness: 0.85}));
   const hairM = mat('hairCap', () => new THREE.MeshStandardMaterial({color: '#15100C', roughness: 0.92, metalness: 0}));
-  const headM = mat('headV', () => new THREE.MeshPhysicalMaterial({vertexColors: true, roughness: 0.5, clearcoat: 0.15, clearcoatRoughness: 0.5}));
+  const headM = mat('headV2', () => new THREE.MeshPhysicalMaterial({vertexColors: true, roughness: 0.62, clearcoat: 0.05, clearcoatRoughness: 0.7, sheen: 0.2, sheenRoughness: 0.6}));
 
   const up: V3 = [P.chest[0] - P.pelvis[0], P.chest[1] - P.pelvis[1], P.chest[2] - P.pelvis[2]];
   const chestFwd: V3 = [Math.cos(P.chestYaw), Math.sin(P.chestYaw), 0];
@@ -256,41 +327,57 @@ export const Athlete: React.FC<Props> = ({pose: P, team, num, skin}) => {
   const Wp = W3(waist);
   const headW = W3(P.head);
   const neckBase: V3 = P.chest;
-  const headQ = frameQuat([P.head[0] - P.chest[0], P.head[1] - P.chest[1], P.head[2] - P.chest[2]], chestFwd);
+  const headYaw = P.headYaw ?? P.chestYaw;
+  const headFwd: V3 = [Math.cos(headYaw), Math.sin(headYaw), 0];
+  const headQ = frameQuat([P.head[0] - P.chest[0], P.head[1] - P.chest[1], P.head[2] - P.chest[2]], headFwd);
+  if (P.headPitch) headQ.multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), P.headPitch));
 
   const parts: React.ReactNode[] = [];
   // torso (jersey) — elliptical: wide across the shoulders, shallow front-to-back
-  parts.push(<mesh key="torso" geometry={G.torso} material={jerseyM} position={Wp} quaternion={torsoQ} scale={[1.0 * k, torsoLen, 0.66 * k]} castShadow receiveShadow />);
+  parts.push(<mesh key="torso" geometry={G.torso} material={jerseyM} position={Wp} quaternion={torsoQ} scale={[1.0 * k * (0.55 + 0.45 * b), torsoLen, 0.66 * k * (0.4 + 0.6 * b)]} castShadow receiveShadow />);
   // shorts body around the hips
   const sb: V3 = [P.pelvis[0], P.pelvis[1], P.pelvis[2] - 0.2 * k];
   // loose basketball shorts: wider than the hips (observed 5438 front/back, 5449–5452)
-  parts.push(<mesh key="shorts" geometry={G.shortsBody} material={shortsM} position={W3(sb)} quaternion={hipQ} scale={[1.1 * k, 0.25 * k, 1.02 * k]} castShadow receiveShadow />);
+  parts.push(<mesh key="shorts" geometry={G.shortsBody} material={shortsM} position={W3(sb)} quaternion={hipQ} scale={[1.1 * k * (0.6 + 0.4 * b), 0.25 * k, 1.02 * k * (0.6 + 0.4 * b)]} castShadow receiveShadow />);
   // neck + head + hair
-  parts.push(<Limb key="neck" a={[neckBase[0], neckBase[1], neckBase[2] - 0.04 * k]} b={P.head} geo={G.neck} m={skinM} s={k} to={0.62} />);
+  parts.push(<Limb key="neck" a={[neckBase[0], neckBase[1], neckBase[2] - 0.04 * k]} b={P.head} geo={G.neck} m={skinM} s={k * (0.7 + 0.3 * b)} to={0.62} />);
   // head size follows dims.headR (0.12·k since 2026-11-18: head ≈ 1/7.6 of standing height in 5438/5440, was 1/8.6)
-  const hs = P.dims.headR / (0.112 * k);
-  parts.push(<mesh key="head" geometry={headGeo(skin)} material={headM} position={headW} quaternion={headQ} scale={[0.082 * k * hs, 0.112 * k * hs, 0.098 * k * hs]} castShadow />);
-  // hair volume on top, short at the sides and nape (observed 5440 frente 0.36–0.85, perfil 2.16–2.60, nuca 4.15–4.70)
-  {
+  const hs = face ? 1 : P.dims.headR / (0.112 * k);
+  if (face) {
+    // stylised young head: rounder and bigger, lifted so the bigger skull sits on the neck
+    const fs = face.headScale;
+    const up = new THREE.Vector3(0, 1, 0).applyQuaternion(headQ).multiplyScalar(0.1 * k * (fs - 1));
+    const at: [number, number, number] = [headW[0] + up.x, headW[1] + up.y, headW[2] + up.z];
+    const rx = 0.092 * k * fs;
+    const ry = 0.108 * k * fs;
+    const rz = 0.1 * k * fs;
+    parts.push(<mesh key="head" geometry={G.sphere} material={skinM} position={at} quaternion={headQ} scale={[rx, ry, rz]} castShadow />);
+    parts.push(<Face key="face" f={face} rx={rx} ry={ry} rz={rz} skinM={skinM} q={headQ} at={at} />);
+  } else {
+    parts.push(<mesh key="head" geometry={headGeo(skin)} material={headM} position={headW} quaternion={headQ} scale={[0.082 * k * hs, 0.112 * k * hs, 0.098 * k * hs]} castShadow />);
+    // hair volume on top, short at the sides and nape (observed 5440 frente 0.36–0.85, perfil 2.16–2.60, nuca 4.15–4.70)
     const hu = new THREE.Vector3(0, 1, 0).applyQuaternion(headQ);
     const hf = new THREE.Vector3(0, 0, 1).applyQuaternion(headQ);
     const o = 0.048 * k * hs;
-    const b = -0.012 * k * hs;
-    parts.push(<mesh key="hair" geometry={G.hair} material={hairM} position={[headW[0] + hu.x * o + hf.x * b, headW[1] + hu.y * o + hf.y * b, headW[2] + hu.z * o + hf.z * b]} quaternion={headQ} scale={[0.08 * k * hs, 0.082 * k * hs, 0.094 * k * hs]} castShadow />);
+    const hb = -0.012 * k * hs;
+    parts.push(<mesh key="hair" geometry={G.hair} material={hairM} position={[headW[0] + hu.x * o + hf.x * hb, headW[1] + hu.y * o + hf.y * hb, headW[2] + hu.z * o + hf.z * hb]} quaternion={headQ} scale={[0.08 * k * hs, 0.082 * k * hs, 0.094 * k * hs]} castShadow />);
   }
   // ears / jaw hint (gives the head a readable orientation without a face)
   for (const s of [-1, 1]) {
-    const r: V3 = [Math.sin(P.chestYaw) * s, -Math.cos(P.chestYaw) * s, 0];
-    const e: V3 = [P.head[0] + r[0] * 0.08 * k * hs, P.head[1] + r[1] * 0.08 * k * hs, P.head[2] - 0.0];
+    const r: V3 = [Math.sin(headYaw) * s, -Math.cos(headYaw) * s, 0];
+    const eo = face ? 0.094 * face.headScale : 0.08 * hs;
+    const e: V3 = [P.head[0] + r[0] * eo * k, P.head[1] + r[1] * eo * k, P.head[2] + (face ? 0.1 * k * (face.headScale - 1) : 0)];
     parts.push(<mesh key={`ear${s}`} geometry={G.sphere} material={skinM} position={W3(e)} scale={[0.018 * k, 0.03 * k, 0.022 * k]} />);
   }
   for (let i = 0; i < 2; i++) {
     const sfx = i === 0 ? 'L' : 'R';
     // legs
-    parts.push(<Limb key={`th${sfx}`} a={P.hip[i]} b={P.knee[i]} geo={G.thigh} m={skinM} s={k} from={0.12} />);
-    parts.push(<Limb key={`sl${sfx}`} a={P.hip[i]} b={P.knee[i]} geo={G.shortsLeg} m={shortsM} s={k} from={0.0} to={0.56} />);
-    parts.push(<Limb key={`sh${sfx}`} a={P.knee[i]} b={P.ankle[i]} geo={G.shin} m={skinM} s={k} />);
-    parts.push(<Limb key={`so${sfx}`} a={P.knee[i]} b={P.ankle[i]} geo={G.sock} m={sockM} s={k} from={0.78} to={1.03} />);
+    parts.push(<Limb key={`th${sfx}`} a={P.hip[i]} b={P.knee[i]} geo={G.thigh} m={skinM} s={kb} from={0.12} />);
+    parts.push(<Limb key={`sl${sfx}`} a={P.hip[i]} b={P.knee[i]} geo={G.shortsLeg} m={shortsM} s={kb} from={0.0} to={0.56} />);
+    parts.push(<Limb key={`sh${sfx}`} a={P.knee[i]} b={P.ankle[i]} geo={G.shin} m={skinM} s={kb} />);
+    // knee: a cap that keeps the joint round when it bends (no pinched cylinder ends)
+    parts.push(<mesh key={`kn${sfx}`} geometry={G.sphere} material={skinM} position={W3(P.knee[i])} scale={[0.052 * kb, 0.056 * kb, 0.052 * kb]} castShadow />);
+    parts.push(<Limb key={`so${sfx}`} a={P.knee[i]} b={P.ankle[i]} geo={G.sock} m={sockM} s={kb} from={0.78} to={1.03} />);
     // shoe: capsule along heel -> toe, flattened
     const heel: V3 = [P.ankle[i][0] - (P.toe[i][0] - P.ankle[i][0]) * 0.32, P.ankle[i][1] - (P.toe[i][1] - P.ankle[i][1]) * 0.32, P.ankle[i][2] - 0.045 * k];
     const S = seg(heel, P.toe[i]);
@@ -299,12 +386,26 @@ export const Athlete: React.FC<Props> = ({pose: P, team, num, skin}) => {
     parts.push(<mesh key={`shoe${sfx}`} geometry={G.shoe} material={shoeM} position={mid} quaternion={shoeQ} scale={[0.052 * k, S.len * 0.42, 0.06 * k]} castShadow receiveShadow />);
     parts.push(<mesh key={`sole${sfx}`} geometry={G.shoe} material={soleM} position={[mid[0], mid[1] - 0.026 * k, mid[2]]} quaternion={shoeQ} scale={[0.056 * k, S.len * 0.45, 0.03 * k]} castShadow />);
     // arms: deltoid, upper arm, elbow, forearm, hand
-    parts.push(<mesh key={`dl${sfx}`} geometry={G.sphere} material={skinM} position={W3(P.shoulder[i])} scale={[0.06 * k, 0.058 * k, 0.058 * k]} castShadow />);
-    parts.push(<Limb key={`ua${sfx}`} a={P.shoulder[i]} b={P.elbow[i]} geo={G.upper} m={skinM} s={k} />);
-    parts.push(<Limb key={`fa${sfx}`} a={P.elbow[i]} b={P.wrist[i]} geo={G.fore} m={skinM} s={k} />);
+    {
+      // deltoid (2026-11-17 V3): an ellipsoid along the upper arm, centred a little down the arm, so the shoulder flows
+      // into the arm instead of reading as a ball on a stick
+      const DS = seg(P.shoulder[i], P.elbow[i]);
+      const dc: V3 = [P.shoulder[i][0] + (P.elbow[i][0] - P.shoulder[i][0]) * 0.16, P.shoulder[i][1] + (P.elbow[i][1] - P.shoulder[i][1]) * 0.16, P.shoulder[i][2] + (P.elbow[i][2] - P.shoulder[i][2]) * 0.16];
+      parts.push(<mesh key={`dl${sfx}`} geometry={G.sphere} material={skinM} position={W3(dc)} quaternion={DS.quat} scale={[0.058 * kb, 0.1 * kb, 0.055 * kb]} castShadow />);
+    }
+    // trapezius: shoulder joined to the base of the neck (reads as one torso, not a pinned arm)
+    parts.push(<Limb key={`tr${sfx}`} a={[P.chest[0], P.chest[1], P.chest[2] - 0.02 * k]} b={P.shoulder[i]} geo={G.upper} m={jerseyM} s={kb * 1.15} to={1.0} />);
+    parts.push(<Limb key={`ua${sfx}`} a={P.shoulder[i]} b={P.elbow[i]} geo={G.upper} m={skinM} s={kb} />);
+    parts.push(<mesh key={`el${sfx}`} geometry={G.sphere} material={skinM} position={W3(P.elbow[i])} scale={[0.036 * kb, 0.036 * kb, 0.036 * kb]} castShadow />);
+    parts.push(<Limb key={`fa${sfx}`} a={P.elbow[i]} b={P.wrist[i]} geo={G.fore} m={skinM} s={kb} />);
+    // wrist joint: closes the forearm-to-hand break seen in close shots (2026-11-17 V2)
+    parts.push(<mesh key={`wr${sfx}`} geometry={G.sphere} material={skinM} position={W3(P.wrist[i])} scale={[0.029 * kb, 0.029 * kb, 0.029 * kb]} castShadow />);
     const hm: V3 = [(P.wrist[i][0] + P.hand[i][0]) / 2, (P.wrist[i][1] + P.hand[i][1]) / 2, (P.wrist[i][2] + P.hand[i][2]) / 2];
     const HS = seg(P.wrist[i], P.hand[i]);
-    parts.push(<mesh key={`hd${sfx}`} geometry={G.sphere} material={skinM} position={W3(hm)} quaternion={HS.quat} scale={[0.034 * k, 0.062 * k, 0.026 * k]} castShadow />);
+    parts.push(<mesh key={`hd${sfx}`} geometry={G.sphere} material={skinM} position={W3(hm)} quaternion={HS.quat} scale={[0.046 * k, 0.074 * k, 0.034 * k]} castShadow />);
+    // thumb: a small lobe on the inside of the palm (gives the hand volume and a readable grip)
+    const th: V3 = [P.wrist[i][0] + (P.hand[i][0] - P.wrist[i][0]) * 0.35 + Math.sin(P.chestYaw) * (i === 0 ? 0.03 : -0.03) * k, P.wrist[i][1] + (P.hand[i][1] - P.wrist[i][1]) * 0.35 - Math.cos(P.chestYaw) * (i === 0 ? 0.03 : -0.03) * k, P.wrist[i][2] + (P.hand[i][2] - P.wrist[i][2]) * 0.35];
+    parts.push(<mesh key={`tb${sfx}`} geometry={G.sphere} material={skinM} position={W3(th)} quaternion={HS.quat} scale={[0.017 * k, 0.034 * k, 0.017 * k]} />);
   }
   return <group>{parts}</group>;
 };

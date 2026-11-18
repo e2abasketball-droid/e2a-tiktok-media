@@ -1,0 +1,363 @@
+{
+ "id": "floppy-a-curl",
+ "title": "Floppy A: he trails, curl to the rim",
+ "duration": 5.6,
+ "concept": "floppy",
+ "source": "original E2A play (standard FIBA/European floppy action, generic coaching knowledge)",
+ "squareUp": true,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Passer, top (a step to the right)"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Shooter: starts under the rim"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Weak-side wing"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Screener, left block"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Screener, right block (the side used)"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the passer",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "On the shooter: trails (A) / shortcuts under (B)",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Weak-side wing",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "On the left screener",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "On the right screener",
+   "guards": "O5"
+  }
+ ],
+ "start": {
+  "O1": [
+   -1.5,
+   8.7
+  ],
+  "X1": [
+   -0.45,
+   8.05
+  ],
+  "O2": [
+   0.0,
+   1.0
+  ],
+  "X2": [
+   0.45,
+   1.55
+  ],
+  "O5": [
+   -2.75,
+   2.05
+  ],
+  "X5": [
+   -2.15,
+   2.85
+  ],
+  "O4": [
+   2.75,
+   2.05
+  ],
+  "X4": [
+   2.15,
+   2.85
+  ],
+  "O3": [
+   5.9,
+   6.4
+  ],
+  "X3": [
+   5.1,
+   5.85
+  ]
+ },
+ "legs": {
+  "O2": [
+   {
+    "at": 0.55,
+    "via": [
+     [
+      -1.3,
+      0.85
+     ],
+     [
+      -2.55,
+      1.1
+     ],
+     [
+      -3.3,
+      1.7
+     ]
+    ],
+    "to": [
+     -3.6,
+     2.7
+    ],
+    "speed": 5.0
+   },
+   {
+    "at": "+0.0",
+    "via": [
+     [
+      -3.35,
+      3.6
+     ],
+     [
+      -2.45,
+      3.85
+     ]
+    ],
+    "to": [
+     -1.45,
+     3.25
+    ],
+    "speed": 4.6
+   },
+   {
+    "at": "+0.0",
+    "to": [
+     -0.55,
+     2.55
+    ],
+    "speed": 4.4
+   }
+  ],
+  "X1": [],
+  "O1": [],
+  "O3": [],
+  "X3": [],
+  "O4": [],
+  "X4": [],
+  "X2": [
+   {
+    "at": 0.8,
+    "via": [
+     [
+      -1.0,
+      1.2
+     ],
+     [
+      -2.3,
+      1.2
+     ],
+     [
+      -3.4,
+      1.55
+     ]
+    ],
+    "to": [
+     -3.8,
+     2.95
+    ],
+    "speed": 4.9
+   },
+   {
+    "at": "+0.0",
+    "via": [
+     [
+      -3.15,
+      3.85
+     ]
+    ],
+    "to": [
+     -2.25,
+     3.75
+    ],
+    "speed": 4.6
+   }
+  ],
+  "X5": [
+   {
+    "at": 0.6,
+    "to": [
+     -4.4,
+     4.45
+    ],
+    "speed": 2.4
+   }
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 2.41
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O2",
+   "t0": 2.41,
+   "t1": 2.83,
+   "style": "chest"
+  },
+  {
+   "type": "hold",
+   "player": "O2",
+   "from": 2.83,
+   "to": 3.52,
+   "dribble": true
+  },
+  {
+   "type": "layup",
+   "player": "O2",
+   "t0": 3.52,
+   "t1": 3.92,
+   "make": true
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "screen": 0.3,
+  "run": 0.55,
+  "trail": 1.87,
+  "rub": 1.87,
+  "curl": 2.02,
+  "pass": 2.41,
+  "catch": 2.83,
+  "finish": 3.52,
+  "make": 3.92,
+  "end": 5.6
+ },
+ "actions": {
+  "O5": [
+   {
+    "type": "screen",
+    "from": 0.3,
+    "to": 2.6,
+    "face": "X2"
+   }
+  ],
+  "O4": [
+   {
+    "type": "screen",
+    "from": 0.3,
+    "to": 2.0,
+    "face": "X2"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6.0,
+    "face": "O1"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6.0,
+    "face": "O1"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6.0,
+    "face": "O2"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0.6,
+    "to": 5.6,
+    "face": "O2"
+   }
+  ],
+  "O2": [
+   {
+    "type": "celebrate",
+    "from": 4.22,
+    "to": 5.5
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "O2",
+   "b": "O5",
+   "at": "rub",
+   "max": 1.3,
+   "says": "Curl tight off the screen."
+  },
+  {
+   "type": "near",
+   "a": "X2",
+   "b": "O2",
+   "at": "trail",
+   "max": 1.9,
+   "says": "He's on your back hip."
+  },
+  {
+   "type": "far",
+   "a": "X5",
+   "b": "O2",
+   "at": "catch",
+   "min": 1.3,
+   "says": "Catch on the move."
+  },
+  {
+   "type": "near_rim",
+   "player": "O2",
+   "at": "finish",
+   "max": 1.6,
+   "says": "Finish at the rim."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "screen",
+    "run",
+    "rub",
+    "pass",
+    "catch",
+    "finish"
+   ],
+   "says": "screen, rub, curl, pass, layup"
+  }
+ ],
+ "notes": [
+  "O2 starts under the rim; O5 screens on the right block, O4 on the left.",
+  "X2 chases on O2's back hip; O2 rubs O5's shoulder and curls tight.",
+  "X5 shows high and outside: the rim is open. Lead chest pass, layup."
+ ]
+}

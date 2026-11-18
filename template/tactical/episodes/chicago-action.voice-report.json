@@ -1,0 +1,132 @@
+{
+ "source": "public/tactical/chicago/voice-raw.mp3",
+ "source_sec": 28.88,
+ "preroll": 0.12,
+ "output": "public/tactical/chicago/voice.wav",
+ "output_sec": 32.89,
+ "inserted_total_sec": 3.89,
+ "last_word_end": 32.97,
+ "gaps": [
+  {
+   "after": "opened the rim.",
+   "natural_silence": [
+    3.81,
+    4.27
+   ],
+   "natural_sec": 0.46,
+   "target_sec": 0.7,
+   "inserted_sec": 0.24,
+   "cut_at_source": 4.145,
+   "why": "hook: the lane is suggested, cut before the basket"
+  },
+  {
+   "after": "Chicago action.",
+   "natural_silence": [
+    6.03,
+    6.09
+   ],
+   "natural_sec": 0.06,
+   "target_sec": 0.35,
+   "inserted_sec": 0.29,
+   "cut_at_source": 6.065,
+   "why": "CHICAGO ACTION title lands"
+  },
+  {
+   "after": "into a handoff.",
+   "natural_silence": [
+    7.86,
+    8.28
+   ],
+   "natural_sec": 0.42,
+   "target_sec": 1.5,
+   "inserted_sec": 1.08,
+   "cut_at_source": 8.065,
+   "why": "overhead: the receiver's route reaches the hand-off spot"
+  },
+  {
+   "after": "take it tight.",
+   "natural_silence": [
+    9.78,
+    10.21
+   ],
+   "natural_sec": 0.43,
+   "target_sec": 0.3,
+   "inserted_sec": 0.0,
+   "cut_at_source": 9.885,
+   "why": "the exchange at the passer's hip"
+  },
+  {
+   "after": "stays deep.",
+   "natural_silence": [
+    11.99,
+    12.5
+   ],
+   "natural_sec": 0.51,
+   "target_sec": 1.4,
+   "inserted_sec": 0.89,
+   "cut_at_source": 12.195,
+   "why": "the pull-up flies and drops"
+  },
+  {
+   "after": "watch his feet.",
+   "natural_silence": [
+    13.5,
+    14.08
+   ],
+   "natural_sec": 0.58,
+   "target_sec": 1.0,
+   "inserted_sec": 0.42,
+   "cut_at_source": 13.715,
+   "why": "slow motion on the defender's jump"
+  },
+  {
+   "after": "changes hands.",
+   "natural_silence": [
+    16.94,
+    17.31
+   ],
+   "natural_sec": 0.37,
+   "target_sec": 0.45,
+   "inserted_sec": 0.08,
+   "cut_at_source": 17.035,
+   "why": "X2 in the exchange line, the ball still with the passer"
+  },
+  {
+   "after": "Keep the ball.",
+   "natural_silence": [
+    18.0,
+    18.41
+   ],
+   "natural_sec": 0.41,
+   "target_sec": 0.35,
+   "inserted_sec": 0.0,
+   "cut_at_source": 18.285,
+   "why": "the plant"
+  },
+  {
+   "after": "beats the help.",
+   "natural_silence": [
+    21.56,
+    21.97
+   ],
+   "natural_sec": 0.41,
+   "target_sec": 1.3,
+   "inserted_sec": 0.89,
+   "cut_at_source": 21.825,
+   "why": "catch, layup, make"
+  },
+  {
+   "after": "touch the ball.",
+   "natural_silence": [
+    25.04,
+    25.44
+   ],
+   "natural_sec": 0.4,
+   "target_sec": 0.4,
+   "inserted_sec": 0.0,
+   "cut_at_source": 25.335,
+   "why": "both decision frames read"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}

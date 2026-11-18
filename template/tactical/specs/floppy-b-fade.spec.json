@@ -1,0 +1,343 @@
+{
+ "id": "floppy-b-fade",
+ "title": "Floppy B: he goes under, fade to the corner",
+ "duration": 6.0,
+ "concept": "floppy",
+ "source": "original E2A play (standard FIBA/European floppy action, generic coaching knowledge)",
+ "squareUp": true,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Passer, top (a step to the right)"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Shooter: starts under the rim"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Weak-side wing"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Screener, left block"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Screener, right block (the side used)"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the passer",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "On the shooter: trails (A) / shortcuts under (B)",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Weak-side wing",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "On the left screener",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "On the right screener",
+   "guards": "O5"
+  }
+ ],
+ "start": {
+  "O1": [
+   -1.5,
+   8.7
+  ],
+  "X1": [
+   -0.45,
+   8.05
+  ],
+  "O2": [
+   0.0,
+   1.0
+  ],
+  "X2": [
+   0.45,
+   1.55
+  ],
+  "O5": [
+   -2.75,
+   2.05
+  ],
+  "X5": [
+   -2.15,
+   2.85
+  ],
+  "O4": [
+   2.75,
+   2.05
+  ],
+  "X4": [
+   2.15,
+   2.85
+  ],
+  "O3": [
+   5.9,
+   6.4
+  ],
+  "X3": [
+   5.1,
+   5.85
+  ]
+ },
+ "legs": {
+  "O2": [
+   {
+    "at": 0.55,
+    "via": [
+     [
+      -1.3,
+      0.85
+     ],
+     [
+      -2.55,
+      1.1
+     ]
+    ],
+    "to": [
+     -3.45,
+     1.55
+    ],
+    "speed": 5.0
+   },
+   {
+    "at": "+0.0",
+    "via": [
+     [
+      -5.0,
+      1.45
+     ]
+    ],
+    "to": [
+     -6.95,
+     1.25
+    ],
+    "speed": 4.6
+   }
+  ],
+  "X1": [],
+  "O1": [],
+  "O3": [],
+  "X3": [],
+  "O4": [],
+  "X4": [],
+  "X2": [
+   {
+    "at": 0.75,
+    "via": [
+     [
+      -0.55,
+      2.65
+     ],
+     [
+      -1.3,
+      3.65
+     ]
+    ],
+    "to": [
+     -2.2,
+     4.05
+    ],
+    "speed": 4.6
+   },
+   {
+    "at": "+0.15",
+    "to": [
+     -3.1,
+     3.05
+    ],
+    "speed": 3.6
+   }
+  ],
+  "X5": [
+   {
+    "at": 0.8,
+    "to": [
+     -1.65,
+     2.45
+    ],
+    "speed": 1.6
+   }
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 2.25
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O2",
+   "t0": 2.25,
+   "t1": 3.03,
+   "style": "overhead"
+  },
+  {
+   "type": "hold",
+   "player": "O2",
+   "from": 3.03,
+   "to": 3.38
+  },
+  {
+   "type": "shot",
+   "player": "O2",
+   "t0": 3.38,
+   "t1": 4.48,
+   "make": true,
+   "three": true
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "screen": 0.3,
+  "run": 0.55,
+  "under": 1.4,
+  "fade": 1.67,
+  "pass": 2.25,
+  "catch": 3.03,
+  "release": 3.38,
+  "make": 4.48,
+  "end": 6.0
+ },
+ "actions": {
+  "O5": [
+   {
+    "type": "screen",
+    "from": 0.3,
+    "to": 2.6,
+    "face": "X2"
+   }
+  ],
+  "O4": [
+   {
+    "type": "screen",
+    "from": 0.3,
+    "to": 2.0,
+    "face": "X2"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6.0,
+    "face": "O1"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6.0,
+    "face": "O1"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6.0,
+    "face": "O2"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0.8,
+    "to": 6.0,
+    "face": "O2"
+   }
+  ],
+  "X2": [
+   {
+    "type": "contest",
+    "from": 3.28,
+    "to": 3.98
+   }
+  ],
+  "O2": [
+   {
+    "type": "celebrate",
+    "from": 4.58,
+    "to": 6.0
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "O2",
+   "b": "O5",
+   "at": "fade",
+   "max": 1.4,
+   "says": "Off the screen."
+  },
+  {
+   "type": "far",
+   "a": "X2",
+   "b": "O2",
+   "at": "catch",
+   "min": 3.0,
+   "says": "He shortcuts through the paint and leaves the corner."
+  },
+  {
+   "type": "behind_arc",
+   "player": "O2",
+   "at": "catch",
+   "says": "Get your feet behind the line."
+  },
+  {
+   "type": "open",
+   "player": "O2",
+   "at": "release",
+   "min": 2.5,
+   "says": "Let it fly."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "screen",
+    "run",
+    "under",
+    "fade",
+    "pass",
+    "catch",
+    "release",
+    "make"
+   ],
+   "says": "under, fade, pass, three"
+  }
+ ],
+ "notes": [
+  "Same start as floppy-a-curl.",
+  "X2 shortcuts under, through the paint; X5 sinks to take away the curl.",
+  "O2 fades to the right corner, feet behind the line; overhead pass from O1; three."
+ ]
+}

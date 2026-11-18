@@ -242,7 +242,7 @@ export const Basket: React.FC<{swish?: number}> = ({swish = 0}) => {
   );
 };
 
-export const Court3D: React.FC<{logo?: HTMLImageElement; swish?: number}> = ({logo, swish}) => {
+export const Court3D: React.FC<{logo?: HTMLImageElement; swish?: number; env?: 'practice' | 'game'}> = ({logo, swish, env}) => {
   const tex = React.useMemo(() => buildFloor(logo), [logo]);
   const cx = 0;
   const cy = Y0 + SPAN / 2;
@@ -259,28 +259,30 @@ export const Court3D: React.FC<{logo?: HTMLImageElement; swish?: number}> = ({lo
         <planeGeometry args={[80, 80]} />
         <meshStandardMaterial color="#070D1A" roughness={0.9} />
       </mesh>
-      <Arena />
+      <Arena env={env} />
       <Basket swish={swish} />
     </group>
   );
 };
 
 /** arena light rig: overhead key light with soft shadows, fill, rim/back light, ambient */
-export const ArenaLights: React.FC<{focus?: [number, number, number]}> = ({focus = [0, 0, -5]}) => {
+export const ArenaLights: React.FC<{focus?: [number, number, number]; env?: 'practice' | 'game'}> = ({focus = [0, 0, -5], env}) => {
+  // practice: warm and soft; game: colder key, bluer fill, more contrast; default: as before
+  const L = env === 'practice' ? {hemi: ['#FFD9A8', '#3A2410', 0.95], key: '#FFD3A0', keyI: 700, fill: '#FFE2C2', fillI: 300, back: '#FFD9A0', side: '#FFDDB8', amb: 0.22} : env === 'game' ? {hemi: ['#8FB0E8', '#0E1626', 0.42], key: '#E6EEFF', keyI: 860, fill: '#9DB6FF', fillI: 220, back: '#BFD4FF', side: '#D8E4FF', amb: 0.06, backI: 1.7} : {hemi: ['#9fb4dc', '#2a1a0e', 0.55], key: '#fff3e2', keyI: 760, fill: '#cdd9ff', fillI: 260, back: '#ffd9a0', side: '#ffe6c8', amb: 0.1};
   const target = React.useMemo(() => new THREE.Object3D(), []);
   target.position.set(...focus);
   return (
     <>
-      <hemisphereLight args={['#9fb4dc', '#2a1a0e', 0.55]} />
+      <hemisphereLight args={L.hemi as [string, string, number]} />
       <primitive object={target} />
       <spotLight
         position={[focus[0] + 3, 14, focus[2] + 5]}
         target={target}
         angle={0.62}
         penumbra={0.85}
-        intensity={760}
+        intensity={L.keyI}
         decay={2}
-        color="#fff3e2"
+        color={L.key}
         castShadow
         shadow-mapSize-width={2048}
         shadow-mapSize-height={2048}
@@ -288,10 +290,15 @@ export const ArenaLights: React.FC<{focus?: [number, number, number]}> = ({focus
         shadow-normalBias={0.02}
         shadow-radius={4}
       />
-      <spotLight position={[focus[0] - 7, 9, focus[2] - 6]} target={target} angle={0.7} penumbra={0.9} intensity={260} decay={2} color="#cdd9ff" />
+      <spotLight position={[focus[0] - 7, 9, focus[2] - 6]} target={target} angle={0.7} penumbra={0.9} intensity={L.fillI} decay={2} color={L.fill} />
       {/* back/rim light for silhouette separation */}
-      <directionalLight position={[2, 6, -18]} intensity={1.1} color="#ffd9a0" />
-      <ambientLight intensity={0.12} />
+      <directionalLight position={[2, 6, -18]} intensity={(L as {backI?: number}).backI ?? 1.1} color={L.back} />
+      {env === 'game' && <directionalLight position={[-12, 5, 14]} intensity={0.9} color="#C9D8FF" />}
+      {/* V3: soft warm side light at face height (faces read in medium shots, players separate from the stands) */}
+      {env === 'game' && <directionalLight position={[focus[0] - 9, 2.2, focus[2] + 9]} intensity={0.32} color="#FFE2C8" />}
+      {/* V2: low side light — models arms, knees and fabric folds from the side, reads weight on the feet */}
+      <directionalLight position={[focus[0] + 14, 3.2, focus[2] + 2]} intensity={0.85} color={L.side} />
+      <ambientLight intensity={L.amb} />
     </>
   );
 };
@@ -300,7 +307,7 @@ export const ArenaLights: React.FC<{focus?: [number, number, number]}> = ({focus
 const crowdGeo = new THREE.CapsuleGeometry(0.15, 0.3, 3, 6);
 const rowGeo = new THREE.BoxGeometry(1, 1, 1);
 
-const Stand: React.FC<{origin: [number, number, number]; along: [number, number, number]; out: [number, number, number]; length: number; rows: number; seed: number}> = ({origin, along, out, length, rows, seed}) => {
+const Stand: React.FC<{origin: [number, number, number]; along: [number, number, number]; out: [number, number, number]; length: number; rows: number; seed: number; fill?: number; warm?: boolean}> = ({origin, along, out, length, rows, seed, fill = 0.78, warm = false}) => {
   const crowd = React.useMemo(() => {
     const m = new THREE.InstancedMesh(crowdGeo, new THREE.MeshStandardMaterial({roughness: 0.9}), Math.ceil((length / 0.62) * rows));
     const o = new THREE.Object3D();
@@ -309,29 +316,32 @@ const Stand: React.FC<{origin: [number, number, number]; along: [number, number,
     for (let r = 0; r < rows; r++) {
       for (let i = 0; i < length / 0.62; i++) {
         const k = seed * 1000 + r * 97 + i;
-        if (rnd(k) < 0.22) continue; // empty seats
+        if (rnd(k) >= fill) continue; // empty seats
         const a = -length / 2 + i * 0.62 + (rnd(k + 1) - 0.5) * 0.2;
         o.position.set(origin[0] + along[0] * a + out[0] * (r * 0.85 + 0.4), origin[1] + r * 0.42 + 0.55 + rnd(k + 2) * 0.08, origin[2] + along[2] * a + out[2] * (r * 0.85 + 0.4));
         o.scale.setScalar(0.9 + rnd(k + 3) * 0.25);
         o.updateMatrix();
         m.setMatrixAt(n, o.matrix);
         const tone = rnd(k + 4);
-        col.setHSL(0.6 + tone * 0.08, 0.2, 0.025 + tone * 0.035);
-        if (rnd(k + 5) < 0.1) col.set('#1c160c'); // a few gold-ish shirts
+        if (warm) col.setHSL(0.05 + tone * 0.6, 0.35, 0.18 + tone * 0.18);
+        else {
+          col.setHSL(0.6 + tone * 0.08, 0.2, 0.025 + tone * 0.035);
+          if (rnd(k + 5) < 0.1) col.set('#1c160c'); // a few gold-ish shirts
+        }
         m.setColorAt(n, col);
         n++;
       }
     }
     m.count = n;
     return m;
-  }, [origin, along, out, length, rows, seed]);
+  }, [origin, along, out, length, rows, seed, fill, warm]);
   const steps = Array.from({length: rows}, (_, r) => r);
   const rotY = Math.atan2(along[0], along[2]);
   return (
     <group>
       {steps.map((r) => (
         <mesh key={r} geometry={rowGeo} position={[origin[0] + out[0] * (r * 0.85 + 0.4), origin[1] + r * 0.42 + 0.2, origin[2] + out[2] * (r * 0.85 + 0.4)]} rotation={[0, rotY, 0]} scale={[0.85, 0.42 + r * 0.0 + 0.4, length]}>
-          <meshStandardMaterial color={r % 2 ? '#0B1424' : '#0D182B'} roughness={0.95} />
+          <meshStandardMaterial color={warm ? (r % 2 ? '#6B4A2E' : '#7A5535') : r % 2 ? '#0B1424' : '#0D182B'} roughness={0.95} />
         </mesh>
       ))}
       <primitive object={crowd} />
@@ -359,14 +369,40 @@ const EnvMap: React.FC = () => {
   return null;
 };
 
-export const Arena: React.FC = () => (
+/** practice gym (2026-11-17): warm wooden walls, short pulled-out bleachers, a handful of people */
+const PracticeGym: React.FC = () => (
+  <group>
+    <EnvMap />
+    {[[0, 7.5, 7, 0], [-12, 7.5, -8, Math.PI / 2], [12, 7.5, -8, -Math.PI / 2], [0, 7.5, -32, Math.PI]].map(([x, y, z, r], i) => (
+      <mesh key={i} position={[x, y, z]} rotation={[0, r, 0]}>
+        <planeGeometry args={[60, 15]} />
+        <meshStandardMaterial color={i % 2 ? '#5C412A' : '#6A4C31'} roughness={0.9} side={THREE.DoubleSide} />
+      </mesh>
+    ))}
+    <Stand origin={[0, 0, 4.6]} along={[1, 0, 0]} out={[0, 0, 1]} length={16} rows={3} seed={11} fill={0.07} warm />
+    <Stand origin={[-10.6, 0, -8]} along={[0, 0, 1]} out={[-1, 0, 0]} length={14} rows={3} seed={12} fill={0.06} warm />
+    <Stand origin={[10.6, 0, -8]} along={[0, 0, 1]} out={[1, 0, 0]} length={14} rows={3} seed={13} fill={0.05} warm />
+    {Array.from({length: 12}, (_, i) => {
+      const x = ((i % 4) - 1.5) * 5;
+      const z = -Math.floor(i / 4) * 9 - 2;
+      return (
+        <mesh key={`l${i}`} position={[x, 9.5, z]} rotation={[Math.PI / 2, 0, 0]}>
+          <planeGeometry args={[2.4, 0.5]} />
+          <meshBasicMaterial color="#FFE7C2" toneMapped={false} side={THREE.DoubleSide} />
+        </mesh>
+      );
+    })}
+  </group>
+);
+
+export const Arena: React.FC<{env?: 'practice' | 'game'}> = ({env}) => env === 'practice' ? <PracticeGym /> : (
   <group>
     <EnvMap />
     {/* behind the baseline (world y < 0 -> three z > 0) */}
-    <Stand origin={[0, 0, 4.2]} along={[1, 0, 0]} out={[0, 0, 1]} length={30} rows={14} seed={1} />
+    <Stand origin={[0, 0, 4.2]} along={[1, 0, 0]} out={[0, 0, 1]} length={30} rows={14} seed={1} fill={env === 'game' ? 0.95 : 0.78} />
     {/* both sidelines */}
-    <Stand origin={[-10.2, 0, -8]} along={[0, 0, 1]} out={[-1, 0, 0]} length={30} rows={14} seed={2} />
-    <Stand origin={[10.2, 0, -8]} along={[0, 0, 1]} out={[1, 0, 0]} length={30} rows={14} seed={3} />
+    <Stand origin={[-10.2, 0, -8]} along={[0, 0, 1]} out={[-1, 0, 0]} length={30} rows={14} seed={2} fill={env === 'game' ? 0.95 : 0.78} />
+    <Stand origin={[10.2, 0, -8]} along={[0, 0, 1]} out={[1, 0, 0]} length={30} rows={14} seed={3} fill={env === 'game' ? 0.95 : 0.78} />
     {/* far end */}
     <Stand origin={[0, 0, -30]} along={[1, 0, 0]} out={[0, 0, -1]} length={30} rows={14} seed={4} />
     {/* ceiling light banks */}

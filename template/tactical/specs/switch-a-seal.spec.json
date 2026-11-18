@@ -1,0 +1,435 @@
+{
+ "id": "switch-a-seal",
+ "title": "Punish the switch A: deep seal, feed the post",
+ "duration": 8.690000000000001,
+ "concept": "switch",
+ "source": "original E2A play (generic high pick-and-roll against a switch, punish the mismatch inside or outside; no copied possession)",
+ "squareUp": true,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Guard: uses the ball screen, then reads the switch"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Left wing spacing"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Right corner spacing"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Left corner spacing"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Big: ball screen, then posts the small"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "Starts on the guard, switches onto the big",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "Left wing",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Right corner",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "Left corner: low man, late help",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "Starts on the big, switches onto the guard",
+   "guards": "O5"
+  }
+ ],
+ "start": {
+  "O1": [
+   1.55,
+   9.55
+  ],
+  "X1": [
+   1.2,
+   8.8
+  ],
+  "O5": [
+   -1.6,
+   6.6
+  ],
+  "X5": [
+   -1.1,
+   6.0
+  ],
+  "O2": [
+   5.4,
+   6.6
+  ],
+  "X2": [
+   4.6,
+   6.1
+  ],
+  "O3": [
+   -6.7,
+   1.4
+  ],
+  "X3": [
+   -5.7,
+   2.0
+  ],
+  "O4": [
+   6.6,
+   1.4
+  ],
+  "X4": [
+   3.6,
+   2.5
+  ]
+ },
+ "legs": {
+  "O5": [
+   {
+    "at": 0.0,
+    "via": [
+     [
+      -0.4,
+      7.9
+     ]
+    ],
+    "to": [
+     0.45,
+     8.8
+    ],
+    "dur": 1.05
+   },
+   {
+    "at": 1.95,
+    "via": [
+     [
+      -0.4,
+      7.4
+     ]
+    ],
+    "to": [
+     -0.95,
+     5.0
+    ],
+    "dur": 1.55
+   },
+   {
+    "at": 3.65,
+    "to": [
+     -1.15,
+     3.4
+    ],
+    "dur": 0.75
+   },
+   {
+    "at": 5.94,
+    "to": [
+     -1.25,
+     2.4
+    ],
+    "dur": 0.75
+   }
+  ],
+  "O1": [
+   {
+    "at": 0.75,
+    "via": [
+     [
+      0.6,
+      9.75
+     ],
+     [
+      -0.6,
+      9.3
+     ]
+    ],
+    "to": [
+     -1.95,
+     7.45
+    ],
+    "dur": 2.3
+   },
+   {
+    "at": 4.45,
+    "to": [
+     -3.15,
+     7.05
+    ],
+    "dur": 0.7
+   }
+  ],
+  "X1": [
+   {
+    "at": 1.25,
+    "to": [
+     0.95,
+     8.95
+    ],
+    "dur": 0.5
+   },
+   {
+    "at": 2.05,
+    "via": [
+     [
+      0.2,
+      7.6
+     ]
+    ],
+    "to": [
+     -0.45,
+     5.55
+    ],
+    "dur": 1.45
+   },
+   {
+    "at": 3.6,
+    "via": [
+     [
+      -0.3,
+      4.2
+     ]
+    ],
+    "to": [
+     -0.45,
+     2.65
+    ],
+    "dur": 1.05
+   },
+   {
+    "at": 5.890000000000001,
+    "to": [
+     -0.15,
+     2.05
+    ],
+    "dur": 0.5
+   }
+  ],
+  "X5": [
+   {
+    "at": 0.2,
+    "to": [
+     -0.55,
+     7.95
+    ],
+    "dur": 0.9
+   },
+   {
+    "at": 1.75,
+    "to": [
+     -1.55,
+     6.55
+    ],
+    "dur": 1.1
+   }
+  ],
+  "X4": [
+   {
+    "at": 1.5,
+    "to": [
+     3.1,
+     2.6
+    ],
+    "dur": 1.2
+   }
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 3.6,
+   "dribble": true
+  },
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 3.6,
+   "to": 5.07,
+   "dribble": true
+  },
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 5.07,
+   "to": 5.220000000000001
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O5",
+   "t0": 5.220000000000001,
+   "t1": 5.640000000000001,
+   "style": "bounce"
+  },
+  {
+   "type": "hold",
+   "player": "O5",
+   "from": 5.640000000000001,
+   "to": 6.69
+  },
+  {
+   "type": "layup",
+   "player": "O5",
+   "t0": 6.69,
+   "t1": 7.090000000000001,
+   "make": true
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "screen": 1.15,
+  "switch": 1.85,
+  "x5step": 1.8,
+  "x1turn": 2.05,
+  "decision": 3.6,
+  "seal": 4.4,
+  "angle": 4.45,
+  "angled": 5.15,
+  "pass": 5.220000000000001,
+  "catch": 5.640000000000001,
+  "layup": 6.69,
+  "make": 7.090000000000001,
+  "end": 8.690000000000001
+ },
+ "actions": {
+  "O5": [
+   {
+    "type": "screen",
+    "from": 1.1,
+    "to": 1.9,
+    "face": "X1"
+   },
+   {
+    "type": "seal",
+    "from": 4.2,
+    "to": 6.2,
+    "face": "O1"
+   },
+   {
+    "type": "celebrate",
+    "from": 7.69,
+    "to": 8.49
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 1.3,
+    "face": "O1"
+   },
+   {
+    "type": "stance",
+    "from": 4.3,
+    "to": 6.6,
+    "face": "O5"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 1.8,
+    "to": 4.2,
+    "face": "O1"
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 12,
+    "face": "O2"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 12,
+    "face": "O3"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 12,
+    "face": "O1"
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "X5",
+   "b": "O1",
+   "at": "decision",
+   "max": 1.3,
+   "says": "Big on the guard. The drive's cut off."
+  },
+  {
+   "type": "near",
+   "a": "X1",
+   "b": "O5",
+   "at": "decision",
+   "max": 1.3,
+   "says": "Small on the big."
+  },
+  {
+   "type": "near",
+   "a": "X1",
+   "b": "O5",
+   "at": "seal",
+   "max": 1.2,
+   "says": "He's got the guard pinned."
+  },
+  {
+   "type": "near_rim",
+   "player": "O5",
+   "at": "layup",
+   "max": 1.5,
+   "says": "...and feed him (short finish)."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "screen",
+    "switch",
+    "decision",
+    "seal",
+    "angle",
+    "pass",
+    "catch",
+    "layup",
+    "make"
+   ],
+   "says": "screen, switch, seal, angle, pass, catch, finish"
+  }
+ ],
+ "notes": [
+  "Ball screen, switch: X5 on O1, X1 on O5.",
+  "O5 seals X1 behind him; O1 keeps the dribble, steps to a better angle, bounce pass, short finish."
+ ]
+}

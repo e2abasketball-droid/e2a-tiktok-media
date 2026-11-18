@@ -1,0 +1,2 @@
+{"voice": {"provider": "ElevenLabs", "voice": "Deuce (E2A English narrator)", "model": "eleven_v4", "takes": 1, "credits": 692, "flow": "ArnJgbGBxkPJ9Xvqto9m", "node": "KTiliaoe9RdCtYrE1JjF", "transcription": "Scribe, 0 credits", "files": ["voice-raw.mp3", "voice.wav (gaps, tactical/episodes/_gen-hide2.py)", "voice.mix.wav"]},
+ "music": {"generator": "music/e2a_music.py --story psychology --duration 53.33 --drop-at 34.0 --payoff-at 42.5", "gain_db": 10, "duck": "x0.4 from 12.9 to 16.6 s (rim impact and first reaction)", "file": "music-mix.mp3"}}

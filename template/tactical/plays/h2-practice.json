@@ -1,0 +1,130 @@
+{
+ "id": "h2-practice",
+ "title": "Hide V2: practice shot",
+ "duration": 6.2,
+ "source": "original E2A character episode V2 (generic coaching knowledge)",
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Passer"
+  },
+  {
+   "id": "O8",
+   "team": "O",
+   "role": "#8"
+  }
+ ],
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 2.25,
+   "dribble": true
+  },
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 2.25,
+   "to": 2.45
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O8",
+   "t0": 2.45,
+   "t1": 3.1,
+   "style": "chest"
+  },
+  {
+   "type": "hold",
+   "player": "O8",
+   "from": 3.1,
+   "to": 4.1
+  },
+  {
+   "type": "shot",
+   "player": "O8",
+   "t0": 4.1,
+   "t1": 5.25
+  }
+ ],
+ "actions": {
+  "O1": [
+   {
+    "type": "dribble",
+    "from": 0,
+    "to": 2.25,
+    "face": "O8"
+   }
+  ],
+  "O8": [
+   {
+    "type": "catchReady",
+    "from": 2.6,
+    "to": 3.15,
+    "face": "O1"
+   },
+   {
+    "type": "gather",
+    "from": 3.1,
+    "to": 3.65,
+    "face": 0.3
+   },
+   {
+    "type": "shoot",
+    "from": 3.6,
+    "to": 5,
+    "face": 0.3
+   }
+  ]
+ },
+ "expr": {
+  "O8": [
+   {
+    "t": 0,
+    "brow": 0.55,
+    "smile": 0.3,
+    "look": "ball"
+   },
+   {
+    "t": 3.1,
+    "smile": 0.1,
+    "brow": 0.6
+   }
+  ]
+ },
+ "marks": {
+  "catch": 3.1,
+  "rise": 3.6,
+  "release": 4.1
+ },
+ "tracks": {
+  "O1": [
+   [
+    0,
+    3.3,
+    7.7
+   ],
+   [
+    6.2,
+    3.3,
+    7.7
+   ]
+  ],
+  "O8": [
+   [
+    0,
+    -4.35,
+    4.05
+   ],
+   [
+    6.2,
+    -4.35,
+    4.05
+   ]
+  ]
+ },
+ "screens": []
+}

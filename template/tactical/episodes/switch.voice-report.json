@@ -1,0 +1,216 @@
+{
+ "source": "public/tactical/switch/voice-raw.mp3",
+ "source_sec": 28.56,
+ "preroll": 0.12,
+ "output": "public/tactical/switch/voice.wav",
+ "output_sec": 45.28,
+ "inserted_total_sec": 16.6,
+ "last_word_end": 45.36,
+ "gaps": [
+  {
+   "after": "stop you.",
+   "natural_silence": [
+    1.44,
+    1.84
+   ],
+   "natural_sec": 0.4,
+   "target_sec": 0.55,
+   "inserted_sec": 0.15,
+   "cut_at_source": 1.635,
+   "why": "short pause after the hook"
+  },
+  {
+   "after": "your mismatch.",
+   "natural_silence": [
+    2.98,
+    3.32
+   ],
+   "natural_sec": 0.34,
+   "target_sec": 1.4,
+   "inserted_sec": 1.06,
+   "cut_at_source": 3.215,
+   "why": "matchups land, cut to the replay"
+  },
+  {
+   "after": "on the guard.",
+   "natural_silence": [
+    4.12,
+    4.33
+   ],
+   "natural_sec": 0.21,
+   "target_sec": 0.45,
+   "inserted_sec": 0.24,
+   "cut_at_source": 4.245,
+   "why": "BIG ON GUARD forms"
+  },
+  {
+   "after": "on the big.",
+   "natural_silence": [
+    5.14,
+    5.53
+   ],
+   "natural_sec": 0.39,
+   "target_sec": 0.45,
+   "inserted_sec": 0.06,
+   "cut_at_source": 5.305,
+   "why": "SMALL ON BIG forms"
+  },
+  {
+   "after": "Now what?",
+   "natural_silence": [
+    7.04,
+    7.48
+   ],
+   "natural_sec": 0.44,
+   "target_sec": 1.5,
+   "inserted_sec": 1.06,
+   "cut_at_source": 7.365,
+   "why": "freeze on the post-switch state"
+  },
+  {
+   "after": "inside first.",
+   "natural_silence": [
+    8.49,
+    8.86
+   ],
+   "natural_sec": 0.37,
+   "target_sec": 0.6,
+   "inserted_sec": 0.23,
+   "cut_at_source": 8.705,
+   "why": "ring toward O5"
+  },
+  {
+   "after": "have a seal?",
+   "natural_silence": [
+    9.9,
+    10.32
+   ],
+   "natural_sec": 0.42,
+   "target_sec": 1.4,
+   "inserted_sec": 0.98,
+   "cut_at_source": 10.205,
+   "why": "freeze held, then the seal starts"
+  },
+  {
+   "after": "guard pinned.",
+   "natural_silence": [
+    11.35,
+    11.68
+   ],
+   "natural_sec": 0.33,
+   "target_sec": 0.5,
+   "inserted_sec": 0.17,
+   "cut_at_source": 11.565,
+   "why": "DEEP SEAL"
+  },
+  {
+   "after": "feed him.",
+   "natural_silence": [
+    14.11,
+    14.46
+   ],
+   "natural_sec": 0.35,
+   "target_sec": 3.2,
+   "inserted_sec": 2.85,
+   "cut_at_source": 14.365,
+   "why": "pass, catch, short finish"
+  },
+  {
+   "after": "pass is gone?",
+   "natural_silence": [
+    16.06,
+    16.38
+   ],
+   "natural_sec": 0.32,
+   "target_sec": 1.6,
+   "inserted_sec": 1.28,
+   "cut_at_source": 16.195,
+   "why": "ENTRY DENIED"
+  },
+  {
+   "after": "Same switch.",
+   "natural_silence": [
+    17.14,
+    17.42
+   ],
+   "natural_sec": 0.28,
+   "target_sec": 0.5,
+   "inserted_sec": 0.22,
+   "cut_at_source": 17.225,
+   "why": "same state"
+  },
+  {
+   "after": "in space.",
+   "natural_silence": [
+    18.77,
+    18.99
+   ],
+   "natural_sec": 0.22,
+   "target_sec": 0.45,
+   "inserted_sec": 0.23,
+   "cut_at_source": 18.895,
+   "why": "space in front of O1"
+  },
+  {
+   "after": "Change pace.",
+   "natural_silence": [
+    19.69,
+    19.8
+   ],
+   "natural_sec": 0.11,
+   "target_sec": 0.5,
+   "inserted_sec": 0.39,
+   "cut_at_source": 19.755,
+   "why": "hesitation"
+  },
+  {
+   "after": "his hip.",
+   "natural_silence": [
+    20.59,
+    20.98
+   ],
+   "natural_sec": 0.39,
+   "target_sec": 3.4,
+   "inserted_sec": 3.01,
+   "cut_at_source": 20.795,
+   "why": "drive, X5 recovers, layup"
+  },
+  {
+   "after": "Feed it.",
+   "natural_silence": [
+    22.19,
+    22.54
+   ],
+   "natural_sec": 0.35,
+   "target_sec": 2.2,
+   "inserted_sec": 1.85,
+   "cut_at_source": 22.345,
+   "why": "recap A"
+  },
+  {
+   "after": "Attack the big.",
+   "natural_silence": [
+    25.14,
+    25.53
+   ],
+   "natural_sec": 0.39,
+   "target_sec": 2.2,
+   "inserted_sec": 1.81,
+   "cut_at_source": 25.265,
+   "why": "recap B"
+  },
+  {
+   "after": "see first?",
+   "natural_silence": [
+    26.46,
+    26.85
+   ],
+   "natural_sec": 0.39,
+   "target_sec": 1.4,
+   "inserted_sec": 1.01,
+   "cut_at_source": 26.735,
+   "why": "INSIDE OR OUTSIDE? readable"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}
