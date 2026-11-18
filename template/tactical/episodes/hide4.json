@@ -1,0 +1,135 @@
+{
+ "id": "hide4",
+ "title": "Hide in games V4",
+ "fps": 30,
+ "voiceRaw": "tactical/hide4/voice-raw.mp3",
+ "wordsRaw": "hide4.words-raw.json",
+ "voice": "tactical/hide4/voice.wav",
+ "voiceMix": "tactical/hide4/voice.mix.wav",
+ "preroll": 0.0,
+ "tail": 0.5,
+ "gaps": [
+  {
+   "after": "the ball.",
+   "sec": 0.3,
+   "why": "hook -> practice memory"
+  },
+  {
+   "after": "calls for it.",
+   "sec": 0.3,
+   "why": "warm practice -> game, same framing"
+  },
+  {
+   "after": "hearing that miss.",
+   "sec": 1.0,
+   "why": "brief rebound memory + short rim echo, #8 looks at the passer"
+  },
+  {
+   "after": "miss again?",
+   "sec": 0.45,
+   "why": "the hand comes back at the end of the question"
+  },
+  {
+   "after": "his hands.",
+   "sec": 0.45,
+   "why": "half a hand rises"
+  },
+  {
+   "after": "them back.",
+   "sec": 1.0,
+   "why": "the hand is back down; cut to the passer's POV, #14 in the line"
+  },
+  {
+   "after": "right at him.",
+   "sec": 0.25,
+   "why": ""
+  },
+  {
+   "after": "in the way.",
+   "sec": 0.25,
+   "why": ""
+  },
+  {
+   "after": "somewhere else.",
+   "sec": 2.3,
+   "why": "the pass travels to O3 and is caught, #8's eyes follow it; new possession"
+  },
+  {
+   "after": "about the shot.",
+   "sec": 0.3,
+   "why": ""
+  },
+  {
+   "after": "one job.",
+   "sec": 0.4,
+   "why": "exhale, eyes up to the passer"
+  },
+  {
+   "after": "open again.",
+   "sec": 0.75,
+   "why": "first step to the space, #14 moves with him"
+  },
+  {
+   "after": "get free.",
+   "sec": 0.3,
+   "why": ""
+  },
+  {
+   "after": "defender follows.",
+   "sec": 1.0,
+   "why": "#14 keeps the line closed: no window, #8 hesitates"
+  },
+  {
+   "after": "calls again.",
+   "sec": 0.45,
+   "why": "the pass leaves as the line opens"
+  },
+  {
+   "after": "pass comes.",
+   "sec": 0.35,
+   "why": "the catch"
+  },
+  {
+   "after": "ready to shoot.",
+   "sec": 0.3,
+   "why": ""
+  },
+  {
+   "after": "defender closes.",
+   "sec": 0.35,
+   "why": "eyes to the corner"
+  },
+  {
+   "after": "teammate's open.",
+   "sec": 0.3,
+   "why": ""
+  },
+  {
+   "after": "one more pass.",
+   "sec": 3.3,
+   "why": "the extra pass travels, #4 catches and attacks, #8 relocates"
+  },
+  {
+   "after": "best players miss.",
+   "sec": 0.5,
+   "why": ""
+  },
+  {
+   "after": "of the game.",
+   "sec": 0.5,
+   "why": ""
+  },
+  {
+   "after": "do next.",
+   "sec": 1.1,
+   "why": "callback: #8 plants and asks; back to the live possession"
+  },
+  {
+   "after": "it again.",
+   "sec": 0.6,
+   "why": "own short pause before the last line"
+  }
+ ],
+ "plays": {},
+ "shots": []
+}

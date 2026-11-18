@@ -36,6 +36,8 @@ export type Shot3 = {
   hide?: string[];
   /** 2026-11-17: warm practice gym or cold game arena (default: the arena as before) */
   env?: 'practice' | 'game';
+  /** 2026-11-18 (V4): gain on this shot's automatic sfx (0 = none, e.g. a quiet memory echo of the rim done by hand) */
+  autoGain?: number;
 };
 export type Episode3 = {
   id: string;
@@ -116,6 +118,8 @@ const autoCues = (ep: Episode3, laid: {shot: Shot3; start: number; end: number}[
   const vol: Record<string, [string, number]> = {bounce: ['bounce', cfg.bounce ?? 0.2], catch: ['bounce', cfg.catch ?? 0.13], squeak: ['squeak', cfg.squeak ?? 0.1], swish: ['swish', cfg.swish ?? 0.3], land: ['bounce', cfg.land ?? 0.08], rim: ['rim', cfg.rim ?? cfg.swish ?? 0.3]};
   const out: Cue[] = [];
   for (const l of laid) {
+    const g = l.shot.autoGain ?? 1;
+    if (g <= 0) continue;
     const play = ep.plays[l.shot.play];
     const evs = playEvents(play, cfg.players ?? ['O1', 'O5', 'X1', 'X5']);
     const rm = resolveRemap(l.shot.remap, play, localResolver(T, l.start, l.end));
@@ -124,7 +128,7 @@ const autoCues = (ep: Episode3, laid: {shot: Shot3; start: number; end: number}[
       const p0 = remapAt(rm, f / fps);
       const p1 = remapAt(rm, (f + 1) / fps);
       if (p1 - p0 < 0.3 / fps) continue;
-      for (const e of evs) if (e.pt > p0 && e.pt <= p1) out.push({t: l.start + (f + (e.pt - p0) / (p1 - p0)) / fps, name: vol[e.name][0], volume: vol[e.name][1]});
+      for (const e of evs) if (e.pt > p0 && e.pt <= p1) out.push({t: l.start + (f + (e.pt - p0) / (p1 - p0)) / fps, name: vol[e.name][0], volume: vol[e.name][1] * g});
     }
   }
   return out;
