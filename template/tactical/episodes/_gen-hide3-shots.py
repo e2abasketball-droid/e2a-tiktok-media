@@ -23,7 +23,9 @@ MED_R3 = follow(*json.loads(os.environ.get("MR3", "[0.8, 2.6, 1.6, 1.35]")))    
 READ = cam(*json.loads(os.environ.get("RD", "[[-9.0, -3.6, 5.6], [-4.75, 2.6, 1.0], 38]")))  # behind O4 in the corner
 COACH = cam(*json.loads(os.environ.get("CO", "[[2.6, 12.8, 7.6], [-3.6, 2.8, 0.4], 42]")))  # high coach angle, left side
 RELO = follow(*json.loads(os.environ.get("RL", "[5.0, 1.0, 2.1, 1.45, 28]")))            # tele medium on #8
-WIDE_F = follow(*json.loads(os.environ.get("WF", "[6.2, 0.9, 2.9, 1.25, 38]")))      # final: #8 relocating, eyes on the ball
+WIDE_F = follow(*json.loads(os.environ.get("WF", "[6.2, 0.9, 3.4, 1.25, 38]")))      # final: #8 relocating, eyes on the ball
+MED_H3 = follow(*json.loads(os.environ.get("MH3", "[0.9, 2.6, 1.75, 1.5]")))            # doubt medium: away from X8's arm
+SWING = cam(*json.loads(os.environ.get("SW", "[[2.8, 17.0, 7.0], [1.8, 7.2, 0.6], 46]")))  # the ball keeps moving (top/right)
 FACES = dict(s2.FACES)
 FACES["nums"] = {**FACES["nums"], "X4": "11", "O4": "4"}
 FACES["hair"] = {**FACES["hair"], "O4": "#1A120C", "X4": "#3A2414"}
@@ -36,7 +38,7 @@ def shots():
     out += [
      {"id": "hideA", "name": "Possession 2, medium: looks at the passer, then briefly down (doubt)", "at": "Next-0.15", "play": "H", "env": "game",
       "remap": [[0, 0], ["What if", 2.85], ["@end", 4.5]],
-      "camera": [key(0, MED_H), key("@end", {**MED_H, "dist": round(MED_H["dist"] * 0.92, 3)})],
+      "camera": [key(0, MED_H3), key("@end", {**MED_H3, "dist": round(MED_H3["dist"] * 0.92, 3)})],
       "screen": [{"type": "title", "lines": ["WHAT IF I", "MISS AGAIN?"], "gold": [1], "from": "What if", "to": "@end"}]},
      {"id": "hideB", "name": "Passer framing: half a hand comes up and goes back, the pass goes to O3", "at": "again?>+0.15", "play": "H", "env": "game",
       "remap": [[0, 4.5], ["@end", 9.05]],
@@ -58,8 +60,11 @@ def shots():
      {"id": "relo", "name": "Tele medium on #8: square, read the closeout, swing, relocate with eyes on the ball", "at": "Even-0.55", "play": "A", "env": "game",
       "remap": [[0, 15.2], ["@end", 18.2]],
       "camera": [key(0, RELO), key("@end", RELO)]},
-     {"id": "final", "name": "#8 relocating with eyes on the ball while the possession keeps running, MAKE THE NEXT READ", "at": "of the game.>+0.3", "play": "A", "env": "game",
-      "remap": [[0, 18.2], ["@end", 23.3]],
+     {"id": "swing", "name": "High angle: the ball keeps moving, O1 attacks, everybody moves", "at": "of the game.>+0.3", "play": "A", "env": "game",
+      "remap": [[0, 18.2], ["@end", 21.6]],
+      "camera": [key(0, SWING), key("@end", {**SWING, "dist": round(SWING["dist"] * 0.95, 3)})]},
+     {"id": "final", "name": "#8 relocating with eyes on the ball while the possession keeps running, MAKE THE NEXT READ", "at": "Read-0.3", "play": "A", "env": "game",
+      "remap": [[0, 21.6], ["@end", 23.3]],
       "camera": [key(0, WIDE_F), key("@end", {**WIDE_F, "dist": round(WIDE_F["dist"] * 0.93, 3)}, "inOut")],
       "screen": [{"type": "title", "lines": ["MAKE THE", "NEXT READ"], "gold": [1], "from": "Read-0.1", "to": "@end"},
                  {"type": "logo", "from": "front of you.>+0.05", "to": "@end"}]},
@@ -70,25 +75,32 @@ def shots():
 SFX = {"game": [{"at": 0, "name": "whoosh", "volume": 0.05}], "reset": [{"at": "out.>+0.6", "name": "tick", "volume": 0.07}]}
 
 
-def groups(words, mx=6):
-    """subtitle cues: split at sentence ends, then into chunks of <= mx words (3-7 words per cue)"""
-    out, cur = [], 0
-    for i, w in enumerate(words):
+def groups(words, mx=7):
+    """subtitle cues (3-7 words): each sentence on its own, a long sentence split into near-equal chunks of <= mx words;
+    a sentence under 3 words joins the next one when the pair stays <= 7"""
+    sents, cur = [], 0
+    for w in words:
         cur += 1
-        if w["text"].endswith((".", "?", "!")) or cur == mx:
-            out.append(cur)
+        if w["text"].endswith((".", "?", "!")):
+            sents.append(cur)
             cur = 0
     if cur:
-        out.append(cur)
-    # merge cues under 3 words into the next/previous one when it stays <= 7
+        sents.append(cur)
     i = 0
-    while i < len(out):
-        if out[i] < 3:
-            if i + 1 < len(out) and out[i] + out[i + 1] <= 7:
-                out[i + 1] += out[i]; out.pop(i); continue
-            if i > 0 and out[i - 1] + out[i] <= 7:
-                out[i - 1] += out[i]; out.pop(i); continue
+    while i < len(sents) - 1:
+        if sents[i] < 3 and sents[i] + sents[i + 1] <= 7:
+            sents[i + 1] += sents[i]
+            sents.pop(i)
+            continue
         i += 1
+    out = []
+    for n in sents:
+        if n == 12:   # "What separates good players / from great ones / is what they do next."
+            out += [4, 3, 5]
+            continue
+        k = -(-n // mx)
+        base, extra = divmod(n, k)
+        out += [base + (1 if j < extra else 0) for j in range(k)]
     return out
 
 
