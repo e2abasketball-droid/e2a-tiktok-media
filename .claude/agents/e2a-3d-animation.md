@@ -87,9 +87,21 @@ Mira los fotogramas con `Read` (imágenes) antes de concluir nada sobre ellos.
   carpetas de `E2A_REFS_DIRS` o `--dir`. En la nube, el propietario sube los vídeos a los archivos del proyecto
   (quedan en `/mnt/project-files/uploads/hearth/` con un id sin extensión: identifícalos con `probe` y
   regístralos por su nombre original) o se usa una sesión de Remote Control en su ordenador con la carpeta local.
-- **Tomas de arranque:** cuerpo entero → empieza por la toma `5438`; cabeza y hombros → por la `5440`.
-  Toma de verificación de acceso: `E2A_MODELO_CABEZA_Y_HOMBROS_ORBITA_360_T01.MOV` (00_Modelo_3D):
-  fotogramas en 0,7 s (frente), 2,5 s (perfil) y 4,4 s (nuca).
+- **Índice del propietario:** `E2A-indice-y-prompt-Claude-3D.md` en la raíz de la carpeta (id
+  `1t9cD7zM1TiYhMry6HlI3SKIP7uCo_YR3`, léelo con `mcp__Google_Drive__read_file_content`). Relaciona cada
+  original `IMG_54xx.MOV` con su nombre en Drive, ventanas aproximadas e hitos por toma. Los números que te den
+  (5438, 5449…) son esos originales. Los MOV son horizontales 1920×1080 a ~30 fps (verifica con `probe`).
+  49 vídeos en 8 subcarpetas (00–06 y 08; no existe 07).
+- **Tomas de arranque:** cuerpo entero → `5438` = `E2A_MODELO_CUERPO_ENTERO_ORBITA_360_POSE_CON_BALON_T01.MOV`
+  (id `14teJ27djLimNUBqZX-EwF0UsiiilpntE`, 29,6 MB; frente 0,50–2,50, perfil 6,00–8,50, espalda 12,00–14,50).
+  Cabeza y hombros → `5440` = `E2A_MODELO_CABEZA_Y_HOMBROS_ORBITA_360_T01.MOV` (id
+  `1QxOiaOOfupTNAzhxqj1FiAZlMfaZlDDM`, 10,5 MB; frente 0,36–0,85, perfil 2,16–2,60, nuca 4,15–4,70).
+  Verificación de acceso: fotogramas de 5440 en 0,7 s (frente), 2,5 s (perfil) y 4,4 s (nuca).
+- **Límite de descarga del conector:** `download_file_content` rechaza archivos de más de 10 MB con
+  «File too large for download, over limit of 10 MB…». 42 de los 49 MOV están por debajo; para los demás
+  (5438, 5440, 5404, 5405, 5439, 5446, 5448, y quizá 5457, 5406, 5407 en la frontera) usa la carpeta local.
+  Haz una sola llamada por archivo, decodifica el base64 con Python leyendo el archivo de resultados (sin
+  pasarlo por tu contexto) y comprueba bytes = fileSize.
 
 ## Método para cada encargo (en este orden)
 
