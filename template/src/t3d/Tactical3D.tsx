@@ -37,6 +37,8 @@ export type Shot3 = {
   hide?: string[];
   /** 2026-11-17: warm practice gym or cold game arena (default: the arena as before) */
   env?: 'practice' | 'game';
+  /** 2026-11-19: 'A' = legacy capsule athletes in this shot (default: the episode's choice, else the E2A players) */
+  players3d?: 'A' | 'C';
   /** 2026-11-18 (V4): gain on this shot's automatic sfx (0 = none, e.g. a quiet memory echo of the rim done by hand) */
   autoGain?: number;
 };
@@ -64,6 +66,9 @@ export type Episode3 = {
   ambience?: {src: string; volume?: number};
   /** stylised character heads with faces (expressions keyed per play in play.expr) */
   faces?: FaceCfg;
+  /** 2026-11-19 default player package (src/t3d/player3d.ts): omitted or 'C' = E2A deformable players (offense /
+   *  defense variants, validated clips by action, compatible rig animation otherwise); 'A' = legacy capsule athletes */
+  players3d?: 'A' | 'C';
 };
 
 type Cue = {t: number; name: string; volume: number};
@@ -116,7 +121,7 @@ const playEvents = (play: PlayWithActions, players: string[]) => {
 const autoCues = (ep: Episode3, laid: {shot: Shot3; start: number; end: number}[], T: (a: Anchor, off?: number) => number, fps: number): Cue[] => {
   if (!ep.autoSfx) return [];
   const cfg = typeof ep.autoSfx === 'object' ? ep.autoSfx : {};
-  const vol: Record<string, [string, number]> = {bounce: ['bounce', cfg.bounce ?? 0.2], catch: ['bounce', cfg.catch ?? 0.13], squeak: ['squeak', cfg.squeak ?? 0.1], swish: ['swish', cfg.swish ?? 0.3], land: ['bounce', cfg.land ?? 0.08], rim: ['rim', cfg.rim ?? cfg.swish ?? 0.3]};
+  const vol: Record<string, [string, number]> = {bounce: ['bounce', cfg.bounce ?? 0], catch: ['bounce', cfg.catch ?? 0], squeak: ['squeak', cfg.squeak ?? 0.1], swish: ['swish', cfg.swish ?? 0.3], land: ['bounce', cfg.land ?? 0], rim: ['rim', cfg.rim ?? cfg.swish ?? 0.3]};
   const out: Cue[] = [];
   for (const l of laid) {
     const g = l.shot.autoGain ?? 1;
@@ -224,7 +229,7 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
     <AbsoluteFill style={{background: '#050A15'}}>
       <AbsoluteFill style={{filter: freezeOn ? 'saturate(0.72) brightness(0.94) contrast(1.04)' : undefined}}>
         {!qcProbe && (
-          <Scene3D play={play} pt={pt} cam={cam} W={W} H={H} hide={shot.hide} logo={logo} env={shot.env} faces={ep.faces}>
+          <Scene3D play={play} pt={pt} cam={cam} W={W} H={H} hide={shot.hide} logo={logo} env={shot.env} faces={ep.faces} players3d={shot.players3d ?? ep.players3d}>
             <Overlays3D play={play} pt={pt} items={ov} />
           </Scene3D>
         )}

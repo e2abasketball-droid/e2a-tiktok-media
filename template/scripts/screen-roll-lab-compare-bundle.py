@@ -1,8 +1,10 @@
-# E2A 3D lab, phase 3 — bundles (props) for the A/B/C comparison of the screener (O5) in the screen-and-roll lab play.
-# Same play, cameras, light, court and play-time remaps for the three looks; only play.skel.O5.look changes:
-#   A = procedural rig + capsule athlete (engine of d1d44b7: rig.ts / Athlete.tsx are untouched by the lab)
-#   B = skeletal clip (5452, mirrored) on the capsule athlete, through the Pose adapter of skelclip.ts
-#   C = skeletal clip on the deformable mesh (public/lab3d/e2a_bloqueador_screen_roll.glb)
+# E2A 3D, phase 4 (2026-11-19) — bundles (props) for the A/B/C comparison of the screen-and-roll lab play.
+# Same play, cameras, light, court and play-time remaps; only the player package / clip changes:
+#   A = what the production flow made before this branch: procedural rig + capsule athletes (episode.players3d = 'A',
+#       no clip) — the "simple way to reproduce the previous reference"
+#   B = the new screener clip (5452 mirrored, head-calibrated) on the capsule athlete (players3d 'A' + skel look B)
+#   C = the NEW DEFAULT: nothing set in the data (no players3d, no play.skel): E2A deformable players, offense /
+#       defense variants, the clip chosen automatically by action for O5, compatible rig animation for the others
 # Silent (lab WAV), subtitles hidden. Usage (from template/):
 #   python3 tactical/specs/_gen-screen-roll-lab.py && node --experimental-strip-types scripts/build-play.mts \
 #       tactical/specs/screen-roll-lab.spec.json tactical/plays/screen-roll-lab.json
@@ -29,19 +31,21 @@ SPEEDS = {
 }
 VIEWS = {"tactica": {"camera": TACT, "hide": []},
          "34": {"camera": CLOSE, "hide": ["O1", "O2", "O3", "O4", "X1", "X2", "X3", "X4", "X5"]}}
-out_dir = os.path.join(T, "out/lab3")
+out_dir = os.path.join(T, "out/lab4")
 os.makedirs(out_dir, exist_ok=True)
 for vname, v in VIEWS.items():
     for sname, s in SPEEDS.items():
         for look in "ABC":
             p = copy.deepcopy(play)
-            p["skel"]["O5"]["look"] = look
+            p.pop("skel", None)
+            if look == "B":
+                p["skel"] = {"O5": {"clip": "screen-roll-5452m", "look": "B"}}
             n = 4
             words = [{"text": "lab", "start": round(0.1 + i * (s["len"] - 0.4) / n, 3), "end": round(0.3 + i * (s["len"] - 0.4) / n, 3)} for i in range(n)]
             ep = {
                 "id": f"screen-roll-lab3-{vname}-{sname}-{look}", "title": f"Lab 3 — screener {look} ({vname}, {sname})", "fps": 30,
                 "voice": SILENCE, "voiceMix": SILENCE, "tail": round(s["len"] - words[-1]["end"], 3), "words": words, "keywords": [],
-                "subtitleHide": [[0, 99]], "plays": {"A": p},
+                "subtitleHide": [[0, 99]], "plays": {"A": p}, **({"players3d": "A"} if look in "AB" else {}),
                 "shots": [{"id": "lab", "name": "lab", "at": 0, "play": "A", "remap": s["remap"], "camera": v["camera"], "hide": v["hide"]}],
             }
             out = os.path.join(out_dir, f"{vname}-{sname}-{look}.bundle.json")

@@ -14,9 +14,20 @@ import type {PlayWithActions} from './rig.ts';
 import {poseAt} from './rig.ts';
 import type {Cam3} from './camera3d.ts';
 import {CLIP_GLB} from './clips/index.ts';
+import './players/index.ts'; // side effect: registers the player rigs
 import type {PlayWithSkel} from './skelclip.ts';
-import {getClip, skelPoseAt} from './skelclip.ts';
-import {SkinnedAthlete, useGlb} from './SkinnedAthlete';
+import {bonesFromPose, getClip, skelPoseAt} from './skelclip.ts';
+import {SkinnedAthlete, useGlbs} from './SkinnedAthlete';
+import {KITS} from './Athlete';
+import {PLAYER3D, describePlan, planPlayers3d, playWithPlan} from './player3d.ts';
+
+/** render log (once per tab and play): which character / animation each player uses and why */
+const logged = new Set<string>();
+const logPlan = (msg: string) => {
+  if (logged.has(msg)) return;
+  logged.add(msg);
+  console.warn(msg);
+};
 
 const RIM: V3 = [FIBA.basket[0], FIBA.basket[1], FIBA.rimZ];
 
@@ -157,6 +168,8 @@ export type SceneProps = {
   /** 2026-11-17 character episodes: warm open practice gym vs cold full game arena (default: the arena as before) */
   env?: 'practice' | 'game';
   faces?: FaceCfg;
+  /** 2026-11-19: 'C' (default) = E2A deformable players (player3d.ts); 'A' = legacy capsule athletes */
+  players3d?: 'A' | 'C';
 };
 
 /** expression keys in PLAY time (so freezes and rewinds carry the face with the body) */
@@ -191,7 +204,7 @@ const autoBlink = (i: number, t: number) => {
   return ph < 0.13 ? Math.sin((Math.PI * ph) / 0.13) : 0;
 };
 
-export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], children, logo, env, faces}) => {
+export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], children, logo, env, faces, players3d}) => {
   const f = sample(play, pt);
   const ball = f.ball;
   // eyes first, head after (2026-11-17 V2): heads turn toward where the ball was 0.2 s ago, the eyes (faceOf) to where it is
@@ -226,10 +239,21 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
     const u = (pt - shot.t1) / 0.6;
     return u > 0 && u < 1 ? u : 0;
   })();
-  // skeletal clips for some players (play.skel): look B = capsule athlete on the clip, C = deformable mesh
-  const skel = (play as PlayWithSkel).skel;
-  const meshSpec = skel ? Object.values(skel).find((s) => s.look === 'C') : undefined;
-  const glb = useGlb(meshSpec ? (meshSpec.glb ?? CLIP_GLB[meshSpec.clip]) : undefined);
+  // DEFAULT PLAYERS (e2a-player-v1, player3d.ts): deformable E2A mesh for every player, validated clips by action,
+  // compatible rig / choreo animation otherwise; capsule athlete (A) only when the data asks for it or a .glb fails
+  const force = players3d === 'A' ? 'A' : undefined;
+  const plan = planPlayers3d(play, {force, faces: !!faces});
+  const playP = playWithPlan(play, {force, faces: !!faces});
+  const skel = playP.skel;
+  const anyC = !force && !faces;
+  const labGlbs = skel ? [...new Set(Object.values(skel).filter((s) => s.look === 'C' && s.glb).map((s) => s.glb!))] : [];
+  const glbs = useGlbs(anyC ? [PLAYER3D.off.glb, PLAYER3D.def.glb, ...labGlbs] : labGlbs);
+  // the canvas only renders on frame changes (Remotion ThreeCanvas): mount it once the meshes are loaded (or failed)
+  const glbWanted = anyC ? [PLAYER3D.off.glb, PLAYER3D.def.glb, ...labGlbs] : labGlbs;
+  const glbReady = glbWanted.every((g) => glbs[g]);
+  const failed = Object.entries(glbs).filter(([, g]) => g.error).map(([k, g]) => `${k}: ${g.error}`);
+  logPlan(`[E2A players3d] ${PLAYER3D.version} play ${play.id}: ${describePlan(plan).join(' | ')}${failed.length ? ` | FALLBACK A for mesh players: ${failed.join('; ')}` : ''}`);
+  if (!glbReady) return null;
   return (
     <ThreeCanvas
       width={W}
@@ -248,18 +272,37 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
       <Court3D logo={logo} swish={swish} env={env} />
       {play.players.map((p, i) => {
         if (hide.includes(p.id)) return null;
+        const pp = plan[p.id];
         const spec = skel?.[p.id];
+        const variant = p.team === 'X' ? 'def' : 'off';
+        const pkg = PLAYER3D[variant];
+        const glbSrc = spec?.glb ?? (spec?.look === 'C' ? pkg.glb : pkg.glb);
+        const glb = glbs[glbSrc]?.scene ?? null;
+        const skin = SKINS[i % SKINS.length];
+        const num = p.id.slice(1);
         if (spec && spec.look !== 'A') {
-          const sp = skelPoseAt(play as PlayWithSkel, p.id, pt, {holder: ball.holder, pos: ball.pos}, RIM, spec.look === 'C');
+          const sp = skelPoseAt(playP, p.id, pt, {holder: ball.holder, pos: ball.pos, lag: ballLag}, RIM, spec.look === 'C');
           const clip = getClip(spec.clip);
+          if (spec.look === 'C' && !(glb && clip && sp.bones && sp.hips)) logPlan(`[E2A players3d] ${p.id} clip ${spec.clip}: capsule this frame (glb ${!!glb}, clip ${!!clip}, bones ${!!sp.bones})`);
           return (
             <React.Fragment key={p.id}>
               {spec.look === 'C' && glb && clip && sp.bones && sp.hips ? (
-                <SkinnedAthlete scene={glb} clipBones={clip.bones} bones={sp.bones} hips={sp.hips} />
+                <SkinnedAthlete scene={glb} clipBones={clip.bones} bones={sp.bones} hips={sp.hips} inst={p.id} skin={skin} num={num} kit={KITS[p.team]} />
               ) : (
-                <Athlete pose={sp.pose} team={p.team} num={p.id.slice(1)} skin={SKINS[i % SKINS.length]} />
+                <Athlete pose={sp.pose} team={p.team} num={num} skin={skin} />
               )}
               <ContactShadows pose={sp.pose} />
+            </React.Fragment>
+          );
+        }
+        if (pp?.look === 'C' && glb && pkg.rig) {
+          const pose = poseAt(play, p.id, pt, {holder: ball.holder, pos: ball.pos, lag: ballLag}, RIM);
+          const sc = pose.dims.H / pkg.rig.H;
+          const r = bonesFromPose(pkg.rig, pose, sc);
+          return (
+            <React.Fragment key={p.id}>
+              <SkinnedAthlete scene={glb} clipBones={pkg.rig.bones} bones={r.bones} hips={r.hips} inst={p.id} scale={sc} skin={skin} num={num} kit={KITS[p.team]} />
+              <ContactShadows pose={pose} />
             </React.Fragment>
           );
         }
