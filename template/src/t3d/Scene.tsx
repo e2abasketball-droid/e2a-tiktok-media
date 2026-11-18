@@ -244,6 +244,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
         // 0.06-0.30 s ago, so a new look turns the head smoothly instead of snapping it
         let lookP: V3 | undefined;
         let down = 0;
+        let chestP: V3 | undefined;
         if (faces) {
           const acc: V3 = [0, 0, 0];
           let nLook = 0;
@@ -261,8 +262,23 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
             acc[2] += q[2] / LAGS.length;
           }
           if (nLook) lookP = acc;
+          // shoulders: the same target, later (0.30-0.54 s ago)
+          if (lookP) {
+            const c: V3 = [0, 0, 0];
+            const CL = [0.3, 0.36, 0.42, 0.48, 0.54];
+            for (const lag of CL) {
+              const tl = Math.max(0, pt - lag);
+              const fr = sample(play, tl);
+              const pp = fr.players[p.id]?.pos ?? [0, 0];
+              const q = lookPoint(play, exprOf(play, p.id, tl).look, tl, fr.ball.pos, [pp[0], pp[1], 1.7]) ?? fr.ball.pos;
+              c[0] += q[0] / CL.length;
+              c[1] += q[1] / CL.length;
+              c[2] += q[2] / CL.length;
+            }
+            chestP = c;
+          }
         }
-        const pose = poseAt(play, p.id, pt, {holder: ball.holder, pos: ball.pos, lag: ballLag, look: lookP, down}, RIM);
+        const pose = poseAt(play, p.id, pt, {holder: ball.holder, pos: ball.pos, lag: ballLag, look: lookP, down, chest: chestP}, RIM);
         return (
           <React.Fragment key={p.id}>
             <Athlete pose={pose} team={p.team} num={faces?.nums?.[p.id] ?? p.id.slice(1)} skin={faces?.skin?.[p.id] ?? SKINS[i % SKINS.length]} face={faces ? faceOf(play, p.id, i, pt, ball.pos, pose.head, faces) : undefined} />

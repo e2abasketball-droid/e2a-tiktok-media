@@ -375,7 +375,7 @@ const landAt = (acts: Action[], t: number) => {
   return d;
 };
 
-export type BallHint = {holder?: string; pos: V3; lag?: V3; look?: V3; down?: number};
+export type BallHint = {holder?: string; pos: V3; lag?: V3; look?: V3; down?: number; chest?: V3};
 
 /**
  * Full pose of player `id` at play time t. `ball` is the ball state (from play.ts) so the
@@ -453,7 +453,9 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
   const counter = run * 0.16 * Math.sin(2 * Math.PI * r.phase);
   const sideTurn = (lock.w * 0.5 + 0.35 * low) * (lock.a?.side ?? 1) + seal.w * 0.6 * (seal.a?.side ?? 1);
   // bump: the shoulders are knocked back toward the screener's side for a beat
-  const chestYaw = h + counter + sideTurn * 0.35 + loadTurn * 0.55 + bump.w * 0.25 * Math.sin(Math.PI * clamp((tc - (bump.a?.from ?? 0)) / 0.35));
+  // V4: gaze -> head -> shoulders. With an explicit look target the shoulders follow the (more delayed) chest target a little
+  const chestTurn = ball.chest && speed < 1.5 ? clamp(wrap(Math.atan2(ball.chest[1] - p2[1], ball.chest[0] - p2[0]) - h), -0.55, 0.55) * 0.3 * (1 - lock.w) : 0;
+  const chestYaw = h + counter + sideTurn * 0.35 + loadTurn * 0.55 + chestTurn + bump.w * 0.25 * Math.sin(Math.PI * clamp((tc - (bump.a?.from ?? 0)) / 0.35));
   const up: V3 = [0, 0, 1];
   // trunk direction: up tilted forward by lean and sideways by roll
   const trunkDir = norm(add(add(mul(up, Math.cos(lean)), mul(fwd(chestYaw), Math.sin(lean))), mul(right(h), -Math.sin(roll))));

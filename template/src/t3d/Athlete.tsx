@@ -260,7 +260,8 @@ const Face: React.FC<{f: FaceState; rx: number; ry: number; rz: number; skinM: T
   // upper eyelids (2026-11-17 V3): a skin dome over each eye that rotates down from behind the eye. At rest it covers the
   // top ~third (soft, relaxed lids instead of round staring eyes); worry adds a little weight; a blink closes it.
   const blink = Math.max(0, Math.min(1, f.blink));
-  const rest = 0.3 + 0.08 * Math.max(0, -f.brow) + Math.max(0, -gy) * 0.12;
+  // V4: a little more lid at rest and smaller whites/irises so the eyes stop dominating the face
+  const rest = 0.36 + 0.08 * Math.max(0, -f.brow) + Math.max(0, -gy) * 0.12;
   const closure = rest + (1 - rest) * blink;
   const lidRot = -Math.PI / 2 + closure * (Math.PI / 2 + 0.95);
   const parts: React.ReactNode[] = [];
@@ -270,15 +271,15 @@ const Face: React.FC<{f: FaceState; rx: number; ry: number; rz: number; skinM: T
     const ez = 0.86 * rz;
     parts.push(
       <group key={`eye${s}`} position={[ex, ey, ez]}>
-        <mesh geometry={FACE_G.eye} material={white} scale={[0.2 * rx, 0.24 * ry, 0.12 * rz]} />
-        <mesh geometry={FACE_G.lid} material={skinM} rotation={[lidRot, 0, 0]} scale={[0.208 * rx, 0.248 * ry, 0.136 * rz]} />
-        <mesh geometry={FACE_G.eye} material={iris} position={[gx * 0.07 * rx, gy * 0.07 * ry, 0.078 * rz]} scale={[0.105 * rx, 0.125 * ry, 0.045 * rz]} />
-        <mesh geometry={FACE_G.eye} material={white} position={[gx * 0.07 * rx + 0.035 * rx, gy * 0.07 * ry + 0.045 * ry, 0.112 * rz]} scale={[0.03 * rx, 0.03 * ry, 0.014 * rz]} />
+        <mesh geometry={FACE_G.eye} material={white} scale={[0.17 * rx, 0.2 * ry, 0.11 * rz]} />
+        <mesh geometry={FACE_G.lid} material={skinM} rotation={[lidRot, 0, 0]} scale={[0.178 * rx, 0.208 * ry, 0.126 * rz]} />
+        <mesh geometry={FACE_G.eye} material={iris} position={[gx * 0.06 * rx, gy * 0.06 * ry, 0.072 * rz]} scale={[0.088 * rx, 0.104 * ry, 0.042 * rz]} />
+        <mesh geometry={FACE_G.eye} material={white} position={[gx * 0.06 * rx + 0.028 * rx, gy * 0.06 * ry + 0.036 * ry, 0.104 * rz]} scale={[0.02 * rx, 0.02 * ry, 0.01 * rz]} />
       </group>,
     );
     // brow: worried = inner end up (rotation toward the centre), determined = inner end down
     const tilt = s * 0.42 * f.brow;
-    parts.push(<mesh key={`brow${s}`} geometry={FACE_G.brow} material={brow} position={[s * 0.36 * rx, (0.4 + 0.06 * Math.max(0, -f.brow)) * ry, 0.9 * rz]} rotation={[0, 0, Math.PI / 2 + tilt]} scale={[0.045 * ry, 0.075 * rx, 0.04 * rz]} />);
+    parts.push(<mesh key={`brow${s}`} geometry={FACE_G.brow} material={brow} position={[s * 0.36 * rx, (0.4 + 0.06 * Math.max(0, -f.brow)) * ry, 0.9 * rz]} rotation={[0, 0, Math.PI / 2 + tilt]} scale={[0.036 * ry, 0.072 * rx, 0.034 * rz]} />);
   }
   // nose
   parts.push(<mesh key="nose" geometry={FACE_G.eye} material={skinM} position={[0, -0.12 * ry, 0.98 * rz]} scale={[0.1 * rx, 0.11 * ry, 0.08 * rz]} />);
@@ -287,8 +288,8 @@ const Face: React.FC<{f: FaceState; rx: number; ry: number; rz: number; skinM: T
   if (open > 0.05) parts.push(<mesh key="mo" geometry={FACE_G.eye} material={lip} position={[0, my, 0.86 * rz]} scale={[0.14 * rx, 0.14 * ry * open + 0.02 * ry, 0.06 * rz]} />);
   const curve = 0.12 + 0.9 * Math.max(0, f.smile);
   parts.push(<mesh key="ml" geometry={FACE_G.mouth} material={lip} position={[0, my + 0.04 * ry * curve, 0.88 * rz]} rotation={[0, 0, Math.PI]} scale={[0.17 * rx * (1 - 0.3 * open), 0.17 * ry * curve, 0.06 * rz]} />);
-  // hair cap (young, full on top)
-  parts.push(<mesh key="hair" geometry={FACE_G.cap} material={brow} position={[0, 0.07 * ry, -0.05 * rz]} rotation={[-0.62, 0, 0]} scale={[1.07 * rx, 1.05 * ry, 1.08 * rz]} castShadow />);
+  // hair cap (young, full on top). V4: tilted back and a touch tighter so the fringe sits on the hairline, not over the brows
+  parts.push(<mesh key="hair" geometry={FACE_G.cap} material={brow} position={[0, 0.07 * ry, -0.06 * rz]} rotation={[-0.78, 0, 0]} scale={[1.055 * rx, 1.04 * ry, 1.065 * rz]} castShadow />);
   return <group position={at} quaternion={q}>{parts}</group>;
 };
 
