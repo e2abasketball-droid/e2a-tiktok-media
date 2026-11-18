@@ -13,8 +13,10 @@ import fs from 'node:fs';
 import {FIBA} from '../src/tactical/geometry.ts';
 import type {V3} from '../src/tactical/geometry.ts';
 import {sample} from '../src/tactical/play.ts';
-import {footTrack, poseAt} from '../src/t3d/rig.ts';
+import {footTrack} from '../src/t3d/rig.ts';
 import type {PlayWithActions, Pose} from '../src/t3d/rig.ts';
+import {registerClip, skelPoseAt} from '../src/t3d/skelclip.ts';
+import type {PlayWithSkel, SkelClip, SkelPose} from '../src/t3d/skelclip.ts';
 
 const args = process.argv.slice(2);
 const opt = (k: string, d?: string) => {
@@ -23,7 +25,13 @@ const opt = (k: string, d?: string) => {
 };
 const file = args.find((a) => a.endsWith('.json') && args[args.indexOf(a) - 1] !== '--json');
 if (!file) throw new Error('usage: qc-contact.mts <play.json> [--fps 30] [--from s] [--to s] [--json out.json]');
-const play = JSON.parse(fs.readFileSync(file, 'utf8')) as PlayWithActions;
+const play = JSON.parse(fs.readFileSync(file, 'utf8')) as PlayWithSkel;
+// LAB skeletal clips (opt-in per play): register the clip data the play asks for
+for (const sp of Object.values(play.skel ?? {})) {
+  const f = new URL(`../src/t3d/clips/${sp.clip}.json`, import.meta.url);
+  if (fs.existsSync(f)) registerClip(sp.clip, JSON.parse(fs.readFileSync(f, 'utf8')) as SkelClip);
+}
+if (opt('--look')) for (const sp of Object.values(play.skel ?? {})) sp.look = opt('--look') as 'A' | 'B' | 'C';
 const fps = Number(opt('--fps', '30'));
 const t0 = Number(opt('--from', '0'));
 const t1 = Number(opt('--to', String(play.duration)));
@@ -63,12 +71,17 @@ const segDist = (p1: V3, q1: V3, p2: V3, q2: V3) => {
 
 const n = Math.floor((t1 - t0) * fps + 1e-6);
 const poses: Record<string, Pose[]> = {};
+const skelP: Record<string, SkelPose[]> = {};
 const balls: {holder?: string; pos: V3}[] = [];
 for (let f = 0; f <= n; f++) {
   const t = t0 + f / fps;
   const s = sample(play, t);
   balls.push({holder: s.ball.holder, pos: s.ball.pos as V3});
-  for (const id of ids) (poses[id] ??= []).push(poseAt(play, id, t, {holder: s.ball.holder, pos: s.ball.pos as V3}, RIM));
+  for (const id of ids) {
+    const sp = skelPoseAt(play, id, t, {holder: s.ball.holder, pos: s.ball.pos as V3}, RIM);
+    (poses[id] ??= []).push(sp.pose);
+    (skelP[id] ??= []).push(sp);
+  }
 }
 
 // ---- 1. planted-foot sliding (rendered ankle while the sim foot is planted over the whole frame interval)
@@ -94,6 +107,7 @@ for (const id of ids) {
     const tb = ta + 1 / fps;
     for (let i = 0; i < 2; i++) {
       if (poses[id][f].airborne > 0.001 || poses[id][f + 1].airborne > 0.001) continue;
+      if (skelP[id][f].w > 0 || skelP[id][f + 1].w > 0) continue; // skeletal clip: measured below on its own contacts
       if (!plantedBetween(ta, tb, i)) continue;
       planted++;
       const a = poses[id][f].ankle[i];
@@ -103,6 +117,53 @@ for (const id of ids) {
     }
   }
   rows.push({player: id, slideMaxMm: slideMax, at, plantedFrames: planted, clearMin: Infinity, clearWho: '-', heldGapMax: null, heldAt: '-', dribbleGapMax: null});
+}
+
+// ---- 1b. skeletal clips: accumulated drift of the pinned ball of the foot over each stance (the foot may rotate about
+// that point: pivot), per-frame slide of that point, and the ankle speed of grounded feet inside the blends
+type SkelRow = {player: string; stances: number; driftMaxMm: number; driftAt: string; slideMaxMm: number; blendAnkleMm: number; window: string};
+const skelRows: SkelRow[] = [];
+for (const id of ids) {
+  if (!skelP[id].some((x) => x.w > 0)) continue;
+  const r: SkelRow = {player: id, stances: 0, driftMaxMm: 0, driftAt: '-', slideMaxMm: 0, blendAnkleMm: 0, window: ''};
+  const ws = skelP[id].map((x) => x.w);
+  const f0 = ws.findIndex((w) => w > 0);
+  const f1 = ws.length - 1 - [...ws].reverse().findIndex((w) => w > 0);
+  r.window = `${(t0 + f0 / fps).toFixed(2)}–${(t0 + f1 / fps).toFixed(2)} s`;
+  for (let i = 0; i < 2; i++) {
+    let start: V3 | null = null;
+    let anchor: V3 | null = null;
+    for (let f = 0; f <= n; f++) {
+      const sp = skelP[id][f];
+      const pin = sp.pins[i];
+      const b = sp.balls?.[i];
+      if (!pin || !b) {
+        start = null;
+        anchor = null;
+        continue;
+      }
+      if (!anchor || len(sub(anchor, pin)) > 1e-6) {
+        anchor = pin;
+        start = b;
+        r.stances++;
+        continue;
+      }
+      const d = len(sub(b, start!)) * 1000;
+      if (d > r.driftMaxMm) [r.driftMaxMm, r.driftAt] = [d, `${i ? 'R' : 'L'}@${(t0 + f / fps).toFixed(2)}s`];
+      const prev = skelP[id][f - 1].balls![i];
+      r.slideMaxMm = Math.max(r.slideMaxMm, len(sub(b, prev)) * 1000);
+    }
+    for (let f = 0; f < n; f++) {
+      const a = skelP[id][f];
+      const b = skelP[id][f + 1];
+      if (!(a.w > 0 && a.w < 1) && !(b.w > 0 && b.w < 1)) continue;
+      const A = poses[id][f].ankle[i];
+      const B = poses[id][f + 1].ankle[i];
+      if (A[2] > 0.16 || B[2] > 0.16) continue; // airborne foot (ankle height ~0.1 m on the floor)
+      r.blendAnkleMm = Math.max(r.blendAnkleMm, len(sub(A, B)) * 1000);
+    }
+  }
+  skelRows.push(r);
 }
 
 // ---- 2. body clearance: torso capsule (pelvis -> chest, radius 0.15·k) and hip spheres (radius 0.095·k)
@@ -165,6 +226,8 @@ const fmt = (v: number | null, d = 3) => (v === null ? '-' : v.toFixed(d));
 console.log(`qc-contact ${play.id}  ${t0.toFixed(2)}–${t1.toFixed(2)} s @ ${fps} fps`);
 console.log('player | slide max mm/frame (where) | planted frames | min clearance m (vs) | held gap max m | dribble contact gap max m');
 for (const r of rows) console.log(`${r.player} | ${r.slideMaxMm.toFixed(2)} (${r.at}) | ${r.plantedFrames} | ${r.clearMin.toFixed(3)} (${r.clearWho}) | ${fmt(r.heldGapMax)}${r.heldGapMax !== null ? ` (${r.heldAt})` : ''} | ${fmt(r.dribbleGapMax)}`);
+for (const r of skelRows)
+  console.log(`skeletal clip ${r.player} [${r.window}]: ${r.stances} stances, accumulated drift of the pinned ball max ${r.driftMaxMm.toFixed(2)} mm (${r.driftAt}), per-frame slide max ${r.slideMaxMm.toFixed(2)} mm, grounded ankle in blends max ${r.blendAnkleMm.toFixed(1)} mm/frame`);
 const slideMax = Math.max(...rows.map((r) => r.slideMaxMm));
 const held = Math.max(...rows.map((r) => r.heldGapMax ?? -1));
 const drib = Math.max(...rows.map((r) => r.dribbleGapMax ?? -1));
@@ -173,8 +236,9 @@ const checks = [
   {check: 'no body interpenetration (clearance ≥ -0.02 m)', ok: worst.v >= -0.02, value: `${worst.v.toFixed(3)} m (${worst.who})`},
   {check: 'held ball stays in the hands (gap ≤ 0.06 m)', ok: held <= 0.06, value: `${held.toFixed(3)} m`},
   {check: 'dribbling hand meets the ball every bounce (gap ≤ 0.08 m)', ok: drib <= 0.08, value: `${drib.toFixed(3)} m`},
+  ...skelRows.map((r) => ({check: `skeletal clip ${r.player}: pinned ball of the foot does not drift over a stance (≤ 5 mm)`, ok: r.driftMaxMm <= 5, value: `${r.driftMaxMm.toFixed(2)} mm`})),
 ];
 for (const c of checks) console.log(`${c.ok ? 'PASS' : 'FAIL'}  ${c.check} — ${c.value}`);
 const out = opt('--json');
-if (out) fs.writeFileSync(out, JSON.stringify({play: play.id, from: t0, to: t1, fps, rows, checks}, null, 1));
+if (out) fs.writeFileSync(out, JSON.stringify({play: play.id, from: t0, to: t1, fps, rows, skelRows, checks}, null, 1));
 process.exitCode = checks.every((c) => c.ok) ? 0 : 1;

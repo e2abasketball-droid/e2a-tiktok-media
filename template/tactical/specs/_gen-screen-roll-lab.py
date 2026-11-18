@@ -23,43 +23,51 @@ players = [P("O1", "O", "Ball handler (right wing)"), P("O2", "O", "Spacer, left
            P("O4", "O", "Spacer, right corner"), P("O5", "O", "Ball screener / roller"),
            P("X1", "X", "On the ball", "O1"), P("X2", "X", "Left wing", "O2"), P("X3", "X", "Left corner", "O3"),
            P("X4", "X", "Right corner", "O4"), P("X5", "X", "On the screener (drop)", "O5")]
-start = {"O1": [5.4, 8.3], "O2": [-5.6, 7.8], "O3": [-6.6, 1.3], "O4": [6.6, 1.3], "O5": [3.4, 5.4],
-         "X1": [5.0, 7.55], "X2": [-4.8, 7.0], "X3": [-5.6, 2.1], "X4": [5.6, 2.1], "X5": [3.0, 4.7]}
+start = {"O1": [5.4, 8.3], "O2": [-5.6, 7.8], "O3": [-6.6, 1.3], "O4": [6.6, 1.3], "O5": [1.98, 7.85],
+         "X1": [5.0, 7.55], "X2": [-4.8, 7.0], "X3": [-5.6, 2.1], "X4": [5.6, 2.1], "X5": [1.65, 6.8]}
+# phase 3: the roll runs at the pace of the reference first strides (4.2 m/s top instead of 5.5; pass, catch and
+# layup 0.3 s later) so the clip keeps a human cadence.
+# phase 3: O5 comes across from the middle (left elbow side) as in the reference 5452 (mirrored): the last metres of the
+# approach run laterally and the two-step brake turns the chest to X1. X5 starts inside him, between O5 and the rim.
 SCREEN = [4.45, 7.65]  # beside X1, on the middle side; the screener faces X1 (sideline), back to the middle
 spec = {
     "id": "screen-roll-lab",
     "title": "Lab — side pick-and-roll: plant, hold, open-step pivot and roll (rig calibration, not an episode)",
-    "duration": 5.5,
-    "notes": ["O5 sprints up from the block and plants a wide, low screen on X1 (two-step brake).",
+    "duration": 5.8,
+    "notes": ["O5 sprints across from the middle and plants a wide, low screen on X1 (two-step brake).",
               "O1 waits for the plant, then turns the corner over the top; X1 is held on the screen.",
               "O5 opens on a pivot (open step 0.2 s), turns to the rim and rolls with short quick steps; bounce pass, layup."],
     "players": players,
     "start": start,
     "legs": {
         "O5": [{"at": 0.4, "to": SCREEN, "speed": 3.8},
-               {"at": 2.55, "to": [0.8, 2.7], "speed": 5.5}],
+               {"at": 2.55, "to": [0.8, 2.7], "speed": 4.2}],
         "O1": [{"at": 1.75, "via": [[3.6, 8.55]], "to": [1.4, 6.3], "speed": 4.6}],
         "X1": [{"at": 1.85, "to": [4.95, 8.25], "speed": 2.0},
                {"at": 2.6, "to": [2.9, 8.0], "speed": 4.0}],
-        "X5": [{"at": 1.0, "to": [3.2, 5.7], "speed": 1.6},
+        "X5": [{"at": 0.8, "to": [3.2, 5.7], "speed": 2.6},
                {"at": 2.4, "to": [2.4, 6.0], "speed": 2.0}],
     },
-    "ball": [{"type": "hold", "player": "O1", "from": 0, "to": 3.65, "dribble": True},
-             {"type": "pass", "from": "O1", "to": "O5", "t0": 3.65, "t1": 4.1, "style": "bounce"},
-             {"type": "hold", "player": "O5", "from": 4.1, "to": 4.3},
-             {"type": "layup", "player": "O5", "t0": 4.3, "t1": 4.7, "make": True}],
+    "ball": [{"type": "hold", "player": "O1", "from": 0, "to": 3.95, "dribble": True},
+             {"type": "pass", "from": "O1", "to": "O5", "t0": 3.95, "t1": 4.4, "style": "bounce"},
+             {"type": "hold", "player": "O5", "from": 4.4, "to": 4.6},
+             {"type": "layup", "player": "O5", "t0": 4.6, "t1": 5.0, "make": True}],
     "screens": [],
-    "marks": {"start": 0, "approach": 0.4, "plant": 1.42, "use": 1.75, "roll": 2.45, "run": 2.55, "pass": 3.65,
-              "catch": 4.1, "release": 4.3, "make": 4.7, "end": 5.5},
+    "marks": {"start": 0, "approach": 0.4, "plant": 1.42, "use": 1.75, "roll": 2.45, "run": 2.55, "pass": 3.95,
+              "catch": 4.4, "release": 4.6, "make": 5.0, "end": 5.8},
     "actions": {
         "O5": [{"type": "screen", "from": 1.42, "to": 2.42, "face": "X1"},
-               {"type": "roll", "from": 2.45, "to": 4.1, "face": "O1"}],
+               {"type": "roll", "from": 2.45, "to": 4.4, "face": "O1"}],
         "X1": [{"type": "stance", "from": 0, "to": 1.9, "face": "O1"}],
-        "X5": [{"type": "stance", "from": 0, "to": 5.5, "face": "O1"}],
-        "X2": [{"type": "stance", "from": 0, "to": 5.5, "face": "O2"}],
-        "X3": [{"type": "stance", "from": 0, "to": 5.5, "face": "O3"}],
-        "X4": [{"type": "stance", "from": 0, "to": 5.5, "face": "O4"}],
+        "X5": [{"type": "stance", "from": 0, "to": 5.8, "face": "O1"}],
+        "X2": [{"type": "stance", "from": 0, "to": 5.8, "face": "O2"}],
+        "X3": [{"type": "stance", "from": 0, "to": 5.8, "face": "O3"}],
+        "X4": [{"type": "stance", "from": 0, "to": 5.8, "face": "O4"}],
     },
+    # LAB 2026-11-18 (phase 3): the screener plays the skeletal clip retargeted from 5452 (approach, two-step brake,
+    # set, hold, open step + pivot on the left ball, first strides). look: A = procedural rig, B = clip on the capsule
+    # athlete, C = clip on the deformable mesh (public/lab3d/*.glb). Engine time, ball and placement stay in charge.
+    "skel": {"O5": {"clip": "screen-roll-5452m", "look": "C"}},
     "claims": [
         {"type": "near", "a": "O5", "b": "X1", "at": "use", "max": 0.9, "says": "the screen is set right on the defender"},
         {"type": "near", "a": "O1", "b": "O5", "at": 2.1, "max": 1.3, "says": "the handler comes off shoulder to shoulder"},

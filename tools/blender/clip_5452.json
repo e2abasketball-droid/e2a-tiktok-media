@@ -1,0 +1,213 @@
+{
+ "video": "E2A_26_BLOQUEO_GIRO_Y_ROLL_APROXIMACION_OPUESTA_T02.MOV",
+ "note": "Contacts read frame by frame on the tonemapped frames (feet crops every frame 0.97-3.94 s). Sides = the player's. Times in seconds of the original MOV (29.97 fps, frame = round(t*29.97)+1).",
+ "t0": 0.97,
+ "t1": 4.04,
+ "contacts": [
+  {
+   "foot": "L",
+   "t0": 0.97,
+   "t1": 1.2,
+   "point": "ball",
+   "heel_lift": [
+    [
+     0.97,
+     4
+    ],
+    [
+     1.1,
+     10
+    ],
+    [
+     1.2,
+     40
+    ]
+   ]
+  },
+  {
+   "foot": "R",
+   "t0": 1.3,
+   "t1": 1.64,
+   "point": "ball",
+   "heel_lift": [
+    [
+     1.3,
+     8
+    ],
+    [
+     1.4,
+     0
+    ],
+    [
+     1.55,
+     4
+    ],
+    [
+     1.64,
+     35
+    ]
+   ]
+  },
+  {
+   "foot": "L",
+   "t0": 1.64,
+   "t1": 3.4,
+   "point": "ball",
+   "pivot": [
+    2.84,
+    3.27
+   ],
+   "heel_lift": [
+    [
+     1.64,
+     6
+    ],
+    [
+     1.72,
+     0
+    ],
+    [
+     2.84,
+     0
+    ],
+    [
+     3.04,
+     8
+    ],
+    [
+     3.27,
+     20
+    ],
+    [
+     3.4,
+     45
+    ]
+   ]
+  },
+  {
+   "foot": "R",
+   "t0": 1.84,
+   "t1": 2.78,
+   "point": "ball",
+   "heel_lift": [
+    [
+     1.84,
+     6
+    ],
+    [
+     1.92,
+     0
+    ],
+    [
+     2.7,
+     0
+    ],
+    [
+     2.78,
+     25
+    ]
+   ]
+  },
+  {
+   "foot": "R",
+   "t0": 3.24,
+   "t1": 3.58,
+   "point": "ball",
+   "anchor": "root",
+   "heel_lift": [
+    [
+     3.24,
+     15
+    ],
+    [
+     3.32,
+     3
+    ],
+    [
+     3.48,
+     10
+    ],
+    [
+     3.58,
+     40
+    ]
+   ]
+  },
+  {
+   "foot": "L",
+   "t0": 3.6,
+   "t1": 3.94,
+   "point": "ball",
+   "anchor": "root",
+   "heel_lift": [
+    [
+     3.6,
+     10
+    ],
+    [
+     3.68,
+     2
+    ],
+    [
+     3.84,
+     15
+    ],
+    [
+     3.94,
+     45
+    ]
+   ]
+  },
+  {
+   "foot": "R",
+   "t0": 3.8,
+   "t1": 4.04,
+   "point": "ball",
+   "anchor": "root",
+   "heel_lift": [
+    [
+     3.8,
+     10
+    ],
+    [
+     3.88,
+     2
+    ],
+    [
+     4.04,
+     25
+    ]
+   ]
+  }
+ ],
+ "milestones": {
+  "approach": 0.97,
+  "brake_R": 1.3,
+  "plant_L": 1.64,
+  "plant_R": 1.84,
+  "set": 1.87,
+  "unweight_R": 2.77,
+  "pivot_start": 2.84,
+  "R_touch": 3.24,
+  "L_release": 3.44,
+  "L_land": 3.6,
+  "R_land": 3.8,
+  "end": 4.04
+ },
+ "corrections": [],
+ "trust_pnp": [
+  [
+   3.2,
+   4.1,
+   4.0
+  ]
+ ],
+ "hands_clasp": {
+  "from": 1.8,
+  "to": 2.76,
+  "blend": 0.15,
+  "forward": 0.17,
+  "up": -0.16,
+  "lateral": 0.02
+ }
+}
