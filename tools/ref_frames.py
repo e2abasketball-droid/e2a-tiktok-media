@@ -14,11 +14,13 @@ Carpetas por defecto (en este orden; se pueden añadir con --dir o la variable E
   /mnt/project-files/tactical-studio/referencias-3d   (carpeta compartida del proyecto, fuera de Git)
   /mnt/project-files/uploads                          (archivos subidos por el propietario desde la app)
   ~/e2a-refs                                          (carpeta local en el ordenador del propietario / Remote Control)
+  /mnt/project-files (solo primer nivel)              (archivos que el propietario sube a la Biblioteca con su nombre)
 Salida por defecto: /mnt/project-files/tactical-studio/referencias-3d/_inspeccion/<nombre>/
 """
 import argparse, hashlib, json, os, subprocess, sys
 
 DEFAULT_DIRS = ["/mnt/project-files/tactical-studio/referencias-3d", "/mnt/project-files/uploads", os.path.expanduser("~/e2a-refs")]
+SHALLOW_DIRS = ["/mnt/project-files"]  # raíz de la Biblioteca del proyecto: solo archivos de primer nivel (no se recorre entera)
 OUT_ROOT = "/mnt/project-files/tactical-studio/referencias-3d/_inspeccion"
 VIDEO_EXT = (".mov", ".mp4", ".m4v", ".mkv", ".avi")
 
@@ -36,6 +38,11 @@ def find(name, extra=None):
             for f in files:
                 if f.lower() == want or (not os.path.splitext(want)[1] and os.path.splitext(f)[0].lower() == want):
                     hits.append(os.path.join(root, f))
+    for d in [x for x in SHALLOW_DIRS if os.path.isdir(x)]:
+        for f in os.listdir(d):
+            p = os.path.join(d, f)
+            if os.path.isfile(p) and (f.lower() == want or (not os.path.splitext(want)[1] and os.path.splitext(f)[0].lower() == want)):
+                hits.append(p)
     return hits
 
 
