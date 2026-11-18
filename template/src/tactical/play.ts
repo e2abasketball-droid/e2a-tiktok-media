@@ -251,7 +251,16 @@ const heldPos = (play: Play, id: string, t: number): V3 => {
   return e && e.type === 'hold' && isHanded(e) ? handedSpot(play, e, Math.min(Math.max(t, e.from), e.to)) : smoothHand(play, id, t);
 };
 
+/** authored ball path (2026-11-18, choreo.ts): a play with `choreo` + `ballHolder` gets its ball from there.
+ *  Registered by rig.ts (which owns the body dimensions) so play.ts stays free of the 3D rig. */
+let ballHook: ((play: Play, t: number) => BallState | undefined) | undefined;
+export const setBallHook = (f: (play: Play, t: number) => BallState | undefined) => {
+  ballHook = f;
+};
+
 const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallState => {
+  const hooked = ballHook?.(play, t);
+  if (hooked) return hooked;
   const ev = play.ball;
   const cur = ev.find((e) => (e.type === 'hold' ? t >= e.from && t <= e.to : t >= e.t0 && t <= e.t1));
   if (cur) {

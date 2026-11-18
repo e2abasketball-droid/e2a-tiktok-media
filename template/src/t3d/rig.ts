@@ -11,7 +11,9 @@
 // World units: metres on the FIBA half court (x across, y from the baseline, z up), as play.ts.
 import type {V2, V3} from '../tactical/geometry.ts';
 import type {Play} from '../tactical/play.ts';
-import {dribbleSide, posAt, stateOf} from '../tactical/play.ts';
+import {dribbleSide, posAt, setBallHook, stateOf} from '../tactical/play.ts';
+import type {ChoreoPlay} from './choreo.ts';
+import {choreoBall, choreoPose} from './choreo.ts';
 
 export type ActionType = 'screen' | 'stance' | 'topLock' | 'catchReady' | 'shoot' | 'layup' | 'pass' | 'dribble' | 'contest' | 'seal' | 'celebrate' | 'blitz' | 'bump' | 'gather' | 'call' | 'hide' | 'tap' | 'exhale' | 'closeout';
 /** character actions (2026-11-17, 'hide in games' episode): 'call' = both hands open in front at head height asking
@@ -336,6 +338,11 @@ export const PLAYER_HEIGHTS: Record<string, number> = {O1: 1.88, O2: 1.98, O3: 2
 /** silhouettes (2026-11-13): the point guard lighter and compact, the bigs stronger — readable in close shots */
 export const PLAYER_BUILD: Record<string, number> = {O1: 0.92, O2: 0.97, O3: 1.0, O4: 1.07, O5: 1.14, X1: 0.95, X2: 0.98, X3: 1.0, X4: 1.06, X5: 1.12};
 const dimsOf = (id: string) => dimsFor(PLAYER_HEIGHTS[id] ?? 2.0, PLAYER_BUILD[id] ?? 1);
+// authored footwork (choreo.ts): the ball of a choreo play comes from the holder's authored path
+setBallHook((play, t) => {
+  const b = choreoBall(play as unknown as ChoreoPlay, t, dimsOf);
+  return b ? {pos: b.pos, holder: b.holder, inFlight: b.phase === 'flight' ? 'layup' : undefined} : undefined;
+});
 
 /** jump height for shots and layups */
 const jumpAt = (acts: Action[], t: number) => {
@@ -383,6 +390,8 @@ export type BallHint = {holder?: string; pos: V3; lag?: V3; look?: V3; down?: nu
  */
 export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallHint, rim: V3): Pose => {
   const D = dimsOf(id);
+  const cp = play as unknown as ChoreoPlay;
+  if (cp.choreo?.[id]) return {...choreoPose(cp, id, t, ball.pos, rim, D, ik2), dims: D};
   const sim = simulate(play, id, D);
   const r = rowAt(sim, t);
   const acts = actionsOf(play, id);
