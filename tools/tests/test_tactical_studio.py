@@ -28,7 +28,7 @@ UTC = dt.timezone.utc
 CID = "E2A-TACTICAL-2026-11-20-V01"
 CID2 = "E2A-TACTICAL-2026-11-20-V02"
 REAL_RB = os.path.join(HERE, "fixtures", "metricool_readback_2026-11-13_20.json")
-OK_LIC = {k: {"commercial_use": True} for k in ("voice/*", "music/*", "sfx/*", "3d/procedural", "anton.woff2", "inter.woff2", "e2a_logo_white.png")}
+OK_LIC = {k: {"commercial_use": True} for k in ("voice/*", "music/*", "sfx/*", "3d/procedural", "anton.woff2", "inter.woff2", "e2a_logo_2026")}
 SCRIPT = """HOOK: Stop guarding the ball. Watch the corner.
 SETUP: The pin-down starts with the shooter buried in the corner and his defender on his hip.
 CASE A: If the defender trails the screen, the shooter curls to the rim before the help arrives.

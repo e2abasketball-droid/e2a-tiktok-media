@@ -16,8 +16,14 @@
    "licence": "SIL Open Font License 1.1",
    "commercial_use": true
   },
+  "e2a_logo_2026": {
+   "origin": "official E2A 2026 logo 'E2A Sports Academy' (template/public/brand/e2a-logo-2026.png, see its .provenance.json)",
+   "owner": "E2A",
+   "commercial_use": true,
+   "confirmed": "owner message 2026-11-19 12:35 UTC: use the new logo instead of the old one everywhere from now on"
+  },
   "e2a_logo_white.png": {
-   "origin": "official E2A logo",
+   "origin": "official E2A logo (previous logo; kept only so older episodes still pass QC)",
    "owner": "E2A",
    "commercial_use": true
   },

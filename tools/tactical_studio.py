@@ -610,7 +610,7 @@ def bundle_manifest(bundle):
     ep = bundle["episode"]
     assets = [{"src": "3d/procedural", "licence_key": "3d/procedural"},
               {"src": "anton.woff2", "licence_key": "anton.woff2"}, {"src": "inter.woff2", "licence_key": "inter.woff2"},
-              {"src": "e2a_logo_white.png", "licence_key": "e2a_logo_white.png"}]
+              {"src": "brand/e2a-logo-2026.png", "licence_key": "e2a_logo_2026"}]
     media = [ep.get("voice"), ep.get("voiceMix"), (ep.get("music") or {}).get("src")]
     for m in [x for x in media if x]:
         p = os.path.join(TEMPLATE, "public", m)
