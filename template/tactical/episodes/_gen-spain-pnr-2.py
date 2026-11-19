@@ -10,7 +10,7 @@ ep = {
  "id": "spain-pnr-2", "title": "Spain Pick & Roll 2.0", "fps": 30,
  "voiceRaw": "tactical/spain2/voice-raw.mp3", "wordsRaw": "spain-pnr-2.words-raw.json",
  "voice": "tactical/spain2/voice.wav", "voiceMix": "tactical/spain2/voice.mix.wav",
- "preroll": 0.1, "tail": 0.75,
+ "preroll": 0.1, "tail": 0.45,
  "gaps": [
   {"after": "Two screens.", "sec": 0.6, "why": "micro-freeze: SCREEN 1 then SCREEN 2 pulse"},
   {"after": "This is Spain.", "sec": 0.65, "why": "SPAIN / PICK & ROLL title lands and clears"},

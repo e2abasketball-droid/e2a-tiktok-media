@@ -12,6 +12,7 @@ import {Subtitles} from './subtitles';
 import {Timed, layoutScenes, makeResolver, totalSeconds, voiceEnd} from './timing';
 import type {CameraMove, Episode, Layout, SceneSpec, SfxCue, SfxName, Transition} from './types';
 import MIX from '../../audio-mix.json';
+import {LOGO} from '../brand';
 
 const OVERLAP: Record<Transition, number> = {cut: 0, flash: 0, whip: 0.22, punch: 0.14, 'zoom-through': 0.3, 'slide-up': 0.28};
 
@@ -121,7 +122,7 @@ const Outro: React.FC<{line?: string}> = ({line = 'MORE THAN A GAME'}) => {
   const l = spring({frame: frame - 6, fps, config: {damping: 18}});
   return (
     <AbsoluteFill style={{background: `rgba(6,15,34,${0.85 * Math.min(1, frame / 5)})`, justifyContent: 'center', alignItems: 'center', flexDirection: 'column', gap: 28}}>
-      <Img src={staticFile('e2a_logo_white.png')} style={{width: 470, transform: `scale(${0.7 + 0.3 * s})`, opacity: s}} />
+      <Img src={staticFile(LOGO)} style={{width: 470, transform: `scale(${0.7 + 0.3 * s})`, opacity: s}} />
       <div style={{display: 'flex', alignItems: 'center', gap: 20, opacity: l}}>
         <div style={{width: 80 * l, height: 4, background: GOLD}} />
         <div style={{fontFamily: BODY, fontWeight: 800, fontSize: 34, letterSpacing: 9, color: GOLD}}>{line}</div>

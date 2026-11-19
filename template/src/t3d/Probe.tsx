@@ -6,13 +6,14 @@ import {Scene3D} from './Scene';
 import {camera3At} from './camera3d.ts';
 import type {CamKey3} from './camera3d.ts';
 import '../theme';
+import {LOGO} from '../brand';
 
 export const useAssets = () => {
   const [logo, setLogo] = React.useState<HTMLImageElement | undefined>();
   const [h] = React.useState(() => delayRender('assets'));
   React.useEffect(() => {
     const img = new Image();
-    img.src = staticFile('e2a_logo_white.png');
+    img.src = staticFile(LOGO);
     Promise.all([new Promise((r) => (img.onload = r)), document.fonts.load('150px Anton')]).then(() => {
       setLogo(img);
       continueRender(h);

@@ -20,6 +20,7 @@ import {FocusVignette, FreezeFrame, KineticTitle, Logo, OfferCounter, PinLabel, 
 import {Flash} from '../pro/fx';
 import {countedSteps} from './overlays3d';
 import '../theme';
+import {LOGO} from '../brand';
 
 type Word = {text: string; start: number; end: number};
 type Timed = {from: Anchor; to?: Anchor};
@@ -158,7 +159,7 @@ const useLogo = () => {
   const [h] = React.useState(() => delayRender('logo + fonts'));
   React.useEffect(() => {
     const img = new Image();
-    img.src = staticFile('e2a_logo_white.png');
+    img.src = staticFile(LOGO);
     Promise.all([new Promise((r) => (img.onload = r)), document.fonts.load('150px Anton'), document.fonts.load('900 40px Inter')]).then(() => {
       setLogo(img);
       continueRender(h);

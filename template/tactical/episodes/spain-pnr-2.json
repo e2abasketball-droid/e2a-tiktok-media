@@ -7,7 +7,7 @@
  "voice": "tactical/spain2/voice.wav",
  "voiceMix": "tactical/spain2/voice.mix.wav",
  "preroll": 0.1,
- "tail": 0.75,
+ "tail": 0.45,
  "gaps": [
   {
    "after": "Two screens.",

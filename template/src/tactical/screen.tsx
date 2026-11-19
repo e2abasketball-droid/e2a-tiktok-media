@@ -3,6 +3,7 @@
 import React from 'react';
 import {AbsoluteFill, Img, random, staticFile} from 'remotion';
 import {BODY, DISPLAY, GOLD, NAVY, WHITE} from '../pro/brand';
+import {LOGO} from '../brand';
 
 const clamp = (x: number) => Math.max(0, Math.min(1, x));
 const easeOut = (x: number) => 1 - Math.pow(1 - clamp(x), 3);
@@ -187,14 +188,14 @@ export const Kicker: React.FC<{text: string; age: number; tone?: 'gold' | 'mint'
 
 export const LogoBug: React.FC<{age: number; big?: boolean; y?: number}> = ({age, big, y}) => (
   <div style={{position: 'absolute', left: 0, right: 0, top: y ?? (big ? 1060 : 1400), display: 'flex', justifyContent: 'center', opacity: clamp(age / 0.5)}}>
-    <Img src={staticFile('e2a_logo_white.png')} style={{height: big ? 210 : 120, transform: `scale(${0.92 + 0.08 * easeOut(age / 0.8)})`, filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.5))'}} />
+    <Img src={staticFile(LOGO)} style={{height: big ? 210 : 120, transform: `scale(${0.92 + 0.08 * easeOut(age / 0.8)})`, filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.5))'}} />
   </div>
 );
 
 /** Constant small brand bug, top-left, inside the safe area. */
 export const BrandBug: React.FC = () => (
   <div style={{position: 'absolute', top: 160, left: 70, display: 'flex', alignItems: 'center', gap: 14, opacity: 0.9}}>
-    <Img src={staticFile('e2a_logo_white.png')} style={{height: 46}} />
+    <Img src={staticFile(LOGO)} style={{height: 46}} />
     <div style={{width: 3, height: 30, background: GOLD}} />
     <div style={{fontFamily: BODY, fontWeight: 800, fontSize: 24, letterSpacing: 6, color: 'rgba(255,255,255,0.85)'}}>TACTICS</div>
   </div>

@@ -4,6 +4,7 @@
 import React from 'react';
 import {Img, staticFile} from 'remotion';
 import {BODY, DISPLAY, GOLD, NAVY, WHITE} from '../pro/brand';
+import {LOGO} from '../brand';
 
 const clamp = (x: number, a = 0, b = 1) => Math.max(a, Math.min(b, x));
 const eo = (x: number) => 1 - Math.pow(1 - clamp(x), 3);
@@ -139,7 +140,7 @@ export const RewindTag: React.FC<{age: number; dur: number}> = ({age, dur}) => {
 
 export const Logo: React.FC<{age: number; big?: boolean}> = ({age, big}) => (
   <div style={{position: 'absolute', left: 0, right: 0, top: big ? 1010 : 1640, display: 'flex', justifyContent: 'center', opacity: eo(age / 0.4)}}>
-    <Img data-qc="logo" src={staticFile('e2a_logo_white.png')} style={{width: big ? 300 : 150, opacity: 0.92}} />
+    <Img data-qc="logo" src={staticFile(LOGO)} style={{width: big ? 380 : 170, opacity: 0.95}} />
   </div>
 );
 
