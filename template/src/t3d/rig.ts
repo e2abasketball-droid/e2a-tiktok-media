@@ -11,11 +11,14 @@
 // World units: metres on the FIBA half court (x across, y from the baseline, z up), as play.ts.
 import type {V2, V3} from '../tactical/geometry.ts';
 import type {Play} from '../tactical/play.ts';
-import {dribbleSide, posAt, setBallHook, stateOf} from '../tactical/play.ts';
+import {dribbleSide, posAt, sample, setBallHook, stateOf} from '../tactical/play.ts';
+const sampleBall = (play: Play, t: number) => sample(play, t).ball.pos;
 import type {ChoreoPlay} from './choreo.ts';
 import {choreoBall, choreoPose} from './choreo.ts';
 
-export type ActionType = 'screen' | 'stance' | 'topLock' | 'catchReady' | 'shoot' | 'layup' | 'pass' | 'dribble' | 'contest' | 'seal' | 'celebrate' | 'blitz' | 'bump' | 'gather' | 'call' | 'hide' | 'tap' | 'exhale' | 'closeout' | 'roll';
+export type ActionType = 'screen' | 'stance' | 'topLock' | 'catchReady' | 'shoot' | 'layup' | 'pass' | 'dribble' | 'contest' | 'seal' | 'celebrate' | 'blitz' | 'bump' | 'gather' | 'call' | 'hide' | 'tap' | 'exhale' | 'closeout' | 'roll' | 'face';
+/** 'face' (2026-11-19, Blind Pig): facing only (body turns to `face`), no arm, crouch or stance change — e.g. a passer who
+ *  holds the ball and turns his chest to a receiver without the defensive-stance arms of 'stance'. */
 /** character actions (2026-11-17, 'hide in games' episode): 'call' = both hands open in front at head height asking
  *  for the ball; 'hide' = hands drop, shoulders sink and narrow, head down on the ball; 'tap' = right hand taps the
  *  chest twice; 'exhale' = shoulders drop on a breath out. All opt-in per action: plays without them are unchanged. */
@@ -135,7 +138,12 @@ export const actionsOf = (play: PlayWithActions, id: string): Action[] => {
   // automatic actions from the ball events
   for (const e of play.ball) {
     if (e.type === 'shot' && e.player === id) out.push({type: 'shoot', from: e.t0 - 0.5, to: e.t0 + 0.75});
-    if (e.type === 'layup' && e.player === id) out.push({type: 'layup', from: e.t0 - 0.38, to: e.t0 + 0.55});
+    if (e.type === 'layup' && e.player === id) {
+      // 2026-11-19 (Blind Pig): a cutter who catches in stride starts the layup carry only once the ball is in his
+      // hands (the carry pose used to pull his hands off an incoming pass caught < 0.38 s before the take-off)
+      const caught = play.ball.find((q) => q.type === 'pass' && q.to === id && q.t1 <= e.t0 && q.t1 > e.t0 - 0.38);
+      out.push({type: 'layup', from: caught && caught.type === 'pass' ? Math.min(e.t0 - 0.05, caught.t1 + 0.14) : e.t0 - 0.38, to: e.t0 + 0.55});
+    }
     if (e.type === 'pass' && e.from === id && e.style === 'handoff') continue; // hand-off: hands stay on the ball (below)
     if (e.type === 'pass' && e.from === id) {
       // overhead arms only when the pass is loaded from a held ball (play.ts raises it above the head)
@@ -678,6 +686,8 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
   const hand: V3[] = [];
   const elbowPoles: V3[] = [];
   const isBallHolder = ball.holder === id;
+  const relEv = pass.a ? play.ball.find((e) => e.type === 'pass' && e.from === id && e.style !== 'handoff' && e.style !== 'overhead' && Math.abs(e.t0 - (pass.a!.to - 0.18)) < 1e-3) : undefined;
+  const heldAt: V3 | undefined = relEv && relEv.type === 'pass' && tc >= relEv.t0 - 1e-6 && tc < relEv.t0 + 0.14 ? (sampleBall(play, relEv.t0) as V3) : undefined;
   const inDribble = acts.some((a) => a.type === 'dribble' && tc >= a.from && tc <= a.to);
   for (let i = 0; i < 2; i++) {
     const side = i === 0 ? -1 : 1;
@@ -737,9 +747,11 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
       blend(wh, add(add(ball.pos, mul(chestR, side * 0.115)), mul(chestF, -0.03)), norm(add(mul(chestR, side), [0, 0, -0.7])));
     }
     // holding the ball: both hands on it
-    if (isBallHolder && !inDribble && shoot.w < 0.01 && layup.w < 0.01) {
+    // (2026-11-19: faded out by the shot / layup weight instead of switched off at 1 %, so the hands stay on the ball
+    // while those actions blend in — they ride the ball themselves until the release)
+    if (isBallHolder && !inDribble && Math.max(shoot.w, layup.w) < 0.999) {
       const ballSide: V3 = add(ball.pos, mul(chestR, side * 0.115));
-      blend(0.95, add(ballSide, mul(chestF, -0.03)), norm(add(mul(chestR, side), [0, 0, -0.7])));
+      blend(0.95 * (1 - Math.max(shoot.w, layup.w)), add(ballSide, mul(chestF, -0.03)), norm(add(mul(chestR, side), [0, 0, -0.7])));
     }
     // dribble: right hand on top of the ball, left arm protects
     if (dribble.w > 0 && isBallHolder) {
@@ -764,7 +776,15 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
         // two hands above the head, then snapped forward over the defenders
         const up = smooth(tt / 0.45);
         blend(pass.w, L(0.1, 0.12 + 0.35 * ext, lerp(-0.15, 0.42, up) - 0.08 * ext), norm(add(mul(chestR, side), [0, 0, -0.3])));
-      } else blend(pass.w, L(0.1, 0.25 + 0.4 * ext, -0.15 + 0.05 * ext), norm(add(mul(chestR, side), [0, 0, -0.6])));
+      } else {
+        // 2026-11-19 (Blind Pig): the hands leave the ball where it was released and push THROUGH it (no 0.4 m jump
+        // of the hands at the release frame); a bounce pass is pushed down and out, not at shoulder height
+        const bounce = play.ball.some((e) => e.type === 'pass' && e.from === id && e.style === 'bounce' && Math.abs(e.t0 - (pass.a!.to - 0.18)) < 1e-3);
+        let push = L(0.1, 0.25 + 0.4 * ext, bounce ? -0.15 - 0.42 * ext : -0.15 + 0.05 * ext);
+        const tRel = pass.a.to - 0.18;
+        if (heldAt && tc >= tRel - 1e-6 && tc < tRel + 0.14) push = lerp3(add(heldAt, mul(chestR, side * 0.115)), push, smooth((tc - tRel) / 0.14));
+        blend(pass.w, push, norm(add(mul(chestR, side), [0, 0, -0.6])));
+      }
     }
     // shooting: gather at chest -> set above the forehead -> release to the rim -> follow-through
     if (shoot.a && shoot.w > 0) {
@@ -835,7 +855,7 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
   const toBall = Math.atan2((ball.lag ?? ball.pos)[1] - pelvis[1], (ball.lag ?? ball.pos)[0] - pelvis[0]);
   const toRim = Math.atan2(rim[1] - pelvis[1], rim[0] - pelvis[0]);
   // the ball handler reads the play: eyes on the receiver for the last 0.6 s before a pass
-  const nextPass = holderSelf ? play.ball.find((e) => e.type === 'pass' && e.from === id && e.t0 >= tc && e.t0 - tc < 0.6) : undefined;
+  const nextPass = holderSelf ? play.ball.find((e) => e.type === 'pass' && e.from === id && e.t0 >= tc && e.t0 - tc < (e.eyes ?? 0.6)) : undefined;
   const recv = nextPass && nextPass.type === 'pass' ? posAt(play.tracks[nextPass.to], tc) : undefined;
   const lookAt = ball.look ? Math.atan2(ball.look[1] - pelvis[1], ball.look[0] - pelvis[0]) : recv ? Math.atan2(recv[1] - pelvis[1], recv[0] - pelvis[0]) : holderSelf || shoot.w > 0.3 || layup.w > 0.3 ? (speed > 1.5 && shoot.w < 0.3 && layup.w < 0.3 ? h : toRim) : toBall;
   const headYaw = chestYaw + clamp(wrap(lookAt - chestYaw), -1.15, 1.15) * 0.85;

@@ -19,7 +19,9 @@ export type Waypoint = [number, number, number];
 
 export type BallEvent =
   | {type: 'hold'; player: string; from: number; to: number; dribble?: boolean; hand?: 1 | -1; cross?: number[]}
-  | {type: 'pass'; from: string; to: string; t0: number; t1: number; style?: 'chest' | 'bounce' | 'overhead' | 'handoff'; side?: number}
+  /** eyes (2026-11-19, Blind Pig): seconds before t0 the passer's eyes go to the receiver (default 0.6);
+   *  lead: a lead pass caught in stride (test-play allows a faster receiver at the catch) */
+  | {type: 'pass'; from: string; to: string; t0: number; t1: number; style?: 'chest' | 'bounce' | 'overhead' | 'handoff'; side?: number; eyes?: number; lead?: boolean}
   | {type: 'shot'; player: string; t0: number; t1: number; make?: boolean; side?: 1 | -1}
   | {type: 'layup'; player: string; t0: number; t1: number; make?: boolean};
 

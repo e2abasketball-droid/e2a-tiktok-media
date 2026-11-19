@@ -1,0 +1,479 @@
+{
+ "id": "blindpig-b-kick",
+ "title": "Blind Pig B (rehook): the low defender helps, kick out to the shooter",
+ "duration": 6.4,
+ "concept": "blind-pig",
+ "source": "original E2A staging of the Triangle 'Blind Pig' counter (NBA Coaches Playbook description; WABC/FIBA backdoor teaching); production coordinates",
+ "squareUp": true,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Passer, left slot: threatens the reversal, enters to the high post"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Right slot: sells the catch, cuts backdoor (the cutter)"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Right corner shooter (spacing; kick-out target in B)"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Big: flashes from the lane to the high post, the passer"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Big: posts on the left block, keeps X5 busy (no screen)"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the ball",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "Denies the reversal pass (the defender on the right)",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Low defender on the right corner: stays (A) / helps on the cutter (B)",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "Trails O4's flash",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "Behind O5 on the left block",
+   "guards": "O5"
+  }
+ ],
+ "start": {
+  "O1": [
+   2.6,
+   8.4
+  ],
+  "X1": [
+   2.95,
+   7.7
+  ],
+  "O2": [
+   -4.35,
+   6.55
+  ],
+  "X2": [
+   -3.7,
+   6.0
+  ],
+  "O3": [
+   -6.6,
+   1.25
+  ],
+  "X3": [
+   -5.35,
+   2.05
+  ],
+  "O4": [
+   1.2,
+   3.35
+  ],
+  "X4": [
+   0.8,
+   2.75
+  ],
+  "O5": [
+   2.55,
+   1.9
+  ],
+  "X5": [
+   2.0,
+   1.55
+  ]
+ },
+ "legs": {
+  "O2": [
+   {
+    "at": 0.1,
+    "via": [
+     [
+      -3.9,
+      7.4
+     ]
+    ],
+    "to": [
+     -3.05,
+     8.3
+    ],
+    "speed": 4.6
+   },
+   {
+    "at": 2.5,
+    "via": [
+     [
+      -3.0,
+      7.05
+     ],
+     [
+      -2.05,
+      4.75
+     ]
+    ],
+    "to": [
+     -1.45,
+     3.05
+    ],
+    "speed": 6.6
+   }
+  ],
+  "X2": [
+   {
+    "at": 0.35,
+    "via": [
+     [
+      -3.3,
+      7.1
+     ]
+    ],
+    "to": [
+     -2.45,
+     7.95
+    ],
+    "speed": 4.4
+   },
+   {
+    "at": 2.78,
+    "via": [
+     [
+      -2.75,
+      6.7
+     ],
+     [
+      -2.05,
+      4.75
+     ]
+    ],
+    "to": [
+     -1.75,
+     3.9
+    ],
+    "speed": 5.4
+   }
+  ],
+  "O4": [
+   {
+    "at": 1.55,
+    "via": [
+     [
+      0.75,
+      4.55
+     ]
+    ],
+    "to": [
+     -0.25,
+     5.85
+    ],
+    "speed": 5.4
+   }
+  ],
+  "X4": [
+   {
+    "at": 1.8,
+    "via": [
+     [
+      0.9,
+      4.3
+     ]
+    ],
+    "to": [
+     0.55,
+     5.2
+    ],
+    "speed": 4.6
+   }
+  ],
+  "O1": [],
+  "X1": [
+   {
+    "at": 2.43,
+    "to": [
+     2.35,
+     7.0
+    ],
+    "speed": 2.0
+   }
+  ],
+  "O5": [],
+  "X5": [],
+  "O3": [],
+  "X3": [
+   {
+    "at": 2.82,
+    "via": [
+     [
+      -4.6,
+      2.55
+     ]
+    ],
+    "to": [
+     -2.75,
+     2.75
+    ],
+    "speed": 4.8
+   },
+   {
+    "at": 4.17,
+    "to": [
+     -4.95,
+     2.3
+    ],
+    "speed": 4.6
+   }
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 2.18
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O4",
+   "t0": 2.18,
+   "t1": 2.66,
+   "style": "chest"
+  },
+  {
+   "type": "hold",
+   "player": "O4",
+   "from": 2.66,
+   "to": 3.95
+  },
+  {
+   "type": "pass",
+   "from": "O4",
+   "to": "O3",
+   "t0": 3.95,
+   "t1": 4.67,
+   "style": "overhead",
+   "eyes": 0.4
+  },
+  {
+   "type": "hold",
+   "player": "O3",
+   "from": 4.67,
+   "to": 4.97
+  },
+  {
+   "type": "shot",
+   "player": "O3",
+   "t0": 4.97,
+   "t1": 6.02,
+   "make": true,
+   "three": true
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "vcut": 0.1,
+  "deny": 1.35,
+  "flash": 1.55,
+  "entry": 2.18,
+  "plant": 2.28,
+  "cut": 2.5,
+  "catch4": 2.66,
+  "x2turn": 2.78,
+  "help": 2.82,
+  "look": 2.89,
+  "kick": 3.95,
+  "catch": 4.67,
+  "release": 4.97,
+  "make": 6.02,
+  "end": 6.4
+ },
+ "actions": {
+  "O1": [
+   {
+    "type": "face",
+    "from": 0,
+    "to": 1.5,
+    "face": "O2"
+   }
+  ],
+  "O2": [
+   {
+    "type": "call",
+    "from": 0.95,
+    "to": 2.23,
+    "amt": 0.55
+   }
+  ],
+  "X2": [
+   {
+    "type": "topLock",
+    "from": 1.1500000000000001,
+    "to": 2.78,
+    "face": "O2"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 2.3800000000000003,
+    "face": "O1"
+   }
+  ],
+  "O5": [
+   {
+    "type": "seal",
+    "from": 0.2,
+    "to": 5.6,
+    "face": "O1"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 5.6,
+    "face": "O5"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 2.45,
+    "to": 5.6,
+    "face": "O4"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 2.77,
+    "face": "O3"
+   },
+   {
+    "type": "stance",
+    "from": 3.07,
+    "to": 4.1000000000000005,
+    "face": "O2"
+   },
+   {
+    "type": "closeout",
+    "from": 4.2,
+    "to": 5.069999999999999
+   },
+   {
+    "type": "contest",
+    "from": 4.92,
+    "to": 5.52
+   }
+  ],
+  "O3": [
+   {
+    "type": "catchReady",
+    "from": 4.0,
+    "to": 4.72
+   },
+   {
+    "type": "celebrate",
+    "from": 6.22,
+    "to": 6.2
+   }
+  ],
+  "O4": []
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "X2",
+   "b": "O2",
+   "at": "deny",
+   "max": 1.0,
+   "says": "He jumps into the passing lane"
+  },
+  {
+   "type": "reacts_after",
+   "player": "O4",
+   "event": "deny",
+   "min": 0.15,
+   "says": "so the big flashes to the high post"
+  },
+  {
+   "type": "reacts_after",
+   "player": "X3",
+   "event": "cut",
+   "min": 0.25,
+   "says": "But if the low defender helps"
+  },
+  {
+   "type": "near",
+   "a": "X3",
+   "b": "O2",
+   "at": "kick",
+   "max": 1.9,
+   "says": "if the low defender helps (on the cutter)"
+  },
+  {
+   "type": "reacts_after",
+   "player": "X3",
+   "event": "kick",
+   "min": 0.15,
+   "says": "Kick it out to the shooter he just left (late closeout)"
+  },
+  {
+   "type": "behind_arc",
+   "player": "O3",
+   "at": "catch",
+   "says": "Kick it out to the shooter he just left."
+  },
+  {
+   "type": "open",
+   "player": "O3",
+   "at": "release",
+   "min": 1.8,
+   "says": "the shooter he just left"
+  },
+  {
+   "type": "order",
+   "marks": [
+    "deny",
+    "flash",
+    "entry",
+    "cut",
+    "help",
+    "kick",
+    "catch",
+    "release",
+    "make"
+   ],
+   "says": "don't force it. Kick it out"
+  }
+ ],
+ "screens": [],
+ "notes": [
+  "Same start as blindpig-a-layup.",
+  "X3 leaves O3 progressively to help on O2's cut.",
+  "O4 does not force the bounce pass: overhead kick-out to O3 in the right corner, late closeout, three.",
+  "This counter is our staging's read, not a universal Blind Pig rule."
+ ]
+}

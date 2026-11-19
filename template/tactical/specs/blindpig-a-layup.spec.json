@@ -1,0 +1,443 @@
+{
+ "id": "blindpig-a-layup",
+ "title": "Blind Pig A: deny, high-post flash, backdoor, layup",
+ "duration": 5.6,
+ "concept": "blind-pig",
+ "source": "original E2A staging of the Triangle 'Blind Pig' counter (NBA Coaches Playbook description; WABC/FIBA backdoor teaching); production coordinates",
+ "squareUp": true,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Passer, left slot: threatens the reversal, enters to the high post"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Right slot: sells the catch, cuts backdoor (the cutter)"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Right corner shooter (spacing; kick-out target in B)"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Big: flashes from the lane to the high post, the passer"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Big: posts on the left block, keeps X5 busy (no screen)"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the ball",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "Denies the reversal pass (the defender on the right)",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Low defender on the right corner: stays (A) / helps on the cutter (B)",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "Trails O4's flash",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "Behind O5 on the left block",
+   "guards": "O5"
+  }
+ ],
+ "start": {
+  "O1": [
+   2.6,
+   8.4
+  ],
+  "X1": [
+   2.95,
+   7.7
+  ],
+  "O2": [
+   -4.35,
+   6.55
+  ],
+  "X2": [
+   -3.7,
+   6.0
+  ],
+  "O3": [
+   -6.6,
+   1.25
+  ],
+  "X3": [
+   -5.35,
+   2.05
+  ],
+  "O4": [
+   1.2,
+   3.35
+  ],
+  "X4": [
+   0.8,
+   2.75
+  ],
+  "O5": [
+   2.55,
+   1.9
+  ],
+  "X5": [
+   2.0,
+   1.55
+  ]
+ },
+ "legs": {
+  "O2": [
+   {
+    "at": 0.1,
+    "via": [
+     [
+      -3.9,
+      7.4
+     ]
+    ],
+    "to": [
+     -3.05,
+     8.3
+    ],
+    "speed": 4.6
+   },
+   {
+    "at": 2.5,
+    "via": [
+     [
+      -3.0,
+      7.05
+     ],
+     [
+      -2.05,
+      4.75
+     ],
+     [
+      -1.15,
+      3.15
+     ]
+    ],
+    "to": [
+     -0.62,
+     2.3
+    ],
+    "speed": 7.2
+   }
+  ],
+  "X2": [
+   {
+    "at": 0.35,
+    "via": [
+     [
+      -3.3,
+      7.1
+     ]
+    ],
+    "to": [
+     -2.45,
+     7.95
+    ],
+    "speed": 4.4
+   },
+   {
+    "at": 2.78,
+    "via": [
+     [
+      -2.75,
+      6.7
+     ],
+     [
+      -2.05,
+      4.75
+     ]
+    ],
+    "to": [
+     -1.75,
+     3.9
+    ],
+    "speed": 5.4
+   }
+  ],
+  "O4": [
+   {
+    "at": 1.55,
+    "via": [
+     [
+      0.75,
+      4.55
+     ]
+    ],
+    "to": [
+     -0.25,
+     5.85
+    ],
+    "speed": 5.4
+   }
+  ],
+  "X4": [
+   {
+    "at": 1.8,
+    "via": [
+     [
+      0.9,
+      4.3
+     ]
+    ],
+    "to": [
+     0.55,
+     5.2
+    ],
+    "speed": 4.6
+   }
+  ],
+  "O1": [],
+  "X1": [
+   {
+    "at": 2.43,
+    "to": [
+     2.35,
+     7.0
+    ],
+    "speed": 2.0
+   }
+  ],
+  "O5": [],
+  "X5": [],
+  "O3": [],
+  "X3": [
+   {
+    "at": 3.1199999999999997,
+    "to": [
+     -4.9,
+     2.25
+    ],
+    "speed": 1.6
+   }
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 2.18
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O4",
+   "t0": 2.18,
+   "t1": 2.66,
+   "style": "chest"
+  },
+  {
+   "type": "hold",
+   "player": "O4",
+   "from": 2.66,
+   "to": 3.34
+  },
+  {
+   "type": "pass",
+   "from": "O4",
+   "to": "O2",
+   "t0": 3.34,
+   "t1": 3.76,
+   "style": "bounce",
+   "eyes": 0.45,
+   "lead": true
+  },
+  {
+   "type": "hold",
+   "player": "O2",
+   "from": 3.76,
+   "to": 4.13
+  },
+  {
+   "type": "layup",
+   "player": "O2",
+   "t0": 4.13,
+   "t1": 4.53,
+   "make": true
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "vcut": 0.1,
+  "deny": 1.35,
+  "flash": 1.55,
+  "entry": 2.18,
+  "plant": 2.28,
+  "cut": 2.5,
+  "catch4": 2.66,
+  "x2turn": 2.78,
+  "look": 2.89,
+  "pass": 3.34,
+  "catch": 3.76,
+  "finish": 4.13,
+  "make": 4.53,
+  "end": 5.6
+ },
+ "actions": {
+  "O1": [
+   {
+    "type": "face",
+    "from": 0,
+    "to": 1.5,
+    "face": "O2"
+   }
+  ],
+  "O2": [
+   {
+    "type": "call",
+    "from": 0.95,
+    "to": 2.23,
+    "amt": 0.55
+   },
+   {
+    "type": "celebrate",
+    "from": 4.93,
+    "to": 5.5
+   }
+  ],
+  "X2": [
+   {
+    "type": "topLock",
+    "from": 1.1500000000000001,
+    "to": 2.78,
+    "face": "O2"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 2.3800000000000003,
+    "face": "O1"
+   }
+  ],
+  "O5": [
+   {
+    "type": "seal",
+    "from": 0.2,
+    "to": 5.6,
+    "face": "O1"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 5.6,
+    "face": "O5"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 2.45,
+    "to": 5.6,
+    "face": "O4"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 5.6,
+    "face": "O3"
+   }
+  ],
+  "O3": [],
+  "O4": []
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "X2",
+   "b": "O2",
+   "at": "deny",
+   "max": 1.0,
+   "says": "He jumps into the passing lane"
+  },
+  {
+   "type": "reacts_after",
+   "player": "O4",
+   "event": "deny",
+   "min": 0.15,
+   "says": "so the big flashes to the high post"
+  },
+  {
+   "type": "reacts_after",
+   "player": "X4",
+   "event": "flash",
+   "min": 0.2,
+   "says": "the big flashes to the high post (X4 trails)"
+  },
+  {
+   "type": "reacts_after",
+   "player": "X2",
+   "event": "cut",
+   "min": 0.22,
+   "says": "then cuts behind him (X2 turns late)"
+  },
+  {
+   "type": "far",
+   "a": "X2",
+   "b": "O2",
+   "at": "catch",
+   "min": 1.5,
+   "says": "Now the defender can't see both."
+  },
+  {
+   "type": "near_rim",
+   "player": "O2",
+   "at": "finish",
+   "max": 1.5,
+   "says": "and gave up the layup"
+  },
+  {
+   "type": "order",
+   "marks": [
+    "vcut",
+    "deny",
+    "flash",
+    "entry",
+    "plant",
+    "cut",
+    "catch4",
+    "look",
+    "pass",
+    "catch",
+    "finish",
+    "make"
+   ],
+   "says": "One pass changes the angle. The next one beats the denial."
+  }
+ ],
+ "screens": [],
+ "notes": [
+  "O1 threatens the reversal to O2; X2 jumps into the passing lane.",
+  "Only after the denial exists O4 flashes from the lane to the high post; O1 enters to him.",
+  "With the entry in the air O2 plants and cuts behind X2; X2 turns late.",
+  "O4 chins it, head first, bounce pass into space; O2 finishes in stride. No screens."
+ ]
+}

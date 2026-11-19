@@ -105,7 +105,9 @@ for (const f of files) {
         check(p.id, `hand-off ${e.from}→${e.to}: 0.15–0.35 s, ball ≤ 5 m/s`, e.t1 - e.t0 >= 0.15 && e.t1 - e.t0 <= 0.35 && sp <= 5, `${(e.t1 - e.t0).toFixed(2)} s, ${sp.toFixed(1)} m/s`);
       } else check(p.id, `pass ${e.from}→${e.to}: speed 6–14 m/s`, sp >= 6 && sp <= 14, `${sp.toFixed(1)} m/s over ${len.toFixed(1)} m`);
       const rv = Math.hypot(...(sample(p, e.t1).players[e.to].vel as [number, number]));
-      check(p.id, `pass ${e.from}→${e.to}: receiver under control at the catch (≤ 3.5 m/s)`, rv <= 3.5, `${rv.toFixed(2)} m/s`);
+      // a lead pass (e.lead) is caught in stride by a cutter: up to 5.5 m/s, still decelerating into the gather
+      const vCap = e.lead ? 5.5 : 3.5;
+      check(p.id, `pass ${e.from}→${e.to}: receiver under control at the catch (≤ ${vCap} m/s${e.lead ? ', lead pass in stride' : ''})`, rv <= vCap, `${rv.toFixed(2)} m/s`);
     }
     if (e.type === 'shot' || e.type === 'layup') {
       const fr = sample(p, e.t0);
@@ -166,12 +168,15 @@ for (const f of files) {
         break;
       }
       case 'reacts_after': {
+        // causal timing: the player is still at the stimulus (event) and only moves afterwards, by ≥ min seconds.
+        // (2026-11-19: a player still running an earlier leg at the event fails instead of reporting a negative delay)
         const wp = p.tracks[c.player as string];
         const t0 = T(c.event);
         const p0 = posAt(wp, t0);
+        const vAt = d2(posAt(wp, t0 - 0.02), posAt(wp, t0 + 0.02)) / 0.04;
         let moved = p.duration;
-        for (let t = t0 - 1; t <= p.duration; t += DT) if (t >= 0 && d2(posAt(wp, t), p0) > 0.05) { moved = t; break; }
-        check(p.id, lbl, moved - t0 >= (c.min as number), `moves ${(moved - t0).toFixed(2)} s after ${c.event} (≥ ${c.min})`);
+        for (let t = t0; t <= p.duration; t += DT) if (d2(posAt(wp, t), p0) > 0.05) { moved = t; break; }
+        check(p.id, lbl, vAt < 0.2 && moved - t0 >= (c.min as number), vAt >= 0.2 ? `already moving at ${c.event} (${vAt.toFixed(2)} m/s)` : `moves ${(moved - t0).toFixed(2)} s after ${c.event} (≥ ${c.min})`);
         break;
       }
       case 'order': {
