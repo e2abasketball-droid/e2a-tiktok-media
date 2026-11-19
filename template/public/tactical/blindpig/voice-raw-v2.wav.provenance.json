@@ -1,0 +1,5 @@
+{
+ "licence_key": "voice/elevenlabs-creator/blind-pig",
+ "source": "splice of the main take (voice-raw.mp3, 535 credits) and take B (voice-raw-b.mp3, 84 credits) at acoustic silences only (tactical/episodes/_splice-blind-pig.py): drops 'Now the defender can't see both.', adds 'Easy layup.'; no re-synthesis, no time-stretch",
+ "sha256": "1a364136f88f8a123c42cd98fe0400d6a79123eec7f723120b9363bc7d1728ae"
+}

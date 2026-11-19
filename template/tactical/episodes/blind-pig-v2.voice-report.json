@@ -1,0 +1,132 @@
+{
+ "source": "public/tactical/blindpig/voice-raw-v2.wav",
+ "source_sec": 26.615,
+ "preroll": 0.1,
+ "output": "public/tactical/blindpig/voice-v2.wav",
+ "output_sec": 33.875,
+ "inserted_total_sec": 7.16,
+ "last_word_end": 33.875,
+ "gaps": [
+  {
+   "after": "the layup.",
+   "natural_silence": [
+    2.44,
+    3.02
+   ],
+   "natural_sec": 0.58,
+   "target_sec": 0.95,
+   "inserted_sec": 0.37,
+   "cut_at_source": 2.785,
+   "why": "result stamp, then the rewind (open loop)"
+  },
+  {
+   "after": "on the right.",
+   "natural_silence": [
+    4.27,
+    4.67
+   ],
+   "natural_sec": 0.4,
+   "target_sec": 0.55,
+   "inserted_sec": 0.15,
+   "cut_at_source": 4.495,
+   "why": "lock ring + DENIAL land on X2"
+  },
+  {
+   "after": "high post.",
+   "natural_silence": [
+    8.14,
+    8.65
+   ],
+   "natural_sec": 0.51,
+   "target_sec": 0.75,
+   "inserted_sec": 0.24,
+   "cut_at_source": 8.295,
+   "why": "O4 arrives at the high post, hands up"
+  },
+  {
+   "after": "behind him.",
+   "natural_silence": [
+    11.14,
+    11.51
+   ],
+   "natural_sec": 0.37,
+   "target_sec": 0.6,
+   "inserted_sec": 0.23,
+   "cut_at_source": 11.315,
+   "why": "the cut is on; mini rewind to the entry pass"
+  },
+  {
+   "after": "the denial.",
+   "natural_silence": [
+    15.0,
+    15.61
+   ],
+   "natural_sec": 0.61,
+   "target_sec": 0.6,
+   "inserted_sec": 0.0,
+   "cut_at_source": 15.315,
+   "why": "in-stride catch"
+  },
+  {
+   "after": "Easy layup.",
+   "natural_silence": [
+    16.42,
+    16.71
+   ],
+   "natural_sec": 0.29,
+   "target_sec": 3.3,
+   "inserted_sec": 3.01,
+   "cut_at_source": 16.605,
+   "why": "the whole action again at REAL SPEED, no graphics (sec. 10)"
+  },
+  {
+   "after": "force it.",
+   "natural_silence": [
+    18.99,
+    19.38
+   ],
+   "natural_sec": 0.39,
+   "target_sec": 0.5,
+   "inserted_sec": 0.11,
+   "cut_at_source": 19.265,
+   "why": "the bounce lane is closed (X3 in it)"
+  },
+  {
+   "after": "just left.",
+   "natural_silence": [
+    21.23,
+    21.6
+   ],
+   "natural_sec": 0.37,
+   "target_sec": 1.9,
+   "inserted_sec": 1.53,
+   "cut_at_source": 21.355,
+   "why": "catch, shot (overlays off), make, OPEN 3"
+  },
+  {
+   "after": "Blind Pig.",
+   "natural_silence": [
+    22.65,
+    23.07
+   ],
+   "natural_sec": 0.42,
+   "target_sec": 1.7,
+   "inserted_sec": 1.28,
+   "cut_at_source": 22.795,
+   "why": "reveal: DENY -> BACKDOOR, then HELP -> KICKOUT"
+  },
+  {
+   "after": "Deny the pass...",
+   "natural_silence": [
+    24.03,
+    24.14
+   ],
+   "natural_sec": 0.11,
+   "target_sec": 0.35,
+   "inserted_sec": 0.24,
+   "cut_at_source": 24.105,
+   "why": "DENY OR HELP? lands before 'or protect the rim?'"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}

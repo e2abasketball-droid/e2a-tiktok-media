@@ -1,0 +1,62 @@
+{
+ "v2": [
+  [
+   "voice-raw-v2.wav",
+   0.0,
+   11.315,
+   "A"
+  ],
+  [
+   "voice-raw-v2.wav",
+   14.005,
+   17.985,
+   "A"
+  ],
+  [
+   "voice-raw-v2.wav",
+   3.645,
+   4.95,
+   "B"
+  ],
+  [
+   "voice-raw-v2.wav",
+   17.985,
+   28.0,
+   "A"
+  ]
+ ],
+ "trialb": [
+  [
+   "voice-raw-trialb.wav",
+   0.0,
+   3.645,
+   "B"
+  ],
+  [
+   "voice-raw-trialb.wav",
+   2.785,
+   11.315,
+   "A"
+  ],
+  [
+   "voice-raw-trialb.wav",
+   14.005,
+   17.985,
+   "A"
+  ],
+  [
+   "voice-raw-trialb.wav",
+   3.645,
+   4.95,
+   "B"
+  ],
+  [
+   "voice-raw-trialb.wav",
+   17.985,
+   28.0,
+   "A"
+  ]
+ ],
+ "take_b_gain": 1.09,
+ "segments": "source, start, end (seconds) of take A (main, 535 credits) or take B (84 credits), cut at acoustic silences"
+}

@@ -18,7 +18,8 @@ Causal timing (no precognition): every defender moves only after his stimulus, w
   X2 turns and chases +0.28 s after the cut starts; (B) X3 starts to help +0.3 s after the cut starts and helps
   progressively; X3 closes out only after the kick-out leaves O4's hands (+0.2 s).
   python3 tactical/specs/_gen-blindpig.py   (writes tactical/specs/blindpig-{a-layup,b-kick}.spec.json + plays)"""
-import json, os, subprocess
+import json, os, subprocess, sys
+VER = sys.argv[1] if len(sys.argv) > 1 else "v1"
 
 D = os.path.dirname(os.path.abspath(__file__))
 T = os.path.dirname(os.path.dirname(D))
@@ -43,6 +44,22 @@ START = {"O1": [2.6, 8.4], "X1": [2.95, 7.7],
          "O4": [1.2, 3.35], "X4": [0.8, 2.75],
          "O5": [2.55, 1.9], "X5": [2.0, 1.55]}
 
+if VER == "v2":
+    # MASTER PROMPT sec. 5 anchors (master x = offence's right; repo x is mirrored: master (+4.9, 7.2) -> repo (-4.9, 7.2)).
+    # Kept: O1, O2, O3, X3, O4, O5, X5 and the flash target. Adjusted (sec. 5 allows it for the play to stay credible):
+    # X1 shades to O1's sideline hip (the master spot sits ON the O1 -> high-post lane); X2 starts off the line and steps
+    # into the denial (sec. 6: "do not start him in a perfect denial"); X4 a step lower so the flash path stays free.
+    START = {"O1": [2.4, 8.3], "X1": [2.75, 7.6],
+             "O2": [-4.9, 7.2], "X2": [-4.3, 6.55],
+             "O3": [-6.95, 1.9], "X3": [-5.75, 2.95],
+             "O4": [3.3, 5.4], "X4": [2.65, 4.75],
+             "O5": [6.4, 2.1], "X5": [5.6, 3.0]}
+
+DA, DB = (5.6, 6.4) if VER == "v1" else (6.1, 6.9)
+if VER == "v2":
+    PLAYERS[4] = P("O5", "O", "Left corner: spacing, keeps X5 out of the lane (no screen)")
+    PLAYERS[9] = P("X5", "X", "On O5 in the left corner, help position", "O5")
+
 # key timings (play seconds); measured / refined in __main__ from the built tracks
 K = {"cutSpeed": 6.6, "vcut": 0.1, "deny": 1.25, "flash": 1.45, "entry": 2.0, "catch4": 2.45, "plant": 2.1, "cut": 2.18,
      "x2turn": 2.46, "look4": 2.62, "pass2": 3.15, "catch2": 3.62, "lay": 3.74,
@@ -54,20 +71,34 @@ HIGH = [-0.25, 5.85]          # high post (just above the free-throw line, middl
 X4_TRAIL = [0.55, 5.2]        # X4 arrives late, on O4's back (left) hip: out of the pass to the right block
 CATCH2 = [-1.15, 3.15]        # O2 catches in stride
 LAYSPOT = [-0.62, 2.3]
+HELP = [-2.75, 2.75]          # (B) X3's help spot on the cutter's lane
+CLOSE = [-4.95, 2.3]          # (B) X3's late closeout
+if VER == "v2":
+    PLANT = [-4.55, 7.5]      # one sell step up and toward the ball, showing the target hand (no V-cut to the slot)
+    DENY = [-3.8, 7.45]       # in the O1 -> O2 lane, 0.75 m off O2 toward the ball, lead foot to the ball
+    HIGH = [-0.2, 5.8]        # master sec. 6: flash target (+0.2, 5.8) mirrored
+    X4_TRAIL = [0.6, 5.1]     # X4 trails on O4's back hip, off the O4 -> cutter lane
+    ESC1, ESC2 = [-5.0, 6.35], [-3.8, 5.1]   # master cut anchors (5.1, 6.3) -> (3.8, 5.1) -> (2.2, 3.7) -> right of the rim
+    CATCH2 = [-2.2, 3.7]
+    LAYSPOT = [-0.85, 2.2]
+    HELP = [-3.1, 2.95]
+    CLOSE = [-5.3, 2.5]
 
 
 def common(kind):
     legs = {
         # O2 V-cut: from the wing up to the right slot, decelerates, sells the catch (shows a hand)
-        "O2": [{"at": K["vcut"], "via": [[-3.9, 7.4]], "to": PLANT, "speed": 4.6},
+        "O2": [{"at": K["vcut"], "via": [[-3.9, 7.4]], "to": PLANT, "speed": 4.6} if VER == "v1" else
+               {"at": K["vcut"] + 0.55, "to": PLANT, "speed": 1.6},
                # small sell step toward the ball while the entry pass is in the air ... then plant and backdoor
                ],
         # X2 follows the V-cut with latency and takes the passing lane (denial exists ~K.deny)
-        "X2": [{"at": K["vcut"] + 0.25, "via": [[-3.3, 7.1]], "to": DENY, "speed": 4.4}],
+        "X2": [{"at": K["vcut"] + 0.25, "via": [[-3.3, 7.1]], "to": DENY, "speed": 4.4} if VER == "v1" else
+               {"at": K["vcut"] + 0.8, "via": [[-3.95, 7.0]], "to": DENY, "speed": 2.6}],
         # O4 flashes ONLY after the denial exists
-        "O4": [{"at": K["flash"], "via": [[0.75, 4.55]], "to": HIGH, "speed": 5.4}],
+        "O4": [{"at": K["flash"], "via": [[0.75, 4.55]] if VER == "v1" else [[2.6, 5.75]], "to": HIGH, "speed": 5.4}],
         # X4 trails the flash (+0.25 s)
-        "X4": [{"at": K["flash"] + 0.25, "via": [[0.9, 4.3]], "to": X4_TRAIL, "speed": 4.6}],
+        "X4": [{"at": K["flash"] + 0.25, "via": [[0.9, 4.3]] if VER == "v1" else [[1.9, 4.85]], "to": X4_TRAIL, "speed": 4.6}],
         "O1": [], "X1": [{"at": K["entry"] + 0.25, "to": [2.35, 7.0], "speed": 2.0}],
         "O5": [], "X5": [],
         "O3": [], "X3": [],
@@ -77,9 +108,9 @@ def common(kind):
         "O2": [{"type": "call", "from": 0.95, "to": K["plant"] - 0.05, "amt": 0.55}],         # shows a hand, sells the catch
         "X2": [{"type": "topLock", "from": K["deny"] - 0.2, "to": K["x2turn"], "face": "O2"}],
         "X1": [st("O1", 0, K["entry"] + 0.2)],
-        "O5": [{"type": "seal", "from": 0.2, "to": 5.6, "face": "O1"}],                         # posts up, stationary: no screen
-        "X5": [st("O5", 0, 5.6)],
-        "X4": [st("O4", K["flash"] + 0.9, 5.6)],
+        "O5": [{"type": "seal", "from": 0.2, "to": DA, "face": "O1"}] if VER == "v1" else [],  # v1 posts up / v2 corner spacing: no screen
+        "X5": [st("O5", 0, DA)],
+        "X4": [st("O4", K["flash"] + 0.9, DA)],
         "X3": [st("O3", 0, K["help"])],
         "O3": [{"type": "catchReady", "from": 0.0, "to": 0.0001}],
     }
@@ -93,32 +124,36 @@ def blindpig(kind):
     legs, acts = common(kind)
     # O2: plant (the entry is in the air) and cut behind X2: one leg from the plant through the catch to the layup,
     # so the catch is in stride (the leg only brakes into the gather at its end)
-    legs["O2"].append({"at": K["cut"], "via": [[-3.0, 7.05], [-2.05, 4.75], CATCH2], "to": LAYSPOT, "speed": K["cutSpeed"]})
-    # X2: human latency before he turns, then chases on the cutter's back
-    legs["X2"].append({"at": K["x2turn"], "via": [[-2.75, 6.7], [-2.05, 4.75]], "to": [-1.75, 3.9], "speed": 5.4})
+    if VER == "v1":
+        legs["O2"].append({"at": K["cut"], "via": [[-3.0, 7.05], [-2.05, 4.75], CATCH2], "to": LAYSPOT, "speed": K["cutSpeed"]})
+        # X2: human latency before he turns, then chases on the cutter's back
+        legs["X2"].append({"at": K["x2turn"], "via": [[-2.75, 6.7], [-2.05, 4.75]], "to": [-1.75, 3.9], "speed": 5.4})
+    else:
+        legs["O2"].append({"at": K["cut"], "via": [ESC1, ESC2, CATCH2], "to": LAYSPOT, "speed": K["cutSpeed"]})
+        legs["X2"].append({"at": K["x2turn"], "via": [[-4.25, 6.6], [-3.55, 5.25]], "to": [-3.1, 4.6], "speed": 4.5})
     ball = [{"type": "hold", "player": "O1", "from": 0, "to": K["entry"]},
             {"type": "pass", "from": "O1", "to": "O4", "t0": K["entry"], "t1": K["catch4"], "style": "chest"}]
     if kind == "layup":
-        legs["X3"] = [{"at": K["help"] + 0.3, "to": [-4.9, 2.25], "speed": 1.6}]                 # a look, then stays home
-        acts["X3"] = [st("O3", 0, 5.6)]
+        legs["X3"] = [{"at": K["help"] + 0.3, "to": [-4.9, 2.25] if VER == "v1" else [-5.45, 2.75], "speed": 1.6}]                 # a look, then stays home
+        acts["X3"] = [st("O3", 0, DA)]
         ball += [{"type": "hold", "player": "O4", "from": K["catch4"], "to": K["pass2"]},
                  {"type": "pass", "from": "O4", "to": "O2", "t0": K["pass2"], "t1": K["catch2"], "style": "bounce", "eyes": 0.45, "lead": True},
                  {"type": "hold", "player": "O2", "from": K["catch2"], "to": K["lay"]},
                  {"type": "layup", "player": "O2", "t0": K["lay"], "t1": K["lay"] + 0.4, "make": True}]
-        acts["O2"].append({"type": "celebrate", "from": K["lay"] + 0.8, "to": 5.5})
+        acts["O2"].append({"type": "celebrate", "from": K["lay"] + 0.8, "to": DA - 0.1})
         marks = {"start": 0, "vcut": K["vcut"], "deny": K["deny"], "flash": K["flash"], "entry": K["entry"], "plant": K["plant"],
                  "cut": K["cut"], "catch4": K["catch4"], "x2turn": K["x2turn"], "look": K["look4"], "pass": K["pass2"],
-                 "catch": K["catch2"], "finish": K["lay"], "make": K["lay"] + 0.4, "end": 5.6}
+                 "catch": K["catch2"], "finish": K["lay"], "make": K["lay"] + 0.4, "end": DA}
         claims = [
             {"type": "near", "a": "X2", "b": "O2", "at": "deny", "max": 1.0, "says": "He jumps into the passing lane"},
             {"type": "reacts_after", "player": "O4", "event": "deny", "min": 0.15, "says": "so the big flashes to the high post"},
             {"type": "reacts_after", "player": "X4", "event": "flash", "min": 0.2, "says": "the big flashes to the high post (X4 trails)"},
             {"type": "reacts_after", "player": "X2", "event": "cut", "min": 0.22, "says": "then cuts behind him (X2 turns late)"},
-            {"type": "far", "a": "X2", "b": "O2", "at": "catch", "min": 1.5, "says": "Now the defender can't see both."},
+            {"type": "far", "a": "X2", "b": "O2", "at": "catch", "min": 1.5, "says": "then cuts behind him (X2 is beaten: no help from him on the catch)"},
             {"type": "near_rim", "player": "O2", "at": "finish", "max": 1.5, "says": "and gave up the layup"},
             {"type": "order", "marks": ["vcut", "deny", "flash", "entry", "plant", "cut", "catch4", "look", "pass", "catch", "finish", "make"],
              "says": "One pass changes the angle. The next one beats the denial."}]
-        return {"id": "blindpig-a-layup", "title": "Blind Pig A: deny, high-post flash, backdoor, layup", "duration": 5.6, "concept": "blind-pig",
+        return {"id": "blindpig-a-layup", "title": "Blind Pig A: deny, high-post flash, backdoor, layup", "duration": DA, "concept": "blind-pig",
                 "source": SRC, "squareUp": True, "players": PLAYERS, "start": START, "legs": legs, "ball": ball, "marks": marks,
                 "actions": acts, "claims": claims, "screens": [],
                 "notes": ["O1 threatens the reversal to O2; X2 jumps into the passing lane.",
@@ -126,9 +161,10 @@ def blindpig(kind):
                           "With the entry in the air O2 plants and cuts behind X2; X2 turns late.",
                           "O4 chins it, head first, bounce pass into space; O2 finishes in stride. No screens."]}
     # B: the low defender helps -> kick out to the shooter he left
-    legs["O2"][-1] = {"at": K["cut"], "via": [[-3.0, 7.05], [-2.05, 4.75]], "to": [-1.45, 3.05], "speed": 6.6}
-    legs["X3"] = [{"at": K["help"], "via": [[-4.6, 2.55]], "to": [-2.75, 2.75], "speed": 4.8},       # progressive help
-                  {"at": K["kick"] + 0.22, "to": [-4.95, 2.3], "speed": 4.6}]
+    legs["O2"][-1] = ({"at": K["cut"], "via": [[-3.0, 7.05], [-2.05, 4.75]], "to": [-1.45, 3.05], "speed": 6.6} if VER == "v1" else
+                      {"at": K["cut"], "via": [ESC1, ESC2, [-2.3, 3.6]], "to": [-1.55, 2.85], "speed": 5.2})
+    legs["X3"] = [{"at": K["help"], "via": [[-4.6, 2.55]] if VER == "v1" else [[-4.9, 3.0]], "to": HELP, "speed": 4.8},  # progressive help
+                  {"at": K["kick"] + 0.22, "to": CLOSE, "speed": 4.6}]
     if K.get("helpEnd", 0) > 50:
         legs["X3"] = legs["X3"][:1]                                                               # measuring pass only                          # late closeout
     acts["X3"] = [st("O3", 0, K["help"] - 0.05), {"type": "stance", "from": K["help"] + 0.25, "to": K["kick"] + 0.15, "face": "O2"},
@@ -138,10 +174,10 @@ def blindpig(kind):
              {"type": "pass", "from": "O4", "to": "O3", "t0": K["kick"], "t1": K["catch3"], "style": "overhead", "eyes": 0.4},
              {"type": "hold", "player": "O3", "from": K["catch3"], "to": K["rel"]},
              {"type": "shot", "player": "O3", "t0": K["rel"], "t1": K["rel"] + 1.05, "make": True, "three": True}]
-    acts["O3"].append({"type": "celebrate", "from": K["rel"] + 1.25, "to": 6.2})
+    acts["O3"].append({"type": "celebrate", "from": K["rel"] + 1.25, "to": DB - 0.2})
     marks = {"start": 0, "vcut": K["vcut"], "deny": K["deny"], "flash": K["flash"], "entry": K["entry"], "plant": K["plant"],
              "cut": K["cut"], "catch4": K["catch4"], "x2turn": K["x2turn"], "help": K["help"], "look": K["look4"], "kick": K["kick"],
-             "catch": K["catch3"], "release": K["rel"], "make": K["rel"] + 1.05, "end": 6.4}
+             "catch": K["catch3"], "release": K["rel"], "make": K["rel"] + 1.05, "end": DB}
     claims = [
         {"type": "near", "a": "X2", "b": "O2", "at": "deny", "max": 1.0, "says": "He jumps into the passing lane"},
         {"type": "reacts_after", "player": "O4", "event": "deny", "min": 0.15, "says": "so the big flashes to the high post"},
@@ -151,7 +187,7 @@ def blindpig(kind):
         {"type": "behind_arc", "player": "O3", "at": "catch", "says": "Kick it out to the shooter he just left."},
         {"type": "open", "player": "O3", "at": "release", "min": 1.8, "says": "the shooter he just left"},
         {"type": "order", "marks": ["deny", "flash", "entry", "cut", "help", "kick", "catch", "release", "make"], "says": "don't force it. Kick it out"}]
-    return {"id": "blindpig-b-kick", "title": "Blind Pig B (rehook): the low defender helps, kick out to the shooter", "duration": 6.4,
+    return {"id": "blindpig-b-kick", "title": "Blind Pig B (rehook): the low defender helps, kick out to the shooter", "duration": DB,
             "concept": "blind-pig", "source": SRC, "squareUp": True, "players": PLAYERS, "start": START, "legs": legs, "ball": ball,
             "marks": marks, "actions": acts, "claims": claims, "screens": [],
             "notes": ["Same start as blindpig-a-layup.",
@@ -161,6 +197,9 @@ def blindpig(kind):
 
 
 def build(s):
+    if VER == "v2":
+        s["id"] = s["id"].replace("blindpig-", "blindpig2-")
+        s["source"] = SRC + "; V2 layout = MASTER PROMPT sec. 5 anchors (x mirrored to repo axes)"
     sp = os.path.join(D, f"{s['id']}.spec.json")
     json.dump(s, open(sp, "w"), indent=1)
     out = os.path.join(T, "tactical", "plays", f"{s['id']}.json")
@@ -206,7 +245,7 @@ if __name__ == "__main__":
     K["catch2"] = round(K["pass2"] + 0.42, 3)
     # O2's cut speed so that he reaches the catch spot exactly when the bounce pass arrives (in stride)
     best = None
-    for k in range(0, 26):
+    for k in range(0, 26 if VER == "v1" else 46):
         K["cutSpeed"] = round(7.2 - 0.06 * k, 3)
         tr = build(blindpig("layup"))["tracks"]
         c2 = first_near(tr["O2"], CATCH2, 0.04, K["cut"])
@@ -220,7 +259,7 @@ if __name__ == "__main__":
     K["lay"] = round((first_near(tr["O2"], LAYSPOT, 0.12, c2) or c2 + 0.2), 3)
     K["helpEnd"] = 99
     trb = build(blindpig("kick"))["tracks"]
-    K["helpEnd"] = first_near(trb["X3"], [-2.75, 2.75], 0.005, K["help"])
+    K["helpEnd"] = first_near(trb["X3"], HELP, 0.005, K["help"])
     K["kick"] = round(max(K["helpEnd"] + 0.04, K["catch4"] + 0.7), 3)   # the help is committed -> kick out
     K["catch3"] = round(K["kick"] + 0.72, 3)
     K["rel"] = round(K["catch3"] + 0.3, 3)

@@ -1,0 +1,5 @@
+{
+ "licence_key": "voice/elevenlabs-creator/blind-pig",
+ "source": "voice-raw-trialb.wav + room-tone gaps at acoustic silences (scripts/tactical-voice.py, blind-pig-trialb.voice-report.json)",
+ "sha256": "2e5cad8139d381b5d1b5846bd751ed8a2c70e2e41dc34f646eeb7ea472e574fb"
+}

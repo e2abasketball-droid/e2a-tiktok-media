@@ -1,0 +1,5 @@
+{
+ "licence_key": "voice/elevenlabs-creator/blind-pig",
+ "source": "as voice-raw-v2.wav, with the hook replaced by take B's 'This defender made one mistake... Can you spot it?' (_splice-blind-pig.py)",
+ "sha256": "451381506ea46f6161c95e3932cfaea0584b4b22bfbd2437a773e654a6e63505"
+}

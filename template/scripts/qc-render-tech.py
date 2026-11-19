@@ -6,7 +6,7 @@ qc-bounds, qc-overlays). Reads only the MP4, never renders.
   python3 scripts/qc-render-tech.py <video.mp4> [--episode tactical/episodes/<id>.json] [--json out.json]
 
 Checks (FAIL):
-  format       1080x1920, 30 fps constant, H.264 yuv420p, AAC 48 kHz, duration 32-36 s
+  format       1080x1920, 30 fps constant, H.264 yuv420p, AAC 48 kHz, duration 32-40.5 s (master prompt: 35-40 s)
   black        no black frames (ffmpeg blackdetect, pixel threshold 0.10, >= 1 frame); the logo outro on a navy scrim
                is not black, so any hit is a real hole
   frozen       no unplanned frozen stretch: freezedetect (-60 dB, >= 0.6 s) outside the episode's planned freeze/hold
@@ -42,7 +42,7 @@ dur = float(pr["format"]["duration"])
 fps = eval(v["r_frame_rate"])
 afr = eval(v.get("avg_frame_rate", v["r_frame_rate"]))
 ok = (v["width"], v["height"]) == (1080, 1920) and abs(fps - 30) < 0.01 and abs(afr - 30) < 0.05 and v["codec_name"] == "h264" and v.get("pix_fmt") == "yuv420p" \
-    and au and au[0]["codec_name"] == "aac" and au[0]["sample_rate"] == "48000" and 32 <= dur <= 36.5
+    and au and au[0]["codec_name"] == "aac" and au[0]["sample_rate"] == "48000" and 32 <= dur <= 40.5
 rec("format", ok, f"{v['width']}x{v['height']} {v['codec_name']} {v.get('pix_fmt')} {fps:.2f} fps (avg {afr:.2f}), audio {au[0]['codec_name'] if au else 'none'} {au[0]['sample_rate'] if au else ''} Hz, {dur:.2f} s")
 
 e = run(["ffmpeg", "-nostats", "-i", a.video, "-vf", "blackdetect=d=0.033:pix_th=0.10:pic_th=0.98", "-an", "-f", "null", "-"]).stderr

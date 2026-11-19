@@ -1,0 +1,5 @@
+{
+ "licence_key": "voice/elevenlabs-creator/blind-pig",
+ "source": "voice-trialb.wav + the same chain as voice-v2.mix.wav",
+ "sha256": "86dad93da802edaa6286e86db76151f6b6e319c9a696d29fd9ffdc3c0c6dd65a"
+}
