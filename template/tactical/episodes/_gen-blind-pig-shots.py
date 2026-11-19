@@ -24,21 +24,21 @@ HOOK1 = orb(fol(["X2", "O2"], 1.0), 7.4, 56, 160, 44)
 HOOK1b = orb(fol(["X2", "O2"], 1.0), 6.8, 55, 166, 44)
 HOOK2 = orb(fol(["O2"], 1.1), 7.6, 60, -18, 46)
 HOOK2b = orb(fol(["O2"], 1.2), 6.8, 62, -12, 46)
-OVER = orb([-1.0, 6.6, 0], 20.5, 30, 0, 42)
-OVER_IN = orb([-0.4, 6.4, 0.2], 18.5, 32, 0, 42)
-FLASH = orb([-0.2, 6.0, 0.3], 18.0, 34, 0, 42)
-DEC = orb([-1.2, 6.2, 0.8], 13.5, 42, 0, 42)
-DEC2 = orb([-1.3, 5.6, 0.8], 12.5, 44, -4, 42)
-FRZ = orb([-1.4, 6.0, 0.9], 10.5, 46, 12, 42)
-FRZ2 = orb([-1.4, 5.9, 0.9], 10.0, 47, 14, 42)
-PAY = orb([-0.6, 5.6, 0.5], 15.0, 38, 0, 42)
+OVER = orb([-1.0, 6.5, 0], 17.5, 30, -25, 42)
+OVER_IN = orb([-1.0, 6.3, 0.2], 16.5, 32, -25, 42)
+FLASH = orb([-0.9, 6.0, 0.3], 16.0, 34, -20, 42)
+DEC = orb([-1.6, 5.8, 0.8], 12.5, 40, -10, 42)
+DEC2 = orb([-1.5, 5.5, 0.8], 12.5, 42, -12, 42)
+FRZ = orb([-1.8, 6.6, 0.9], 8.8, 46, 8, 42)
+FRZ2 = orb([-1.8, 6.6, 0.9], 8.4, 47, 10, 42)
+PAY = orb([-0.9, 5.5, 0.5], 13.5, 38, -8, 42)
 FIN = orb(fol(["O2"], 1.1), 7.4, 60, -22, 46)
-RE = orb([-3.0, 4.3, 0.5], 19.5, 33, -20, 42)
-KICK = orb([-3.2, 3.9, 0.6], 15.5, 40, -30, 44)
+RE = orb([-2.9, 3.5, 0.5], 17.0, 32, -10, 42)
+KICK = orb([-3.0, 3.8, 0.6], 13.5, 38, -20, 44)
 KICK2 = orb(fol(["O3"], 1.3), 8.6, 58, -40, 44)
-TAKE = orb([-0.3, 5.6, 0.2], 21.0, 18, 0, 42)
-TAKE2 = orb([-0.3, 5.5, 0.2], 20.0, 20, 0, 42)
-CTA = orb([-0.3, 6.2, 0.4], 19.0, 32, 0, 42)
+TAKE = orb([-0.9, 5.6, 0.2], 17.5, 18, -15, 42)
+TAKE2 = orb([-0.9, 5.5, 0.2], 16.8, 20, -15, 42)
+CTA = orb([-1.0, 6.4, 0.4], 17.0, 32, -20, 42)
 
 
 def shots():
@@ -80,26 +80,26 @@ def shots():
       "camera": [key(0, OVER_IN), key("big", OVER_IN), key("@end", FLASH, "inOut")],
       "ov3": [{"type": "lockRing", "player": "X2", "from": 0, "to": "@end"},
               {"type": "passLane", "src": "O1", "dst": "O2", "color": WHITE, "from": "jumps", "to": "so-0.05"},
-              {"type": "arrow3d", "player": "O4", "t0": 1.55, "t1": 2.66, "draw": 0.6, "from": "big", "to": "@end"},
-              {"type": "passLane", "src": "O1", "dst": "O4", "dstAt": 2.66, "travel": 0.45, "color": GOLD, "from": "post.-0.05", "to": "@end"}],
+              {"type": "arrow3d", "player": "O4", "t0": 1.575, "t1": 2.685, "draw": 0.6, "from": "big", "to": "@end"},
+              {"type": "passLane", "src": "O1", "dst": "O4", "dstAt": 2.685, "travel": 0.45, "color": GOLD, "from": "post.-0.05", "to": "@end"}],
       "screen": [{"type": "pin", "player": "X2", "text": "DENIED", "tone": "red", "from": "jumps", "to": "so-0.05", "size": 42},
                  {"type": "pin", "player": "O4", "text": "HIGH POST", "from": "flashes", "to": "post.-0.08", "size": 42}]})
     # 4 MECHANISM 2: the sell, then the backdoor behind X2 ---------------------------------------------------------
     S.append({"id": "cut", "name": "MECHANISM 2: close on the right slot; O2 sells the catch (spot), plants, raised arrow behind X2; tether X2-O2 stretches",
       "at": "The wing-0.12", "play": "A",
-      "remap": [[0, 2.26], ["ball...>", 2.44], ["then", 2.46], ["him.>", 2.98], ["@end", 3.02]],
+      "remap": [[0, 2.24], ["ball...>", 2.36], ["then", 2.4], ["him.>", 2.7], ["@end", 2.72]],
       "camera": [key(0, DEC), key("then", DEC), key("@end", DEC2, "inOut")],
       "ov3": [{"type": "spot", "player": "O2", "r": 0.85, "from": "wing", "to": "then"},
               {"type": "lockRing", "player": "X2", "from": 0, "to": "@end"},
-              {"type": "arrow3d", "player": "O2", "t0": 2.46, "t1": 3.76, "consume": True, "draw": 0.45, "from": "cuts-0.05", "to": "@end"},
+              {"type": "arrow3d", "player": "O2", "t0": 2.52, "t1": 3.78, "consume": True, "draw": 0.45, "from": "cuts-0.05", "to": "@end"},
               {"type": "tether", "a": "X2", "b": "O2", "rest": 1.2, "snap": 2.6, "from": "behind", "to": "@end"}],
       "screen": [{"type": "pin", "player": "O2", "text": "SELLS THE CATCH", "from": "shows", "to": "then-0.05", "size": 40}]})
     # 5 MECHANISM 3: freeze — he can't see both ---------------------------------------------------------------------
     S.append({"id": "freeze", "name": "DECISION FREEZE (TacticalFreezeHUD): X2's two lines of sight, ball (O4) vs man (O2), the angle splits red; CAN'T SEE BOTH",
       "at": "Now-0.1", "play": "A",
-      "remap": [[0, 3.02], ["both.>", 3.07], ["@end", 3.09]],
+      "remap": [[0, 2.72], ["both.>", 2.735], ["@end", 2.74]],
       "camera": [key(0, FRZ), key("@end", FRZ2, "linear")],
-      "ov3": [{"type": "vision", "player": "X2", "man": "O2", "split": 100, "len": 3.2, "from": 0.05, "to": "@end"},
+      "ov3": [{"type": "vision", "player": "X2", "man": "O2", "split": 95, "len": 3.2, "from": 0.05, "to": "@end"},
               {"type": "lockRing", "player": "X2", "from": 0, "to": "@end"}],
       "screen": [{"type": "freeze", "label": "FREEZE", "from": 0, "to": "@end"},
                  {"type": "focus", "player": "X2", "r": 300, "strength": 0.42, "from": 0, "to": "@end"},
@@ -108,10 +108,10 @@ def shots():
     # 6 PAYOFF: one pass changed the angle, the next one beats the denial -----------------------------------------
     S.append({"id": "payoff", "name": "PAYOFF: the entry that changed the angle (gold lane), then the bounce pass trajectory into space, in-stride catch, layup, rim, EASY 2",
       "at": "One-0.14", "play": "A",
-      "remap": [[0, 3.09], ["next", 3.22], ["beats", 3.34], ["denial.", 3.62], ["denial.>", 3.98], ["@end", 4.75]],
+      "remap": [[0, 2.74], ["next", 3.2], ["beats", 3.37], ["denial.", 3.66], ["denial.>", 3.99], ["@end", 4.75]],
       "camera": [key(0, PAY), key("next", PAY), key("denial.>", FIN, "inOut"), key("@end", FIN)],
       "ov3": [{"type": "passLane", "src": "O1", "dst": HIGH, "color": GOLD, "from": "One", "to": "next-0.05"},
-              {"type": "floorText", "text": "NEW ANGLE", "at": [1.35, 6.35], "yaw": 0, "size": 0.62, "plate": True, "from": "changes", "to": "next-0.05"},
+              {"type": "floorText", "text": "NEW ANGLE", "at": [0.75, 6.75], "yaw": 0, "size": 0.62, "plate": True, "from": "changes", "to": "next-0.05"},
               {"type": "ballPath", "src": "O4", "dst": "O2", "draw": 0.4, "from": "next", "to": "denial.>"},
               {"type": "ballTrail", "from": "beats", "to": "denial.>"},
               {"type": "glow", "at": [0, 1.575], "hoop": True, "r": 0.8, "strength": 0.8, "from": "denial.>+0.5", "to": "@end"}],
@@ -161,7 +161,7 @@ def shots():
     S.append({"id": "cta", "name": "CTA: back to the denial, freeze: DENY? on X2 / RIM? at the basket; logo",
       "at": "Deny-0.12", "play": "A",
       "remap": [[0, 1.36], ["@end", 1.4]],
-      "camera": [key(0, CTA), key("@end", orb([-0.3, 6.1, 0.4], 18.2, 33, 0, 42), "linear")],
+      "camera": [key(0, CTA), key("@end", orb([-1.0, 6.3, 0.4], 16.5, 33, -20, 42), "linear")],
       "ov3": [{"type": "lockRing", "player": "X2", "from": "Deny", "to": "choosing?>"},
               {"type": "glow", "at": [0, 1.575], "hoop": True, "r": 1.0, "strength": 0.7, "from": "protect", "to": "choosing?>"}],
       "screen": [{"type": "freeze", "label": "YOUR CALL", "from": 0, "to": "choosing?>"},

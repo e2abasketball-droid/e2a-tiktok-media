@@ -225,14 +225,14 @@ export const TelestrationBP: React.FC<{play: Play; pt: number; o: TeleOvBP & {ag
       const a0 = diff >= 0 ? toB : toM;
       return (
         <group>
-          <mesh geometry={beam(toB, dB, WHITE, 0.32)} material={mat(WHITE, 0.32 * a)} />
-          <mesh geometry={ribbon([d, [d[0] + Math.cos(toB) * dB * grow, d[1] + Math.sin(toB) * dB * grow]], 0.05, 0.022, 0.18)} material={mat(WHITE, 0.95 * a)} />
-          <mesh geometry={beam(toM, dM, CORAL, 0.32)} material={mat(CORAL, 0.3 * a)} />
-          <mesh geometry={ribbon([d, [d[0] + Math.cos(toM) * dM * grow, d[1] + Math.sin(toM) * dM * grow]], 0.05, 0.022, 0.18)} material={mat(CORAL, 0.95 * a)} />
+          <mesh geometry={beam(toB, dB, WHITE, 0.42)} material={mat(WHITE, 0.45 * a)} />
+          <mesh geometry={ribbon([d, [d[0] + Math.cos(toB) * dB * grow, d[1] + Math.sin(toB) * dB * grow]], 0.1, 0.022, 0.18)} material={mat(WHITE, 0.95 * a)} />
+          <mesh geometry={beam(toM, dM, CORAL, 0.42)} material={mat(CORAL, 0.45 * a)} />
+          <mesh geometry={ribbon([d, [d[0] + Math.cos(toM) * dM * grow, d[1] + Math.sin(toM) * dM * grow]], 0.1, 0.022, 0.18)} material={mat(CORAL, 0.95 * a)} />
           <mesh position={W3([d[0], d[1], 0.024])} rotation={[-Math.PI / 2, 0, 0]} material={mat(arcCol, 0.85 * a * pulse * grow)}>
-            <ringGeometry args={[0.82, 0.95, 48, 1, a0, Math.abs(diff) * grow]} />
+            <ringGeometry args={[0.8, 1.0, 48, 1, a0, Math.abs(diff) * grow]} />
           </mesh>
-          <mesh position={W3([d[0], d[1], 0.023])} rotation={[-Math.PI / 2, 0, 0]} material={mat(arcCol, 0.18 * a * pulse * grow)}>
+          <mesh position={W3([d[0], d[1], 0.023])} rotation={[-Math.PI / 2, 0, 0]} material={mat(arcCol, 0.3 * a * pulse * grow)}>
             <circleGeometry args={[0.82, 48, a0, Math.abs(diff) * grow]} />
           </mesh>
         </group>
