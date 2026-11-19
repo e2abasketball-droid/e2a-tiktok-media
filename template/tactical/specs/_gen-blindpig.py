@@ -49,7 +49,7 @@ K = {"cutSpeed": 6.6, "vcut": 0.1, "deny": 1.25, "flash": 1.45, "entry": 2.0, "c
      "help": 2.48, "kick": 3.22, "catch3": 3.92, "rel": 4.2}
 
 PLANT = [-3.05, 8.3]          # O2's sell spot at the right slot
-DENY = [-2.45, 7.95]          # X2 in the passing lane, a step off O2 toward the ball
+DENY = [-2.2, 7.85]          # X2 in the passing lane, a step off O2 toward the ball
 HIGH = [-0.25, 5.85]          # high post (just above the free-throw line, middle)
 X4_TRAIL = [0.55, 5.2]        # X4 arrives late, on O4's back (left) hip: out of the pass to the right block
 CATCH2 = [-1.15, 3.15]        # O2 catches in stride

@@ -13,6 +13,8 @@ import type {PlayWithActions} from './rig.ts';
 import type {ChoreoPlay} from './choreo.ts';
 import type {TeleOv} from './telestration3d';
 import {PassTravel, Telestration3D} from './telestration3d';
+import type {TeleOvBP} from './telestration3d-bp';
+import {TelestrationBP} from './telestration3d-bp';
 
 export const GOLD3 = '#E0B455';
 export const RED3 = '#E5483A';
@@ -101,6 +103,8 @@ export type Ov3 =
   | {type: 'passLane'; src: string; dst: string | V2; color?: string; travel?: number; dstAt?: number}
   /** 2026-11-19 broadcast telestration (telestration3d.tsx): spot, ripple, floorText, ballTrail, ghostTrail */
   | TeleOv
+  /** 2026-11-19 telestration v2 (Blind Pig, telestration3d-bp.tsx): arrow3d, lockRing, vision, tether, ghost, ballPath, motionTrail */
+  | TeleOvBP
   | {type: 'separation'; a: string; b: string; color?: string}
   | {type: 'openSpace'; at: V2; r: number; rx?: number; angle?: number; color?: string}
   | {type: 'deny'; player: string; toward: V2; color?: string}
@@ -689,6 +693,14 @@ export const Overlays3D: React.FC<{play: Play; pt: number; items: LiveOv3[]}> = 
           case 'ballTrail':
           case 'ghostTrail':
             return <Telestration3D key={i} play={play} pt={pt} o={o} a={a} />;
+          case 'arrow3d':
+          case 'lockRing':
+          case 'vision':
+          case 'tether':
+          case 'ghost':
+          case 'ballPath':
+          case 'motionTrail':
+            return <TelestrationBP key={i} play={play} pt={pt} o={o} a={a} />;
           default:
             return null;
         }

@@ -138,12 +138,7 @@ export const actionsOf = (play: PlayWithActions, id: string): Action[] => {
   // automatic actions from the ball events
   for (const e of play.ball) {
     if (e.type === 'shot' && e.player === id) out.push({type: 'shoot', from: e.t0 - 0.5, to: e.t0 + 0.75});
-    if (e.type === 'layup' && e.player === id) {
-      // 2026-11-19 (Blind Pig): a cutter who catches in stride starts the layup carry only once the ball is in his
-      // hands (the carry pose used to pull his hands off an incoming pass caught < 0.38 s before the take-off)
-      const caught = play.ball.find((q) => q.type === 'pass' && q.to === id && q.t1 <= e.t0 && q.t1 > e.t0 - 0.38);
-      out.push({type: 'layup', from: caught && caught.type === 'pass' ? Math.min(e.t0 - 0.05, caught.t1 + 0.14) : e.t0 - 0.38, to: e.t0 + 0.55});
-    }
+    if (e.type === 'layup' && e.player === id) out.push({type: 'layup', from: e.t0 - 0.38, to: e.t0 + 0.55});
     if (e.type === 'pass' && e.from === id && e.style === 'handoff') continue; // hand-off: hands stay on the ball (below)
     if (e.type === 'pass' && e.from === id) {
       // overhead arms only when the pass is loaded from a held ball (play.ts raises it above the head)
@@ -747,11 +742,11 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
       blend(wh, add(add(ball.pos, mul(chestR, side * 0.115)), mul(chestF, -0.03)), norm(add(mul(chestR, side), [0, 0, -0.7])));
     }
     // holding the ball: both hands on it
-    // (2026-11-19: faded out by the shot / layup weight instead of switched off at 1 %, so the hands stay on the ball
-    // while those actions blend in — they ride the ball themselves until the release)
-    if (isBallHolder && !inDribble && Math.max(shoot.w, layup.w) < 0.999) {
+    // (2026-11-19: kept while a layup blends in — the layup arms ride the held ball too — so a ball caught in stride
+    // right before the take-off never leaves the hands; the shot keeps its own switch)
+    if (isBallHolder && !inDribble && shoot.w < 0.01) {
       const ballSide: V3 = add(ball.pos, mul(chestR, side * 0.115));
-      blend(0.95 * (1 - Math.max(shoot.w, layup.w)), add(ballSide, mul(chestF, -0.03)), norm(add(mul(chestR, side), [0, 0, -0.7])));
+      blend(0.95, add(ballSide, mul(chestF, -0.03)), norm(add(mul(chestR, side), [0, 0, -0.7])));
     }
     // dribble: right hand on top of the ball, left arm protects
     if (dribble.w > 0 && isBallHolder) {
@@ -811,7 +806,11 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
       const carry = L(0.05, 0.3, -0.05);
       let tg = i === 1 ? lerp3(carry, reach, smooth((tt - 0.12) / 0.38)) : lerp3(carry, L(0.3, 0.25, -0.15), smooth((tt - 0.3) / 0.2));
       if (isBallHolder) tg = add(add(ball.pos, mul(chestR, side * 0.1)), mul(chestF, -0.05));
-      blend(layup.w, tg, norm(add(mul(chestR, side * 0.6), [0, 0, -0.6])));
+      // 2026-11-19 (Blind Pig): a cutter who catches in stride just before the take-off keeps his hands on the incoming
+      // ball; the layup carry takes over only once the ball is in his hands (ramp 0.08 s after the catch)
+      const lastPass = play.ball.find((e) => e.type === 'pass' && e.to === id && e.t1 > layup.a!.from - 0.05 && e.t1 <= layup.a!.to);
+      const afterCatch = lastPass && lastPass.type === 'pass' ? smooth((tc - lastPass.t1) / 0.08) : 1;
+      blend(layup.w * afterCatch, tg, norm(add(mul(chestR, side * 0.6), [0, 0, -0.6])));
     }
     // character: hide (hands dead at the thighs), call (open hands at head height, a small ask), tap (chest)
     blend(hide.w * (1 - call.w), L(0.04, 0.05, -armLen * 0.97), norm(add(mul(chestF, -1), mul(chestR, side * 0.2))));

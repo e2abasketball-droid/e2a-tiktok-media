@@ -1,0 +1,5 @@
+{
+ "licence_key": "voice/elevenlabs-creator/blind-pig",
+ "source": "ElevenLabs eleven_v4, voice Deuce (DaueUomjhh8LFuAV8aGj), flow g5DXlcDEXV4pY5NtWFbB, ONE take (535 credits) generated 2026-11-19, script = the owner's 'Blind Pig' brief word for word (tone tags only); Scribe word timings 0 credits (blind-pig.words-raw.json); pauses by scripts/tactical-voice.py (room tone at acoustic silences only, no time-stretch); gaps from tactical/episodes/blind-pig.json (voice-report)",
+ "sha256": "93a2805978b4a73ff45f634894380ee8d85ee923967562661cbfce24f658c37f"
+}

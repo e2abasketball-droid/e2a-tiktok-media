@@ -1,0 +1,5 @@
+{
+ "licence_key": "voice/elevenlabs-creator/blind-pig",
+ "source": "voice.wav + ffmpeg highpass 80 Hz, presence +2 dB @3.2 kHz, compressor 2.5:1, loudnorm -16 LUFS (chain of scripts/render-tactical.sh)",
+ "sha256": "5dae34a04a3e11ab4cb375a209d543f839ac0b7fdbe054f80ca59e9981d0a4a9"
+}
