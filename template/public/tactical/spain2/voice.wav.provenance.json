@@ -1,0 +1,5 @@
+{
+ "licence_key": "voice/elevenlabs-creator/spain-pnr-2",
+ "source": "ElevenLabs eleven_v4, voice Deuce (DaueUomjhh8LFuAV8aGj), flow Oxnwr0d2YnCS7w62hMOa, ONE take (501 credits) generated 2026-11-19, script word for word from the owner's 'Spain Pick & Roll 2.0' brief; Scribe word timings 0 credits (words-raw.json); pauses by scripts/tactical-voice.py (room tone at acoustic silences only, no time-stretch); gaps from tactical/episodes/spain-pnr-2.json (voice-report)",
+ "sha256": "a5d8b40e7894a3ef19b8b142b41acacd38a4bf0778c0530ad44785fa77578408"
+}

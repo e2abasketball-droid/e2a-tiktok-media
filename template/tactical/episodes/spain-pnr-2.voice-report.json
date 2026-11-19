@@ -1,0 +1,156 @@
+{
+ "source": "public/tactical/spain2/voice-raw.mp3",
+ "source_sec": 31.6,
+ "preroll": 0.1,
+ "output": "public/tactical/spain2/voice.wav",
+ "output_sec": 34.14,
+ "inserted_total_sec": 2.44,
+ "last_word_end": 34.22,
+ "gaps": [
+  {
+   "after": "Two screens.",
+   "natural_silence": [
+    2.14,
+    2.6
+   ],
+   "natural_sec": 0.46,
+   "target_sec": 0.6,
+   "inserted_sec": 0.14,
+   "cut_at_source": 2.405,
+   "why": "micro-freeze: SCREEN 1 then SCREEN 2 pulse"
+  },
+  {
+   "after": "This is Spain.",
+   "natural_silence": [
+    3.65,
+    4.22
+   ],
+   "natural_sec": 0.57,
+   "target_sec": 0.65,
+   "inserted_sec": 0.08,
+   "cut_at_source": 3.825,
+   "why": "SPAIN / PICK & ROLL title lands and clears"
+  },
+  {
+   "after": "at the top.",
+   "natural_silence": [
+    5.9,
+    6.41
+   ],
+   "natural_sec": 0.51,
+   "target_sec": 0.35,
+   "inserted_sec": 0.0,
+   "cut_at_source": 6.075,
+   "why": "ball-screen contact ripple"
+  },
+  {
+   "after": "to stop the roll.",
+   "natural_silence": [
+    9.57,
+    10.13
+   ],
+   "natural_sec": 0.56,
+   "target_sec": 1.0,
+   "inserted_sec": 0.44,
+   "cut_at_source": 9.835,
+   "why": "back-screen contact, freeze, the defender who decides"
+  },
+  {
+   "after": "takes the roller.",
+   "natural_silence": [
+    13.67,
+    14.17
+   ],
+   "natural_sec": 0.5,
+   "target_sec": 0.6,
+   "inserted_sec": 0.1,
+   "cut_at_source": 13.815,
+   "why": "freeze: OPEN window in the paint"
+  },
+  {
+   "after": "Pocket pass.",
+   "natural_silence": [
+    14.85,
+    15.21
+   ],
+   "natural_sec": 0.36,
+   "target_sec": 0.4,
+   "inserted_sec": 0.04,
+   "cut_at_source": 15.015,
+   "why": "the pass line travels, the ball follows"
+  },
+  {
+   "after": "at the rim.",
+   "natural_silence": [
+    16.25,
+    16.82
+   ],
+   "natural_sec": 0.57,
+   "target_sec": 1.5,
+   "inserted_sec": 0.93,
+   "cut_at_source": 16.455,
+   "why": "layup + rim flash + EASY 2, then rewind: SAME ACTION. DIFFERENT READ."
+  },
+  {
+   "after": "is free.",
+   "natural_silence": [
+    19.63,
+    20.07
+   ],
+   "natural_sec": 0.44,
+   "target_sec": 0.3,
+   "inserted_sec": 0.0,
+   "cut_at_source": 19.835,
+   "why": "spotlight moves to O2"
+  },
+  {
+   "after": "Open three.",
+   "natural_silence": [
+    21.89,
+    22.53
+   ],
+   "natural_sec": 0.64,
+   "target_sec": 1.3,
+   "inserted_sec": 0.66,
+   "cut_at_source": 22.365,
+   "why": "ball flight, swish, OPEN 3"
+  },
+  {
+   "after": "too much.",
+   "natural_silence": [
+    25.55,
+    25.85
+   ],
+   "natural_sec": 0.3,
+   "target_sec": 0.35,
+   "inserted_sec": 0.05,
+   "cut_at_source": 25.675,
+   "why": "the trapped defender"
+  },
+  {
+   "after": "something up.",
+   "natural_silence": [
+    27.5,
+    28.09
+   ],
+   "natural_sec": 0.59,
+   "target_sec": 0.55,
+   "inserted_sec": 0.0,
+   "cut_at_source": 27.695,
+   "why": "two ghost routes, two endpoints"
+  },
+  {
+   "after": "guarding Spain?",
+   "natural_silence": [
+    29.17,
+    29.66
+   ],
+   "natural_sec": 0.49,
+   "target_sec": 0.3,
+   "inserted_sec": 0.0,
+   "cut_at_source": 29.395,
+   "why": "ROLL? / POP?"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}
