@@ -134,7 +134,7 @@ ep.shots.forEach((shot: any, i: number) => {
   const rm = resolveRemap(shot.remap, play, toLocal);
   const keys: CamKey3[] = shot.camera.map((k: any) => ({...k, at: toLocal(k.at)}));
   let prev: number[] | null = null;
-  const rings = (shot.ov3 ?? []).filter((o: any) => o.type === 'ring');
+  const rings = (shot.ov3 ?? []).filter((o: any) => o.type === 'ring' || (o.type === 'spot' && o.player)); // 2026-11-19: spotlights are highlights too
   for (let f = 0; f < Math.round(len * fps); f++) {
     const lt = f / fps;
     const pt = remapAt(rm, lt);

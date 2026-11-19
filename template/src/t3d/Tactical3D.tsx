@@ -16,13 +16,17 @@ import type {PlayWithActions} from './rig.ts';
 import {Scene3D} from './Scene';
 import type {FaceCfg} from './Scene';
 import {choosePin, placePin} from './pinPlace';
-import {FreezeFrame, KineticTitle, Logo, OfferCounter, PinLabel, PremiumSubtitles, RewindTag, Stamp, StepBadge, StepCounter} from './screen3d';
+import {FocusVignette, FreezeFrame, KineticTitle, Logo, OfferCounter, PinLabel, PremiumSubtitles, RewindTag, Stamp, StepBadge, StepCounter, TacticalHUD, sceneFx} from './screen3d';
+import {Flash} from '../pro/fx';
 import {countedSteps} from './overlays3d';
 import '../theme';
 
 type Word = {text: string; start: number; end: number};
 type Timed = {from: Anchor; to?: Anchor};
-type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: number; gold?: number[]; sub?: string} | {type: 'stamp'; text: string; y?: number; tone?: 'gold' | 'white'; badge?: string} | {type: 'pin'; player: string; text: string; tone?: 'gold' | 'red' | 'white'; dy?: number; z?: number; size?: number} | {type: 'freeze'; label?: string} | {type: 'rewind'} | {type: 'logo'; big?: boolean} | {type: 'grade'} | {type: 'scrim'; opacity?: number} | {type: 'step'; n: number; text: string; y?: number} | {type: 'counter'; steps: Anchor[]; total?: number; y?: number; base?: number} | {type: 'stepCount'; player: string; labels: string[]; y?: number; gatherLabel?: boolean});
+type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: number; gold?: number[]; sub?: string} | {type: 'stamp'; text: string; y?: number; tone?: 'gold' | 'white'; badge?: string} | {type: 'pin'; player: string; text: string; tone?: 'gold' | 'red' | 'white'; dy?: number; z?: number; size?: number} | {type: 'freeze'; label?: string} | {type: 'rewind'} | {type: 'logo'; big?: boolean} | {type: 'grade'} | {type: 'scrim'; opacity?: number} | {type: 'step'; n: number; text: string; y?: number} | {type: 'counter'; steps: Anchor[]; total?: number; y?: number; base?: number} | {type: 'stepCount'; player: string; labels: string[]; y?: number; gatherLabel?: boolean}
+  /** 2026-11-19 (Spain PnR 2.0): frame dims around one player; small read chip; punch-in / whip on the 3D layer; flash */
+  | {type: 'focus'; player: string; r?: number; strength?: number; z?: number} | {type: 'hud'; tag: string; text: string; y?: number}
+  | {type: 'punch'; amount?: number} | {type: 'whip'; amount?: number; dir?: number} | {type: 'flash'; color?: string; strength?: number});
 type CamKeyA = Omit<CamKey3, 'at'> & {at: Anchor};
 export type Shot3 = {
   id: string;
@@ -223,11 +227,12 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
   const scr = live(shot.screen);
   const proj = projector(cam, W, H);
   const freezeOn = scr.some((s) => s.type === 'freeze' || s.type === 'grade');
+  const fx = sceneFx(scr as unknown as {type: string; age: number; dur: number; amount?: number; dir?: number}[]);
   const subHide = (ep.subtitleHide ?? []).map(([a, b]) => [T(a), T(b)] as [number, number]);
 
   return (
     <AbsoluteFill style={{background: '#050A15'}}>
-      <AbsoluteFill style={{filter: freezeOn ? 'saturate(0.72) brightness(0.94) contrast(1.04)' : undefined}}>
+      <AbsoluteFill style={{filter: [freezeOn ? 'saturate(0.72) brightness(0.94) contrast(1.04)' : '', fx.blur > 0.05 ? `blur(${fx.blur.toFixed(2)}px)` : ''].join(' ').trim() || undefined, transform: fx.scale !== 1 || fx.tx !== 0 ? `translateX(${fx.tx.toFixed(1)}px) scale(${fx.scale.toFixed(4)})` : undefined}}>
         {!qcProbe && (
           <Scene3D play={play} pt={pt} cam={cam} W={W} H={H} hide={shot.hide} logo={logo} env={shot.env} faces={ep.faces} players3d={shot.players3d ?? ep.players3d}>
             <Overlays3D play={play} pt={pt} items={ov} />
@@ -273,6 +278,15 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
             return <OfferCounter key={i} steps={s.steps.map((a) => toLocal(a) - (lt - s.age))} total={s.total ?? 3} base={s.base} age={s.age} dur={s.dur} y={s.y} />;
           case 'logo':
             return <Logo key={i} age={s.age} big={s.big} />;
+          case 'focus': {
+            const p = posAt(play.tracks[s.player], Math.max(0, Math.min(play.duration, pt))) as V2;
+            const q = proj([p[0], p[1], s.z ?? 1.1]);
+            return q.visible ? <FocusVignette key={i} x={q.x} y={q.y} age={s.age} dur={s.dur} r={s.r} strength={s.strength} /> : null;
+          }
+          case 'hud':
+            return <TacticalHUD key={i} tag={s.tag} text={s.text} age={s.age} dur={s.dur} y={s.y} />;
+          case 'flash':
+            return <Flash key={i} age={s.age} color={s.color} strength={s.strength ?? 0.35} />;
           case 'stepCount': {
             const cs = countedSteps(play, s.player).slice(0, s.labels.length);
             const g = (play as unknown as {choreo: Record<string, {ev: {gather: number}}>}).choreo[s.player].ev.gather;

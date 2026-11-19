@@ -294,3 +294,57 @@ export const StepCounter: React.FC<{pt: number; gather: number; lands: number[];
     </div>
   );
 };
+
+/** FocusVignette (2026-11-19, Spain PnR 2.0 "the defender who decides"): the frame dims around ONE player (projected
+ *  from 3D every frame), so the eye goes straight to him. Pure function of the projected point and age. */
+export const FocusVignette: React.FC<{x: number; y: number; age: number; dur: number; r?: number; strength?: number}> = ({x, y, age, dur, r = 260, strength = 0.5}) => {
+  const a = inOut(age, dur, 0.25, 0.25);
+  if (a <= 0.001) return null;
+  const rr = r * (1.25 - 0.25 * eo(age / 0.4));
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        inset: 0,
+        opacity: a,
+        background: `radial-gradient(circle ${Math.round(rr * 2.4)}px at ${x.toFixed(1)}px ${y.toFixed(1)}px, rgba(5,10,21,0) 0%, rgba(5,10,21,0) ${Math.round((100 * rr) / (rr * 2.4))}%, rgba(5,10,21,${strength}) 100%)`,
+      }}
+    />
+  );
+};
+
+/** TacticalHUD chip (2026-11-19): small top-left read tag ("A" + "HE STAYS"), wipe in, hold, clean exit. */
+export const TacticalHUD: React.FC<{tag: string; text: string; age: number; dur: number; y?: number}> = ({tag, text, age, dur, y = 262}) => {
+  const a = inOut(age, dur, 0.2, 0.2);
+  return (
+    <div style={{position: 'absolute', left: 60, top: y, opacity: a, transform: `translateX(${(1 - eo(age / 0.3)) * -16}px)`}}>
+      <div data-qc="stamp" style={{display: 'flex', alignItems: 'center', boxShadow: '0 10px 30px rgba(0,0,0,0.45)', borderRadius: 10, overflow: 'hidden'}}>
+        <span style={{fontFamily: DISPLAY, fontSize: 44, lineHeight: 1.2, color: NAVY, background: GOLD, padding: '0 16px'}}>{tag}</span>
+        <span style={{fontFamily: BODY, fontWeight: 900, fontSize: 30, letterSpacing: 3, color: WHITE, background: 'rgba(11,28,61,0.92)', padding: '12px 18px', clipPath: `inset(0 ${(1 - eo((age - 0.08) / 0.3)) * 100}% 0 0)`}}>{text}</span>
+      </div>
+    </div>
+  );
+};
+
+/** scene-layer camera FX (2026-11-19): punch-in zoom on an impact, whip blur on a cut. Returns a CSS style for the 3D
+ *  layer from the live items (pure function of their ages). */
+export const sceneFx = (items: {type: string; age: number; dur: number; amount?: number; dir?: number}[]) => {
+  let scale = 1;
+  let blur = 0;
+  let tx = 0;
+  for (const s of items) {
+    if (s.type === 'punch') {
+      const k = s.amount ?? 0.045;
+      const up = eo(s.age / 0.09);
+      const down = 1 - eo((s.age - 0.09) / Math.max(0.1, s.dur - 0.09));
+      scale *= 1 + k * Math.min(up, s.age < 0.09 ? 1 : down);
+    }
+    if (s.type === 'whip') {
+      const u = clamp(s.age / Math.max(0.05, s.dur));
+      const env = Math.sin(Math.PI * u);
+      blur = Math.max(blur, (s.amount ?? 14) * env);
+      tx += (s.dir ?? 1) * 60 * env * (u < 0.5 ? 1 : -1) * (1 - u);
+    }
+  }
+  return {scale, blur, tx};
+};

@@ -51,3 +51,19 @@ Voz ≈ 1.100 créditos (2 tomas); render ≈ 25 min; más la revisión de fragm
 - **Tamaño y encuadre:** en las cenitales, el grupo de jugadores implicados debe ocupar al menos la mitad del ancho (usa `TOP_IN` o acerca `dist`); en el CTA, los 10 jugadores visibles o, si no caben, un encuadre que no corte a ninguno por el borde.
 - **Revisión final a tamaño de móvil** (fotogramas a 360 px de ancho) del vídeo completo antes de `package`.
 - Todo lo demás (puertas, QC, licencias, publicación, delegación) sigue `PROCEDIMIENTO.md` sin cambios.
+
+## Regla editorial permanente: tipo de contenido → framework (decisión del dueño, 2026-11-19, encargo Spain PnR 2.0)
+Antes de escribir guion o planos de CUALQUIER vídeo E2A, identifica primero el tipo de contenido y elige su framework.
+No uses siempre el mismo hook ni la misma estructura.
+
+| Tipo | Framework |
+|---|---|
+| TACTICAL EXPLAINER (jugada con lecturas) | HOOK → MECHANISM → DECISION → PAYOFF → REHOOK (solo si hay segunda lectura; preferiblemente visual: freeze + rewind + «SAME ACTION. DIFFERENT READ.») → SECOND PAYOFF → TAKEAWAY → CTA |
+| TECHNIQUE / MISTAKE-FIX / DRILL | PROBLEM / MISTAKE → WHY → CORRECT MOVEMENT → PROOF → TAKEAWAY → CTA |
+| STORY | TENSION → PROGRESSION → TURN → PAYOFF → CTA |
+| PLAYER BREAKDOWN / CONCEPT / COMPARISON | el más cercano de los anteriores, justificado en una línea en la entrega |
+
+**Regla superior: CLARITY > FRAMEWORK.** Nunca fuerces un framework si empeora la explicación.
+Regla de lectura asociada: muchos efectos a lo largo del vídeo, **una sola idea visual principal en cada momento**
+(máx. 1 título + subtítulos + 1 etiqueta táctica a la vez); cada gráfico tiene entrada, permanencia y salida.
+Referencia aplicada: `template/tactical/episodes/_gen-spain-pnr-2-shots.py` (capa `src/t3d/telestration3d.tsx`).

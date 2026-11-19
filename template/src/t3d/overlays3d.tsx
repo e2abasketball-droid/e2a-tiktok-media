@@ -11,6 +11,8 @@ import {W3} from './Athlete';
 import {poseAt} from './rig.ts';
 import type {PlayWithActions} from './rig.ts';
 import type {ChoreoPlay} from './choreo.ts';
+import type {TeleOv} from './telestration3d';
+import {PassTravel, Telestration3D} from './telestration3d';
 
 export const GOLD3 = '#E0B455';
 export const RED3 = '#E5483A';
@@ -92,9 +94,13 @@ const cut = (pts: V2[], u: number): V2[] => {
 
 export type Ov3 =
   | {type: 'ring'; player: string; color?: string; pulse?: boolean; size?: number}
-  | {type: 'route'; player: string; t0: number; t1: number; color?: string; draw?: number; dashed?: boolean; width?: number; pts?: V2[]; trail?: boolean}
+  /** consume (2026-11-19): the route ahead of the player only (born under him, eaten as he runs it) */
+  | {type: 'route'; player: string; t0: number; t1: number; color?: string; draw?: number; dashed?: boolean; width?: number; pts?: V2[]; trail?: boolean; consume?: boolean}
   | {type: 'screen'; player?: string; at?: V2; n: number; facing?: number}
-  | {type: 'passLane'; src: string; dst: string | V2; color?: string}
+  /** travel (2026-11-19): seconds for a lit segment to run from the passer to the catch point; dstAt = play time of the catch */
+  | {type: 'passLane'; src: string; dst: string | V2; color?: string; travel?: number; dstAt?: number}
+  /** 2026-11-19 broadcast telestration (telestration3d.tsx): spot, ripple, floorText, ballTrail, ghostTrail */
+  | TeleOv
   | {type: 'separation'; a: string; b: string; color?: string}
   | {type: 'openSpace'; at: V2; r: number; rx?: number; angle?: number; color?: string}
   | {type: 'deny'; player: string; toward: V2; color?: string}
@@ -492,8 +498,9 @@ export const Overlays3D: React.FC<{play: Play; pt: number; items: LiveOv3[]}> = 
           }
           case 'route': {
             const t1 = o.trail ? Math.min(o.t1, pt) : o.t1;
-            if (t1 - o.t0 < 0.05 && !o.pts) return null;
-            const pts = o.pts ?? routeOf(play, o.player, o.t0, t1, 1 / 30);
+            const t0 = o.consume ? Math.max(o.t0, Math.min(pt, o.t1)) : o.t0;
+            if (t1 - t0 < 0.05 && !o.pts) return null;
+            const pts = o.pts ?? routeOf(play, o.player, t0, t1, 1 / 30);
             const u = o.draw ? easeOut(o.age / o.draw) : 1;
             const part = cut(pts, u);
             if (part.length < 2) return null;
@@ -531,6 +538,7 @@ export const Overlays3D: React.FC<{play: Play; pt: number; items: LiveOv3[]}> = 
             );
           }
           case 'passLane': {
+            if (o.travel) return <PassTravel key={i} play={play} pt={pt} src={o.src} dst={o.dst} dstAt={o.dstAt} travel={o.travel} age={o.age} a={a} color={o.color} ribbon={ribbon} arrowHead={arrowHead} />;
             const s = P(o.src);
             const e = typeof o.dst === 'string' ? P(o.dst) : o.dst;
             const pts: V2[] = Array.from({length: 40}, (_, k) => [s[0] + ((e[0] - s[0]) * k) / 39, s[1] + ((e[1] - s[1]) * k) / 39]);
@@ -675,6 +683,12 @@ export const Overlays3D: React.FC<{play: Play; pt: number; items: LiveOv3[]}> = 
               </group>
             );
           }
+          case 'spot':
+          case 'ripple':
+          case 'floorText':
+          case 'ballTrail':
+          case 'ghostTrail':
+            return <Telestration3D key={i} play={play} pt={pt} o={o} a={a} />;
           default:
             return null;
         }

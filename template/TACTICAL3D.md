@@ -60,3 +60,38 @@ construida con `tools/blender/build_player.py`), sin campos nuevos en el episodi
 - Episodios con `faces`: siguen en cápsula (la malla tiene cara neutra); se registra el motivo.
 - Si un `.glb` no carga: cápsulas y `FALLBACK` en el registro del render (no se cancela el render).
 - `autoSfx`: botes, recepciones y caídas a 0 por defecto (regla de cero sonido de bote).
+
+
+## Telestración broadcast (2026-11-19, `src/t3d/telestration3d.tsx` + `screen3d.tsx`)
+Todo es función pura de (jugada, tiempo de jugada, edad): buscar = reproducir; congelaciones y rebobinados los arrastran.
+| Concepto del encargo | Tipo en el episodio | Dónde |
+|---|---|---|
+| PlayerSpotlight | ov3 `spot` (halo + cono de luz que sigue al jugador; `beam:false` solo halo) | telestration3d.tsx |
+| ImpactPulse | ov3 `ripple` (dos anillos que se expanden en el contacto) | telestration3d.tsx |
+| Floor label / endpoint | ov3 `floorText` (rótulo pintado en el parqué, `yaw` = yaw de la cámara, `plate`) | telestration3d.tsx |
+| BallTrail | ov3 `ballTrail` (estela del balón en pases y tiros) | telestration3d.tsx |
+| GhostTrail | ov3 `ghostTrail` (posiciones pasadas: discos + columnas translúcidas) | telestration3d.tsx |
+| PassWindow que viaja | ov3 `passLane` + `travel` (s) + `dstAt` (tiempo de la recepción) | telestration3d.tsx `PassTravel` |
+| FloorRoute que nace bajo el jugador | ov3 `route` + `consume:true` | overlays3d.tsx |
+| PlayerRing / ScreenMarker / DecisionZone / DefensiveVector / tether | `ring` / `screen` / `openSpace` / `deny` o `route` roja con `trail` / `separation` | overlays3d.tsx (existentes) |
+| PlayerLabel / FreezeCallout / Rewind / títulos / sello | `pin` (pinV2) / `freeze` (+`grade`) / `rewind` / `title` / `stamp` | screen3d.tsx (existentes) |
+| Foco en el defensor (resto atenuado) | screen `focus` (FocusVignette) | screen3d.tsx |
+| TacticalHUD | screen `hud` (chip «A · HE STAYS») | screen3d.tsx |
+| Punch-in / whip / flash | screen `punch`, `whip`, `flash` (capa 3D; `flash` reutiliza `pro/fx.tsx Flash`) | screen3d.tsx `sceneFx`, Tactical3D.tsx |
+`qc-tactical3d` trata `spot` con jugador como resaltado (zona segura), igual que `ring`.
+
+## Regla editorial permanente: tipo de contenido → framework (decisión del dueño, 2026-11-19, encargo Spain PnR 2.0)
+Antes de escribir guion o planos de CUALQUIER vídeo E2A, identifica primero el tipo de contenido y elige su framework.
+No uses siempre el mismo hook ni la misma estructura.
+
+| Tipo | Framework |
+|---|---|
+| TACTICAL EXPLAINER (jugada con lecturas) | HOOK → MECHANISM → DECISION → PAYOFF → REHOOK (solo si hay segunda lectura; preferiblemente visual: freeze + rewind + «SAME ACTION. DIFFERENT READ.») → SECOND PAYOFF → TAKEAWAY → CTA |
+| TECHNIQUE / MISTAKE-FIX / DRILL | PROBLEM / MISTAKE → WHY → CORRECT MOVEMENT → PROOF → TAKEAWAY → CTA |
+| STORY | TENSION → PROGRESSION → TURN → PAYOFF → CTA |
+| PLAYER BREAKDOWN / CONCEPT / COMPARISON | el más cercano de los anteriores, justificado en una línea en la entrega |
+
+**Regla superior: CLARITY > FRAMEWORK.** Nunca fuerces un framework si empeora la explicación.
+Regla de lectura asociada: muchos efectos a lo largo del vídeo, **una sola idea visual principal en cada momento**
+(máx. 1 título + subtítulos + 1 etiqueta táctica a la vez); cada gráfico tiene entrada, permanencia y salida.
+Referencia aplicada: `template/tactical/episodes/_gen-spain-pnr-2-shots.py` (capa `src/t3d/telestration3d.tsx`).

@@ -1,5 +1,5 @@
 {
  "licence_key": "voice/elevenlabs-creator/spain-pnr-2",
  "source": "voice.wav + ffmpeg highpass 80 Hz, presence +2 dB @3.2 kHz, compressor 2.5:1, loudnorm -16 LUFS (chain of scripts/render-tactical.sh)",
- "sha256": "336aa923859825e4f183796d9b7d80d4575cb02a30064ec684453d528bc3dbc5"
+ "sha256": "5e7e9dc5993b907ba35d7cbce99f7b63f83577266d308d00bde383bfd6d50e06"
 }
