@@ -19,9 +19,9 @@ import {W3} from './Athlete';
 const clamp = (x: number, a = 0, b = 1) => Math.max(a, Math.min(b, x));
 const eo = (x: number) => 1 - Math.pow(1 - clamp(x), 3);
 const add = (color: string, opacity: number, map?: THREE.Texture) =>
-  new THREE.MeshBasicMaterial({color, map, transparent: true, opacity, depthWrite: false, toneMapped: false, side: THREE.DoubleSide, blending: THREE.AdditiveBlending});
+  new THREE.MeshBasicMaterial({color, ...(map ? {map} : {}), transparent: true, opacity, depthWrite: false, toneMapped: false, side: THREE.DoubleSide, blending: THREE.AdditiveBlending});
 const flat = (color: string, opacity: number, map?: THREE.Texture) =>
-  new THREE.MeshBasicMaterial({color, map, transparent: true, opacity, depthWrite: false, toneMapped: false, side: THREE.DoubleSide});
+  new THREE.MeshBasicMaterial({color, ...(map ? {map} : {}), transparent: true, opacity, depthWrite: false, toneMapped: false, side: THREE.DoubleSide});
 
 export type TeleOv =
   | {type: 'spot'; player?: string; at?: V2; color?: string; r?: number; h?: number; strength?: number; beam?: boolean}

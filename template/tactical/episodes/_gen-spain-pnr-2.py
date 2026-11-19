@@ -10,7 +10,7 @@ ep = {
  "id": "spain-pnr-2", "title": "Spain Pick & Roll 2.0", "fps": 30,
  "voiceRaw": "tactical/spain2/voice-raw.mp3", "wordsRaw": "spain-pnr-2.words-raw.json",
  "voice": "tactical/spain2/voice.wav", "voiceMix": "tactical/spain2/voice.mix.wav",
- "preroll": 0.1, "tail": 1.3,
+ "preroll": 0.1, "tail": 0.75,
  "gaps": [
   {"after": "Two screens.", "sec": 0.6, "why": "micro-freeze: SCREEN 1 then SCREEN 2 pulse"},
   {"after": "This is Spain.", "sec": 0.65, "why": "SPAIN / PICK & ROLL title lands and clears"},
@@ -20,7 +20,7 @@ ep = {
   {"after": "Pocket pass.", "sec": 0.4, "why": "the pass line travels, the ball follows"},
   {"after": "at the rim.", "sec": 1.5, "why": "layup + rim flash + EASY 2, then rewind: SAME ACTION. DIFFERENT READ."},
   {"after": "is free.", "sec": 0.3, "why": "spotlight moves to O2"},
-  {"after": "Open three.", "sec": 1.3, "why": "ball flight, swish, OPEN 3"},
+  {"after": "Open three.", "sec": 1.5, "why": "ball flight, swish, OPEN 3"},
   {"after": "too much.", "sec": 0.35, "why": "the trapped defender"},
   {"after": "something up.", "sec": 0.55, "why": "two ghost routes, two endpoints"},
   {"after": "guarding Spain?", "sec": 0.3, "why": "ROLL? / POP?"}],

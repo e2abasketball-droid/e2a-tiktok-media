@@ -72,23 +72,20 @@ def shots():
     S.append({"id": "backscreen", "name": "MECHANISM 2: mini orbit discovers the back screen; O2's route to X5, contact + freeze, BACK SCREEN; DROP BIG; then the decision: X2 spotlit, frame dims, READ THE DEFENDER",
       "at": "Then-0.12", "play": "A",
       "remap": [[0, 1.32], ["back screen", 1.5], ["hits", 1.7, "out"], ["hits>+0.24", 1.7], ["drops", 1.78], ["roll.>", 1.85], ["@end", 1.85]],
-      "camera": [key(0, OVER_IN), key("hits", SLIDE, "inOut"), key("roll.>-0.2", SLIDE), key("@end", DEC, "inOut")],
+      "camera": [key(0, OVER_IN), key("hits", SLIDE, "inOut"), key("@end", orb([-1.0, 5.9, 0.6], 10.4, 46, -18, 42), "inOut")],
       "ov3": [{"type": "route", "player": "O2", "t0": 0.2, "t1": 1.7, "draw": 0.55, "width": 0.14, "from": "back screen", "to": "big-0.1"},
               {"type": "ripple", "player": "X5", "r": 1.4, "color": GOLD, "from": "hits-0.05", "to": "hits>+0.6"},
               {"type": "screen", "player": "O2", "n": 2, "facing": FACE2, "from": "hits-0.05", "to": "roll.>"},
-              {"type": "ring", "player": "X5", "color": RED, "size": 0.9, "from": "big", "to": "roll.>"},
-              {"type": "spot", "player": "X2", "color": CORAL, "r": 0.9, "from": "roll.>-0.05", "to": "@end"}],
+              {"type": "ring", "player": "X5", "color": RED, "size": 0.9, "from": "big", "to": "@end"}],
       "screen": [{"type": "punch", "amount": 0.03, "from": "hits-0.05", "to": "hits>+0.35"},
                  {"type": "grade", "from": "hits", "to": "hits>+0.24"},
                  {"type": "pin", "player": "O2", "text": "BACK SCREEN", "from": "hits-0.05", "to": "big-0.1", "size": 44},
-                 {"type": "pin", "player": "X5", "text": "DROP BIG", "tone": "red", "from": "big", "to": "roll.>", "size": 40},
-                 {"type": "focus", "player": "X2", "r": 230, "strength": 0.5, "from": "roll.>-0.05", "to": "@end"},
-                 {"type": "freeze", "label": "READ THE DEFENDER", "from": "roll.>", "to": "@end"}],
+                 {"type": "pin", "player": "X5", "text": "DROP BIG", "tone": "red", "from": "big", "to": "@end", "size": 40}],
       "sfx": [{"at": "back screen", "name": "tick", "volume": 0.2}, {"at": "hits-0.05", "name": "impact", "volume": 0.26},
-              {"at": "roll.>", "name": "shutter", "volume": 0.2}]})
+              {"at": "drops", "name": "tick", "volume": 0.12}]})
     # 4 READ A -----------------------------------------------------------------------------------------------
     S.append({"id": "readA", "name": "READ A: X2 stays attached (ghost trail + tether) -> nobody takes the roller (spotlight, OPEN window) -> pocket pass travels -> finish camera, rim flash, EASY 2",
-      "at": "If-0.1", "play": "A",
+      "at": "roll.>", "play": "A",
       "remap": [[0, 1.85], ["stays", 1.85], ["attached,>", 2.1], ["nobody", 2.12], ["roller.", 2.2], ["roller.>+0.12", 2.22], ["Pocket", 2.3],
                 ["pass.>", 3.0], ["Easy", 3.05], ["rim.", 3.62], ["@end", 4.0, "out"]],
       "camera": [key(0, DEC), key("nobody", DEC), key("Pocket", DEC_W, "inOut"), key("pass.>", DEC_W), key("Easy+0.6", FIN_A, "inOut"), key("@end", FIN_A2, "inOut")],
@@ -104,11 +101,14 @@ def shots():
               {"type": "glow", "at": [0, 1.575], "hoop": True, "r": 0.8, "strength": 0.8, "from": "rim.", "to": "@end"},
               {"type": "ripple", "at": [0, 1.575], "r": 1.3, "from": "rim.", "to": "@end"}],
       "screen": [{"type": "focus", "player": "X2", "r": 230, "strength": 0.5, "from": 0, "to": "attached,>"},
+                 {"type": "grade", "from": 0, "to": "stays"},
+                 {"type": "hud", "tag": "?", "text": "HE HAS TO CHOOSE", "from": 0.08, "to": "stays-0.05"},
+                 {"type": "whip", "amount": 5, "dir": 1, "from": 0, "to": 0.2},
                  {"type": "hud", "tag": "A", "text": "HE STAYS", "from": "stays", "to": "roller.>"},
                  {"type": "grade", "from": "roller.", "to": "roller.>+0.12"},
                  {"type": "punch", "amount": 0.025, "from": "rim.", "to": "rim.>+0.3"},
                  {"type": "stamp", "text": "EASY 2", "from": "rim.", "to": "@end", "y": 400}],
-      "sfx": [{"at": "nobody", "name": "tick", "volume": 0.2}, {"at": "Pocket", "name": "whoosh", "volume": 0.16},
+      "sfx": [{"at": 0, "name": "shutter", "volume": 0.2}, {"at": "nobody", "name": "tick", "volume": 0.2}, {"at": "Pocket", "name": "whoosh", "volume": 0.16},
               {"at": "rim.+0.03", "name": "swish", "volume": 0.42}]})
     # 5 VISUAL REHOOK ----------------------------------------------------------------------------------------
     S.append({"id": "rehook", "name": "REHOOK (visual, not narrated): fast rewind back to the decision frame, whip, impact on the return; SAME ACTION. / DIFFERENT READ.",
@@ -119,7 +119,7 @@ def shots():
       "screen": [{"type": "rewind", "from": 0, "to": 0.42},
                  {"type": "whip", "amount": 10, "dir": -1, "from": 0, "to": 0.42},
                  {"type": "flash", "color": "#FFFFFF", "strength": 0.25, "from": 0.42, "to": 0.7},
-                 {"type": "title", "lines": ["SAME ACTION.", "DIFFERENT READ."], "gold": [1], "from": 0.45, "to": "@end", "y": 262, "size": 96}],
+                 {"type": "title", "lines": ["SAME ACTION.", "DIFFERENT READ."], "gold": [1], "from": 0.28, "to": "@end", "y": 262, "size": 96}],
       "sfx": [{"at": 0, "name": "reverse_cymbal", "volume": 0.14}, {"at": 0.02, "name": "whip", "volume": 0.2}, {"at": 0.42, "name": "impact", "volume": 0.22}]})
     # 6 READ B -----------------------------------------------------------------------------------------------
     S.append({"id": "readB", "name": "READ B: same frame; X2 steps up (spotlight, ghost trail, red vector) -> the screener is free (spotlight moves, arc lights) -> POP route grows ahead of O2 -> pass travels, push, shot, swish, OPEN 3",
@@ -159,7 +159,7 @@ def shots():
               {"type": "route", "player": "O5", "fromPlay": "A", "t0": 1.85, "t1": 3.0, "draw": 0.5, "width": 0.16, "from": "defence", "to": "@end-0.1"},
               {"type": "route", "player": "O2", "fromPlay": "B", "t0": 2.05, "t1": 3.2, "draw": 0.5, "width": 0.16, "color": WHITE, "from": "defence+0.15", "to": "@end-0.1"},
               {"type": "floorText", "text": "EASY 2", "at": [0.4, 1.7], "yaw": 0, "size": 0.8, "plate": True, "from": "give", "to": "@end-0.1"},
-              {"type": "floorText", "text": "OPEN 3", "at": [1.3, 9.2], "yaw": 0, "size": 0.8, "plate": True, "color": WHITE, "from": "something", "to": "@end-0.1"}],
+              {"type": "floorText", "text": "OPEN 3", "at": [-1.35, 7.75], "yaw": 0, "size": 0.7, "plate": True, "color": WHITE, "from": "something", "to": "@end-0.1"}],
       "screen": [{"type": "focus", "player": "X2", "r": 260, "strength": 0.42, "from": "One#2", "to": "defence"},
                  {"type": "title", "lines": ["ONE DEFENDER.", "TWO PROBLEMS."], "gold": [1], "from": "One#2", "to": "defence-0.08", "y": 262, "size": 100}],
       "sfx": [{"at": "Two#3", "name": "impact", "volume": 0.18}, {"at": "One#2", "name": "tick", "volume": 0.2}, {"at": "defence", "name": "whoosh", "volume": 0.12}]})

@@ -6,7 +6,7 @@
  "voice": "tactical/spain2/voice.wav",
  "voiceMix": "tactical/spain2/voice.mix.wav",
  "preroll": 0.1,
- "tail": 1.3,
+ "tail": 0.75,
  "gaps": [
   {
    "after": "Two screens.",
@@ -501,32 +501,17 @@
      "ease": "inOut"
     },
     {
-     "at": "roll.>-0.2",
+     "at": "@end",
      "rig": {
       "type": "orbit",
       "target": [
        -1.0,
        5.9,
-       0.5
+       0.6
       ],
-      "dist": 10.8,
-      "pitch": 44,
-      "yaw": -24,
-      "fov": 42
-     }
-    },
-    {
-     "at": "@end",
-     "rig": {
-      "type": "orbit",
-      "target": [
-       -0.5,
-       5.9,
-       0.9
-      ],
-      "dist": 9.0,
-      "pitch": 50,
-      "yaw": 16,
+      "dist": 10.4,
+      "pitch": 46,
+      "yaw": -18,
       "fov": 42
      },
      "ease": "inOut"
@@ -565,14 +550,6 @@
      "color": "#E5483A",
      "size": 0.9,
      "from": "big",
-     "to": "roll.>"
-    },
-    {
-     "type": "spot",
-     "player": "X2",
-     "color": "#F06A55",
-     "r": 0.9,
-     "from": "roll.>-0.05",
      "to": "@end"
     }
    ],
@@ -602,22 +579,8 @@
      "text": "DROP BIG",
      "tone": "red",
      "from": "big",
-     "to": "roll.>",
+     "to": "@end",
      "size": 40
-    },
-    {
-     "type": "focus",
-     "player": "X2",
-     "r": 230,
-     "strength": 0.5,
-     "from": "roll.>-0.05",
-     "to": "@end"
-    },
-    {
-     "type": "freeze",
-     "label": "READ THE DEFENDER",
-     "from": "roll.>",
-     "to": "@end"
     }
    ],
    "sfx": [
@@ -632,16 +595,16 @@
      "volume": 0.26
     },
     {
-     "at": "roll.>",
-     "name": "shutter",
-     "volume": 0.2
+     "at": "drops",
+     "name": "tick",
+     "volume": 0.12
     }
    ]
   },
   {
    "id": "readA",
    "name": "READ A: X2 stays attached (ghost trail + tether) -> nobody takes the roller (spotlight, OPEN window) -> pocket pass travels -> finish camera, rim flash, EASY 2",
-   "at": "If-0.1",
+   "at": "roll.>",
    "play": "A",
    "remap": [
     [
@@ -894,6 +857,25 @@
      "to": "attached,>"
     },
     {
+     "type": "grade",
+     "from": 0,
+     "to": "stays"
+    },
+    {
+     "type": "hud",
+     "tag": "?",
+     "text": "HE HAS TO CHOOSE",
+     "from": 0.08,
+     "to": "stays-0.05"
+    },
+    {
+     "type": "whip",
+     "amount": 5,
+     "dir": 1,
+     "from": 0,
+     "to": 0.2
+    },
+    {
      "type": "hud",
      "tag": "A",
      "text": "HE STAYS",
@@ -920,6 +902,11 @@
     }
    ],
    "sfx": [
+    {
+     "at": 0,
+     "name": "shutter",
+     "volume": 0.2
+    },
     {
      "at": "nobody",
      "name": "tick",
@@ -1045,7 +1032,7 @@
      "gold": [
       1
      ],
-     "from": 0.45,
+     "from": 0.28,
      "to": "@end",
      "y": 262,
      "size": 96
@@ -1523,11 +1510,11 @@
      "type": "floorText",
      "text": "OPEN 3",
      "at": [
-      1.3,
-      9.2
+      -1.35,
+      7.75
      ],
      "yaw": 0,
-     "size": 0.8,
+     "size": 0.7,
      "plate": true,
      "color": "#FFFFFF",
      "from": "something",
