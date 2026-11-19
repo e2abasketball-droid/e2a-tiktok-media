@@ -1,0 +1,168 @@
+{
+ "id": "blind-pig-cover",
+ "title": "Blind Pig",
+ "fps": 30,
+ "voiceRaw": "tactical/blindpig/voice-raw-v2.wav",
+ "voice": "tactical/blindpig/voice-v2.wav",
+ "voiceMix": "tactical/blindpig/voice-v2.mix.wav",
+ "preroll": 0.1,
+ "tail": 1.6,
+ "gaps": [
+  {
+   "after": "the layup.",
+   "sec": 0.95,
+   "why": "result stamp, then the rewind (open loop)"
+  },
+  {
+   "after": "on the right.",
+   "sec": 0.55,
+   "why": "lock ring + DENIAL land on X2"
+  },
+  {
+   "after": "high post.",
+   "sec": 0.75,
+   "why": "O4 arrives at the high post, hands up"
+  },
+  {
+   "after": "behind him.",
+   "sec": 0.6,
+   "why": "the cut is on; mini rewind to the entry pass"
+  },
+  {
+   "after": "the denial.",
+   "sec": 0.6,
+   "why": "in-stride catch"
+  },
+  {
+   "after": "Easy layup.",
+   "sec": 3.3,
+   "why": "the whole action again at REAL SPEED, no graphics (sec. 10)"
+  },
+  {
+   "after": "force it.",
+   "sec": 0.5,
+   "why": "the bounce lane is closed (X3 in it)"
+  },
+  {
+   "after": "just left.",
+   "sec": 1.9,
+   "why": "catch, shot (overlays off), make, OPEN 3"
+  },
+  {
+   "after": "Blind Pig.",
+   "sec": 1.7,
+   "why": "reveal: DENY -> BACKDOOR, then HELP -> KICKOUT"
+  },
+  {
+   "after": "Deny the pass...",
+   "sec": 0.35,
+   "why": "DENY OR HELP? lands before 'or protect the rim?'"
+  }
+ ],
+ "plays": {
+  "A": "blindpig2-a-layup",
+  "B": "blindpig2-b-kick"
+ },
+ "shots": [
+  {
+   "id": "cover",
+   "name": "COVER still: O2 starts the cut behind X2, X2 still in the denial, O4 has the ball at the high post (no overlays)",
+   "at": 0,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.0
+    ],
+    [
+     "@end",
+     3.0
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.1,
+       5.95,
+       0.7
+      ],
+      "dist": 12.5,
+      "pitch": 47,
+      "yaw": -72,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  }
+ ],
+ "pinV2": true,
+ "noScreens": true,
+ "autoSfx": false,
+ "keywords": [
+  "denied",
+  "layup",
+  "defender",
+  "right",
+  "passing lane",
+  "big",
+  "high post",
+  "wing",
+  "cuts behind him",
+  "One pass",
+  "angle",
+  "beats the denial",
+  "Easy layup",
+  "low defender",
+  "helps",
+  "Kick it out",
+  "shooter",
+  "Blind Pig",
+  "protect the rim",
+  "mistake",
+  "spot it"
+ ],
+ "subtitleHide": [
+  [
+   0,
+   "choosing?>+5"
+  ]
+ ],
+ "subtitleY": 1560,
+ "subtitleGroups": [
+  4,
+  5,
+  6,
+  6,
+  4,
+  4,
+  6,
+  4,
+  5,
+  6,
+  2,
+  6,
+  3,
+  5,
+  4,
+  3,
+  7,
+  4
+ ],
+ "subtitleBlock": true,
+ "subtitleYAt": [
+  [
+   "Kick-0.1",
+   "left.>",
+   330
+  ]
+ ],
+ "music": {
+  "src": "tactical/blindpig/music-v2.mp3",
+  "volume": 1
+ }
+}

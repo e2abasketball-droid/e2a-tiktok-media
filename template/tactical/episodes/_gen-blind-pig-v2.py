@@ -61,7 +61,7 @@ TB_HOOKb = orb([-1.6, 7.2, 0.9], 12.5, 47, -58, 44)
 
 
 def opening_main():
-    return [{"id": "hook", "name": "HOOK (cam A): O2 already behind X2, the pass arrives, micro speed ramp on the catch, layup; DENIED -> LAYUP?",
+    return [{"id": "hook", "name": "HOOK (cam A): O2 already behind X2, the pass arrives, micro speed ramp on the catch, layup; DENIED. LAYUP?",
       "at": 0, "play": "A",
       "remap": [[0, 3.62], ["pass...", 3.88], ["gave", 4.0], ["up", 4.1], ["layup.", 4.62], ["layup.>", 5.1], ["@end", 5.25]],
       "camera": [key(0, A_HOOK), key("layup.", A_HOOKb, "inOut"), key("@end", A_HOOKb)],
@@ -173,16 +173,16 @@ def body(rewind_from):
       "ov3": [{"type": "glow", "at": [0, 1.575], "hoop": True, "r": 0.8, "strength": 0.8, "from": "@end-0.45", "to": "@end"}],
       "screen": [{"type": "stamp", "text": "OPEN 3", "from": "@end-0.45", "to": "@end", "y": 760}],
       "sfx": [{"at": "@end-0.5", "name": "bass_hit", "volume": 0.1}]})
-    S.append({"id": "nameA", "name": "REVEAL 1/2 (cam B): read A frozen at the catch: backdoor arrow; BLIND PIG / DENY → BACKDOOR",
+    S.append({"id": "nameA", "name": "REVEAL 1/2 (cam B): read A frozen at the catch: backdoor arrow; BLIND PIG / DENY? BACKDOOR.",
       "at": "That's-0.25", "play": "A",
       "remap": [[0, 3.95], ["@end", 4.1]],
       "camera": [key(0, EXPL_IN), key("@end", EXPL_IN)],
       "ov3": [{"type": "arrow3d", "player": "O2", "t0": 2.83, "t1": 4.06, "draw": 0.3, "from": 0.05, "to": "@end"}],
       "screen": [{"type": "title", "lines": ["BLIND PIG"], "sub": "DENY? BACKDOOR.", "gold": [0], "from": "Blind-0.05", "to": "@end", "y": 262, "size": 120}],
       "sfx": [{"at": "Blind", "name": "impact", "volume": 0.13}]})
-    S.append({"id": "nameB", "name": "REVEAL 2/2 (cam B): read B at the kick-out: trajectory to the corner; BLIND PIG / HELP → KICKOUT",
-      "at": "Pig.>+0.55", "play": "B",
-      "remap": [[0, 4.5], ["@end", 4.75]],
+    S.append({"id": "nameB", "name": "REVEAL 2/2 (cam B): read B at the kick-out: trajectory to the corner; BLIND PIG / HELP? KICKOUT.",
+      "at": "Pig.>", "play": "B",
+      "remap": [[0, 4.3], ["@end", 4.75]],
       "camera": [key(0, EXPL_IN), key("@end", EXPL_IN)],
       "ov3": [{"type": "ballPath", "src": "O4", "dst": "O3", "draw": 0.3, "from": 0.0, "to": "@end"}],
       "screen": [{"type": "title", "lines": ["BLIND PIG"], "sub": "HELP? KICKOUT.", "gold": [0], "from": 0, "to": "@end", "y": 262, "size": 120}],

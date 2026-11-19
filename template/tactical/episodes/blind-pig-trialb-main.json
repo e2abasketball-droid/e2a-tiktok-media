@@ -1220,7 +1220,7 @@
   },
   {
    "id": "nameA",
-   "name": "REVEAL 1/2 (cam B): read A frozen at the catch: backdoor arrow; BLIND PIG / DENY → BACKDOOR",
+   "name": "REVEAL 1/2 (cam B): read A frozen at the catch: backdoor arrow; BLIND PIG / DENY? BACKDOOR.",
    "at": "That's-0.25",
    "play": "A",
    "remap": [
@@ -1302,13 +1302,13 @@
   },
   {
    "id": "nameB",
-   "name": "REVEAL 2/2 (cam B): read B at the kick-out: trajectory to the corner; BLIND PIG / HELP → KICKOUT",
-   "at": "Pig.>+0.55",
+   "name": "REVEAL 2/2 (cam B): read B at the kick-out: trajectory to the corner; BLIND PIG / HELP? KICKOUT.",
+   "at": "Pig.>",
    "play": "B",
    "remap": [
     [
      0,
-     4.5
+     4.3
     ],
     [
      "@end",
