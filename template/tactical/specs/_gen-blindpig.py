@@ -200,6 +200,7 @@ def build(s):
     if VER == "v2":
         s["id"] = s["id"].replace("blindpig-", "blindpig2-")
         s["source"] = SRC + "; V2 layout = MASTER PROMPT sec. 5 anchors (x mirrored to repo axes)"
+        s["catchV2"] = True  # 2026-11-19 catch fix (play.ts catchV2): catch spot in front of the trunk, grip IK
     sp = os.path.join(D, f"{s['id']}.spec.json")
     json.dump(s, open(sp, "w"), indent=1)
     out = os.path.join(T, "tactical", "plays", f"{s['id']}.json")

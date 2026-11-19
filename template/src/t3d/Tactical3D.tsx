@@ -7,7 +7,7 @@ import {AbsoluteFill, Audio, Sequence, continueRender, delayRender, staticFile, 
 import type {V2} from '../tactical/geometry.ts';
 import type {Anchor, RemapKey} from '../tactical/edit.ts';
 import {localResolver, makeTacticalResolver, remapAt, resolveRemap} from '../tactical/edit.ts';
-import {posAt, routeOf, sample} from '../tactical/play.ts';
+import {ballPhase, posAt, routeOf, sample} from '../tactical/play.ts';
 import type {CamKey3} from './camera3d.ts';
 import {camera3At} from './camera3d.ts';
 import type {LiveOv3, Ov3} from './overlays3d';
@@ -27,6 +27,8 @@ type Timed = {from: Anchor; to?: Anchor};
 type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: number; gold?: number[]; sub?: string} | {type: 'stamp'; text: string; y?: number; tone?: 'gold' | 'white'; badge?: string} | {type: 'pin'; player: string; text: string; tone?: 'gold' | 'red' | 'white'; dy?: number; z?: number; size?: number} | {type: 'freeze'; label?: string} | {type: 'rewind'} | {type: 'logo'; big?: boolean} | {type: 'grade'} | {type: 'scrim'; opacity?: number} | {type: 'step'; n: number; text: string; y?: number} | {type: 'counter'; steps: Anchor[]; total?: number; y?: number; base?: number} | {type: 'stepCount'; player: string; labels: string[]; y?: number; gatherLabel?: boolean}
   /** 2026-11-19 (Spain PnR 2.0): frame dims around one player; small read chip; punch-in / whip on the 3D layer; flash */
   | {type: 'focus'; player: string; r?: number; strength?: number; z?: number} | {type: 'hud'; tag: string; text: string; y?: number}
+  /** 2026-11-19 (catch fix): DIAGNOSTIC ONLY, never in a delivered episode: ball phase, owner, play time and a label */
+  | {type: 'debugPhase'; label?: string}
   | {type: 'punch'; amount?: number} | {type: 'whip'; amount?: number; dir?: number} | {type: 'flash'; color?: string; strength?: number});
 type CamKeyA = Omit<CamKey3, 'at'> & {at: Anchor};
 export type Shot3 = {
@@ -286,6 +288,16 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
           }
           case 'hud':
             return <TacticalHUD key={i} tag={s.tag} text={s.text} age={s.age} dur={s.dur} y={s.y} />;
+          case 'debugPhase': {
+            const ph = ballPhase(play, pt);
+            return (
+              <div key={i} style={{position: 'absolute', left: 40, top: 60, padding: '14px 22px', background: 'rgba(0,0,0,0.72)', color: '#fff', font: '600 38px Inter, sans-serif', lineHeight: 1.35, borderRadius: 10}}>
+                <div style={{color: '#FFD34D'}}>DEBUG {s.label ?? ''}</div>
+                <div>{ph.phase}{ph.owner ? ` · ${ph.owner}` : ''}</div>
+                <div>play t = {pt.toFixed(3)} s</div>
+              </div>
+            );
+          }
           case 'flash':
             return <Flash key={i} age={s.age} color={s.color} strength={s.strength ?? 0.35} />;
           case 'stepCount': {

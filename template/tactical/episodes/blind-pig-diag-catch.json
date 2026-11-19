@@ -1,0 +1,445 @@
+{
+ "fps": 30,
+ "voice": "tactical/blindpig/voice-v2.wav",
+ "plays": {
+  "A": "blindpig2-a-layup",
+  "B": "blindpig2-b-kick"
+ },
+ "pinV2": true,
+ "noScreens": true,
+ "id": "blind-pig-diag-catch",
+ "title": "Blind Pig catch diagnostic (debug overlay, never delivered)",
+ "tail": 0,
+ "autoSfx": false,
+ "shots": [
+  {
+   "id": "d0",
+   "name": "ORIGINAL (cam E) 0.25x",
+   "at": 0.0,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.82
+    ],
+    [
+     3.0,
+     4.57
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.2,
+       2.8,
+       1.1
+      ],
+      "dist": 8.5,
+      "pitch": 62,
+      "yaw": 30,
+      "fov": 46
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "from": 0,
+     "type": "debugCatch",
+     "player": "O2"
+    }
+   ],
+   "screen": [
+    {
+     "from": 0,
+     "type": "debugPhase",
+     "label": "ORIGINAL (cam E) 0.25x"
+    }
+   ]
+  },
+  {
+   "id": "d1",
+   "name": "SIDE 0.25x",
+   "at": 3.0,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.82
+    ],
+    [
+     3.0,
+     4.57
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O2",
+       "z": 1.0,
+       "window": 0.6
+      },
+      "dist": 5.0,
+      "pitch": 82,
+      "yaw": 134,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "from": 0,
+     "type": "debugCatch",
+     "player": "O2"
+    }
+   ],
+   "screen": [
+    {
+     "from": 0,
+     "type": "debugPhase",
+     "label": "SIDE 0.25x"
+    }
+   ]
+  },
+  {
+   "id": "d2",
+   "name": "FRONT 3/4 0.25x",
+   "at": 6.0,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.82
+    ],
+    [
+     3.0,
+     4.57
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O2",
+       "z": 1.0,
+       "window": 0.6
+      },
+      "dist": 5.0,
+      "pitch": 76,
+      "yaw": -90,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "from": 0,
+     "type": "debugCatch",
+     "player": "O2"
+    }
+   ],
+   "screen": [
+    {
+     "from": 0,
+     "type": "debugPhase",
+     "label": "FRONT 3/4 0.25x"
+    }
+   ]
+  },
+  {
+   "id": "d3",
+   "name": "ELEVATED 0.25x",
+   "at": 9.0,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.82
+    ],
+    [
+     3.0,
+     4.57
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O2",
+       "z": 0.8,
+       "window": 0.6
+      },
+      "dist": 6.0,
+      "pitch": 28,
+      "yaw": 44,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "from": 0,
+     "type": "debugCatch",
+     "player": "O2"
+    }
+   ],
+   "screen": [
+    {
+     "from": 0,
+     "type": "debugPhase",
+     "label": "ELEVATED 0.25x"
+    }
+   ]
+  },
+  {
+   "id": "d4",
+   "name": "ORIGINAL (cam E) 1x",
+   "at": 12.0,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.6
+    ],
+    [
+     1.15,
+     4.75
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.2,
+       2.8,
+       1.1
+      ],
+      "dist": 8.5,
+      "pitch": 62,
+      "yaw": 30,
+      "fov": 46
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "d5",
+   "name": "SIDE 1x",
+   "at": 13.15,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.6
+    ],
+    [
+     1.15,
+     4.75
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O2",
+       "z": 1.0,
+       "window": 0.6
+      },
+      "dist": 5.0,
+      "pitch": 82,
+      "yaw": 134,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "d6",
+   "name": "FRONT 3/4 1x",
+   "at": 14.3,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.6
+    ],
+    [
+     1.15,
+     4.75
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O2",
+       "z": 1.0,
+       "window": 0.6
+      },
+      "dist": 5.0,
+      "pitch": 76,
+      "yaw": -90,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "d7",
+   "name": "ELEVATED 1x",
+   "at": 15.45,
+   "play": "A",
+   "remap": [
+    [
+     0,
+     3.6
+    ],
+    [
+     1.15,
+     4.75
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O2",
+       "z": 0.8,
+       "window": 0.6
+      },
+      "dist": 6.0,
+      "pitch": 28,
+      "yaw": 44,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "d8",
+   "name": "KICK ORIGINAL (cam G2) 0.25x",
+   "at": 16.6,
+   "play": "B",
+   "remap": [
+    [
+     0,
+     4.82
+    ],
+    [
+     1.8,
+     5.27
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -4.2,
+       1.8,
+       1.0
+      ],
+      "dist": 10.5,
+      "pitch": 58,
+      "yaw": 75,
+      "fov": 46
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "from": 0,
+     "type": "debugCatch",
+     "player": "O3"
+    }
+   ],
+   "screen": [
+    {
+     "from": 0,
+     "type": "debugPhase",
+     "label": "KICK ORIGINAL (cam G2) 0.25x"
+    }
+   ]
+  },
+  {
+   "id": "d9",
+   "name": "KICK SIDE 0.25x",
+   "at": 18.4,
+   "play": "B",
+   "remap": [
+    [
+     0,
+     4.82
+    ],
+    [
+     1.8,
+     5.27
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O3",
+       "z": 1.0,
+       "window": 0.6
+      },
+      "dist": 5.0,
+      "pitch": 82,
+      "yaw": 0,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "from": 0,
+     "type": "debugCatch",
+     "player": "O3"
+    }
+   ],
+   "screen": [
+    {
+     "from": 0,
+     "type": "debugPhase",
+     "label": "KICK SIDE 0.25x"
+    }
+   ]
+  }
+ ],
+ "subtitleHide": [
+  [
+   0,
+   999
+  ]
+ ],
+ "keywords": []
+}

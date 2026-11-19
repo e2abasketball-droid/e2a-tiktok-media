@@ -11,7 +11,7 @@
 // World units: metres on the FIBA half court (x across, y from the baseline, z up), as play.ts.
 import type {V2, V3} from '../tactical/geometry.ts';
 import type {Play} from '../tactical/play.ts';
-import {dribbleSide, posAt, sample, setBallHook, stateOf} from '../tactical/play.ts';
+import {catchV2, dribbleSide, posAt, sample, setBallHook, stateOf} from '../tactical/play.ts';
 const sampleBall = (play: Play, t: number) => sample(play, t).ball.pos;
 import type {ChoreoPlay} from './choreo.ts';
 import {choreoBall, choreoPose} from './choreo.ts';
@@ -71,6 +71,9 @@ export const dimsFor = (H: number, build = 1): Dims => {
   // head 0.12·k and shoulders 0.205·k since 2026-11-18 (observed 5438/5440: head ≈ 1/7.6 of standing height)
   return {H, build, thigh: 0.5 * k, shin: 0.49 * k, ankleH: 0.085 * k, foot: 0.27 * k, upper: 0.34 * k, fore: 0.29 * k, hand: 0.17 * k, hipW: 0.105 * k * (0.6 + 0.4 * build), shW: 0.205 * k * (0.55 + 0.45 * build), trunk: 0.55 * k, neck: 0.075 * k, headR: 0.12 * k};
 };
+
+/** ball radius (m), = the rendered sphere in Scene.tsx */
+export const BALL_R = 0.121;
 
 // ---------- small vector helpers ----------
 const add = (a: V3, b: V3): V3 => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
@@ -729,11 +732,24 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
     blend(closeout.w, i === 1 ? L(0.24, 0.24, 0.5) : L(0.08, 0.36, -0.36), norm(add(mul(chestF, -0.3), [0, 0, -1])));
     // catch ready: hands showing a target at chest height
     blend(catchR.w * (isBallHolder ? 0.3 : 1), L(-0.02, 0.4, -0.12), norm(add(mul(chestR, side), [0, 0, -0.8])));
-    // reaching for an incoming pass (V2): over the last 0.22 s the hands meet the ball, not a fixed target
-    const incoming = play.ball.find((e) => e.type === 'pass' && e.to === id && tc >= e.t1 - 0.22 && tc <= e.t1);
+    // grip (2026-11-19, Blind Pig catch fix): the IK target is the WRIST and the hand extends D.hand along the forearm,
+    // so a wrist put ON the ball's side drove the palm and fingers 6-8 cm INTO the ball and the two palms almost met.
+    // gripWrist puts the PALM centre (mid wrist-fingertip) on the ball surface at its side (two distinct grip points
+    // ~0.27 m apart), fingers wrapping forward around it, the wrist behind and outside the ball.
+    const gripWrist = (b: V3, s2: number): V3 => {
+      const dirF = norm(add(mul(chestF, 0.86), mul(chestR, -s2 * 0.34)));
+      return add(add(b, mul(chestR, s2 * (BALL_R + 0.012))), mul(dirF, -D.hand * 0.5));
+    };
+    // reaching for an incoming pass (V2): the hands prepare for the ball (anticipation window scaled to the flight,
+    // 0.22-0.32 s) and meet it at the contact, palms on its surface
+    // (plays without `catchV2` keep the previous reach: 0.22 s window, wrist 0.11 m off the ball centre)
+    const cv2 = catchV2(play as unknown as Play);
+    const winOf = (e: {t0: number; t1: number}) => (cv2 ? Math.min(0.32, Math.max(0.22, 0.6 * (e.t1 - e.t0))) : 0.22);
+    const incoming = play.ball.find((e) => e.type === 'pass' && e.to === id && tc >= e.t1 - winOf(e) && tc <= e.t1);
     if (incoming && incoming.type === 'pass') {
-      const wr = smooth((tc - (incoming.t1 - 0.22)) / 0.18);
-      blend(wr, add(ball.pos, mul(chestR, side * 0.11)), norm(add(mul(chestR, side), [0, 0, -0.7])));
+      const win = winOf(incoming);
+      const wr = smooth((tc - (incoming.t1 - win)) / (win - 0.04));
+      blend(wr, cv2 ? gripWrist(ball.pos, side) : add(ball.pos, mul(chestR, side * 0.11)), norm(add(mul(chestR, side), [0, 0, -0.7])));
     }
     // dribble hand-off (2026-11-15): the passer's hands ride the ball until the receiver's hands have it
     const ho = play.ball.find((e) => e.type === 'pass' && e.style === 'handoff' && e.from === id && tc >= e.t0 - 0.02 && tc <= e.t1 + 0.2);
@@ -744,9 +760,14 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
     // holding the ball: both hands on it
     // (2026-11-19: kept while a layup blends in — the layup arms ride the held ball too — so a ball caught in stride
     // right before the take-off never leaves the hands; the shot keeps its own switch)
-    if (isBallHolder && !inDribble && shoot.w < 0.01) {
-      const ballSide: V3 = add(ball.pos, mul(chestR, side * 0.115));
-      blend(0.95, add(ballSide, mul(chestF, -0.03)), norm(add(mul(chestR, side), [0, 0, -0.7])));
+    // catch-and-shoot (2026-11-19): the shot's arms wait for the catch — before the contact the hands go to the ball
+    // (incoming reach above), not to the gather pocket (Blind Pig kick-out: palms 15-27 cm off the ball at the catch)
+    const shotCatch = shoot.a && cv2 ? play.ball.find((e) => e.type === 'pass' && e.to === id && e.t1 > shoot.a!.from - 0.05 && e.t1 < shoot.a!.to) : undefined;
+    const shootArm = shoot.w * (shotCatch && shotCatch.type === 'pass' ? smooth((tc - shotCatch.t1) / 0.1) : 1);
+    // (catchV2) the grip stays on until the shot's arms are fully in (they ride the same ball until the release), so the
+    // hands never drop off the ball while the shot blends in
+    if (isBallHolder && !inDribble && (cv2 ? shootArm < 0.999 : shootArm < 0.01)) {
+      blend(0.95, cv2 ? gripWrist(ball.pos, side) : add(add(ball.pos, mul(chestR, side * 0.115)), mul(chestF, -0.03)), norm(add(mul(chestR, side), [0, 0, -0.7])));
     }
     // dribble: right hand on top of the ball, left arm protects
     if (dribble.w > 0 && isBallHolder) {
@@ -782,7 +803,7 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
       }
     }
     // shooting: gather at chest -> set above the forehead -> release to the rim -> follow-through
-    if (shoot.a && shoot.w > 0) {
+    if (shoot.a && shootArm > 0) {
       const tt = tc - shoot.a.from;
       const toRim = norm(sub(rim, sh));
       const gather = L(0.0, 0.3, -0.2);
@@ -795,8 +816,8 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
       else if (tt < 0.64) tg = i === 1 ? lerp3(setSide, follow, smooth((tt - 0.48) / 0.16)) : lerp3(setSide, add(setSide, [0, 0, 0.12]), smooth((tt - 0.48) / 0.16));
       else tg = i === 1 ? follow : add(setSide, mul(chestR, side * 0.12));
       // V2: until the release the hands ride ON the ball (play.ts owns the ball path into the pocket)
-      if (isBallHolder) tg = add(add(ball.pos, mul(chestR, side * 0.1)), mul(chestF, -0.05));
-      blend(shoot.w, tg, norm(add(mul(chestR, side * 0.8), [0, 0, -0.4])));
+      if (isBallHolder) tg = cv2 ? gripWrist(ball.pos, side) : add(add(ball.pos, mul(chestR, side * 0.1)), mul(chestF, -0.05));
+      blend(shootArm, tg, norm(add(mul(chestR, side * 0.8), [0, 0, -0.4])));
     }
     // layup: carry the ball up with the outside hand toward the rim
     if (layup.a && layup.w > 0) {

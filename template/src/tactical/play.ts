@@ -253,6 +253,56 @@ const heldPos = (play: Play, id: string, t: number): V3 => {
   return e && e.type === 'hold' && isHanded(e) ? handedSpot(play, e, Math.min(Math.max(t, e.from), e.to)) : smoothHand(play, id, t);
 };
 
+/** catch spot of a receiver on the move (2026-11-19, Blind Pig catch fix): the ball is met in front of the trunk and a
+ *  little to the passer's side, in the run frame (the frame rig.ts renders the body in above 2.2 m/s), at chest height:
+ *  outside the torso volume (ball centre >= 0.34 m ahead of the body axis), inside arm reach (< 0.45 m), no hand behind
+ *  the body. Standing receivers keep the classic hand spot. Used for the END of the pass flight (the receiver's pose at
+ *  catchTime, i.e. a lead pass to where he will be) and blended back into the hand spot over CATCH_SECURE s after the
+ *  contact, so FLIGHT -> CONTACT -> SECURED has no position jump. */
+export const CATCH_SECURE = 0.4;
+/** opt-in per play (`"catchV2": true`, 2026-11-19): the catch model below (catch spot, SECURED blend, open-not-square
+ *  catch facing, 0.3 s turn to the next receiver, grip IK in rig.ts). Plays without the flag keep the previous model
+ *  unchanged (regression run over all plays). */
+export const catchV2 = (play: Play) => !!(play as {catchV2?: boolean}).catchV2;
+export const catchSpot = (play: Play, id: string, t: number, passerAt: V2): V3 => {
+  const st = stateOf(play, id, t);
+  const h = smoothHand(play, id, t);
+  // run direction and speed over the last 0.15 s (the instantaneous velocity of a decelerating track is noisy)
+  const p0 = posAt(play.tracks[id], Math.max(0, t - 0.15));
+  const vx = (st.pos[0] - p0[0]) / 0.15, vy = (st.pos[1] - p0[1]) / 0.15;
+  const k = Math.max(0, Math.min(1, (Math.hypot(vx, vy) - 0.6) / 1.6));
+  if (k <= 0) return h;
+  const run = Math.atan2(vy, vx);
+  const F: V2 = [Math.cos(run), Math.sin(run)];
+  const L: V2 = [-F[1], F[0]];
+  const side = Math.sign((passerAt[0] - st.pos[0]) * L[0] + (passerAt[1] - st.pos[1]) * L[1]) || 1;
+  const c: V3 = [st.pos[0] + F[0] * 0.38 + L[0] * 0.12 * side, st.pos[1] + F[1] * 0.38 + L[1] * 0.12 * side, 1.12];
+  return [h[0] + (c[0] - h[0]) * k, h[1] + (c[1] - h[1]) * k, h[2] + (c[2] - h[2]) * k];
+};
+
+export const CATCH_HOLD_MIN = 0.12;
+export const CATCH_CONTACT = 0.05;
+export type BallPhaseName = 'OWNED_BY_PASSER' | 'RELEASED' | 'IN_FLIGHT' | 'CONTACT' | 'SECURED' | 'GATHER' | 'HELD' | 'SHOT' | 'LOOSE';
+/** explicit ball phase machine (2026-11-19, catch fix), derived from the same events that drive ballAt, for QC and the
+ *  debug overlay: OWNED_BY_PASSER (hold before a pass) -> RELEASED (first 0.05 s of the flight) -> IN_FLIGHT ->
+ *  CONTACT (first CATCH_CONTACT s in the receiver's hands) -> SECURED (until CATCH_SECURE, or the gather) -> GATHER
+ *  (rise to the release before a shot / layup) -> SHOT. One owner at most at any time. */
+export const ballPhase = (play: Play, t: number): {phase: BallPhaseName; owner?: string} => {
+  const ev = play.ball;
+  const cur = ev.find((e) => (e.type === 'hold' ? t >= e.from && t <= e.to : t >= e.t0 && t <= e.t1));
+  if (!cur) return {phase: 'LOOSE'};
+  if (cur.type === 'pass') return {phase: t - cur.t0 < 0.05 ? 'RELEASED' : 'IN_FLIGHT'};
+  if (cur.type !== 'hold') return {phase: 'SHOT', owner: cur.player};
+  const fromPass = !cur.dribble && ev.some((e) => e.type === 'pass' && e.to === cur.player && Math.abs(e.t1 - cur.from) < 1e-6);
+  const next = ev.find((e) => (e.type === 'shot' || e.type === 'layup') && e.player === cur.player && Math.abs(e.t0 - cur.to) < 1e-6);
+  const gw = next ? Math.max(0, Math.min(0.3, cur.to - cur.from - (fromPass && catchV2(play) ? CATCH_HOLD_MIN : 0))) : 0;
+  if (fromPass && t - cur.from < CATCH_CONTACT) return {phase: 'CONTACT', owner: cur.player};
+  if (next && t > cur.to - gw) return {phase: 'GATHER', owner: cur.player};
+  if (fromPass && t - cur.from < CATCH_SECURE) return {phase: 'SECURED', owner: cur.player};
+  const passNext = ev.some((e) => e.type === 'pass' && e.from === cur.player && Math.abs(e.t0 - cur.to) < 1e-6);
+  return {phase: passNext ? 'OWNED_BY_PASSER' : 'HELD', owner: cur.player};
+};
+
 /** authored ball path (2026-11-18, choreo.ts): a play with `choreo` + `ballHolder` gets its ball from there.
  *  Registered by rig.ts (which owns the body dimensions) so play.ts stays free of the 3D rig. */
 let ballHook: ((play: Play, t: number) => BallState | undefined) | undefined;
@@ -271,7 +321,15 @@ const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallSta
       // (a raw facing that snaps from "rest" to "running" swung the ball sideways at 15+ m/s)
       let h = isHanded(cur) ? handedSpot(play, cur, t) : smoothHand(play, cur.player, t);
       // catch (2026-11-17 V3): both hands give on contact, the ball comes back toward the chest and a little down
-      const fromPass = !cur.dribble && play.ball.some((e) => e.type === 'pass' && e.to === cur.player && Math.abs(e.t1 - cur.from) < 1e-6);
+      const inPass = !cur.dribble ? (play.ball.find((e) => e.type === 'pass' && e.to === cur.player && Math.abs(e.t1 - cur.from) < 1e-6) as Extract<BallEvent, {type: 'pass'}> | undefined) : undefined;
+      const fromPass = !!inPass;
+      // SECURED: from the catch spot (where the flight ended) back into the hand spot, no jump at the contact
+      if (inPass && catchV2(play) && t - cur.from < CATCH_SECURE) {
+        const c = catchSpot(play, cur.player, t, heldPos(play, inPass.from, inPass.t0) as unknown as V2);
+        const u2 = (t - cur.from) / CATCH_SECURE;
+        const w = u2 * u2 * (3 - 2 * u2);
+        h = [c[0] + (h[0] - c[0]) * w, c[1] + (h[1] - c[1]) * w, c[2] + (h[2] - c[2]) * w];
+      }
       const gu = (t - cur.from) / 0.34;
       if (fromPass && gu > 0 && gu < 1) {
         const g = Math.sin(Math.PI * gu) * (1 - 0.3 * gu);
@@ -282,7 +340,8 @@ const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallSta
       const next = play.ball.find((e): e is Extract<BallEvent, {type: 'shot' | 'layup'}> => (e.type === 'shot' || e.type === 'layup') && e.player === cur.player && Math.abs(e.t0 - cur.to) < 1e-6);
       // gather window never longer than the hold itself (2026-11-15: a 0.25 s catch-and-finish started the
       // gather at 17 % on the catch frame, a 23 m/s jump); a dribble ends (pick-up) where the gather starts
-      const gw = next ? Math.min(0.3, cur.to - cur.from) : 0;
+      // (2026-11-19) after a catch the ball is SECURED for >= CATCH_HOLD_MIN s before the gather starts
+      const gw = next ? Math.max(0, Math.min(0.3, cur.to - cur.from - (fromPass && catchV2(play) ? CATCH_HOLD_MIN : 0))) : 0;
       if (next && t > cur.to - gw) {
         const g = Math.min(1, (t - (cur.to - gw)) / gw);
         const e = g * g * (3 - 2 * g);
@@ -349,7 +408,8 @@ const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallSta
       const a0 = heldPos(play, cur.from, cur.t0);
       const loaded = cur.style === 'overhead' && play.ball.some((e) => e.type === 'hold' && e.player === cur.from && !e.dribble && Math.abs(e.to - cur.t0) < 1e-6);
       if (loaded) a0[2] = 2.05;
-      const b1 = smoothHand(play, cur.to, cur.t1);
+      // IN_FLIGHT ends at the receiver's catch spot at catchTime (= t1), computed from his pose THEN (lead pass)
+      const b1 = cur.style === 'handoff' || !catchV2(play) ? smoothHand(play, cur.to, cur.t1) : catchSpot(play, cur.to, cur.t1, [a0[0], a0[1]]);
       void a;
       const x = a0[0] + (b1[0] - a0[0]) * u;
       const y = a0[1] + (b1[1] - a0[1]) * u;
@@ -439,7 +499,12 @@ export const stateOf = (play: Play, id: string, t: number): PlayerState => {
   let rest: number;
   if (spec.team === 'X' && spec.guards) rest = look(posAt(play.tracks[spec.guards], t));
   else if (nextPass) {
-    const k = Math.max(0, Math.min(1, (0.8 - (nextPass.t0 - t)) / 0.4));
+    let k = Math.max(0, Math.min(1, (0.8 - (nextPass.t0 - t)) / 0.4));
+    // (2026-11-19) a player who has JUST caught the ball turns to his next receiver over 0.3 s from the catch: the
+    // ownership flip used to snap the facing (baseLook -> blended look) on the catch frame, a jump of the hand spot
+    // (the held ball moved 10-13 cm in 1/120 s) and a ~1000 deg/s body turn of the high-post passer in Blind Pig
+    const hs = (play.ball.find((e) => e.type === 'hold' && e.player === id && t >= e.from && t <= e.to) as Extract<BallEvent, {type: 'hold'}> | undefined)?.from;
+    if (hs !== undefined && catchV2(play)) k *= Math.max(0, Math.min(1, (t - hs) / 0.3));
     rest = blendAngle(baseLook, look(posAt(play.tracks[nextPass.to], nextPass.t1)), k * k * (3 - 2 * k));
   } else rest = baseLook;
   if (speed > 0.6) {
@@ -452,7 +517,12 @@ export const stateOf = (play: Play, id: string, t: number): PlayerState => {
   if (inc && (play as {squareUp?: boolean}).squareUp) {
     const ss = (x: number) => (x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x));
     const wq = Math.min(ss((t - (inc.t1 - 0.55)) / 0.3), 1 - ss((t - (inc.t1 + 0.05)) / 0.35));
-    facing = blendAngle(facing, look(posAt(play.tracks[inc.from], inc.t0)), wq);
+    // the turn toward a passer BEHIND the receiver is ~180 deg: its direction is fixed once per catch (the side the
+    // passer is on relative to the receiver's run into the catch), else it flips sides frame to frame
+    const pa = posAt(play.tracks[id], Math.max(0, inc.t1 - 0.55)), pb = posAt(play.tracks[id], inc.t1);
+    const pp = posAt(play.tracks[inc.from], inc.t0);
+    const side = Math.sign((pb[0] - pa[0]) * (pp[1] - pb[1]) - (pb[1] - pa[1]) * (pp[0] - pb[0])) || 1;
+    facing = catchV2(play) ? facing + (catchFacing(facing, look(pp), speed, side) - facing) * wq : blendAngle(facing, look(pp), wq);
   }
   const st: PlayerState = {spec, pos, vel, speed, facing, stride: distAt(wp, t)};
   if (stateCache.size > 20000) stateCache.clear();
@@ -463,6 +533,25 @@ export const stateOf = (play: Play, id: string, t: number): PlayerState => {
 const ballHolderPos = (play: Play, t: number): V2 | undefined => {
   const e = play.ball.find((x) => x.type === 'hold' && t >= x.from && t <= x.to) as Extract<BallEvent, {type: 'hold'}> | undefined;
   return e ? posAt(play.tracks[e.player], t) : undefined;
+};
+
+/** catch frame of a receiver (2026-11-19, Blind Pig catch fix). A receiver standing still squares up to the passer.
+ *  A receiver on the move (a cutter catching in stride) keeps his hips on his run line and only OPENS toward the
+ *  passer, at most CATCH_OPEN rad when he runs >= 2.2 m/s (the rig's sprint threshold: above it rig.ts points the
+ *  body where it runs). Before this fix the facing swung up to ~130 deg toward a passer behind the cutter while the
+ *  rendered body kept running forward, so the catch / hold point (hand(), built from this facing) sat BEHIND the
+ *  torso: arms reaching back and the ball crossing the trunk into the gather (Blind Pig V1, 0:18.8).
+ *  `run` is the facing before the square-up (= direction of travel when moving), `toPasser` the look at the passer. */
+export const CATCH_OPEN = 0.55;
+export const catchFacing = (run: number, toPasser: number, speed: number, side?: number): number => {
+  const k = Math.max(0, Math.min(1, (speed - 0.6) / 1.6)); // 0 standing -> 1 at >= 2.2 m/s
+  const maxOpen = Math.PI * (1 - k) + CATCH_OPEN * k;
+  let d = toPasser - run;
+  while (d > Math.PI) d -= 2 * Math.PI;
+  while (d < -Math.PI) d += 2 * Math.PI;
+  // turn on the given side (+1 left / -1 right) when the passer is more than ~120 deg away (no side flip near 180)
+  if (side && Math.abs(d) > 2.1 && Math.sign(d) !== side) d += side * 2 * Math.PI;
+  return run + Math.max(-maxOpen, Math.min(maxOpen, d));
 };
 
 export const blendAngle = (a: number, b: number, w: number) => {

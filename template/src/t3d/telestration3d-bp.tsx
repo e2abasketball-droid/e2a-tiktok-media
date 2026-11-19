@@ -17,7 +17,8 @@ import React from 'react';
 import * as THREE from 'three';
 import type {V2, V3} from '../tactical/geometry.ts';
 import type {Play} from '../tactical/play.ts';
-import {posAt, routeOf, sample} from '../tactical/play.ts';
+import {posAt, routeOf, sample, ballPhase} from '../tactical/play.ts';
+import {poseAt, BALL_R} from './rig';
 import {W3} from './Athlete';
 
 const clamp = (x: number, a = 0, b = 1) => Math.max(a, Math.min(b, x));
@@ -36,7 +37,11 @@ export type TeleOvBP =
   | {type: 'tether'; a: string; b: string; rest?: number; snap?: number}
   | {type: 'ghost'; player?: string; t?: number; at?: V2; color?: string; link?: boolean}
   | {type: 'ballPath'; src: string; dst: string; color?: string; draw?: number}
-  | {type: 'motionTrail'; player: string; len?: number; color?: string; width?: number};
+  | {type: 'motionTrail'; player: string; len?: number; color?: string; width?: number}
+  /** DEBUG ONLY (2026-11-19 catch fix; never in a published edit): trunk volume (elliptic cylinder used by
+   *  scripts/qc-catch.mts), ball sphere coloured by ball phase, palm contact points, body forward vector (cyan),
+   *  chest forward (white) and the ball's direction of travel (magenta) */
+  | {type: 'debugCatch'; player: string};
 
 const P = (play: Play, id: string, t: number): V2 => posAt(play.tracks[id], clamp(t, 0, play.duration));
 
@@ -168,6 +173,46 @@ export const TelestrationBP: React.FC<{play: Play; pt: number; o: TeleOvBP & {ag
             const s = cut(all, Math.max(u0, g - 0.02), g);
             return <mesh key={i} geometry={ribbon(s, w * 0.9, h + 0.003)} material={mat('#FFF4D6', 0.75 * a, true)} />;
           })}
+        </group>
+      );
+    }
+    case 'debugCatch': {
+      const b = sample(play, pt).ball;
+      const ps = poseAt(play as never, o.player, pt, {holder: b.holder, pos: b.pos as V3}, [0, 1.575, 3.05]);
+      const k = ps.dims.H / 2;
+      const D = 0.115 * k, Wd = 0.9 * ps.dims.shW;
+      const z0 = ps.pelvis[2], z1 = ps.chest[2];
+      const mid: V3 = [(ps.pelvis[0] + ps.chest[0]) / 2, (ps.pelvis[1] + ps.chest[1]) / 2, (z0 + z1) / 2];
+      const ph = ballPhase(play, pt).phase;
+      const phCol: Record<string, string> = {OWNED_BY_PASSER: '#3BA0FF', RELEASED: '#FFFFFF', IN_FLIGHT: '#FFE14D', CONTACT: '#FF8A00', SECURED: '#36D17A', GATHER: '#B57BFF', HELD: '#3BA0FF', SHOT: '#FFFFFF', LOOSE: '#888888'};
+      const b2 = sample(play, Math.min(play.duration, pt + 1 / 60)).ball.pos as V3;
+      const dir: V3 = [b2[0] - b.pos[0], b2[1] - b.pos[1], b2[2] - b.pos[2]];
+      const dl = Math.hypot(...dir) || 1;
+      const seg = (p0: V3, p1: V3, col: string, w = 0.025) => {
+        const a3 = new THREE.Vector3(...W3(p0)), b3 = new THREE.Vector3(...W3(p1));
+        const len = a3.distanceTo(b3);
+        const q = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), b3.clone().sub(a3).normalize());
+        return <mesh position={a3.clone().add(b3).multiplyScalar(0.5)} quaternion={q} material={mat(col, 0.95)}><cylinderGeometry args={[w, w, len, 8]} /></mesh>;
+      };
+      const palms = [0, 1].map((i) => ps.wrist[i].map((w, j) => (w + ps.hand[i][j]) / 2) as V3);
+      return (
+        <group renderOrder={20}>
+          {/* trunk: elliptic cylinder (half-depth D along the chest forward, half-width Wd), chest yaw */}
+          <mesh position={W3(mid)} rotation={[0, ps.chestYaw, 0]} scale={[D, z1 - z0, Wd]}>
+            <cylinderGeometry args={[1, 1, 1, 24, 1, true]} />
+            <meshBasicMaterial color="#00E5FF" wireframe transparent opacity={0.55} depthTest={false} />
+          </mesh>
+          {/* ball sphere (physical radius), colour = ball phase */}
+          <mesh position={W3(b.pos as V3)}>
+            <sphereGeometry args={[BALL_R + 0.004, 16, 12]} />
+            <meshBasicMaterial color={phCol[ph] ?? '#fff'} wireframe transparent opacity={0.9} depthTest={false} />
+          </mesh>
+          {palms.map((q, i) => (
+            <mesh key={i} position={W3(q)}><sphereGeometry args={[0.03, 10, 8]} /><meshBasicMaterial color={i ? '#FF3B3B' : '#3BFF6A'} depthTest={false} /></mesh>
+          ))}
+          {seg([ps.pelvis[0], ps.pelvis[1], 0.05], [ps.pelvis[0] + Math.cos(ps.heading) * 0.9, ps.pelvis[1] + Math.sin(ps.heading) * 0.9, 0.05], '#00E5FF')}
+          {seg([ps.chest[0], ps.chest[1], ps.chest[2]], [ps.chest[0] + Math.cos(ps.chestYaw) * 0.6, ps.chest[1] + Math.sin(ps.chestYaw) * 0.6, ps.chest[2]], '#FFFFFF', 0.015)}
+          {dl > 1e-4 ? seg(b.pos as V3, [b.pos[0] + (dir[0] / dl) * 0.7, b.pos[1] + (dir[1] / dl) * 0.7, b.pos[2] + (dir[2] / dl) * 0.7], '#FF2BD6', 0.015) : null}
         </group>
       );
     }
