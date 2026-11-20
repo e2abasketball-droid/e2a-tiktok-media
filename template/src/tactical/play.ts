@@ -24,7 +24,7 @@ export type BallEvent =
   | {type: 'hold'; player: string; from: number; to: number; dribble?: boolean; hand?: 1 | -1; cross?: number[]}
   /** eyes (2026-11-19, Blind Pig): seconds before t0 the passer's eyes go to the receiver (default 0.6);
    *  lead: a lead pass caught in stride (test-play allows a faster receiver at the catch) */
-  | {type: 'pass'; from: string; to: string; t0: number; t1: number; style?: 'chest' | 'bounce' | 'overhead' | 'handoff'; side?: number; eyes?: number; lead?: boolean}
+  | {type: 'pass'; from: string; to: string; t0: number; t1: number; style?: 'chest' | 'bounce' | 'overhead' | 'handoff'; side?: number; eyes?: number; lead?: boolean; phased?: boolean}
   | {type: 'shot'; player: string; t0: number; t1: number; make?: boolean; side?: 1 | -1}
   | {type: 'layup'; player: string; t0: number; t1: number; make?: boolean};
 
@@ -252,6 +252,54 @@ const handedSpot = (play: Play, e: Extract<BallEvent, {type: 'hold'}>, t: number
   const lat = 0.27 * sd, fw = 0.3 + 0.08 * (1 - Math.abs(sd));
   return [st.pos[0] + fx * fw + fy * lat, st.pos[1] + fy * fw - fx * lat, z];
 };
+/** PHASED overhead throw (2026-11-20, Double Drag V2 pass fix; opt-in `phased: true` on an overhead pass loaded from a
+ *  held ball). The old load lifted the ball straight up from the travel-frame hand spot to 2.05 m over 0.35 s (on the
+ *  defender's side when the passer runs one way and throws the other, arms locked at full extension for 5 frames).
+ *  Phases, in the PASS frame (unit vector passer -> receiver's spot at t1), both hands on the ball:
+ *  gather (pick-up blend, then the chest pocket) -> load (ball just above the forehead, 1.81 m, elbows bent ~90 deg) over PH_LOAD s ->
+ *  push (forward + up, accelerating) over PH_PUSH s -> release at phasedRelease(), where the flight starts. */
+export const PH_LOAD = 0.13, PH_PUSH = 0.1;
+const phDir = (play: Play, ev: {from: string; to: string; t1: number}, t: number): V2 => {
+  const p = posAt(play.tracks[ev.from], t), q = posAt(play.tracks[ev.to], ev.t1);
+  const n = Math.hypot(q[0] - p[0], q[1] - p[1]) || 1;
+  return [(q[0] - p[0]) / n, (q[1] - p[1]) / n];
+};
+const phPoint = (play: Play, ev: {from: string; to: string; t1: number}, t: number, fw: number, z: number): V3 => {
+  const p = posAt(play.tracks[ev.from], t), d = phDir(play, ev, t);
+  return [p[0] + d[0] * fw, p[1] + d[1] * fw, z];
+};
+export const phasedRelease = (play: Play, ev: {from: string; to: string; t0: number; t1: number}): V3 => phPoint(play, ev, ev.t0, 0.42, 2.0);
+const phasedHold = (play: Play, ev: {from: string; to: string; t0: number; t1: number}, from: number, t: number, h: V3, h0: V3): V3 => {
+  const sm = (x: number) => (x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x));
+  const tL = ev.t0 - PH_PUSH - PH_LOAD, tP = ev.t0 - PH_PUSH;
+  // chest pocket in the pass frame (the chest has turned to the receiver: rig face action), reached at the end of
+  // the pick-up (0.2 s); before that the pick-up path h (dribbling hand -> pocket, bowed round the trunk)
+  // the pick-up rides in the BODY frame (rig heading): the ball keeps its angle/radius relative to the turning chest
+  // at the pick-up and moves round the front to the pocket (angle 0, 0.34 m), so it never crosses the trunk
+  const yawAt = (x: number) => yawHook?.(play, ev.from, x) ?? Math.atan2(phDir(play, ev, x)[1], phDir(play, ev, x)[0]);
+  const p0 = posAt(play.tracks[ev.from], from), y0 = yawAt(from);
+  const rx = h0[0] - p0[0], ry = h0[1] - p0[1];
+  const a0 = Math.atan2(ry, rx) - y0, aRel = Math.atan2(Math.sin(a0), Math.cos(a0)), r0 = Math.max(0.36, Math.hypot(rx, ry));
+  // the ball comes round to the front in 0.17 s (a rip from the dribbling side into both hands), rises to the pocket in 0.2 s
+  const k = sm((t - from) / 0.2), ka = sm((t - from) / 0.17), pt = posAt(play.tracks[ev.from], t), yt = yawAt(t);
+  const ang = yt + aRel * (1 - ka), rad = r0 + (0.34 - r0) * ka;
+  let b: V3 = [pt[0] + Math.cos(ang) * rad, pt[1] + Math.sin(ang) * rad, h0[2] + (1.2 - h0[2]) * k];
+  // continuity with the dribble at the pick-up frame: the 0.36 m radius floor is eased in over the first 0.05 s
+  const c0 = 1 - sm((t - from) / 0.05);
+  if (c0 > 0) b = [b[0] + (h[0] - b[0]) * c0, b[1] + (h[1] - b[1]) * c0, b[2] + (h[2] - b[2]) * c0];
+  if (t > tL) {
+    // the path bows 0.1 m forward so the ball goes up in front of the face, not through it (head ~0.05 m ahead of the
+    // pelvis, centre 1.55 m: ball centre >= 0.28 m from it all the way up)
+    const u0 = Math.min(1, (t - tL) / PH_LOAD), u = sm(u0), bow = 0.1 * Math.sin(Math.PI * u0), L = phPoint(play, ev, t, 0.15, 1.81), d = phDir(play, ev, t);
+    b = [b[0] + (L[0] - b[0]) * u + d[0] * bow, b[1] + (L[1] - b[1]) * u + d[1] * bow, b[2] + (L[2] - b[2]) * u];
+  }
+  if (t > tP) {
+    // accelerating push (cubic ease-in): ~9 m/s at the release, close to the flight's 11 m/s (no speed jump)
+    const u = Math.min(1, (t - tP) / PH_PUSH), e = u * u * u, L = phPoint(play, ev, t, 0.15, 1.81), R = phPoint(play, ev, t, 0.42, 2.0);
+    b = [L[0] + (R[0] - L[0]) * e, L[1] + (R[1] - L[1]) * e, L[2] + (R[2] - L[2]) * e];
+  }
+  return b;
+};
 const heldPos = (play: Play, id: string, t: number): V3 => {
   const e = play.ball.find((x) => x.type === 'hold' && x.player === id && t >= x.from - 1e-6 && t <= x.to + 1e-6);
   return e && e.type === 'hold' && isHanded(e) ? handedSpot(play, e, Math.min(Math.max(t, e.from), e.to)) : smoothHand(play, id, t);
@@ -327,6 +375,12 @@ export const ballPhase = (play: Play, t: number): {phase: BallPhaseName; owner?:
 
 /** authored ball path (2026-11-18, choreo.ts): a play with `choreo` + `ballHolder` gets its ball from there.
  *  Registered by rig.ts (which owns the body dimensions) so play.ts stays free of the 3D rig. */
+/** body-heading provider (2026-11-20, phased overhead throw): rig.ts registers its simulated heading so a phased pick-up
+ *  carries the ball round the FRONT of a chest that turns 120 deg in 0.1 s (play.ts alone only knows the travel facing) */
+let yawHook: ((play: Play, id: string, t: number) => number | undefined) | undefined;
+export const setYawHook = (f: (play: Play, id: string, t: number) => number | undefined) => {
+  yawHook = f;
+};
 let ballHook: ((play: Play, t: number) => BallState | undefined) | undefined;
 export const setBallHook = (f: (play: Play, t: number) => BallState | undefined) => {
   ballHook = f;
@@ -386,6 +440,11 @@ const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallSta
       }
       // an overhead pass is loaded above the head during the last 0.35 s of the hold
       const ohp = play.ball.find((e): e is Extract<BallEvent, {type: 'pass'}> => e.type === 'pass' && e.from === cur.player && e.style === 'overhead' && Math.abs(e.t0 - cur.to) < 1e-6);
+      if (ohp && ohp.phased && !cur.dribble) {
+        const pv = play.ball.find((e): e is Extract<BallEvent, {type: 'hold'}> => e.type === 'hold' && e.player === cur.player && !!e.dribble && Math.abs(e.to - cur.from) < 1e-6);
+        const h0 = pv ? (isHanded(pv) ? handedSpot(play, pv, pv.to) : smoothHand(play, cur.player, cur.from)) : smoothHand(play, cur.player, cur.from);
+        return {pos: phasedHold(play, ohp, cur.from, t, h, h0), holder: cur.player, event: cur};
+      }
       const ohW = Math.min(0.35, cur.to - cur.from);
       if (ohp && !cur.dribble && t > cur.to - ohW) {
         const g = Math.min(1, (t - (cur.to - ohW)) / ohW);
@@ -444,6 +503,8 @@ const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallSta
       const a0 = heldPos(play, cur.from, cur.t0);
       const loaded = cur.style === 'overhead' && play.ball.some((e) => e.type === 'hold' && e.player === cur.from && !e.dribble && Math.abs(e.to - cur.t0) < 1e-6);
       if (loaded) a0[2] = 2.05;
+      const a0p = loaded && cur.phased ? phasedRelease(play, cur) : a0;
+      if (a0p !== a0) [a0[0], a0[1], a0[2]] = a0p;
       // IN_FLIGHT ends at the receiver's catch spot at catchTime (= t1), computed from his pose THEN (lead pass)
       const b1 = cur.style === 'handoff' || !catchV2(play) ? smoothHand(play, cur.to, cur.t1) : catchSpot(play, cur.to, cur.t1, [a0[0], a0[1]]);
       void a;

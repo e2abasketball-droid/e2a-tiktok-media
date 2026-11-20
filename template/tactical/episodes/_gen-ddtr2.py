@@ -28,8 +28,12 @@ SCREENS1 = orb([-0.8, 8.0, 0.6], 12, 56, -100)
 SPLIT = orb([0.3, 6.3, 0.3], 15, 38, -12)            # short high look: dive up the picture, pop down
 PAY0 = orb([-1.2, 5.0, 1.0], 11, 62, -128)           # weak-side baseline 3/4: O1's release in frame, O5's FRONT at the
 PAY1 = orb([0.3, 2.4, 1.2], 11, 62, -128)            # catch (66 deg), ball >= 130 px from X5's body, rim in frame
-SKIP0 = orb([0.5, 4.6, 1.0], 11, 68, 80)             # ball side, low: the skip flies away, O3 catches FACING the camera
-SKIP1 = orb([5.4, 2.7, 1.0], 11, 68, 80)
+# PASS FIX (2026-11-20, owner brief Correccion-Pase-y-Audio): the old SKIP0/SKIP1 (yaw 80) crossed the line 3 frames after
+# the release (HOOK_IN yaw -100 -> 80 = 180 deg flip). THROW is on the SAME side as HOOK_IN and SHOT (yaw -18), oblique
+# (pitch 48) so the ball over O1's head separates from the heads: projected gap ball vs body boxes (0-2.0 m) S080-S092
+# X4 58 px, X1 164 px, X5 101 px, X2 223 px (old HOOK_IN: X4 0 px at S085-S086). Held from the gather through release+6.
+THROW = orb([-2.2, 6.2, 1.2], 9, 48, -18)
+CATCH = orb([5.3, 2.8, 1.1], 10, 50, -18)            # pans with the ball to O3's catch, same side; shot3 (SHOT, yaw -50) follows
 SHOT = orb([4.0, 2.0, 1.6], 13, 64, -50)             # weak wing: O3 in profile (load, release), rim and net in frame;
 #   preview 1 had O3 at x 110 px (cropped, the V1 fault): now O3 x 250, rim x 870, X3 >= 140 px from O3
 
@@ -84,17 +88,17 @@ def body():
                "camera": [key(0, HOOK), key("He-0.1", HOOK_IN, "linear")],
                "ov3": [{"type": "spot", "player": "X3", "r": 0.42, "color": RED, "strength": 0.55, "from": "watch him", "to": "He-0.1"}],
                "screen": [{"type": "rewind", "from": 0, "to": 0.35}]})
-    sh.append({"id": "tag", "name": "TAG (cam HOOK_IN): tag_roll S069->S089, X3 goes to the roll line, O1 turns to the corner, release S086",
+    sh.append({"id": "tag", "name": "TAG (cam HOOK_IN): tag_roll S069->S074, X3 goes to the roll line while O1 still dribbles; ends with the ball back in his hand (no throw in this shot)",
                "at": "He-0.1", "play": "B", "branch": "tag_roll",
-               "remap": [[0, S(69)], ["roll.>", S(79)], ["leave?>", S(85)], ["Skip-0.1", S(86)], ["Skip+0.0", S(89)]],
-               "camera": [key(0, HOOK_IN), key("Skip+0.0", HOOK_IN)],
-               "ov3": [{"type": "ghost", "player": "X3", "t": S(66), "link": True, "from": "Who", "to": "Skip+0.0"}],
+               "remap": [[0, S(69)], ["roll.>", S(73)], ["leave?+0.1", S(74)]],
+               "camera": [key(0, HOOK_IN), key("leave?+0.1", HOOK_IN)],
+               "ov3": [{"type": "ghost", "player": "X3", "t": S(66), "link": True, "from": "Who", "to": "leave?+0.1"}],
                "screen": []})
-    sh.append({"id": "skip", "name": "SKIP (cam ball side, low, pans with the ball): tag_roll S089->S121 at 1x, O3 catches facing the camera, absorbs, starts the load",
-               "at": "Skip+0.0", "play": "B", "branch": "tag_roll",
-               "remap": [[0, S(89)], [round(32 / 30, 4), S(121)]],
-               "camera": [key(0, SKIP0), key(round(25 / 30, 4), SKIP1, "inOut"), key(round(32 / 30, 4), SKIP1)],
-               "ov3": [{"type": "ballPath", "src": "O1", "dst": "O3", "draw": 0.3, "from": 0.0, "to": round(16 / 30, 4)}],   # off ~9 frames before the hands
+    sh.append({"id": "skip", "name": "SKIP (cam THROW, same side, then pans to the catch): tag_roll S074->S121; gather S074, load S079-S083, push, release S086 (~0.93x), 6 frames after the release on the same angle, then 1x to O3's catch S114",
+               "at": "leave?+0.1", "play": "B", "branch": "tag_roll",
+               "remap": [[0, S(74)], ["Skip-0.1", S(86)], [f"Skip+{round(32 / 30, 4)}", S(121)]],
+               "camera": [key(0, THROW), key("Skip+0.1", THROW), key(f"Skip+{round(32 / 30, 4)}", CATCH, "inOut")],
+               "ov3": [{"type": "ballPath", "src": "O1", "dst": "O3", "draw": 0.3, "from": "Skip-0.1", "to": "Skip+0.6"}],   # born at the release, off 6 frames before O3's hands (catch S114 = Skip+0.833)
                "screen": []})
     sh.append({"id": "shot3", "name": "CORNER THREE (cam weak wing, O3 in profile): tag_roll S121->S193 at ~1x, release S133, ball through the rim S163-S166, net, follow-through, landing",
                "at": f"Skip+{round(32 / 30, 4)}", "play": "B", "branch": "tag_roll",
@@ -142,11 +146,11 @@ def build(variant):
     ep["autoSfx"] = False
     ep["keywords"] = ["foot", "rolls", "pops", "corner defender", "roller", "Same play", "step in", "corner", "Double Drag", "Help", "stay home", "layup", "three"]
     ep["subtitleHide"] = [[0, "Two-0.05"], ["That's-0.3", "stay home?>+5"]]   # title cards own the hook and the close
-    ep["subtitleY"] = 1360
+    ep["subtitleY"] = 1350   # 1360 left "transition." 7 px / "rolls." 3 px under the safe line for one frame (qc-bounds, already in V2)
     words = json.load(open(os.path.join(D, f"ddtr2-{variant}.words.json")))
     ep["subtitleGroups"] = groups(words)
     ep["subtitleBlock"] = True
-    ep["subtitleYAt"] = [["If-0.15", "hit-0.1", 300], ["Same-0.15", "Skip+0.0", 300], [f"Skip+{round(32 / 30, 4)}", "That's-0.15", 300]]   # X3's feet are low in the HOOK camera
+    ep["subtitleYAt"] = [["If-0.15", "hit-0.1", 300], ["Same-0.15", "leave?+0.1", 300], [f"Skip+{round(32 / 30, 4)}", "That's-0.15", 300]]   # X3's feet are low in the HOOK camera
     ep["music"] = {"src": "tactical/ddtr/v2-music.mp3", "volume": 1}
     json.dump(ep, open(os.path.join(D, f"{eid}.json"), "w"), indent=1, ensure_ascii=False)
     shutil.copyfile(os.path.join(D, f"ddtr2-{variant}.words.json"), os.path.join(D, f"{eid}.words.json"))

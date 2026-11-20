@@ -74,6 +74,7 @@ ADJUST = [   # anchors moved or added (reported in the tactical sheet); times ne
  "V2 (2026-11-20, owner brief Double-Drag-V2 sec. 5.3/5.4): DUR S158 -> S200; A layup S113 -> S116 (O5 controls 0.6 s before the gather: catch, two steps, takeoff readable), make S131; B shot S127 -> S133 (the auto 'shoot' load began 0.5 s before t0 = BEFORE the catch at S114: catch, absorb and load were one blur), make S163 + ball through the net, O3's follow-through and landing to S193",
  "X3 (B, V2): closeout anchors S138 -> S142, S156 -> S162 (the release moved to S133; O3 keeps >= 1.8 m at the release = the late closeout the brief describes)",
  "O3 (V2 control data): x -0.12 m from S050 on (S065 (-6.88, 2.33) -> (-7.00, 2.33), B (-6.87/-6.79) -> (-6.99/-6.91)): at the catch his inner toe was at |x| 6.593 m, ON the corner line (|x| 6.60 = 2 points); now every sole is >= 6.70 m out and <= 7.0 m (sideline 7.50)",
+ "O1 (B, V2 pass fix 2026-11-20): pick-up S077 -> S074 and the skip is a PHASED overhead throw (engine opt-in 'phased'): gather to the chest pocket in the pass frame S074-S080, load just above the forehead S079.1-S083 (1.86 m), push forward + up S083-S086, release S086 at 2.00 m, 0.40 m toward O3 (the old load went straight up on X4's side to 2.05 m, arms locked S082-S086, off hand 0.7-1.3 m off the ball S077-S081); follow-through along the pass line",
  "all players: first waypoint flagged 'fly' (new engine option): the S-clock begins mid-transition; clamped runs started from rest (O5 30 m/s2 at S000)"]
 DUR = S(200)   # V2 (2026-11-20): S158 -> S200, the B three is seen through the net (+8-15 frames) and the A layup lands
 
@@ -128,7 +129,7 @@ def actions(kind):
 
 
 def ball(kind):
-    pick = 80 if kind == "a" else 77   # B: pick-up 3 frames earlier, the ball is then loaded over the head for the skip
+    pick = 80 if kind == "a" else 74   # B: pick-up S074 (V2 pass fix: gather 0.2 s -> chest -> load -> push -> release S086)
     ev = [{"type": "hold", "player": "O1", "from": 0, "to": S(pick), "dribble": True, "hand": -1, "cross": [S(40)]}]   # pick-up S080 (brief S079-S080)
     if kind == "a":
         ev += [{"type": "hold", "player": "O1", "from": S(80), "to": S(84)},
@@ -136,8 +137,8 @@ def ball(kind):
                {"type": "hold", "player": "O5", "from": S(98), "to": S(116)},
                {"type": "layup", "player": "O5", "t0": S(116), "t1": S(131), "make": True}]
     else:
-        ev += [{"type": "hold", "player": "O1", "from": S(77), "to": S(86)},
-               {"type": "pass", "from": "O1", "to": "O3", "t0": S(86), "t1": S(114), "style": "overhead", "eyes": 0.4},
+        ev += [{"type": "hold", "player": "O1", "from": S(74), "to": S(86)},
+               {"type": "pass", "from": "O1", "to": "O3", "t0": S(86), "t1": S(114), "style": "overhead", "eyes": 0.4, "phased": True},
                {"type": "hold", "player": "O3", "from": S(114), "to": S(133)},
                {"type": "shot", "player": "O3", "t0": S(133), "t1": S(163), "make": True, "three": True}]
     return ev
@@ -163,7 +164,7 @@ def spec(kind):
         s["notes"] = ["Brief sec. 5 anchors (mirrored to repo axes). X3 stays connected to O3.",
                       "O1 leads O5 in stride (S084 -> S095); O5 finishes on the left of the rim, release ~S113."]
     else:
-        s["marks"] = {**common, "gather": S(77), "decide": S(66), "tag": S(75), "pass": S(86), "catch": S(114), "release": S(133), "make": S(163), "end": DUR}
+        s["marks"] = {**common, "gather": S(74), "decide": S(66), "tag": S(75), "pass": S(86), "catch": S(114), "release": S(133), "make": S(163), "end": DUR}
         s["claims"] = [
             {"type": "reacts_after", "player": "X3", "event": "decide", "min": 0.05, "says": "This time, he steps in to tag the roll."},
             {"type": "far", "a": "X3", "b": "O3", "at": "pass", "min": 2.5, "says": "See what he just left?"},

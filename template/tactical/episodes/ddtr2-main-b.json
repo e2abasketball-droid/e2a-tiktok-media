@@ -504,7 +504,7 @@
   },
   {
    "id": "tag",
-   "name": "TAG (cam HOOK_IN): tag_roll S069->S089, X3 goes to the roll line, O1 turns to the corner, release S086",
+   "name": "TAG (cam HOOK_IN): tag_roll S069->S074, X3 goes to the roll line while O1 still dribbles; ends with the ball back in his hand (no throw in this shot)",
    "at": "He-0.1",
    "play": "B",
    "branch": "tag_roll",
@@ -515,19 +515,11 @@
     ],
     [
      "roll.>",
-     2.6333
+     2.4333
     ],
     [
-     "leave?>",
-     2.8333
-    ],
-    [
-     "Skip-0.1",
-     2.8667
-    ],
-    [
-     "Skip+0.0",
-     2.9667
+     "leave?+0.1",
+     2.4667
     ]
    ],
    "camera": [
@@ -547,7 +539,7 @@
      }
     },
     {
-     "at": "Skip+0.0",
+     "at": "leave?+0.1",
      "rig": {
       "type": "orbit",
       "target": [
@@ -569,24 +561,28 @@
      "t": 2.2,
      "link": true,
      "from": "Who",
-     "to": "Skip+0.0"
+     "to": "leave?+0.1"
     }
    ],
    "screen": []
   },
   {
    "id": "skip",
-   "name": "SKIP (cam ball side, low, pans with the ball): tag_roll S089->S121 at 1x, O3 catches facing the camera, absorbs, starts the load",
-   "at": "Skip+0.0",
+   "name": "SKIP (cam THROW, same side, then pans to the catch): tag_roll S074->S121; gather S074, load S079-S083, push, release S086 (~0.93x), 6 frames after the release on the same angle, then 1x to O3's catch S114",
+   "at": "leave?+0.1",
    "play": "B",
    "branch": "tag_roll",
    "remap": [
     [
      0,
-     2.9667
+     2.4667
     ],
     [
-     1.0667,
+     "Skip-0.1",
+     2.8667
+    ],
+    [
+     "Skip+1.0667",
      4.0333
     ]
    ],
@@ -596,46 +592,46 @@
      "rig": {
       "type": "orbit",
       "target": [
-       0.5,
-       4.6,
-       1.0
+       -2.2,
+       6.2,
+       1.2
       ],
-      "dist": 11,
-      "pitch": 68,
-      "yaw": 80,
+      "dist": 9,
+      "pitch": 48,
+      "yaw": -18,
       "fov": 46
      }
     },
     {
-     "at": 0.8333,
+     "at": "Skip+0.1",
      "rig": {
       "type": "orbit",
       "target": [
-       5.4,
-       2.7,
-       1.0
+       -2.2,
+       6.2,
+       1.2
       ],
-      "dist": 11,
-      "pitch": 68,
-      "yaw": 80,
+      "dist": 9,
+      "pitch": 48,
+      "yaw": -18,
+      "fov": 46
+     }
+    },
+    {
+     "at": "Skip+1.0667",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       5.3,
+       2.8,
+       1.1
+      ],
+      "dist": 10,
+      "pitch": 50,
+      "yaw": -18,
       "fov": 46
      },
      "ease": "inOut"
-    },
-    {
-     "at": 1.0667,
-     "rig": {
-      "type": "orbit",
-      "target": [
-       5.4,
-       2.7,
-       1.0
-      ],
-      "dist": 11,
-      "pitch": 68,
-      "yaw": 80,
-      "fov": 46
-     }
     }
    ],
    "ov3": [
@@ -644,8 +640,8 @@
      "src": "O1",
      "dst": "O3",
      "draw": 0.3,
-     "from": 0.0,
-     "to": 0.5333
+     "from": "Skip-0.1",
+     "to": "Skip+0.6"
     }
    ],
    "screen": []
@@ -811,7 +807,7 @@
    "stay home?>+5"
   ]
  ],
- "subtitleY": 1360,
+ "subtitleY": 1350,
  "subtitleGroups": [
   4,
   3,
@@ -839,7 +835,7 @@
   ],
   [
    "Same-0.15",
-   "Skip+0.0",
+   "leave?+0.1",
    300
   ],
   [

@@ -803,6 +803,7 @@
    "V2 (2026-11-20, owner brief Double-Drag-V2 sec. 5.3/5.4): DUR S158 -> S200; A layup S113 -> S116 (O5 controls 0.6 s before the gather: catch, two steps, takeoff readable), make S131; B shot S127 -> S133 (the auto 'shoot' load began 0.5 s before t0 = BEFORE the catch at S114: catch, absorb and load were one blur), make S163 + ball through the net, O3's follow-through and landing to S193",
    "X3 (B, V2): closeout anchors S138 -> S142, S156 -> S162 (the release moved to S133; O3 keeps >= 1.8 m at the release = the late closeout the brief describes)",
    "O3 (V2 control data): x -0.12 m from S050 on (S065 (-6.88, 2.33) -> (-7.00, 2.33), B (-6.87/-6.79) -> (-6.99/-6.91)): at the catch his inner toe was at |x| 6.593 m, ON the corner line (|x| 6.60 = 2 points); now every sole is >= 6.70 m out and <= 7.0 m (sideline 7.50)",
+   "O1 (B, V2 pass fix 2026-11-20): pick-up S077 -> S074 and the skip is a PHASED overhead throw (engine opt-in 'phased'): gather to the chest pocket in the pass frame S074-S080, load just above the forehead S079.1-S083 (1.86 m), push forward + up S083-S086, release S086 at 2.00 m, 0.40 m toward O3 (the old load went straight up on X4's side to 2.05 m, arms locked S082-S086, off hand 0.7-1.3 m off the ball S077-S081); follow-through along the pass line",
    "all players: first waypoint flagged 'fly' (new engine option): the S-clock begins mid-transition; clamped runs started from rest (O5 30 m/s2 at S000)"
   ]
  },

@@ -5,7 +5,7 @@ hook B (v2-hookB-raw.mp3); never re-synthesised.
   python3 tactical/episodes/_voice-ddtr2.py                             (B: hook B take to the splice, then A; mixes)
 B = hook B take (same 0.1 s preroll) until T (the middle of A's natural silence between "foot." and "Two"), then the A
 track from T: the body is sample-identical in A and B. Mix chain (E2A voice standard): highpass 80, +2 dB at 3.2 kHz,
-compressor 2.5:1, loudnorm I -16 / TP -2 / LRA 7. Both tracks are padded with the take's own room tone to the episode end."""
+compressor 2.5:1, loudnorm I -16 / TP -2 / LRA 7. Both tracks end with the take's own room tone faded out once, then silence, to the episode end (no looped slice)."""
 import json, os, subprocess
 import numpy as np
 D = os.path.dirname(os.path.abspath(__file__)); T_ = os.path.dirname(os.path.dirname(D)); P = os.path.join(T_, 'public', 'tactical', 'ddtr')
@@ -19,10 +19,23 @@ hb = rd(os.path.join(P, 'v2-hookB-raw.mp3'))
 i_two = next(i for i, w in enumerate(wa) if w['text'] == 'Two')
 T = round((wa[i_two - 1]['end'] + wa[i_two]['start']) / 2, 3)
 n = int(T * SR)
-pad = lambda y, tone: np.concatenate([y, np.resize(tone, max(0, int(END * SR) - len(y)))])
-tone = a[int((wa[i_two - 1]['end'] + 0.08) * SR): int((wa[i_two]['start'] - 0.08) * SR)]   # room tone of the take
-head = np.concatenate([np.resize(tone, int(PRE * SR)), hb])[:n]
-head = np.concatenate([head, np.resize(tone, n - len(head))])
+def fill(k, tone):
+    """k samples of room tone WITHOUT looping (2026-11-20 audio fix): np.resize() repeated the 0.217 s slice with a hard
+    seam every 0.217 s (four audible ticks at the end of V2-Hook-A, 27.5-30.0 s). Now: the slice once, faded out over its
+    length, then digital silence (the music bed carries the tail)."""
+    k = max(0, int(k)); m = min(k, len(tone))
+    seg = tone[:m] * (0.5 + 0.5 * np.cos(np.linspace(0, np.pi, m, dtype=np.float32))) if m else tone[:0]
+    return np.concatenate([seg, np.zeros(k - m, np.float32)]).astype(np.float32)
+def pad(y, tone):
+    """the take's own end (room tone after the last word) fades out over its last 0.15 s, then silence to END"""
+    k = int(END * SR) - len(y)
+    if k <= 0:
+        return y
+    f = min(len(y), int(0.15 * SR)); y = y.copy(); y[-f:] *= 0.5 + 0.5 * np.cos(np.linspace(0, np.pi, f, dtype=np.float32))
+    return np.concatenate([y, np.zeros(k, np.float32)])
+tone = a[int((wa[i_two - 1]['end'] + 0.08) * SR): int((wa[i_two]['start'] - 0.08) * SR)]   # room tone of the take (0.217 s, used once, never looped)
+head = np.concatenate([tone[:int(PRE * SR)], hb])[:n]   # 0.1 s < the 0.217 s slice: no loop
+head = np.concatenate([head, fill(n - len(head), tone)])
 f = int(0.008 * SR); ramp = np.linspace(0, 1, f, dtype=np.float32)
 b = np.concatenate([head, a[n:]]); b[n - f:n] = head[n - f:n] * ramp[::-1] + a[n - f:n] * ramp
 a, b = pad(a, tone), pad(b, tone)

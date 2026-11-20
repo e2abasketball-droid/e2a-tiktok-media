@@ -127,3 +127,13 @@ Todo es opcional y se activa por jugada o por episodio. Lo que no lo usa no camb
 - **Carga de tiro posterior a la recepción:** la acción automática `shoot` empieza 0,5 s antes de `t0`. Con `t0 − 0,5 < t1` del pase, la recepción y la carga se funden. Hay que dejar `t0 ≥ t1 + 0,6`.
 - **Suelas y línea de tres:** `tactical/episodes/_control-ddtr2.py` mide toe/ankle de ambos pies contra |x| > 6,60 en la esquina y d > 6,75 en el arco. En la V2 el pie interior de O3 estaba a 6,593 m, sobre la línea, y se corrigió.
 - **Regresión «pase por dentro del cuerpo»:** `bash scripts/regress-catch.sh`. El fixture `tactical/regress/regress-pass-through-body.json` debe FALLAR en `qc-catch` (`ball_torso`, X5).
+
+### Corrección pase + audio (2026-11-20)
+- **Pase alto «por fases» (opt-in `"phased": true` en un pase `overhead` cargado desde un balón sostenido).**
+  - Fases en el marco del pase (pasador → receptor en `t1`): recogida en el marco del cuerpo (rumbo simulado del rig, `setYawHook`), bolsillo del pecho, carga justo sobre la frente (1,81 m, codo ~90°), empuje acelerado y suelta a 2,00 m, 0,42 m hacia el receptor.
+  - El vuelo empieza en `phasedRelease()`: la última posición en mano y la primera en vuelo son la misma.
+  - Tras la suelta, las manos siguen la línea del pase (follow-through). Las jugadas sin la opción no cambian.
+- **Sin el «brazo protector» del bote tras la recogida** (solo en ese pase): ya no hay balón a una mano durante 5 fotogramas.
+- **Plano de pase:** empieza en la recogida, mantiene el mismo ángulo hasta la suelta + 6 fotogramas y queda en el mismo lado de la línea que el plano anterior y el siguiente. La estela nace en la suelta y se apaga ≥ 6 fotogramas antes de las manos del receptor.
+- **Relleno de voz:** nunca `np.resize()` de un trozo de room tone. Se repite cada 0,217 s y suena como clics. El final de la toma se funde 0,15 s y después va silencio. La música lleva la cola.
+- **Regresión «balón dentro de un cuerpo» en la recogida del skip:** `tactical/regress/regress-skip-ball-in-body.json`, con X4 aparcado en el bolsillo de O1. Lo ejecuta `scripts/regress-catch.sh`.

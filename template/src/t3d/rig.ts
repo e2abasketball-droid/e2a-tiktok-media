@@ -11,7 +11,7 @@
 // World units: metres on the FIBA half court (x across, y from the baseline, z up), as play.ts.
 import type {V2, V3} from '../tactical/geometry.ts';
 import type {Play} from '../tactical/play.ts';
-import {catchV2, dribbleSide, posAt, sample, setBallHook, stateOf} from '../tactical/play.ts';
+import {catchV2, dribbleSide, posAt, sample, setBallHook, setYawHook, stateOf} from '../tactical/play.ts';
 const sampleBall = (play: Play, t: number) => sample(play, t).ball.pos;
 import type {ChoreoPlay} from './choreo.ts';
 import {choreoBall, choreoPose} from './choreo.ts';
@@ -451,6 +451,13 @@ setBallHook((play, t) => {
   return b ? {pos: b.pos, holder: b.holder, inFlight: b.phase === 'flight' ? 'layup' : undefined} : undefined;
 });
 
+// the simulated body heading, for play.ts's phased overhead pick-up (ball carried round the front of the turning chest)
+setYawHook((play, id, t) => {
+  const cp = play as unknown as ChoreoPlay;
+  if (cp.choreo?.[id]) return undefined;
+  return rowAt(simulate(play as unknown as PlayWithActions, id, dimsOf(id)), t).heading;
+});
+
 /** jump height for shots and layups */
 const jumpAt = (acts: Action[], t: number) => {
   let z = 0;
@@ -686,6 +693,11 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
   const isBallHolder = ball.holder === id;
   const relEv = pass.a ? play.ball.find((e) => e.type === 'pass' && e.from === id && e.style !== 'handoff' && e.style !== 'overhead' && Math.abs(e.t0 - (pass.a!.to - 0.18)) < 1e-3) : undefined;
   const heldAt: V3 | undefined = relEv && relEv.type === 'pass' && tc >= relEv.t0 - 1e-6 && tc < relEv.t0 + 0.14 ? (sampleBall(play, relEv.t0) as V3) : undefined;
+  const phE = pass.a ? play.ball.find((e) => e.type === 'pass' && e.from === id && (e as {phased?: boolean}).phased && Math.abs(e.t0 - (pass.a!.to - 0.18)) < 1e-3) : undefined;
+  const phEv = phE && phE.type === 'pass' && tc >= phE.t0 - 1e-6 ? (() => {
+    const p0 = posAt(play.tracks[phE.from], phE.t0), q = posAt(play.tracks[phE.to], phE.t1);
+    return {t0: phE.t0, dir: [q[0] - p0[0], q[1] - p0[1]] as V2};
+  })() : undefined;
   const inDribble = acts.some((a) => a.type === 'dribble' && tc >= a.from && tc <= a.to);
   for (let i = 0; i < 2; i++) {
     const side = i === 0 ? -1 : 1;
@@ -770,7 +782,10 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
       blend(0.95, cv2 ? gripWrist(ball.pos, side) : add(add(ball.pos, mul(chestR, side * 0.115)), mul(chestF, -0.03)), norm(add(mul(chestR, side), [0, 0, -0.7])));
     }
     // dribble: right hand on top of the ball, left arm protects
-    if (dribble.w > 0 && isBallHolder) {
+    // (2026-11-20, phased overhead throw) after the pick-up the dribble's blend-out no longer pulls the off hand away
+    // from the ball (it did for 5 frames: a one-hand rise before the load, the 'which hand?' defect)
+    const phHold = isBallHolder && !inDribble && play.ball.some((e) => e.type === 'pass' && e.from === id && (e as {phased?: boolean}).phased && play.ball.some((h) => h.type === 'hold' && h.player === id && !h.dribble && tc >= h.from - 1e-6 && tc <= h.to + 1e-6 && Math.abs(h.to - e.t0) < 1e-6));
+    if (dribble.w > 0 && isBallHolder && !phHold) {
       // the hand meets the ball in the top of its bounce and waits at hip height while it hits the floor
       // handed dribble (crossover, 2026-11-15): the hand on the ball's side dribbles, the other arm protects
       const hev = play.ball.find((e) => e.type === 'hold' && e.player === id && e.dribble && tc >= e.from && tc <= e.to);
@@ -788,6 +803,13 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
       const ext = smooth((tt - 0.4) / 0.4);
       if (pass.a.pose === 'overhead' && isBallHolder) {
         // loading: the hands stay ON the ball while play.ts lifts it above the head (no arms ahead of the ball)
+      } else if (pass.a.pose === 'overhead' && phEv) {
+        // phased throw follow-through: the hands leave the ball at the release grip points and keep going along the
+        // pass line (arms extend toward the receiver, wrists snap down), then relax as the action blends out
+        const rel = sampleBall(play, phEv.t0) as V3;
+        const d3 = norm([phEv.dir[0], phEv.dir[1], 0]);
+        const v = smooth((tc - phEv.t0) / 0.16);
+        blend(pass.w, add(add(gripWrist(rel, side), mul(d3, 0.3 * v)), [0, 0, -0.12 * v]), norm(add(mul(chestR, side), [0, 0, -0.4])));
       } else if (pass.a.pose === 'overhead') {
         // two hands above the head, then snapped forward over the defenders
         const up = smooth(tt / 0.45);
