@@ -155,7 +155,7 @@ def build(variant):
     words = json.load(open(os.path.join(D, f"ddtr-{variant}.words.json")))
     ep["subtitleGroups"] = groups(words)
     ep["subtitleBlock"] = True
-    ep["subtitleYAt"] = [["Now-0.15", "Hit-0.05", 300], ["Same-0.15", "to the corner.>+0.1", 300]]   # O3/X3 sit low in the choice and skip cameras: captions to the top
+    ep["subtitleYAt"] = [["Now-0.15", "Here-0.2", 300], ["Same-0.15", "to the corner.>+0.1", 300]]   # O3/X3 low in the choice/skip cameras, O1/X1 low in the payoff camera (V1 QC): captions to the top
     ep["music"] = {"src": "tactical/ddtr/music.mp3", "volume": 1}
     json.dump(ep, open(os.path.join(D, f"{eid}.json"), "w"), indent=1, ensure_ascii=False)
     shutil.copyfile(os.path.join(D, f"ddtr-{variant}.words.json"), os.path.join(D, f"{eid}.words.json"))
