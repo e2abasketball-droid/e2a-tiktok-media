@@ -13,26 +13,26 @@
  "shots": [
   {
    "id": "hook",
-   "name": "HOOK B (cam HOOK, tag_roll S063->S082): X3 loads and steps inside; O3 in the corner, O5 rolling; no pass, no result",
+   "name": "HOOK B (cam HOOK, tag_roll S065->S083): X3 loads and steps inside; O3 in the corner, O5 rolling; no pass, no result",
    "at": 0,
    "play": "B",
    "branch": "tag_roll",
    "remap": [
     [
      0,
-     2.1
+     2.1667
     ],
     [
-     0.5,
-     2.2333
+     0.4,
+     2.2667
     ],
     [
      2.5,
-     2.6
+     2.6333
     ],
     [
      3.257,
-     2.7333
+     2.7667
     ]
    ],
    "camera": [
@@ -672,13 +672,13 @@
      "rig": {
       "type": "orbit",
       "target": [
-       3.4,
+       4.0,
        2.0,
        1.6
       ],
-      "dist": 14,
-      "pitch": 68,
-      "yaw": -40,
+      "dist": 13,
+      "pitch": 64,
+      "yaw": -50,
       "fov": 46
      }
     }
@@ -840,6 +840,11 @@
   [
    "Same-0.15",
    "Skip+0.0",
+   300
+  ],
+  [
+   "Skip+1.0667",
+   "That's-0.15",
    300
   ]
  ],

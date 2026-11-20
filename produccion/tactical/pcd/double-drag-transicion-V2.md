@@ -8,7 +8,7 @@
 - **Promesa (qué aprende, ve o gana dentro del vídeo):** reconocer qué tiro concede el primer paso de X3 en un Double Drag: bandeja (si se queda) o triple de esquina (si ayuda).
 - **Curiosidad (qué sabe al principio y qué pregunta concreta le queda):** ve a X3 entre dos responsabilidades y el pie que empieza a cargar. La pregunta es cuál de las dos va a quitar y qué deja libre: «Layup or three?».
 - **Disruptividad (palanca: ángulo):** se mira al defensor sin balón, no al manejador. La cámara 3/4 a media altura desde el lado débil centra su pie. El cambio de patrón ocurre dentro de la jugada: el mismo fotograma lleva a dos desenlaces.
-- **Comienzo visible (fotograma 0 y qué cambia en el primer segundo, sin audio):** X3 parado justo antes de su primer apoyo (escena S063). El pie carga y arranca hacia dentro a los ≈ 0,2 s, con una marca roja pequeña bajo él. O3 sigue en la esquina. El pase y su resultado no se ven.
+- **Comienzo visible (fotograma 0 y qué cambia en el primer segundo, sin audio):** X3 parado justo antes de su primer apoyo (escena S065). Transfiere el peso desde E 0,2 s (S066,5) y despega el pie derecho del suelo en E 0,4 s (S068), hacia dentro, con una marca roja pequeña bajo él. O3 sigue en la esquina. El pase y su resultado no se ven.
 - **Primera evidencia (cuándo ve algo que cumple parte de la promesa):** E 3,3–5,0 s, las dos pantallas sobre X1 (O5 primero en S032, O4 después en S053). E 5,0–8,2 s, la separación ROLL/POP.
 - **Primer desenlace (qué sucede, escena y corte donde se confirma):** `stay_home`. Pase S084, recepción por delante S098, dos apoyos, suelta S116, canasta S131 y caída, en un solo plano (E ≈ 10,2–14,0 s).
 - **Reenganche (pregunta nueva que nace de lo aprendido):** «Same play. Now watch him step in.» Vuelta atrás al mismo fotograma de decisión (S058–S068) y con la misma cámara que el gancho. Ahora X3 sí entra.
@@ -17,7 +17,7 @@
 - **Pregunta final (qué intervención le corresponde al usuario):** «You're guarding the corner. Help or stay home?». Va sobre el mismo fotograma de decisión, con X3 identificado, y el plano termina en el gesto del inicio (bucle).
 
 ## Aperturas candidatas (al menos 2; etiquetas de prueba)
-- H-A: «Layup or three? Watch this foot.» | «LAYUP OR THREE?» → «WATCH THIS FOOT» | plano HOOK (3/4 lado débil, S063→S082)
+- H-A: «Layup or three? Watch this foot.» | «LAYUP OR THREE?» → «WATCH THIS FOOT» | plano HOOK (3/4 lado débil, S065→S083)
 - H-B: «Take away the layup. What opens up?» | «TAKE AWAY THE LAYUP» → «WHAT OPENS UP?» | el mismo plano
 - H-V1 (referencia, no se renderiza): «One step changes the shot.» Es la apertura declarativa de la V1 y queda como comparativa.
 - Elegida: se entregan H-A y H-B como variante A/B de una sola variable (lo pide el brief). Si hay que publicar solo una, H-A, porque nombra los dos desenlaces y el objeto que hay que mirar.

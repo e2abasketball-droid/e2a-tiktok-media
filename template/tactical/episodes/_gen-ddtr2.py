@@ -30,16 +30,17 @@ PAY0 = orb([-1.2, 5.0, 1.0], 11, 62, -128)           # weak-side baseline 3/4: O
 PAY1 = orb([0.3, 2.4, 1.2], 11, 62, -128)            # catch (66 deg), ball >= 130 px from X5's body, rim in frame
 SKIP0 = orb([0.5, 4.6, 1.0], 11, 68, 80)             # ball side, low: the skip flies away, O3 catches FACING the camera
 SKIP1 = orb([5.4, 2.7, 1.0], 11, 68, 80)
-SHOT = orb([3.4, 2.0, 1.6], 14, 68, -40)             # weak wing: O3 in profile (load, release), rim and net in frame
+SHOT = orb([4.0, 2.0, 1.6], 13, 64, -50)             # weak wing: O3 in profile (load, release), rim and net in frame;
+#   preview 1 had O3 at x 110 px (cropped, the V1 fault): now O3 x 250, rim x 870, X3 >= 140 px from O3
 
 HOOK_END = 3.257      # = "Two"-0.1 in both voice tracks (the body is sample-identical from the splice at 3.168 s)
-HOOK_REMAP = [[0, S(63)], [0.5, S(67)], [2.5, S(78)], [HOOK_END, S(82)]]   # first motion of X3 at ~0.2 s; pass hidden
+HOOK_REMAP = [[0, S(65)], [0.4, S(68)], [2.5, S(79)], [HOOK_END, S(83)]]   # X3 weight shift from S066.5 (E 0.2 s), right foot off the floor S068 (E 0.4 s); pass (S086) hidden
 
 
 def opening(variant):
     c1, c2, sw = ((["LAYUP OR THREE?"], ["WATCH THIS FOOT"], "Watch-0.12") if variant == "a" else
                   (["TAKE AWAY THE LAYUP"], ["WHAT OPENS UP?"], "What-0.12"))
-    return [{"id": "hook", "name": f"HOOK {variant.upper()} (cam HOOK, tag_roll S063->S082): X3 loads and steps inside; O3 in the corner, O5 rolling; no pass, no result",
+    return [{"id": "hook", "name": f"HOOK {variant.upper()} (cam HOOK, tag_roll S065->S083): X3 loads and steps inside; O3 in the corner, O5 rolling; no pass, no result",
              "at": 0, "play": "B", "branch": "tag_roll",
              "remap": HOOK_REMAP,
              "camera": [key(0, HOOK), key(HOOK_END, HOOK_IN, "linear")],
@@ -145,7 +146,7 @@ def build(variant):
     words = json.load(open(os.path.join(D, f"ddtr2-{variant}.words.json")))
     ep["subtitleGroups"] = groups(words)
     ep["subtitleBlock"] = True
-    ep["subtitleYAt"] = [["If-0.15", "hit-0.1", 300], ["Same-0.15", "Skip+0.0", 300]]   # X3's feet are low in the HOOK camera
+    ep["subtitleYAt"] = [["If-0.15", "hit-0.1", 300], ["Same-0.15", "Skip+0.0", 300], [f"Skip+{round(32 / 30, 4)}", "That's-0.15", 300]]   # X3's feet are low in the HOOK camera
     ep["music"] = {"src": "tactical/ddtr/v2-music.mp3", "volume": 1}
     json.dump(ep, open(os.path.join(D, f"{eid}.json"), "w"), indent=1, ensure_ascii=False)
     shutil.copyfile(os.path.join(D, f"ddtr2-{variant}.words.json"), os.path.join(D, f"{eid}.words.json"))

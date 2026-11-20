@@ -42,7 +42,7 @@ PLAYERS = [P("O1", "O", "Point guard: pushes the ball, uses both drags"),
 OFF = {
  "O1": {0: (-2.40, 13.40), 18: (-2.25, 10.75), 36: (-1.80, 8.87), 50: (-0.22, 8.98), 65: (1.25, 8.06), 75: (2.45, 7.36), 84: (3.17, 6.52), 94: (3.56, 5.98), 105: (3.76, 5.60), 120: (3.86, 5.45), 138: (3.91, 5.42)},
  "O2": {0: (5.70, 8.40), 18: (5.94, 6.20), 36: (6.35, 3.90), 50: (6.62, 2.30), 65: (6.86, 1.43), 75: (6.86, 1.38), 138: (6.87, 1.45)},
- "O3": {0: (-5.85, 8.10), 18: (-6.03, 6.10), 36: (-6.44, 4.20), 50: (-6.71, 2.97), 65: (-6.88, 2.33), 75: (-6.87, 2.34), 138: (-6.83, 2.35)},
+ "O3": {0: (-5.85, 8.10), 18: (-6.03, 6.10), 36: (-6.44, 4.20), 50: (-6.75, 2.97), 65: (-7.00, 2.33), 75: (-6.99, 2.34), 138: (-6.95, 2.35)},
  "O4": {0: (-0.40, 13.76), 18: (0.25, 11.46), 36: (0.57, 9.15), 53: (0.55, 7.48), 67: (0.55, 7.48), 84: (-0.38, 8.84), 94: (-1.11, 9.34), 105: (-1.32, 9.48), 120: (-1.36, 9.49), 138: (-1.34, 9.51)},
  "O5": {0: (-0.28, 12.60), 18: (-0.91, 9.55), 32: (-1.12, 8.05), 48: (-1.12, 8.05), 65: (-0.95, 6.38), 75: (-0.93, 5.22), 84: (-0.89, 4.15), 94: (-0.58, 3.03), 105: (-0.37, 2.18), 120: (-0.62, 1.83), 138: (-0.95, 1.78)},
 }
@@ -56,7 +56,7 @@ DEF = {
 # B (sec. 5 "Cambio de B"): shared until S065
 B_X3 = {66: (-5.43, 2.86), 75: (-4.84, 2.77), 84: (-3.83, 2.69), 94: (-2.55, 2.71), 101: (-2.09, 2.78), 108: (-2.40, 2.73), 123: (-4.06, 2.58), 142: (-5.49, 2.53), 162: (-5.86, 2.53)}
 B_O5 = {75: (-0.93, 5.22), 84: (-0.89, 4.15), 94: (-0.58, 3.03), 101: (-0.32, 2.58), 108: (-0.20, 2.28), 123: (0.39, 2.21), 138: (1.00, 2.25), 156: (1.08, 2.31)}
-B_O3 = {75: (-6.87, 2.34), 156: (-6.79, 2.40)}
+B_O3 = {75: (-6.99, 2.34), 156: (-6.91, 2.40)}
 B_X5 = {105: (0.03, 3.13), 120: (0.85, 2.95), 138: (1.45, 2.95), 156: (1.55, 2.90)}   # B: X5 trails O5 (brief gives no B column)
 ADJUST = [   # anchors moved or added (reported in the tactical sheet); times never moved unless said
  "O5: screen hold S032-S048 (brief: both feet set 'cerca de S031'; arriving at S031 from the flying start was a 24 m/s2 stop)",
@@ -73,6 +73,7 @@ ADJUST = [   # anchors moved or added (reported in the tactical sheet); times ne
  "X4: S084 (4.04, 6.18) -> (3.85, 6.35): smaller containment step, the reversal back to O4 was 25 m/s2",
  "V2 (2026-11-20, owner brief Double-Drag-V2 sec. 5.3/5.4): DUR S158 -> S200; A layup S113 -> S116 (O5 controls 0.6 s before the gather: catch, two steps, takeoff readable), make S131; B shot S127 -> S133 (the auto 'shoot' load began 0.5 s before t0 = BEFORE the catch at S114: catch, absorb and load were one blur), make S163 + ball through the net, O3's follow-through and landing to S193",
  "X3 (B, V2): closeout anchors S138 -> S142, S156 -> S162 (the release moved to S133; O3 keeps >= 1.8 m at the release = the late closeout the brief describes)",
+ "O3 (V2 control data): x -0.12 m from S050 on (S065 (-6.88, 2.33) -> (-7.00, 2.33), B (-6.87/-6.79) -> (-6.99/-6.91)): at the catch his inner toe was at |x| 6.593 m, ON the corner line (|x| 6.60 = 2 points); now every sole is >= 6.70 m out and <= 7.0 m (sideline 7.50)",
  "all players: first waypoint flagged 'fly' (new engine option): the S-clock begins mid-transition; clamped runs started from rest (O5 30 m/s2 at S000)"]
 DUR = S(200)   # V2 (2026-11-20): S158 -> S200, the B three is seen through the net (+8-15 frames) and the A layup lands
 

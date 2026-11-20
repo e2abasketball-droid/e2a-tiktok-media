@@ -189,27 +189,27 @@
    ],
    [
     1.6667,
-    6.71,
+    6.75,
     2.97
    ],
    [
     2.1667,
-    6.88,
+    7.0,
     2.33
    ],
    [
     2.5,
-    6.87,
+    6.99,
     2.34
    ],
    [
     5.2,
-    6.79,
+    6.91,
     2.4
    ],
    [
     6.6667,
-    6.79,
+    6.91,
     2.4
    ]
   ],
@@ -845,6 +845,7 @@
    "X4: S084 (4.04, 6.18) -> (3.85, 6.35): smaller containment step, the reversal back to O4 was 25 m/s2",
    "V2 (2026-11-20, owner brief Double-Drag-V2 sec. 5.3/5.4): DUR S158 -> S200; A layup S113 -> S116 (O5 controls 0.6 s before the gather: catch, two steps, takeoff readable), make S131; B shot S127 -> S133 (the auto 'shoot' load began 0.5 s before t0 = BEFORE the catch at S114: catch, absorb and load were one blur), make S163 + ball through the net, O3's follow-through and landing to S193",
    "X3 (B, V2): closeout anchors S138 -> S142, S156 -> S162 (the release moved to S133; O3 keeps >= 1.8 m at the release = the late closeout the brief describes)",
+   "O3 (V2 control data): x -0.12 m from S050 on (S065 (-6.88, 2.33) -> (-7.00, 2.33), B (-6.87/-6.79) -> (-6.99/-6.91)): at the catch his inner toe was at |x| 6.593 m, ON the corner line (|x| 6.60 = 2 points); now every sole is >= 6.70 m out and <= 7.0 m (sideline 7.50)",
    "all players: first waypoint flagged 'fly' (new engine option): the S-clock begins mid-transition; clamped runs started from rest (O5 30 m/s2 at S000)"
   ]
  },

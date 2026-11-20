@@ -114,3 +114,16 @@ Todo es opcional y se activa por jugada o por episodio. Lo que no lo usa no camb
   - `tools/blender/catch_pilot.py`: bpy 5.3; recepción en mallas desde el lateral y a tres cuartos, con distancias balón–tronco y balón–mano medidas en la malla y `--inject behind` para provocar el fallo a propósito.
 - **Comparativa controlada:** `_gen-slip-lab.py` y `_gen-ddtr-lab.py` renderizan la misma jugada, cámara y ventana con el perfil anterior y con el nuevo.
 - **MPFB 2.0.18:** clonado (assets CC0). No se pudo instalar como extensión de Blender en la sesión (bloqueado por el clasificador de permisos), así que sigue el pipeline CC0 de `tools/blender/build_player.py`.
+
+## Double Drag V2 + método PCD (2026-11-20)
+- **Apertura PCD:** ficha `produccion/tactical/pcd/<id>.md` (plantilla `PLANTILLA-PCD.md`, herramienta `tools/pcd.py`), enlazada desde el guion con `PCD: <ruta>`. El gate `script` la valida.
+- **Cámaras elegidas con números, no a ojo.** Además de `cam-probe`, el reel V2 usó rejillas de separación proyectada (yaw × pitch × dist) con estos criterios:
+  - balón frente al cuerpo de los defensores (caja 0–2 m × 0,3 m);
+  - frente del receptor en la recepción (ángulo rumbo–cámara < 90°);
+  - aro y receptor dentro del marco seguro;
+  - escala del sujeto (X3 ≈ 330 px de alto = 110 px a 360 px de ancho).
+  - Los scripts están en `tactical/episodes/_gen-ddtr2.py`, junto a cada cámara.
+- **Resultado de tiro protegido:** el plano del tiro se corta con un ancla del remapeo posterior al evento de resultado (balón bajo el plano del aro S166). La V1 cortaba en S157 = la llegada al aro. La jugada se alarga (`duration`) hasta cubrir la red y la caída.
+- **Carga de tiro posterior a la recepción:** la acción automática `shoot` empieza 0,5 s antes de `t0`. Con `t0 − 0,5 < t1` del pase, la recepción y la carga se funden. Hay que dejar `t0 ≥ t1 + 0,6`.
+- **Suelas y línea de tres:** `tactical/episodes/_control-ddtr2.py` mide toe/ankle de ambos pies contra |x| > 6,60 en la esquina y d > 6,75 en el arco. En la V2 el pie interior de O3 estaba a 6,593 m, sobre la línea, y se corrigió.
+- **Regresión «pase por dentro del cuerpo»:** `bash scripts/regress-catch.sh`. El fixture `tactical/regress/regress-pass-through-body.json` debe FALLAR en `qc-catch` (`ball_torso`, X5).
