@@ -123,7 +123,11 @@ ep.shots.forEach((shot: any, i: number) => {
   const len = end - start;
   // anchors inside the shot
   const anchors = [...shot.remap.map((k: any) => k[0]), ...shot.camera.map((k: any) => k.at), ...(shot.ov3 ?? []).flatMap((o: any) => [o.from, o.to]), ...(shot.screen ?? []).flatMap((o: any) => [o.from, o.to])].filter((a) => a !== undefined);
+  // (2026-11-20) a NUMERIC negative `from` on an overlay of the opening shot is allowed: it pre-rolls the entry so the
+  // overlay is already fully in on frame 0 (hook title / lock ring readable on the first frame)
+  const preRolled = new Set(i === 0 && start === 0 ? [...(shot.ov3 ?? []), ...(shot.screen ?? [])].map((o: any) => o.from).filter((v: unknown) => typeof v === 'number' && v < 0 && v >= -1) : []);
   for (const a of anchors) {
+    if (preRolled.has(a)) continue;
     const l = toLocal(a);
     if (l < -0.02 || l > len + 0.02) {
       anchorsOut++;

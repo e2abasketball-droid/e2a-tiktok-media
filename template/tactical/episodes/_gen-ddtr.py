@@ -14,8 +14,8 @@ key = lambda at, rig, ease=None: {"at": at, "rig": rig, **({"ease": ease} if eas
 S = lambda n: round(n / 30, 4)
 RED = "#E5483A"
 
-CHOICE = orb([3.6, 3.7, 0.5], 15.5, 42, -108)        # 3/4 high from the offence's LEFT corner: O3, X3, O5, O1 in one line
-CHOICE_IN = orb([3.5, 3.8, 0.5], 14.5, 43, -108)
+CHOICE = orb([2.3, 4.6, 0.5], 19.5, 42, -108)        # 3/4 high from the offence's LEFT corner: O3, X3, O5, O1 in one line
+CHOICE_IN = orb([2.4, 4.5, 0.5], 18.8, 42, -108)
 PUSH0 = orb([1.0, 9.6, 0.5], 21, 50, 15)           # chase of O1 from half court (both screeners arriving, corners)
 PUSH1 = orb([0.2, 7.2, 0.5], 17, 52, 15)
 SPLIT = orb([0.3, 6.3, 0.3], 15, 38, -12)          # high, from behind: the dive goes up the picture, the pop comes down
@@ -35,7 +35,7 @@ def opening(variant):
              "remap": [[0, S(60)], [0.5, S(64)], [2.4, S(76)], [HOOK_END, S(79)]],
              "camera": [key(0, CHOICE), key(HOOK_END, CHOICE_IN, "linear")],
              "ov3": [{"type": "lockRing", "player": "X3", "from": -0.8, "to": HOOK_END}],   # already locked on frame 0
-             "screen": [{"type": "title", "lines": title, "gold": [1], "from": -0.6, "to": HOOK_END, "y": 1580, "size": 92}]}]
+             "screen": [{"type": "title", "lines": title, "gold": [1], "from": -0.6, "to": HOOK_END, "y": 252, "size": 84}]}]
 
 
 def body():
@@ -104,19 +104,19 @@ def body():
                "camera": [key(0, SPLIT), key("You're-0.1", SPLIT)],
                "ov3": [{"type": "arrow3d", "player": "O5", "t0": S(48), "t1": S(100), "draw": 0.3, "from": 0.0, "to": "You're-0.1"},
                        {"type": "arrow3d", "player": "O4", "t0": S(67), "t1": S(100), "draw": 0.3, "from": 0.0, "to": "You're-0.1"}],
-               "screen": [{"type": "title", "lines": ["DOUBLE DRAG"], "sub": "ROLL. POP. ONE CHOICE.", "gold": [0], "from": "Double-0.05", "to": "You're-0.1", "y": 236, "size": 112}]})
+               "screen": [{"type": "title", "lines": ["DOUBLE DRAG"], "sub": "ROLL. POP. ONE CHOICE.", "gold": [0], "from": "Double-0.05", "to": "You're-0.1", "y": 256, "size": 104}]})
     sh.append({"id": "microA", "name": "MICRO REPLAY 1/2 (cam CHOICE): A, X3 stays -> the roller",
                "at": "You're-0.1", "play": "A",
                "remap": [[0, S(64)], ["Help-0.1", S(90)]],
                "camera": [key(0, CHOICE_IN), key("Help-0.1", CHOICE_IN)],
                "ov3": [{"type": "lockRing", "player": "X3", "from": 0.0, "to": "Help-0.1"}],
-               "screen": [{"type": "title", "lines": ["HELP", "OR STAY HOME?"], "gold": [1], "from": 0.0, "to": "Help-0.1", "y": 1580, "size": 92}]})
+               "screen": [{"type": "title", "lines": ["HELP", "OR STAY HOME?"], "gold": [1], "from": 0.0, "to": "Help-0.1", "y": 252, "size": 84}]})
     sh.append({"id": "microB", "name": "MICRO REPLAY 2/2 (cam CHOICE): B, X3 steps in; ends on the hook's gesture (loop), small logo",
                "at": "Help-0.1", "play": "B",
                "remap": [[0, S(62)], ["home?>", S(77)], ["@end", S(79)]],
                "camera": [key(0, CHOICE), key("@end", CHOICE_IN, "linear")],
                "ov3": [{"type": "lockRing", "player": "X3", "from": 0.0, "to": "@end"}],
-               "screen": [{"type": "title", "lines": ["HELP", "OR STAY HOME?"], "gold": [1], "from": 0.0, "to": "home?>", "y": 1580, "size": 92},
+               "screen": [{"type": "title", "lines": ["HELP", "OR STAY HOME?"], "gold": [1], "from": 0.0, "to": "home?>", "y": 252, "size": 84},
                           {"type": "freeze", "label": "YOUR CALL", "from": "home?>", "to": "@end"},
                           {"type": "logo", "from": "home?>-0.1", "to": "@end"}]})
     return sh
@@ -151,11 +151,11 @@ def build(variant):
     ep["keywords"] = ["One step", "two screens", "dive", "arc", "choice", "shooter", "roller", "stride", "game speed",
                       "Same play", "tag the roll", "just left", "corner", "Double Drag", "Help", "stay home", "Stop the layup", "Lose the corner"]
     ep["subtitleHide"] = [[0, "As-0.05"], ["That's-0.3", "home?>+5"]]
-    ep["subtitleY"] = 1560
+    ep["subtitleY"] = 1360   # qc-bounds safe area ends at y 1500 (platform caption band)
     words = json.load(open(os.path.join(D, f"ddtr-{variant}.words.json")))
     ep["subtitleGroups"] = groups(words)
     ep["subtitleBlock"] = True
-    ep["subtitleYAt"] = [["See-0.1", "to the corner.>+0.1", 330]]   # O3 sits low in the skip shot: captions to the top
+    ep["subtitleYAt"] = [["Now-0.15", "Hit-0.05", 300], ["Same-0.15", "to the corner.>+0.1", 300]]   # O3/X3 sit low in the choice and skip cameras: captions to the top
     ep["music"] = {"src": "tactical/ddtr/music.mp3", "volume": 1}
     json.dump(ep, open(os.path.join(D, f"{eid}.json"), "w"), indent=1, ensure_ascii=False)
     shutil.copyfile(os.path.join(D, f"ddtr-{variant}.words.json"), os.path.join(D, f"{eid}.words.json"))
