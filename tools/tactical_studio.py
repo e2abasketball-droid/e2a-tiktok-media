@@ -492,8 +492,28 @@ def script_check(text, c=None):
         missing.append("CASE B or COUNTER")
     words = len(spoken_text(text).split())
     est = words / c["speech"]["words_per_s"] + c["speech"]["designed_pauses_s"] + c["speech"]["tail_s"]
+    pcd = pcd_check(text, c)
+    if pcd.get("missing"):
+        missing.append("PCD: " + ", ".join(pcd["missing"]))
     ok = not missing and c["duration_s"]["min"] <= est <= c["duration_s"]["max"]
-    return {"ok": ok, "missing": missing, "words": words, "estimated_s": round(est, 1)}
+    return {"ok": ok, "missing": missing, "words": words, "estimated_s": round(est, 1), "pcd": pcd}
+
+
+def pcd_check(text, c=None):
+    """PCD hook sheet (2026-11-20, produccion/tactical/pcd/PLANTILLA-PCD.md): the script's line
+    'PCD: produccion/tactical/pcd/<id>.md' points to the episode's sheet, which must pass tools/pcd.py check
+    (stage script). Without the line the script is still accepted (status 'absent') unless cfg pcd.required."""
+    c = c or cfg()
+    m = re.search(r"^\s*PCD\s*:\s*(\S+)\s*$", text, re.M)
+    if not m:
+        return {"status": "absent", "missing": ["no 'PCD: <sheet>' line"] if c.get("pcd", {}).get("required") else []}
+    path = _abs(m.group(1))
+    if not os.path.exists(path):
+        return {"status": "missing_file", "sheet": m.group(1), "missing": [f"sheet not found: {m.group(1)}"]}
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import pcd as _pcd
+    r = _pcd.check(path, "script")
+    return {"status": "ok" if r["ok"] else "incomplete", "sheet": m.group(1), "sha256": sha256(path), "missing": r["missing"]}
 
 
 def freeze_script(st, cid, op, script_path):

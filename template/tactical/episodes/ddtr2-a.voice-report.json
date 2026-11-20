@@ -1,0 +1,108 @@
+{
+ "source": "public/tactical/ddtr/v2-voice-raw.mp3",
+ "source_sec": 21.84,
+ "preroll": 0.1,
+ "output": "public/tactical/ddtr/v2-voice-a.wav",
+ "output_sec": 27.29,
+ "inserted_total_sec": 5.35,
+ "last_word_end": 27.37,
+ "gaps": [
+  {
+   "after": "in transition.",
+   "natural_silence": [
+    4.49,
+    4.9
+   ],
+   "natural_sec": 0.41,
+   "target_sec": 0.6,
+   "inserted_sec": 0.19,
+   "cut_at_source": 4.755,
+   "why": "O4 plants the second screen before the split"
+  },
+  {
+   "after": "The second pops.",
+   "natural_silence": [
+    7.4,
+    7.79
+   ],
+   "natural_sec": 0.39,
+   "target_sec": 0.7,
+   "inserted_sec": 0.31,
+   "cut_at_source": 7.535,
+   "why": "POP lands, cut back to the decision"
+  },
+  {
+   "after": "in stride.",
+   "natural_silence": [
+    11.03,
+    11.38
+   ],
+   "natural_sec": 0.35,
+   "target_sec": 2.3,
+   "inserted_sec": 1.95,
+   "cut_at_source": 11.205,
+   "why": "catch, two steps, takeoff, ball through the rim, landing"
+  },
+  {
+   "after": "Same play.",
+   "natural_silence": [
+    12.06,
+    12.44
+   ],
+   "natural_sec": 0.38,
+   "target_sec": 0.5,
+   "inserted_sec": 0.12,
+   "cut_at_source": 12.335,
+   "why": "rewind to the shared decision frame"
+  },
+  {
+   "after": "step in.",
+   "natural_silence": [
+    13.52,
+    13.86
+   ],
+   "natural_sec": 0.34,
+   "target_sec": 0.2,
+   "inserted_sec": 0.0,
+   "cut_at_source": 13.685,
+   "why": "X3's first step inside"
+  },
+  {
+   "after": "he leave?",
+   "natural_silence": [
+    16.14,
+    16.51
+   ],
+   "natural_sec": 0.37,
+   "target_sec": 0.4,
+   "inserted_sec": 0.03,
+   "cut_at_source": 16.405,
+   "why": "brief breath before the skip (brief sec. 4)"
+  },
+  {
+   "after": "Skip it to the corner.",
+   "natural_silence": [
+    17.58,
+    17.88
+   ],
+   "natural_sec": 0.3,
+   "target_sec": 2.6,
+   "inserted_sec": 2.3,
+   "cut_at_source": 17.765,
+   "why": "flight, catch, load, release, ball through the net + 12 frames, at 1x"
+  },
+  {
+   "after": "Double Drag.",
+   "natural_silence": [
+    19.02,
+    19.37
+   ],
+   "natural_sec": 0.35,
+   "target_sec": 0.8,
+   "inserted_sec": 0.45,
+   "cut_at_source": 19.245,
+   "why": "return to the decision frame"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}

@@ -1,0 +1,850 @@
+{
+ "id": "ddtr2-main-b",
+ "title": "Double Drag",
+ "fps": 30,
+ "voice": "tactical/ddtr/v2-voice-b.wav",
+ "voiceMix": "tactical/ddtr/v2-voice-b.mix.wav",
+ "preroll": 0.1,
+ "tail": 2.65,
+ "plays": {
+  "A": "ddtr-a-roll",
+  "B": "ddtr-b-skip"
+ },
+ "shots": [
+  {
+   "id": "hook",
+   "name": "HOOK B (cam HOOK, tag_roll S063->S082): X3 loads and steps inside; O3 in the corner, O5 rolling; no pass, no result",
+   "at": 0,
+   "play": "B",
+   "branch": "tag_roll",
+   "remap": [
+    [
+     0,
+     2.1
+    ],
+    [
+     0.5,
+     2.2333
+    ],
+    [
+     2.5,
+     2.6
+    ],
+    [
+     3.257,
+     2.7333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       3.0,
+       3.7,
+       0.6
+      ],
+      "dist": 12,
+      "pitch": 48,
+      "yaw": -100,
+      "fov": 46
+     }
+    },
+    {
+     "at": 3.257,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       3.0,
+       3.6,
+       0.6
+      ],
+      "dist": 11.2,
+      "pitch": 48,
+      "yaw": -100,
+      "fov": 46
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "spot",
+     "player": "X3",
+     "r": 0.42,
+     "color": "#E5483A",
+     "strength": 0.55,
+     "from": 0.15,
+     "to": 2.3
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "TAKE AWAY THE LAYUP"
+     ],
+     "gold": [],
+     "from": -0.6,
+     "to": "What-0.12",
+     "y": 252,
+     "size": 76
+    },
+    {
+     "type": "title",
+     "lines": [
+      "WHAT OPENS UP?"
+     ],
+     "gold": [
+      0
+     ],
+     "from": "What-0.12",
+     "to": 3.257,
+     "y": 252,
+     "size": 76
+    }
+   ]
+  },
+  {
+   "id": "screens",
+   "name": "TWO SCREENS (cam 3/4 weak wing): stay_home S018->S064, O5 sets on X1 (S032), then O4 (S053); X1's long route",
+   "at": 3.257,
+   "play": "A",
+   "branch": "stay_home",
+   "remap": [
+    [
+     0,
+     0.6
+    ],
+    [
+     "The first-0.1",
+     2.1333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.2,
+       9.4,
+       0.6
+      ],
+      "dist": 12,
+      "pitch": 56,
+      "yaw": -100,
+      "fov": 46
+     }
+    },
+    {
+     "at": "The first-0.1",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.8,
+       8.0,
+       0.6
+      ],
+      "dist": 12,
+      "pitch": 56,
+      "yaw": -100,
+      "fov": 46
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "spot",
+     "player": "O5",
+     "r": 0.55,
+     "strength": 0.5,
+     "from": "screens",
+     "to": "transition."
+    },
+    {
+     "type": "spot",
+     "player": "O4",
+     "r": 0.55,
+     "strength": 0.5,
+     "from": "transition.+0.3",
+     "to": "The first-0.1"
+    }
+   ],
+   "screen": []
+  },
+  {
+   "id": "split",
+   "name": "SPLIT (cam high, short): stay_home S056->S092, O5 dives (ROLL), O4 opens (POP); thin arrows born with the move",
+   "at": "The first-0.1",
+   "play": "A",
+   "branch": "stay_home",
+   "remap": [
+    [
+     0,
+     1.8667
+    ],
+    [
+     "rolls.>",
+     2.4
+    ],
+    [
+     "pops.>",
+     2.9333
+    ],
+    [
+     "If-0.15",
+     3.0667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.3,
+       6.3,
+       0.3
+      ],
+      "dist": 15,
+      "pitch": 38,
+      "yaw": -12,
+      "fov": 46
+     }
+    },
+    {
+     "at": "If-0.15",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.3,
+       6.3,
+       0.3
+      ],
+      "dist": 15,
+      "pitch": 38,
+      "yaw": -12,
+      "fov": 46
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "arrow3d",
+     "player": "O5",
+     "t0": 1.8667,
+     "t1": 3.2667,
+     "draw": 0.6,
+     "from": "screener",
+     "to": "pops."
+    },
+    {
+     "type": "arrow3d",
+     "player": "O4",
+     "t0": 2.2333,
+     "t1": 3.2,
+     "draw": 0.6,
+     "from": "second",
+     "to": "If-0.4"
+    }
+   ],
+   "screen": [
+    {
+     "type": "pin",
+     "player": "O5",
+     "text": "ROLL",
+     "from": "rolls.",
+     "to": "The second",
+     "size": 38
+    },
+    {
+     "type": "pin",
+     "player": "O4",
+     "text": "POP",
+     "from": "pops.",
+     "to": "If-0.4",
+     "size": 38
+    }
+   ]
+  },
+  {
+   "id": "choice",
+   "name": "STAY HOME (cam HOOK, same composition): stay_home S062->S081, X3 holds near O3; one brief ring",
+   "at": "If-0.15",
+   "play": "A",
+   "branch": "stay_home",
+   "remap": [
+    [
+     0,
+     2.0667
+    ],
+    [
+     "home,>",
+     2.6
+    ],
+    [
+     "hit-0.1",
+     2.7
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       3.0,
+       3.7,
+       0.6
+      ],
+      "dist": 12,
+      "pitch": 48,
+      "yaw": -100,
+      "fov": 46
+     }
+    },
+    {
+     "at": "hit-0.1",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       3.0,
+       3.6,
+       0.6
+      ],
+      "dist": 11.2,
+      "pitch": 48,
+      "yaw": -100,
+      "fov": 46
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "lockRing",
+     "player": "X3",
+     "from": "corner",
+     "to": "home,>"
+    }
+   ],
+   "screen": []
+  },
+  {
+   "id": "payoff",
+   "name": "PAYOFF stay_home (cam weak-side baseline 3/4): O1 picks up S080, pass S084, catch in front S098, two steps, release S116, make S131, landing",
+   "at": "hit-0.1",
+   "play": "A",
+   "branch": "stay_home",
+   "remap": [
+    [
+     0,
+     2.6667
+    ],
+    [
+     "stride.",
+     3.1333
+    ],
+    [
+     "stride.>",
+     3.5333
+    ],
+    [
+     "stride.>+1.04",
+     4.3667
+    ],
+    [
+     "Same-0.15",
+     4.7333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.2,
+       5.0,
+       1.0
+      ],
+      "dist": 11,
+      "pitch": 62,
+      "yaw": -128,
+      "fov": 46
+     }
+    },
+    {
+     "at": "stride.",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.3,
+       2.4,
+       1.2
+      ],
+      "dist": 11,
+      "pitch": 62,
+      "yaw": -128,
+      "fov": 46
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "Same-0.15",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.3,
+       2.4,
+       1.2
+      ],
+      "dist": 11,
+      "pitch": 62,
+      "yaw": -128,
+      "fov": 46
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ballPath",
+     "src": "O1",
+     "dst": "O5",
+     "draw": 0.3,
+     "from": 0.12,
+     "to": "roller>"
+    }
+   ],
+   "screen": []
+  },
+  {
+   "id": "rehook",
+   "name": "SAME PLAY (cam HOOK): rewind, tag_roll S058->S068, X3's first step inside (same decision frame as stay_home)",
+   "at": "Same-0.15",
+   "play": "B",
+   "branch": "tag_roll",
+   "remap": [
+    [
+     0,
+     3.3333
+    ],
+    [
+     0.35,
+     1.9333,
+     "inOut"
+    ],
+    [
+     "Now",
+     2.0667
+    ],
+    [
+     "He-0.15",
+     2.2667
+    ],
+    [
+     "He-0.1",
+     2.3
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       3.0,
+       3.7,
+       0.6
+      ],
+      "dist": 12,
+      "pitch": 48,
+      "yaw": -100,
+      "fov": 46
+     }
+    },
+    {
+     "at": "He-0.1",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       3.0,
+       3.6,
+       0.6
+      ],
+      "dist": 11.2,
+      "pitch": 48,
+      "yaw": -100,
+      "fov": 46
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "spot",
+     "player": "X3",
+     "r": 0.42,
+     "color": "#E5483A",
+     "strength": 0.55,
+     "from": "watch him",
+     "to": "He-0.1"
+    }
+   ],
+   "screen": [
+    {
+     "type": "rewind",
+     "from": 0,
+     "to": 0.35
+    }
+   ]
+  },
+  {
+   "id": "tag",
+   "name": "TAG (cam HOOK_IN): tag_roll S069->S089, X3 goes to the roll line, O1 turns to the corner, release S086",
+   "at": "He-0.1",
+   "play": "B",
+   "branch": "tag_roll",
+   "remap": [
+    [
+     0,
+     2.3
+    ],
+    [
+     "roll.>",
+     2.6333
+    ],
+    [
+     "leave?>",
+     2.8333
+    ],
+    [
+     "Skip-0.1",
+     2.8667
+    ],
+    [
+     "Skip+0.0",
+     2.9667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       3.0,
+       3.6,
+       0.6
+      ],
+      "dist": 11.2,
+      "pitch": 48,
+      "yaw": -100,
+      "fov": 46
+     }
+    },
+    {
+     "at": "Skip+0.0",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       3.0,
+       3.6,
+       0.6
+      ],
+      "dist": 11.2,
+      "pitch": 48,
+      "yaw": -100,
+      "fov": 46
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ghost",
+     "player": "X3",
+     "t": 2.2,
+     "link": true,
+     "from": "Who",
+     "to": "Skip+0.0"
+    }
+   ],
+   "screen": []
+  },
+  {
+   "id": "skip",
+   "name": "SKIP (cam ball side, low, pans with the ball): tag_roll S089->S121 at 1x, O3 catches facing the camera, absorbs, starts the load",
+   "at": "Skip+0.0",
+   "play": "B",
+   "branch": "tag_roll",
+   "remap": [
+    [
+     0,
+     2.9667
+    ],
+    [
+     1.0667,
+     4.0333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.5,
+       4.6,
+       1.0
+      ],
+      "dist": 11,
+      "pitch": 68,
+      "yaw": 80,
+      "fov": 46
+     }
+    },
+    {
+     "at": 0.8333,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       5.4,
+       2.7,
+       1.0
+      ],
+      "dist": 11,
+      "pitch": 68,
+      "yaw": 80,
+      "fov": 46
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": 1.0667,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       5.4,
+       2.7,
+       1.0
+      ],
+      "dist": 11,
+      "pitch": 68,
+      "yaw": 80,
+      "fov": 46
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ballPath",
+     "src": "O1",
+     "dst": "O3",
+     "draw": 0.3,
+     "from": 0.0,
+     "to": 0.5333
+    }
+   ],
+   "screen": []
+  },
+  {
+   "id": "shot3",
+   "name": "CORNER THREE (cam weak wing, O3 in profile): tag_roll S121->S193 at ~1x, release S133, ball through the rim S163-S166, net, follow-through, landing",
+   "at": "Skip+1.0667",
+   "play": "B",
+   "branch": "tag_roll",
+   "remap": [
+    [
+     0,
+     4.0333
+    ],
+    [
+     "That's-0.15",
+     6.4333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       3.4,
+       2.0,
+       1.6
+      ],
+      "dist": 14,
+      "pitch": 68,
+      "yaw": -40,
+      "fov": 46
+     }
+    }
+   ],
+   "screen": []
+  },
+  {
+   "id": "close",
+   "name": "CLOSE (cam HOOK): back to the decision frame, tag_roll S060->S080 (the step again, loops into the hook); small title, question, logo",
+   "at": "That's-0.15",
+   "play": "B",
+   "branch": "tag_roll",
+   "remap": [
+    [
+     0,
+     2.0
+    ],
+    [
+     "@end",
+     2.6667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       3.0,
+       3.7,
+       0.6
+      ],
+      "dist": 12,
+      "pitch": 48,
+      "yaw": -100,
+      "fov": 46
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       3.0,
+       3.6,
+       0.6
+      ],
+      "dist": 11.2,
+      "pitch": 48,
+      "yaw": -100,
+      "fov": 46
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "lockRing",
+     "player": "X3",
+     "from": "You're",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "DOUBLE DRAG"
+     ],
+     "gold": [
+      0
+     ],
+     "from": "That's",
+     "to": "You're-0.1",
+     "y": 252,
+     "size": 72
+    },
+    {
+     "type": "title",
+     "lines": [
+      "HELP",
+      "OR STAY HOME?"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "You're-0.1",
+     "to": "@end",
+     "y": 252,
+     "size": 76
+    },
+    {
+     "type": "logo",
+     "from": "stay home?>-0.1",
+     "to": "@end"
+    }
+   ]
+  }
+ ],
+ "variant": "V2-Hook-B",
+ "branches": {
+  "stay_home": "A",
+  "tag_roll": "B"
+ },
+ "env": "academy",
+ "pinV2": true,
+ "autoSfx": false,
+ "keywords": [
+  "foot",
+  "rolls",
+  "pops",
+  "corner defender",
+  "roller",
+  "Same play",
+  "step in",
+  "corner",
+  "Double Drag",
+  "Help",
+  "stay home",
+  "layup",
+  "three"
+ ],
+ "subtitleHide": [
+  [
+   0,
+   "Two-0.05"
+  ],
+  [
+   "That's-0.3",
+   "stay home?>+5"
+  ]
+ ],
+ "subtitleY": 1360,
+ "subtitleGroups": [
+  4,
+  3,
+  4,
+  4,
+  3,
+  6,
+  5,
+  2,
+  5,
+  3,
+  4,
+  4,
+  5,
+  3,
+  4,
+  4
+ ],
+ "subtitleBlock": true,
+ "subtitleYAt": [
+  [
+   "If-0.15",
+   "hit-0.1",
+   300
+  ],
+  [
+   "Same-0.15",
+   "Skip+0.0",
+   300
+  ]
+ ],
+ "music": {
+  "src": "tactical/ddtr/v2-music.mp3",
+  "volume": 1
+ }
+}

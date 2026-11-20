@@ -1,0 +1,58 @@
+{
+ "id": "ddtr2-a",
+ "title": "Double Drag in transition V2",
+ "fps": 30,
+ "voiceRaw": "tactical/ddtr/v2-voice-raw.mp3",
+ "wordsRaw": "ddtr2-a.words-raw.json",
+ "voice": "tactical/ddtr/v2-voice-a.wav",
+ "voiceMix": "tactical/ddtr/v2-voice-a.mix.wav",
+ "preroll": 0.1,
+ "tail": 2.65,
+ "gaps": [
+  {
+   "after": "in transition.",
+   "sec": 0.6,
+   "why": "O4 plants the second screen before the split"
+  },
+  {
+   "after": "The second pops.",
+   "sec": 0.7,
+   "why": "POP lands, cut back to the decision"
+  },
+  {
+   "after": "in stride.",
+   "sec": 2.3,
+   "why": "catch, two steps, takeoff, ball through the rim, landing"
+  },
+  {
+   "after": "Same play.",
+   "sec": 0.5,
+   "why": "rewind to the shared decision frame"
+  },
+  {
+   "after": "step in.",
+   "sec": 0.2,
+   "why": "X3's first step inside"
+  },
+  {
+   "after": "he leave?",
+   "sec": 0.4,
+   "why": "brief breath before the skip (brief sec. 4)"
+  },
+  {
+   "after": "Skip it to the corner.",
+   "sec": 2.6,
+   "why": "flight, catch, load, release, ball through the net + 12 frames, at 1x"
+  },
+  {
+   "after": "Double Drag.",
+   "sec": 0.8,
+   "why": "return to the decision frame"
+  }
+ ],
+ "plays": {
+  "A": "ddtr-a-roll",
+  "B": "ddtr-b-skip"
+ },
+ "shots": []
+}

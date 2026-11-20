@@ -54,7 +54,7 @@ DEF = {
  "X5": {0: (-0.65, 9.92), 18: (0.10, 8.89), 36: (-0.15, 7.06), 50: (0.02, 7.05), 65: (-0.02, 6.89), 75: (-0.05, 6.02), 84: (-0.04, 5.28), 94: (-0.03, 4.14), 105: (0.03, 3.25), 120: (0.20, 2.64), 138: (0.48, 2.62)},
 }
 # B (sec. 5 "Cambio de B"): shared until S065
-B_X3 = {66: (-5.43, 2.86), 75: (-4.84, 2.77), 84: (-3.83, 2.69), 94: (-2.55, 2.71), 101: (-2.09, 2.78), 108: (-2.40, 2.73), 123: (-4.06, 2.58), 138: (-5.49, 2.53), 156: (-5.86, 2.53)}
+B_X3 = {66: (-5.43, 2.86), 75: (-4.84, 2.77), 84: (-3.83, 2.69), 94: (-2.55, 2.71), 101: (-2.09, 2.78), 108: (-2.40, 2.73), 123: (-4.06, 2.58), 142: (-5.49, 2.53), 162: (-5.86, 2.53)}
 B_O5 = {75: (-0.93, 5.22), 84: (-0.89, 4.15), 94: (-0.58, 3.03), 101: (-0.32, 2.58), 108: (-0.20, 2.28), 123: (0.39, 2.21), 138: (1.00, 2.25), 156: (1.08, 2.31)}
 B_O3 = {75: (-6.87, 2.34), 156: (-6.79, 2.40)}
 B_X5 = {105: (0.03, 3.13), 120: (0.85, 2.95), 138: (1.45, 2.95), 156: (1.55, 2.90)}   # B: X5 trails O5 (brief gives no B column)
@@ -71,8 +71,10 @@ ADJUST = [   # anchors moved or added (reported in the tactical sheet); times ne
  "X3: stop S065-S066 in A and B (the brief's 'planta inicial' at S066; B's own S066 coordinate (-5.40, 2.88) -> the shared S065 spot): X3 is still at the decision and B only diverges after it",
  "X3 (B): S108 (-2.73, 2.69) -> (-2.40, 2.73): the brake-and-reverse in 0.23 s was a 31 m/s2 jerk (he still brakes at S101 and closes out from S108)",
  "X4: S084 (4.04, 6.18) -> (3.85, 6.35): smaller containment step, the reversal back to O4 was 25 m/s2",
+ "V2 (2026-11-20, owner brief Double-Drag-V2 sec. 5.3/5.4): DUR S158 -> S200; A layup S113 -> S116 (O5 controls 0.6 s before the gather: catch, two steps, takeoff readable), make S131; B shot S127 -> S133 (the auto 'shoot' load began 0.5 s before t0 = BEFORE the catch at S114: catch, absorb and load were one blur), make S163 + ball through the net, O3's follow-through and landing to S193",
+ "X3 (B, V2): closeout anchors S138 -> S142, S156 -> S162 (the release moved to S133; O3 keeps >= 1.8 m at the release = the late closeout the brief describes)",
  "all players: first waypoint flagged 'fly' (new engine option): the S-clock begins mid-transition; clamped runs started from rest (O5 30 m/s2 at S000)"]
-DUR = S(158)
+DUR = S(200)   # V2 (2026-11-20): S158 -> S200, the B three is seen through the net (+8-15 frames) and the A layup lands
 
 
 def track(anchors, dur=DUR):
@@ -117,10 +119,10 @@ def actions(kind):
         "O1": [{"type": "face", "from": S(70 if kind == "a" else 76), "to": S(84 if kind == "a" else 86), "face": "O5" if kind == "a" else "O3"}],
     }
     if kind == "a":
-        a["X5"].append({"type": "contest", "from": S(108), "to": S(124)})
-        a["O5"].append({"type": "celebrate", "from": S(140), "to": DUR - 0.05})
+        a["X5"].append({"type": "contest", "from": S(110), "to": S(128)})
+        a["O5"].append({"type": "celebrate", "from": S(146), "to": DUR - 0.05})
     else:
-        a["O3"] = [{"type": "catchReady", "from": S(96), "to": S(114), "face": "O1"}, {"type": "celebrate", "from": S(158) - 0.6, "to": DUR - 0.05}]
+        a["O3"] = [{"type": "catchReady", "from": S(96), "to": S(114), "face": "O1"}, {"type": "celebrate", "from": S(170), "to": DUR - 0.05}]
     return a
 
 
@@ -130,13 +132,13 @@ def ball(kind):
     if kind == "a":
         ev += [{"type": "hold", "player": "O1", "from": S(80), "to": S(84)},
                {"type": "pass", "from": "O1", "to": "O5", "t0": S(84), "t1": S(98), "style": "chest", "eyes": 0.45, "lead": True},
-               {"type": "hold", "player": "O5", "from": S(98), "to": S(113)},
-               {"type": "layup", "player": "O5", "t0": S(113), "t1": S(128), "make": True}]
+               {"type": "hold", "player": "O5", "from": S(98), "to": S(116)},
+               {"type": "layup", "player": "O5", "t0": S(116), "t1": S(131), "make": True}]
     else:
         ev += [{"type": "hold", "player": "O1", "from": S(77), "to": S(86)},
                {"type": "pass", "from": "O1", "to": "O3", "t0": S(86), "t1": S(114), "style": "overhead", "eyes": 0.4},
-               {"type": "hold", "player": "O3", "from": S(114), "to": S(127)},
-               {"type": "shot", "player": "O3", "t0": S(127), "t1": S(157), "make": True, "three": True}]
+               {"type": "hold", "player": "O3", "from": S(114), "to": S(133)},
+               {"type": "shot", "player": "O3", "t0": S(133), "t1": S(163), "make": True, "three": True}]
     return ev
 
 
@@ -149,7 +151,7 @@ def spec(kind):
          "sclock": {"fps": 30, "mirrorX": True, "shared_until": 65, "anchors": "brief sec. 5", "adjust": ADJUST}}
     common = {"start": 0, "screen1": S(32), "screen1off": S(48), "screen2": S(53), "screen2hit": S(62), "screen2off": S(67), "cross": S(40), "gather": S(80)}
     if kind == "a":
-        s["marks"] = {**common, "decide": S(66), "pass": S(84), "catch": S(98), "release": S(113), "make": S(128), "end": DUR}
+        s["marks"] = {**common, "decide": S(66), "pass": S(84), "catch": S(98), "release": S(116), "make": S(131), "end": DUR}
         s["claims"] = [
             {"type": "near", "a": "O5", "b": "X1", "at": "screen1", "max": 1.6, "says": "the guard gets two screens in a row (1st: O5 on X1)"},
             {"type": "near", "a": "O4", "b": "X1", "at": "screen2hit", "max": 1.8, "says": "two screens in a row (2nd: O4 on X1)"},
@@ -160,7 +162,7 @@ def spec(kind):
         s["notes"] = ["Brief sec. 5 anchors (mirrored to repo axes). X3 stays connected to O3.",
                       "O1 leads O5 in stride (S084 -> S095); O5 finishes on the left of the rim, release ~S113."]
     else:
-        s["marks"] = {**common, "gather": S(77), "decide": S(66), "tag": S(75), "pass": S(86), "catch": S(114), "release": S(127), "make": S(157), "end": DUR}
+        s["marks"] = {**common, "gather": S(77), "decide": S(66), "tag": S(75), "pass": S(86), "catch": S(114), "release": S(133), "make": S(163), "end": DUR}
         s["claims"] = [
             {"type": "reacts_after", "player": "X3", "event": "decide", "min": 0.05, "says": "This time, he steps in to tag the roll."},
             {"type": "far", "a": "X3", "b": "O3", "at": "pass", "min": 2.5, "says": "See what he just left?"},

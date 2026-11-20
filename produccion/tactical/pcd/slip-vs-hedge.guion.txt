@@ -1,0 +1,7 @@
+PCD: produccion/tactical/pcd/slip-vs-hedge.md
+HOOK: He left before the screen. Who's open?
+SETUP: The big comes up to set the ball screen. His defender jumps out to hedge before it even lands.
+CASE A: So the screener slips. Plant, open up, dive to the rim. Over the top, catch in stride, layup.
+CASE B: Same start. Now he waits. The screen is real, the big drops, so the guard stops and pulls up.
+TAKEAWAY: He shows early? Slip it. He waits? Use the screen.
+CTA: You're guarding the screener. Show early, or wait?

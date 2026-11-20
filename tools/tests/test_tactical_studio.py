@@ -297,6 +297,24 @@ class TestSelectionAndScript(Base):
             ts.freeze_script(self.st, CID, "s2", long)
         self.assertTrue(ts.script_check(SCRIPT)["ok"], ts.script_check(SCRIPT))
 
+    def test_script_pcd_sheet_gate(self):
+        """2026-11-20 PCD method: a script that points to its PCD sheet is refused until the sheet is complete;
+        the Double Drag V2 sheet (the worked example) passes; a script without the line keeps working."""
+        self.assertEqual(ts.script_check(SCRIPT)["pcd"]["status"], "absent")
+        sys.path.insert(0, os.path.join(ts.ROOT, "tools"))
+        import pcd
+        blank = os.path.join(self.tmp, "blank-pcd.md")
+        pcd.new("test-cid", blank)
+        r = ts.script_check(f"PCD: {blank}\n" + SCRIPT)
+        self.assertFalse(r["ok"]); self.assertEqual(r["pcd"]["status"], "incomplete")
+        example = "produccion/tactical/pcd/double-drag-transicion-V2.md"
+        r = ts.script_check(f"PCD: {example}\n" + SCRIPT)
+        self.assertTrue(r["ok"], r); self.assertEqual(r["pcd"]["status"], "ok")
+        self.assertTrue(pcd.check(os.path.join(ts.ROOT, example), "render")["ok"])
+        self.assertNotIn("PCD", ts.spoken_text(f"PCD: {example}\n" + SCRIPT))
+        r = ts.script_check("PCD: produccion/tactical/pcd/does-not-exist.md\n" + SCRIPT)
+        self.assertFalse(r["ok"])
+
     def test_script_changed_after_freeze_is_refused(self):
         self.drive(CID, "scripted")
         p = os.path.join(self.tmp, f"{CID}.script.txt")

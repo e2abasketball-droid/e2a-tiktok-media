@@ -4,8 +4,35 @@ Decisión del dueño, 2026-11-14 20:11 UTC: "a partir de ahora todos los vídeos
 
 Este documento describe el formato. **No autoriza por sí solo publicar ni cambiar tareas programadas.**
 
+## Ficha PCD de la apertura (obligatoria desde 2026-11-20, antes del storyboard)
+Todo vídeo E2A nuevo empieza por su **ficha PCD (Promesa, Curiosidad, Disruptividad)**. Va antes que el guion y el storyboard. Origen: encargo del dueño «Double Drag V2 y método PCD».
+1. **Crear:** `python3 tools/pcd.py new --cid <id> --out produccion/tactical/pcd/<id>.md --ficha <FICHA-TACTICA.md>`.
+   - Con ficha táctica, la ficha PCD hereda el título, las jugadas y las dos lecturas como BORRADOR.
+   - Los 11 campos son: público, promesa, curiosidad, disruptividad, comienzo visible, primera evidencia, primer desenlace, reenganche, segundo desenlace, variante A/B y pregunta final.
+   - Se añaden 2 aperturas candidatas como mínimo y la elegida.
+2. **Guion:** la primera línea de `guion.txt` es `PCD: produccion/tactical/pcd/<id>.md`.
+   - El gate `T script` (`tools/tactical_studio.py script_check`) rechaza el guion si la ficha no pasa `python3 tools/pcd.py check <ficha>`.
+   - Sin esa línea el guion se acepta con `pcd.status = absent`. Pasa a ser obligatoria si el dueño pone `"pcd": {"required": true}` en la configuración, tras la fusión.
+3. **Gancho en imagen:** el plano, la frase y el primer movimiento cuentan el mismo problema.
+   - El sujeto es legible a 360 px de ancho.
+   - Hay una primera pista de movimiento en 0–0,4 s.
+   - Hay una sola señal visual por vez.
+   - El resultado queda oculto hasta el desenlace.
+4. **Puerta editorial antes del render final:** `python3 tools/pcd.py check <ficha> --stage render`. Comprueba:
+   - los primeros 1–2 s, a tamaño de móvil y sin audio;
+   - el tramo hasta la primera evidencia;
+   - el fotograma donde se cumple la promesa (el resultado de cada tiro se ve);
+   - que el final cierre la pregunta;
+   - que la variante A/B cambie una sola variable.
+5. **Tras publicar:** se registran los datos observables o «sin dato». Son hipótesis: una sola pareja de publicaciones no prueba el PCD.
+
+**Referencias:**
+- Plantilla: `produccion/tactical/pcd/PLANTILLA-PCD.md`. Las versiones anteriores del estándar se recuperan con `git log -- produccion/tactical/pcd/` y `git show <sha>:<ruta>`.
+- Ejemplo completo (renderizado, ganchos A/B): `produccion/tactical/pcd/double-drag-transicion-V2.md`, generador `template/tactical/episodes/_gen-ddtr2.py`.
+- Muestra nueva hecha con la plantilla: `produccion/tactical/pcd/slip-vs-hedge.md` + `slip-vs-hedge.guion.txt` (pasa el gate `script`).
+
 ## Ficha técnica
-- Vertical 1080×1920, 30 fps, H.264/AAC 48 kHz, **32–36 s**, inglés.
+- Vertical 1080×1920, 30 fps, H.264/AAC 48 kHz, **32–36 s**, inglés. (Double Drag V2, 2026-11-20: ≈ 30 s cuando la apertura PCD y los desenlaces completos lo piden. Se protege el resultado de cada tiro y se recorta la explicación repetida.)
 - Voz E2A en inglés (Deuce, eleven_v4 con etiquetas de tono). Gancho firme con el verbo clave acentuado; la frase de lectura más lenta; la orden clave seca.
 - Mezcla a −14 LUFS ±1, pico ≤ −1 dBTP, ganancia fija al final (sin loudnorm sobre la mezcla). Música propia discreta; solo SFX de contacto.
 - Subtítulos con tiempos reales de palabra, palabras clave en dorado.
