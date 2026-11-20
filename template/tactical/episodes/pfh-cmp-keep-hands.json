@@ -1,0 +1,71 @@
+{
+ "id": "pfh-cmp-keep-hands",
+ "title": "Pistol Fake Handoff test keep hands",
+ "fps": 30,
+ "voice": "tactical/pfh/voice-a.wav",
+ "voiceMix": "tactical/pfh/voice-a.mix.wav",
+ "preroll": 0.1,
+ "tail": 2.3,
+ "plays": {
+  "A": "pfh-keep",
+  "B": "pfh-give"
+ },
+ "shots": [
+  {
+   "id": "t",
+   "name": "keep S030->S066 0.30x",
+   "at": 0,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.0
+    ],
+    [
+     4.0,
+     2.2
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.3,
+       6.2,
+       1.0
+      ],
+      "dist": 5.4,
+      "pitch": 60,
+      "yaw": -20,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": [
+    {
+     "type": "debugPhase",
+     "label": "KEEP",
+     "from": 0,
+     "to": 4.0
+    }
+   ]
+  }
+ ],
+ "branches": {
+  "keep": "A",
+  "give": "B"
+ },
+ "env": "academy",
+ "pinV2": true,
+ "autoSfx": false,
+ "subtitleHide": [
+  [
+   0,
+   999
+  ]
+ ]
+}

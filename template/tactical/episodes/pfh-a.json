@@ -1,0 +1,23 @@
+{
+"id": "pfh-a",
+"title": "Pistol Fake Handoff in transition",
+"fps": 30,
+"voiceRaw": "tactical/pfh/voice-raw.mp3",
+"wordsRaw": "pfh-a.words-raw.json",
+"voice": "tactical/pfh/voice-a.wav",
+"voiceMix": "tactical/pfh/voice-a.mix.wav",
+"preroll": 0.1,
+"tail": 2.3,
+"gapFill": "silence",
+"gaps": [
+{"after": "is a lie.", "sec": 0.95, "why": "hook window shared with B (2.74 s line): the body starts at the same time in A and B"},
+{"after": "chases his pass.", "sec": 0.45, "why": "O2 settles on both feet, O1 arrives"},
+{"after": "wing's hands.", "sec": 0.3, "why": "the offer"},
+{"after": "his defender.", "sec": 0.35, "why": "X2's first step inside"},
+{"after": "the baseline.", "sec": 4.6, "why": "drive, layup, ball through the rim + the alternate-angle replay of the fake"},
+{"after": "handoff back.", "sec": 2.3, "why": "give: the real handoff, both pairs of hands, the new owner, then KEEP/GIVE mirror"},
+{"after": "fake handoff.", "sec": 0.35, "why": "back to the decision frame"}
+],
+"plays": {"A": "pfh-keep", "B": "pfh-give"},
+"shots": []
+}

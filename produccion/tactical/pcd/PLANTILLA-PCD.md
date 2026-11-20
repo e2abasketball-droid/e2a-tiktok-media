@@ -5,7 +5,7 @@ Método de ganchos **PCD: Promesa, Curiosidad, Disruptividad** (encargo del due�
 - **Crear:** `python3 tools/pcd.py new --cid <id> --out produccion/tactical/pcd/<id>.md --ficha <FICHA-TACTICA.md>`. Si existe ficha táctica, la ficha PCD hereda de ella el título, las jugadas y las dos lecturas (como BORRADOR).
 - **Validar:** `python3 tools/pcd.py check produccion/tactical/pcd/<id>.md` (antes del guion) y `--stage render` (antes del render final).
 - **Gate:** la primera línea del guion es `PCD: produccion/tactical/pcd/<id>.md`. `T script` rechaza el guion si la ficha está incompleta.
-- **Ejemplo completo:** `produccion/tactical/pcd/double-drag-transicion-V2.md` (reel Double Drag V2, ganchos A/B).
+- **Ejemplos completos:** `produccion/tactical/pcd/double-drag-transicion-V2.md` (reel Double Drag V2, ganchos A/B; palanca: ángulo) y `produccion/tactical/pcd/pistol-fake-handoff.md` (reel Pistol Fake Handoff, ganchos A/B; palanca: idea comprobable en el balón).
 
 **Principio.** Una persona sabe qué mirar al comienzo y prevé qué va a recibir si se queda. El plano, la frase y el primer movimiento cuentan el mismo problema. La brecha de curiosidad tiene una respuesta filmable. La disruptividad sale del ángulo de comunicación, de la idea o del formato: elige la palanca que de verdad aporta al tema. El sonido solo añade énfasis donde la imagen ya funciona.
 

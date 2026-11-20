@@ -785,7 +785,10 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
     // (2026-11-20, phased overhead throw) after the pick-up the dribble's blend-out no longer pulls the off hand away
     // from the ball (it did for 5 frames: a one-hand rise before the load, the 'which hand?' defect)
     const phHold = isBallHolder && !inDribble && play.ball.some((e) => e.type === 'pass' && e.from === id && (e as {phased?: boolean}).phased && play.ball.some((h) => h.type === 'hold' && h.player === id && !h.dribble && tc >= h.from - 1e-6 && tc <= h.to + 1e-6 && Math.abs(h.to - e.t0) < 1e-6));
-    if (dribble.w > 0 && isBallHolder && !phHold) {
+    // (2026-11-20, Pistol) the same for a chest-POCKET hold: the next dribble's blend-in does not pull a hand off the
+    // held ball before the dribble starts
+    const pkHold = isBallHolder && !inDribble && play.ball.some((h) => h.type === 'hold' && h.player === id && !h.dribble && !!(h as {pocket?: boolean}).pocket && tc >= h.from - 1e-6 && tc <= h.to + 1e-6);
+    if (dribble.w > 0 && isBallHolder && !phHold && !pkHold) {
       // the hand meets the ball in the top of its bounce and waits at hip height while it hits the floor
       // handed dribble (crossover, 2026-11-15): the hand on the ball's side dribbles, the other arm protects
       const hev = play.ball.find((e) => e.type === 'hold' && e.player === id && e.dribble && tc >= e.from && tc <= e.to);
@@ -871,6 +874,16 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
     }
     // celebrate: small fist pump
     blend(celebrate.w, L(0.15, 0.2, -0.05 + 0.08 * Math.sin(tc * 12)), norm(add(mul(chestR, side), [0, 0, -1])));
+    // hand-ball clearance (2026-11-20, Pistol Fake Handoff, opt-in play.handBallClear): a player who neither holds the
+    // ball nor is reaching for a pass to him keeps his wrist out of a sphere around it, so a run swing or an offered
+    // hand next to someone else's ball (the fake handoff) cannot put fingers INSIDE the ball (keep S045: 4 cm from
+    // its centre). The receiver of a pass/hand-off is exempt inside his reach window (incoming), and so is the passer.
+    if ((play as {handBallClear?: boolean}).handBallClear && !isBallHolder && !incoming && !ho) {
+      const rc = BALL_R + D.hand + 0.02;
+      const dv = sub(tgt, ball.pos as V3);
+      const dl = Math.hypot(dv[0], dv[1], dv[2]);
+      if (dl < rc) tgt = add(ball.pos as V3, mul(dl > 1e-6 ? mul(dv, 1 / dl) : chestF, rc));
+    }
     hand.push(tgt);
     elbowPoles.push(pole);
   }

@@ -141,6 +141,42 @@ const rigOf = (scene: THREE.Object3D, clipBones: ClipBone[]): Rig => {
   return {bones, rest3, root: bones.get(clipBones[0].name)!.parent!};
 };
 
+
+// ---------------------------------------------------------------- cloth fix (2026-11-20, Pistol Fake Handoff close 3/4)
+// At hook distance the posed body skin poked through the jersey / shorts near the straps, neck and hems (jagged white /
+// skin edges that read as torn shirts). 'academy' look only. Tried and dropped: dropping the skin triangles under the
+// cloth + inflating the cloth (the straps sank deeper than the margin: shredded shoulders) and copying the body's skin
+// weights onto the cloth (nearest / K-nearest: shards following the arms, the piping flew off).
+// Kept: (1) the jersey and shorts are drawn FRONT faces only (the glb marks them double-sided: the navy / white
+// triangles at the straps and neck were the INSIDE of the shirt seen through the gaps); (2) a view-space depth bias:
+// jersey 3 cm (+5 cm on the top 12 cm: straps, neck), shorts 5 cm, piping 3.6 cm (+5 cm on the straps).
+// view-space depth bias: the cloth is drawn as if it were d metres closer to the camera (depth only: position on screen
+// unchanged), so skin that pokes through it by less than d stays hidden behind the jersey / shorts; the trims get a
+// little more so the piping stays on top of the cloth edge. An arm in front of the torso is > d away in practice.
+const clothBias = (mat: THREE.Material, d: number, strap = 0) => {
+  mat.onBeforeCompile = (sh) => {
+    if (strap) sh.vertexShader = 'attribute float e2aStrap;\n' + sh.vertexShader;
+    sh.vertexShader = sh.vertexShader.replace('#include <project_vertex>', `#include <project_vertex>
+  {
+    vec4 mvB = mvPosition; mvB.z += ${d.toFixed(4)}${strap ? ` + ${strap.toFixed(4)} * e2aStrap` : ''};
+    vec4 pB = projectionMatrix * mvB;
+    gl_Position.z = pB.z / pB.w * gl_Position.w;
+  }`);
+  };
+  mat.customProgramCacheKey = () => `e2a-clothbias-${d}-${strap}`;
+  mat.needsUpdate = true;
+};
+// shoulder straps and neck: the top 12 cm of the jersey (bind pose, y up) get up to `strap` more bias (they sank up to
+// ~7 cm under the posed deltoid / trapezius skin), fading out over the next 8 cm
+const strapWeights = (g: THREE.BufferGeometry) => {
+  if (g.getAttribute('e2aStrap')) return;
+  const P = g.attributes.position; let top = -1e9;
+  for (let i = 0; i < P.count; i++) top = Math.max(top, P.getY(i));
+  const w = new Float32Array(P.count);
+  for (let i = 0; i < P.count; i++) { const dy = top - P.getY(i); w[i] = dy <= 0.12 ? 1 : Math.max(0, 1 - (dy - 0.12) / 0.08); }
+  g.setAttribute('e2aStrap', new THREE.BufferAttribute(w, 1));
+};
+
 /** one independent instance of a player mesh: own skeleton (pose state), own skin and jersey materials */
 type Inst = {obj: THREE.Object3D; rig: Rig};
 const instances = new Map<string, Inst>();
@@ -187,6 +223,18 @@ const instanceOf = (template: THREE.Group, key: string, bonesDesc: ClipBone[], l
     });
     m.material = Array.isArray(m.material) ? mats : mats[0];
   });
+  if (look.profile === 'academy') {
+    obj.traverse((o) => {
+      const m = o as THREE.Mesh;
+      if (!m.isMesh) return;
+      for (const mt of Array.isArray(m.material) ? m.material : [m.material]) {
+        if (mt.name.startsWith('E2A_jersey')) { strapWeights(m.geometry); clothBias(mt, 0.03, 0.05); mt.side = THREE.FrontSide; }
+        else if (mt.name.startsWith('E2A_shorts')) { clothBias(mt, 0.05); mt.side = THREE.FrontSide; }
+        else if (mt.name.startsWith('E2A_trim') && m.name.includes('Jersey')) { strapWeights(m.geometry); clothBias(mt, 0.036, 0.05); }
+        else if (mt.name.startsWith('E2A_trim')) clothBias(mt, 0.036);
+      }
+    });
+  }
   // rest orientations measured on the template's bind pose (the clone shares it)
   it = {obj, rig: rigOf(obj, bonesDesc)};
   instances.set(k, it);

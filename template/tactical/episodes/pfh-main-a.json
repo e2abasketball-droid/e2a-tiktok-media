@@ -1,0 +1,820 @@
+{
+ "id": "pfh-main-a",
+ "title": "Pistol Fake Handoff",
+ "fps": 30,
+ "voice": "tactical/pfh/voice-a.wav",
+ "voiceMix": "tactical/pfh/voice-a.mix.wav",
+ "preroll": 0.1,
+ "tail": 2.3,
+ "plays": {
+  "A": "pfh-keep",
+  "B": "pfh-give"
+ },
+ "shots": [
+  {
+   "id": "hook",
+   "name": "HOOK A (cam HOOK close 3/4, keep S041->S052.5): ball before O2's hip, O1's hands arriving, X2 turns; cut before the ball's owner is resolved",
+   "at": 0,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.3667
+    ],
+    [
+     0.55,
+     1.5167
+    ],
+    [
+     1.35,
+     1.65
+    ],
+    [
+     2.8,
+     1.75
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.3,
+       6.2,
+       1.0
+      ],
+      "dist": 5.4,
+      "pitch": 60,
+      "yaw": -20,
+      "fov": 40
+     }
+    },
+    {
+     "at": 2.8,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.3,
+       6.2,
+       1.05
+      ],
+      "dist": 4.8,
+      "pitch": 62,
+      "yaw": -22,
+      "fov": 40
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "spot",
+     "player": "X2",
+     "r": 0.45,
+     "color": "#E5483A",
+     "strength": 0.5,
+     "from": 0.55,
+     "to": 2.8
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "THIS HANDOFF",
+      "IS A LIE."
+     ],
+     "gold": [
+      1
+     ],
+     "from": -0.6,
+     "to": 2.8,
+     "y": 252,
+     "size": 76
+    }
+   ]
+  },
+  {
+   "id": "entry",
+   "name": "ENTRY (cam tracking from the right slot): keep S000->S038, O1 pushes it ahead (S010), O2 catches in front (S029), O1 chases his pass",
+   "at": 2.8,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "pushes",
+     0.3333
+    ],
+    [
+     "ahead,>",
+     0.9667
+    ],
+    [
+     "Watch-0.03",
+     1.2667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O1",
+        "O2"
+       ],
+       "z": 0.8
+      },
+      "dist": 10.5,
+      "pitch": 52,
+      "yaw": -12,
+      "fov": 44
+     }
+    },
+    {
+     "at": "Watch-0.03",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O1",
+        "O2"
+       ],
+       "z": 0.9
+      },
+      "dist": 8.0,
+      "pitch": 56,
+      "yaw": -14,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ballPath",
+     "src": "O1",
+     "dst": "O2",
+     "draw": 0.3,
+     "from": "pushes",
+     "to": "ahead,>"
+    }
+   ],
+   "screen": []
+  },
+  {
+   "id": "fake",
+   "name": "FAKE (cam lateral from the inside): keep S038->S050, O2 settled on both feet, presents the ball, O1 offers hands; X2's first step inside",
+   "at": "Watch-0.03",
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.2667
+    ],
+    [
+     "hands.",
+     1.5
+    ],
+    [
+     "He bites-0.04",
+     1.6667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.2,
+       6.3,
+       0.95
+      ],
+      "dist": 6.2,
+      "pitch": 57,
+      "yaw": -8,
+      "fov": 40
+     }
+    },
+    {
+     "at": "He bites-0.04",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.2,
+       6.3,
+       0.95
+      ],
+      "dist": 5.7,
+      "pitch": 57,
+      "yaw": -10,
+      "fov": 40
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "route",
+     "player": "O1",
+     "t0": 1.2667,
+     "t1": 1.8333,
+     "width": 0.06,
+     "draw": 0.5,
+     "from": 0.1,
+     "to": "hands.>"
+    },
+    {
+     "type": "spot",
+     "player": "X2",
+     "r": 0.45,
+     "color": "#E5483A",
+     "strength": 0.5,
+     "from": "Now",
+     "to": "He bites-0.04"
+    }
+   ],
+   "screen": []
+  },
+  {
+   "id": "reveal",
+   "name": "REVEAL (cam 3/4 following O2): keep S050->S070, O1 passes empty-handed, O2 pulls the ball back across his body, first bounce, X2 replants",
+   "at": "He bites-0.04",
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.6667
+    ],
+    [
+     "on the handoff.>",
+     1.7833
+    ],
+    [
+     "keeps it.>",
+     2.0
+    ],
+    [
+     "way.>+0.08",
+     2.3333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O2",
+       "z": 1.0,
+       "window": 0.5
+      },
+      "dist": 6.6,
+      "pitch": 64,
+      "yaw": -22,
+      "fov": 40
+     }
+    },
+    {
+     "at": "way.>+0.08",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O2",
+       "z": 0.9,
+       "window": 0.5
+      },
+      "dist": 7.4,
+      "pitch": 62,
+      "yaw": -40,
+      "fov": 40
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [],
+   "screen": [
+    {
+     "type": "stamp",
+     "text": "STILL HIS BALL",
+     "tone": "gold",
+     "y": 300,
+     "from": "keeps",
+     "to": "way."
+    }
+   ]
+  },
+  {
+   "id": "drive",
+   "name": "BASELINE DRIVE (cam 3/4 from the inside of the lane): keep S070->S152, drive, X5 late from the top, gather, layup S110->S124, ball through the rim, landing",
+   "at": "way.>+0.08",
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     2.3333
+    ],
+    [
+     "baseline.>",
+     3.3333
+    ],
+    [
+     "baseline.>+1.3",
+     4.2
+    ],
+    [
+     "baseline.>+2.95",
+     5.0667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O2",
+       "z": 0.9,
+       "lead": 0.25,
+       "window": 0.6
+      },
+      "dist": 8.5,
+      "pitch": 66,
+      "yaw": -75,
+      "fov": 44
+     }
+    },
+    {
+     "at": "baseline.>",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": "O2",
+       "z": 0.9,
+       "lead": 0.25,
+       "window": 0.6
+      },
+      "dist": 8.5,
+      "pitch": 66,
+      "yaw": -75,
+      "fov": 44
+     }
+    },
+    {
+     "at": "baseline.>+1.0",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.2,
+       2.2,
+       1.6
+      ],
+      "dist": 8.5,
+      "pitch": 70,
+      "yaw": -80,
+      "fov": 44
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "baseline.>+2.95",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.2,
+       2.2,
+       1.6
+      ],
+      "dist": 8.5,
+      "pitch": 70,
+      "yaw": -80,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "openSpace",
+     "at": [
+      -4.3,
+      3.3
+     ],
+     "r": 0.5,
+     "rx": 2.1,
+     "angle": 0.65,
+     "from": 0,
+     "to": "baseline."
+    }
+   ],
+   "screen": []
+  },
+  {
+   "id": "replay",
+   "name": "REPLAY (cam elevated): keep S043->S062, the fake again: dashed apparent route (handoff back) vs solid real route (O2 to the baseline)",
+   "at": "baseline.>+2.95",
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     5.0667
+    ],
+    [
+     0.3,
+     1.4333,
+     "inOut"
+    ],
+    [
+     "Same-0.1",
+     2.0667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.0,
+       5.9,
+       0.4
+      ],
+      "dist": 8.0,
+      "pitch": 24,
+      "yaw": -10,
+      "fov": 44
+     }
+    },
+    {
+     "at": "Same-0.1",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.0,
+       5.9,
+       0.4
+      ],
+      "dist": 8.0,
+      "pitch": 24,
+      "yaw": -10,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "route",
+     "player": "O2",
+     "pts": [
+      [
+       -5.55,
+       6.55
+      ],
+      [
+       -4.75,
+       6.35
+      ],
+      [
+       -3.9,
+       5.95
+      ]
+     ],
+     "t0": 0,
+     "t1": 1,
+     "dashed": true,
+     "width": 0.09,
+     "draw": 0.4,
+     "color": "#FFFFFF",
+     "from": 0.35,
+     "to": "Same-0.1"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 1.8,
+     "t1": 2.8,
+     "width": 0.11,
+     "draw": 0.6,
+     "from": 0.8,
+     "to": "Same-0.1"
+    }
+   ],
+   "screen": [
+    {
+     "type": "rewind",
+     "from": 0,
+     "to": 0.3
+    }
+   ]
+  },
+  {
+   "id": "give",
+   "name": "GIVE (cam FAKE, same frame): give S036->S066, X2 keeps the baseline, O2 presents, the real handoff S047->S055, O1 the new owner, first step inside",
+   "at": "Same-0.1",
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.2
+    ],
+    [
+     "shut,>",
+     1.5
+    ],
+    [
+     "back.>",
+     1.8667
+    ],
+    [
+     "back.>+0.35",
+     2.1333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.2,
+       6.3,
+       0.95
+      ],
+      "dist": 6.2,
+      "pitch": 57,
+      "yaw": -8,
+      "fov": 40
+     }
+    },
+    {
+     "at": "back.>+0.35",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.2,
+       6.3,
+       0.95
+      ],
+      "dist": 5.7,
+      "pitch": 57,
+      "yaw": -10,
+      "fov": 40
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "spot",
+     "player": "X2",
+     "r": 0.45,
+     "color": "#E5483A",
+     "strength": 0.45,
+     "from": "If",
+     "to": "shut,>"
+    }
+   ],
+   "screen": []
+  },
+  {
+   "id": "mirror-keep",
+   "name": "MIRROR KEEP (cam FAKE, same frame and play frames as the give mirror): keep S046->S058",
+   "at": "back.>+0.35",
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.5333
+    ],
+    [
+     "back.>+1.2",
+     1.9333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.2,
+       6.3,
+       0.95
+      ],
+      "dist": 6.2,
+      "pitch": 57,
+      "yaw": -8,
+      "fov": 40
+     }
+    }
+   ],
+   "screen": [
+    {
+     "type": "stamp",
+     "text": "KEEP",
+     "tone": "gold",
+     "y": 300,
+     "from": 0.05,
+     "to": "back.>+1.2"
+    }
+   ]
+  },
+  {
+   "id": "mirror-give",
+   "name": "MIRROR GIVE (cam FAKE): give S046->S058",
+   "at": "back.>+1.2",
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.5333
+    ],
+    [
+     "That's-0.08",
+     1.9333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.2,
+       6.3,
+       0.95
+      ],
+      "dist": 6.2,
+      "pitch": 57,
+      "yaw": -8,
+      "fov": 40
+     }
+    }
+   ],
+   "screen": [
+    {
+     "type": "stamp",
+     "text": "GIVE",
+     "tone": "white",
+     "y": 300,
+     "from": 0.05,
+     "to": "That's-0.08"
+    }
+   ]
+  },
+  {
+   "id": "close",
+   "name": "CLOSE (cam HOOK): back to the decision frame, keep S036->S046 (ends on the hook's opening image); title, question, logo",
+   "at": "That's-0.08",
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.1333
+    ],
+    [
+     "bite?>+2.3",
+     1.3667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.3,
+       6.2,
+       1.0
+      ],
+      "dist": 5.4,
+      "pitch": 60,
+      "yaw": -20,
+      "fov": 40
+     }
+    },
+    {
+     "at": "bite?>+2.3",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.3,
+       6.2,
+       1.0
+      ],
+      "dist": 5.4,
+      "pitch": 60,
+      "yaw": -20,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "PISTOL",
+      "FAKE HANDOFF"
+     ],
+     "gold": [
+      1
+     ],
+     "from": "That's",
+     "to": "Would-0.1",
+     "y": 252,
+     "size": 76
+    },
+    {
+     "type": "title",
+     "lines": [
+      "WOULD YOU BITE?"
+     ],
+     "gold": [
+      0
+     ],
+     "from": "Would-0.1",
+     "to": "bite?>+2.3",
+     "y": 252,
+     "size": 76
+    },
+    {
+     "type": "logo",
+     "from": "bite?>+0.2",
+     "to": "bite?>+2.3"
+    }
+   ]
+  }
+ ],
+ "variant": "Hook-A",
+ "branches": {
+  "keep": "A",
+  "give": "B"
+ },
+ "env": "academy",
+ "pinV2": true,
+ "autoSfx": false,
+ "keywords": [
+  "handoff",
+  "hands",
+  "defender",
+  "bites",
+  "keeps",
+  "wrong way",
+  "baseline",
+  "Same setup",
+  "lane",
+  "handoff back",
+  "Pistol",
+  "fake handoff",
+  "bite"
+ ],
+ "subtitleHide": [
+  [
+   0,
+   "The-0.05"
+  ],
+  [
+   "That's-0.3",
+   "bite?>+2.3"
+  ]
+ ],
+ "subtitleY": 1350,
+ "subtitleGroups": [
+  2,
+  3,
+  5,
+  4,
+  4,
+  4,
+  5,
+  4,
+  5,
+  4,
+  2,
+  5,
+  5,
+  5,
+  3
+ ],
+ "subtitleBlock": true,
+ "music": {
+  "src": "tactical/pfh/music.mp3",
+  "volume": 1
+ }
+}

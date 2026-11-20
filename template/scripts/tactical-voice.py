@@ -103,10 +103,14 @@ def fade(seg, fin=True, fout=True):
 
 
 def room_tone(sec, around):
-    """loop a slice of the take's own silence (crossfaded) to fill `sec` seconds"""
+    """loop a slice of the take's own silence (crossfaded) to fill `sec` seconds
+    (2026-11-20, owner rule 'never pad audio with loops'): episode.gapFill = "silence" -> digital silence instead; the
+    take's own end of phrase is already faded (8 ms) at the cut, made in the quietest 20 ms of its natural silence"""
     n = int(round(sec * SR))
     if n <= 0:
         return np.zeros(0, np.float32)
+    if ep.get('gapFill') == 'silence':
+        return np.zeros(n, np.float32)
     s0, s1 = around
     a, b = int((s0 + 0.05) * SR), int((s1 - 0.05) * SR)
     base = x[a:b] if b - a > 0.05 * SR else np.zeros(int(0.1 * SR), np.float32)

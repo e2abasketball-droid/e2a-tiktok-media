@@ -21,7 +21,11 @@ export type PlayerSpec = {
 export type Waypoint = [number, number, number] | [number, number, number, 'fly'];
 
 export type BallEvent =
-  | {type: 'hold'; player: string; from: number; to: number; dribble?: boolean; hand?: 1 | -1; cross?: number[]}
+  /** pocket (2026-11-20, Pistol Fake Handoff): the held ball sits in front of the rig CHEST (simulated heading via
+   *  setYawHook), not along the travel facing. present: a handoff offer (fake or real) — the ball travels `amt` m toward
+   *  player `toward` (and `dz` m up/down) between `from` and `peak`, stays to `hold`, and comes back to the pocket by `to`. */
+  | {type: 'hold'; player: string; from: number; to: number; dribble?: boolean; hand?: 1 | -1; cross?: number[]; pocket?: boolean;
+     present?: {toward: string; from: number; peak: number; hold?: number; to: number; amt: number; dz?: number}}
   /** eyes (2026-11-19, Blind Pig): seconds before t0 the passer's eyes go to the receiver (default 0.6);
    *  lead: a lead pass caught in stride (test-play allows a faster receiver at the catch) */
   | {type: 'pass'; from: string; to: string; t0: number; t1: number; style?: 'chest' | 'bounce' | 'overhead' | 'handoff'; side?: number; eyes?: number; lead?: boolean; phased?: boolean}
@@ -300,8 +304,25 @@ const phasedHold = (play: Play, ev: {from: string; to: string; t0: number; t1: n
   }
   return b;
 };
+/** chest pocket of a holder (hold.pocket): 0.42 m in front of the rig heading (the chest sits ahead of the pelvis), 1.15 m, plus the `present` offer */
+const pocketSpot = (play: Play, e: Extract<BallEvent, {type: 'hold'}>, t: number): V3 => {
+  const p = posAt(play.tracks[e.player], t);
+  const y = yawHook?.(play, e.player, t) ?? stateOf(play, e.player, t).facing;
+  let b: V3 = [p[0] + Math.cos(y) * 0.42, p[1] + Math.sin(y) * 0.42, 1.15];
+  const pr = e.present;
+  if (pr && t > pr.from && t < pr.to) {
+    const sm = (x: number) => (x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x));
+    const hd = pr.hold ?? pr.peak;
+    const w = t < pr.peak ? sm((t - pr.from) / (pr.peak - pr.from)) : t < hd ? 1 : 1 - sm((t - hd) / (pr.to - hd));
+    const q = posAt(play.tracks[pr.toward], t);
+    const dx = q[0] - b[0], dy = q[1] - b[1], n = Math.hypot(dx, dy) || 1;
+    b = [b[0] + (dx / n) * pr.amt * w, b[1] + (dy / n) * pr.amt * w, b[2] + (pr.dz ?? 0) * w];
+  }
+  return b;
+};
 const heldPos = (play: Play, id: string, t: number): V3 => {
   const e = play.ball.find((x) => x.type === 'hold' && x.player === id && t >= x.from - 1e-6 && t <= x.to + 1e-6);
+  if (e && e.type === 'hold' && e.pocket) return pocketSpot(play, e, Math.min(Math.max(t, e.from), e.to));
   return e && e.type === 'hold' && isHanded(e) ? handedSpot(play, e, Math.min(Math.max(t, e.from), e.to)) : smoothHand(play, id, t);
 };
 
@@ -395,7 +416,7 @@ const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallSta
     if (cur.type === 'hold') {
       // the ball sits in the hand of a body that turns smoothly: average the facing over the last 0.15 s
       // (a raw facing that snaps from "rest" to "running" swung the ball sideways at 15+ m/s)
-      let h = isHanded(cur) ? handedSpot(play, cur, t) : smoothHand(play, cur.player, t);
+      let h = cur.pocket ? pocketSpot(play, cur, t) : isHanded(cur) ? handedSpot(play, cur, t) : smoothHand(play, cur.player, t);
       // pick-up after a handed dribble (2026-11-20, Double Drag): the ball comes from the dribbling hand to the
       // two-hand spot in front of the chest over the first 0.2 s of the hold (was a 0.3 m jump in one frame)
       if (!cur.dribble) {
@@ -414,7 +435,7 @@ const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallSta
       const inPass = !cur.dribble ? (play.ball.find((e) => e.type === 'pass' && e.to === cur.player && Math.abs(e.t1 - cur.from) < 1e-6) as Extract<BallEvent, {type: 'pass'}> | undefined) : undefined;
       const fromPass = !!inPass;
       // SECURED: from the catch spot (where the flight ended) back into the hand spot, no jump at the contact
-      if (inPass && catchV2(play) && t - cur.from < CATCH_SECURE) {
+      if (inPass && catchV2(play) && t - cur.from < CATCH_SECURE && !(cur.pocket && inPass.style === 'handoff')) {
         const c = catchSpot(play, cur.player, t, heldPos(play, inPass.from, inPass.t0) as unknown as V2);
         const u2 = (t - cur.from) / CATCH_SECURE;
         const w = u2 * u2 * (3 - 2 * u2);
@@ -479,6 +500,16 @@ const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallSta
         // ...and starts from the hand height of a held ball (catch -> first dribble without a jump)
         const startW = 1 - Math.max(0, Math.min(1, (t - cur.from) / 0.2));
         hz += (h[2] - hz) * startW;
+        // (2026-11-20) a dribble that starts from a chest-POCKET hold leaves from where that ball was (no jump to the
+        // dribbling hand's spot): the xy follows the pocket -> hand path over the first 0.2 s
+        const pkPrev = play.ball.find((e): e is Extract<BallEvent, {type: 'hold'}> => e.type === 'hold' && e.player === cur.player && !!e.pocket && Math.abs(e.to - cur.from) < 1e-6);
+        const pk = (q: V3): V3 => {
+          if (!pkPrev || startW <= 0) return q;
+          const s0 = pocketSpot(play, pkPrev, Math.min(t, pkPrev.to)), w2 = startW * startW * (3 - 2 * startW);
+          // bowed 0.1 m forward (body heading) so the ball goes from the chest to the dribbling hand in FRONT of the trunk
+          const yw = yawHook?.(play, cur.player, t) ?? stateOf(play, cur.player, t).facing, bw = 0.1 * Math.sin(Math.PI * w2);
+          return [q[0] + (s0[0] - q[0]) * w2 + Math.cos(yw) * bw, q[1] + (s0[1] - q[1]) * w2 + Math.sin(yw) * bw, q[2]];
+        };
         let down = Math.abs(Math.cos(Math.PI * c)); // 1 = in the hand, 0 = on the floor
         const push = 0.12 * sp * (1 - down);
         const v = velAt(wp, t);
@@ -490,9 +521,9 @@ const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallSta
           const hs = handedSpot(play, cur, t);
           const px = hs[0] + (v[0] / vl) * push;
           const py = hs[1] + (v[1] / vl) * push;
-          return {pos: [px, py, 0.12 + (hz - 0.12) * down], holder: cur.player, event: cur};
+          return {pos: pk([px, py, 0.12 + (hz - 0.12) * down]), holder: cur.player, event: cur};
         }
-        return {pos: [h[0] + (v[0] / vl) * push, h[1] + (v[1] / vl) * push, 0.12 + (hz - 0.12) * down], holder: cur.player, event: cur};
+        return {pos: pk([h[0] + (v[0] / vl) * push, h[1] + (v[1] / vl) * push, 0.12 + (hz - 0.12) * down]), holder: cur.player, event: cur};
       }
       return {pos: h, holder: cur.player, event: cur};
     }
@@ -506,7 +537,11 @@ const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallSta
       const a0p = loaded && cur.phased ? phasedRelease(play, cur) : a0;
       if (a0p !== a0) [a0[0], a0[1], a0[2]] = a0p;
       // IN_FLIGHT ends at the receiver's catch spot at catchTime (= t1), computed from his pose THEN (lead pass)
-      const b1 = cur.style === 'handoff' || !catchV2(play) ? smoothHand(play, cur.to, cur.t1) : catchSpot(play, cur.to, cur.t1, [a0[0], a0[1]]);
+      // (2026-11-20) a hand-off into a chest-POCKET hold ends in that pocket (heldPos), where the receiver's hands grip it
+      const toPocket = cur.style === 'handoff' && play.ball.some((e) => e.type === 'hold' && e.player === cur.to && !!e.pocket && Math.abs(e.from - cur.t1) < 1e-6);
+      const rxHold = toPocket ? play.ball.find((e): e is Extract<BallEvent, {type: 'hold'}> => e.type === 'hold' && e.player === cur.to && !!e.pocket && Math.abs(e.from - cur.t1) < 1e-6) : undefined;
+      // the target MOVES with the receiver (his pocket at t, not at t1): at the contact the ball already travels with him
+      const b1 = rxHold ? pocketSpot(play, rxHold, t) : cur.style === 'handoff' || !catchV2(play) ? smoothHand(play, cur.to, cur.t1) : catchSpot(play, cur.to, cur.t1, [a0[0], a0[1]]);
       void a;
       const x = a0[0] + (b1[0] - a0[0]) * u;
       const y = a0[1] + (b1[1] - a0[1]) * u;

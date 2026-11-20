@@ -698,6 +698,18 @@ class Song:
         end_t = plan['vend'] + 0.12
         ci = int((end_t + off) * SR)
         fade = int(0.03 * SR)
+        if SOFT_EDGES:
+            # --soft-edges (2026-11-20, Pistol Fake Handoff brief: no hit at the open or at the close, the loop back to
+            # the first frame must not restart the music with a hit): the groove fades out over 2 s from the voice end
+            # drums, bass and fx (the pulses) leave over 0.35 s; only the chords ring out (no repeated transients
+            # in the last seconds)
+            for k, fl in (('drums', 0.35), ('bass', 0.35), ('fx', 0.35), ('music', 2.0)):
+                c0 = int((end_t + off) * SR)
+                c1 = min(n, c0 + int(fl * SR))
+                seg = B[k][:, c0:c1]
+                seg *= np.linspace(1, 0, seg.shape[1]) ** 1.5
+                B[k][:, c1:] = 0
+            return B, kicks, min(n, int((end_t + off + 2.0) * SR))
         for k in ('drums', 'bass', 'music', 'fx'):
             if ci < n:
                 B[k][:, ci - fade : ci] *= np.linspace(1, 0, fade)
@@ -895,6 +907,7 @@ def make(words, story, out, duration=None, track=None, history=None, no_duck=Fal
 
 
 NO_SFX = False  # set by --no-sfx
+SOFT_EDGES = False  # set by --soft-edges
 
 
 def main():
@@ -910,10 +923,12 @@ def main():
     ap.add_argument('--voice', help='the narration file (vo.mp3): sets the music level so the voice stays clear')
     ap.add_argument('--no-duck', action='store_true')
     ap.add_argument('--no-sfx', action='store_true', help='no basketball one-shots (squeak, net swish, crowd) in the bed: music only')
+    ap.add_argument('--soft-edges', action='store_true', help='no impact on the first frame and no final hit stack: the groove fades out over 2 s after the voice')
     ap.add_argument('--mix-json', help='template/src/music-mix.json: set premixed=true so the template plays the bed at volume 1')
     a = ap.parse_args()
-    global NO_SFX
+    global NO_SFX, SOFT_EDGES
     NO_SFX = a.no_sfx
+    SOFT_EDGES = a.soft_edges
     with open(a.words) as f:
         words = json.load(f)
     info = make(words, a.story, a.out, a.duration, a.track, a.history or None, a.no_duck, a.voice, a.drop_at, a.payoff_at)

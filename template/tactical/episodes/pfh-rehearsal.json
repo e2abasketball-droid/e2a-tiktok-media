@@ -1,0 +1,2129 @@
+{
+ "id": "pfh-rehearsal",
+ "title": "Pistol Fake Handoff rehearsal",
+ "fps": 30,
+ "voice": "tactical/pfh/voice-a.wav",
+ "voiceMix": "tactical/pfh/voice-a.mix.wav",
+ "preroll": 0.1,
+ "tail": 2.3,
+ "gapFill": "silence",
+ "plays": {
+  "A": "pfh-keep",
+  "B": "pfh-give"
+ },
+ "shots": [
+  {
+   "id": "keep-C34-S043",
+   "at": 0.0,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.4333
+    ],
+    [
+     0.06666666666666667,
+     1.4333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.3,
+       6.2,
+       1.0
+      ],
+      "dist": 5.4,
+      "pitch": 60,
+      "yaw": -20,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-C34-S047",
+   "at": 0.0667,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.5667
+    ],
+    [
+     0.06666666666666667,
+     1.5667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.3,
+       6.2,
+       1.0
+      ],
+      "dist": 5.4,
+      "pitch": 60,
+      "yaw": -20,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-C34-S049",
+   "at": 0.1333,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.6333
+    ],
+    [
+     0.06666666666666667,
+     1.6333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.3,
+       6.2,
+       1.0
+      ],
+      "dist": 5.4,
+      "pitch": 60,
+      "yaw": -20,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-C34-S051",
+   "at": 0.2,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.7
+    ],
+    [
+     0.06666666666666667,
+     1.7
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.3,
+       6.2,
+       1.0
+      ],
+      "dist": 5.4,
+      "pitch": 60,
+      "yaw": -20,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-C34-S053",
+   "at": 0.2667,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.7667
+    ],
+    [
+     0.06666666666666667,
+     1.7667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.3,
+       6.2,
+       1.0
+      ],
+      "dist": 5.4,
+      "pitch": 60,
+      "yaw": -20,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-C34-S054",
+   "at": 0.3333,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.8
+    ],
+    [
+     0.06666666666666667,
+     1.8
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.3,
+       6.2,
+       1.0
+      ],
+      "dist": 5.4,
+      "pitch": 60,
+      "yaw": -20,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-C34-S056",
+   "at": 0.4,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.8667
+    ],
+    [
+     0.06666666666666667,
+     1.8667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.3,
+       6.2,
+       1.0
+      ],
+      "dist": 5.4,
+      "pitch": 60,
+      "yaw": -20,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-C34-S059",
+   "at": 0.4667,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.9667
+    ],
+    [
+     0.06666666666666667,
+     1.9667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.3,
+       6.2,
+       1.0
+      ],
+      "dist": 5.4,
+      "pitch": 60,
+      "yaw": -20,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-C34-S062",
+   "at": 0.5333,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     2.0667
+    ],
+    [
+     0.06666666666666667,
+     2.0667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.3,
+       6.2,
+       1.0
+      ],
+      "dist": 5.4,
+      "pitch": 60,
+      "yaw": -20,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-C34-S066",
+   "at": 0.6,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     2.2
+    ],
+    [
+     0.06666666666666667,
+     2.2
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.3,
+       6.2,
+       1.0
+      ],
+      "dist": 5.4,
+      "pitch": 60,
+      "yaw": -20,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-C34-S072",
+   "at": 0.6667,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     2.4
+    ],
+    [
+     0.06666666666666667,
+     2.4
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.3,
+       6.2,
+       1.0
+      ],
+      "dist": 5.4,
+      "pitch": 60,
+      "yaw": -20,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-LAT-S043",
+   "at": 0.7333,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.4333
+    ],
+    [
+     0.06666666666666667,
+     1.4333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.25,
+       6.45,
+       1.0
+      ],
+      "dist": 6.0,
+      "pitch": 80,
+      "yaw": -4,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-LAT-S047",
+   "at": 0.8,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.5667
+    ],
+    [
+     0.06666666666666667,
+     1.5667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.25,
+       6.45,
+       1.0
+      ],
+      "dist": 6.0,
+      "pitch": 80,
+      "yaw": -4,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-LAT-S049",
+   "at": 0.8667,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.6333
+    ],
+    [
+     0.06666666666666667,
+     1.6333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.25,
+       6.45,
+       1.0
+      ],
+      "dist": 6.0,
+      "pitch": 80,
+      "yaw": -4,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-LAT-S051",
+   "at": 0.9333,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.7
+    ],
+    [
+     0.06666666666666667,
+     1.7
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.25,
+       6.45,
+       1.0
+      ],
+      "dist": 6.0,
+      "pitch": 80,
+      "yaw": -4,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-LAT-S053",
+   "at": 1.0,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.7667
+    ],
+    [
+     0.06666666666666667,
+     1.7667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.25,
+       6.45,
+       1.0
+      ],
+      "dist": 6.0,
+      "pitch": 80,
+      "yaw": -4,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-LAT-S054",
+   "at": 1.0667,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.8
+    ],
+    [
+     0.06666666666666667,
+     1.8
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.25,
+       6.45,
+       1.0
+      ],
+      "dist": 6.0,
+      "pitch": 80,
+      "yaw": -4,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-LAT-S056",
+   "at": 1.1333,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.8667
+    ],
+    [
+     0.06666666666666667,
+     1.8667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.25,
+       6.45,
+       1.0
+      ],
+      "dist": 6.0,
+      "pitch": 80,
+      "yaw": -4,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-LAT-S059",
+   "at": 1.2,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.9667
+    ],
+    [
+     0.06666666666666667,
+     1.9667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.25,
+       6.45,
+       1.0
+      ],
+      "dist": 6.0,
+      "pitch": 80,
+      "yaw": -4,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-LAT-S062",
+   "at": 1.2667,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     2.0667
+    ],
+    [
+     0.06666666666666667,
+     2.0667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.25,
+       6.45,
+       1.0
+      ],
+      "dist": 6.0,
+      "pitch": 80,
+      "yaw": -4,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-LAT-S066",
+   "at": 1.3333,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     2.2
+    ],
+    [
+     0.06666666666666667,
+     2.2
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.25,
+       6.45,
+       1.0
+      ],
+      "dist": 6.0,
+      "pitch": 80,
+      "yaw": -4,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-LAT-S072",
+   "at": 1.4,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     2.4
+    ],
+    [
+     0.06666666666666667,
+     2.4
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.25,
+       6.45,
+       1.0
+      ],
+      "dist": 6.0,
+      "pitch": 80,
+      "yaw": -4,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-GAME-S043",
+   "at": 1.4667,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.4333
+    ],
+    [
+     0.06666666666666667,
+     1.4333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.0,
+       5.6,
+       0.7
+      ],
+      "dist": 7.6,
+      "pitch": 54,
+      "yaw": -15,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-GAME-S047",
+   "at": 1.5333,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.5667
+    ],
+    [
+     0.06666666666666667,
+     1.5667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.0,
+       5.6,
+       0.7
+      ],
+      "dist": 7.6,
+      "pitch": 54,
+      "yaw": -15,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-GAME-S049",
+   "at": 1.6,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.6333
+    ],
+    [
+     0.06666666666666667,
+     1.6333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.0,
+       5.6,
+       0.7
+      ],
+      "dist": 7.6,
+      "pitch": 54,
+      "yaw": -15,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-GAME-S051",
+   "at": 1.6667,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.7
+    ],
+    [
+     0.06666666666666667,
+     1.7
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.0,
+       5.6,
+       0.7
+      ],
+      "dist": 7.6,
+      "pitch": 54,
+      "yaw": -15,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-GAME-S053",
+   "at": 1.7333,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.7667
+    ],
+    [
+     0.06666666666666667,
+     1.7667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.0,
+       5.6,
+       0.7
+      ],
+      "dist": 7.6,
+      "pitch": 54,
+      "yaw": -15,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-GAME-S054",
+   "at": 1.8,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.8
+    ],
+    [
+     0.06666666666666667,
+     1.8
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.0,
+       5.6,
+       0.7
+      ],
+      "dist": 7.6,
+      "pitch": 54,
+      "yaw": -15,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-GAME-S056",
+   "at": 1.8667,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.8667
+    ],
+    [
+     0.06666666666666667,
+     1.8667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.0,
+       5.6,
+       0.7
+      ],
+      "dist": 7.6,
+      "pitch": 54,
+      "yaw": -15,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-GAME-S059",
+   "at": 1.9333,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     1.9667
+    ],
+    [
+     0.06666666666666667,
+     1.9667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.0,
+       5.6,
+       0.7
+      ],
+      "dist": 7.6,
+      "pitch": 54,
+      "yaw": -15,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-GAME-S062",
+   "at": 2.0,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     2.0667
+    ],
+    [
+     0.06666666666666667,
+     2.0667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.0,
+       5.6,
+       0.7
+      ],
+      "dist": 7.6,
+      "pitch": 54,
+      "yaw": -15,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-GAME-S066",
+   "at": 2.0667,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     2.2
+    ],
+    [
+     0.06666666666666667,
+     2.2
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.0,
+       5.6,
+       0.7
+      ],
+      "dist": 7.6,
+      "pitch": 54,
+      "yaw": -15,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "keep-GAME-S072",
+   "at": 2.1333,
+   "play": "A",
+   "branch": "keep",
+   "remap": [
+    [
+     0,
+     2.4
+    ],
+    [
+     0.06666666666666667,
+     2.4
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.0,
+       5.6,
+       0.7
+      ],
+      "dist": 7.6,
+      "pitch": 54,
+      "yaw": -15,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-C34-S043",
+   "at": 2.2,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.4333
+    ],
+    [
+     0.06666666666666667,
+     1.4333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.3,
+       6.2,
+       1.0
+      ],
+      "dist": 5.4,
+      "pitch": 60,
+      "yaw": -20,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-C34-S045",
+   "at": 2.2667,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.5
+    ],
+    [
+     0.06666666666666667,
+     1.5
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.3,
+       6.2,
+       1.0
+      ],
+      "dist": 5.4,
+      "pitch": 60,
+      "yaw": -20,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-C34-S047",
+   "at": 2.3333,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.5667
+    ],
+    [
+     0.06666666666666667,
+     1.5667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.3,
+       6.2,
+       1.0
+      ],
+      "dist": 5.4,
+      "pitch": 60,
+      "yaw": -20,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-C34-S049",
+   "at": 2.4,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.6333
+    ],
+    [
+     0.06666666666666667,
+     1.6333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.3,
+       6.2,
+       1.0
+      ],
+      "dist": 5.4,
+      "pitch": 60,
+      "yaw": -20,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-C34-S051",
+   "at": 2.4667,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.7
+    ],
+    [
+     0.06666666666666667,
+     1.7
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.3,
+       6.2,
+       1.0
+      ],
+      "dist": 5.4,
+      "pitch": 60,
+      "yaw": -20,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-C34-S053",
+   "at": 2.5333,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.7667
+    ],
+    [
+     0.06666666666666667,
+     1.7667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.3,
+       6.2,
+       1.0
+      ],
+      "dist": 5.4,
+      "pitch": 60,
+      "yaw": -20,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-C34-S055",
+   "at": 2.6,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.8333
+    ],
+    [
+     0.06666666666666667,
+     1.8333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.3,
+       6.2,
+       1.0
+      ],
+      "dist": 5.4,
+      "pitch": 60,
+      "yaw": -20,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-C34-S058",
+   "at": 2.6667,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.9333
+    ],
+    [
+     0.06666666666666667,
+     1.9333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.3,
+       6.2,
+       1.0
+      ],
+      "dist": 5.4,
+      "pitch": 60,
+      "yaw": -20,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-C34-S062",
+   "at": 2.7333,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     2.0667
+    ],
+    [
+     0.06666666666666667,
+     2.0667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.3,
+       6.2,
+       1.0
+      ],
+      "dist": 5.4,
+      "pitch": 60,
+      "yaw": -20,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-LAT-S043",
+   "at": 2.8,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.4333
+    ],
+    [
+     0.06666666666666667,
+     1.4333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.25,
+       6.45,
+       1.0
+      ],
+      "dist": 6.0,
+      "pitch": 80,
+      "yaw": -4,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-LAT-S045",
+   "at": 2.8667,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.5
+    ],
+    [
+     0.06666666666666667,
+     1.5
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.25,
+       6.45,
+       1.0
+      ],
+      "dist": 6.0,
+      "pitch": 80,
+      "yaw": -4,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-LAT-S047",
+   "at": 2.9333,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.5667
+    ],
+    [
+     0.06666666666666667,
+     1.5667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.25,
+       6.45,
+       1.0
+      ],
+      "dist": 6.0,
+      "pitch": 80,
+      "yaw": -4,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-LAT-S049",
+   "at": 3.0,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.6333
+    ],
+    [
+     0.06666666666666667,
+     1.6333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.25,
+       6.45,
+       1.0
+      ],
+      "dist": 6.0,
+      "pitch": 80,
+      "yaw": -4,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-LAT-S051",
+   "at": 3.0667,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.7
+    ],
+    [
+     0.06666666666666667,
+     1.7
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.25,
+       6.45,
+       1.0
+      ],
+      "dist": 6.0,
+      "pitch": 80,
+      "yaw": -4,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-LAT-S053",
+   "at": 3.1333,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.7667
+    ],
+    [
+     0.06666666666666667,
+     1.7667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.25,
+       6.45,
+       1.0
+      ],
+      "dist": 6.0,
+      "pitch": 80,
+      "yaw": -4,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-LAT-S055",
+   "at": 3.2,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.8333
+    ],
+    [
+     0.06666666666666667,
+     1.8333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.25,
+       6.45,
+       1.0
+      ],
+      "dist": 6.0,
+      "pitch": 80,
+      "yaw": -4,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-LAT-S058",
+   "at": 3.2667,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.9333
+    ],
+    [
+     0.06666666666666667,
+     1.9333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.25,
+       6.45,
+       1.0
+      ],
+      "dist": 6.0,
+      "pitch": 80,
+      "yaw": -4,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-LAT-S062",
+   "at": 3.3333,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     2.0667
+    ],
+    [
+     0.06666666666666667,
+     2.0667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.25,
+       6.45,
+       1.0
+      ],
+      "dist": 6.0,
+      "pitch": 80,
+      "yaw": -4,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-GAME-S043",
+   "at": 3.4,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.4333
+    ],
+    [
+     0.06666666666666667,
+     1.4333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.0,
+       5.6,
+       0.7
+      ],
+      "dist": 7.6,
+      "pitch": 54,
+      "yaw": -15,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-GAME-S045",
+   "at": 3.4667,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.5
+    ],
+    [
+     0.06666666666666667,
+     1.5
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.0,
+       5.6,
+       0.7
+      ],
+      "dist": 7.6,
+      "pitch": 54,
+      "yaw": -15,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-GAME-S047",
+   "at": 3.5333,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.5667
+    ],
+    [
+     0.06666666666666667,
+     1.5667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.0,
+       5.6,
+       0.7
+      ],
+      "dist": 7.6,
+      "pitch": 54,
+      "yaw": -15,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-GAME-S049",
+   "at": 3.6,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.6333
+    ],
+    [
+     0.06666666666666667,
+     1.6333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.0,
+       5.6,
+       0.7
+      ],
+      "dist": 7.6,
+      "pitch": 54,
+      "yaw": -15,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-GAME-S051",
+   "at": 3.6667,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.7
+    ],
+    [
+     0.06666666666666667,
+     1.7
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.0,
+       5.6,
+       0.7
+      ],
+      "dist": 7.6,
+      "pitch": 54,
+      "yaw": -15,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-GAME-S053",
+   "at": 3.7333,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.7667
+    ],
+    [
+     0.06666666666666667,
+     1.7667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.0,
+       5.6,
+       0.7
+      ],
+      "dist": 7.6,
+      "pitch": 54,
+      "yaw": -15,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-GAME-S055",
+   "at": 3.8,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.8333
+    ],
+    [
+     0.06666666666666667,
+     1.8333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.0,
+       5.6,
+       0.7
+      ],
+      "dist": 7.6,
+      "pitch": 54,
+      "yaw": -15,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-GAME-S058",
+   "at": 3.8667,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     1.9333
+    ],
+    [
+     0.06666666666666667,
+     1.9333
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.0,
+       5.6,
+       0.7
+      ],
+      "dist": 7.6,
+      "pitch": 54,
+      "yaw": -15,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "give-GAME-S062",
+   "at": 3.9333,
+   "play": "B",
+   "branch": "give",
+   "remap": [
+    [
+     0,
+     2.0667
+    ],
+    [
+     0.06666666666666667,
+     2.0667
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -5.0,
+       5.6,
+       0.7
+      ],
+      "dist": 7.6,
+      "pitch": 54,
+      "yaw": -15,
+      "fov": 44
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  }
+ ],
+ "branches": {
+  "keep": "A",
+  "give": "B"
+ },
+ "env": "academy",
+ "pinV2": true,
+ "autoSfx": false,
+ "subtitleHide": [
+  [
+   0,
+   999
+  ]
+ ]
+}

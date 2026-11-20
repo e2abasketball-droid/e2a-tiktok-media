@@ -1,0 +1,96 @@
+{
+ "source": "public/tactical/pfh/voice-raw.mp3",
+ "source_sec": 20.96,
+ "preroll": 0.1,
+ "output": "public/tactical/pfh/voice-a.wav",
+ "output_sec": 27.57,
+ "inserted_total_sec": 6.51,
+ "last_word_end": 27.65,
+ "gaps": [
+  {
+   "after": "is a lie.",
+   "natural_silence": [
+    1.82,
+    2.46
+   ],
+   "natural_sec": 0.64,
+   "target_sec": 0.95,
+   "inserted_sec": 0.31,
+   "cut_at_source": 2.235,
+   "why": "hook window shared with B (2.74 s line): the body starts at the same time in A and B"
+  },
+  {
+   "after": "chases his pass.",
+   "natural_silence": [
+    5.2,
+    5.63
+   ],
+   "natural_sec": 0.43,
+   "target_sec": 0.45,
+   "inserted_sec": 0.02,
+   "cut_at_source": 5.315,
+   "why": "O2 settles on both feet, O1 arrives"
+  },
+  {
+   "after": "wing's hands.",
+   "natural_silence": [
+    6.7,
+    7.17
+   ],
+   "natural_sec": 0.47,
+   "target_sec": 0.3,
+   "inserted_sec": 0.0,
+   "cut_at_source": 6.975,
+   "why": "the offer"
+  },
+  {
+   "after": "his defender.",
+   "natural_silence": [
+    8.2,
+    8.61
+   ],
+   "natural_sec": 0.41,
+   "target_sec": 0.35,
+   "inserted_sec": 0.0,
+   "cut_at_source": 8.415,
+   "why": "X2's first step inside"
+  },
+  {
+   "after": "the baseline.",
+   "natural_silence": [
+    13.92,
+    14.29
+   ],
+   "natural_sec": 0.37,
+   "target_sec": 4.6,
+   "inserted_sec": 4.23,
+   "cut_at_source": 14.185,
+   "why": "drive, layup, ball through the rim + the alternate-angle replay of the fake"
+  },
+  {
+   "after": "handoff back.",
+   "natural_silence": [
+    17.93,
+    18.28
+   ],
+   "natural_sec": 0.35,
+   "target_sec": 2.3,
+   "inserted_sec": 1.95,
+   "cut_at_source": 18.075,
+   "why": "give: the real handoff, both pairs of hands, the new owner, then KEEP/GIVE mirror"
+  },
+  {
+   "after": "fake handoff.",
+   "natural_silence": [
+    19.86,
+    20.26
+   ],
+   "natural_sec": 0.4,
+   "target_sec": 0.35,
+   "inserted_sec": 0.0,
+   "cut_at_source": 20.065,
+   "why": "back to the decision frame"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}
