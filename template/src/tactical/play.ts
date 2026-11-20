@@ -263,7 +263,13 @@ export const CATCH_SECURE = 0.4;
 /** opt-in per play (`"catchV2": true`, 2026-11-19): the catch model below (catch spot, SECURED blend, open-not-square
  *  catch facing, 0.3 s turn to the next receiver, grip IK in rig.ts). Plays without the flag keep the previous model
  *  unchanged (regression run over all plays). */
-export const catchV2 = (play: Play) => !!(play as {catchV2?: boolean}).catchV2;
+export const catchV2 = (play: Play) => !!(play as {catchV2?: boolean | number}).catchV2;
+/** catch model version: 0 (off), 1 (`"catchV2": true`, 2026-11-19), 2 (`"catchV2": 2`, 2026-11-20: over-the-shoulder
+ *  spot for passes from behind the run, see catchSpot) */
+export const catchV2Level = (play: Play) => {
+  const v = (play as {catchV2?: boolean | number}).catchV2;
+  return v === true ? 1 : typeof v === 'number' ? v : 0;
+};
 export const catchSpot = (play: Play, id: string, t: number, passerAt: V2): V3 => {
   const st = stateOf(play, id, t);
   const h = smoothHand(play, id, t);
@@ -276,7 +282,19 @@ export const catchSpot = (play: Play, id: string, t: number, passerAt: V2): V3 =
   const F: V2 = [Math.cos(run), Math.sin(run)];
   const L: V2 = [-F[1], F[0]];
   const side = Math.sign((passerAt[0] - st.pos[0]) * L[0] + (passerAt[1] - st.pos[1]) * L[1]) || 1;
-  const c: V3 = [st.pos[0] + F[0] * 0.38 + L[0] * 0.12 * side, st.pos[1] + F[1] * 0.38 + L[1] * 0.12 * side, 1.12];
+  // catchV2 = 2 (2026-11-20, Slip vs Hedge): a pass that arrives from BEHIND the run (a slip / dive / backdoor away from
+  // the passer) is met on the passer's side of the trunk, over the shoulder, not straight ahead of the chest: with the
+  // v1 spot the last 0.05 s of the straight flight went THROUGH the runner's trunk (qc-catch ball_torso 12.8 cm on
+  // slip-a-dive). `behind` = 0 (passer beside or ahead) .. 1 (passer straight behind); the spot moves from 0.38 ahead /
+  // 0.12 aside to 0.24 ahead / 0.36 aside. Plays with catchV2 === true keep the 2026-11-19 spot (regression identical).
+  let fw = 0.38, lat = 0.12;
+  if (catchV2Level(play) >= 2) {
+    const dx = passerAt[0] - st.pos[0], dy = passerAt[1] - st.pos[1], dl = Math.hypot(dx, dy) || 1;
+    const behind = Math.max(0, Math.min(1, -(dx * F[0] + dy * F[1]) / dl / 0.8));
+    fw = 0.38 - 0.14 * behind;
+    lat = 0.12 + 0.24 * behind;
+  }
+  const c: V3 = [st.pos[0] + F[0] * fw + L[0] * lat * side, st.pos[1] + F[1] * fw + L[1] * lat * side, 1.12];
   return [h[0] + (c[0] - h[0]) * k, h[1] + (c[1] - h[1]) * k, h[2] + (c[2] - h[2]) * k];
 };
 

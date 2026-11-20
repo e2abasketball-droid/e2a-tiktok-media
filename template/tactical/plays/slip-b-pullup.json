@@ -1,0 +1,456 @@
+{
+ "id": "slip-b-pullup",
+ "title": "Slip vs hard hedge B: the big's defender waits, the screen is set, pull-up",
+ "duration": 5.6,
+ "concept": "slip-vs-hedge",
+ "source": "original E2A staging of the slip-vs-hard-hedge ball-screen counter (Hooper University 'Ball Screen Offense - Beating The Hard Hedge'; Breakthrough Basketball '3 Offensive Counters For The Hard Hedge'; FIBA 2026 art. 33.7 screening, art. 25 travelling); production coordinates",
+ "squareUp": true,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Ball handler, left slot"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Right wing, spacing"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Right corner, spacing"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Left corner, spacing"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "The screener: slips (A) / sets the screen (B)"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the ball",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "On the right wing",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Weak-side low man: late rotation in A",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "Left corner, stays home",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "The screener's defender: shows early (A) / waits in the drop (B) = THE READ",
+   "guards": "O5"
+  }
+ ],
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 3.605,
+   "dribble": true
+  },
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 3.605,
+   "to": 4.025
+  },
+  {
+   "type": "shot",
+   "player": "O1",
+   "t0": 4.025,
+   "t1": 4.9750000000000005,
+   "make": true,
+   "three": false,
+   "side": -1
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "up": 0.35,
+  "wait": 0.6,
+  "contact": 2.005,
+  "use": 2.055,
+  "gather": 3.605,
+  "release": 4.025,
+  "make": 4.9750000000000005,
+  "end": 5.6
+ },
+ "actions": {
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 2.055,
+    "face": "O1"
+   },
+   {
+    "type": "bump",
+    "from": 2.105,
+    "to": 2.455,
+    "face": "O5"
+   },
+   {
+    "type": "contest",
+    "from": 3.9750000000000005,
+    "to": 4.525
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6,
+    "face": "ball"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6,
+    "face": "ball"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6,
+    "face": "ball"
+   }
+  ],
+  "O1": [
+   {
+    "type": "face",
+    "from": 0,
+    "to": 1.2,
+    "face": "O5"
+   },
+   {
+    "type": "gather",
+    "from": 3.555,
+    "to": 3.885
+   },
+   {
+    "type": "celebrate",
+    "from": 5.325,
+    "to": 5.5
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 0.5499999999999999,
+    "face": "O5"
+   },
+   {
+    "type": "stance",
+    "from": 0.8,
+    "to": 5.6,
+    "face": "O1"
+   }
+  ],
+  "O5": [
+   {
+    "type": "screen",
+    "from": 1.855,
+    "to": 2.805,
+    "face": "X1"
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "reacts_after",
+   "player": "X5",
+   "event": "up",
+   "min": 0.2,
+   "says": "But this time he waits."
+  },
+  {
+   "type": "far",
+   "a": "X5",
+   "b": "O1",
+   "at": "contact",
+   "min": 2.4,
+   "says": "he waits (no show)"
+  },
+  {
+   "type": "near",
+   "a": "O5",
+   "b": "X1",
+   "at": "contact",
+   "max": 0.95,
+   "says": "Now the screen is real."
+  },
+  {
+   "type": "far",
+   "a": "X5",
+   "b": "O1",
+   "at": "release",
+   "min": 1.8,
+   "says": "the big is back in the paint"
+  },
+  {
+   "type": "open",
+   "player": "O1",
+   "at": "release",
+   "min": 1.8,
+   "says": "Space for the pull-up."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "up",
+    "wait",
+    "contact",
+    "use",
+    "gather",
+    "release",
+    "make"
+   ],
+   "says": "wait, screen, pull-up"
+  }
+ ],
+ "screens": [],
+ "notes": [
+  "Same start as slip-a-dive until X5's first step (0.6 s).",
+  "X5 waits below the screen: no gap behind him, so O5 sets a legal, stationary screen on X1.",
+  "O1 comes off over the top, two-foot brake at the right elbow, pull-up two in front of the drop."
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0,
+    2.45,
+    9.05
+   ],
+   [
+    2.055,
+    2.45,
+    9.05
+   ],
+   [
+    2.562,
+    1.45,
+    9.15
+   ],
+   [
+    2.918,
+    0.25,
+    8.45
+   ],
+   [
+    3.239,
+    -0.4,
+    7.4
+   ],
+   [
+    3.731,
+    -0.45,
+    6.45
+   ],
+   [
+    5.6,
+    -0.45,
+    6.45
+   ]
+  ],
+  "O2": [
+   [
+    0,
+    -4.9,
+    6.7
+   ],
+   [
+    5.6,
+    -4.9,
+    6.7
+   ]
+  ],
+  "O3": [
+   [
+    0,
+    -6.6,
+    1.35
+   ],
+   [
+    5.6,
+    -6.6,
+    1.35
+   ]
+  ],
+  "O4": [
+   [
+    0,
+    6.6,
+    1.35
+   ],
+   [
+    5.6,
+    6.6,
+    1.35
+   ]
+  ],
+  "O5": [
+   [
+    0,
+    0.65,
+    5.55
+   ],
+   [
+    0.35,
+    0.65,
+    5.55
+   ],
+   [
+    1.87,
+    1.5,
+    8.15
+   ],
+   [
+    2.905,
+    1.5,
+    8.15
+   ],
+   [
+    4.161,
+    1.1,
+    5.5
+   ],
+   [
+    5.6,
+    1.1,
+    5.5
+   ]
+  ],
+  "X1": [
+   [
+    0,
+    2.3,
+    8.05
+   ],
+   [
+    2.005,
+    2.3,
+    8.05
+   ],
+   [
+    2.494,
+    2.15,
+    8.55
+   ],
+   [
+    2.505,
+    2.15,
+    8.55
+   ],
+   [
+    2.935,
+    1.75,
+    9.25
+   ],
+   [
+    3.582,
+    0.6,
+    8.3
+   ],
+   [
+    5.6,
+    0.6,
+    8.3
+   ]
+  ],
+  "X2": [
+   [
+    0,
+    -4.05,
+    6.05
+   ],
+   [
+    5.6,
+    -4.05,
+    6.05
+   ]
+  ],
+  "X3": [
+   [
+    0,
+    -4.45,
+    2.45
+   ],
+   [
+    5.6,
+    -4.45,
+    2.45
+   ]
+  ],
+  "X4": [
+   [
+    0,
+    5.25,
+    2.25
+   ],
+   [
+    5.6,
+    5.25,
+    2.25
+   ]
+  ],
+  "X5": [
+   [
+    0,
+    0.15,
+    5.15
+   ],
+   [
+    0.6,
+    0.15,
+    5.15
+   ],
+   [
+    1.578,
+    0.85,
+    6.55
+   ],
+   [
+    2.305,
+    0.85,
+    6.55
+   ],
+   [
+    3.443,
+    0.55,
+    4.6
+   ],
+   [
+    5.6,
+    0.55,
+    4.6
+   ]
+  ]
+ }
+}

@@ -1,0 +1,397 @@
+{
+ "id": "slip-a-dive",
+ "title": "Slip vs hard hedge A: the big's defender shows early, the screener slips, layup",
+ "duration": 5.4,
+ "concept": "slip-vs-hedge",
+ "source": "original E2A staging of the slip-vs-hard-hedge ball-screen counter (Hooper University 'Ball Screen Offense - Beating The Hard Hedge'; Breakthrough Basketball '3 Offensive Counters For The Hard Hedge'; FIBA 2026 art. 33.7 screening, art. 25 travelling); production coordinates",
+ "squareUp": true,
+ "catchV2": 2,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Ball handler, left slot"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Right wing, spacing"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Right corner, spacing"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Left corner, spacing"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "The screener: slips (A) / sets the screen (B)"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the ball",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "On the right wing",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Weak-side low man: late rotation in A",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "Left corner, stays home",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "The screener's defender: shows early (A) / waits in the drop (B) = THE READ",
+   "guards": "O5"
+  }
+ ],
+ "start": {
+  "O1": [
+   2.45,
+   9.05
+  ],
+  "X1": [
+   2.3,
+   8.05
+  ],
+  "O5": [
+   0.65,
+   5.55
+  ],
+  "X5": [
+   0.15,
+   5.15
+  ],
+  "O2": [
+   -4.9,
+   6.7
+  ],
+  "X2": [
+   -4.05,
+   6.05
+  ],
+  "O3": [
+   -6.6,
+   1.35
+  ],
+  "X3": [
+   -4.45,
+   2.45
+  ],
+  "O4": [
+   6.6,
+   1.35
+  ],
+  "X4": [
+   5.25,
+   2.25
+  ]
+ },
+ "legs": {
+  "O5": [
+   {
+    "at": 0.35,
+    "to": [
+     1.3,
+     7.9
+    ],
+    "speed": 2.15
+   },
+   {
+    "at": 2.18,
+    "via": [
+     [
+      0.95,
+      6.35
+     ],
+     [
+      0.45,
+      4.45
+     ]
+    ],
+    "to": [
+     0.2,
+     2.85
+    ],
+    "speed": 7.6
+   }
+  ],
+  "O1": [
+   {
+    "at": 1.2299999999999998,
+    "to": [
+     3.25,
+     9.05
+    ],
+    "speed": 1.7
+   }
+  ],
+  "X1": [
+   {
+    "at": 1.2,
+    "via": [
+     [
+      2.0,
+      8.75
+     ]
+    ],
+    "to": [
+     2.7,
+     9.65
+    ],
+    "speed": 2.6
+   }
+  ],
+  "O2": [],
+  "X2": [],
+  "O3": [],
+  "O4": [],
+  "X3": [
+   {
+    "at": 2.73,
+    "to": [
+     -1.25,
+     3.05
+    ],
+    "speed": 5.2
+   }
+  ],
+  "X4": [],
+  "X5": [
+   {
+    "at": 0.6,
+    "via": [
+     [
+      0.45,
+      7.35
+     ]
+    ],
+    "to": [
+     1.7,
+     9.3
+    ],
+    "speed": 6.4
+   }
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 2.03,
+   "dribble": true
+  },
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 2.03,
+   "to": 2.53
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O5",
+   "t0": 2.53,
+   "t1": 3.11,
+   "style": "overhead",
+   "eyes": 0.5,
+   "lead": true
+  },
+  {
+   "type": "hold",
+   "player": "O5",
+   "from": 3.11,
+   "to": 3.62
+  },
+  {
+   "type": "layup",
+   "player": "O5",
+   "t0": 3.62,
+   "t1": 4.0200000000000005,
+   "make": true
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "up": 0.35,
+  "show": 0.6,
+  "hedged": 1.98,
+  "plant": 2.08,
+  "slip": 2.18,
+  "pick": 2.03,
+  "pass": 2.53,
+  "catch": 3.11,
+  "finish": 3.62,
+  "make": 4.0200000000000005,
+  "end": 5.4
+ },
+ "actions": {
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 2.8299999999999996,
+    "face": "O1"
+   },
+   {
+    "type": "stance",
+    "from": 2.8299999999999996,
+    "to": 5.4,
+    "face": "ball"
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6,
+    "face": "ball"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6,
+    "face": "ball"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 2.6799999999999997,
+    "face": "ball"
+   },
+   {
+    "type": "contest",
+    "from": 3.5700000000000003,
+    "to": 4.12
+   }
+  ],
+  "O1": [
+   {
+    "type": "face",
+    "from": 0,
+    "to": 1.2,
+    "face": "O5"
+   },
+   {
+    "type": "face",
+    "from": 1.63,
+    "to": 2.73,
+    "face": "O5"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 0.5499999999999999,
+    "face": "O5"
+   },
+   {
+    "type": "blitz",
+    "from": 1.35,
+    "to": 3.21,
+    "face": "O1"
+   }
+  ],
+  "O5": [
+   {
+    "type": "celebrate",
+    "from": 4.5200000000000005,
+    "to": 5.300000000000001
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "reacts_after",
+   "player": "X5",
+   "event": "up",
+   "min": 0.2,
+   "says": "He jumps out (after the screener starts up)"
+  },
+  {
+   "type": "near",
+   "a": "X5",
+   "b": "O1",
+   "at": "hedged",
+   "max": 2.4,
+   "says": "Before the screen even lands, he's already out."
+  },
+  {
+   "type": "far",
+   "a": "O5",
+   "b": "X1",
+   "at": "plant",
+   "min": 0.55,
+   "says": "So the screener slips (no contact with X1)"
+  },
+  {
+   "type": "far",
+   "a": "X5",
+   "b": "O5",
+   "at": "catch",
+   "min": 3.0,
+   "says": "and dive behind him"
+  },
+  {
+   "type": "reacts_after",
+   "player": "X3",
+   "event": "pass",
+   "min": 0.15,
+   "says": "the low man is late"
+  },
+  {
+   "type": "near_rim",
+   "player": "O5",
+   "at": "finish",
+   "max": 1.5,
+   "says": "Layup."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "up",
+    "show",
+    "hedged",
+    "pick",
+    "plant",
+    "slip",
+    "pass",
+    "catch",
+    "finish",
+    "make"
+   ],
+   "says": "show early, slip, over the top, layup"
+  }
+ ],
+ "screens": [],
+ "notes": [
+  "O5 walks up to screen X1; X5 reads it and jumps out above the screen line BEFORE O5 arrives.",
+  "O5 never touches X1: plant, open up, dive into the empty paint behind X5.",
+  "O1 retreats half a step, picks up, loaded overhead pass over the hedge; catch in stride, layup.",
+  "X3 rotates only after the release: late."
+ ]
+}
