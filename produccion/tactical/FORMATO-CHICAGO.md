@@ -67,3 +67,9 @@ No uses siempre el mismo hook ni la misma estructura.
 Regla de lectura asociada: muchos efectos a lo largo del vídeo, **una sola idea visual principal en cada momento**
 (máx. 1 título + subtítulos + 1 etiqueta táctica a la vez); cada gráfico tiene entrada, permanencia y salida.
 Referencia aplicada: `template/tactical/episodes/_gen-spain-pnr-2-shots.py` (capa `src/t3d/telestration3d.tsx`).
+
+## Añadidos 2026-11-20 (Double Drag en transición)
+- **El gancho se lee en el fotograma 0:** el título y el anillo del gancho llevan `from` negativo (−0,6 / −0,8 s), así que ya están dentro en el primer fotograma (portada automática y primer frame del feed).
+- **Zona segura:** los títulos van con `y` ≥ 252 y los subtítulos con `subtitleY` ≤ 1360, porque `qc-bounds` corta en y = 1500. Cuando el jugador clave queda abajo en el plano, los subtítulos suben con `subtitleYAt` (y ≈ 300).
+- **Variante de gancho (B):** cambian solo la voz y el título de apertura. La voz B es la toma corta del gancho empalmada en el silencio de la toma A antes de «As…». El vídeo B se monta con los fotogramas 0–91 de B y el resto de A, sin renderizar el cuerpo dos veces.
+- **Comparativa actual / nuevo:** la misma jugada, cámara y ventana con el perfil anterior y con el nuevo (`_gen-ddtr-lab.py`), en `comparativa/`.

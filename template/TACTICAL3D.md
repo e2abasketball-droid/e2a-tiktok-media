@@ -96,3 +96,21 @@ No uses siempre el mismo hook ni la misma estructura.
 Regla de lectura asociada: muchos efectos a lo largo del vídeo, **una sola idea visual principal en cada momento**
 (máx. 1 título + subtítulos + 1 etiqueta táctica a la vez); cada gráfico tiene entrada, permanencia y salida.
 Referencia aplicada: `template/tactical/episodes/_gen-spain-pnr-2-shots.py` (capa `src/t3d/telestration3d.tsx`).
+
+## Novedades 2026-11-20 (pilotos Slip vs Hedge y Double Drag en transición)
+Todo es opcional y se activa por jugada o por episodio. Lo que no lo usa no cambia: las 79 jugadas anteriores dan los mismos jugadores y balón fotograma a fotograma antes y después (comparación con `play-dump`, base 23a2cd8).
+- **`"catchV2": 2`** (jugada): recepción por encima del hombro cuando el pase llega desde detrás de la carrera (*slip*, *dive*, puerta atrás). El punto de recepción se desplaza hacia el pasador y deja de atravesar el tronco (qc-catch: de 12,8 cm a 0). `true` mantiene el modelo del 19 nov.
+- **`env: 'academy'`** (episodio o plano): look mate y sin brillos (suelo sin mapa de rugosidad, tela con *sheen*, luz frontal de relleno). Sin `env`, el aspecto es el de antes.
+- **Inicio lanzado:** un 4.º elemento `"fly"` en el PRIMER punto de un track (`[0, x, y, "fly"]`) hace que el jugador ya vaya lanzado en t = 0. Es para jugadas cuyo reloj empieza en plena transición. Sin la marca, cada tramo sigue empezando y acabando parado.
+- **Recogida tras bote con mano** (`hand` / `cross`): el balón pasa de la mano del bote a las dos manos en 0,2 s, por delante del tronco. Antes daba un salto de 0,3 m en un fotograma.
+- **Reloj S y anclas del encargo:** `tactical/specs/_gen-ddrag-tr.py` convierte tablas «S → (x, y)» en tracks: x del repo = −x del encargo. Los cambios quedan en `spec.sclock.adjust`.
+- **QC:**
+  - `qc-contact` mide el bote con la mano que bota (antes, siempre la derecha).
+  - `qc-tactical3d` admite un `from` numérico negativo (≥ −1) en el plano inicial: el gancho entra ya visible en el fotograma 0.
+- **Herramientas:**
+  - `scripts/play-dump.mts`: jugadores, balón y fase a 30 fps.
+  - `tools/tactical_2d.py`: pase táctico 2D, MP4 y hoja.
+  - `scripts/pose-dump.mts`: articulaciones del rig.
+  - `tools/blender/catch_pilot.py`: bpy 5.3; recepción en mallas desde el lateral y a tres cuartos, con distancias balón–tronco y balón–mano medidas en la malla y `--inject behind` para provocar el fallo a propósito.
+- **Comparativa controlada:** `_gen-slip-lab.py` y `_gen-ddtr-lab.py` renderizan la misma jugada, cámara y ventana con el perfil anterior y con el nuevo.
+- **MPFB 2.0.18:** clonado (assets CC0). No se pudo instalar como extensión de Blender en la sesión (bloqueado por el clasificador de permisos), así que sigue el pipeline CC0 de `tools/blender/build_player.py`.
