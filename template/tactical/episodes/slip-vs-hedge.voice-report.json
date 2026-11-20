@@ -1,0 +1,96 @@
+{
+ "source": "public/tactical/slip/voice-raw.mp3",
+ "source_sec": 28.64,
+ "preroll": 0.1,
+ "output": "public/tactical/slip/voice.wav",
+ "output_sec": 32.31,
+ "inserted_total_sec": 3.57,
+ "last_word_end": 32.39,
+ "gaps": [
+  {
+   "after": "WIDE open.",
+   "natural_silence": [
+    3.56,
+    4.01
+   ],
+   "natural_sec": 0.45,
+   "target_sec": 0.5,
+   "inserted_sec": 0.05,
+   "cut_at_source": 3.715,
+   "why": "EMPTY RIM lands, then the rewind (open loop: the catch is not shown yet)"
+  },
+  {
+   "after": "even lands.",
+   "natural_silence": [
+    7.39,
+    7.66
+   ],
+   "natural_sec": 0.27,
+   "target_sec": 0.5,
+   "inserted_sec": 0.23,
+   "cut_at_source": 7.475,
+   "why": "freeze: X5 above the screen line, O5 still 0.8 m from X1"
+  },
+  {
+   "after": "dive.",
+   "natural_silence": [
+    10.97,
+    11.21
+   ],
+   "natural_sec": 0.24,
+   "target_sec": 0.3,
+   "inserted_sec": 0.06,
+   "cut_at_source": 11.115,
+   "why": "O5's first acceleration step"
+  },
+  {
+   "after": "Layup.",
+   "natural_silence": [
+    13.57,
+    13.95
+   ],
+   "natural_sec": 0.38,
+   "target_sec": 2.6,
+   "inserted_sec": 2.22,
+   "cut_at_source": 13.795,
+   "why": "the whole action again at REAL SPEED, no graphics"
+  },
+  {
+   "after": "Same action.",
+   "natural_silence": [
+    14.73,
+    15.01
+   ],
+   "natural_sec": 0.28,
+   "target_sec": 0.45,
+   "inserted_sec": 0.17,
+   "cut_at_source": 14.935,
+   "why": "rewind to the last shared instant (X5's first step)"
+  },
+  {
+   "after": "pulls up.",
+   "natural_silence": [
+    20.67,
+    20.99
+   ],
+   "natural_sec": 0.32,
+   "target_sec": 1.1,
+   "inserted_sec": 0.78,
+   "cut_at_source": 20.845,
+   "why": "release, flight, make: overlays off"
+  },
+  {
+   "after": "Use the screen.",
+   "natural_silence": [
+    25.55,
+    25.84
+   ],
+   "natural_sec": 0.29,
+   "target_sec": 0.35,
+   "inserted_sec": 0.06,
+   "cut_at_source": 25.755,
+   "why": "second reveal image lands before the CTA"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}

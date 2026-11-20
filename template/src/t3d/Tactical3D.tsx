@@ -42,8 +42,8 @@ export type Shot3 = {
   screen?: ScreenItem[];
   sfx?: {at: Anchor; name: string; volume?: number}[];
   hide?: string[];
-  /** 2026-11-17: warm practice gym or cold game arena (default: the arena as before) */
-  env?: 'practice' | 'game';
+  /** 2026-11-17: warm practice gym or cold game arena (default: the arena as before); 2026-11-20: 'academy' look */
+  env?: 'practice' | 'game' | 'academy';
   /** 2026-11-19: 'A' = legacy capsule athletes in this shot (default: the episode's choice, else the E2A players) */
   players3d?: 'A' | 'C';
   /** 2026-11-18 (V4): gain on this shot's automatic sfx (0 = none, e.g. a quiet memory echo of the rim done by hand) */
@@ -76,6 +76,8 @@ export type Episode3 = {
   /** 2026-11-19 default player package (src/t3d/player3d.ts): omitted or 'C' = E2A deformable players (offense /
    *  defense variants, validated clips by action, compatible rig animation otherwise); 'A' = legacy capsule athletes */
   players3d?: 'A' | 'C';
+  /** 2026-11-20: look profile for every shot that does not set its own `env` ('academy' = master prompt 3D sec. 7.1) */
+  env?: 'practice' | 'game' | 'academy';
 };
 
 type Cue = {t: number; name: string; volume: number};
@@ -237,7 +239,7 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
     <AbsoluteFill style={{background: '#050A15'}}>
       <AbsoluteFill style={{filter: [freezeOn ? 'saturate(0.72) brightness(0.94) contrast(1.04)' : '', fx.blur > 0.05 ? `blur(${fx.blur.toFixed(2)}px)` : ''].join(' ').trim() || undefined, transform: fx.scale !== 1 || fx.tx !== 0 ? `translateX(${fx.tx.toFixed(1)}px) scale(${fx.scale.toFixed(4)})` : undefined}}>
         {!qcProbe && (
-          <Scene3D play={play} pt={pt} cam={cam} W={W} H={H} hide={shot.hide} logo={logo} env={shot.env} faces={ep.faces} players3d={shot.players3d ?? ep.players3d}>
+          <Scene3D play={play} pt={pt} cam={cam} W={W} H={H} hide={shot.hide} logo={logo} env={shot.env ?? ep.env} faces={ep.faces} players3d={shot.players3d ?? ep.players3d}>
             <Overlays3D play={play} pt={pt} items={ov} />
           </Scene3D>
         )}

@@ -125,8 +125,8 @@ def slip_b():
     acts["O5"] = [{"type": "screen", "from": K["contact"] - 0.15, "to": K["use"] + 0.75, "face": "X1"}]
     legs["O5"].append({"at": K["use"] + 0.85, "to": [1.1, 5.5], "speed": 3.2})
     # X1 runs into it (bump), then chases over the top, late
-    legs["X1"] = [{"at": K["use"] - 0.05, "to": [2.15, 8.55], "speed": 1.6},
-                  {"at": K["use"] + 0.45, "via": [[1.75, 9.25]], "to": [0.6, 8.3], "speed": 3.2}]
+    legs["X1"] = [{"at": K["use"] - 0.05, "to": [2.0, 8.4], "speed": 1.8},
+                  {"at": K["use"] + 0.5, "via": [[1.9, 9.2]], "to": [0.6, 8.3], "speed": 3.2}]
     acts["X1"] = [st("O1", 0, K["use"]), {"type": "bump", "from": K["use"] + 0.05, "to": K["use"] + 0.4, "face": "O5"},
                   {"type": "contest", "from": K["rel"] - 0.05, "to": K["rel"] + 0.5}]
     # O1 comes off the screen over its top, brakes on two feet at the elbow, pull-up
@@ -135,12 +135,12 @@ def slip_b():
             {"type": "hold", "player": "O1", "from": K["gather"], "to": K["rel"]},
             {"type": "shot", "player": "O1", "t0": K["rel"], "t1": K["rel"] + 0.95, "make": True, "three": False, "side": -1}]
     acts["O1"] += [{"type": "gather", "from": K["gather"] - 0.05, "to": K["gather"] + 0.28}, {"type": "celebrate", "from": K["rel"] + 1.3, "to": DB - 0.1}]
-    marks = {"start": 0, "up": K["up"], "wait": K["x5go"], "contact": K["contact"], "use": K["use"], "gather": K["gather"],
+    marks = {"start": 0, "up": K["up"], "wait": K["x5go"], "contact": K["contact"], "use": K["use"], "bump": K["use"] + 0.3, "gather": K["gather"],
              "release": K["rel"], "make": K["rel"] + 0.95, "end": DB}
     claims = [
         {"type": "reacts_after", "player": "X5", "event": "up", "min": 0.2, "says": "But this time he waits."},
         {"type": "far", "a": "X5", "b": "O1", "at": "contact", "min": 2.4, "says": "he waits (no show)"},
-        {"type": "near", "a": "O5", "b": "X1", "at": "contact", "max": 0.95, "says": "Now the screen is real."},
+        {"type": "near", "a": "O5", "b": "X1", "at": "bump", "max": 0.6, "says": "Now the screen is real."},
         {"type": "far", "a": "X5", "b": "O1", "at": "release", "min": 1.8, "says": "the big is back in the paint"},
         {"type": "open", "player": "O1", "at": "release", "min": 1.8, "says": "Space for the pull-up."},
         {"type": "order", "marks": ["up", "wait", "contact", "use", "gather", "release", "make"], "says": "wait, screen, pull-up"}]

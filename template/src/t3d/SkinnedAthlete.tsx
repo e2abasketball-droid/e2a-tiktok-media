@@ -144,8 +144,8 @@ const rigOf = (scene: THREE.Object3D, clipBones: ClipBone[]): Rig => {
 /** one independent instance of a player mesh: own skeleton (pose state), own skin and jersey materials */
 type Inst = {obj: THREE.Object3D; rig: Rig};
 const instances = new Map<string, Inst>();
-const instanceOf = (template: THREE.Group, key: string, bonesDesc: ClipBone[], look: {skin?: string; num?: string; kit?: Record<string, string>}) => {
-  const k = `${template.uuid}|${key}|${look.skin}|${look.num}`;
+const instanceOf = (template: THREE.Group, key: string, bonesDesc: ClipBone[], look: {skin?: string; num?: string; kit?: Record<string, string>; profile?: 'academy'}) => {
+  const k = `${template.uuid}|${key}|${look.skin}|${look.num}|${look.profile ?? ''}`;
   let it = instances.get(k);
   if (it) return it;
   const obj = SkeletonUtils.clone(template);
@@ -154,18 +154,36 @@ const instanceOf = (template: THREE.Group, key: string, bonesDesc: ClipBone[], l
     if (!m.isMesh) return;
     const mats = (Array.isArray(m.material) ? m.material : [m.material]).map((mt) => {
       const mm = mt as THREE.MeshStandardMaterial;
+      // 'academy' look (2026-11-20): matte cloth with a soft sheen, satin skin, shoes and soles with their own response
+      const matte = (c: THREE.MeshStandardMaterial) => {
+        if (look.profile !== 'academy') return c;
+        const n = c.name;
+        const set = (r: number) => (c.roughness = r);
+        if (n.startsWith('E2A_jersey') || n.startsWith('E2A_shorts')) {
+          set(0.93);
+          const ph = c as THREE.MeshPhysicalMaterial;
+          if (ph.isMeshPhysicalMaterial) {
+            ph.sheen = 0.55;
+            ph.sheenRoughness = 0.85;
+          }
+        } else if (n.startsWith('E2A_skin')) set(0.62);
+        else if (n.startsWith('E2A_shoe')) set(0.55);
+        else if (n.startsWith('E2A_trim')) set(0.75);
+        c.envMapIntensity = 0.6;
+        return c;
+      };
       if (mm.name.startsWith('E2A_skin') && look.skin) {
         const c = mm.clone();
         c.color = new THREE.Color(look.skin);
-        return c;
+        return matte(c);
       }
       if (mm.name.startsWith('E2A_jersey') && look.num && look.kit) {
         const c = mm.clone();
         c.map = jerseyTexture(look.kit, look.num);
         c.color = new THREE.Color('#ffffff');
-        return c;
+        return matte(c);
       }
-      return mm;
+      return look.profile === 'academy' ? matte(mm.clone()) : mm;
     });
     m.material = Array.isArray(m.material) ? mats : mats[0];
   });
@@ -187,8 +205,10 @@ export const SkinnedAthlete: React.FC<{
   skin?: string;
   num?: string;
   kit?: Record<string, string>;
-}> = ({scene, clipBones, bones, hips, inst = 'lab', scale = 1, skin, num, kit}) => {
-  const {obj, rig} = instanceOf(scene, inst, clipBones, {skin, num, kit});
+  /** 2026-11-20 look profile ('academy': matte cloth, satin skin) */
+  look?: 'academy';
+}> = ({scene, clipBones, bones, hips, inst = 'lab', scale = 1, skin, num, kit, look}) => {
+  const {obj, rig} = instanceOf(scene, inst, clipBones, {skin, num, kit, profile: look});
   obj.scale.setScalar(scale);
   obj.updateMatrixWorld(true);
   const world = new Map<string, THREE.Quaternion>();

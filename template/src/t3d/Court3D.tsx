@@ -242,7 +242,12 @@ export const Basket: React.FC<{swish?: number}> = ({swish = 0}) => {
   );
 };
 
-export const Court3D: React.FC<{logo?: HTMLImageElement; swish?: number; env?: 'practice' | 'game'}> = ({logo, swish, env}) => {
+/** scene look profiles. 'academy' (2026-11-20, master prompt 3D sec. 7.1, opt-in per episode `env`): softer and wider key,
+ *  stronger fill so contact shadows stay soft grey instead of black masses, matte parquet (no speckled highlight under the
+ *  feet or the captions), darker stands; the player materials go matte too (SkinnedAthlete `look`). */
+export type SceneEnv = 'practice' | 'game' | 'academy';
+
+export const Court3D: React.FC<{logo?: HTMLImageElement; swish?: number; env?: SceneEnv}> = ({logo, swish, env}) => {
   const tex = React.useMemo(() => buildFloor(logo), [logo]);
   const cx = 0;
   const cy = Y0 + SPAN / 2;
@@ -252,7 +257,11 @@ export const Court3D: React.FC<{logo?: HTMLImageElement; swish?: number; env?: '
       {/* parquet */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[px, 0, pz]} receiveShadow>
         <planeGeometry args={[SPAN, SPAN]} />
-        <meshStandardMaterial map={tex.map} roughnessMap={tex.rough} roughness={0.85} metalness={0.0} envMapIntensity={0.8} />
+        {env === 'academy' ? (
+          <meshStandardMaterial map={tex.map} roughness={0.74} metalness={0.0} envMapIntensity={0.28} />
+        ) : (
+          <meshStandardMaterial map={tex.map} roughnessMap={tex.rough} roughness={0.85} metalness={0.0} envMapIntensity={0.8} />
+        )}
       </mesh>
       {/* dark arena floor beyond the texture */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.005, -7]} receiveShadow>
@@ -266,9 +275,9 @@ export const Court3D: React.FC<{logo?: HTMLImageElement; swish?: number; env?: '
 };
 
 /** arena light rig: overhead key light with soft shadows, fill, rim/back light, ambient */
-export const ArenaLights: React.FC<{focus?: [number, number, number]; env?: 'practice' | 'game'}> = ({focus = [0, 0, -5], env}) => {
+export const ArenaLights: React.FC<{focus?: [number, number, number]; env?: SceneEnv}> = ({focus = [0, 0, -5], env}) => {
   // practice: warm and soft; game: colder key, bluer fill, more contrast; default: as before
-  const L = env === 'practice' ? {hemi: ['#FFD9A8', '#3A2410', 0.95], key: '#FFD3A0', keyI: 700, fill: '#FFE2C2', fillI: 300, back: '#FFD9A0', side: '#FFDDB8', amb: 0.22} : env === 'game' ? {hemi: ['#8FB0E8', '#0E1626', 0.42], key: '#E6EEFF', keyI: 860, fill: '#9DB6FF', fillI: 220, back: '#BFD4FF', side: '#D8E4FF', amb: 0.06, backI: 1.7} : {hemi: ['#9fb4dc', '#2a1a0e', 0.55], key: '#fff3e2', keyI: 760, fill: '#cdd9ff', fillI: 260, back: '#ffd9a0', side: '#ffe6c8', amb: 0.1};
+  const L = env === 'academy' ? {hemi: ['#C8D4EC', '#3B2A1A', 0.95], key: '#FFF1E0', keyI: 600, fill: '#DCE4FF', fillI: 430, back: '#FFE2B8', side: '#FFE9D2', amb: 0.2, backI: 1.25} : env === 'practice' ? {hemi: ['#FFD9A8', '#3A2410', 0.95], key: '#FFD3A0', keyI: 700, fill: '#FFE2C2', fillI: 300, back: '#FFD9A0', side: '#FFDDB8', amb: 0.22} : env === 'game' ? {hemi: ['#8FB0E8', '#0E1626', 0.42], key: '#E6EEFF', keyI: 860, fill: '#9DB6FF', fillI: 220, back: '#BFD4FF', side: '#D8E4FF', amb: 0.06, backI: 1.7} : {hemi: ['#9fb4dc', '#2a1a0e', 0.55], key: '#fff3e2', keyI: 760, fill: '#cdd9ff', fillI: 260, back: '#ffd9a0', side: '#ffe6c8', amb: 0.1};
   const target = React.useMemo(() => new THREE.Object3D(), []);
   target.position.set(...focus);
   return (
@@ -278,8 +287,8 @@ export const ArenaLights: React.FC<{focus?: [number, number, number]; env?: 'pra
       <spotLight
         position={[focus[0] + 3, 14, focus[2] + 5]}
         target={target}
-        angle={0.62}
-        penumbra={0.85}
+        angle={env === 'academy' ? 0.78 : 0.62}
+        penumbra={env === 'academy' ? 1 : 0.85}
         intensity={L.keyI}
         decay={2}
         color={L.key}
@@ -297,7 +306,9 @@ export const ArenaLights: React.FC<{focus?: [number, number, number]; env?: 'pra
       {/* V3: soft warm side light at face height (faces read in medium shots, players separate from the stands) */}
       {env === 'game' && <directionalLight position={[focus[0] - 9, 2.2, focus[2] + 9]} intensity={0.32} color="#FFE2C8" />}
       {/* V2: low side light — models arms, knees and fabric folds from the side, reads weight on the feet */}
-      <directionalLight position={[focus[0] + 14, 3.2, focus[2] + 2]} intensity={0.85} color={L.side} />
+      <directionalLight position={[focus[0] + 14, 3.2, focus[2] + 2]} intensity={env === 'academy' ? 0.6 : 0.85} color={L.side} />
+      {/* academy: broad frontal fill at face height (models faces and fabric, lifts the shadow side) */}
+      {env === 'academy' && <directionalLight position={[focus[0] - 4, 4.5, focus[2] + 14]} intensity={0.55} color="#F4F0FF" />}
       <ambientLight intensity={L.amb} />
     </>
   );
@@ -395,7 +406,7 @@ const PracticeGym: React.FC = () => (
   </group>
 );
 
-export const Arena: React.FC<{env?: 'practice' | 'game'}> = ({env}) => env === 'practice' ? <PracticeGym /> : (
+export const Arena: React.FC<{env?: SceneEnv}> = ({env}) => env === 'practice' ? <PracticeGym /> : (
   <group>
     <EnvMap />
     {/* behind the baseline (world y < 0 -> three z > 0) */}

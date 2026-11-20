@@ -1,0 +1,13 @@
+{"id": "slip-vs-hedge", "title": "Slip vs Hard Hedge", "fps": 30,
+ "voiceRaw": "tactical/slip/voice-raw.mp3", "wordsRaw": "slip-vs-hedge.words-raw.json",
+ "voice": "tactical/slip/voice.wav", "voiceMix": "tactical/slip/voice.mix.wav",
+ "preroll": 0.1, "tail": 1.3,
+ "gaps": [
+  {"after": "WIDE open.", "sec": 0.5, "why": "EMPTY RIM lands, then the rewind (open loop: the catch is not shown yet)"},
+  {"after": "even lands.", "sec": 0.5, "why": "freeze: X5 above the screen line, O5 still 0.8 m from X1"},
+  {"after": "dive.", "sec": 0.3, "why": "O5's first acceleration step"},
+  {"after": "Layup.", "sec": 2.6, "why": "the whole action again at REAL SPEED, no graphics"},
+  {"after": "Same action.", "sec": 0.45, "why": "rewind to the last shared instant (X5's first step)"},
+  {"after": "pulls up.", "sec": 1.1, "why": "release, flight, make: overlays off"},
+  {"after": "Use the screen.", "sec": 0.35, "why": "second reveal image lands before the CTA"}],
+ "plays": {"A": "slip-a-dive", "B": "slip-b-pullup"}, "shots": []}

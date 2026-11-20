@@ -9,7 +9,7 @@ import type {V3} from '../tactical/geometry.ts';
 import {posAt, sample} from '../tactical/play.ts';
 import {Athlete, SKINS, W3} from './Athlete';
 import type {FaceState} from './Athlete';
-import {ArenaLights, Court3D} from './Court3D';
+import {ArenaLights, Court3D, type SceneEnv} from './Court3D';
 import type {PlayWithActions} from './rig.ts';
 import {poseAt} from './rig.ts';
 import type {Cam3} from './camera3d.ts';
@@ -165,8 +165,9 @@ export type SceneProps = {
   children?: React.ReactNode; // world-space graphics (overlays3d)
   dimTeam?: 'O' | 'X';
   logo?: HTMLImageElement;
-  /** 2026-11-17 character episodes: warm open practice gym vs cold full game arena (default: the arena as before) */
-  env?: 'practice' | 'game';
+  /** 2026-11-17 character episodes: warm open practice gym vs cold full game arena (default: the arena as before);
+   *  2026-11-20 'academy' look profile (Court3D SceneEnv) */
+  env?: SceneEnv;
   faces?: FaceCfg;
   /** 2026-11-19: 'C' (default) = E2A deformable players (player3d.ts); 'A' = legacy capsule athletes */
   players3d?: 'A' | 'C';
@@ -266,8 +267,8 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
       camera={{fov: cam.fov, near: 0.1, far: 120}}
     >
       <CameraSync cam={cam} />
-      <color attach="background" args={[env === 'practice' ? '#1B140E' : '#050A15']} />
-      <fog attach="fog" args={[env === 'practice' ? '#1B140E' : '#050A15', 14, 40]} />
+      <color attach="background" args={[env === 'practice' ? '#1B140E' : env === 'academy' ? '#04070F' : '#050A15']} />
+      <fog attach="fog" args={[env === 'practice' ? '#1B140E' : env === 'academy' ? '#04070F' : '#050A15', env === 'academy' ? 12 : 14, env === 'academy' ? 34 : 40]} />
       <ArenaLights focus={W3([cam.target[0] * 0.5, Math.max(2, cam.target[1] * 0.7 + 1.5), 0])} env={env} />
       <Court3D logo={logo} swish={swish} env={env} />
       {play.players.map((p, i) => {
@@ -287,7 +288,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
           return (
             <React.Fragment key={p.id}>
               {spec.look === 'C' && glb && clip && sp.bones && sp.hips ? (
-                <SkinnedAthlete scene={glb} clipBones={clip.bones} bones={sp.bones} hips={sp.hips} inst={p.id} skin={skin} num={num} kit={KITS[p.team]} />
+                <SkinnedAthlete scene={glb} clipBones={clip.bones} bones={sp.bones} hips={sp.hips} inst={p.id} skin={skin} num={num} kit={KITS[p.team]} look={env === 'academy' ? 'academy' : undefined} />
               ) : (
                 <Athlete pose={sp.pose} team={p.team} num={num} skin={skin} />
               )}
@@ -301,7 +302,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
           const r = bonesFromPose(pkg.rig, pose, sc);
           return (
             <React.Fragment key={p.id}>
-              <SkinnedAthlete scene={glb} clipBones={pkg.rig.bones} bones={r.bones} hips={r.hips} inst={p.id} scale={sc} skin={skin} num={num} kit={KITS[p.team]} />
+              <SkinnedAthlete scene={glb} clipBones={pkg.rig.bones} bones={r.bones} hips={r.hips} inst={p.id} scale={sc} skin={skin} num={num} kit={KITS[p.team]} look={env === 'academy' ? 'academy' : undefined} />
               <ContactShadows pose={pose} />
             </React.Fragment>
           );
