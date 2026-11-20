@@ -12,7 +12,7 @@
 import fs from 'node:fs';
 import {FIBA} from '../src/tactical/geometry.ts';
 import type {V3} from '../src/tactical/geometry.ts';
-import {sample} from '../src/tactical/play.ts';
+import {dribbleSide, sample} from '../src/tactical/play.ts';
 import {footTrack} from '../src/t3d/rig.ts';
 import type {PlayWithActions, Pose} from '../src/t3d/rig.ts';
 import {registerClip, skelPoseAt} from '../src/t3d/skelclip.ts';
@@ -210,7 +210,11 @@ for (const id of ids) {
         cycleMin = Infinity;
         rising = false;
       }
-      cycleMin = Math.min(cycleMin, len(sub(P.hand[1], bl.pos)) - BALL_R);
+      // the dribbling hand (2026-11-20): a handed dribble (hand / cross) switches it; before, always the right hand
+      // (a left-hand or crossover dribble read as a 0.7 m gap)
+      const ev = acts.find((e) => e.type === 'hold' && e.player === id && e.dribble && t >= (e.from ?? 0) && t <= (e.to ?? 0)) as {hand?: 1 | -1; cross?: number[]} | undefined;
+      const hi = ev && (ev.hand !== undefined || ev.cross?.length) && dribbleSide(ev, t) < 0 ? 0 : 1;
+      cycleMin = Math.min(cycleMin, len(sub(P.hand[hi], bl.pos)) - BALL_R);
       prevZ = z;
     } else {
       // skip the 0.1 s after a catch and around shots/layups/passes (the hands travel with the ball by design)

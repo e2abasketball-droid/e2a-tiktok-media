@@ -15,7 +15,10 @@ export type PlayerSpec = {
 };
 
 /** [seconds, x, y] — the player is exactly there at that time. Two equal points = standing still. */
-export type Waypoint = [number, number, number];
+/** [t, x, y] — an optional 4th element 'fly' on the FIRST waypoint (2026-11-20, Double Drag in transition) makes the
+ *  first run start already at speed (natural spline end, M = 0) instead of from rest: for plays whose clock starts
+ *  mid-transition. Without it every run is clamped (rest at both ends), as before. */
+export type Waypoint = [number, number, number] | [number, number, number, 'fly'];
 
 export type BallEvent =
   | {type: 'hold'; player: string; from: number; to: number; dribble?: boolean; hand?: 1 | -1; cross?: number[]}
@@ -57,7 +60,7 @@ const runCache = new WeakMap<Waypoint[], Run[]>();
 
 /** Clamped cubic spline (C2: smooth speed AND acceleration) through each moving run of waypoints.
  *  A run starts and ends at rest; equal consecutive waypoints are a stop that splits runs. */
-const clamped = (t: number[], y: number[]): number[] => {
+const clamped = (t: number[], y: number[], freeStart = false): number[] => {
   const n = t.length;
   if (n < 2) return [0];
   const h = t.slice(1).map((v, i) => v - t[i]);
@@ -66,9 +69,9 @@ const clamped = (t: number[], y: number[]): number[] => {
   const b = new Array(n).fill(0);
   const c = new Array(n).fill(0);
   const d = new Array(n).fill(0);
-  b[0] = 2 * h[0];
-  c[0] = h[0];
-  d[0] = 6 * ((y[1] - y[0]) / h[0]);
+  b[0] = freeStart ? 1 : 2 * h[0];
+  c[0] = freeStart ? 0 : h[0];
+  d[0] = freeStart ? 0 : 6 * ((y[1] - y[0]) / h[0]);
   for (let i = 1; i < n - 1; i++) {
     a[i] = h[i - 1];
     b[i] = 2 * (h[i - 1] + h[i]);
@@ -99,7 +102,8 @@ const runs = (wp: Waypoint[]): Run[] => {
     if (cur.length < 2) return;
     const t = cur.map((w) => w[0]);
     const x = [cur.map((w) => w[1]), cur.map((w) => w[2])];
-    out.push({t, x, m: x.map((col) => clamped(t, col))});
+    const fly = cur[0] === wp[0] && wp[0][3] === 'fly';
+    out.push({t, x, m: x.map((col) => clamped(t, col, fly))});
   };
   for (let i = 1; i < wp.length; i++) {
     if (same(wp[i], wp[i - 1])) {
@@ -338,6 +342,20 @@ const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallSta
       // the ball sits in the hand of a body that turns smoothly: average the facing over the last 0.15 s
       // (a raw facing that snaps from "rest" to "running" swung the ball sideways at 15+ m/s)
       let h = isHanded(cur) ? handedSpot(play, cur, t) : smoothHand(play, cur.player, t);
+      // pick-up after a handed dribble (2026-11-20, Double Drag): the ball comes from the dribbling hand to the
+      // two-hand spot in front of the chest over the first 0.2 s of the hold (was a 0.3 m jump in one frame)
+      if (!cur.dribble) {
+        const prev = play.ball.find((e): e is Extract<BallEvent, {type: 'hold'}> => e.type === 'hold' && e.player === cur.player && isHanded(e) && Math.abs(e.to - cur.from) < 1e-6);
+        const pw = prev ? Math.min(0.2, (cur.to - cur.from) * 0.85) : 0;
+        if (prev && t - cur.from < pw) {
+          const s0 = handedSpot(play, prev, prev.to);
+          const u3 = (t - cur.from) / pw;
+          const w = u3 * u3 * (3 - 2 * u3);
+          // the path bows forward (+0.1 m at mid-way) so the ball goes round the front of the trunk, not through it
+          const fa = stateOf(play, cur.player, t).facing, bow = 0.1 * Math.sin(Math.PI * u3);
+          h = [s0[0] + (h[0] - s0[0]) * w + Math.cos(fa) * bow, s0[1] + (h[1] - s0[1]) * w + Math.sin(fa) * bow, s0[2] + (h[2] - s0[2]) * w];
+        }
+      }
       // catch (2026-11-17 V3): both hands give on contact, the ball comes back toward the chest and a little down
       const inPass = !cur.dribble ? (play.ball.find((e) => e.type === 'pass' && e.to === cur.player && Math.abs(e.t1 - cur.from) < 1e-6) as Extract<BallEvent, {type: 'pass'}> | undefined) : undefined;
       const fromPass = !!inPass;

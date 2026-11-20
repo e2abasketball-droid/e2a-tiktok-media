@@ -1,0 +1,18 @@
+{"id": "ddtr-a", "title": "Double Drag in transition", "fps": 30,
+ "voiceRaw": "tactical/ddtr/voice-raw.mp3", "wordsRaw": "ddtr-a.words-raw.json",
+ "voice": "tactical/ddtr/voice-a.wav", "voiceMix": "tactical/ddtr/voice-a.mix.wav",
+ "preroll": 0.1, "tail": 1.8,
+ "gaps": [
+  {"after": "changes the shot.", "sec": 1.05, "why": "hook window as long as hook B (Stop the layup. Lose the corner.), X3's first step"},
+  {"after": "in a row.", "sec": 0.35, "why": "O4's plant, before the split"},
+  {"after": "to the arc.", "sec": 0.45, "why": "POP mark lands; cut back to the choice camera"},
+  {"after": "has a choice.", "sec": 0.45, "why": "X3 ring: the first step, a short accent"},
+  {"after": "with his shooter?", "sec": 0.55, "why": "micro-pulse: X3 holds the corner"},
+  {"after": "in stride.", "sec": 1.45, "why": "catch in stride, layup, floor and rim"},
+  {"after": "at game speed.", "sec": 3.4, "why": "the whole possession at 1x, no graphics"},
+  {"after": "Same play.", "sec": 0.4, "why": "visual reset to the shared decision"},
+  {"after": "tag the roll.", "sec": 0.3, "why": "X3's plant inside"},
+  {"after": "he just left?", "sec": 0.35, "why": "empty corner, before the skip"},
+  {"after": "Skip it to the corner.", "sec": 1.5, "why": "flight, catch behind the arc, release, closeout"},
+  {"after": "Double Drag.", "sec": 0.4, "why": "micro-replays of the choice begin"}],
+ "plays": {"A": "ddtr-a-roll", "B": "ddtr-b-skip"}, "shots": []}

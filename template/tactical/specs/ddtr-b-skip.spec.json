@@ -1,0 +1,914 @@
+{
+ "id": "ddtr-b-skip",
+ "title": "Double Drag in transition B: X3 tags the roll, skip to the corner, three",
+ "duration": 5.2667,
+ "concept": "double-drag-transition",
+ "source": "E2A didactic construction (owner brief 'Double Drag en transicion', S-clock anchors S000-S158) on: FIBA Europe Coaching Certificate terminology (Drag / Double Drag, on-ball screens); NBA.com Schuhmann 'Two Screens for Walker'; Hooper University 'Golden State Warriors Split Action' (first screener rolls, second pops); WABC level 1 (help and recover); FIBA 2026 arts. 2, 14, 16, 24, 25, 33.7",
+ "squareUp": true,
+ "catchV2": 2,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Point guard: pushes the ball, uses both drags"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Strong-side wide runner: right corner (offence's right)"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Weak-side corner shooter (offence's left)"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Second screener: pops to the high slot"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "First screener: rolls to the rim"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the ball: chases over both screens",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "On O2",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Weak-side corner defender: stays (A) / tags the roll (B) = THE CHOICE",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "On the popper: brief containment of the guard",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "On the roller: steps up, loses the rim side",
+   "guards": "O5"
+  }
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0.0,
+    2.4,
+    13.4,
+    "fly"
+   ],
+   [
+    0.6,
+    2.25,
+    10.75
+   ],
+   [
+    1.2,
+    1.8,
+    8.87
+   ],
+   [
+    1.6667,
+    0.22,
+    8.98
+   ],
+   [
+    2.1667,
+    -1.25,
+    8.06
+   ],
+   [
+    2.5,
+    -2.45,
+    7.36
+   ],
+   [
+    2.8,
+    -3.17,
+    6.52
+   ],
+   [
+    3.1333,
+    -3.56,
+    5.98
+   ],
+   [
+    3.5,
+    -3.76,
+    5.6
+   ],
+   [
+    4.0,
+    -3.86,
+    5.45
+   ],
+   [
+    4.6,
+    -3.91,
+    5.42
+   ],
+   [
+    5.2667,
+    -3.91,
+    5.42
+   ]
+  ],
+  "O2": [
+   [
+    0.0,
+    -5.7,
+    8.4,
+    "fly"
+   ],
+   [
+    0.6,
+    -5.94,
+    6.2
+   ],
+   [
+    1.2,
+    -6.35,
+    3.9
+   ],
+   [
+    1.6667,
+    -6.62,
+    2.3
+   ],
+   [
+    2.1667,
+    -6.86,
+    1.43
+   ],
+   [
+    2.5,
+    -6.86,
+    1.38
+   ],
+   [
+    4.6,
+    -6.87,
+    1.45
+   ],
+   [
+    5.2667,
+    -6.87,
+    1.45
+   ]
+  ],
+  "O3": [
+   [
+    0.0,
+    5.85,
+    8.1,
+    "fly"
+   ],
+   [
+    0.6,
+    6.03,
+    6.1
+   ],
+   [
+    1.2,
+    6.44,
+    4.2
+   ],
+   [
+    1.6667,
+    6.71,
+    2.97
+   ],
+   [
+    2.1667,
+    6.88,
+    2.33
+   ],
+   [
+    2.5,
+    6.87,
+    2.34
+   ],
+   [
+    5.2,
+    6.79,
+    2.4
+   ],
+   [
+    5.2667,
+    6.79,
+    2.4
+   ]
+  ],
+  "O4": [
+   [
+    0.0,
+    0.4,
+    13.76,
+    "fly"
+   ],
+   [
+    0.6,
+    -0.25,
+    11.46
+   ],
+   [
+    1.2,
+    -0.57,
+    9.15
+   ],
+   [
+    1.7667,
+    -0.55,
+    7.48
+   ],
+   [
+    2.2333,
+    -0.55,
+    7.48
+   ],
+   [
+    2.8,
+    0.38,
+    8.84
+   ],
+   [
+    3.1333,
+    1.11,
+    9.34
+   ],
+   [
+    3.5,
+    1.32,
+    9.48
+   ],
+   [
+    4.0,
+    1.36,
+    9.49
+   ],
+   [
+    4.6,
+    1.34,
+    9.51
+   ],
+   [
+    5.2667,
+    1.34,
+    9.51
+   ]
+  ],
+  "O5": [
+   [
+    0.0,
+    0.28,
+    12.6,
+    "fly"
+   ],
+   [
+    0.6,
+    0.91,
+    9.55
+   ],
+   [
+    1.0667,
+    1.12,
+    8.05
+   ],
+   [
+    1.6,
+    1.12,
+    8.05
+   ],
+   [
+    2.1667,
+    0.95,
+    6.38
+   ],
+   [
+    2.5,
+    0.93,
+    5.22
+   ],
+   [
+    2.8,
+    0.89,
+    4.15
+   ],
+   [
+    3.1333,
+    0.58,
+    3.03
+   ],
+   [
+    3.3667,
+    0.32,
+    2.58
+   ],
+   [
+    3.6,
+    0.2,
+    2.28
+   ],
+   [
+    4.1,
+    -0.39,
+    2.21
+   ],
+   [
+    4.6,
+    -1.0,
+    2.25
+   ],
+   [
+    5.2,
+    -1.08,
+    2.31
+   ],
+   [
+    5.2667,
+    -1.08,
+    2.31
+   ]
+  ],
+  "X1": [
+   [
+    0.0,
+    2.15,
+    11.85,
+    "fly"
+   ],
+   [
+    0.6,
+    2.19,
+    9.8
+   ],
+   [
+    1.2,
+    2.1,
+    8.33
+   ],
+   [
+    1.6667,
+    1.24,
+    9.4
+   ],
+   [
+    2.1667,
+    -0.48,
+    8.83
+   ],
+   [
+    2.5,
+    -1.52,
+    8.67
+   ],
+   [
+    2.8,
+    -2.3,
+    7.57
+   ],
+   [
+    3.1333,
+    -3.02,
+    6.68
+   ],
+   [
+    3.5,
+    -3.3,
+    6.3
+   ],
+   [
+    4.0,
+    -3.52,
+    6.2
+   ],
+   [
+    4.6,
+    -3.64,
+    6.14
+   ],
+   [
+    5.2667,
+    -3.64,
+    6.14
+   ]
+  ],
+  "X2": [
+   [
+    0.0,
+    -4.88,
+    6.58,
+    "fly"
+   ],
+   [
+    0.6,
+    -5.08,
+    4.84
+   ],
+   [
+    1.2,
+    -5.3,
+    3.6
+   ],
+   [
+    1.6667,
+    -5.75,
+    2.8
+   ],
+   [
+    2.1667,
+    -5.65,
+    2.15
+   ],
+   [
+    2.5,
+    -5.55,
+    2.17
+   ],
+   [
+    2.8,
+    -5.5,
+    2.24
+   ],
+   [
+    3.1333,
+    -5.39,
+    2.24
+   ],
+   [
+    3.5,
+    -5.15,
+    2.29
+   ],
+   [
+    4.0,
+    -5.02,
+    2.35
+   ],
+   [
+    4.6,
+    -4.96,
+    2.39
+   ],
+   [
+    5.2667,
+    -4.96,
+    2.39
+   ]
+  ],
+  "X3": [
+   [
+    0.0,
+    5.32,
+    6.93,
+    "fly"
+   ],
+   [
+    0.6,
+    5.32,
+    4.96
+   ],
+   [
+    1.2,
+    5.56,
+    3.77
+   ],
+   [
+    1.6667,
+    5.56,
+    3.08
+   ],
+   [
+    2.1667,
+    5.43,
+    2.86
+   ],
+   [
+    2.2,
+    5.43,
+    2.86
+   ],
+   [
+    2.5,
+    4.84,
+    2.77
+   ],
+   [
+    2.8,
+    3.83,
+    2.69
+   ],
+   [
+    3.1333,
+    2.55,
+    2.71
+   ],
+   [
+    3.3667,
+    2.09,
+    2.78
+   ],
+   [
+    3.6,
+    2.4,
+    2.73
+   ],
+   [
+    4.1,
+    4.06,
+    2.58
+   ],
+   [
+    4.6,
+    5.49,
+    2.53
+   ],
+   [
+    5.2,
+    5.86,
+    2.53
+   ],
+   [
+    5.2667,
+    5.86,
+    2.53
+   ]
+  ],
+  "X4": [
+   [
+    0.0,
+    -1.85,
+    9.2,
+    "fly"
+   ],
+   [
+    0.6,
+    -1.51,
+    8.68
+   ],
+   [
+    1.2,
+    -1.55,
+    7.94
+   ],
+   [
+    1.6667,
+    -1.38,
+    6.97
+   ],
+   [
+    2.1667,
+    -1.94,
+    7.12
+   ],
+   [
+    2.5,
+    -3.3,
+    6.65
+   ],
+   [
+    2.8,
+    -3.85,
+    6.35
+   ],
+   [
+    3.1333,
+    -3.93,
+    7.1
+   ],
+   [
+    3.5,
+    -2.82,
+    7.88
+   ],
+   [
+    4.0,
+    -1.34,
+    8.53
+   ],
+   [
+    4.6,
+    0.19,
+    9.02
+   ],
+   [
+    5.2667,
+    0.19,
+    9.02
+   ]
+  ],
+  "X5": [
+   [
+    0.0,
+    0.65,
+    9.92,
+    "fly"
+   ],
+   [
+    0.6,
+    -0.1,
+    8.89
+   ],
+   [
+    1.2,
+    0.15,
+    7.06
+   ],
+   [
+    1.6667,
+    -0.02,
+    7.05
+   ],
+   [
+    2.1667,
+    0.02,
+    6.89
+   ],
+   [
+    2.5,
+    0.05,
+    6.02
+   ],
+   [
+    2.8,
+    0.04,
+    5.28
+   ],
+   [
+    3.1333,
+    0.03,
+    4.14
+   ],
+   [
+    3.5,
+    -0.03,
+    3.13
+   ],
+   [
+    4.0,
+    -0.85,
+    2.95
+   ],
+   [
+    4.6,
+    -1.45,
+    2.95
+   ],
+   [
+    5.2,
+    -1.55,
+    2.9
+   ],
+   [
+    5.2667,
+    -1.55,
+    2.9
+   ]
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 2.5667,
+   "dribble": true,
+   "hand": -1,
+   "cross": [
+    1.3333
+   ]
+  },
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 2.5667,
+   "to": 2.8667
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O3",
+   "t0": 2.8667,
+   "t1": 3.8,
+   "style": "overhead",
+   "eyes": 0.4
+  },
+  {
+   "type": "hold",
+   "player": "O3",
+   "from": 3.8,
+   "to": 4.2333
+  },
+  {
+   "type": "shot",
+   "player": "O3",
+   "t0": 4.2333,
+   "t1": 5.2333,
+   "make": true,
+   "three": true
+  }
+ ],
+ "actions": {
+  "O5": [
+   {
+    "type": "screen",
+    "from": 1.0667,
+    "to": 1.6,
+    "face": "X1"
+   }
+  ],
+  "O4": [
+   {
+    "type": "screen",
+    "from": 1.7667,
+    "to": 2.2333,
+    "face": "X1"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 5.2667,
+    "face": "O1"
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 1.0,
+    "to": 5.2667,
+    "face": "ball"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 1.6667,
+    "to": 3.0,
+    "face": "O1"
+   },
+   {
+    "type": "stance",
+    "from": 3.0667,
+    "to": 5.2667,
+    "face": "O4"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 1.2,
+    "to": 2.0,
+    "face": "O1"
+   }
+  ],
+  "O2": [],
+  "O3": [
+   {
+    "type": "catchReady",
+    "from": 3.2,
+    "to": 3.8,
+    "face": "O1"
+   },
+   {
+    "type": "celebrate",
+    "from": 4.6667000000000005,
+    "to": 5.2167
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0.6667,
+    "to": 2.2,
+    "face": "ball"
+   },
+   {
+    "type": "stance",
+    "from": 2.2333,
+    "to": 3.3333,
+    "face": "O5"
+   },
+   {
+    "type": "closeout",
+    "from": 3.4667,
+    "to": 4.1333
+   },
+   {
+    "type": "contest",
+    "from": 4.0667,
+    "to": 4.6667
+   }
+  ],
+  "O1": [
+   {
+    "type": "face",
+    "from": 2.5333,
+    "to": 2.8667,
+    "face": "O3"
+   }
+  ]
+ },
+ "screens": [],
+ "sclock": {
+  "fps": 30,
+  "mirrorX": true,
+  "shared_until": 65,
+  "anchors": "brief sec. 5",
+  "adjust": [
+   "O5: screen hold S032-S048 (brief: both feet set 'cerca de S031'; arriving at S031 from the flying start was a 24 m/s2 stop)",
+   "O1 (B): eyes/shoulders to O3 from S076 (not S070): turning to the far corner while still driving right twisted the dribbling arm (mesh hand 42 mm off the ball)",
+   "O1 (B): pick-up S077 (A S080): the overhead skip needs the ball loaded above the head before S086 (0.12 m hand gap when the pick-up and the load overlapped)",
+   "O3 (B): shot S127 -> S157 (brief window S121-S127; with the catch at S114 a S124 shot left a 0.17 s gather and a 0.105 m hand gap)",
+   "O4: screen hold S053-S067 (brief 'aprox. S053-S070'; X1 is past him at ~S065) and anchor S075 (0.28, 7.80) dropped, spline S067 -> S084 (the stop -> pop start in 0.17 s was a 41 m/s2 jerk)",
+   "X5 (A): S105 (0.03, 3.13) -> (0.03, 3.25), S120 (0.25, 2.51) -> (0.20, 2.64), S138 y 2.56 -> 2.62: O5 open >= 1.0 m at the release (was 0.97 m)",
+   "X5 (B): new anchors S120 (0.85, 2.95), S138 (1.45, 2.95), S156 (1.55, 2.90): trails O5 (A anchors put him through O5 at S118-S123)",
+   "A pass: release S084 kept, catch S098 (was S095): flight 0.47 s, ~11 m/s (14.1 m/s broke the 14 m/s cap and the 10 cm/120 Hz catch continuity)",
+   "B pass: release S086 kept, catch S114 (was S108; O3 'control estable' ~S115): flight 0.93 s, ~11.6 m/s over 10.8 m (14.8 m/s broke both checks)",
+   "X3: stop S065-S066 in A and B (the brief's 'planta inicial' at S066; B's own S066 coordinate (-5.40, 2.88) -> the shared S065 spot): X3 is still at the decision and B only diverges after it",
+   "X3 (B): S108 (-2.73, 2.69) -> (-2.40, 2.73): the brake-and-reverse in 0.23 s was a 31 m/s2 jerk (he still brakes at S101 and closes out from S108)",
+   "X4: S084 (4.04, 6.18) -> (3.85, 6.35): smaller containment step, the reversal back to O4 was 25 m/s2",
+   "all players: first waypoint flagged 'fly' (new engine option): the S-clock begins mid-transition; clamped runs started from rest (O5 30 m/s2 at S000)"
+  ]
+ },
+ "marks": {
+  "start": 0,
+  "screen1": 1.0667,
+  "screen1off": 1.6,
+  "screen2": 1.7667,
+  "screen2hit": 2.0667,
+  "screen2off": 2.2333,
+  "cross": 1.3333,
+  "gather": 2.5667,
+  "decide": 2.2,
+  "tag": 2.5,
+  "pass": 2.8667,
+  "catch": 3.8,
+  "release": 4.2333,
+  "make": 5.2333,
+  "end": 5.2667
+ },
+ "claims": [
+  {
+   "type": "reacts_after",
+   "player": "X3",
+   "event": "decide",
+   "min": 0.05,
+   "says": "This time, he steps in to tag the roll."
+  },
+  {
+   "type": "far",
+   "a": "X3",
+   "b": "O3",
+   "at": "pass",
+   "min": 2.5,
+   "says": "See what he just left?"
+  },
+  {
+   "type": "behind_arc",
+   "player": "O3",
+   "at": "catch",
+   "says": "Skip it to the corner."
+  },
+  {
+   "type": "open",
+   "player": "O3",
+   "at": "release",
+   "min": 1.0,
+   "says": "Skip it to the corner (late closeout)."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "screen1",
+    "screen2",
+    "decide",
+    "tag",
+    "pass",
+    "catch",
+    "release",
+    "make"
+   ],
+   "says": "two screens, tag, skip, three"
+  }
+ ],
+ "notes": [
+  "Same as ddtr-a-roll until S065.",
+  "X3 steps in from S066; O1 reads it and skips over the top (S086 -> S108); late closeout; corner three."
+ ]
+}
