@@ -230,30 +230,39 @@ export const dribbleSide = (e: {hand?: 1 | -1; cross?: number[]}, t: number): nu
   return s;
 };
 
-const smoothHand = (play: Play, id: string, t: number): V3 => {
+/** Realism V2 (2026-11-21, opt-in `play.realism >= 2`): ONE body frame for the held ball. The hand spots of a held or
+ *  dribbled ball follow the SIMULATED body heading of the rig (yawHook = the chest the hands belong to, face actions
+ *  included), not the travel facing of play.ts. Without it a handler who faces the receiver while standing dribbled the
+ *  ball BEHIND his own back, and the pick-up into the chest pocket swept the ball through his trunk (Chicago V2 baseline,
+ *  qc-catch: 17.9 cm inside O1's trunk). Plays without the flag are unchanged. */
+export const realismV2 = (play: Play) => ((play as {realism?: number}).realism ?? 0) >= 2;
+const avgFacing = (play: Play, id: string, t: number): number => {
   let cx = 0, cy = 0;
+  const body = realismV2(play) && yawHook ? yawHook : undefined;
   for (let k = 0; k < 6; k++) {
-    const f = stateOf(play, id, Math.max(0, t - k * 0.03)).facing;
+    const x = Math.max(0, t - k * 0.03);
+    const f = (body && body(play, id, x)) ?? stateOf(play, id, x).facing;
     cx += Math.cos(f);
     cy += Math.sin(f);
   }
-  return hand({...stateOf(play, id, t), facing: Math.atan2(cy, cx)});
+  return Math.atan2(cy, cx);
 };
+const smoothHand = (play: Play, id: string, t: number): V3 => hand({...stateOf(play, id, t), facing: avgFacing(play, id, t)});
 
 /** where a held ball sits: in the dribbling hand for a handed dribble (crossover plays), else the classic hand spot */
 const isHanded = (e: BallEvent): boolean => e.type === 'hold' && !!e.dribble && (e.hand !== undefined || !!e.cross?.length);
 const handedSpot = (play: Play, e: Extract<BallEvent, {type: 'hold'}>, t: number, z = 1.15): V3 => {
   const st = stateOf(play, e.player, t);
-  let cx = 0, cy = 0;
-  for (let k = 0; k < 6; k++) {
-    const f = stateOf(play, e.player, Math.max(0, t - k * 0.03)).facing;
-    cx += Math.cos(f);
-    cy += Math.sin(f);
-  }
-  const fa = Math.atan2(cy, cx);
+  const fa = avgFacing(play, e.player, t);
   const fx = Math.cos(fa), fy = Math.sin(fa);
   const sd = dribbleSide(e, t);
-  const lat = 0.27 * sd, fw = 0.3 + 0.08 * (1 - Math.abs(sd));
+  // Realism V2: the ball is dribbled a little wider and further ahead, outside the stride (at 0.27 / 0.30 m the
+  // swinging thigh crossed it: 13-15 cm deep in qc-realism swept_ball)
+  const v2 = realismV2(play);
+  // and pushed further ahead with speed (+0.04 m per m/s, max +0.14 m: the knee reaches ~0.4 m ahead in a sprint)
+  const pa = posAt(play.tracks[e.player], Math.max(0, t - 0.05)), pb = posAt(play.tracks[e.player], Math.min(play.duration, t + 0.05));
+  const spd = v2 ? Math.hypot(pb[0] - pa[0], pb[1] - pa[1]) / 0.1 : 0;
+  const lat = (v2 ? 0.34 : 0.27) * sd, fw = (v2 ? 0.36 + Math.min(0.14, 0.04 * spd) : 0.3) + 0.08 * (1 - Math.abs(sd));
   return [st.pos[0] + fx * fw + fy * lat, st.pos[1] + fy * fw - fx * lat, z];
 };
 /** PHASED overhead throw (2026-11-20, Double Drag V2 pass fix; opt-in `phased: true` on an overhead pass loaded from a
@@ -320,7 +329,8 @@ const pocketSpot = (play: Play, e: Extract<BallEvent, {type: 'hold'}>, t: number
   }
   return b;
 };
-const heldPos = (play: Play, id: string, t: number): V3 => {
+const heldPos = (play: Play, id: string, t: number): V3 => clearBall(play, t, heldPosRaw(play, id, t));
+const heldPosRaw = (play: Play, id: string, t: number): V3 => {
   const e = play.ball.find((x) => x.type === 'hold' && x.player === id && t >= x.from - 1e-6 && t <= x.to + 1e-6);
   if (e && e.type === 'hold' && e.pocket) return pocketSpot(play, e, Math.min(Math.max(t, e.from), e.to));
   return e && e.type === 'hold' && isHanded(e) ? handedSpot(play, e, Math.min(Math.max(t, e.from), e.to)) : smoothHand(play, id, t);
@@ -402,12 +412,98 @@ let yawHook: ((play: Play, id: string, t: number) => number | undefined) | undef
 export const setYawHook = (f: (play: Play, id: string, t: number) => number | undefined) => {
   yawHook = f;
 };
+/** Realism V2 trunk model (registered by rig.ts): trunk axis of a player at t (pelvis xy, heading, forward lean) */
+export type Trunk = {p0: V3; p1: V3; yaw: number; a: number; w: number; head?: V3; hr?: number};
+let trunkHook: ((play: Play, id: string, t: number) => Trunk | undefined) | undefined;
+export const setTrunkHook = (f: (play: Play, id: string, t: number) => Trunk | undefined) => {
+  trunkHook = f;
+};
+/** Realism V2 contact solver: a ball that is held, dribbled or handed off can never sit inside ANY player's trunk
+ *  (elliptic cylinder pelvis -> chest, oriented by the simulated heading, leaning forward). The ball centre is pushed
+ *  radially out to the ellipse grown by the ball radius + 5 cm, 3 passes (two bodies close together in a hand-off).
+ *  Continuous (radial projection), pure function of (play, t). Passes in flight and shots are not touched: their paths
+ *  are checked by qc-realism (swept collision) and fixed in the play. */
+export const BALL_CLEAR = 0.05;
+export const EVENT_BLEND = 0.15;
+const clearBall = (play: Play, t: number, p: V3): V3 => {
+  if (!trunkHook || !realismV2(play)) return p;
+  const R = 0.121;
+  const q: V3 = [p[0], p[1], p[2]];
+  for (let it = 0; it < 3; it++) {
+    let moved = false;
+    for (const pl of play.players) {
+      const pp = posAt(play.tracks[pl.id], Math.max(0, Math.min(play.duration, t)));
+      if (Math.hypot(pp[0] - q[0], pp[1] - q[1]) > 1.2) continue;
+      const tr = trunkHook(play, pl.id, t);
+      if (!tr) continue;
+      // head (a sphere over the neck): a ball lifted to the set point passes IN FRONT of the face. The push is along
+      // the chest's forward (a held ball is always in front of the face, so it never jumps through the head)
+      if (tr.head) {
+        const hr = (tr.hr ?? 0.1) + R + BALL_CLEAR * 0.3;
+        const fx = Math.cos(tr.yaw), fy = Math.sin(tr.yaw);
+        const d: V3 = [q[0] - tr.head[0], q[1] - tr.head[1], q[2] - tr.head[2]];
+        const dd = d[0] * d[0] + d[1] * d[1] + d[2] * d[2];
+        const dn = d[0] * fx + d[1] * fy;
+        if (dd < hr * hr && dn > 0) {
+          const sP = -dn + Math.sqrt(Math.max(0, dn * dn - (dd - hr * hr)));
+          q[0] += fx * sP; q[1] += fy * sP;
+          moved = true;
+        }
+      }
+      if (q[2] < tr.p0[2] - R || q[2] > tr.p1[2] + R * 0.5) continue;
+      // the trunk axis at the ball height (pelvis -> chest: the lean moves it forward), oriented by the chest yaw
+      const u = Math.max(0, Math.min(1, (q[2] - tr.p0[2]) / Math.max(0.1, tr.p1[2] - tr.p0[2])));
+      const fx = Math.cos(tr.yaw), fy = Math.sin(tr.yaw);
+      const cx = tr.p0[0] + (tr.p1[0] - tr.p0[0]) * u, cy = tr.p0[1] + (tr.p1[1] - tr.p0[1]) * u;
+      const dx = q[0] - cx, dy = q[1] - cy;
+      const f = dx * fx + dy * fy, l = -dx * fy + dy * fx;
+      const A = tr.a + R + BALL_CLEAR, W = tr.w + R + BALL_CLEAR;
+      const r = Math.hypot(f / A, l / W);
+      if (r >= 1) continue;
+      const k = r < 1e-4 ? 0 : 1 / r;
+      const f2 = r < 1e-4 ? A : f * k, l2 = r < 1e-4 ? 0 : l * k;
+      q[0] = cx + fx * f2 - fy * l2;
+      q[1] = cy + fy * f2 + fx * l2;
+      moved = true;
+    }
+    if (!moved) break;
+  }
+  return q;
+};
 let ballHook: ((play: Play, t: number) => BallState | undefined) | undefined;
 export const setBallHook = (f: (play: Play, t: number) => BallState | undefined) => {
   ballHook = f;
 };
 
 const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallState => {
+  const b = ballAtRaw(play, t, ps);
+  if (!realismV2(play)) return b;
+  // ball event continuity (Realism V2): at the start of an event (hold, pass, hand-off) the ball continues from where the
+  // previous event left it; a residual offset between the two models (catch "give", pocket vs dribbling hand, ...) is
+  // eased out over EVENT_BLEND s instead of jumping in one frame (Chicago V2 baseline: 8.4 cm in 1/120 s at the
+  // pocket -> dribble switch). Shots/layups and the ball after them are left alone (release and rim are their own events).
+  const e = b.event;
+  if (e && e.type !== 'shot' && e.type !== 'layup') {
+    const tb = e.type === 'hold' ? e.from : e.t0;
+    const prev = play.ball.find((x) => (x.type === 'hold' ? x.to : x.t1) === tb && x !== e);
+    if (tb > 0 && t >= tb && t - tb < EVENT_BLEND && prev && prev.type !== 'shot' && prev.type !== 'layup') {
+      const a = rawBallAt(play, tb - 1e-5).pos, z = rawBallAt(play, tb + 1e-5).pos;
+      const u = (t - tb) / EVENT_BLEND, w = 1 - u * u * (3 - 2 * u);
+      b.pos = [b.pos[0] + (a[0] - z[0]) * w, b.pos[1] + (a[1] - z[1]) * w, b.pos[2] + (a[2] - z[2]) * w];
+    }
+  }
+  if (b.inFlight === 'shot' || b.inFlight === 'layup' || (b.inFlight === 'pass' && (b.event as {style?: string} | undefined)?.style !== 'handoff')) return b;
+  if (!b.holder && b.inFlight !== 'pass') return b;
+  return {...b, pos: clearBall(play, t, b.pos)};
+};
+/** the ball BEFORE the Realism V2 contact solver (rig.ts uses it as the pose hint of the trunk model) */
+export const rawBallAt = (play: Play, t: number): BallState => {
+  const tt = Math.max(0, Math.min(play.duration, t));
+  const players: Record<string, PlayerState> = {};
+  play.players.forEach((p) => (players[p.id] = stateOf(play, p.id, tt)));
+  return ballAtRaw(play, tt, players);
+};
+const ballAtRaw = (play: Play, t: number, ps: Record<string, PlayerState>): BallState => {
   const hooked = ballHook?.(play, t);
   if (hooked) return hooked;
   const ev = play.ball;

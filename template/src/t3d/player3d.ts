@@ -25,8 +25,10 @@ export const registerPlayerRig = (v: 'off' | 'def', r: PlayerRig) => {
 };
 export const PLAYER3D = {
   version: 'e2a-player-v1',
-  off: {glb: 'players3d/e2a_player_off.glb', rigFile: 'src/t3d/players/e2a-off.rig.json', get rig() { return RIGS.off; }},
-  def: {glb: 'players3d/e2a_player_def.glb', rigFile: 'src/t3d/players/e2a-def.rig.json', get rig() { return RIGS.def; }},
+  // glbV2 (Realism V2, 2026-11-21): same body, skeleton and rig descriptor; jersey rebuilt with --garment v2 (drape,
+  // longer hem over the shorts, _E2A_HEM / _E2A_EASE for cloth2.ts). Used when play.realism >= 2.
+  off: {glb: 'players3d/e2a_player_off.glb', glbV2: 'players3d/e2a_player_off_v2.glb', rigFile: 'src/t3d/players/e2a-off.rig.json', get rig() { return RIGS.off; }},
+  def: {glb: 'players3d/e2a_player_def.glb', glbV2: 'players3d/e2a_player_def_v2.glb', rigFile: 'src/t3d/players/e2a-def.rig.json', get rig() { return RIGS.def; }},
 };
 
 /** validated clips by action pattern (see tactical/reports/3d-animation-mpfb-2026-11-19/INFORME.md, clip register) */

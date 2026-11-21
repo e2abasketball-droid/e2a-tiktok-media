@@ -13,6 +13,7 @@ import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js';
 import {continueRender, delayRender, staticFile} from 'remotion';
 import type {V3} from '../tactical/geometry.ts';
 import type {ClipBone, Q} from './skelclip.ts';
+import type {Cloth} from './cloth2.ts';
 import {W3} from './Athlete';
 
 type GlbState = {scene: THREE.Group | null; error?: string};
@@ -177,11 +178,77 @@ const strapWeights = (g: THREE.BufferGeometry) => {
   g.setAttribute('e2aStrap', new THREE.BufferAttribute(w, 1));
 };
 
+// ---------------------------------------------------------------- Realism V2 apparel (2026-11-21, cloth2.ts)
+// v2 meshes (build_player.py --garment v2) carry _E2A_HEM / _E2A_EASE on the jersey. The trim (piping) along the hem gets
+// the values of its nearest jersey vertex (bind pose), so the piping swings WITH the cloth. One set of uniforms per
+// instance (sway, twist, flutter, stride phase, pelvis; object space), updated every frame from clothAt().
+type ClothU = {uSway: {value: THREE.Vector3}; uTwist: {value: number}; uFlutter: {value: number}; uPhase: {value: number}; uPelvis: {value: THREE.Vector3}};
+const clothAttrsDone = new WeakSet<THREE.BufferGeometry>();
+const copyClothAttrs = (jersey: THREE.BufferGeometry, trim: THREE.BufferGeometry) => {
+  if (clothAttrsDone.has(trim) || trim.getAttribute('_e2a_hem')) return;
+  const PJ = jersey.attributes.position, H = jersey.getAttribute('_e2a_hem'), E = jersey.getAttribute('_e2a_ease');
+  if (!H || !E) return;
+  const PT = trim.attributes.position;
+  const h = new Float32Array(PT.count), e = new Float32Array(PT.count);
+  for (let i = 0; i < PT.count; i++) {
+    let best = 1e9, bi = 0;
+    const x = PT.getX(i), y = PT.getY(i), z = PT.getZ(i);
+    for (let j = 0; j < PJ.count; j++) {
+      const d = (PJ.getX(j) - x) ** 2 + (PJ.getY(j) - y) ** 2 + (PJ.getZ(j) - z) ** 2;
+      if (d < best) {
+        best = d;
+        bi = j;
+      }
+    }
+    h[i] = H.getX(bi);
+    e[i] = E.getX(bi);
+  }
+  trim.setAttribute('_e2a_hem', new THREE.BufferAttribute(h, 1));
+  trim.setAttribute('_e2a_ease', new THREE.BufferAttribute(e, 1));
+  clothAttrsDone.add(trim);
+};
+/** v2 cloth material: secondary motion before the projection (object space), small depth bias after it (skin poking
+ *  through at the straps / armholes), inside of the shirt drawn darker (DoubleSide: the loose hem shows its inside) */
+const cloth2Material = (mat: THREE.Material, U: ClothU, bias: number, strap: number, inside: boolean) => {
+  mat.onBeforeCompile = (sh) => {
+    Object.assign(sh.uniforms, U);
+    sh.vertexShader =
+      'uniform vec3 uSway; uniform float uTwist; uniform float uFlutter; uniform float uPhase; uniform vec3 uPelvis;\nattribute float _e2a_hem; attribute float _e2a_ease;\n' +
+      (strap ? 'attribute float e2aStrap;\n' : '') +
+      sh.vertexShader;
+    sh.vertexShader = sh.vertexShader.replace('#include <skinning_vertex>', `#include <skinning_vertex>
+  {
+    float hem = _e2a_hem;
+    if (hem > 0.0) {
+      vec3 n = normalize(objectNormal);
+      vec2 r = transformed.xz - uPelvis.xz;
+      float a = uTwist * hem; float ca = cos(a); float sa = sin(a);
+      vec2 rr = vec2(r.x * ca + r.y * sa, -r.x * sa + r.y * ca);
+      vec3 d = vec3(rr.x - r.x, 0.0, rr.y - r.y) + uSway * hem;
+      float ang = atan(-r.y, r.x);
+      d += n * (uFlutter * hem * sin(6.0 * ang + 6.2831853 * uPhase));
+      vec2 nh = n.xz; float nl = length(nh);
+      if (nl > 1e-5) { nh /= nl; float inward = -dot(d.xz, nh); float lim = 0.85 * _e2a_ease; if (inward > lim) d.xz += nh * (inward - lim); }
+      transformed += d;
+    }
+  }`);
+    sh.vertexShader = sh.vertexShader.replace('#include <project_vertex>', `#include <project_vertex>
+  {
+    vec4 mvB = mvPosition; mvB.z += ${bias.toFixed(4)}${strap ? ` + ${strap.toFixed(4)} * e2aStrap` : ''};
+    vec4 pB = projectionMatrix * mvB;
+    gl_Position.z = pB.z / pB.w * gl_Position.w;
+  }`);
+    if (inside) sh.fragmentShader = sh.fragmentShader.replace('#include <map_fragment>', '#include <map_fragment>\n  if (!gl_FrontFacing) diffuseColor.rgb *= 0.42;');
+  };
+  mat.customProgramCacheKey = () => `e2a-cloth2-${bias}-${strap}-${inside ? 1 : 0}`;
+  mat.needsUpdate = true;
+};
+
 /** one independent instance of a player mesh: own skeleton (pose state), own skin and jersey materials */
-type Inst = {obj: THREE.Object3D; rig: Rig};
+type Inst = {obj: THREE.Object3D; rig: Rig; cloth?: ClothU};
 const instances = new Map<string, Inst>();
-const instanceOf = (template: THREE.Group, key: string, bonesDesc: ClipBone[], look: {skin?: string; num?: string; kit?: Record<string, string>; profile?: 'academy'}) => {
-  const k = `${template.uuid}|${key}|${look.skin}|${look.num}|${look.profile ?? ''}`;
+const instanceOf = (template: THREE.Group, key: string, bonesDesc: ClipBone[], look: {skin?: string; num?: string; kit?: Record<string, string>; profile?: 'academy'; cloth2?: boolean}) => {
+  const k = `${template.uuid}|${key}|${look.skin}|${look.num}|${look.profile ?? ''}|${look.cloth2 ? 2 : 1}`;
   let it = instances.get(k);
   if (it) return it;
   const obj = SkeletonUtils.clone(template);
@@ -223,7 +290,40 @@ const instanceOf = (template: THREE.Group, key: string, bonesDesc: ClipBone[], l
     });
     m.material = Array.isArray(m.material) ? mats : mats[0];
   });
-  if (look.profile === 'academy') {
+  let clothU: ClothU | undefined;
+  if (look.cloth2) {
+    // Realism V2: jersey + its trims swing with cloth2 (needs the v2 attributes; a v1 mesh keeps the v1 path below)
+    let jg: THREE.BufferGeometry | undefined;
+    obj.traverse((o) => {
+      const m = o as THREE.Mesh;
+      if (m.isMesh && m.name.includes('Jersey') && !m.name.includes('Trim') && m.geometry.getAttribute('_e2a_hem')) jg = m.geometry;
+    });
+    if (jg) {
+      clothU = {uSway: {value: new THREE.Vector3()}, uTwist: {value: 0}, uFlutter: {value: 0}, uPhase: {value: 0}, uPelvis: {value: new THREE.Vector3()}};
+      obj.traverse((o) => {
+        const m = o as THREE.Mesh;
+        if (!m.isMesh) return;
+        const mats = Array.isArray(m.material) ? m.material : [m.material];
+        if (m.name.includes('Jersey') && m.name.includes('Trim')) copyClothAttrs(jg!, m.geometry);
+        if (m.name.includes('Jersey')) {
+          if (!m.geometry.getAttribute('e2aStrap')) strapWeights(m.geometry);
+          const ms = mats.map((mt) => mt.clone());
+          for (const mt of ms) {
+            const isTrim = mt.name.startsWith('E2A_trim');
+            if (!isTrim) mt.side = THREE.DoubleSide;
+            cloth2Material(mt, clothU!, isTrim ? 0.016 : 0.012, 0.03, !isTrim);
+          }
+          m.material = Array.isArray(m.material) ? ms : ms[0];
+        } else if (look.profile === 'academy') {
+          for (const mt of mats) {
+            if (mt.name.startsWith('E2A_shorts')) { clothBias(mt, 0.05); mt.side = THREE.FrontSide; }
+            else if (mt.name.startsWith('E2A_trim')) clothBias(mt, 0.036);
+          }
+        }
+      });
+    }
+  }
+  if (look.profile === 'academy' && !clothU) {
     obj.traverse((o) => {
       const m = o as THREE.Mesh;
       if (!m.isMesh) return;
@@ -236,7 +336,7 @@ const instanceOf = (template: THREE.Group, key: string, bonesDesc: ClipBone[], l
     });
   }
   // rest orientations measured on the template's bind pose (the clone shares it)
-  it = {obj, rig: rigOf(obj, bonesDesc)};
+  it = {obj, rig: rigOf(obj, bonesDesc), cloth: clothU};
   instances.set(k, it);
   return it;
 };
@@ -255,8 +355,20 @@ export const SkinnedAthlete: React.FC<{
   kit?: Record<string, string>;
   /** 2026-11-20 look profile ('academy': matte cloth, satin skin) */
   look?: 'academy';
-}> = ({scene, clipBones, bones, hips, inst = 'lab', scale = 1, skin, num, kit, look}) => {
-  const {obj, rig} = instanceOf(scene, inst, clipBones, {skin, num, kit, profile: look});
+  /** Realism V2 (cloth2.ts): the cloth state of this player at this frame (play space); needs a --garment v2 mesh */
+  cloth?: Cloth;
+}> = ({scene, clipBones, bones, hips, inst = 'lab', scale = 1, skin, num, kit, look, cloth}) => {
+  const {obj, rig, cloth: cu} = instanceOf(scene, inst, clipBones, {skin, num, kit, profile: look, cloth2: !!cloth});
+  if (cu && cloth) {
+    // object space of the instance = three world / scale (no rotation, origin at 0)
+    const sw = W3(cloth.sway);
+    cu.uSway.value.set(sw[0] / scale, sw[1] / scale, sw[2] / scale);
+    cu.uTwist.value = cloth.twist;
+    cu.uFlutter.value = cloth.flutter / scale;
+    cu.uPhase.value = cloth.phase % 1;
+    const pv = W3(hips);
+    cu.uPelvis.value.set(pv[0] / scale, pv[1] / scale, pv[2] / scale);
+  }
   obj.scale.setScalar(scale);
   obj.updateMatrixWorld(true);
   const world = new Map<string, THREE.Quaternion>();

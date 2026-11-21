@@ -1,0 +1,57 @@
+{
+ "id": "chicago-v2-voice",
+ "title": "Chicago Action Realism V2 (ONE Deuce take)",
+ "fps": 30,
+ "voiceRaw": "tactical/chicago-v2/voice-raw.mp3",
+ "wordsRaw": "chicago-v2.words-raw.json",
+ "voice": "tactical/chicago-v2/voice.wav",
+ "preroll": 0.12,
+ "tail": 1.0,
+ "gaps": [
+  {
+   "after": "whole story.",
+   "sec": 0.55,
+   "why": "hook title settles"
+  },
+  {
+   "after": "Barely two seconds.",
+   "sec": 0.7,
+   "why": "overhead: the defender ringed"
+  },
+  {
+   "after": "has to chase.",
+   "sec": 1.1,
+   "why": "O2 comes off the planted pin-down, X2 chases"
+  },
+  {
+   "after": "into the handoff.",
+   "sec": 0.9,
+   "why": "the exchange at the hander's hip"
+  },
+  {
+   "after": "before you recover.",
+   "sec": 2.0,
+   "why": "one dribble, pull-up, make"
+  },
+  {
+   "after": "rise up.",
+   "sec": 2.0,
+   "why": "catch off the handoff, three, make"
+  },
+  {
+   "after": "different problems.",
+   "sec": 0.45,
+   "why": "recap frame"
+  },
+  {
+   "after": "Tell us your read.",
+   "sec": 0.45,
+   "why": "TRAIL OR UNDER? card"
+  }
+ ],
+ "plays": {
+  "A": "chicago-v2-a-trail",
+  "B": "chicago-v2-b-under"
+ },
+ "shots": []
+}

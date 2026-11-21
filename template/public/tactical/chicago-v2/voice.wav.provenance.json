@@ -1,0 +1,5 @@
+{
+ "licence_key": "voice/elevenlabs-creator/chicago-action-realism-v2",
+ "source": "derived from voice-raw.mp3 (ONE take) by scripts/tactical-voice.py: preroll 0.12 s, total silences after 8 phrases (take's own room tone, 8 ms fades), report tactical/episodes/chicago-v2-voice.voice-report.json",
+ "sha256": "9c44be15a8386550fbe5a78d34d6e2bf8814254cd5b4dd1eb10e49c8ee7cdcc0"
+}

@@ -1,0 +1,5 @@
+{
+ "licence_key": "voice/elevenlabs-creator/chicago-action-realism-v2",
+ "source": "derived from voice.wav: highpass 80 Hz, EQ +2 dB @3.2 kHz, compressor 2.5:1, loudnorm I -16 / TP -2, apad to 38.0 s (silence), 48 kHz stereo",
+ "sha256": "ee66ecd3fad84290707055e58d7ddaf2563aa29867b4eba08bfaa6857b9b3c27"
+}

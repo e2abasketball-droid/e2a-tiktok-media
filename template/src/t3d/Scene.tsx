@@ -6,7 +6,8 @@ import {useThree} from '@react-three/fiber';
 import * as THREE from 'three';
 import {FIBA} from '../tactical/geometry.ts';
 import type {V3} from '../tactical/geometry.ts';
-import {posAt, sample} from '../tactical/play.ts';
+import {posAt, realismV2, sample} from '../tactical/play.ts';
+import {clothAt} from './cloth2.ts';
 import {Athlete, SKINS, W3} from './Athlete';
 import type {FaceState} from './Athlete';
 import {ArenaLights, Court3D, type SceneEnv} from './Court3D';
@@ -248,9 +249,13 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
   const skel = playP.skel;
   const anyC = !force && !faces;
   const labGlbs = skel ? [...new Set(Object.values(skel).filter((s) => s.look === 'C' && s.glb).map((s) => s.glb!))] : [];
-  const glbs = useGlbs(anyC ? [PLAYER3D.off.glb, PLAYER3D.def.glb, ...labGlbs] : labGlbs);
+  // Realism V2 (play.realism >= 2): v2 apparel meshes + cloth2 secondary motion; every other play keeps e2a-player-v1
+  const rv2 = realismV2(play);
+  const offGlb = rv2 ? PLAYER3D.off.glbV2 : PLAYER3D.off.glb;
+  const defGlb = rv2 ? PLAYER3D.def.glbV2 : PLAYER3D.def.glb;
+  const glbs = useGlbs(anyC ? [offGlb, defGlb, ...labGlbs] : labGlbs);
   // the canvas only renders on frame changes (Remotion ThreeCanvas): mount it once the meshes are loaded (or failed)
-  const glbWanted = anyC ? [PLAYER3D.off.glb, PLAYER3D.def.glb, ...labGlbs] : labGlbs;
+  const glbWanted = anyC ? [offGlb, defGlb, ...labGlbs] : labGlbs;
   const glbReady = glbWanted.every((g) => glbs[g]);
   const failed = Object.entries(glbs).filter(([, g]) => g.error).map(([k, g]) => `${k}: ${g.error}`);
   logPlan(`[E2A players3d] ${PLAYER3D.version} play ${play.id}: ${describePlan(plan).join(' | ')}${failed.length ? ` | FALLBACK A for mesh players: ${failed.join('; ')}` : ''}`);
@@ -277,7 +282,9 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
         const spec = skel?.[p.id];
         const variant = p.team === 'X' ? 'def' : 'off';
         const pkg = PLAYER3D[variant];
-        const glbSrc = spec?.glb ?? (spec?.look === 'C' ? pkg.glb : pkg.glb);
+        const pkgGlb = rv2 ? pkg.glbV2 : pkg.glb;
+        const glbSrc = spec?.glb ?? pkgGlb;
+        const cloth = rv2 && !spec?.glb ? clothAt(play, p.id, pt) : undefined;
         const glb = glbs[glbSrc]?.scene ?? null;
         const skin = SKINS[i % SKINS.length];
         const num = p.id.slice(1);
@@ -288,7 +295,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
           return (
             <React.Fragment key={p.id}>
               {spec.look === 'C' && glb && clip && sp.bones && sp.hips ? (
-                <SkinnedAthlete scene={glb} clipBones={clip.bones} bones={sp.bones} hips={sp.hips} inst={p.id} skin={skin} num={num} kit={KITS[p.team]} look={env === 'academy' || env === 'cinema' ? 'academy' : undefined} />
+                <SkinnedAthlete scene={glb} clipBones={clip.bones} bones={sp.bones} hips={sp.hips} inst={p.id} skin={skin} num={num} kit={KITS[p.team]} look={env === 'academy' || env === 'cinema' ? 'academy' : undefined} cloth={cloth} />
               ) : (
                 <Athlete pose={sp.pose} team={p.team} num={num} skin={skin} />
               )}
@@ -302,7 +309,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
           const r = bonesFromPose(pkg.rig, pose, sc);
           return (
             <React.Fragment key={p.id}>
-              <SkinnedAthlete scene={glb} clipBones={pkg.rig.bones} bones={r.bones} hips={r.hips} inst={p.id} scale={sc} skin={skin} num={num} kit={KITS[p.team]} look={env === 'academy' || env === 'cinema' ? 'academy' : undefined} />
+              <SkinnedAthlete scene={glb} clipBones={pkg.rig.bones} bones={r.bones} hips={r.hips} inst={p.id} scale={sc} skin={skin} num={num} kit={KITS[p.team]} look={env === 'academy' || env === 'cinema' ? 'academy' : undefined} cloth={cloth} />
               <ContactShadows pose={pose} />
             </React.Fragment>
           );

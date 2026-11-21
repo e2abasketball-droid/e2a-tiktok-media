@@ -42,6 +42,10 @@ ap.add_argument('--out-glb', required=True)
 ap.add_argument('--number', default='')
 ap.add_argument('--skin', default='')
 ap.add_argument('--cloth-cut', choices=['iso', 'legacy'], default='iso', help='garment / hidden-skin edges (see iso_clip)')
+ap.add_argument('--garment', choices=['v1', 'v2'], default='v1',
+                help='v2 (Realism V2, 2026-11-21): looser jersey that HANGS from the chest (straight drape, not painted on the '
+                     'belly), 5 cm longer, always outside the shorts waistband, hem weights off the thighs, and per-vertex '
+                     '_E2A_HEM / _E2A_EASE attributes for the engine secondary motion (src/t3d/cloth2.ts). v1 = byte-identical')
 a = ap.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else sys.argv[1:])
 
 # kits = engine KITS (src/t3d/Athlete.tsx) so the capsule (A) and the mesh (C) read the same on screen
@@ -333,7 +337,8 @@ def smooth_loops(P, faces, iters=4, flat=None):
     return P
 
 
-hem_j = hip_z - 0.05
+GV2 = a.garment == 'v2'
+hem_j = hip_z - (0.085 if GV2 else 0.05)
 hem_s = knee_z + 0.12
 ISO_DIFF = 10  # graph diffusion steps (lam 0.5): rounds the staircase (quads ~2-3 cm) without eating the straps
 # iso mode: the garment sets reach PAST their hems (jersey to the pelvis, shorts to the knee) so that, near a hem, the
@@ -554,11 +559,37 @@ if ISO:
     Pj = smooth_loops(Pj, jpoly, 4, flat=jflat)
 else:
     Pj, jon = smooth_boundary(Pj, jpoly, 26, 8, flat=jflat)
-z0j, z1j = hip_z - 0.06, J['neck01____head'][2]
-juv = cyl_uvs(Pj, jpoly, z0j, z1j)
+z0j, z1j = (hem_j - 0.01) if GV2 else (hip_z - 0.06), J['neck01____head'][2]
 jmat = [0] * len(jpoly)  # trims are a separate piping mesh (pipe_loops) along the boundaries
-ob_jersey, _ = make_mesh('E2A_Jersey', Pj, jpoly, [M_JERSEY, M_TRIM], jmat, juv, Wj)
-ob_jpipe = pipe_loops('E2A_JerseyTrim', Pj, jpoly, Wj, 0.0062)
+if GV2:
+    # ---- Realism V2 drape: below the chest the jersey falls STRAIGHT from the widest chest/back section (radial target
+    # per direction round the trunk axis), blended in over the top third so there is no kink under the chest; the hem
+    # flares 1.5 cm. Radii about a vertical axis through x = 0, y = mean of the chest band.
+    inj = np.zeros(len(Pj), bool); inj[np.unique(np.concatenate([np.asarray(f_) for f_ in jpoly]))] = True  # jersey vertices only
+    band = inj & (Pj[:, 2] > chest_z - 0.06) & (Pj[:, 2] < chest_z + 0.05)
+    yc = float(Pj[band, 1].mean())
+    th = np.arctan2(Pj[:, 1] - yc, Pj[:, 0]); rr = np.hypot(Pj[:, 0], Pj[:, 1] - yc)
+    NB = 48
+    bi = ((th + math.pi) / (2 * math.pi) * NB).astype(int) % NB
+    rch = np.zeros(NB)
+    for k in range(NB):
+        m = band & (bi == k)
+        rch[k] = rr[m].max() if m.any() else 0.0
+    for k in range(NB):  # empty bins (armholes): neighbours
+        if rch[k] == 0:
+            rch[k] = max(rch[(k - 1) % NB], rch[(k + 1) % NB])
+    rch = np.array([max(rch[(k - 1) % NB], rch[k], rch[(k + 1) % NB]) * 0.5 + rch[k] * 0.5 for k in range(NB)])
+    u = np.clip((chest_z - Pj[:, 2]) / (chest_z - hem_j), 0, 1)
+    tgt = rch[bi] * (1 - 0.05 * u) + 0.015 * u ** 2
+    wb = np.clip(u / 0.35, 0, 1); wb = wb * wb * (3 - 2 * wb)
+    rn = np.maximum(rr, rr + (tgt - rr) * wb)
+    Pj[:, 0] = np.cos(th) * rn; Pj[:, 1] = yc + np.sin(th) * rn
+    J_EASE = rn - np.hypot(Vj[:, 0], Vj[:, 1] - yc)  # horizontal gap to the body surface it was cut from
+    J_TH, J_YC = th, yc
+else:
+    juv = cyl_uvs(Pj, jpoly, z0j, z1j)
+    ob_jersey, _ = make_mesh('E2A_Jersey', Pj, jpoly, [M_JERSEY, M_TRIM], jmat, juv, Wj)
+    ob_jpipe = pipe_loops('E2A_JerseyTrim', Pj, jpoly, Wj, 0.0062)
 
 # shorts: loose; leg part pushed away from the thigh axis, flared towards the hem
 spoly, Vs, Ns, Wsh = garment(G_shorts, shorts_f)
@@ -585,6 +616,15 @@ for s in 'LR':
     mv = Wsh[:, ti] * u
     Wsh[:, ti] -= mv
     Wsh[:, hips_i] += mv
+if GV2:
+    # Realism V2: the shorts WAISTBAND follows the pelvis, not the thighs (MakeHuman weights the lower belly ~0.8 to
+    # the thigh, so on a high knee the waistband swung 15-20 cm through the jersey; qc-realism cloth_clip 2026-11-21)
+    for s in 'LR':
+        ti = SK.NAMES.index('thigh.' + s)
+        uu = np.clip((Vs[:, 2] - (hip_z - 0.06)) / 0.08, 0, 1)
+        mv = Wsh[:, ti] * uu
+        Wsh[:, ti] -= mv
+        Wsh[:, hips_i] += mv
 sflat = lambda q: hem_s if q[:, 2].max() < hip_z - 0.1 else None
 if ISO:
     Ps = smooth_loops(Ps, spoly, 4, flat=sflat)
@@ -595,6 +635,47 @@ suv = cyl_uvs(Ps, spoly, z0s, z1s)
 shm = [0] * len(spoly)
 ob_shorts, _ = make_mesh('E2A_Shorts', Ps, spoly, [M_SHORTS, M_TRIM], shm, suv, Wsh)
 ob_spipe = pipe_loops('E2A_ShortsTrim', Ps, spoly, Wsh, 0.006, keep=lambda q: q[:, 2].min() > hip_z)
+
+if GV2:
+    # ---- Realism V2: the jersey stays OUTSIDE the shorts waistband (>= 1.4 cm radially over the nearest shorts vertex)
+    from mathutils import kdtree as _kd
+    kd_s = _kd.KDTree(len(Ps))
+    for i_, p_ in enumerate(Ps):
+        kd_s.insert(p_.tolist(), i_)
+    kd_s.balance()
+    low = np.where(inj & (Pj[:, 2] < hip_z + 0.16))[0]
+    for i_ in low:
+        co, k_, dd = kd_s.find(Pj[i_].tolist())
+        rs = math.hypot(Ps[k_][0], Ps[k_][1] - J_YC)
+        rj = math.hypot(Pj[i_][0], Pj[i_][1] - J_YC)
+        if rj < rs + 0.014:
+            sc = (rs + 0.014) / max(rj, 1e-6)
+            Pj[i_, 0] *= sc; Pj[i_, 1] = J_YC + (Pj[i_, 1] - J_YC) * sc
+            J_EASE[i_] += rs + 0.014 - rj
+    # the hem does not follow the thighs (a shirt hangs from the shoulders): thigh weights -> hips under the waist
+    Wj = Wj.copy()
+    for sd in 'LR':
+        ti = SK.NAMES.index('thigh.' + sd)
+        # 45 % of the thigh weight stays: a high knee still pushes the front hem out (the shorts must not poke
+        # through the longer hem; qc-realism cloth_clip, 2026-11-21)
+        uu = np.clip((hip_z + 0.08 - Pj[:, 2]) / 0.08, 0, 1) * 0.55
+        mv = Wj[:, ti] * uu
+        Wj[:, ti] -= mv
+        Wj[:, SK.NAMES.index('hips')] += mv
+    Pj = smooth_loops(Pj, jpoly, 4, flat=jflat)
+    juv = cyl_uvs(Pj, jpoly, z0j, z1j)
+    ob_jersey, jused = make_mesh('E2A_Jersey', Pj, jpoly, [M_JERSEY, M_TRIM], jmat, juv, Wj)
+    ob_jpipe = pipe_loops('E2A_JerseyTrim', Pj, jpoly, Wj, 0.0062)
+    # per-vertex data for the engine secondary motion (src/t3d/cloth2.ts): _E2A_HEM 0 above the chest line -> 1 at the
+    # hem (how free the cloth is), _E2A_EASE = horizontal gap to the body (m, how far the hem may swing inward)
+    hem_w = np.clip((chest_z - 0.04 - Pj[:, 2]) / (chest_z - 0.04 - hem_j), 0, 1) ** 1.6
+    me_ = ob_jersey.data
+    for nm, arr in (('_E2A_HEM', hem_w), ('_E2A_EASE', np.maximum(0.0, J_EASE))):
+        at = me_.attributes.new(nm, 'FLOAT', 'POINT')
+        for vi_new, vi_old in enumerate(jused):
+            at.data[vi_new].value = float(arr[vi_old])
+    print('garment v2: jersey ease (m) min/med/max', round(float(J_EASE[inj].min()), 3), round(float(np.median(J_EASE[inj])), 3), round(float(J_EASE[inj].max()), 3),
+          'hem', round(hem_j, 3))
 
 # shoes: per foot, convex hull of the inflated foot + ankle (a smooth sneaker last, no toes), sole flat on the floor,
 # weights from the nearest body vertex
@@ -813,5 +894,6 @@ for o in list(bpy.data.objects):
     o.select_set(o.name.startswith('E2A_'))
 bpy.ops.export_scene.gltf(filepath=os.path.abspath(a.out_glb), export_format='GLB', use_selection=True, export_animations=True,
                           export_skins=True, export_yup=True, export_apply=False, export_texcoords=True, export_normals=True,
-                          export_materials='EXPORT', export_image_format='AUTO', export_def_bones=False, export_frame_range=True)
+                          export_materials='EXPORT', export_image_format='AUTO', export_def_bones=False, export_frame_range=True,
+                          **({'export_attributes': True} if GV2 else {}))
 print('glb', a.out_glb, os.path.getsize(a.out_glb))

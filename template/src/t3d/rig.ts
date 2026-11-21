@@ -11,7 +11,8 @@
 // World units: metres on the FIBA half court (x across, y from the baseline, z up), as play.ts.
 import type {V2, V3} from '../tactical/geometry.ts';
 import type {Play} from '../tactical/play.ts';
-import {catchV2, dribbleSide, posAt, sample, setBallHook, setYawHook, stateOf} from '../tactical/play.ts';
+import {catchV2, dribbleSide, posAt, rawBallAt, realismV2, sample, setBallHook, setTrunkHook, setYawHook, stateOf} from '../tactical/play.ts';
+import type {Trunk} from '../tactical/play.ts';
 const sampleBall = (play: Play, t: number) => sample(play, t).ball.pos;
 import type {ChoreoPlay} from './choreo.ts';
 import {choreoBall, choreoPose} from './choreo.ts';
@@ -232,6 +233,7 @@ const simulate = (play: PlayWithActions, id: string, dims: Dims): Sim => {
   }) as [Foot, Foot];
   let prevVel: V2 = [0, 0];
   let prevHeading = heading;
+  const rv2Sim = realismV2(play as unknown as Play);
   // ----- stance width / stagger at any play time. The screen base is 1.2 x the shoulder width with a small
   // stagger (observed 5449/5450/5451/5452: lateral foot spacing 1.15–1.25 x deltoid width, base escalonada).
   const shoulderW = 2 * (dims.shW + 0.06 * (dims.H / 2));
@@ -294,6 +296,9 @@ const simulate = (play: PlayWithActions, id: string, dims: Dims): Sim => {
     const k = 26; // stiffness
     const err = wrap(want - heading);
     headingVel += (k * k * err - 2 * k * headingVel) * DT;
+    // Realism V2: a body never spins faster than ~690°/s (12 rad/s; a fast pivot / spin move), however far the
+    // facing target jumps (a 'ball' target switching player used to give 900+°/s; qc-realism root_foot)
+    if (rv2Sim) headingVel = clamp(headingVel, -12, 12);
     heading = wrap(heading + headingVel * DT);
     const turn = wrap(heading - prevHeading) / DT;
     prevHeading = heading;
@@ -385,8 +390,10 @@ const simulate = (play: PlayWithActions, id: string, dims: Dims): Sim => {
           f.dur = 0.16;
           f.from = [f.p[0] - (f.to[0] - f.p[0]), f.p[1] - (f.to[1] - f.p[1]), 0];
         }
-      } else if (f.planted) {
+      } else if (f.planted && !(rv2Sim && speed < 0.2 && restDev[i] <= 0.13)) {
         // lift off: commit the next plant, predicted at mid-stance of the next contact
+        // (Realism V2: a slow / standing player only lifts the foot that is OFF its base: a set screener or a
+        // defender in stance keeps both feet on the floor instead of marking time; qc-realism blocking gate)
         launch(i, (1 - fp) * cycleDur, false);
       }
       // reach guard (2026-11-18): a planted foot the hips have left behind (or that landed too far ahead) is
@@ -456,6 +463,42 @@ setYawHook((play, id, t) => {
   const cp = play as unknown as ChoreoPlay;
   if (cp.choreo?.[id]) return undefined;
   return rowAt(simulate(play as unknown as PlayWithActions, id, dimsOf(id)), t).heading;
+});
+
+// Realism V2 trunk model for play.ts's held-ball contact solver (setTrunkHook): the trunk of the POSE (pelvis -> chest,
+// chest yaw: the same trunk qc-catch measures and the mesh shows), posed with the ball BEFORE the solver as its hint
+// (rawBallAt). Re-entrant calls (a pose that samples the ball at a release time) fall back to the simulation: pelvis at
+// the track position, heading, lean from speed and acceleration. Cached per play, player and time.
+let inTrunk = false;
+const trunkCache = new Map<string, Trunk>();
+setTrunkHook((play, id, t) => {
+  const cp = play as unknown as ChoreoPlay;
+  if (cp.choreo?.[id] || !play.tracks[id]) return undefined;
+  const key = `${play.id}|${id}|${t.toFixed(6)}`;
+  const hit = trunkCache.get(key);
+  if (hit) return hit;
+  const D = dimsOf(id);
+  let tr: Trunk;
+  if (inTrunk) {
+    const r = rowAt(simulate(play as unknown as PlayWithActions, id, D), t);
+    const lean = clamp(0.06 + 0.05 * r.speed + 0.025 * r.acc, -0.12, 0.42);
+    const c = posAt(play.tracks[id], clamp(t, 0, play.duration));
+    const z0 = D.thigh + D.shin + D.ankleH;
+    const f = fwd(r.heading);
+    tr = {p0: [c[0], c[1], z0], p1: [c[0] + f[0] * Math.sin(lean) * D.trunk, c[1] + f[1] * Math.sin(lean) * D.trunk, z0 + D.trunk * Math.cos(lean)], yaw: r.heading, a: 0.115 * (D.H / 2), w: 0.9 * D.shW};
+    return tr;
+  }
+  inTrunk = true;
+  try {
+    const b = rawBallAt(play, t);
+    const ps = poseAt(play as PlayWithActions, id, t, {holder: b.holder, pos: b.pos}, [0, 1.575, 3.05]);
+    tr = {p0: ps.pelvis, p1: ps.chest, yaw: ps.chestYaw, a: 0.115 * (ps.dims.H / 2), w: 0.9 * ps.dims.shW, head: [ps.head[0], ps.head[1], ps.head[2] + 0.06 * (ps.dims.H / 2)], hr: 0.1 * (ps.dims.H / 2)};
+  } finally {
+    inTrunk = false;
+  }
+  if (trunkCache.size > 50000) trunkCache.clear();
+  trunkCache.set(key, tr);
+  return tr;
 });
 
 /** jump height for shots and layups */
@@ -699,6 +742,7 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
     return {t0: phE.t0, dir: [q[0] - p0[0], q[1] - p0[1]] as V2};
   })() : undefined;
   const inDribble = acts.some((a) => a.type === 'dribble' && tc >= a.from && tc <= a.to);
+  const palmGoals: ({p: V3; w: number; c: V3} | undefined)[] = [];
   for (let i = 0; i < 2; i++) {
     const side = i === 0 ? -1 : 1;
     const sh = shoulder[i];
@@ -708,10 +752,17 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
     const sw = Math.sin(2 * Math.PI * (r.phase + (i === 0 ? 0.5 : 0)));
     let tgt = L(0.13 - 0.04 * run, 0.13 - 0.07 * run + (0.04 + 0.38 * run) * sw, -armLen * (0.92 - 0.3 * run) + Math.max(0, sw) * 0.18 * run);
     let pole: V3 = norm(add(add(mul(chestF, -1), mul(chestR, side * 0.25)), [0, 0, -0.2]));
-    const blend = (wgt: number, t2: V3, p2pole?: V3) => {
+    // Realism V2 contact IK: a grip blend also records WHERE THE PALM must touch the ball (palm goal, weight); every later
+    // non-contact blend weakens it. After the two-bone IK the wrist target is corrected so the palm centre (not the wrist)
+    // lands on the ball surface (rv2 only; the legacy solve is untouched)
+    let pg: {p: V3; w: number; c: V3} | undefined;
+    const blend = (wgt: number, t2: V3, p2pole?: V3, palm?: V3) => {
+      const bc = ball.pos as V3;
       if (wgt <= 0) return;
       tgt = lerp3(tgt, t2, wgt);
       if (p2pole) pole = norm(lerp3(pole, p2pole, wgt));
+      if (palm) pg = {p: palm, w: pg ? Math.min(1, pg.w * (1 - wgt) + wgt) : wgt, c: bc};
+      else if (pg) pg.w *= 1 - wgt;
     };
     // defensive stance: hands wide and active
     blend(stance.w * (1 - run * 0.7), L(0.4, 0.3, -0.34 + (i === 1 ? 0.14 : 0)), norm(add(mul(chestR, side), [0, 0, -0.5])));
@@ -752,22 +803,41 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
       const dirF = norm(add(mul(chestF, 0.86), mul(chestR, -s2 * 0.34)));
       return add(add(b, mul(chestR, s2 * (BALL_R + 0.012))), mul(dirF, -D.hand * 0.5));
     };
+    // Realism V2 offer grip (hand-off passer): palm centre on the TOP (right hand) or BEHIND (left hand) the ball,
+    // wrist behind it toward the passer's chest
+    const gripPalm = (b: V3, s2: number): V3 => add(b, mul(chestR, s2 * (BALL_R + 0.012)));
+    // right hand on TOP of the ball, left palm BEHIND it (the side facing the passer's chest): both reachable at the hip
+    // offer height, and both away from the receiver's side grip (the four hands never share a point of the ball)
+    const toBall = (b: V3): V3 => {
+      const dx = b[0] - chest[0], dy = b[1] - chest[1], dl = Math.hypot(dx, dy) || 1;
+      return [dx / dl, dy / dl, 0];
+    };
+    const presentPalm = (b: V3, hi: number): V3 => (hi === 1 ? add(b, [0, 0, BALL_R + 0.012]) : add(b, mul(toBall(b), -(BALL_R + 0.012))));
+    const presentWrist = (b: V3, hi: number): V3 => (hi === 1 ? add(presentPalm(b, hi), mul(toBall(b), -D.hand * 0.5)) : add(add(presentPalm(b, hi), mul(toBall(b), -D.hand * 0.3)), [0, 0, -D.hand * 0.35]));
     // reaching for an incoming pass (V2): the hands prepare for the ball (anticipation window scaled to the flight,
     // 0.22-0.32 s) and meet it at the contact, palms on its surface
     // (plays without `catchV2` keep the previous reach: 0.22 s window, wrist 0.11 m off the ball centre)
     const cv2 = catchV2(play as unknown as Play);
     const winOf = (e: {t0: number; t1: number}) => (cv2 ? Math.min(0.32, Math.max(0.22, 0.6 * (e.t1 - e.t0))) : 0.22);
-    const incoming = play.ball.find((e) => e.type === 'pass' && e.to === id && tc >= e.t1 - winOf(e) && tc <= e.t1);
+    // Realism V2 hand-off (2026-11-21, play.realism >= 2): the receiver's hands reach the ball AT THE CONTACT (pass t0,
+    // the first frame of shared control), not at the end of the transfer: both palms on the sides of the ball (his chest
+    // frame) from t0 to t1, while the passer still holds it top and bottom (below); legacy plays reach for t1
+    const rv2 = realismV2(play as unknown as Play);
+    const hoWin = 0.3;
+    const incoming = play.ball.find((e) => e.type === 'pass' && e.to === id && (rv2 && e.style === 'handoff' ? tc >= e.t0 - hoWin && tc <= e.t1 : tc >= e.t1 - winOf(e) && tc <= e.t1));
     if (incoming && incoming.type === 'pass') {
-      const win = winOf(incoming);
-      const wr = smooth((tc - (incoming.t1 - win)) / (win - 0.04));
-      blend(wr, cv2 ? gripWrist(ball.pos, side) : add(ball.pos, mul(chestR, side * 0.11)), norm(add(mul(chestR, side), [0, 0, -0.7])));
+      const v2ho = rv2 && incoming.style === 'handoff';
+      const win = v2ho ? hoWin : winOf(incoming);
+      const wr = v2ho ? smooth((tc - (incoming.t0 - win)) / (win - 0.04)) : smooth((tc - (incoming.t1 - win)) / (win - 0.04));
+      blend(wr, cv2 || v2ho ? gripWrist(ball.pos, side) : add(ball.pos, mul(chestR, side * 0.11)), norm(add(mul(chestR, side), [0, 0, -0.7])), rv2 ? gripPalm(ball.pos, side) : undefined);
     }
     // dribble hand-off (2026-11-15): the passer's hands ride the ball until the receiver's hands have it
     const ho = play.ball.find((e) => e.type === 'pass' && e.style === 'handoff' && e.from === id && tc >= e.t0 - 0.02 && tc <= e.t1 + 0.2);
     if (ho && ho.type === 'pass') {
       const wh = 0.95 * (1 - smooth((tc - (ho.t1 - 0.04)) / 0.2));
-      blend(wh, add(add(ball.pos, mul(chestR, side * 0.115)), mul(chestF, -0.03)), norm(add(mul(chestR, side), [0, 0, -0.7])));
+      // V2: top / back grip (right palm on top, left palm behind the ball) so the receiver's side grip has room: the four
+      // hands never share a point of the ball; the palms leave the ball along their own side after t1
+      blend(wh, rv2 ? presentWrist(ball.pos, i) : add(add(ball.pos, mul(chestR, side * 0.115)), mul(chestF, -0.03)), rv2 ? norm(add(mul(chestR, side), [0, 0, -0.4])) : norm(add(mul(chestR, side), [0, 0, -0.7])), rv2 ? presentPalm(ball.pos, i) : undefined);
     }
     // holding the ball: both hands on it
     // (2026-11-19: kept while a layup blends in — the layup arms ride the held ball too — so a ball caught in stride
@@ -779,7 +849,13 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
     // (catchV2) the grip stays on until the shot's arms are fully in (they ride the same ball until the release), so the
     // hands never drop off the ball while the shot blends in
     if (isBallHolder && !inDribble && (cv2 ? shootArm < 0.999 : shootArm < 0.01)) {
-      blend(0.95, cv2 ? gripWrist(ball.pos, side) : add(add(ball.pos, mul(chestR, side * 0.115)), mul(chestF, -0.03)), norm(add(mul(chestR, side), [0, 0, -0.7])));
+      blend(0.95, cv2 ? gripWrist(ball.pos, side) : add(add(ball.pos, mul(chestR, side * 0.115)), mul(chestF, -0.03)), norm(add(mul(chestR, side), [0, 0, -0.7])), rv2 && cv2 ? gripPalm(ball.pos, side) : undefined);
+      // V2: while he presents a real hand-off the grip turns to top / bottom (blended over the present's rise)
+      if (rv2) {
+        const pres = play.ball.find((e) => e.type === 'hold' && e.player === id && !!(e as {present?: unknown}).present && tc >= e.from && tc <= e.to) as {present?: {from: number; peak: number}} | undefined;
+        const hoNext = pres && play.ball.some((e) => e.type === 'pass' && e.from === id && e.style === 'handoff');
+        if (pres?.present && hoNext) blend(0.95 * smooth((tc - pres.present.from) / Math.max(0.05, pres.present.peak - pres.present.from)), presentWrist(ball.pos, i), norm(add(mul(chestR, side), [0, 0, -0.4])), presentPalm(ball.pos, i));
+      }
     }
     // dribble: right hand on top of the ball, left arm protects
     // (2026-11-20, phased overhead throw) after the pick-up the dribble's blend-out no longer pulls the off hand away
@@ -842,7 +918,9 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
       else tg = i === 1 ? follow : add(setSide, mul(chestR, side * 0.12));
       // V2: until the release the hands ride ON the ball (play.ts owns the ball path into the pocket)
       if (isBallHolder) tg = cv2 ? gripWrist(ball.pos, side) : add(add(ball.pos, mul(chestR, side * 0.1)), mul(chestF, -0.05));
-      blend(shootArm, tg, norm(add(mul(chestR, side * 0.8), [0, 0, -0.4])));
+      // (V2) the palms stay ON the ball surface through the rise (the contact IK keeps the grip; it used to fade with
+      // the shot blend: palms 5-8 cm off the ball in the pull-up gather, qc-realism contact_pose)
+      blend(shootArm, tg, norm(add(mul(chestR, side * 0.8), [0, 0, -0.4])), rv2 && cv2 && isBallHolder ? gripPalm(ball.pos, side) : undefined);
     }
     // layup: carry the ball up with the outside hand toward the rim
     if (layup.a && layup.w > 0) {
@@ -878,23 +956,49 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
     // ball nor is reaching for a pass to him keeps his wrist out of a sphere around it, so a run swing or an offered
     // hand next to someone else's ball (the fake handoff) cannot put fingers INSIDE the ball (keep S045: 4 cm from
     // its centre). The receiver of a pass/hand-off is exempt inside his reach window (incoming), and so is the passer.
-    if ((play as {handBallClear?: boolean}).handBallClear && !isBallHolder && !incoming && !ho) {
-      const rc = BALL_R + D.hand + 0.02;
+    // (V2) the hand-off passer's hands leave the ball after the transfer (t1) without passing through it
+    const releasing = rv2 && ho && ho.type === 'pass' && tc > ho.t1 && !isBallHolder;
+    if (((play as {handBallClear?: boolean}).handBallClear && !isBallHolder && !incoming && !ho) || releasing) {
+      // (V2 release) the clearance grows from the palm-on-surface distance over 0.2 s: the hands peel off, no snap
+      // (V2 release) the hander's hands come back to his own body (hands off the receiver: no forearm left in the
+      // ball path while the receiver turns the corner with it; qc-realism swept_ball)
+      if (releasing && ho && ho.type === 'pass') tgt = lerp3(tgt, L(0.16, 0.06, -0.24), smooth((tc - ho.t1) / 0.18));
+      const rc = releasing && ho && ho.type === 'pass' ? BALL_R + D.hand * 0.5 + 0.012 + (D.hand * 0.5 + 0.01) * smooth((tc - ho.t1) / 0.2) : BALL_R + D.hand + 0.02;
       const dv = sub(tgt, ball.pos as V3);
       const dl = Math.hypot(dv[0], dv[1], dv[2]);
       if (dl < rc) tgt = add(ball.pos as V3, mul(dl > 1e-6 ? mul(dv, 1 / dl) : chestF, rc));
     }
     hand.push(tgt);
     elbowPoles.push(pole);
+    palmGoals.push(pg && pg.w > 0.02 && !releasing ? pg : undefined);
   }
   const elbow: V3[] = [];
   const wrist: V3[] = [];
   const handTip: V3[] = [];
   for (let i = 0; i < 2; i++) {
-    const s = ik2(shoulder[i], hand[i], D.upper, D.fore, elbowPoles[i]);
+    let s = ik2(shoulder[i], hand[i], D.upper, D.fore, elbowPoles[i]);
+    const gl = palmGoals[i];
+    // the hand of a contact grip lies ALONG the ball (tangent at the palm point, fingers wrapping round it) instead of
+    // pointing into it along the forearm: fingertips stay outside the ball (no fingers buried in the ball)
+    const handDir = (sx: {mid: V3; end: V3}): V3 => {
+      const fd = norm(sub(sx.end, sx.mid));
+      if (!gl) return fd;
+      const n = norm(sub(gl.p, gl.c));
+      const dt = norm(sub(fd, mul(n, fd[0] * n[0] + fd[1] * n[1] + fd[2] * n[2])));
+      return norm(lerp3(fd, dt, gl.w));
+    };
+    if (gl) {
+      // contact IK (V2): move the wrist target by the palm error (4 passes); the palm centre = wrist + hand dir * hand/2
+      let tg = hand[i];
+      for (let k = 0; k < 4; k++) {
+        const palm = add(s.end, mul(handDir(s), D.hand * 0.5));
+        tg = add(tg, mul(sub(gl.p, palm), gl.w));
+        s = ik2(shoulder[i], tg, D.upper, D.fore, elbowPoles[i]);
+      }
+    }
     elbow.push(s.mid);
     wrist.push(s.end);
-    let dir = norm(sub(s.end, s.mid));
+    let dir = handDir(s);
     // wrist (2026-11-17 V2): cocked back under the ball at the set, snapped down through the release, held in the follow-through
     if (i === 1 && shoot.a && shoot.w > 0.05) {
       const tt = tc - shoot.a.from;
@@ -941,3 +1045,9 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
 
 /** feet positions over time — used by the QC (foot sliding test) */
 export const footTrack = (play: PlayWithActions, id: string) => simulate(play, id, dimsOf(id));
+
+// ---------- Realism V2 accessors (cloth2.ts, qc-realism): the simulated body state, read-only ----------
+/** simulated body state of a player at t (heading, speed, stride phase, planted feet), deterministic */
+export const bodyRowAt = (play: PlayWithActions, id: string, t: number) => rowAt(simulate(play, id, dimsOf(id)), t);
+/** jump height of the pelvis at t (shots, layups) */
+export const jumpHeightAt = (play: PlayWithActions, id: string, t: number) => jumpAt(actionsOf(play, id), clamp(t, 0, play.duration));

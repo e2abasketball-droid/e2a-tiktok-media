@@ -242,3 +242,24 @@ Código: `src/t3d/coverage3d.tsx`. QA: `scripts/qc-coverage.mts`.
   - Usa `--range` con el tramo de juego que el reel enseña con cobertura en pantalla.
 - **Cámara cenital perpendicular:** `pitch` 1,5 con `orbit`. A 0 la órbita degenera.
 - **Pantalla:** `stamp.instant` (sin fundido de entrada: visible desde el fotograma 0 del hook). Subtítulos por tramo con `subtitleYAt`.
+
+## Realism V2 (2026-11-21) — por defecto en episodios nuevos, interruptor legacy
+Encargo: `E2A_REALISM_V2_PROMPT_CLAUDE_CODE.md`. Informes en `tactical/reports/realism-v2-2026-11-21/`: AUDITORIA, ADR y QA.
+
+- **Activar:** `"realism": 2` en la jugada (preset `tactical/presets/realism-v2.json`, junto con `catchV2: 2` y `handBallClear: true`). Todos los episodios nuevos lo llevan.
+- **Volver a legacy:** quitar la clave. El motor da entonces EXACTAMENTE las poses y el balón de `d700987`; `npx tsx scripts/regress-poses.mts` lo comprueba con 12 jugadas.
+
+Con `realism: 2`, el motor hace:
+  - **balón sostenido** en el marco del cuerpo, fuera del tronco de la pose y por delante de la cara (`play.ts clearBall` + `rig.ts setTrunkHook`); continuidad entre eventos de 0,15 s;
+  - **palmas sobre el balón** (IK de contacto, mano tangente). En el hand-off, el pasador agarra arriba y detrás. El receptor alcanza desde t0−0,3 s. Al soltar, las manos se despegan en 0,2 s y vuelven al cuerpo;
+  - **bote** más abierto y adelantado con la velocidad (sin cruzar el muslo);
+  - **rumbo** limitado a 688°/s. Un jugador parado no «marca el paso»: solo mueve el pie que está fuera de su base;
+  - **ropa v2**: `e2a_player_{off,def}_v2.glb`, que construye `tools/blender/build_player.py --garment v2`. Movimiento secundario en el shader con `src/t3d/cloth2.ts` (LOD-B, determinista). LOD-A, el horneado en Blender, está pendiente.
+
+Gates:
+  - `npx tsx scripts/qc-realism.mts tactical/plays/<id>.json [--legacy] [--json out.json]` mide 10 gates sobre la malla dibujada: pies, contacto de palmas, balón contra cápsulas, continuidad, IK, rumbo, bloqueo, *clipping* y estabilidad de ropa, y pista;
+  - `bash scripts/smoke-realism.sh <ids>` ejecuta regresión, test-play, qc-contact/catch/handoff y gates.
+
+Más:
+  - **Biblioteca de movimientos:** `src/t3d/motion-library.v1.json`. Lista cada movimiento, su fuente, sus parámetros, su gate y su estado.
+  - **Episodio de ejemplo:** `tactical/specs/_gen-chicago-v2.py` (jugadas) y `tactical/episodes/_gen-chicago-v2.py` (reel). La comparación privada está en `tactical/episodes/_gen-realism-ab.py`.

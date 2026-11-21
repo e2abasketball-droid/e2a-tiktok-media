@@ -1,0 +1,12 @@
+{
+ "preset": "realism-v2",
+ "since": "2026-11-21",
+ "note": "Default for EVERY new tactical episode (play/spec top-level keys). Merge these keys into the spec/play generator output. Remove 'realism' (or set it to 0) for the legacy engine: the rollback toggle. Gates: bash scripts/smoke-realism.sh <play ids> must pass test-play + qc-contact/catch/handoff, and qc-realism must not be worse than the legacy run of the same play (npx tsx scripts/qc-realism.mts <play> and --legacy).",
+ "play_keys": {"realism": 2, "catchV2": 2, "handBallClear": true},
+ "rules": [
+  "screens: give `face` a FIXED angle (rad) when the screener must hold his angle (pin-down, flare); a player id makes him track a moving defender",
+  "hand-offs: hander `hold` with `present {from, peak, hold, to, amt, dz}` then `pass style: handoff`; receiver pocket 2-3 frames before a dribble",
+  "dribbles: `hand` set on every dribble hold (handed spot + V2 lead)",
+  "apparel: e2a_player_*_v2.glb is chosen automatically by Scene.tsx when realism >= 2"
+ ]
+}

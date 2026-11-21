@@ -1,0 +1,5 @@
+{
+ "licence_key": "music/synth/tactical",
+ "source": "E2A in-house synth engine music/e2a_music.py --story tactical --duration 38 --drop-at 16.52 (Trail) --payoff-at 26.32 (Chicago action) --no-sfx --soft-edges --history '' --voice voice.mix.wav (no samples, no ball sounds)",
+ "sha256": "b92497a5be1c48f5bdb9b9bda326a60f81bba7f865579057c4ccccc882a9a00e"
+}

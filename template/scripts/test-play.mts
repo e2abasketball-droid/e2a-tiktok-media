@@ -18,6 +18,9 @@ const args = process.argv.slice(2);
 const repIdx = args.indexOf('--report');
 const reportPath = repIdx >= 0 ? args[repIdx + 1] : undefined;
 const files = args.filter((f, i) => f.endsWith('.json') && (repIdx < 0 || i !== repIdx + 1));
+// Realism V2 plays (play.realism >= 2) are validated with the render's hooks (rig.ts: body heading + trunk contact solver),
+// so the ball checked here is the ball that is drawn. Older plays keep the hook-free path (unchanged results).
+if (files.some((f) => (JSON.parse(fs.readFileSync(f, 'utf8')).realism ?? 0) >= 2)) await import('../src/t3d/rig.ts');
 const DT = 1 / 120;
 const BODY = 0.25;
 const d2 = (a: number[], b: number[]) => Math.hypot(a[0] - b[0], a[1] - b[1]);
