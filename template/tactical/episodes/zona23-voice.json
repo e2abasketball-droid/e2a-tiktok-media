@@ -1,0 +1,69 @@
+{
+ "id": "zona23-voice",
+ "title": "2-3 Zone 40s cinematic",
+ "fps": 30,
+ "voiceRaw": "tactical/zona23/voice-raw.mp3",
+ "wordsRaw": "zona23-voice.words-raw.json",
+ "voice": "tactical/zona23/voice.wav",
+ "preroll": 0.1,
+ "tail": 0.6,
+ "gapFill": "silence",
+ "gaps": [
+  {
+   "after": "Right... HERE.",
+   "sec": 0.9,
+   "why": "HERE: the gap lights up, the hook settles"
+  },
+  {
+   "after": "That's a two-three zone.",
+   "sec": 0.6,
+   "why": "the five areas finish their reveal"
+  },
+  {
+   "after": "move with the ball.",
+   "sec": 0.7,
+   "why": "boxes slide with the ball; reset to READ 01"
+  },
+  {
+   "after": "flash to the foul line.",
+   "sec": 0.4,
+   "why": "O5's catch at the nail"
+  },
+  {
+   "after": "a cutter slips behind.",
+   "sec": 0.5,
+   "why": "O5 -> O4 pass in flight"
+  },
+  {
+   "after": "Layup.",
+   "sec": 1.0,
+   "why": "ball through the net, +2"
+  },
+  {
+   "after": "squeezes the middle.",
+   "sec": 0.6,
+   "why": "reset to READ 02 (ball to the wing)"
+  },
+  {
+   "after": "throw the SKIP.",
+   "sec": 0.6,
+   "why": "the skip flies over the zone"
+  },
+  {
+   "after": "THREE points.",
+   "sec": 1.0,
+   "why": "ball through the net, +3"
+  },
+  {
+   "after": "The zone resets.",
+   "sec": 0.6,
+   "why": "TOO SLOW comparison lands"
+  }
+ ],
+ "plays": {
+  "A": "zone23-a-nail",
+  "B": "zone23-b-skip",
+  "C": "zone23-c-slow"
+ },
+ "shots": []
+}

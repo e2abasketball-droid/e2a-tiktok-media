@@ -38,7 +38,9 @@ for (const f of files) {
   const T = (v: unknown): number => (typeof v === 'number' ? v : p.marks?.[v as string]);
   check(p.id, '5 attackers and 5 defenders', O.length === 5 && X.length === 5, `${O.length} O / ${X.length} X`);
   check(p.id, 'every player has a track over the whole play', ids.every((i) => p.tracks[i] && p.tracks[i][0][0] === 0 && p.tracks[i].at(-1)[0] >= p.duration - 1e-9), 'tracks');
-  check(p.id, 'every defender guards an existing attacker', X.every((x: {guards?: string}) => x.guards && ids.includes(x.guards)), X.map((x: {guards?: string}) => x.guards).join(','));
+  // (2026-11-21, 2-3 zone) a ZONE defence has no man-to-man match-ups: every defender must own a floor area instead
+  if (p.zone?.areas) check(p.id, `zone ${p.zone.type ?? ''}: every defender owns a floor area`, X.every((x: {id: string}) => typeof p.zone.areas[x.id] === 'string' && p.zone.areas[x.id].length > 0), Object.keys(p.zone.areas).join(','));
+  else check(p.id, 'every defender guards an existing attacker', X.every((x: {guards?: string}) => x.guards && ids.includes(x.guards)), X.map((x: {guards?: string}) => x.guards).join(','));
 
   let vmax = 0, vWho = '', amax = 0, aWho = '';
   for (const id of ids) {

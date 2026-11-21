@@ -29,7 +29,9 @@ type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: n
   | {type: 'focus'; player: string; r?: number; strength?: number; z?: number} | {type: 'hud'; tag: string; text: string; y?: number}
   /** 2026-11-19 (catch fix): DIAGNOSTIC ONLY, never in a delivered episode: ball phase, owner, play time and a label */
   | {type: 'debugPhase'; label?: string}
-  | {type: 'punch'; amount?: number} | {type: 'whip'; amount?: number; dir?: number} | {type: 'flash'; color?: string; strength?: number});
+  | {type: 'punch'; amount?: number} | {type: 'whip'; amount?: number; dir?: number} | {type: 'flash'; color?: string; strength?: number}
+  /** 2026-11-21 (2-3 Zone): small caption chip (ILLUSTRATIVE COVERAGE); WrongTempo red edge tint */
+  | {type: 'micro'; text: string; y?: number} | {type: 'tint'; color?: string; strength?: number});
 type CamKeyA = Omit<CamKey3, 'at'> & {at: Anchor};
 export type Shot3 = {
   id: string;
@@ -299,6 +301,18 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
                 <div>play t = {pt.toFixed(3)} s</div>
               </div>
             );
+          }
+          case 'micro': {
+            const o = Math.min(1, s.age / 0.2, (s.dur - s.age) / 0.25);
+            return (
+              <div key={i} style={{position: 'absolute', left: 0, right: 0, top: s.y ?? 330, display: 'flex', justifyContent: 'center', opacity: Math.max(0, o)}}>
+                <div data-qc="stamp" style={{padding: '8px 18px', borderRadius: 8, background: 'rgba(5,10,21,0.62)', border: '1.5px solid rgba(243,180,107,0.7)', color: '#FFE6B8', font: '700 30px Inter, sans-serif', letterSpacing: 3}}>{s.text}</div>
+              </div>
+            );
+          }
+          case 'tint': {
+            const o = Math.max(0, Math.min(1, s.age / 0.3, (s.dur - s.age) / 0.3)) * (s.strength ?? 0.5);
+            return <AbsoluteFill key={i} style={{boxShadow: `inset 0 0 160px 40px ${s.color ?? 'rgba(229,72,58,0.9)'}`, opacity: o}} />;
           }
           case 'flash':
             return <Flash key={i} age={s.age} color={s.color} strength={s.strength ?? 0.35} />;

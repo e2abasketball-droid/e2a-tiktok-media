@@ -609,7 +609,10 @@ const ballAt = (play: Play, t: number, ps: Record<string, PlayerState>): BallSta
 const stateCache = new Map<string, PlayerState>();
 
 export const stateOf = (play: Play, id: string, t: number): PlayerState => {
-  const key = `${play.id}|${id}|${t.toFixed(4)}`;
+  // (2026-11-21, zone 2-3) 6 decimals: a frame time (10/30 = 0.333333) and an event time written to 4 decimals
+  // (0.3333) shared one cache key, so the passer's pose AFTER the release was reused as his pose AT the release
+  // (the ball jumped ~0.45 m on the release frame)
+  const key = `${play.id}|${id}|${t.toFixed(6)}`;
   const hit = stateCache.get(key);
   if (hit) return hit;
   const spec = play.players.find((p) => p.id === id)!;

@@ -1,0 +1,5 @@
+{
+ "licence_key": "voice/elevenlabs-creator/zona-2-3-zone-40s",
+ "source": "derived from voice.wav (ElevenLabs eleven_v4, voice Deuce (DaueUomjhh8LFuAV8aGj), flow yZq5Fb0IbxQwyjpm9Tsx, node VGoU2YWSNT5bhBwWhN8N, generation VOPnPmtdpl0Okyfag06I, one take): highpass 80 Hz, EQ +2 dB @3.2 kHz, compressor 2.5:1, loudnorm I -16 / TP -2, apad to 40.0 s (silence), 48 kHz stereo",
+ "sha256": "00145df10871abb6370b58026c0fb93d7439f691122e76c6a09a8488429b70ad"
+}

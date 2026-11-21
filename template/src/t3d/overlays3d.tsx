@@ -15,6 +15,8 @@ import type {TeleOv} from './telestration3d';
 import {PassTravel, Telestration3D, floorQuad, textTex, yawAxes} from './telestration3d';
 import type {TeleOvBP} from './telestration3d-bp';
 import {TelestrationBP} from './telestration3d-bp';
+import type {ZoneGridOv} from './zone3d';
+import {ZoneGrid3D} from './zone3d';
 
 export const GOLD3 = '#E0B455';
 export const RED3 = '#E5483A';
@@ -119,7 +121,9 @@ export type Ov3 =
    *  it appears on the contact frame (play time), so rewinds and slow motion keep it honest. opacity dims it. */
   | {type: 'print'; player: string; n: number; color?: string; opacity?: number}
   /** coral hip axis at hip height (defender's hip signal) with a small arrow where the hips point */
-  | {type: 'hipMark'; player: string; color?: string};
+  | {type: 'hipMark'; player: string; color?: string}
+  /** 2026-11-21 (2-3 Zone): ZoneGridMorph, five zone areas that move with their defenders (zone3d.tsx) */
+  | ZoneGridOv;
 
 /** counted steps of a choreo player: the first plants after the gather, in order */
 export const countedSteps = (play: Play, id: string) => {
@@ -637,6 +641,8 @@ export const Overlays3D: React.FC<{play: Play; pt: number; items: LiveOv3[]}> = 
               </group>
             );
           }
+          case 'zoneGrid':
+            return <ZoneGrid3D key={i} play={play} pt={pt} o={o} a={a} />;
           case 'wall':
             return <Wall3D key={i} play={play} pt={pt} o={o} a={a} />;
           case 'print': {

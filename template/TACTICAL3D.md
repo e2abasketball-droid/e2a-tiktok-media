@@ -172,3 +172,17 @@ Todo es opcional y se activa por jugada o por episodio. Lo que no lo usa no camb
   - el roll.
   - Falla si la órbita no llega a los grados pedidos o si el sujeto sale del encuadre seguro; también si el cenital no alcanza la elevación o no la mantiene el tiempo pedido.
 - **Lección (anclas):** las palabras repetidas en la narración («TWO», «Set.», «for», «Different», «They») se resuelven en la PRIMERA aparición. Usa una frase única («They collapse») o `#2`, y repite `qc-tactical3d` (anclas dentro de su plano) antes de renderizar.
+
+## Zona 2-3 cinematográfica (2026-11-21)
+- **`zoneGrid` (ov3, `src/t3d/zone3d.tsx`, ZoneGridMorph):** `{areas: {X1: [x0, x1, y0, y1], …}, select?, selectAt?, only?, stagger?, follow?, base?, compress?, compressIn?, labels?, labelPos?, labelYaw?, labelSize?, labelsSelectedOnly?, dim?, tone?: 'warm' | 'red', pulse?: {at, ids, dur?}}`.
+  - Un área redondeada por defensor de zona (diagrama orientativo: las áreas se solapan).
+  - Cada área se mueve CON su defensor: centro = centro base + `follow` × (posición ahora − posición en `base`), y se estira un poco en esa dirección. Nunca se adelanta al jugador.
+  - `compress` acerca todas las áreas al aro (la zona que se cierra). `pulse` hace destellar y luego atenuar las áreas indicadas desde un instante de juego (p. ej. la salida del skip).
+  - `only` dibuja solo las áreas seleccionadas (una idea cada vez).
+  - Contraste: trazo inferior navy + línea crema; la seleccionada lleva borde dorado, relleno cálido, rejilla de 0,5 m y halo.
+  - Se recorta a la pista, lleva *depth test* (los jugadores tapan las líneas) y cuenta como UN overlay en `qc-overlays`.
+- **Pantalla:** `micro` (chip pequeño, p. ej. «ILLUSTRATIVE COVERAGE») y `tint` (borde rojo, WrongTempo).
+- **`test-play`:** si la jugada tiene `zone.areas`, el control «cada defensor guarda a un atacante» pasa a ser «cada defensor tiene un área». Las defensas individuales no cambian.
+- **Caché de `stateOf` con 6 decimales:** con 4 decimales, un instante de fotograma (10/30 = 0,333333) y un evento escrito con 4 decimales (0,3333) compartían clave. La pose del pasador después del pase se usaba como pose en el pase y el balón saltaba ~0,45 m en el fotograma del pase.
+- **`mj()` en `tactical/specs/_gen-zone23.py`:** carreras de jerk mínimo (velocidad y aceleración cero en los extremos) a lo largo de una curva de Bézier. Pico de velocidad 1,875·d/T y pico de aceleración 5,77·d/T². Resuelve los arranques bruscos del *spline* fijado (> 22 m/s²).
+- **9:16 y zona completa:** la zona ocupa 14 m de ancho. Los planos generales y cenitales miran A TRAVÉS de la pista (yaw ≈ 90): el ancho de la pista va en vertical y el aro queda a la derecha.

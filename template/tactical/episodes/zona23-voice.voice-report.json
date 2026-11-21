@@ -1,0 +1,132 @@
+{
+ "source": "public/tactical/zona23/voice-raw.mp3",
+ "source_sec": 35.2,
+ "preroll": 0.1,
+ "output": "public/tactical/zona23/voice.wav",
+ "output_sec": 39.0,
+ "inserted_total_sec": 3.7,
+ "last_word_end": 39.08,
+ "gaps": [
+  {
+   "after": "Right... HERE.",
+   "natural_silence": [
+    4.69,
+    5.08
+   ],
+   "natural_sec": 0.39,
+   "target_sec": 0.9,
+   "inserted_sec": 0.51,
+   "cut_at_source": 4.965,
+   "why": "HERE: the gap lights up, the hook settles"
+  },
+  {
+   "after": "That's a two-three zone.",
+   "natural_silence": [
+    8.82,
+    9.13
+   ],
+   "natural_sec": 0.31,
+   "target_sec": 0.6,
+   "inserted_sec": 0.29,
+   "cut_at_source": 8.945,
+   "why": "the five areas finish their reveal"
+  },
+  {
+   "after": "move with the ball.",
+   "natural_silence": [
+    11.02,
+    11.37
+   ],
+   "natural_sec": 0.35,
+   "target_sec": 0.7,
+   "inserted_sec": 0.35,
+   "cut_at_source": 11.185,
+   "why": "boxes slide with the ball; reset to READ 01"
+  },
+  {
+   "after": "flash to the foul line.",
+   "natural_silence": [
+    13.08,
+    13.37
+   ],
+   "natural_sec": 0.29,
+   "target_sec": 0.4,
+   "inserted_sec": 0.11,
+   "cut_at_source": 13.205,
+   "why": "O5's catch at the nail"
+  },
+  {
+   "after": "a cutter slips behind.",
+   "natural_silence": [
+    15.89,
+    16.13
+   ],
+   "natural_sec": 0.24,
+   "target_sec": 0.5,
+   "inserted_sec": 0.26,
+   "cut_at_source": 16.005,
+   "why": "O5 -> O4 pass in flight"
+  },
+  {
+   "after": "Layup.",
+   "natural_silence": [
+    16.6,
+    17.03
+   ],
+   "natural_sec": 0.43,
+   "target_sec": 1.0,
+   "inserted_sec": 0.57,
+   "cut_at_source": 16.915,
+   "why": "ball through the net, +2"
+  },
+  {
+   "after": "squeezes the middle.",
+   "natural_silence": [
+    18.72,
+    19.06
+   ],
+   "natural_sec": 0.34,
+   "target_sec": 0.6,
+   "inserted_sec": 0.26,
+   "cut_at_source": 18.965,
+   "why": "reset to READ 02 (ball to the wing)"
+  },
+  {
+   "after": "throw the SKIP.",
+   "natural_silence": [
+    21.5,
+    21.85
+   ],
+   "natural_sec": 0.35,
+   "target_sec": 0.6,
+   "inserted_sec": 0.25,
+   "cut_at_source": 21.685,
+   "why": "the skip flies over the zone"
+  },
+  {
+   "after": "THREE points.",
+   "natural_silence": [
+    28.28,
+    28.51
+   ],
+   "natural_sec": 0.23,
+   "target_sec": 1.0,
+   "inserted_sec": 0.77,
+   "cut_at_source": 28.445,
+   "why": "ball through the net, +3"
+  },
+  {
+   "after": "The zone resets.",
+   "natural_silence": [
+    30.83,
+    31.1
+   ],
+   "natural_sec": 0.27,
+   "target_sec": 0.6,
+   "inserted_sec": 0.33,
+   "cut_at_source": 31.025,
+   "why": "TOO SLOW comparison lands"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}

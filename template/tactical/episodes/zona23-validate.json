@@ -1,0 +1,181 @@
+{
+ "id": "zona23-validate",
+ "title": "2-3 Zone validation clips",
+ "fps": 30,
+ "voice": "tactical/zona23/voice.wav",
+ "preroll": 0.1,
+ "tail": 0.0,
+ "plays": {
+  "A": "zone23-a-nail",
+  "B": "zone23-b-skip",
+  "C": "zone23-c-slow"
+ },
+ "shots": [
+  {
+   "id": "v1-o5-catch",
+   "name": "v1-o5-catch: A 0.7 -> 1.5 at 0.5x",
+   "at": 0.0,
+   "play": "A",
+   "branch": "a",
+   "remap": [
+    [
+     0,
+     0.7
+    ],
+    [
+     1.6,
+     1.5
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O5"
+       ],
+       "z": 1.1,
+       "window": 0.3
+      },
+      "dist": 5.0,
+      "pitch": 80,
+      "yaw": 90,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "v2-o4-catch",
+   "name": "v2-o4-catch: A 2.05 -> 2.85 at 0.5x",
+   "at": 1.6,
+   "play": "A",
+   "branch": "a",
+   "remap": [
+    [
+     0,
+     2.05
+    ],
+    [
+     1.6,
+     2.85
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O4"
+       ],
+       "z": 1.1,
+       "window": 0.3
+      },
+      "dist": 5.5,
+      "pitch": 80,
+      "yaw": 25,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "v3-o2-skip",
+   "name": "v3-o2-skip: B 0.95 -> 1.75 at 0.5x",
+   "at": 3.2,
+   "play": "B",
+   "branch": "b",
+   "remap": [
+    [
+     0,
+     0.95
+    ],
+    [
+     1.6,
+     1.75
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2"
+       ],
+       "z": 1.1,
+       "window": 0.3
+      },
+      "dist": 5.5,
+      "pitch": 80,
+      "yaw": -60,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  },
+  {
+   "id": "v4-o3-catch-shot",
+   "name": "v4-o3-catch-shot: B 2.3 -> 3.45 at 0.5x",
+   "at": 4.8,
+   "play": "B",
+   "branch": "b",
+   "remap": [
+    [
+     0,
+     2.3
+    ],
+    [
+     2.3,
+     3.45
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O3"
+       ],
+       "z": 1.4,
+       "window": 0.3
+      },
+      "dist": 6.0,
+      "pitch": 78,
+      "yaw": 60,
+      "fov": 42
+     }
+    }
+   ],
+   "ov3": [],
+   "screen": []
+  }
+ ],
+ "branches": {
+  "a": "A",
+  "b": "B",
+  "c": "C"
+ },
+ "env": "cinema",
+ "pinV2": true,
+ "autoSfx": false,
+ "subtitleHide": [
+  [
+   0,
+   999
+  ]
+ ]
+}

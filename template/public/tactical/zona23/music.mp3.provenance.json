@@ -1,0 +1,44 @@
+{
+ "licence_key": "music/synth/tactical",
+ "source": "E2A in-house synth engine music/e2a_music.py --story tactical --track cine_b --duration 40 --drop-at 17.93 (Layup) --payoff-at 30.14 (THREE) --no-sfx --soft-edges --history '' (no samples, no ball sounds), then a -12 dB dip 32.50-33.45 s on 'But pass slowly?' (brief sec. 3: short music cut), ffmpeg volume automation; measured 39.5-40.0 s at -59 dBFS, last 50 ms -92 dBFS",
+ "sha256": "02229312a921bf42a2ac513cbc1a299c91de0304609b16a207129e25c871f070",
+ "engine_plan": {
+  "track": "cine_b",
+  "style": "cinematic",
+  "bpm": 120,
+  "key": 0,
+  "story": "tactical",
+  "drop": 17.93,
+  "payoff": 30.14,
+  "end_hit": 39.2,
+  "sections": [
+   [
+    "intro",
+    -0.07,
+    13.93
+   ],
+   [
+    "build",
+    13.93,
+    17.93
+   ],
+   [
+    "drop",
+    17.93,
+    25.93
+   ],
+   [
+    "break",
+    25.93,
+    29.93
+   ],
+   [
+    "drop2",
+    29.93,
+    41.93
+   ]
+  ],
+  "duration": 40.0,
+  "out": "/tmp/claude-0/z23/music-pre.mp3"
+ }
+}
