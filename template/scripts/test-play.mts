@@ -69,8 +69,22 @@ for (const f of files) {
       }
   }
   check(p.id, 'no two bodies overlap (≥ 0.5 m centre to centre)', minGap >= 2 * BODY - 1e-6, `${minGap.toFixed(2)} m (${gapWho})`);
-  const oob = ids.filter((id) => p.tracks[id].some((w: number[]) => Math.abs(w[1]) > FIBA.halfW - 0.2 || w[2] < 0.2 || w[2] > FIBA.halfL));
-  check(p.id, 'everyone stays in bounds', oob.length === 0, oob.join(',') || 'ok');
+  // throw-in (2026-11-20, BLOB): play.inbound = {player, release, limit, margin}: the thrower may stand out of bounds
+  // (baseline, y >= -1.5 m); he must stay OUT (centre y <= -0.2 m: both feet behind the line) until the release, release
+  // the ball before limit - margin (FIBA art. 17: 5 s), and the ball must leave HIM (first pass of the play from him).
+  const inb = p.inbound as {player: string; release: number; limit?: number; margin?: number} | undefined;
+  const oob = ids.filter((id) => p.tracks[id].some((w: number[]) => Math.abs(w[1]) > FIBA.halfW - 0.2 || w[2] > FIBA.halfL ||
+    (inb && id === inb.player ? w[2] < -1.5 : w[2] < 0.2)));
+  check(p.id, 'everyone stays in bounds' + (inb ? ` (thrower ${inb.player} on the baseline)` : ''), oob.length === 0, oob.join(',') || 'ok');
+  if (inb) {
+    let ymax = -99;
+    for (let t = 0; t <= inb.release + 1e-9; t += DT) ymax = Math.max(ymax, posAt(p.tracks[inb.player], t)[1]);
+    check(p.id, `throw-in: ${inb.player} out of bounds until the release (centre y ≤ -0.2 m)`, ymax <= -0.2, `max y ${ymax.toFixed(2)} m to ${inb.release.toFixed(2)} s`);
+    const lim = (inb.limit ?? 5) - (inb.margin ?? 0.5);
+    check(p.id, `throw-in: released ≤ ${lim.toFixed(1)} s (FIBA 5 s with margin)`, inb.release <= lim, `${inb.release.toFixed(2)} s`);
+    const first = (p.ball as {type: string; from?: string; t0?: number}[]).find((e) => e.type === 'pass');
+    check(p.id, `throw-in: the first pass leaves ${inb.player} at the release`, !!first && first.from === inb.player && Math.abs((first.t0 ?? -1) - inb.release) < 1e-3, first ? `${first.from} @ ${first.t0}` : 'no pass');
+  }
 
   let bmax = 0, lost = 0;
   let prevB = sample(p, 0).ball.pos;

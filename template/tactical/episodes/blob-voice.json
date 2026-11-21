@@ -1,0 +1,74 @@
+{
+ "id": "blob-voice",
+ "title": "BLOB Box Screen-the-Screener",
+ "fps": 30,
+ "voiceRaw": "tactical/blob/voice-raw.mp3",
+ "wordsRaw": "blob-voice.words-raw.json",
+ "voice": "tactical/blob/voice.wav",
+ "voiceMix": "tactical/blob/voice.mix.wav",
+ "preroll": 0.1,
+ "tail": 1.0,
+ "gapFill": "silence",
+ "gaps": [
+  {
+   "after": "is HE open?",
+   "sec": 0.75,
+   "why": "hook -> rewind to the box"
+  },
+  {
+   "after": "watches the big.",
+   "sec": 0.4,
+   "why": "box freeze, O5 pulse"
+  },
+  {
+   "after": "screens for FIVE.",
+   "sec": 0.85,
+   "why": "O5's cut under the screen"
+  },
+  {
+   "after": "easy layup.",
+   "sec": 1.25,
+   "why": "layup to the net (A)"
+  },
+  {
+   "after": "protect the rim?",
+   "sec": 1.15,
+   "why": "X4's help step and NO PASS (B)"
+  },
+  {
+   "after": "isn't finished.",
+   "sec": 0.8,
+   "why": "O2 leaves screen 1, O4 moves"
+  },
+  {
+   "after": "Screen… the screener.",
+   "sec": 1.1,
+   "why": "O2 curls off O4"
+  },
+  {
+   "after": "to the wing.",
+   "sec": 0.52,
+   "why": "the pass in flight"
+  },
+  {
+   "after": "Catch. Three.",
+   "sec": 1.25,
+   "why": "the three to the net (B)"
+  },
+  {
+   "after": "defensive choice.",
+   "sec": 0.8,
+   "why": "split X4 STAYS / X4 HELPS"
+  },
+  {
+   "after": "onto TWO?",
+   "sec": 0.68,
+   "why": "RIM / SWITCH arrows"
+  }
+ ],
+ "plays": {
+  "A": "blob-a-rim",
+  "B": "blob-b-three"
+ },
+ "shots": []
+}

@@ -1,0 +1,1 @@
+O2 soles (ankle+toe, both feet) vs FIBA 6.75 m arc, blob-b-three, scripts/pose-dump.mts 4.30-4.75 s @30fps: min distance to basket centre 6.922 m (catch 4.37 s, grounded load to 4.5 s; airborne from ~4.6 s, release 4.70 s) -> behind the line by >= 0.17 m

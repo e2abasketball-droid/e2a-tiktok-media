@@ -1,0 +1,75 @@
+== qc-tactical3d
+PASS  duration 30–40 s — 40.00 s
+PASS  shots in narration order — 0.00 1.68 4.14 7.30 10.97 14.52 17.19 19.58 24.23 28.43 29.39 32.52
+PASS  every graphic points at a player that exists — ok
+PASS  every anchor falls inside its shot — ok
+PASS  camera moves smoothly inside shots (≤ 0.9 m per frame) — 0.73 m (09-three@3.07)
+PASS  camera never below 0.8 m — 2.60 m
+PASS  camera stays ≥ 0.5 m from the basket structure — 0 frame-structure hits, min 5.63 m (07-screener@17.190s rim)
+PASS  camera never films through the backboard glass (> 10 % of the picture) — max 0 %
+PASS  every pin label sits on its own player (no other body under it) — ok
+PASS  highlighted players stay inside the safe frame — ok
+PASS  planted feet never slide (max drift per 1/120 s) — 0.000 mm (none)
+PASS  feet never go under the floor — 0 samples
+PASS  players3d e2a-player-v1: player meshes present in public/ — players3d/e2a_player_off.glb, players3d/e2a_player_def.glb
+INFO  players3d play A: O1:C/off/rig | O2:C/off/rig | O3:C/off/rig | O4:C/off/rig | O5:C/off/rig | X1:C/def/rig | X2:C/def/rig | X3:C/def/rig | X4:C/def/rig | X5:C/def/rig
+PASS  players3d A: mesh ankle on the engine ankle (≤ 15 mm) — 0.0 mm (X4@2.97s)
+PASS  players3d A: planted mesh foot does not slide (≤ 2 mm/frame) — 0.00 mm/frame (X2@0.83s)
+PASS  players3d A: ball holder: mesh fingertips on the engine hand point (≤ 40 mm) — 0.0 mm (O5@2.83s)
+PASS  players3d A: other players: fingertips vs engine hand (info, arms at full stretch clamp) — 0.0 mm (O5@2.60s)
+PASS  players3d A: head never looks up (face pitch ≤ +15°, +35° while a shot is up) — 5.6° (O2@1.37s)
+PASS  players3d A: head not buried (face pitch ≥ -35°) — -10.6° (X5@2.13s)
+PASS  players3d A: same time, same bones (seek = playback) — 0.0e+0
+INFO  players3d play B: O1:C/off/rig | O2:C/off/rig | O3:C/off/rig | O4:C/off/rig | O5:C/off/rig | X1:C/def/rig | X2:C/def/rig | X3:C/def/rig | X4:C/def/rig | X5:C/def/rig
+PASS  players3d B: mesh ankle on the engine ankle (≤ 15 mm) — 0.0 mm (X4@1.90s)
+PASS  players3d B: planted mesh foot does not slide (≤ 2 mm/frame) — 0.43 mm/frame (X1@5.47s)
+PASS  players3d B: ball holder: mesh fingertips on the engine hand point (≤ 40 mm) — 17.9 mm (O2@4.67s)
+PASS  players3d B: other players: fingertips vs engine hand (info, arms at full stretch clamp) — 9.6 mm (O2@5.20s)
+PASS  players3d B: head never looks up (face pitch ≤ +15°, +35° while a shot is up) — 5.6° (O2@1.37s)
+PASS  players3d B: head not buried (face pitch ≥ -35°) — -10.4° (X5@2.10s)
+PASS  players3d B: same time, same bones (seek = playback) — 0.0e+0
+
+27/27 engine checks passed
+rc=0
+== qc-overlays
+PASS  tactical overlays on screen ≤ 3 on every frame — max 3 at 06-help@15.90s (spot:X4, floorText, passLane); 0 frames over
+INFO  frames by overlay count: 0:248  1:363  2:430  3:159 (of 1200)
+rc=0
+== qc-bounds
+Detected differing memory amounts:
+Memory reported by CGroup: 8796093018073.41 MB
+Memory reported by /proc/meminfo MemAvailable: 14685.89 MB
+You might have inadvertently set the --memory flag of `docker run` to a value that is higher than the global Docker memory limit.
+Using the lower amount of memory for calculation.
+Detected differing memory amounts:
+Memory reported by CGroup: 8796093018007.20 MB
+Memory reported by /proc/meminfo MemAvailable: 14644.97 MB
+You might have inadvertently set the --memory flag of `docker run` to a value that is higher than the global Docker memory limit.
+Using the lower amount of memory for calculation.
+Detected differing memory amounts:
+Memory reported by CGroup: 8796093018046.89 MB
+Memory reported by /proc/meminfo MemAvailable: 14560.82 MB
+You might have inadvertently set the --memory flag of `docker run` to a value that is higher than the global Docker memory limit.
+Using the lower amount of memory for calculation.
+Detected differing memory amounts:
+Memory reported by CGroup: 8796093017932.81 MB
+Memory reported by /proc/meminfo MemAvailable: 14536.55 MB
+You might have inadvertently set the --memory flag of `docker run` to a value that is higher than the global Docker memory limit.
+Using the lower amount of memory for calculation.
+Detected differing memory amounts:
+Memory reported by CGroup: 8796093017931.97 MB
+Memory reported by /proc/meminfo MemAvailable: 14536.04 MB
+You might have inadvertently set the --memory flag of `docker run` to a value that is higher than the global Docker memory limit.
+Using the lower amount of memory for calculation.
+Detected differing memory amounts:
+Memory reported by CGroup: 8796093017927.77 MB
+Memory reported by /proc/meminfo MemAvailable: 14532.52 MB
+You might have inadvertently set the --memory flag of `docker run` to a value that is higher than the global Docker memory limit.
+Using the lower amount of memory for calculation.
+Detected differing memory amounts:
+Memory reported by CGroup: 8796093017920.42 MB
+Memory reported by /proc/meminfo MemAvailable: 14529.78 MB
+You might have inadvertently set the --memory flag of `docker run` to a value that is higher than the global Docker memory limit.
+Using the lower amount of memory for calculation.
+PASS  bounds: 1200 frames, 4280 boxes, 0 violations
+rc=0

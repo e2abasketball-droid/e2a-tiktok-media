@@ -41,6 +41,7 @@ ap.add_argument('--out-blend', required=True)
 ap.add_argument('--out-glb', required=True)
 ap.add_argument('--number', default='')
 ap.add_argument('--skin', default='')
+ap.add_argument('--cloth-cut', choices=['iso', 'legacy'], default='iso', help='garment / hidden-skin edges (see iso_clip)')
 a = ap.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else sys.argv[1:])
 
 # kits = engine KITS (src/t3d/Athlete.tsx) so the capsule (A) and the mesh (C) read the same on screen
@@ -236,6 +237,117 @@ armpit = (freg == 2) & (np.abs(cent[:, 0]) > 0.16) & (cent[:, 2] > J['upperarm01
 hide[armpit] = False
 body_f = np.where(~hide)[0]
 
+# ---------------------------------------------------------------- cloth edges cut on iso-lines (2026-11-20)
+# The face sets above follow the MakeHuman quads, so their boundary is a staircase; smoothing that boundary loop
+# moved its vertices but left the staircase in the skin under it and in the ring next to it (jagged collar /
+# armholes / hems, skin quads poking through at the shoulder straps and at the shorts hem, Pistol cover 2026-11-20).
+# --cloth-cut iso (default): each garment is a SMOOTH FIELD on the body surface (the face-set indicator diffused over
+# the mesh graph, capped by a horizontal plane at the hem) and the garment / the hidden skin are the parts of the
+# quads on one side of an iso-line of that field, cut exactly through the quads (new vertices on the edges, skin
+# weights / normals / UVs interpolated). The skin is cut on a DEEPER iso-line than the cloth, so its hidden-region
+# edge is always ~2 quads under the garment and never shows. --cloth-cut legacy rebuilds the 2026-11-19 meshes.
+EV = np.unique(np.sort(np.concatenate([F[:, [0, 1]], F[:, [1, 2]], F[:, [2, 3]], F[:, [3, 0]]]), 1), axis=0)
+DEG = np.zeros(len(V)); np.add.at(DEG, EV.ravel(), 1)
+
+
+def face_indicator(face_idx):
+    m = np.zeros(len(F)); m[face_idx] = 1
+    s = np.zeros(len(V)); c = np.zeros(len(V))
+    np.add.at(s, F.ravel(), np.repeat(m, 4)); np.add.at(c, F.ravel(), 1)
+    return s / np.maximum(c, 1)
+
+
+def diffuse(g, iters, lam=0.5):
+    g = g.copy()
+    for _ in range(iters):
+        s = np.zeros(len(V)); np.add.at(s, EV[:, 0], g[EV[:, 1]]); np.add.at(s, EV[:, 1], g[EV[:, 0]])
+        g = g + lam * (s / np.maximum(DEG, 1) - g)
+    return g
+
+
+def plane_up(z0, width=0.03):
+    """0.5 on the plane z = z0, growing upwards: min(field, plane_up(hem)) puts a flat hem at z0"""
+    return 0.5 + (V[:, 2] - z0) / width
+
+
+def iso_clip(face_idx, g, thr=0.5):
+    """the parts of the quads face_idx where g >= thr. Returns (polygons over the extended vertex list,
+    extra = [(i, j, t)] new vertices i + t (j - i) numbered from len(V), corner sources per polygon
+    [(corner a, corner b, t)] to interpolate per-corner data such as UVs, source quad of each polygon)."""
+    n = len(V); extra, key, out, src, fids = [], {}, [], [], []
+
+    def edge_vertex(i, j):
+        a_, b_ = (i, j) if i < j else (j, i)
+        if (a_, b_) not in key:
+            t = float(np.clip((thr - g[a_]) / (g[b_] - g[a_]), 0.0, 1.0))
+            key[(a_, b_)] = n + len(extra); extra.append((a_, b_, t))
+        return key[(a_, b_)]
+
+    for fi in face_idx:
+        f = F[fi]; gv = g[f] - thr
+        inside = gv >= 0
+        if inside.all():
+            out.append([int(x) for x in f]); src.append([(k, k, 0.0) for k in range(4)]); fids.append(int(fi)); continue
+        if not inside.any():
+            continue
+        poly, cs = [], []
+        for k in range(4):
+            k2 = (k + 1) % 4
+            if inside[k]:
+                poly.append(int(f[k])); cs.append((k, k, 0.0))
+            if inside[k] != inside[k2]:
+                poly.append(edge_vertex(int(f[k]), int(f[k2]))); cs.append((k, k2, float(gv[k] / (gv[k] - gv[k2]))))
+        if len(poly) >= 3:
+            out.append(poly); src.append(cs); fids.append(int(fi))
+    return out, extra, src, fids
+
+
+def extend(A, extra, unit=False, weights=False):
+    """per-vertex data A on the extended vertex list of iso_clip"""
+    if not extra:
+        return A.copy()
+    i = np.array([e[0] for e in extra]); j = np.array([e[1] for e in extra]); t = np.array([e[2] for e in extra])
+    t = t.reshape((-1,) + (1,) * (A.ndim - 1))
+    B_ = np.concatenate([A, A[i] * (1 - t) + A[j] * t])
+    if unit:
+        B_ /= np.maximum(np.linalg.norm(B_, axis=1, keepdims=True), 1e-9)
+    if weights:
+        B_ = top4(B_)
+    return B_
+
+
+def smooth_loops(P, faces, iters=4, flat=None):
+    """light 1-D Laplacian along each boundary loop (the iso-cut is already smooth: this only evens the spacing)"""
+    P = P.copy()
+    for lp in boundary_loops(faces):
+        idx = np.array(lp)
+        if len(idx) < 6:
+            continue
+        for _ in range(iters):
+            q = P[idx]
+            P[idx] = 0.5 * q + 0.25 * (np.roll(q, 1, 0) + np.roll(q, -1, 0))
+        if flat is not None:
+            z = flat(P[idx])
+            if z is not None:
+                P[idx, 2] = z
+    return P
+
+
+hem_j = hip_z - 0.05
+hem_s = knee_z + 0.12
+ISO_DIFF = 10  # graph diffusion steps (lam 0.5): rounds the staircase (quads ~2-3 cm) without eating the straps
+# iso mode: the garment sets reach PAST their hems (jersey to the pelvis, shorts to the knee) so that, near a hem, the
+# diffused field is ~1 and the hem is the plane alone (flat, no notch where a MakeHuman region boundary dips); the
+# jersey then overlaps the shorts' waistband by 7 cm (its hem piping never z-fights the waist piping)
+jersey_iso_f = np.union1d(jersey_f, np.where(((freg == 2) | (freg == 3)) & (cent[:, 2] > hem_j - 0.04) & (cent[:, 2] < hip_z + 0.2))[0])
+shorts_iso_f = np.union1d(shorts_f, np.where(((freg == 7) | (freg == 255)) & (cent[:, 2] > knee_z + 0.02) & (cent[:, 2] < hip_z + 0.11))[0])
+D_jersey = diffuse(face_indicator(jersey_iso_f), ISO_DIFF)
+D_shorts = diffuse(face_indicator(shorts_iso_f), ISO_DIFF)
+G_jersey = np.minimum(D_jersey, plane_up(hem_j))
+G_shorts = np.minimum(D_shorts, plane_up(hem_s))
+# skin hidden only DEEP inside a garment: the 0.80 iso-line of the diffused set and 4 cm above the hems
+G_skin_hide = np.maximum(np.minimum(D_jersey - 0.30, plane_up(hem_j + 0.04)), np.minimum(D_shorts - 0.30, plane_up(hem_s + 0.04)))
+
 # ---------------------------------------------------------------- textures (PIL)
 from PIL import Image, ImageDraw, ImageFont
 TEXDIR = os.path.join(os.path.dirname(os.path.abspath(a.out_blend)), 'tex')
@@ -391,84 +503,98 @@ def pipe_loops(name, P, faces, W, radius=0.006, keep=lambda q: True, inset=0.004
 
 
 # body (skin + socks)
+ISO = a.cloth_cut == 'iso'
 sock_face = (cent[:, 2] < 0.26) & ((freg == 8) | (freg == 255))
-bf = [F[i] for i in body_f]
-bmat = [1 if sock_face[i] else 0 for i in body_f]
-buv = [[UV[FU[i][k]] for k in range(4)] for i in body_f]
-ob_body, _ = make_mesh('E2A_Body', V, bf, [M_SKIN, M_SOCK], bmat, buv, WGT)
+if ISO:
+    UVa = np.asarray(UV, float)
+    bpoly, bextra, bsrc, bfid = iso_clip(np.where(freg != 9)[0], 1.0 - G_skin_hide, 0.5)  # feet: under the shoes
+    bmat = [1 if sock_face[fi] else 0 for fi in bfid]
+    buv = [[(UVa[FU[fi][c0]] * (1 - t) + UVa[FU[fi][c1]] * t).tolist() for c0, c1, t in cs] for fi, cs in zip(bfid, bsrc)]
+    ob_body, _ = make_mesh('E2A_Body', extend(V, bextra), bpoly, [M_SKIN, M_SOCK], bmat, buv, extend(WGT, bextra, weights=True))
+else:
+    bf = [F[i] for i in body_f]
+    bmat = [1 if sock_face[i] else 0 for i in body_f]
+    buv = [[UV[FU[i][k]] for k in range(4)] for i in body_f]
+    ob_body, _ = make_mesh('E2A_Body', V, bf, [M_SKIN, M_SOCK], bmat, buv, WGT)
 
-# jersey: offset outward, looser below the chest, flared hem
-Pj = V.copy()
-chest_z = J['spine01____head'][2]
-off = 0.02 + 0.01 * np.clip((chest_z - V[:, 2]) / 0.25, 0, 1) + 0.012 * np.clip((hip_z + 0.02 - V[:, 2]) / 0.08, 0, 1)
-Pj += NRM * off[:, None]
-hem_j = hip_z - 0.05
-Pj, jon = smooth_boundary(Pj, [F[i] for i in jersey_f], 26, 8, flat=lambda q: hem_j if q[:, 2].max() < hip_z + 0.02 else None)
-jv = np.unique(F[jersey_f])
+
+def garment(G, face_set):
+    """(polygons, vertices, normals, weights) of a garment: iso-cut of G (default) or the legacy face set"""
+    if ISO:
+        poly, extra, _, _ = iso_clip(np.where((G[F] >= 0.5).any(1))[0], G, 0.5)
+        return poly, extend(V, extra), extend(NRM, extra, unit=True), extend(WGT, extra, weights=True)
+    return [list(F[i]) for i in face_set], V.copy(), NRM, WGT
+
+
 # cylindrical UV around the trunk axis: u = 0 his left side, 0.25 front, 0.5 right side, 0.75 back
 def cyl_uv(p, z0, z1):
     phi = math.atan2(-(p[1] - 0.02), p[0])
     u = 1.0 - (phi % (2 * math.pi)) / (2 * math.pi)  # u grows clockwise seen from above -> text reads correctly outside
     return [u, (p[2] - z0) / (z1 - z0)]
+
+
+def cyl_uvs(P, polys, z0, z1):
+    out = []
+    for f in polys:
+        uvq = [cyl_uv(P[v], z0, z1) for v in f]
+        us = [q[0] for q in uvq]
+        if max(us) - min(us) > 0.5:  # seam: keep the polygon on one side
+            uvq = [[q[0] + (1 if q[0] < 0.5 else 0), q[1]] for q in uvq]
+        out.append(uvq)
+    return out
+
+
+# jersey: offset outward, looser below the chest, flared hem
+jpoly, Vj, Nj, Wj = garment(G_jersey, jersey_f)
+chest_z = J['spine01____head'][2]
+off = 0.02 + 0.01 * np.clip((chest_z - Vj[:, 2]) / 0.25, 0, 1) + (0.026 if ISO else 0.012) * np.clip((hip_z + 0.02 - Vj[:, 2]) / 0.08, 0, 1)
+Pj = Vj + Nj * off[:, None]
+jflat = lambda q: hem_j if q[:, 2].max() < hip_z + 0.02 else None
+if ISO:
+    Pj = smooth_loops(Pj, jpoly, 4, flat=jflat)
+else:
+    Pj, jon = smooth_boundary(Pj, jpoly, 26, 8, flat=jflat)
 z0j, z1j = hip_z - 0.06, J['neck01____head'][2]
-juv = []
-for i in jersey_f:
-    uvq = [cyl_uv(Pj[v], z0j, z1j) for v in F[i]]
-    us = [q[0] for q in uvq]
-    if max(us) - min(us) > 0.5:  # seam: keep the quad on one side
-        uvq = [[q[0] + (1 if q[0] < 0.5 else 0), q[1]] for q in uvq]
-    juv.append(uvq)
-# gold trims: faces touching the jersey boundary (collar, armholes, hem)
-Ej = {}
-for i in jersey_f:
-    f = F[i]
-    for k in range(4):
-        e = (min(f[k], f[(k + 1) % 4]), max(f[k], f[(k + 1) % 4]))
-        Ej[e] = Ej.get(e, 0) + 1
-jmat = [0 for i in jersey_f]  # trims are a separate piping mesh (pipe_loops) along the smoothed boundaries
-ob_jersey, _ = make_mesh('E2A_Jersey', Pj, [F[i] for i in jersey_f], [M_JERSEY, M_TRIM], jmat, juv, WGT)
-ob_jpipe = pipe_loops('E2A_JerseyTrim', Pj, [F[i] for i in jersey_f], WGT, 0.0062)
-
-
+juv = cyl_uvs(Pj, jpoly, z0j, z1j)
+jmat = [0] * len(jpoly)  # trims are a separate piping mesh (pipe_loops) along the boundaries
+ob_jersey, _ = make_mesh('E2A_Jersey', Pj, jpoly, [M_JERSEY, M_TRIM], jmat, juv, Wj)
+ob_jpipe = pipe_loops('E2A_JerseyTrim', Pj, jpoly, Wj, 0.0062)
 
 # shorts: loose; leg part pushed away from the thigh axis, flared towards the hem
-Ps = V.copy()
-offs = np.full(len(V), 0.022)
+spoly, Vs, Ns, Wsh = garment(G_shorts, shorts_f)
+Ps = Vs.copy()
+offs = np.full(len(Vs), 0.022)
 for s in 'LR':
     h0 = J[f'upperleg01.{s}____head']; k0 = J[f'lowerleg01.{s}____head']
     ax = (k0 - h0) / np.linalg.norm(k0 - h0)
-    side = (V[:, 0] > 0) if s == 'L' else (V[:, 0] <= 0)
-    legp = side & (V[:, 2] < hip_z - 0.02)
-    rel = V - h0
+    side = (Vs[:, 0] > 0) if s == 'L' else (Vs[:, 0] <= 0)
+    legp = side & (Vs[:, 2] < hip_z - 0.02)
+    rel = Vs - h0
     along = rel @ ax
     radial = rel - np.outer(along, ax)
     rn = radial / np.maximum(np.linalg.norm(radial, axis=1, keepdims=True), 1e-9)
-    u = np.clip((hip_z - 0.02 - V[:, 2]) / (hip_z - knee_z - 0.12), 0, 1)
+    u = np.clip((hip_z - 0.02 - Vs[:, 2]) / (hip_z - knee_z - 0.12), 0, 1)
     push = 0.012 + 0.035 * u
     Ps[legp] += rn[legp] * push[legp, None]
-Ps += NRM * offs[:, None]
-Wsh = WGT.copy()
+Ps += Ns * offs[:, None]
+Wsh = Wsh.copy()
 hips_i = SK.NAMES.index('hips')
 for s in 'LR':
     ti = SK.NAMES.index('thigh.' + s)
-    u = np.clip((hip_z - V[:, 2]) / 0.4, 0, 1) * 0.3
+    u = np.clip((hip_z - Vs[:, 2]) / 0.4, 0, 1) * 0.3
     mv = Wsh[:, ti] * u
     Wsh[:, ti] -= mv
     Wsh[:, hips_i] += mv
-# gold side stripe on the shorts: faces near the outer side
-hem_s = knee_z + 0.12
-Ps, son = smooth_boundary(Ps, [F[i] for i in shorts_f], 22, 8, flat=lambda q: hem_s if q[:, 2].max() < hip_z - 0.1 else None)
+sflat = lambda q: hem_s if q[:, 2].max() < hip_z - 0.1 else None
+if ISO:
+    Ps = smooth_loops(Ps, spoly, 4, flat=sflat)
+else:
+    Ps, son = smooth_boundary(Ps, spoly, 22, 8, flat=sflat)
 z0s, z1s = hem_s, hip_z + 0.12
-suv = []
-for i in shorts_f:
-    uvq = [cyl_uv(Ps[v], z0s, z1s) for v in F[i]]
-    us = [q[0] for q in uvq]
-    if max(us) - min(us) > 0.5:
-        uvq = [[q[0] + (1 if q[0] < 0.5 else 0), q[1]] for q in uvq]
-    suv.append(uvq)
-shm = [0 for i in shorts_f]
-ob_shorts, _ = make_mesh('E2A_Shorts', Ps, [F[i] for i in shorts_f], [M_SHORTS, M_TRIM], shm, suv, Wsh)
-ob_spipe = pipe_loops('E2A_ShortsTrim', Ps, [F[i] for i in shorts_f], Wsh, 0.006, keep=lambda q: q[:, 2].min() > hip_z)
+suv = cyl_uvs(Ps, spoly, z0s, z1s)
+shm = [0] * len(spoly)
+ob_shorts, _ = make_mesh('E2A_Shorts', Ps, spoly, [M_SHORTS, M_TRIM], shm, suv, Wsh)
+ob_spipe = pipe_loops('E2A_ShortsTrim', Ps, spoly, Wsh, 0.006, keep=lambda q: q[:, 2].min() > hip_z)
 
 # shoes: per foot, convex hull of the inflated foot + ankle (a smooth sneaker last, no toes), sole flat on the floor,
 # weights from the nearest body vertex

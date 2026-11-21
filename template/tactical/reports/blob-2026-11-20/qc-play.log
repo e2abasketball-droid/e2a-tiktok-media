@@ -1,0 +1,177 @@
+== test-play tactical/plays/blob-a-rim.json
+PASS  [blob-a-rim] 5 attackers and 5 defenders — 5 O / 5 X
+PASS  [blob-a-rim] every player has a track over the whole play — tracks
+PASS  [blob-a-rim] every defender guards an existing attacker — O1,O2,O3,O4,O5
+PASS  [blob-a-rim] top speed ≤ 7.5 m/s (no teleports) — 4.56 m/s (O2@1.01)
+PASS  [blob-a-rim] acceleration ≤ 22 m/s² (no jerks) — 21.8 m/s² (O5@1.87)
+PASS  [blob-a-rim] no two bodies overlap (≥ 0.5 m centre to centre) — 0.51 m (O2-X5@1.50)
+PASS  [blob-a-rim] everyone stays in bounds (thrower O3 on the baseline) — ok
+PASS  [blob-a-rim] throw-in: O3 out of bounds until the release (centre y ≤ -0.2 m) — max y -0.85 m to 2.27 s
+PASS  [blob-a-rim] throw-in: released ≤ 4.5 s (FIBA 5 s with margin) — 2.27 s
+PASS  [blob-a-rim] throw-in: the first pass leaves O3 at the release — O3 @ 2.2667
+PASS  [blob-a-rim] ball horizontal speed ≤ 15 m/s and continuous — 9.0 m/s
+PASS  [blob-a-rim] ball always held, in flight or dropping after a make — 0 orphan samples
+PASS  [blob-a-rim] pass O3→O5: lane open (ball ≥ 0.6 m from every defender) — 0.83 m (X3@2.38)
+PASS  [blob-a-rim] pass O3→O5: speed 6–14 m/s — 11.1 m/s over 4.1 m
+PASS  [blob-a-rim] pass O3→O5: receiver under control at the catch (≤ 5.5 m/s, lead pass in stride) — 2.73 m/s
+PASS  [blob-a-rim] O5 lays up within 1.5 m of the rim — 0.72 m
+PASS  [blob-a-rim] O5 is open (nearest defender ≥ 1 m) — 1.08 m
+PASS  [blob-a-rim] O2 screen 1.4333–2.4667s is legal (stationary ≤ 0.15 m/s) — 0.000 m/s
+PASS  [blob-a-rim] claim "He screens for FIVE." — O2–X5 0.51 m (≤ 0.8)
+PASS  [blob-a-rim] claim "If the defense stays home... easy layup." — nearest defender 1.19 m (≥ 1)
+PASS  [blob-a-rim] claim "easy layup" — 0.72 m (≤ 1)
+PASS  [blob-a-rim] claim "screen, cut, pass, layup" — 1.4333 < 1.5333 < 2.2667 < 2.6333 < 2.9333 < 3.4
+
+22/22 generic tactical checks passed
+rc=0
+== test-play tactical/plays/blob-b-three.json
+PASS  [blob-b-three] 5 attackers and 5 defenders — 5 O / 5 X
+PASS  [blob-b-three] every player has a track over the whole play — tracks
+PASS  [blob-b-three] every defender guards an existing attacker — O1,O2,O3,O4,O5
+PASS  [blob-b-three] top speed ≤ 7.5 m/s (no teleports) — 5.41 m/s (O2@3.42)
+PASS  [blob-b-three] acceleration ≤ 22 m/s² (no jerks) — 21.3 m/s² (O5@1.87)
+PASS  [blob-b-three] no two bodies overlap (≥ 0.5 m centre to centre) — 0.51 m (O2-X5@1.50)
+PASS  [blob-b-three] everyone stays in bounds (thrower O3 on the baseline) — ok
+PASS  [blob-b-three] throw-in: O3 out of bounds until the release (centre y ≤ -0.2 m) — max y -0.85 m to 3.70 s
+PASS  [blob-b-three] throw-in: released ≤ 4.5 s (FIBA 5 s with margin) — 3.70 s
+PASS  [blob-b-three] throw-in: the first pass leaves O3 at the release — O3 @ 3.7
+PASS  [blob-b-three] ball horizontal speed ≤ 15 m/s and continuous — 10.3 m/s
+PASS  [blob-b-three] ball always held, in flight or dropping after a make — 0 orphan samples
+PASS  [blob-b-three] pass O3→O2: lane open (ball ≥ 0.6 m from every defender) — 0.70 m (X3@3.85)
+PASS  [blob-b-three] pass O3→O2: speed 6–14 m/s — 11.3 m/s over 7.5 m
+PASS  [blob-b-three] pass O3→O2: receiver under control at the catch (≤ 5.5 m/s, lead pass in stride) — 0.04 m/s
+PASS  [blob-b-three] O2 shoots from behind the FIBA 3-pt line — 7.16 m from the basket
+PASS  [blob-b-three] shot flight 0.9–1.3 s — 1.03 s
+PASS  [blob-b-three] O2 is open (nearest defender ≥ 1.8 m) — 1.97 m
+PASS  [blob-b-three] O2 screen 1.4333–2.2s is legal (stationary ≤ 0.15 m/s) — 0.000 m/s
+PASS  [blob-b-three] O4 screen 2.8667–3.5333s is legal (stationary ≤ 0.15 m/s) — 0.000 m/s
+PASS  [blob-b-three] claim "He screens for FIVE." — O2–X5 0.51 m (≤ 0.8)
+PASS  [blob-b-three] claim "But what if they protect the rim?" — moves 0.08 s after decide (≥ 0)
+PASS  [blob-b-three] claim "But what if they protect the rim? (X4 at the rim when O3 fakes)" — 1.34 m (≤ 1.6)
+PASS  [blob-b-three] claim "FOUR screens for TWO." — O4–X2 0.79 m (≤ 0.8)
+PASS  [blob-b-three] claim "Two escapes to the wing. Catch. Three." — 7.16 m
+PASS  [blob-b-three] claim "Catch. Three." — nearest defender 1.97 m (≥ 1.8)
+PASS  [blob-b-three] claim "screen, help, fake, screen the screener, pass, three" — 1.4333 < 1.5333 < 1.6667 < 2.1667 < 2.8667 < 3 < 3.7 < 4.3667 < 4.7 < 5.7333
+
+27/27 generic tactical checks passed
+rc=0
+== test-ball tactical/plays/blob-a-rim.json
+PASS  [blob-a-rim] ball path continuous: 3D speed ≤ 20 m/s at 240 Hz (no jump at any contact) — 12.3 m/s @2.842
+PASS  [blob-a-rim] ball never below the floor (centre ≥ radius − 1 cm) — 0.422 m @4.00
+PASS  [blob-a-rim] held ball: a hand on it the whole time (gap ≤ 0.10 m) — 0.057 m O5@2.85
+PASS  [blob-a-rim] layup O5: ball inside the rim at the make (≤ 0.15 m from centre) — 0.000 m, z 3.10
+PASS  [blob-a-rim] layup O5: ball leaves from the hands (≤ 0.30 m) — 0.035 m
+
+5/5 ball checks passed
+rc=0
+== test-ball tactical/plays/blob-b-three.json
+PASS  [blob-b-three] ball path continuous: 3D speed ≤ 20 m/s at 240 Hz (no jump at any contact) — 11.5 m/s @4.367
+PASS  [blob-b-three] ball never below the floor (centre ≥ radius − 1 cm) — 0.895 m @6.20
+FAIL  [blob-b-three] held ball: a hand on it the whole time (gap ≤ 0.10 m) — 0.104 m O2@4.67
+PASS  [blob-b-three] shot O2: ball inside the rim at the make (≤ 0.15 m from centre) — 0.000 m, z 3.10
+PASS  [blob-b-three] shot O2: ball leaves from the hands (≤ 0.30 m) — 0.078 m
+
+4/5 ball checks passed
+rc=1
+== test-motion tactical/plays/blob-a-rim.json
+PASS  [blob-a-rim] pose and ball are a pure function of play time (freeze / rewind / out-of-order frames) — max diff 0.0e+0 m
+PASS  [blob-a-rim] dribble: the hand is on the ball at the top of every bounce (≤ 0.12 m gap) — 0.000 m 
+PASS  [blob-a-rim] dribble ends with the ball back in the hand (no vertical jump ≥ 0.2 m) — 0.000 m 
+PASS  [blob-a-rim] pass O3→O5: leaves from the passer's hands and lands in the receiver's (≤ 0.45 m) — release 0.13 m, catch 0.02 m
+PASS  [blob-a-rim] O5 lands with bent knees after the layup (pelvis drops ≥ 6 cm below standing) — 13.0 cm
+PASS  [blob-a-rim] heads turn to the ball within the neck range (≤ 1.0 rad from the chest) — 0.98 rad
+PASS  [blob-a-rim] point guard and big read as different bodies (build ratio ≥ 1.15) — O5/O1 1.24 (builds 0.92,0.97,1,1.07,1.14,0.95,0.98,1,1.06,1.12)
+
+7/7 motion checks passed
+rc=0
+== test-motion tactical/plays/blob-b-three.json
+PASS  [blob-b-three] pose and ball are a pure function of play time (freeze / rewind / out-of-order frames) — max diff 0.0e+0 m
+PASS  [blob-b-three] dribble: the hand is on the ball at the top of every bounce (≤ 0.12 m gap) — 0.000 m 
+PASS  [blob-b-three] dribble ends with the ball back in the hand (no vertical jump ≥ 0.2 m) — 0.000 m 
+PASS  [blob-b-three] pass O3→O2: leaves from the passer's hands and lands in the receiver's (≤ 0.45 m) — release 0.11 m, catch 0.04 m
+PASS  [blob-b-three] O2 lands with bent knees after the shot (pelvis drops ≥ 6 cm below standing) — 13.7 cm
+PASS  [blob-b-three] heads turn to the ball within the neck range (≤ 1.0 rad from the chest) — 0.98 rad
+PASS  [blob-b-three] point guard and big read as different bodies (build ratio ≥ 1.15) — O5/O1 1.24 (builds 0.92,0.97,1,1.07,1.14,0.95,0.98,1,1.06,1.12)
+
+7/7 motion checks passed
+rc=0
+== qc-catch tactical/plays/blob-a-rim.json
+PASS  [blob-a-rim] ball never sinks into a trunk (<= 2 cm) — max 1.2 cm (O5@2.850)
+  catch O3->O5 @2.633 (chest): ball ahead of spine 0.37 m, hands ahead 0.32/0.36 m, hand-ball -0.02/-0.00 m, hands apart 0.21 m, max step 8.0 cm, dv 10.6 m/s, ball vs receiver after contact 1.0 m/s, phases OWNED_BY_PASSER:O3 > RELEASED > IN_FLIGHT > CONTACT:O5 > SECURED:O5 > GATHER:O5 > SHOT:O5
+PASS  [blob-a-rim] every catch in front of the trunk (hands not behind the body, ball >= 0.15 m ahead)
+PASS  [blob-a-rim] every catch with two hands on two different points of the ball
+PASS  [blob-a-rim] FLIGHT -> CONTACT -> SECURED continuous (step <= 10 cm / 1/120 s; after the contact the ball moves with the receiver, <= 3.5 m/s relative)
+PASS  [blob-a-rim] ball phase machine in order for every pass
+rc=0
+== qc-catch tactical/plays/blob-b-three.json
+PASS  [blob-b-three] ball never sinks into a trunk (<= 2 cm) — max 1.1 cm (O2@4.367)
+  catch O3->O2 @4.367 (overhead): ball ahead of spine 0.22 m, hands ahead 0.17/0.14 m, hand-ball -0.02/0.02 m, hands apart 0.18 m, max step 9.6 cm, dv 12.6 m/s, ball vs receiver after contact 0.7 m/s, phases OWNED_BY_PASSER:O3 > RELEASED > IN_FLIGHT > CONTACT:O2 > SECURED:O2 > GATHER:O2 > SHOT:O2
+PASS  [blob-b-three] every catch in front of the trunk (hands not behind the body, ball >= 0.15 m ahead)
+PASS  [blob-b-three] every catch with two hands on two different points of the ball
+PASS  [blob-b-three] FLIGHT -> CONTACT -> SECURED continuous (step <= 10 cm / 1/120 s; after the contact the ball moves with the receiver, <= 3.5 m/s relative)
+PASS  [blob-b-three] ball phase machine in order for every pass
+rc=0
+== qc-contact tactical/plays/blob-a-rim.json
+qc-contact blob-a-rim  0.00–4.00 s @ 30 fps
+player | slide max mm/frame (where) | planted frames | min clearance m (vs) | held gap max m | dribble contact gap max m
+O1 | 0.00 (-) | 139 | 0.050 (X1@0.57s) | - | -
+O2 | 0.00 (L@0.10s) | 116 | 0.020 (X2@0.70s) | - | -
+O3 | 0.00 (-) | 231 | 1.106 (X3@2.30s) | -0.021 (0.00s) | -
+O4 | 0.00 (-) | 193 | -0.014 (X4@2.27s) | - | -
+O5 | 0.00 (L@3.67s) | 120 | 0.010 (X5@0.10s) | -0.100 (2.63s) | -
+X1 | 0.00 (L@1.83s) | 153 | 0.050 (O1@0.57s) | - | -
+X2 | 0.00 (L@0.07s) | 128 | 0.020 (O2@0.70s) | - | -
+X3 | 0.00 (-) | 198 | 1.106 (O3@2.30s) | - | -
+X4 | 0.00 (-) | 164 | -0.014 (O4@2.27s) | - | -
+X5 | 0.00 (-) | 158 | 0.010 (O5@0.10s) | - | -
+PASS  planted feet do not slide (≤ 2 mm/frame) — 0.00 mm/frame
+PASS  no body interpenetration (clearance ≥ -0.02 m) — -0.014 m (O4-X4@2.27s)
+PASS  held ball stays in the hands (gap ≤ 0.06 m) — -0.021 m
+PASS  dribbling hand meets the ball every bounce (gap ≤ 0.08 m) — -1.000 m
+rc=0
+== qc-contact tactical/plays/blob-b-three.json
+qc-contact blob-b-three  0.00–6.20 s @ 30 fps
+player | slide max mm/frame (where) | planted frames | min clearance m (vs) | held gap max m | dribble contact gap max m
+O1 | 0.05 (R@3.57s) | 220 | 0.050 (X1@0.57s) | - | -
+O2 | 0.00 (L@0.10s) | 174 | -0.004 (X5@2.27s) | -0.010 (4.43s) | -
+O3 | 0.00 (R@4.80s) | 306 | 0.463 (X3@5.90s) | -0.021 (0.00s) | -
+O4 | 0.00 (-) | 234 | 0.022 (X2@3.13s) | - | -
+O5 | 0.00 (L@1.60s) | 237 | -0.002 (X5@2.07s) | - | -
+X1 | 0.00 (L@1.83s) | 247 | 0.050 (O1@0.57s) | - | -
+X2 | 0.00 (L@0.07s) | 162 | 0.020 (O2@0.70s) | - | -
+X3 | 0.00 (-) | 283 | 0.463 (O3@5.90s) | - | -
+X4 | 0.00 (-) | 251 | 0.043 (O4@1.67s) | - | -
+X5 | 0.00 (-) | 272 | -0.004 (O2@2.27s) | - | -
+PASS  planted feet do not slide (≤ 2 mm/frame) — 0.05 mm/frame
+PASS  no body interpenetration (clearance ≥ -0.02 m) — -0.004 m (O2-X5@2.27s)
+PASS  held ball stays in the hands (gap ≤ 0.06 m) — -0.010 m
+PASS  dribbling hand meets the ball every bounce (gap ≤ 0.08 m) — -1.000 m
+rc=0
+== qc-players3d tactical/plays/blob-a-rim.json
+players3d e2a-player-v1 — blob-a-rim: O1:C/rig O2:C/rig O3:C/rig O4:C/rig O5:C/rig X1:C/rig X2:C/rig X3:C/rig X4:C/rig X5:C/rig
+PASS  mesh ankle on the engine ankle (≤ 15 mm) — 0.0 mm (X4@2.97s)
+PASS  planted mesh foot does not slide (≤ 2 mm/frame) — 0.00 mm/frame (X2@0.83s)
+PASS  ball holder: mesh fingertips on the engine hand point (≤ 40 mm) — 0.0 mm (O5@2.83s)
+PASS  other players: fingertips vs engine hand (info, arms at full stretch clamp) — 0.0 mm (O5@2.60s)
+PASS  head never looks up (face pitch ≤ +15°, +35° while a shot is up) — 5.6° (O2@1.37s)
+PASS  head not buried (face pitch ≥ -35°) — -10.6° (X5@2.13s)
+PASS  same time, same bones (seek = playback) — 0.0e+0
+rc=0
+== qc-players3d tactical/plays/blob-b-three.json
+players3d e2a-player-v1 — blob-b-three: O1:C/rig O2:C/rig O3:C/rig O4:C/rig O5:C/rig X1:C/rig X2:C/rig X3:C/rig X4:C/rig X5:C/rig
+PASS  mesh ankle on the engine ankle (≤ 15 mm) — 0.0 mm (X4@1.90s)
+PASS  planted mesh foot does not slide (≤ 2 mm/frame) — 0.43 mm/frame (X1@5.47s)
+PASS  ball holder: mesh fingertips on the engine hand point (≤ 40 mm) — 17.9 mm (O2@4.67s)
+PASS  other players: fingertips vs engine hand (info, arms at full stretch clamp) — 9.6 mm (O2@5.20s)
+PASS  head never looks up (face pitch ≤ +15°, +35° while a shot is up) — 5.6° (O2@1.37s)
+PASS  head not buried (face pitch ≥ -35°) — -10.4° (X5@2.10s)
+PASS  same time, same bones (seek = playback) — 0.0e+0
+rc=0
+== qc-handoff tactical/plays/blob-a-rim.json
+PASS  [blob-a-rim] no fingers inside someone else's ball (non-holder fingertip >= 0.111 m from the ball centre) — 0.200 m (O3@2.28s)
+PASS  [blob-a-rim] one owner O3 from 0.00 to 2.23 s (no transfer during the fake) — O3 throughout
+rc=0
+== qc-handoff tactical/plays/blob-b-three.json
+PASS  [blob-b-three] no fingers inside someone else's ball (non-holder fingertip >= 0.111 m from the ball centre) — 0.217 m (O3@3.72s)
+PASS  [blob-b-three] one owner O3 from 0.00 to 3.67 s (no transfer during the fake) — O3 throughout
+rc=0

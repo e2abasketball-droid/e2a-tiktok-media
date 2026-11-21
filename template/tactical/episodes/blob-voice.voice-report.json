@@ -1,0 +1,144 @@
+{
+ "source": "public/tactical/blob/voice-raw.mp3",
+ "source_sec": 34.72,
+ "preroll": 0.1,
+ "output": "public/tactical/blob/voice.wav",
+ "output_sec": 38.8,
+ "inserted_total_sec": 3.98,
+ "last_word_end": 38.88,
+ "gaps": [
+  {
+   "after": "is HE open?",
+   "natural_silence": [
+    3.37,
+    3.86
+   ],
+   "natural_sec": 0.49,
+   "target_sec": 0.75,
+   "inserted_sec": 0.26,
+   "cut_at_source": 3.585,
+   "why": "hook -> rewind to the box"
+  },
+  {
+   "after": "watches the big.",
+   "natural_silence": [
+    6.59,
+    7.07
+   ],
+   "natural_sec": 0.48,
+   "target_sec": 0.4,
+   "inserted_sec": 0.0,
+   "cut_at_source": 6.945,
+   "why": "box freeze, O5 pulse"
+  },
+  {
+   "after": "screens for FIVE.",
+   "natural_silence": [
+    9.9,
+    10.5
+   ],
+   "natural_sec": 0.6,
+   "target_sec": 0.85,
+   "inserted_sec": 0.25,
+   "cut_at_source": 10.095,
+   "why": "O5's cut under the screen"
+  },
+  {
+   "after": "easy layup.",
+   "natural_silence": [
+    12.82,
+    13.42
+   ],
+   "natural_sec": 0.6,
+   "target_sec": 1.25,
+   "inserted_sec": 0.65,
+   "cut_at_source": 12.985,
+   "why": "layup to the net (A)"
+  },
+  {
+   "after": "protect the rim?",
+   "natural_silence": [
+    14.96,
+    15.52
+   ],
+   "natural_sec": 0.56,
+   "target_sec": 1.15,
+   "inserted_sec": 0.59,
+   "cut_at_source": 15.365,
+   "why": "X4's help step and NO PASS (B)"
+  },
+  {
+   "after": "isn't finished.",
+   "natural_silence": [
+    17.05,
+    17.62
+   ],
+   "natural_sec": 0.57,
+   "target_sec": 0.8,
+   "inserted_sec": 0.23,
+   "cut_at_source": 17.455,
+   "why": "O2 leaves screen 1, O4 moves"
+  },
+  {
+   "after": "Screen\u2026 the screener.",
+   "natural_silence": [
+    21.17,
+    21.7
+   ],
+   "natural_sec": 0.53,
+   "target_sec": 1.1,
+   "inserted_sec": 0.57,
+   "cut_at_source": 21.305,
+   "why": "O2 curls off O4"
+  },
+  {
+   "after": "to the wing.",
+   "natural_silence": [
+    22.83,
+    23.19
+   ],
+   "natural_sec": 0.36,
+   "target_sec": 0.52,
+   "inserted_sec": 0.16,
+   "cut_at_source": 23.055,
+   "why": "the pass in flight"
+  },
+  {
+   "after": "Catch. Three.",
+   "natural_silence": [
+    24.38,
+    24.87
+   ],
+   "natural_sec": 0.49,
+   "target_sec": 1.25,
+   "inserted_sec": 0.76,
+   "cut_at_source": 24.665,
+   "why": "the three to the net (B)"
+  },
+  {
+   "after": "defensive choice.",
+   "natural_silence": [
+    28.25,
+    28.72
+   ],
+   "natural_sec": 0.47,
+   "target_sec": 0.8,
+   "inserted_sec": 0.33,
+   "cut_at_source": 28.545,
+   "why": "split X4 STAYS / X4 HELPS"
+  },
+  {
+   "after": "onto TWO?",
+   "natural_silence": [
+    32.07,
+    32.57
+   ],
+   "natural_sec": 0.5,
+   "target_sec": 0.68,
+   "inserted_sec": 0.18,
+   "cut_at_source": 32.325,
+   "why": "RIM / SWITCH arrows"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}

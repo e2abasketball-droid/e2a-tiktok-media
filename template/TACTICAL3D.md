@@ -137,3 +137,19 @@ Todo es opcional y se activa por jugada o por episodio. Lo que no lo usa no camb
 - **Plano de pase:** empieza en la recogida, mantiene el mismo ángulo hasta la suelta + 6 fotogramas y queda en el mismo lado de la línea que el plano anterior y el siguiente. La estela nace en la suelta y se apaga ≥ 6 fotogramas antes de las manos del receptor.
 - **Relleno de voz:** nunca `np.resize()` de un trozo de room tone. Se repite cada 0,217 s y suena como clics. El final de la toma se funde 0,15 s y después va silencio. La música lleva la cola.
 - **Regresión «balón dentro de un cuerpo» en la recogida del skip:** `tactical/regress/regress-skip-ball-in-body.json`, con X4 aparcado en el bolsillo de O1. Lo ejecuta `scripts/regress-catch.sh`.
+
+## BLOB Box Screen-the-Screener (2026-11-20)
+- **Saque de fondo validado:** `play.inbound = {player, release, limit, margin}`.
+  - `test-play` añade tres comprobaciones:
+    - el sacador sigue fuera de pista (centro y ≤ −0,2 m) hasta la suelta;
+    - la suelta llega antes de `limit − margin` (5 − 0,5 s);
+    - el primer pase sale del sacador en la suelta.
+  - Al sacador se le permite y ≥ −1,5 m.
+- **Tabla de estado cada 0,1 s:** `node --experimental-strip-types scripts/state-table.mts <play.json> [--mirror]`. Escribe un CSV con la x/y de los 10 jugadores y el dueño y la posición del balón. `--mirror` usa los ejes del brief (x de la pista = −x del brief).
+  - Las tablas de BLOB están en `tactical/reports/blob-2026-11-20/`.
+- **Ropa cortada por isolíneas:** `tools/blender/build_player.py --cloth-cut iso`, valor por defecto.
+  - Los bordes de camiseta y pantalón, y la piel oculta debajo, se recortan sobre una isolínea de un campo suavizado (Laplaciano del grafo + plano del dobladillo), no por caras enteras. Así desaparecen los dientes de sierra en sisas, tirantes y dobladillos.
+  - La camiseta cubre la cintura del pantalón, lo que quita las motas rojas del ribete.
+  - `--cloth-cut legacy` reconstruye el glb anterior byte a byte.
+- **Lección:** `posAt` es un spline. Un cambio brusco de rumbo entre dos waypoints sobrepasa la trayectoria y provoca solapes de cuerpos. Se arregla con anclas intermedias, y después hay que repetir `qc-contact` sobre la jugada FINAL antes de renderizar.
+  - En BLOB, el solape O2–X5 al iniciar el rizo (curl) de O2 en B (−0,078 m) solo apareció al repetir el QC tras un cambio tardío.

@@ -1,0 +1,1257 @@
+{
+ "id": "blob-box-screen-the-screener-v1",
+ "title": "BLOB Box Screen-the-Screener",
+ "fps": 30,
+ "voice": "tactical/blob/voice.wav",
+ "voiceMix": "tactical/blob/voice.mix.wav",
+ "preroll": 0.1,
+ "tail": 1.12,
+ "plays": {
+  "A": "blob-a-rim",
+  "B": "blob-b-three"
+ },
+ "shots": [
+  {
+   "id": "01-hook",
+   "name": "HOOK (3/4 high, B 2.45 -> 2.95): X4 shuts the rim, ball still with O3, O2 (gold ring, focus) leaves screen 1 toward O4",
+   "at": 0,
+   "play": "B",
+   "branch": "b",
+   "remap": [
+    [
+     0,
+     2.45
+    ],
+    [
+     "so-0.06",
+     2.95
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X4",
+        "O3"
+       ],
+       "z": 0.1,
+       "window": 0.5
+      },
+      "dist": 10.2,
+      "pitch": 57,
+      "yaw": -40,
+      "fov": 40
+     }
+    },
+    {
+     "at": "so-0.06",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X4",
+        "O3"
+       ],
+       "z": 0.1,
+       "window": 0.5
+      },
+      "dist": 9.6,
+      "pitch": 57,
+      "yaw": -34,
+      "fov": 40
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "spot",
+     "player": "X4",
+     "r": 0.5,
+     "color": "#E5483A",
+     "strength": 0.55,
+     "from": 0.2,
+     "to": "so-0.06"
+    },
+    {
+     "type": "ring",
+     "player": "O2",
+     "color": "#E3BE68",
+     "size": 0.75,
+     "pulse": true,
+     "from": 0.7,
+     "to": "so-0.06"
+    }
+   ],
+   "screen": [
+    {
+     "type": "focus",
+     "player": "O2",
+     "r": 0.9,
+     "strength": 0.35,
+     "from": 0.7,
+     "to": "so-0.06"
+    }
+   ]
+  },
+  {
+   "id": "02-how",
+   "name": "HOW IS HE OPEN (TACTICAL_3Q_HIGH, B 2.60 -> 4.15 + freeze before the catch): O2 gold ring, X2 ghost where he should be",
+   "at": "so-0.06",
+   "play": "B",
+   "branch": "b",
+   "remap": [
+    [
+     0,
+     2.95
+    ],
+    [
+     "open?>",
+     4.2
+    ],
+    [
+     "On-0.06",
+     4.2
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.9,
+       4.7,
+       0.6
+      ],
+      "dist": 12.0,
+      "pitch": 55,
+      "yaw": -30,
+      "fov": 40
+     }
+    },
+    {
+     "at": "open?>",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.8,
+       5.8,
+       0.6
+      ],
+      "dist": 11.5,
+      "pitch": 56,
+      "yaw": -26,
+      "fov": 40
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O2",
+     "color": "#E3BE68",
+     "size": 0.6,
+     "from": 0.15,
+     "to": "On-0.06"
+    },
+    {
+     "type": "ghost",
+     "player": "X2",
+     "t": 4.2,
+     "at": [
+      -4.45,
+      5.85
+     ],
+     "color": "#C8CDD6",
+     "from": "HE",
+     "to": "On-0.06"
+    }
+   ],
+   "screen": [
+    {
+     "type": "freeze",
+     "from": "open?>",
+     "to": "On-0.06"
+    }
+   ]
+  },
+  {
+   "id": "03-box",
+   "name": "BOX (rewind, courtside -> 3/4 high, A 0.0 freeze, then 0.0 -> 0.5): four in the box, O3 behind the baseline, O5 highlighted",
+   "at": "On-0.06",
+   "play": "A",
+   "branch": "a",
+   "remap": [
+    [
+     0,
+     4.2,
+     "inOut"
+    ],
+    [
+     0.35,
+     0.0
+    ],
+    [
+     "the big.>",
+     0.0
+    ],
+    [
+     "But watch-0.1",
+     0.5
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.4,
+       2.4,
+       0.9
+      ],
+      "dist": 9.0,
+      "pitch": 72,
+      "yaw": -40,
+      "fov": 40
+     }
+    },
+    {
+     "at": 1.4,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       2.5,
+       0.6
+      ],
+      "dist": 12.5,
+      "pitch": 54,
+      "yaw": -38,
+      "fov": 40
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "floorText",
+     "text": "BOX",
+     "at": [
+      0.0,
+      4.25
+     ],
+     "size": 0.9,
+     "color": "#E3BE68",
+     "plate": false,
+     "yaw": -38,
+     "from": 0.6,
+     "to": "everyone"
+    },
+    {
+     "type": "spot",
+     "player": "O5",
+     "r": 0.45,
+     "color": "#E3BE68",
+     "strength": 0.6,
+     "from": "everyone",
+     "to": "But watch-0.1"
+    },
+    {
+     "type": "floorText",
+     "text": "INBOUNDER",
+     "at": [
+      -3.5,
+      -1.55
+     ],
+     "size": 0.42,
+     "color": "#FFFFFF",
+     "plate": true,
+     "yaw": -38,
+     "from": "baseline",
+     "to": "big."
+    }
+   ],
+   "screen": [
+    {
+     "type": "rewind",
+     "from": 0,
+     "to": 0.35
+    }
+   ]
+  },
+  {
+   "id": "04-screen1",
+   "name": "SCREEN 1 (lateral-high -> diagonal, A 0.5 -> 1.85): O2 from the right elbow, plants on X5, O5 waits then cuts under",
+   "at": "But watch-0.1",
+   "play": "A",
+   "branch": "a",
+   "remap": [
+    [
+     0,
+     0.5
+    ],
+    [
+     "screens",
+     1.4
+    ],
+    [
+     "FIVE.>",
+     1.72
+    ],
+    [
+     "If-0.12",
+     1.85
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.5,
+       3.4,
+       0.8
+      ],
+      "dist": 9.0,
+      "pitch": 62,
+      "yaw": -25,
+      "fov": 40
+     }
+    },
+    {
+     "at": "He screens",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.5,
+       3.4,
+       0.8
+      ],
+      "dist": 9.0,
+      "pitch": 62,
+      "yaw": -25,
+      "fov": 40
+     }
+    },
+    {
+     "at": "FIVE.>",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.6,
+       2.6,
+       0.8
+      ],
+      "dist": 8.6,
+      "pitch": 64,
+      "yaw": -50,
+      "fov": 40
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 0.25,
+     "t1": 1.43,
+     "width": 0.09,
+     "draw": 0.8,
+     "color": "#E3BE68",
+     "from": 0.1,
+     "to": "FIVE."
+    },
+    {
+     "type": "print",
+     "player": "O2",
+     "n": 2,
+     "color": "#E3BE68",
+     "from": "screens",
+     "to": "If-0.12"
+    },
+    {
+     "type": "route",
+     "player": "O5",
+     "t0": 1.5,
+     "t1": 2.63,
+     "width": 0.08,
+     "draw": 0.5,
+     "color": "#FFFFFF",
+     "dashed": true,
+     "from": "FIVE.",
+     "to": "If-0.12"
+    }
+   ],
+   "screen": [
+    {
+     "type": "pin",
+     "player": "O2",
+     "text": "2",
+     "tone": "gold",
+     "from": "watch number",
+     "to": "He screens"
+    }
+   ]
+  },
+  {
+   "id": "05-layup",
+   "name": "READ 1 (A 1.85 -> 3.75): X4 high with O4, X5 trailing; O3 -> O5, catch, layup, net",
+   "at": "If-0.12",
+   "play": "A",
+   "branch": "a",
+   "remap": [
+    [
+     0,
+     1.85
+    ],
+    [
+     "home…>",
+     "catch"
+    ],
+    [
+     "easy layup.>+0.05",
+     "make"
+    ],
+    [
+     "But what-0.1",
+     3.75
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.2,
+       2.2,
+       1.0
+      ],
+      "dist": 8.0,
+      "pitch": 74,
+      "yaw": -12,
+      "fov": 40
+     }
+    },
+    {
+     "at": "easy",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.2,
+       2.2,
+       1.0
+      ],
+      "dist": 8.0,
+      "pitch": 74,
+      "yaw": -12,
+      "fov": 40
+     }
+    },
+    {
+     "at": "easy layup.>",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.1,
+       1.9,
+       1.6
+      ],
+      "dist": 7.6,
+      "pitch": 76,
+      "yaw": -16,
+      "fov": 40
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ballPath",
+     "src": "O3",
+     "dst": "O5",
+     "draw": 0.3,
+     "color": "#E3BE68",
+     "from": 0.4,
+     "to": "home…>"
+    }
+   ],
+   "screen": [
+    {
+     "type": "stamp",
+     "text": "READ 1: RIM",
+     "tone": "gold",
+     "y": 300,
+     "from": "easy layup.>+0.12",
+     "to": "But what-0.1"
+    }
+   ]
+  },
+  {
+   "id": "06-help",
+   "name": "READ 2 SAME SET (rewind, B 1.45 -> 2.30): X4 drops to the rim, HELP, O3 fakes, NO PASS",
+   "at": "But what-0.1",
+   "play": "B",
+   "branch": "b",
+   "remap": [
+    [
+     0,
+     3.75,
+     "inOut"
+    ],
+    [
+     0.3,
+     1.45
+    ],
+    [
+     "rim?>",
+     2.17
+    ],
+    [
+     "The first-0.1",
+     2.3
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       1.9,
+       0.9
+      ],
+      "dist": 7.6,
+      "pitch": 76,
+      "yaw": -40,
+      "fov": 40
+     }
+    },
+    {
+     "at": "The first-0.1",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.4,
+       2.0,
+       0.9
+      ],
+      "dist": 7.0,
+      "pitch": 76,
+      "yaw": -36,
+      "fov": 40
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "spot",
+     "player": "X4",
+     "r": 0.5,
+     "color": "#E5483A",
+     "strength": 0.6,
+     "from": 0.6,
+     "to": "The first-0.1"
+    },
+    {
+     "type": "floorText",
+     "text": "HELP",
+     "at": [
+      -0.2,
+      2.9
+     ],
+     "size": 0.45,
+     "color": "#E5483A",
+     "plate": true,
+     "yaw": -38,
+     "from": "protect",
+     "to": "The first-0.1"
+    },
+    {
+     "type": "passLane",
+     "src": "O3",
+     "dst": "O5",
+     "color": "#E5483A",
+     "from": "rim?",
+     "to": "rim?>+0.55"
+    }
+   ],
+   "screen": [
+    {
+     "type": "rewind",
+     "from": 0,
+     "to": 0.3
+    },
+    {
+     "type": "stamp",
+     "text": "NO PASS",
+     "tone": "white",
+     "y": 300,
+     "from": "rim?",
+     "to": "rim?>+0.55"
+    }
+   ]
+  },
+  {
+   "id": "07-screener",
+   "name": "THE SCREENER ISN'T DONE (O2 detail -> 3/4 wide, B 1.95 -> 2.75): O2 leaves screen 1, X2 trails, O4 leaves the block",
+   "at": "The first-0.1",
+   "play": "B",
+   "branch": "b",
+   "remap": [
+    [
+     0,
+     1.95
+    ],
+    [
+     "finished.>",
+     2.62
+    ],
+    [
+     "FOUR-0.1",
+     2.75
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       1.2,
+       2.95,
+       0.9
+      ],
+      "dist": 5.8,
+      "pitch": 64,
+      "yaw": 35,
+      "fov": 40
+     }
+    },
+    {
+     "at": 0.5,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       1.2,
+       2.95,
+       0.9
+      ],
+      "dist": 5.8,
+      "pitch": 64,
+      "yaw": 35,
+      "fov": 40
+     }
+    },
+    {
+     "at": "finished.>",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.2,
+       3.9,
+       0.6
+      ],
+      "dist": 10.5,
+      "pitch": 58,
+      "yaw": 5,
+      "fov": 40
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "O2",
+     "color": "#E3BE68",
+     "size": 0.55,
+     "from": 0.1,
+     "to": "FOUR-0.1"
+    }
+   ],
+   "screen": [
+    {
+     "type": "stamp",
+     "text": "NOW WATCH 2",
+     "tone": "gold",
+     "y": 300,
+     "from": "isn't",
+     "to": "FOUR-0.1"
+    }
+   ]
+  },
+  {
+   "id": "08-screen2",
+   "name": "SCREEN THE SCREENER (3/4 moderate, B 2.75 -> 3.75, freeze at X2's contact 3.0): O4 down-screens X2, O2 curls over the top",
+   "at": "FOUR-0.1",
+   "play": "B",
+   "branch": "b",
+   "remap": [
+    [
+     0,
+     2.75
+    ],
+    [
+     "for TWO.>",
+     3.0
+    ],
+    [
+     "the screener.",
+     3.0
+    ],
+    [
+     "Two escapes-0.1",
+     3.75
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       4.4,
+       0.6
+      ],
+      "dist": 10.0,
+      "pitch": 58,
+      "yaw": -45,
+      "fov": 40
+     }
+    },
+    {
+     "at": "the screener.",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       4.4,
+       0.6
+      ],
+      "dist": 10.0,
+      "pitch": 58,
+      "yaw": -45,
+      "fov": 40
+     }
+    },
+    {
+     "at": "Two escapes-0.1",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.8,
+       4.9,
+       0.6
+      ],
+      "dist": 10.5,
+      "pitch": 58,
+      "yaw": -35,
+      "fov": 40
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "color": "#E5483A",
+     "size": 0.5,
+     "from": "for TWO.",
+     "to": "Two escapes-0.1"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 2.2,
+     "t1": 4.33,
+     "width": 0.09,
+     "draw": 0.6,
+     "color": "#E3BE68",
+     "from": "Screen…",
+     "to": "Two escapes-0.1"
+    }
+   ],
+   "screen": [
+    {
+     "type": "freeze",
+     "from": "for TWO.>",
+     "to": "the screener."
+    },
+    {
+     "type": "stamp",
+     "text": "1ST: O2 → O5",
+     "tone": "white",
+     "y": 300,
+     "from": 0.15,
+     "to": "Screen…"
+    },
+    {
+     "type": "stamp",
+     "text": "2ND: O4 → O2",
+     "tone": "gold",
+     "y": 300,
+     "from": "Screen…",
+     "to": "Two escapes-0.1"
+    }
+   ]
+  },
+  {
+   "id": "09-three",
+   "name": "READ 2 PAYOFF (SHOT_FOLLOW -> RIM_PAYOFF, B 3.70 -> 5.95): O3 -> O2, two-hand catch, feet behind the arc, three, net",
+   "at": "Two escapes-0.1",
+   "play": "B",
+   "branch": "b",
+   "remap": [
+    [
+     0,
+     3.7
+    ],
+    [
+     "Catch.",
+     "catch"
+    ],
+    [
+     "Three.",
+     "release"
+    ],
+    [
+     "Three.>+0.55",
+     "make"
+    ],
+    [
+     "Same box-0.1",
+     5.95
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -4.6,
+       5.2,
+       1.1
+      ],
+      "dist": 7.5,
+      "pitch": 70,
+      "yaw": 10,
+      "fov": 40
+     }
+    },
+    {
+     "at": "Three.+0.12",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -4.6,
+       5.2,
+       1.1
+      ],
+      "dist": 7.5,
+      "pitch": 70,
+      "yaw": 10,
+      "fov": 40
+     }
+    },
+    {
+     "at": "Three.>+0.05",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.8,
+       2.4,
+       2.5
+      ],
+      "dist": 7.0,
+      "pitch": 78,
+      "yaw": 25,
+      "fov": 40
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ballPath",
+     "src": "O3",
+     "dst": "O2",
+     "draw": 0.3,
+     "color": "#E3BE68",
+     "from": 0.2,
+     "to": "Catch."
+    },
+    {
+     "type": "spot",
+     "player": "O2",
+     "r": 0.45,
+     "color": "#E3BE68",
+     "strength": 0.5,
+     "from": "Catch.",
+     "to": "Three.+0.2"
+    }
+   ],
+   "screen": [
+    {
+     "type": "stamp",
+     "text": "READ 2: THREE",
+     "tone": "gold",
+     "y": 300,
+     "from": "Three.>+0.62",
+     "to": "Same box-0.1"
+    }
+   ]
+  },
+  {
+   "id": "10a-stays",
+   "name": "TWO READS (TAC, A 1.30 -> 2.45): X4 STAYS",
+   "at": "Same box-0.1",
+   "play": "A",
+   "branch": "a",
+   "remap": [
+    [
+     0,
+     1.3
+    ],
+    [
+     "Same action.-0.1",
+     2.45
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.5,
+       3.2,
+       0.6
+      ],
+      "dist": 12.5,
+      "pitch": 52,
+      "yaw": -32,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "route",
+     "player": "X4",
+     "t0": 1.3,
+     "t1": 2.6,
+     "width": 0.08,
+     "draw": 0.4,
+     "color": "#E5483A",
+     "from": 0.2,
+     "to": "Same action.-0.1"
+    }
+   ],
+   "screen": [
+    {
+     "type": "stamp",
+     "text": "X4 STAYS",
+     "tone": "white",
+     "y": 300,
+     "from": 0.05,
+     "to": "Same action.-0.1"
+    }
+   ]
+  },
+  {
+   "id": "10b-helps",
+   "name": "TWO READS (TAC, B 1.30 -> 2.75): X4 HELPS",
+   "at": "Same action.-0.1",
+   "play": "B",
+   "branch": "b",
+   "remap": [
+    [
+     0,
+     1.3
+    ],
+    [
+     "You're-0.1",
+     2.75
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.5,
+       3.2,
+       0.6
+      ],
+      "dist": 12.5,
+      "pitch": 52,
+      "yaw": -32,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "route",
+     "player": "X4",
+     "t0": 1.3,
+     "t1": 2.4,
+     "width": 0.08,
+     "draw": 0.4,
+     "color": "#E5483A",
+     "from": 0.2,
+     "to": "You're-0.1"
+    },
+    {
+     "type": "route",
+     "player": "O4",
+     "t0": 1.9,
+     "t1": 2.9,
+     "width": 0.08,
+     "draw": 0.4,
+     "color": "#E3BE68",
+     "from": 0.6,
+     "to": "You're-0.1"
+    }
+   ],
+   "screen": [
+    {
+     "type": "stamp",
+     "text": "X4 HELPS",
+     "tone": "gold",
+     "y": 300,
+     "from": 0.05,
+     "to": "You're-0.1"
+    }
+   ]
+  },
+  {
+   "id": "11-call",
+   "name": "YOUR CALL (freeze B 1.70, slow orbit back to the hook camera): RIM / SWITCH floor arrows, logo",
+   "at": "You're-0.1",
+   "play": "B",
+   "branch": "b",
+   "remap": [
+    [
+     0,
+     1.7
+    ],
+    [
+     "@end",
+     1.75
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.2,
+       2.5,
+       1.0
+      ],
+      "dist": 9.5,
+      "pitch": 70,
+      "yaw": -30,
+      "fov": 40
+     }
+    },
+    {
+     "at": "RIM or SWITCH.",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.2,
+       2.5,
+       1.0
+      ],
+      "dist": 9.5,
+      "pitch": 70,
+      "yaw": -30,
+      "fov": 40
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2",
+        "X4",
+        "O3"
+       ],
+       "z": 0.1,
+       "window": 0.5
+      },
+      "dist": 10.2,
+      "pitch": 57,
+      "yaw": -40,
+      "fov": 40
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "route",
+     "player": "X4",
+     "pts": [
+      [
+       -1.88,
+       2.45
+      ],
+      [
+       -1.45,
+       2.25
+      ],
+      [
+       -1.0,
+       2.05
+      ]
+     ],
+     "t0": 0,
+     "t1": 1,
+     "width": 0.11,
+     "draw": 0.5,
+     "color": "#E5483A",
+     "from": "Protect#2",
+     "to": "@end-0.6"
+    },
+    {
+     "type": "route",
+     "player": "X4",
+     "pts": [
+      [
+       -1.88,
+       2.45
+      ],
+      [
+       -1.6,
+       3.6
+      ],
+      [
+       -1.2,
+       4.6
+      ]
+     ],
+     "t0": 0,
+     "t1": 1,
+     "width": 0.15,
+     "draw": 0.5,
+     "color": "#E3BE68",
+     "from": "switch onto",
+     "to": "@end-0.6"
+    },
+    {
+     "type": "floorText",
+     "text": "RIM",
+     "at": [
+      -0.65,
+      1.95
+     ],
+     "size": 0.5,
+     "color": "#E5483A",
+     "plate": true,
+     "yaw": -30,
+     "from": "rim#2",
+     "to": "@end-0.6"
+    }
+   ],
+   "screen": [
+    {
+     "type": "stamp",
+     "text": "SWITCH ONTO 2?",
+     "tone": "gold",
+     "y": 300,
+     "from": "switch onto",
+     "to": "@end-0.6"
+    },
+    {
+     "type": "logo",
+     "from": "SWITCH#2>",
+     "to": "@end"
+    }
+   ]
+  }
+ ],
+ "branches": {
+  "a": "A",
+  "b": "B"
+ },
+ "env": "academy",
+ "pinV2": true,
+ "autoSfx": false,
+ "keywords": [
+  "HE",
+  "TWO",
+  "FIVE",
+  "FOUR",
+  "easy layup",
+  "protect the rim",
+  "screener",
+  "Screen… the screener",
+  "Three",
+  "X-four",
+  "RIM",
+  "SWITCH"
+ ],
+ "subtitleY": 1350,
+ "subtitleYAt": [
+  [
+   0,
+   "On-0.06",
+   270
+  ]
+ ],
+ "subtitleGroups": [
+  4,
+  5,
+  4,
+  4,
+  4,
+  4,
+  5,
+  2,
+  3,
+  4,
+  5,
+  4,
+  1,
+  2,
+  5,
+  1,
+  1,
+  2,
+  2,
+  3,
+  2,
+  3,
+  4,
+  1,
+  3
+ ],
+ "subtitleBlock": true,
+ "music": {
+  "src": "tactical/blob/music.mp3",
+  "volume": 1
+ }
+}

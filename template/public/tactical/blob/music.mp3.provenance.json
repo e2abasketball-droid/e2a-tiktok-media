@@ -1,0 +1,44 @@
+{
+ "licence_key": "music/synth/tactical",
+ "source": "E2A in-house synth engine music/e2a_music.py --story tactical --duration 40 --drop-at 14.5 --payoff-at 27.0 --no-sfx --soft-edges --history '' (no samples, no ball sounds, no opening impact; the engine plan lists end_hit 39.0 but --soft-edges suppresses it: measured on the final master, 39.0-40.0 s is a fading music tail, -38.6/-46.2 dBFS RMS, no transient), track drive_a 126 bpm",
+ "sha256": "b2cb9fef77ca0ff580342c51075050c41cfc2352f673e46cfba913fceeca3f65",
+ "engine_plan": {
+  "track": "drive_a",
+  "style": "drive",
+  "bpm": 126,
+  "key": 5,
+  "story": "tactical",
+  "drop": 14.5,
+  "payoff": 27.0,
+  "end_hit": 39.0,
+  "sections": [
+   [
+    "intro",
+    -0.74,
+    10.69
+   ],
+   [
+    "build",
+    10.69,
+    14.5
+   ],
+   [
+    "drop",
+    14.5,
+    24.02
+   ],
+   [
+    "break",
+    24.02,
+    27.83
+   ],
+   [
+    "drop2",
+    27.83,
+    41.17
+   ]
+  ],
+  "duration": 40.0,
+  "out": "public/tactical/blob/music.mp3"
+ }
+}

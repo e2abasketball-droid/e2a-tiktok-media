@@ -1,0 +1,962 @@
+{
+ "id": "blob-b-three",
+ "title": "BLOB box (B): X4 protects the rim, O3 fakes, O4 screens the screener, O3 -> O2, three",
+ "duration": 6.2,
+ "concept": "blob-box-screen-the-screener",
+ "source": "E2A didactic construction (owner master brief 'BLOB Box Screen-the-Screener', sec. 04-06, 11, 12) on: FIBA WABC Coaching Manual level 2 (box set out of bounds: screen for the inside cutter, the screener becomes the second option; 'screen the screener'); FIBA Official Basketball Rules 2026 arts. 17 (throw-in, 5 seconds, the thrower out of bounds) and 33.7 (screening: legal when stationary, both feet on the floor).",
+ "squareUp": true,
+ "catchV2": 2,
+ "handBallClear": true,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Safety: left elbow, lifts to the left wing (-4.7, 7.2); never cuts, never a third finish"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Right elbow: FIRST screener (cross screen on X5 for O5), then the shooter off O4's down screen (B)"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Inbounder out of bounds right of the basket (3.50, -0.85): passes to O5 (A) / fakes O5, passes to O2 (B)"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Right block: SECOND screener, down screen on X2 (B); lifts slightly in A"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Left block: cuts under O2's screen to the rim; layup (A) / occupies the short paint (B)"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On O1: stays with the safety",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "On O2: trails him to the first screen on the inside, is screened by O4 (B), late closeout",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "On the inbounder: in the court, hands active; bites on the pass fake (B)",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "On O4 = THE DEFENDER WHO DECIDES: stays home (A) / drops to protect the rim at 1.65 s (B)",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "On O5: basket side, meets O2's screen, trails O5 under it",
+   "guards": "O5"
+  }
+ ],
+ "tracks": {
+  "O3": [
+   [
+    0.0,
+    -3.5,
+    -0.85
+   ],
+   [
+    3.9333,
+    -3.5,
+    -0.85
+   ],
+   [
+    4.3333,
+    -3.42,
+    -0.45
+   ],
+   [
+    5.0,
+    -3.25,
+    0.3
+   ],
+   [
+    6.2,
+    -3.2,
+    0.45
+   ]
+  ],
+  "O2": [
+   [
+    0.0,
+    -2.15,
+    5.55
+   ],
+   [
+    0.2667,
+    -2.08,
+    5.58
+   ],
+   [
+    0.5333,
+    -1.35,
+    5.22
+   ],
+   [
+    0.8,
+    -0.45,
+    4.52
+   ],
+   [
+    1.0667,
+    0.42,
+    3.68
+   ],
+   [
+    1.2667,
+    0.98,
+    3.02
+   ],
+   [
+    1.4333,
+    1.3,
+    2.65
+   ],
+   [
+    1.5333,
+    1.35,
+    2.6
+   ],
+   [
+    2.2,
+    1.35,
+    2.6
+   ],
+   [
+    2.3333,
+    1.31,
+    2.71
+   ],
+   [
+    2.5333,
+    1.06,
+    3.2
+   ],
+   [
+    2.7333,
+    0.62,
+    3.88
+   ],
+   [
+    3.0,
+    -0.2,
+    4.8
+   ],
+   [
+    3.2667,
+    -1.3,
+    5.32
+   ],
+   [
+    3.5333,
+    -2.65,
+    5.74
+   ],
+   [
+    3.8,
+    -3.85,
+    6.12
+   ],
+   [
+    4.0,
+    -4.55,
+    6.33
+   ],
+   [
+    4.2,
+    -5.02,
+    6.45
+   ],
+   [
+    4.3667,
+    -5.2,
+    6.5
+   ],
+   [
+    6.2,
+    -5.2,
+    6.5
+   ]
+  ],
+  "O5": [
+   [
+    0.0,
+    2.2,
+    2.85
+   ],
+   [
+    0.6667,
+    2.25,
+    2.87
+   ],
+   [
+    1.1333,
+    2.31,
+    2.91
+   ],
+   [
+    1.3333,
+    2.38,
+    2.92
+   ],
+   [
+    1.5333,
+    2.5,
+    2.84
+   ],
+   [
+    1.6667,
+    2.54,
+    2.55
+   ],
+   [
+    1.8667,
+    2.38,
+    2.03
+   ],
+   [
+    2.0667,
+    1.7,
+    1.86
+   ],
+   [
+    2.2667,
+    0.85,
+    1.95
+   ],
+   [
+    2.4667,
+    0.22,
+    2.0
+   ],
+   [
+    2.6667,
+    -0.0,
+    2.05
+   ],
+   [
+    3.6667,
+    -0.02,
+    2.08
+   ],
+   [
+    5.0,
+    0.05,
+    2.1
+   ],
+   [
+    6.2,
+    0.1,
+    2.15
+   ]
+  ],
+  "O4": [
+   [
+    0.0,
+    -2.35,
+    2.85
+   ],
+   [
+    1.3333,
+    -2.36,
+    2.88
+   ],
+   [
+    1.9,
+    -2.35,
+    2.88
+   ],
+   [
+    2.1333,
+    -2.05,
+    3.28
+   ],
+   [
+    2.4,
+    -1.3,
+    3.82
+   ],
+   [
+    2.6,
+    -0.8,
+    4.08
+   ],
+   [
+    2.7333,
+    -0.55,
+    4.18
+   ],
+   [
+    2.8333,
+    -0.47,
+    4.2
+   ],
+   [
+    2.8667,
+    -0.47,
+    4.2
+   ],
+   [
+    3.5333,
+    -0.47,
+    4.2
+   ],
+   [
+    4.0,
+    -0.7,
+    4.05
+   ],
+   [
+    5.0,
+    -1.1,
+    3.7
+   ],
+   [
+    6.2,
+    -1.15,
+    3.65
+   ]
+  ],
+  "O1": [
+   [
+    0.0,
+    2.25,
+    5.6
+   ],
+   [
+    0.5,
+    2.3,
+    5.66
+   ],
+   [
+    1.3333,
+    3.2,
+    6.22
+   ],
+   [
+    2.3333,
+    4.3,
+    6.9
+   ],
+   [
+    2.8333,
+    4.7,
+    7.2
+   ],
+   [
+    6.2,
+    4.7,
+    7.22
+   ]
+  ],
+  "X1": [
+   [
+    0.0,
+    2.15,
+    5.05
+   ],
+   [
+    0.6,
+    2.2,
+    5.1
+   ],
+   [
+    1.5,
+    3.0,
+    5.66
+   ],
+   [
+    2.5,
+    3.95,
+    6.4
+   ],
+   [
+    3.0,
+    4.2,
+    6.65
+   ],
+   [
+    6.2,
+    4.22,
+    6.66
+   ]
+  ],
+  "X2": [
+   [
+    0.0,
+    -2.3,
+    4.8
+   ],
+   [
+    0.3333,
+    -2.15,
+    4.72
+   ],
+   [
+    0.6667,
+    -1.32,
+    4.42
+   ],
+   [
+    1.0,
+    -0.32,
+    3.62
+   ],
+   [
+    1.3333,
+    0.35,
+    3.08
+   ],
+   [
+    1.5333,
+    0.55,
+    3.05
+   ],
+   [
+    2.2,
+    0.55,
+    3.05
+   ],
+   [
+    2.4,
+    0.45,
+    3.18
+   ],
+   [
+    2.6667,
+    0.18,
+    3.48
+   ],
+   [
+    2.8667,
+    0.1,
+    3.55
+   ],
+   [
+    2.9667,
+    0.03,
+    3.56
+   ],
+   [
+    3.1,
+    -0.2,
+    3.54
+   ],
+   [
+    3.2667,
+    -0.66,
+    3.6
+   ],
+   [
+    3.4667,
+    -1.3,
+    3.98
+   ],
+   [
+    3.7333,
+    -2.15,
+    4.55
+   ],
+   [
+    4.0333,
+    -3.0,
+    5.1
+   ],
+   [
+    4.3667,
+    -3.4,
+    5.4
+   ],
+   [
+    4.7333,
+    -3.5,
+    5.58
+   ],
+   [
+    5.2,
+    -4.3,
+    5.98
+   ],
+   [
+    6.2,
+    -4.4,
+    6.02
+   ]
+  ],
+  "X3": [
+   [
+    0.0,
+    -3.1,
+    0.75
+   ],
+   [
+    2.0667,
+    -3.1,
+    0.75
+   ],
+   [
+    2.3333,
+    -2.88,
+    0.88
+   ],
+   [
+    2.6,
+    -2.8,
+    0.92
+   ],
+   [
+    3.3333,
+    -3.05,
+    1.05
+   ],
+   [
+    4.0,
+    -3.3,
+    1.25
+   ],
+   [
+    6.2,
+    -3.3,
+    1.3
+   ]
+  ],
+  "X4": [
+   [
+    0.0,
+    -1.85,
+    2.35
+   ],
+   [
+    1.0,
+    -1.86,
+    2.42
+   ],
+   [
+    1.5333,
+    -1.88,
+    2.45
+   ],
+   [
+    1.6667,
+    -1.88,
+    2.45
+   ],
+   [
+    1.7667,
+    -1.82,
+    2.41
+   ],
+   [
+    1.9333,
+    -1.58,
+    2.28
+   ],
+   [
+    2.1,
+    -1.3,
+    2.16
+   ],
+   [
+    2.3,
+    -1.1,
+    2.1
+   ],
+   [
+    3.0667,
+    -1.12,
+    2.12
+   ],
+   [
+    3.4667,
+    -1.45,
+    2.6
+   ],
+   [
+    3.9333,
+    -2.05,
+    3.45
+   ],
+   [
+    4.4,
+    -2.55,
+    4.2
+   ],
+   [
+    5.0,
+    -2.75,
+    4.55
+   ],
+   [
+    6.2,
+    -2.75,
+    4.6
+   ]
+  ],
+  "X5": [
+   [
+    0.0,
+    1.9,
+    2.4
+   ],
+   [
+    0.6667,
+    1.9,
+    2.42
+   ],
+   [
+    1.2667,
+    1.86,
+    2.5
+   ],
+   [
+    1.5333,
+    1.86,
+    2.55
+   ],
+   [
+    1.6667,
+    1.92,
+    2.6
+   ],
+   [
+    1.8,
+    1.86,
+    2.62
+   ],
+   [
+    2.0,
+    1.95,
+    2.45
+   ],
+   [
+    2.2,
+    1.75,
+    2.06
+   ],
+   [
+    2.4,
+    1.25,
+    1.96
+   ],
+   [
+    2.6,
+    0.78,
+    2.08
+   ],
+   [
+    3.0,
+    0.72,
+    2.15
+   ],
+   [
+    5.0,
+    0.7,
+    2.18
+   ],
+   [
+    6.2,
+    0.7,
+    2.2
+   ]
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O3",
+   "from": 0,
+   "to": 3.7,
+   "pocket": true,
+   "present": {
+    "toward": "O5",
+    "from": 2.0,
+    "peak": 2.1667,
+    "hold": 2.2667,
+    "to": 2.5333,
+    "amt": 0.14,
+    "dz": 0.02
+   }
+  },
+  {
+   "type": "pass",
+   "from": "O3",
+   "to": "O2",
+   "t0": 3.7,
+   "t1": 4.3667,
+   "style": "overhead",
+   "eyes": 0.4,
+   "lead": true,
+   "phased": true
+  },
+  {
+   "type": "hold",
+   "player": "O2",
+   "from": 4.3667,
+   "to": 4.7,
+   "pocket": true
+  },
+  {
+   "type": "shot",
+   "player": "O2",
+   "t0": 4.7,
+   "t1": 5.7333,
+   "make": true,
+   "three": true
+  }
+ ],
+ "actions": {
+  "O1": [
+   {
+    "type": "face",
+    "from": 3.0,
+    "to": 6.2,
+    "face": "ball"
+   }
+  ],
+  "O2": [
+   {
+    "type": "screen",
+    "from": 1.4333,
+    "to": 2.2,
+    "face": "X5"
+   },
+   {
+    "type": "catchReady",
+    "from": 3.9333,
+    "to": 4.3667,
+    "face": "O3"
+   }
+  ],
+  "O3": [
+   {
+    "type": "face",
+    "from": 0,
+    "to": 1.3333,
+    "face": "O5"
+   },
+   {
+    "type": "face",
+    "from": 1.3333,
+    "to": 2.4667,
+    "face": "O5"
+   },
+   {
+    "type": "face",
+    "from": 2.8,
+    "to": 3.7,
+    "face": "O2"
+   }
+  ],
+  "O5": [
+   {
+    "type": "face",
+    "from": 1.7333,
+    "to": 2.4667,
+    "face": "O3"
+   }
+  ],
+  "O4": [
+   {
+    "type": "screen",
+    "from": 2.8667,
+    "to": 3.5333,
+    "face": "X2"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0.0,
+    "to": 6.2,
+    "face": "O1"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0.0,
+    "to": 6.2,
+    "face": "ball"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0.0,
+    "to": 1.7333,
+    "face": "O5"
+   },
+   {
+    "type": "bump",
+    "from": 1.7333,
+    "to": 1.9333
+   },
+   {
+    "type": "stance",
+    "from": 2.0,
+    "to": 6.2,
+    "face": "O5"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0.0,
+    "to": 1.6333,
+    "face": "O4"
+   },
+   {
+    "type": "stance",
+    "from": 1.6667,
+    "to": 3.2,
+    "face": "O5"
+   },
+   {
+    "type": "stance",
+    "from": 3.2667,
+    "to": 6.2,
+    "face": "O2"
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 0.0,
+    "to": 4.3667,
+    "face": "O2"
+   },
+   {
+    "type": "closeout",
+    "from": 4.3667,
+    "to": 4.7
+   },
+   {
+    "type": "contest",
+    "from": 4.7,
+    "to": 5.2667
+   }
+  ]
+ },
+ "screens": [],
+ "inbound": {
+  "player": "O3",
+  "release": 3.7,
+  "limit": 5.0,
+  "margin": 0.5
+ },
+ "sclock": {
+  "fps": 30,
+  "mirrorX": true,
+  "shared_until": 49,
+  "anchors": "E2A anchors on brief sec. 04-05",
+  "adjust": [
+   "O2 screen 1: brief test point (-1.35, 3.00) -> (-1.35, 2.60) (0.40 m, inside the brief's 0.15-0.45 m tolerance): at 3.00 the screen was 0.6 m ABOVE X5's chase line (X5 starts basket side at (-1.90, 2.40) and O5 cuts under at y ~1.9-2.0), i.e. a screen on an empty spot (sec. 04.4 'regla de oro'); at 2.60 he plants 0.55 m on X5's ball side, so X5's short way to the right block runs into him and X5 has to trail O5 underneath",
+   "O5 cut: from the left block down the OUTSIDE of X5 and under the screen (passes O2 at 0.73-0.83 m, y 1.86-1.95); the brief's 'y ~2.10-2.25' is 0.15-0.3 m lower here because X5 sits at y 2.4-2.6 (two bodies need >= 0.5 m)",
+   "O4 screen 2: brief test point (0.15, 4.40) -> (0.45, 4.20) (0.36 m), the 'micro-adjustment to X2's real chase line' the brief asks for: X2 trails on O2's inside, O2 curls over the TOP of O4 (0.53-0.58 m from his centre), X2 runs into O4 at S090 (0.60 m) and goes around under him",
+   "O2 route B: brief via-point (0.75, 4.90) -> (0.20, 4.80)/(1.30, 5.32) (curl over the top of O4); (2.7, 5.75) and the catch (5.20, 6.50) kept; catch 7.16 m from the basket (FIBA 6.75 m, both feet 0.41 m behind the line)",
+   "B pass O3 -> O2: release S111 (3.70 s, brief 3.85-4.05), catch S131 (4.37 s, brief ~4.25): 7.6 m in 0.67 s = 11.4 m/s (qc-catch: <= 12 m/s at the contact); the brief's 3.85 -> 4.25 window would need 19 m/s, so the release is 0.15 s earlier (still 1.3 s inside the 5 s)",
+   "A pass O3 -> O5: release S068 (2.27 s), catch S079 (2.63 s, brief ~2.55): 3.96 m at 10.8 m/s; layup take-off S088 (2.93 s), make S102 (3.40 s, brief release 3.35, net 3.55)",
+   "B shot: catch S131, gather to S141 (4.70 s), shot S141 -> S172 (flight 1.03 s, make); brief window 4.35-5.15",
+   "X2 start (2.25, 5.00) -> (2.30, 4.80) (0.2 m): at 0.56 m from O2 their arms interpenetrated in the stance (qc-contact -0.12 m)",
+   "O5 set-up step S034-S050 0.1-0.15 m wider (away from X5): arms touched at 1.47 s (qc-contact -0.08 m)"
+  ]
+ },
+ "expect": {
+  "owner": {
+   "player": "O3",
+   "from": 0,
+   "to": 3.6667
+  }
+ },
+ "marks": {
+  "start": 0,
+  "screen1": 1.4333,
+  "cut": 1.5333,
+  "decide": 1.6667,
+  "fake": 2.1667,
+  "screen2": 2.8667,
+  "screen2hit": 3.0,
+  "pass": 3.7,
+  "catch": 4.3667,
+  "release": 4.7,
+  "make": 5.7333,
+  "end": 6.2
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "O2",
+   "b": "X5",
+   "at": "cut",
+   "max": 0.8,
+   "says": "He screens for FIVE."
+  },
+  {
+   "type": "reacts_after",
+   "player": "X4",
+   "event": "decide",
+   "min": 0.0,
+   "says": "But what if they protect the rim?"
+  },
+  {
+   "type": "near_rim",
+   "player": "X4",
+   "at": "fake",
+   "max": 1.6,
+   "says": "But what if they protect the rim? (X4 at the rim when O3 fakes)"
+  },
+  {
+   "type": "near",
+   "a": "O4",
+   "b": "X2",
+   "at": "screen2hit",
+   "max": 0.8,
+   "says": "FOUR screens for TWO."
+  },
+  {
+   "type": "behind_arc",
+   "player": "O2",
+   "at": "catch",
+   "says": "Two escapes to the wing. Catch. Three."
+  },
+  {
+   "type": "open",
+   "player": "O2",
+   "at": "release",
+   "min": 1.8,
+   "says": "Catch. Three."
+  },
+  {
+   "type": "order",
+   "marks": [
+    "screen1",
+    "cut",
+    "decide",
+    "fake",
+    "screen2",
+    "screen2hit",
+    "pass",
+    "catch",
+    "release",
+    "make"
+   ],
+   "says": "screen, help, fake, screen the screener, pass, three"
+  }
+ ]
+}
