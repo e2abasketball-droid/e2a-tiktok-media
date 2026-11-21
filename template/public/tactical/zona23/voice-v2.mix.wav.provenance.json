@@ -1,0 +1,5 @@
+{
+ "licence_key": "voice/elevenlabs-creator/zona-2-3-zone-40s",
+ "source": "derived from voice-v2.wav: highpass 80 Hz, EQ +2 dB @3.2 kHz, compressor 2.5:1, loudnorm I -16 / TP -2, apad to 40.0 s (silence), 48 kHz stereo",
+ "sha256": "90612f4f6f3068c91d9c754c1c92572bec0eb61c9d9ae3cdd380f0d44c96f12d"
+}

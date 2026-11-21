@@ -186,3 +186,59 @@ Todo es opcional y se activa por jugada o por episodio. Lo que no lo usa no camb
 - **Caché de `stateOf` con 6 decimales:** con 4 decimales, un instante de fotograma (10/30 = 0,333333) y un evento escrito con 4 decimales (0,3333) compartían clave. La pose del pasador después del pase se usaba como pose en el pase y el balón saltaba ~0,45 m en el fotograma del pase.
 - **`mj()` en `tactical/specs/_gen-zone23.py`:** carreras de jerk mínimo (velocidad y aceleración cero en los extremos) a lo largo de una curva de Bézier. Pico de velocidad 1,875·d/T y pico de aceleración 5,77·d/T². Resuelve los arranques bruscos del *spline* fijado (> 22 m/s²).
 - **9:16 y zona completa:** la zona ocupa 14 m de ancho. Los planos generales y cenitales miran A TRAVÉS de la pista (yaw ≈ 90): el ancho de la pista va en vertical y el aro queda a la derecha.
+
+## E2A Dynamic Defensive Coverage (2026-11-21, zona 2-3 V2)
+Sustituye al `zoneGrid` en los episodios nuevos. `zone3d.tsx` se mantiene para no cambiar la V1 ni otros episodios.
+Código: `src/t3d/coverage3d.tsx`. QA: `scripts/qc-coverage.mts`.
+
+- **Idea:** las áreas no se dibujan a mano. Cada fotograma se calculan a partir de la escena:
+  - la posición real de cada defensor, con una ventana que solo mira hacia atrás (el área no puede adelantarse a su jugador);
+  - su posición «de casa»;
+  - el balón, promediado en los últimos 0,4 s.
+- **CoverageController** (`coverageState(play, pt, {scheme, base?, lag?, compress?})`) devuelve por defensor: posición, casa, velocidad, distancia a casa y polígono.
+- **CoverageGeometry:** el área de cada defensor se construye así.
+  1. Envolvente convexa de dos piezas:
+     - un «huevo» alrededor del defensor, estirado hacia el balón;
+     - un disco en su casa, que encoge y se acerca a él a medida que se aleja.
+  2. Recorte por semiplanos de Voronoi frente a los otros defensores, con un hueco de `gap` metros. Así no hay solapes ni bordes dobles.
+  3. Recorte a la pista y suavizado de Chaikin.
+  - Resultado: las áreas se deslizan y se deforman con los defensores reales, y el espacio que deja un defensor se abre de verdad.
+- **CoverageMaterials:**
+  - Relleno navy del 10–18 % con gradiente interior (alfa por vértice). El activo lleva relleno dorado del 18–25 %.
+  - Borde fino de 5–7 cm, un trazo navy debajo y un glow pequeño.
+  - Colores:
+    - azul frío: secundario o en espera;
+    - dorado: activo;
+    - coral: vulnerable o recuperación tardía.
+  - `depthTest` activado, `depthWrite` desactivado, `polygonOffset`, y una altura de 6–12 mm sobre el suelo.
+- **Ov3 `coverage`:** `{scheme: '2-3', mode: 'full' | 'active' | 'clean', active?, only?, vulnerable?, reveal?, base?, labels?: 'all' | 'active' | 'none' | ids[], labelYaw?, labelSize?, dim?, compress?, recover?: {ids, t0, t1}, lag?}`.
+  - `reveal` (s): aparición escalonada en el orden del esquema (los dos de arriba y luego los tres de abajo). Incluye escala, fundido, un barrido de luz por el contorno y un pulso.
+  - `active`: modo ACTIVE. Las 2–3 responsabilidades de la acción van en dorado y el resto en azul frío atenuado (`dim`).
+  - `clean`: modo CLEAN para recepciones, finalizaciones y tiros. En la práctica, en esos planos no se pone ningún `coverage`.
+  - `recover`: el área va de coral a normal según la distancia REAL del defensor a su punto de llegada (`t1`).
+- **Efectos:** todos siguen las posiciones reales y cada uno cuenta como un overlay.
+  - `covLink {a, b}`: línea discontinua entre dos defensores (ayuda o relevo). Úsala solo cuando la acción la justifique.
+  - `gapReveal {at, r, trigger: {id, dist, base?}, arrowFrom?, arrowTo?}`: el hueco solo se ilumina cuando el defensor `trigger` se ha alejado `dist` metros de su sitio. Puede llevar una flecha corta hacia la recepción.
+  - `covHull {base, ids?}`: compresión. Muestra la envolvente de los cinco defensores ahora (dorada) frente a la de `base` (fantasma azul discontinuo).
+  - `closeout {id, t0, t1, late?, label?}`: la ruta REAL del defensor entre t0 y t1. Tramo recorrido en dorado, resto tenue, anillo de destino, distancia en metros y anillo coral «tarde» desde `late`.
+  - `shotWindow {shooter, t0, t1, defender?}`: anillo que se llena entre la recepción (t0) y la suelta (t1), con una línea hacia el defensor que cierra.
+  - `covGhost {id, at}`: dónde estaba UN defensor en `at`, durante menos de 1 s.
+- **Esquemas reutilizables (`COVERAGE_SCHEMES`):** cada esquema define:
+  - `ids`;
+  - por rol: `label` («X1 · TOP»), `r` (semiejes), `rh` (disco de casa), `home?` y `labelOff`;
+  - `gap`;
+  - `reveal` (orden de aparición).
+  - Para una 3-2, 1-3-1 o box-and-one: añade una entrada con sus ids y roles. Las casas salen por defecto de las posiciones de la jugada en `base`. No hay que tocar el render.
+  - Solo la 2-3 está implementada y validada.
+- **CoverageQA:** `npx tsx scripts/qc-coverage.mts tactical/plays/<id>.json [--scheme 2-3] [--range t0:t1]`. Cada fotograma comprueba:
+  - que cada área contiene a su defensor;
+  - que no hay solapes;
+  - que el área está dentro de la pista;
+  - continuidad: el centroide no se mueve más que el paso del defensor + 0,12 m;
+  - adelanto:
+    - con el defensor en movimiento, el centro del área no puede ir más de 0,35 m por delante en su carrera;
+    - con el defensor quieto, el área solo cambia si se mueve un vecino o el balón;
+  - función pura (*seek*).
+  - Usa `--range` con el tramo de juego que el reel enseña con cobertura en pantalla.
+- **Cámara cenital perpendicular:** `pitch` 1,5 con `orbit`. A 0 la órbita degenera.
+- **Pantalla:** `stamp.instant` (sin fundido de entrada: visible desde el fotograma 0 del hook). Subtítulos por tramo con `subtitleYAt`.

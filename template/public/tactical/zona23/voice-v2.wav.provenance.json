@@ -1,0 +1,5 @@
+{
+ "licence_key": "voice/elevenlabs-creator/zona-2-3-zone-40s",
+ "source": "derived from voice-v2-raw.wav: scripts/tactical-voice.py, 10 pauses lengthened with digital silence inside natural silences (gapFill silence, no loops), +3.84 s, preroll 0.1 s; never re-synthesised or time-stretched",
+ "sha256": "fc999ac3eceb6afcf390905e0647323f8874593b99af29e72e22ea308342748e"
+}

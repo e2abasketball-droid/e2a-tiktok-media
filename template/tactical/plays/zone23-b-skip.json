@@ -1290,7 +1290,7 @@
    "B skip O2 -> O3 DIRECT: release S044 (1.47 s, brief 1.05-1.30; O2 needs 0.5 s from the catch to load an overhead with both hands on the ball), catch S077 (2.57 s, brief 2.20): 12.5 m in 1.10 s overhead with an arc",
    "B O3 catch-and-shoot: gather S077 -> S088, release S088 (2.93 s, brief 2.70), make S119 (3.97 s, brief 3.65-4.10). O3 is >= 1.8 m clear at the catch; X4's late closeout is ~1.1 m away, hands up, at the release (late contest, no contact): shown as a late step, never 'wide open'",
    "B X1 closes out on O2 from the TOP (-5.35, 6.70), runs UNDER the O1 -> O2 lane a step behind the ball; X2 sinks UNDER the nail (0.50, 5.22), 0.7 m below the skip line",
-   "C (slow): identical to B to S034; O2 holds to S066 (+0.73 s vs B), skip S066 -> S099; X2 (1.1 m) and X4 arrive with the catch, O3 does not shoot"
+   "C (slow): identical to B to S034; O2 holds to S066 (+0.73 s vs B), skip S066 -> S099; X2 (1.1 m) arrives with the catch, O3 does not shoot; V2: X4 resets to the short corner (O4) instead of doubling O3"
   ]
  },
  "expect": {

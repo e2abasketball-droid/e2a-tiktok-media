@@ -1,0 +1,5 @@
+{
+ "licence_key": "music/synth/tactical",
+ "source": "E2A in-house synth engine music/e2a_music.py --story tactical --track cine_b --duration 40 --drop-at 17.21 (Layup) --payoff-at 30.03 (THREE) --no-sfx --soft-edges --history '' (no samples, no ball sounds), then a -12 dB dip 32.39-33.34 s on 'But pass slowly?', ffmpeg volume automation",
+ "sha256": "693cc04438936ad06a52ac9ef5779a1fdca05da7ca56a9caf0e9e241e95d2bc9"
+}

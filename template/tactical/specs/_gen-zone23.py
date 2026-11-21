@@ -128,8 +128,10 @@ C["X1"] = cat(mj(6, 44, START["X1"], X1W, ctrl=(-3.70, 5.85)), {120: X1W})
 C["X2"] = cat(mj(0, 34, START["X2"], X2N, ctrl=(1.10, 6.05)), {40: X2N}, mj(40, 70, X2N, (2.80, 5.20)), mj(70, 104, (2.80, 5.20), (5.45, 5.25)),
               {120: (5.45, 5.25)})
 C["X3"].update({46: (-4.20, 3.40), 70: (-3.60, 3.00), 120: (-3.40, 2.90)})
-# X4 is free of his doubt (O4 does nothing new): he is already sliding up when the skip leaves
-C["X4"] = cat(mj(0, 24, START["X4"], (4.35, 2.86)), {40: (4.35, 2.86)}, mj(40, 100, (4.35, 2.86), (6.00, 4.75), ctrl=(4.95, 3.70)), {120: (6.00, 4.75)})
+# X4 is free of his doubt (O4 does nothing new). V2 tactical audit (2026-11-21): with time to reset, the 2-3 does NOT
+# double the wing shooter: X2 takes the wing (top man on his side) and X4 resets to his low area, between the block and
+# O4 in the right short corner (V1 had X4 also closing out on O3: two defenders on O3 and the corner open)
+C["X4"] = cat(mj(0, 24, START["X4"], (4.35, 2.86)), {40: (4.35, 2.86)}, mj(40, 96, (4.35, 2.86), (4.85, 2.55), ctrl=(4.70, 2.80)), {120: (4.85, 2.55)})
 C["O4"] = {36: (5.40, 1.90), 120: (5.40, 1.90)}
 C["O4"] = cat(mj(30, 54, START["O4"], (5.40, 1.90)), {120: (5.40, 1.90)})
 C["X5"].update({46: (-0.40, 3.25), 75: (0.25, 3.15), 120: (0.40, 3.00)})
@@ -151,7 +153,7 @@ ADJUST = [
  "B skip O2 -> O3 DIRECT: release S044 (1.47 s, brief 1.05-1.30; O2 needs 0.5 s from the catch to load an overhead with both hands on the ball), catch S077 (2.57 s, brief 2.20): 12.5 m in 1.10 s overhead with an arc",
  "B O3 catch-and-shoot: gather S077 -> S088, release S088 (2.93 s, brief 2.70), make S119 (3.97 s, brief 3.65-4.10). O3 is >= 1.8 m clear at the catch; X4's late closeout is ~1.1 m away, hands up, at the release (late contest, no contact): shown as a late step, never 'wide open'",
  "B X1 closes out on O2 from the TOP (-5.35, 6.70), runs UNDER the O1 -> O2 lane a step behind the ball; X2 sinks UNDER the nail (0.50, 5.22), 0.7 m below the skip line",
- "C (slow): identical to B to S034; O2 holds to S066 (+0.73 s vs B), skip S066 -> S099; X2 (1.1 m) and X4 arrive with the catch, O3 does not shoot",
+ "C (slow): identical to B to S034; O2 holds to S066 (+0.73 s vs B), skip S066 -> S099; X2 (1.1 m) arrives with the catch, O3 does not shoot; V2: X4 resets to the short corner (O4) instead of doubling O3",
 ]
 
 
@@ -202,7 +204,7 @@ def actions(kind):
             act["X4"] = [st("O4", 0, 54), st("ball", 56, 86), {"type": "contest", "from": S(88), "to": S(112)}]
         else:
             act["X2"] = [st("ball", 0, 90), {"type": "closeout", "from": S(90), "to": S(99)}, {"type": "contest", "from": S(99), "to": S(120)}]
-            act["X4"] = [st("ball", 0, 96), {"type": "contest", "from": S(99), "to": S(120)}]
+            act["X4"] = [st("ball", 0, 120)]
     return act
 
 
@@ -258,6 +260,7 @@ def spec(kind):
         s["marks"] = {"start": 0, "pass": S(10), "catch": S(28), "skip": S(66), "skipcatch": S(99), "end": s["duration"]}
         s["claims"] = [
             {"type": "near", "a": "O3", "b": "X2", "at": "skipcatch", "max": 1.3, "says": "But pass slowly? The zone resets."},
+            {"type": "near", "a": "O4", "b": "X4", "at": "skipcatch", "max": 1.2, "says": "The zone resets: X4 back on the short corner, no double team on O3"},
             {"type": "order", "marks": ["pass", "catch", "skip", "skipcatch"], "says": "entry, (too long), skip, contested"}]
     return s
 

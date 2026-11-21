@@ -1,0 +1,69 @@
+{
+ "id": "zona23-v2-voice",
+ "title": "2-3 Zone V2 dynamic coverage (V1 take + one pickup)",
+ "fps": 30,
+ "voiceRaw": "tactical/zona23/voice-v2-raw.wav",
+ "wordsRaw": "zona23-v2-voice.words-raw.json",
+ "voice": "tactical/zona23/voice-v2.wav",
+ "preroll": 0.1,
+ "tail": 0.6,
+ "gapFill": "silence",
+ "gaps": [
+  {
+   "after": "WATCH IT OPEN.",
+   "sec": 0.9,
+   "why": "the gap opens (X5 steps up in the preview), the hook settles"
+  },
+  {
+   "after": "That's a two-three zone.",
+   "sec": 0.7,
+   "why": "the five areas finish their reveal (full coverage, top-down)"
+  },
+  {
+   "after": "move with the ball.",
+   "sec": 0.8,
+   "why": "areas slide and deform with the ball to the wing; reset to READ 01"
+  },
+  {
+   "after": "flash to the foul line.",
+   "sec": 0.4,
+   "why": "O5's catch at the nail"
+  },
+  {
+   "after": "a cutter slips behind.",
+   "sec": 0.5,
+   "why": "O5 -> O4 pass in flight"
+  },
+  {
+   "after": "Layup.",
+   "sec": 0.9,
+   "why": "ball through the net, +2"
+  },
+  {
+   "after": "defense collapses?",
+   "sec": 0.7,
+   "why": "the zone compresses to the middle (freeze)"
+  },
+  {
+   "after": "throw the SKIP.",
+   "sec": 0.6,
+   "why": "the skip flies over the zone"
+  },
+  {
+   "after": "THREE points.",
+   "sec": 1.0,
+   "why": "ball through the net, +3"
+  },
+  {
+   "after": "The zone resets.",
+   "sec": 0.6,
+   "why": "recovery lands in the slow-pass comparison"
+  }
+ ],
+ "plays": {
+  "A": "zone23-a-nail",
+  "B": "zone23-b-skip",
+  "C": "zone23-c-slow"
+ },
+ "shots": []
+}

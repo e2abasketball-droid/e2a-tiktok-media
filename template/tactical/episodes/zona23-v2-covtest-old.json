@@ -1,0 +1,118 @@
+{
+ "id": "zona23-v2-covtest-old",
+ "title": "2-3 Zone V2 coverage gate (old)",
+ "fps": 30,
+ "voice": "tactical/zona23/voice.wav",
+ "preroll": 0.1,
+ "tail": 0.0,
+ "plays": {
+  "A": "zone23-a-nail",
+  "B": "zone23-b-skip",
+  "C": "zone23-c-slow"
+ },
+ "shots": [
+  {
+   "id": "gate",
+   "name": "coverage gate old",
+   "at": 0,
+   "play": "B",
+   "branch": "b",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     2.2,
+     0.0
+    ],
+    [
+     5.8,
+     1.3
+    ],
+    [
+     7.0,
+     1.45
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       5.1,
+       0.0
+      ],
+      "dist": 22.0,
+      "pitch": 8,
+      "yaw": 90,
+      "fov": 40
+     }
+    }
+   ],
+   "ov3": [
+    {
+     "type": "zoneGrid",
+     "areas": {
+      "X1": [
+       -0.4,
+       4.3,
+       5.0,
+       8.1
+      ],
+      "X2": [
+       -4.3,
+       0.4,
+       5.0,
+       8.1
+      ],
+      "X3": [
+       1.7,
+       7.0,
+       0.6,
+       5.1
+      ],
+      "X4": [
+       -7.0,
+       -1.7,
+       0.6,
+       5.1
+      ],
+      "X5": [
+       -2.5,
+       2.5,
+       0.6,
+       5.75
+      ]
+     },
+     "stagger": 0.09,
+     "select": [
+      "X1",
+      "X3"
+     ],
+     "selectAt": 3.0,
+     "from": 0,
+     "to": 7.0,
+     "fin": 0.01
+    }
+   ],
+   "screen": []
+  }
+ ],
+ "branches": {
+  "a": "A",
+  "b": "B",
+  "c": "C"
+ },
+ "env": "cinema",
+ "pinV2": true,
+ "autoSfx": false,
+ "subtitleHide": [
+  [
+   0,
+   999
+  ]
+ ]
+}

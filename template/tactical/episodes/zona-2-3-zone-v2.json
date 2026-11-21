@@ -1,0 +1,1573 @@
+{
+ "id": "zona-2-3-zone-v2",
+ "title": "2-3 Zone V2: dynamic defensive coverage",
+ "fps": 30,
+ "voice": "tactical/zona23/voice-v2.wav",
+ "preroll": 0.1,
+ "tail": 1.109,
+ "plays": {
+  "A": "zone23-a-nail",
+  "B": "zone23-b-skip",
+  "C": "zone23-c-slow"
+ },
+ "shots": [
+  {
+   "id": "01-hook",
+   "name": "HOOK: elevated orbit around the five, areas appear, flash + catch, X5 steps up, the gap opens on OPEN (A 0 -> 1.75)",
+   "at": 0,
+   "play": "A",
+   "branch": "a",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     1.0,
+     0.0
+    ],
+    [
+     "OPEN.",
+     1.45
+    ],
+    [
+     "Two-0.1",
+     1.85
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       4.9,
+       0.5
+      ],
+      "dist": 14.5,
+      "pitch": 50,
+      "yaw": 30,
+      "fov": 42
+     }
+    },
+    {
+     "at": "WATCH",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       4.6,
+       0.4
+      ],
+      "dist": 15.5,
+      "pitch": 42,
+      "yaw": 92,
+      "fov": 40
+     },
+     "ease": "inOut",
+     "spin": true
+    },
+    {
+     "at": "Two-0.1",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.2,
+       4.0,
+       0.4
+      ],
+      "dist": 14.0,
+      "pitch": 40,
+      "yaw": 104,
+      "fov": 40
+     },
+     "ease": "out"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "coverage",
+     "scheme": "2-3",
+     "mode": "full",
+     "labelYaw": 90,
+     "reveal": 0.2,
+     "from": 0,
+     "to": "WATCH",
+     "fin": 0.01,
+     "fout": 0.3
+    },
+    {
+     "type": "coverage",
+     "scheme": "2-3",
+     "mode": "active",
+     "labelYaw": 90,
+     "active": [
+      "X5"
+     ],
+     "dim": 0.5,
+     "from": "WATCH-0.3",
+     "to": "Two-0.1",
+     "fin": 0.3
+    },
+    {
+     "type": "gapReveal",
+     "at": [
+      -0.45,
+      2.55
+     ],
+     "r": 1.05,
+     "trigger": {
+      "id": "X5",
+      "dist": 0.3
+     },
+     "arrowFrom": "O4",
+     "arrowTo": [
+      -1.35,
+      1.9
+     ],
+     "from": "WATCH",
+     "to": "Two-0.1"
+    }
+   ],
+   "screen": [
+    {
+     "type": "flash",
+     "color": "#FFE9C8",
+     "strength": 0.16,
+     "from": 0,
+     "to": 0.2
+    },
+    {
+     "type": "stamp",
+     "text": "THE 2-3 ZONE",
+     "tone": "white",
+     "y": 300,
+     "instant": true,
+     "from": 0,
+     "to": "WATCH"
+    },
+    {
+     "type": "micro",
+     "text": "ILLUSTRATIVE COVERAGE",
+     "y": 300,
+     "from": "WATCH",
+     "to": "Two-0.1"
+    }
+   ]
+  },
+  {
+   "id": "02-shape",
+   "name": "TOP 2 / BOTTOM 3: perpendicular top-down, ACTIVE X1 X2 -> X3 X4 X5 -> FULL with labels (A 0)",
+   "at": "Two-0.1",
+   "play": "A",
+   "branch": "a",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "These-0.1",
+     0.0
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       5.5,
+       0.0
+      ],
+      "dist": 23.0,
+      "pitch": 1.5,
+      "yaw": 90,
+      "fov": 40
+     }
+    },
+    {
+     "at": "These-0.1",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       5.5,
+       0.0
+      ],
+      "dist": 22.5,
+      "pitch": 1.5,
+      "yaw": 90,
+      "fov": 40
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "coverage",
+     "scheme": "2-3",
+     "mode": "active",
+     "labelYaw": 90,
+     "active": [
+      "X1",
+      "X2"
+     ],
+     "labels": "active",
+     "dim": 0.4,
+     "from": 0,
+     "to": "Three",
+     "fin": 0.2,
+     "fout": 0.2
+    },
+    {
+     "type": "coverage",
+     "scheme": "2-3",
+     "mode": "active",
+     "labelYaw": 90,
+     "active": [
+      "X3",
+      "X4",
+      "X5"
+     ],
+     "labels": "active",
+     "dim": 0.4,
+     "from": "Three-0.1",
+     "to": "That's",
+     "fin": 0.2,
+     "fout": 0.25
+    },
+    {
+     "type": "coverage",
+     "scheme": "2-3",
+     "mode": "full",
+     "labelYaw": 90,
+     "labels": "all",
+     "from": "That's-0.15",
+     "to": "These-0.1",
+     "fin": 0.25
+    }
+   ]
+  },
+  {
+   "id": "03-move",
+   "name": "THE AREAS MOVE: top, O1 -> O2 to the wing, areas slide + deform, ghost of X1 (B 0 -> 1.30)",
+   "at": "These-0.1",
+   "play": "B",
+   "branch": "b",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "boxes",
+     0.15
+    ],
+    [
+     "ball.>",
+     1.3
+    ],
+    [
+     "First,-0.12",
+     1.3
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.6,
+       5.5,
+       0.0
+      ],
+      "dist": 22.5,
+      "pitch": 4,
+      "yaw": 90,
+      "fov": 40
+     }
+    },
+    {
+     "at": "First,-0.12",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       1.0,
+       5.2,
+       0.0
+      ],
+      "dist": 22.0,
+      "pitch": 10,
+      "yaw": 78,
+      "fov": 40
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "coverage",
+     "scheme": "2-3",
+     "mode": "full",
+     "labelYaw": 90,
+     "from": 0,
+     "to": "First,-0.12",
+     "fin": 0.01
+    },
+    {
+     "type": "passLane",
+     "src": "O1",
+     "dst": "O2",
+     "travel": 0.6,
+     "dstAt": 0.9333,
+     "color": "#FFFFFF",
+     "from": "boxes-0.2",
+     "to": "with"
+    },
+    {
+     "type": "covGhost",
+     "id": "X1",
+     "at": 0.0,
+     "from": "with",
+     "to": "First,-0.12"
+    }
+   ]
+  },
+  {
+   "id": "04-flash",
+   "name": "READ 01: O5 flashes to the nail, X1/X2 pinch, catch, X5 steps up: the gap opens behind him (A 0 -> 1.40)",
+   "at": "First,-0.12",
+   "play": "A",
+   "branch": "a",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "flash",
+     0.05
+    ],
+    [
+     "line.",
+     1.033
+    ],
+    [
+     "steps",
+     1.4
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.8,
+       4.3,
+       0.6
+      ],
+      "dist": 15.5,
+      "pitch": 36,
+      "yaw": 128,
+      "fov": 42
+     }
+    },
+    {
+     "at": "line.",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.3,
+       3.6,
+       0.6
+      ],
+      "dist": 14.0,
+      "pitch": 40,
+      "yaw": 118,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "steps",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.3,
+       3.6,
+       0.6
+      ],
+      "dist": 14.0,
+      "pitch": 40,
+      "yaw": 118,
+      "fov": 42
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "route",
+     "player": "O5",
+     "t0": 0.0,
+     "t1": 1.0,
+     "consume": true,
+     "color": "#FFC447",
+     "width": 0.1,
+     "from": 0.1,
+     "to": "line.>"
+    },
+    {
+     "type": "coverage",
+     "scheme": "2-3",
+     "mode": "active",
+     "labelYaw": 90,
+     "active": [
+      "X1",
+      "X2",
+      "X5"
+     ],
+     "dim": 0.45,
+     "from": 0,
+     "to": "steps",
+     "fin": 0.01
+    },
+    {
+     "type": "gapReveal",
+     "at": [
+      -0.45,
+      2.55
+     ],
+     "r": 1.05,
+     "trigger": {
+      "id": "X5",
+      "dist": 0.3
+     },
+     "from": "center",
+     "to": "steps"
+    }
+   ],
+   "screen": [
+    {
+     "type": "hud",
+     "tag": "READ 01",
+     "text": "ATTACK THE NAIL",
+     "y": 300,
+     "from": 0.05,
+     "to": "line."
+    }
+   ]
+  },
+  {
+   "id": "05-layup",
+   "name": "IF THE CENTER STEPS UP: gap + lane to O4, O5 -> O4, CLEAN catch + layup, +2 (A 1.40 -> 3.45)",
+   "at": "steps",
+   "play": "A",
+   "branch": "a",
+   "remap": [
+    [
+     0,
+     1.4
+    ],
+    [
+     "Layup.+0.12",
+     3.2
+    ],
+    [
+     "But-0.1",
+     3.45
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.3,
+       3.6,
+       0.6
+      ],
+      "dist": 14.0,
+      "pitch": 40,
+      "yaw": 118,
+      "fov": 42
+     }
+    },
+    {
+     "at": "behind.",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.7,
+       2.8,
+       0.8
+      ],
+      "dist": 11.5,
+      "pitch": 48,
+      "yaw": 108,
+      "fov": 44
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "Layup.",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.7,
+       1.9,
+       1.4
+      ],
+      "dist": 7.6,
+      "pitch": 66,
+      "yaw": 98,
+      "fov": 44
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "But-0.1",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.7,
+       1.9,
+       1.4
+      ],
+      "dist": 7.6,
+      "pitch": 66,
+      "yaw": 98,
+      "fov": 44
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "coverage",
+     "scheme": "2-3",
+     "mode": "active",
+     "labelYaw": 90,
+     "active": [
+      "X5",
+      "X4"
+     ],
+     "vulnerable": [
+      "X5"
+     ],
+     "dim": 0.4,
+     "from": 0,
+     "to": "behind.",
+     "fin": 0.01,
+     "fout": 0.35
+    },
+    {
+     "type": "gapReveal",
+     "at": [
+      -0.45,
+      2.55
+     ],
+     "r": 1.05,
+     "trigger": {
+      "id": "X5",
+      "dist": 0.3
+     },
+     "arrowFrom": "O4",
+     "arrowTo": [
+      -1.35,
+      1.9
+     ],
+     "from": 0,
+     "to": "slips"
+    },
+    {
+     "type": "passLane",
+     "src": "O5",
+     "dst": "O4",
+     "travel": 0.47,
+     "dstAt": 2.4,
+     "color": "#FFC447",
+     "from": "cutter",
+     "to": "behind.+0.2"
+    },
+    {
+     "type": "ballTrail",
+     "len": 0.25,
+     "from": "behind.",
+     "to": "Layup.+0.15"
+    },
+    {
+     "type": "glow",
+     "hoop": true,
+     "r": 1.1,
+     "color": "#FFC447",
+     "strength": 0.6,
+     "from": "Layup.+0.12",
+     "to": "But-0.1"
+    }
+   ],
+   "screen": [
+    {
+     "type": "flash",
+     "color": "#FFE3A3",
+     "strength": 0.2,
+     "from": "Layup.+0.12",
+     "to": "Layup.+0.4"
+    },
+    {
+     "type": "stamp",
+     "text": "+2",
+     "tone": "gold",
+     "y": 300,
+     "from": "Layup.+0.15",
+     "to": "But-0.1"
+    }
+   ]
+  },
+  {
+   "id": "06-collapse",
+   "name": "BUT WHAT HAPPENS WHEN THE DEFENSE COLLAPSES?: orbit, A replay 0.55 -> 1.70, areas compress with the real defenders, hull vs ghost hull",
+   "at": "But-0.1",
+   "play": "A",
+   "branch": "a",
+   "remap": [
+    [
+     0,
+     0.55
+    ],
+    [
+     "collapses?",
+     1.45
+    ],
+    [
+     "Now-0.1",
+     1.7
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       4.4,
+       0.5
+      ],
+      "dist": 14.5,
+      "pitch": 36,
+      "yaw": 125,
+      "fov": 40
+     }
+    },
+    {
+     "at": "Now-0.1",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       4.4,
+       0.5
+      ],
+      "dist": 14.0,
+      "pitch": 34,
+      "yaw": 70,
+      "fov": 40
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "coverage",
+     "scheme": "2-3",
+     "mode": "active",
+     "labelYaw": 90,
+     "active": [
+      "X1",
+      "X2",
+      "X5"
+     ],
+     "dim": 0.5,
+     "compress": 0.25,
+     "from": 0,
+     "to": "Now-0.1",
+     "fin": 0.2
+    },
+    {
+     "type": "covHull",
+     "base": 0.0,
+     "from": "happens",
+     "to": "Now-0.1"
+    }
+   ],
+   "screen": [
+    {
+     "type": "hud",
+     "tag": "REPLAY",
+     "text": "THE ZONE COLLAPSES",
+     "y": 300,
+     "from": 0.05,
+     "to": "Now-0.1"
+    }
+   ]
+  },
+  {
+   "id": "07-read2",
+   "name": "READ 02: wide, O1 -> O2, the zone shifts to the ball (B 0 -> 0.95)",
+   "at": "Now-0.1",
+   "play": "B",
+   "branch": "b",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "pull",
+     0.25
+    ],
+    [
+     "wing...>",
+     0.93
+    ],
+    [
+     "and-0.06",
+     0.95
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       1.0,
+       5.6,
+       0.5
+      ],
+      "dist": 18.0,
+      "pitch": 34,
+      "yaw": 84,
+      "fov": 40
+     }
+    },
+    {
+     "at": "and-0.06",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       3.2,
+       6.2,
+       1.2
+      ],
+      "dist": 11.0,
+      "pitch": 60,
+      "yaw": 60,
+      "fov": 44
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "coverage",
+     "scheme": "2-3",
+     "mode": "active",
+     "labelYaw": 90,
+     "active": [
+      "X1",
+      "X3"
+     ],
+     "dim": 0.55,
+     "from": 0,
+     "to": "and-0.06",
+     "fin": 0.01
+    },
+    {
+     "type": "passLane",
+     "src": "O1",
+     "dst": "O2",
+     "travel": 0.6,
+     "dstAt": 0.9333,
+     "color": "#FFFFFF",
+     "from": "pull-0.1",
+     "to": "wing...>"
+    }
+   ],
+   "screen": [
+    {
+     "type": "hud",
+     "tag": "READ 02",
+     "text": "BALL TO THE WING",
+     "y": 300,
+     "from": 0.05,
+     "to": "wing..."
+    }
+   ]
+  },
+  {
+   "id": "08-skip",
+   "name": "SKIP: behind O2, release on SKIP, rises wide over the flight; areas follow the defenders; X4 closeout route (B 0.95 -> 1.75)",
+   "at": "and-0.06",
+   "play": "B",
+   "branch": "b",
+   "remap": [
+    [
+     0,
+     0.95
+    ],
+    [
+     "SKIP.",
+     1.467
+    ],
+    [
+     "weak-side-0.12",
+     1.75
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       3.2,
+       6.2,
+       1.2
+      ],
+      "dist": 11.0,
+      "pitch": 60,
+      "yaw": 60,
+      "fov": 44
+     }
+    },
+    {
+     "at": "throw>",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       3.2,
+       6.2,
+       1.2
+      ],
+      "dist": 11.0,
+      "pitch": 60,
+      "yaw": 60,
+      "fov": 44
+     },
+     "ease": "linear"
+    },
+    {
+     "at": "weak-side-0.12",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.6,
+       5.2,
+       1.0
+      ],
+      "dist": 15.5,
+      "pitch": 46,
+      "yaw": 88,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "coverage",
+     "scheme": "2-3",
+     "mode": "full",
+     "labelYaw": 90,
+     "from": 0,
+     "to": "weak-side-0.12",
+     "fin": 0.01
+    },
+    {
+     "type": "ballTrail",
+     "len": 0.35,
+     "from": "SKIP.",
+     "to": "weak-side-0.12"
+    },
+    {
+     "type": "closeout",
+     "id": "X4",
+     "t0": 1.467,
+     "t1": 2.93,
+     "label": false,
+     "from": "SKIP.+0.15",
+     "to": "weak-side-0.12"
+    }
+   ]
+  },
+  {
+   "id": "09-jobs",
+   "name": "TWO JOBS: weak side, freeze B 1.75 (RIM? / CLOSE?), resume: X4 real route + distance, O3 catch, shot window, LATE at the release",
+   "at": "weak-side-0.12",
+   "play": "B",
+   "branch": "b",
+   "remap": [
+    [
+     0,
+     1.75
+    ],
+    [
+     "shooter.>",
+     1.75
+    ],
+    [
+     "step.>",
+     2.93
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.8,
+       4.2,
+       0.6
+      ],
+      "dist": 12.0,
+      "pitch": 44,
+      "yaw": 120,
+      "fov": 42
+     }
+    },
+    {
+     "at": "shooter.>",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -4.4,
+       4.2,
+       0.6
+      ],
+      "dist": 11.0,
+      "pitch": 48,
+      "yaw": 70,
+      "fov": 42
+     },
+     "ease": "inOut",
+     "spin": true
+    },
+    {
+     "at": "step.>",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O3"
+       ],
+       "z": 1.4,
+       "window": 0.4
+      },
+      "dist": 6.2,
+      "pitch": 74,
+      "yaw": 32,
+      "fov": 44
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "coverage",
+     "scheme": "2-3",
+     "mode": "active",
+     "labelYaw": 90,
+     "active": [
+      "X4"
+     ],
+     "dim": 0.4,
+     "from": 0,
+     "to": "late-0.3",
+     "fin": 0.01,
+     "fout": 0.3
+    },
+    {
+     "type": "route",
+     "player": "X4",
+     "t0": 0,
+     "t1": 0,
+     "pts": [
+      [
+       -4.4,
+       2.75
+      ],
+      [
+       -3.3,
+       2.2
+      ],
+      [
+       -2.1,
+       1.85
+      ],
+      [
+       -1.2,
+       1.7
+      ]
+     ],
+     "color": "#A9C8EE",
+     "width": 0.09,
+     "draw": 0.35,
+     "label": "RIM?",
+     "labelYaw": 95,
+     "labelOffset": [
+      -0.3,
+      0.7
+     ],
+     "labelSize": 0.55,
+     "from": "guard",
+     "to": "late-0.2"
+    },
+    {
+     "type": "route",
+     "player": "X4",
+     "t0": 0,
+     "t1": 0,
+     "pts": [
+      [
+       -4.5,
+       2.95
+      ],
+      [
+       -4.9,
+       3.7
+      ],
+      [
+       -5.3,
+       4.4
+      ],
+      [
+       -5.6,
+       4.9
+      ]
+     ],
+     "color": "#FFC447",
+     "width": 0.09,
+     "draw": 0.35,
+     "label": "CLOSE?",
+     "labelYaw": 95,
+     "labelOffset": [
+      0.7,
+      0.3
+     ],
+     "labelSize": 0.55,
+     "from": "close",
+     "to": "late-0.2"
+    },
+    {
+     "type": "closeout",
+     "id": "X4",
+     "t0": 1.467,
+     "t1": 2.93,
+     "late": 2.93,
+     "from": "late-0.3",
+     "to": "step.>"
+    },
+    {
+     "type": "shotWindow",
+     "shooter": "O3",
+     "t0": 2.5667,
+     "t1": 2.93,
+     "defender": "X4",
+     "from": "late",
+     "to": "step.>"
+    }
+   ],
+   "screen": [
+    {
+     "type": "freeze",
+     "from": 0.05,
+     "to": "shooter.>"
+    }
+   ]
+  },
+  {
+   "id": "10-three",
+   "name": "THREE POINTS: CLEAN, close on O3 + rim, net, +3 (B 2.93 -> 4.30)",
+   "at": "step.>",
+   "play": "B",
+   "branch": "b",
+   "remap": [
+    [
+     0,
+     2.93
+    ],
+    [
+     "points.>+0.1",
+     4.1
+    ],
+    [
+     "But#2-0.1",
+     4.3
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O3"
+       ],
+       "z": 1.4,
+       "window": 0.4
+      },
+      "dist": 6.2,
+      "pitch": 74,
+      "yaw": 32,
+      "fov": 44
+     }
+    },
+    {
+     "at": "points.>",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.6,
+       2.2,
+       2.6
+      ],
+      "dist": 7.4,
+      "pitch": 80,
+      "yaw": 32,
+      "fov": 44
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "But#2-0.1",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.6,
+       2.2,
+       2.6
+      ],
+      "dist": 7.4,
+      "pitch": 80,
+      "yaw": 32,
+      "fov": 44
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ballTrail",
+     "len": 0.3,
+     "from": 0,
+     "to": "points.>"
+    },
+    {
+     "type": "glow",
+     "hoop": true,
+     "r": 1.1,
+     "color": "#FFC447",
+     "strength": 0.6,
+     "from": "points.",
+     "to": "But#2-0.1"
+    }
+   ],
+   "screen": [
+    {
+     "type": "flash",
+     "color": "#FFE3A3",
+     "strength": 0.2,
+     "from": "points.",
+     "to": "points.+0.3"
+    },
+    {
+     "type": "stamp",
+     "text": "+3",
+     "tone": "gold",
+     "y": 300,
+     "from": "points.",
+     "to": "But#2-0.1"
+    }
+   ]
+  },
+  {
+   "id": "11-slow",
+   "name": "TOO SLOW: top-down, O2 holds, late skip; X2 recovers to the wing (coral -> normal from his real distance), X4 resets to the short corner, O3 contested (C 1.10 -> 3.45)",
+   "at": "But#2-0.1",
+   "play": "C",
+   "branch": "c",
+   "remap": [
+    [
+     0,
+     1.1
+    ],
+    [
+     "resets.",
+     3.3
+    ],
+    [
+     "Your-0.1",
+     3.45
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.3,
+       5.0,
+       0.0
+      ],
+      "dist": 25.0,
+      "pitch": 1.5,
+      "yaw": 90,
+      "fov": 40
+     }
+    },
+    {
+     "at": "Your-0.1",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.4,
+       5.0,
+       0.0
+      ],
+      "dist": 24.5,
+      "pitch": 3,
+      "yaw": 92,
+      "fov": 40
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "coverage",
+     "scheme": "2-3",
+     "mode": "active",
+     "labelYaw": 90,
+     "active": [
+      "X2",
+      "X4"
+     ],
+     "recover": {
+      "ids": [
+       "X2"
+      ],
+      "t0": 2.2,
+      "t1": 3.3
+     },
+     "dim": 0.5,
+     "from": 0,
+     "to": "Your-0.1",
+     "fin": 0.01
+    },
+    {
+     "type": "ring",
+     "player": "O3",
+     "color": "#A9C8EE",
+     "size": 0.7,
+     "from": "resets.-0.3",
+     "to": "Your-0.1"
+    }
+   ],
+   "screen": [
+    {
+     "type": "hud",
+     "tag": "TOO SLOW",
+     "text": "THE ZONE HAS TIME",
+     "y": 300,
+     "from": "pass",
+     "to": "Your-0.1"
+    }
+   ]
+  },
+  {
+   "id": "12-cta",
+   "name": "YOUR CALL: NAIL route vs SKIP arc from the point guard's seat, title, logo; camera returns to the hook frame (A 0)",
+   "at": "Your-0.1",
+   "play": "A",
+   "branch": "a",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "@end",
+     0.0
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       6.5,
+       0.4
+      ],
+      "dist": 19.5,
+      "pitch": 26,
+      "yaw": 92,
+      "fov": 40
+     }
+    },
+    {
+     "at": "below.",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       6.2,
+       0.4
+      ],
+      "dist": 18.5,
+      "pitch": 32,
+      "yaw": 76,
+      "fov": 40
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end-0.45",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       4.9,
+       0.5
+      ],
+      "dist": 14.5,
+      "pitch": 50,
+      "yaw": 30,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       4.9,
+       0.5
+      ],
+      "dist": 14.5,
+      "pitch": 50,
+      "yaw": 30,
+      "fov": 42
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "coverage",
+     "scheme": "2-3",
+     "mode": "full",
+     "labelYaw": 90,
+     "dim": 0.5,
+     "from": 0,
+     "to": "@end-0.4",
+     "fout": 0.35
+    },
+    {
+     "type": "route",
+     "player": "O1",
+     "t0": 0,
+     "t1": 0,
+     "pts": [
+      [
+       0.0,
+       8.5
+      ],
+      [
+       0.15,
+       7.4
+      ],
+      [
+       0.25,
+       6.4
+      ],
+      [
+       0.3,
+       5.9
+      ]
+     ],
+     "color": "#FFC447",
+     "width": 0.16,
+     "draw": 0.45,
+     "label": "NAIL",
+     "labelYaw": 92,
+     "labelOffset": [
+      1.2,
+      -0.2
+     ],
+     "labelSize": 0.7,
+     "from": "NAIL...",
+     "to": "@end-0.4"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 0,
+     "t1": 0,
+     "pts": [
+      [
+       6.0,
+       6.3
+      ],
+      [
+       3.2,
+       7.4
+      ],
+      [
+       0.0,
+       7.8
+      ],
+      [
+       -3.2,
+       7.4
+      ],
+      [
+       -6.0,
+       6.3
+      ]
+     ],
+     "color": "#A9C8EE",
+     "width": 0.16,
+     "draw": 0.5,
+     "label": "SKIP",
+     "labelYaw": 92,
+     "labelOffset": [
+      0.9,
+      0.0
+     ],
+     "labelSize": 0.7,
+     "from": "SKIP#2",
+     "to": "@end-0.4"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "NAIL",
+      "OR SKIP?"
+     ],
+     "gold": [
+      0
+     ],
+     "y": 300,
+     "size": 120,
+     "from": "call:",
+     "to": "@end"
+    },
+    {
+     "type": "micro",
+     "text": "YOU HAVE THE BALL",
+     "y": 560,
+     "from": "Your",
+     "to": "NAIL..."
+    },
+    {
+     "type": "micro",
+     "text": "COMMENT: NAIL / SKIP",
+     "y": 560,
+     "from": "Comment",
+     "to": "@end"
+    },
+    {
+     "type": "logo",
+     "from": "below.",
+     "to": "@end"
+    }
+   ]
+  }
+ ],
+ "voiceMix": "tactical/zona23/voice-v2.mix.wav",
+ "branches": {
+  "a": "A",
+  "b": "B",
+  "c": "C"
+ },
+ "env": "cinema",
+ "pinV2": true,
+ "autoSfx": false,
+ "keywords": [
+  "FIVE",
+  "GAP...",
+  "OPEN.",
+  "two-three",
+  "flash",
+  "steps",
+  "Layup.",
+  "collapses?",
+  "SKIP.",
+  "jobs:",
+  "late",
+  "THREE",
+  "slowly?",
+  "resets.",
+  "NAIL...",
+  "SKIP?"
+ ],
+ "subtitleY": 1350,
+ "subtitleYAt": [
+  [
+   "Layup.-0.3",
+   "But-0.1",
+   520
+  ]
+ ],
+ "subtitleGroups": [
+  2,
+  2,
+  3,
+  3,
+  4,
+  4,
+  3,
+  4,
+  6,
+  5,
+  4,
+  1,
+  3,
+  4,
+  6,
+  4,
+  6,
+  3,
+  4,
+  3,
+  2,
+  3,
+  3,
+  2,
+  3,
+  3,
+  2
+ ],
+ "subtitleBlock": true,
+ "music": {
+  "src": "tactical/zona23/music-v2.mp3",
+  "volume": 1
+ }
+}
