@@ -267,8 +267,8 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
       camera={{fov: cam.fov, near: 0.1, far: 120}}
     >
       <CameraSync cam={cam} />
-      <color attach="background" args={[env === 'practice' ? '#1B140E' : env === 'academy' ? '#04070F' : '#050A15']} />
-      <fog attach="fog" args={[env === 'practice' ? '#1B140E' : env === 'academy' ? '#04070F' : '#050A15', env === 'academy' ? 12 : 14, env === 'academy' ? 34 : 40]} />
+      <color attach="background" args={[env === 'practice' ? '#1B140E' : env === 'academy' ? '#04070F' : env === 'cinema' ? '#071022' : '#050A15']} />
+      <fog attach="fog" args={[env === 'practice' ? '#1B140E' : env === 'academy' ? '#04070F' : env === 'cinema' ? '#071022' : '#050A15', env === 'academy' ? 12 : env === 'cinema' ? 22 : 14, env === 'academy' ? 34 : env === 'cinema' ? 58 : 40]} />
       <ArenaLights focus={W3([cam.target[0] * 0.5, Math.max(2, cam.target[1] * 0.7 + 1.5), 0])} env={env} />
       <Court3D logo={logo} swish={swish} env={env} />
       {play.players.map((p, i) => {
@@ -288,7 +288,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
           return (
             <React.Fragment key={p.id}>
               {spec.look === 'C' && glb && clip && sp.bones && sp.hips ? (
-                <SkinnedAthlete scene={glb} clipBones={clip.bones} bones={sp.bones} hips={sp.hips} inst={p.id} skin={skin} num={num} kit={KITS[p.team]} look={env === 'academy' ? 'academy' : undefined} />
+                <SkinnedAthlete scene={glb} clipBones={clip.bones} bones={sp.bones} hips={sp.hips} inst={p.id} skin={skin} num={num} kit={KITS[p.team]} look={env === 'academy' || env === 'cinema' ? 'academy' : undefined} />
               ) : (
                 <Athlete pose={sp.pose} team={p.team} num={num} skin={skin} />
               )}
@@ -302,7 +302,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
           const r = bonesFromPose(pkg.rig, pose, sc);
           return (
             <React.Fragment key={p.id}>
-              <SkinnedAthlete scene={glb} clipBones={pkg.rig.bones} bones={r.bones} hips={r.hips} inst={p.id} scale={sc} skin={skin} num={num} kit={KITS[p.team]} look={env === 'academy' ? 'academy' : undefined} />
+              <SkinnedAthlete scene={glb} clipBones={pkg.rig.bones} bones={r.bones} hips={r.hips} inst={p.id} scale={sc} skin={skin} num={num} kit={KITS[p.team]} look={env === 'academy' || env === 'cinema' ? 'academy' : undefined} />
               <ContactShadows pose={pose} />
             </React.Fragment>
           );

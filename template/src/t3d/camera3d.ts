@@ -39,7 +39,9 @@ export type Rig =
   /** eye-level camera behind a player (e.g. the chasing defender) looking at another player */
   | {type: 'pov'; behind: string; look: string | V3; back?: number; height?: number; side?: number; fov: number; lookZ?: number; window?: number};
 
-export type CamKey3 = {at: number; rig: Rig; ease?: 'inOut' | 'out' | 'in' | 'linear' | 'hold'};
+/** spin (2026-11-21, BLOB V2 hero orbit): blend yaw WITHOUT wrapping to the short way, so one key can sweep
+ *  200-300 degrees around a subject (yaw values are taken literally: -60 -> 180 = 240 degrees clockwise) */
+export type CamKey3 = {at: number; rig: Rig; ease?: 'inOut' | 'out' | 'in' | 'linear' | 'hold'; spin?: boolean};
 
 const smoothPos = (play: Play, id: string, t: number, w = 0.35): [number, number] => {
   // average over a window -> weight, no step jitter
@@ -98,12 +100,12 @@ const lerpAngle = (a: number, b: number, u: number) => {
   return a + d * u;
 };
 
-export const blendOrbit = (a: Orbit, b: Orbit, u: number): Orbit => ({
+export const blendOrbit = (a: Orbit, b: Orbit, u: number, spin = false): Orbit => ({
   target: [lerp(a.target[0], b.target[0], u), lerp(a.target[1], b.target[1], u), lerp(a.target[2], b.target[2], u)],
   // distance blends in log space so dolly moves feel even
   dist: Math.exp(lerp(Math.log(a.dist), Math.log(b.dist), u)),
   pitch: lerp(a.pitch, b.pitch, u),
-  yaw: lerpAngle(a.yaw, b.yaw, u),
+  yaw: spin ? lerp(a.yaw, b.yaw, u) : lerpAngle(a.yaw, b.yaw, u),
   fov: lerp(a.fov, b.fov, u),
   roll: lerp(a.roll ?? 0, b.roll ?? 0, u),
 });
@@ -117,7 +119,7 @@ export const camera3At = (play: Play, keys: CamKey3[], lt: number, pt: number): 
     if (lt >= a.at && lt <= b.at) {
       const u = (lt - a.at) / Math.max(1e-6, b.at - a.at);
       const e = EASE[b.ease ?? 'inOut'](u);
-      return toCam(blendOrbit(rigOrbit(play, a.rig, pt), rigOrbit(play, b.rig, pt), e));
+      return toCam(blendOrbit(rigOrbit(play, a.rig, pt), rigOrbit(play, b.rig, pt), e, b.spin));
     }
   }
   return toCam(rigOrbit(play, keys[keys.length - 1].rig, pt));

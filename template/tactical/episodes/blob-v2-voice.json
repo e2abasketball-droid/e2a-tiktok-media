@@ -1,0 +1,49 @@
+{
+ "id": "blob-v2-voice",
+ "title": "BLOB Screen-the-Screener V2 cinematic",
+ "fps": 30,
+ "voiceRaw": "tactical/blob/voice-v2-raw.mp3",
+ "wordsRaw": "blob-v2-voice.words-raw.json",
+ "voice": "tactical/blob/voice-v2.wav",
+ "voiceMix": "tactical/blob/voice-v2.mix.wav",
+ "preroll": 0.1,
+ "tail": 1.0,
+ "gapFill": "silence",
+ "gaps": [
+  {
+   "after": "wide open?!",
+   "sec": 0.6,
+   "why": "hook reveal settles on O2 -> crane back to the box"
+  },
+  {
+   "after": "screens for FIVE.",
+   "sec": 0.55,
+   "why": "screen-1 plant, O5 starts the cut"
+  },
+  {
+   "after": "and finishes.",
+   "sec": 0.95,
+   "why": "layup through the net (A)"
+  },
+  {
+   "after": "Watch the price.",
+   "sec": 0.7,
+   "why": "orbit lands, rise to top-down"
+  },
+  {
+   "after": "Catch. Set. THREE!",
+   "sec": 1.0,
+   "why": "the three through the net (B)"
+  },
+  {
+   "after": "onto TWO?",
+   "sec": 0.45,
+   "why": "RIM / SWITCH fork"
+  }
+ ],
+ "plays": {
+  "A": "blob-a-rim",
+  "B": "blob-b-three"
+ },
+ "shots": []
+}

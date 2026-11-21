@@ -12,7 +12,7 @@ import {poseAt} from './rig.ts';
 import type {PlayWithActions} from './rig.ts';
 import type {ChoreoPlay} from './choreo.ts';
 import type {TeleOv} from './telestration3d';
-import {PassTravel, Telestration3D} from './telestration3d';
+import {PassTravel, Telestration3D, floorQuad, textTex, yawAxes} from './telestration3d';
 import type {TeleOvBP} from './telestration3d-bp';
 import {TelestrationBP} from './telestration3d-bp';
 
@@ -97,7 +97,9 @@ const cut = (pts: V2[], u: number): V2[] => {
 export type Ov3 =
   | {type: 'ring'; player: string; color?: string; pulse?: boolean; size?: number}
   /** consume (2026-11-19): the route ahead of the player only (born under him, eaten as he runs it) */
-  | {type: 'route'; player: string; t0: number; t1: number; color?: string; draw?: number; dashed?: boolean; width?: number; pts?: V2[]; trail?: boolean; consume?: boolean}
+  | {type: 'route'; player: string; t0: number; t1: number; color?: string; draw?: number; dashed?: boolean; width?: number; pts?: V2[]; trail?: boolean; consume?: boolean;
+     /** 2026-11-21 (BLOB V2 fork): a plated floor label at the arrow tip, read from camera yaw `labelYaw` */
+     label?: string; labelYaw?: number; labelOffset?: V2; labelSize?: number}
   | {type: 'screen'; player?: string; at?: V2; n: number; facing?: number}
   /** travel (2026-11-19): seconds for a lit segment to run from the passer to the catch point; dstAt = play time of the catch */
   | {type: 'passLane'; src: string; dst: string | V2; color?: string; travel?: number; dstAt?: number}
@@ -517,6 +519,13 @@ export const Overlays3D: React.FC<{play: Play; pt: number; items: LiveOv3[]}> = 
                 <mesh geometry={ribbon(part, w * 2.2, 0.011)} material={basic(col, 0.18 * a)} />
                 <mesh geometry={ribbon(part, w, 0.013, o.dashed)} material={basic(col, 0.95 * a)} />
                 <mesh geometry={arrowHead(tip, [tip[0] - prev[0], tip[1] - prev[1]], w * 3.2)} material={basic(col, 0.95 * a)} />
+                {o.label && u > 0.85 && (() => {
+                  const t = textTex(o.label, col, true);
+                  const {right, up} = yawAxes(o.labelYaw ?? 0);
+                  const h = o.labelSize ?? 0.5;
+                  const c: V2 = [tip[0] + (o.labelOffset?.[0] ?? 0), tip[1] + (o.labelOffset?.[1] ?? 0)];
+                  return <mesh geometry={floorQuad(c, right, up, h * t.aspect, h, 0.022)} material={new THREE.MeshBasicMaterial({color: '#FFFFFF', map: t.tex, transparent: true, opacity: 0.97 * a * Math.min(1, (u - 0.85) / 0.15), depthWrite: false, toneMapped: false, side: THREE.DoubleSide})} />;
+                })()}
               </group>
             );
           }
@@ -692,6 +701,7 @@ export const Overlays3D: React.FC<{play: Play; pt: number; items: LiveOv3[]}> = 
           case 'floorText':
           case 'ballTrail':
           case 'ghostTrail':
+          case 'screenTag':
             return <Telestration3D key={i} play={play} pt={pt} o={o} a={a} />;
           case 'arrow3d':
           case 'lockRing':

@@ -43,7 +43,7 @@ export type Shot3 = {
   sfx?: {at: Anchor; name: string; volume?: number}[];
   hide?: string[];
   /** 2026-11-17: warm practice gym or cold game arena (default: the arena as before); 2026-11-20: 'academy' look */
-  env?: 'practice' | 'game' | 'academy';
+  env?: 'practice' | 'game' | 'academy' | 'cinema';
   /** 2026-11-19: 'A' = legacy capsule athletes in this shot (default: the episode's choice, else the E2A players) */
   players3d?: 'A' | 'C';
   /** 2026-11-18 (V4): gain on this shot's automatic sfx (0 = none, e.g. a quiet memory echo of the rim done by hand) */
@@ -77,7 +77,7 @@ export type Episode3 = {
    *  defense variants, validated clips by action, compatible rig animation otherwise); 'A' = legacy capsule athletes */
   players3d?: 'A' | 'C';
   /** 2026-11-20: look profile for every shot that does not set its own `env` ('academy' = master prompt 3D sec. 7.1) */
-  env?: 'practice' | 'game' | 'academy';
+  env?: 'practice' | 'game' | 'academy' | 'cinema';
 };
 
 type Cue = {t: number; name: string; volume: number};

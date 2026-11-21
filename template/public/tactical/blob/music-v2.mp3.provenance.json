@@ -1,0 +1,44 @@
+{
+ "licence_key": "music/synth/tactical",
+ "source": "E2A in-house synth engine music/e2a_music.py --story tactical --track cine_a --duration 40 --drop-at 17.2 --payoff-at 27.98 --no-sfx --soft-edges --history '' (no samples, no ball sounds; engine plan end_hit 39.01 suppressed by --soft-edges; measured 39.5-40.0 s at -55.9 dBFS, last 50 ms -90 dBFS)",
+ "sha256": "dfb5e870ff37adc48312ff2452272938837968a7c7e8e6df001f17e6ea280230",
+ "engine_plan": {
+  "track": "cine_a",
+  "style": "cinematic",
+  "bpm": 124,
+  "key": 2,
+  "story": "tactical",
+  "drop": 17.2,
+  "payoff": 27.98,
+  "end_hit": 39.01,
+  "sections": [
+   [
+    "intro",
+    -0.22,
+    13.33
+   ],
+   [
+    "build",
+    13.33,
+    17.2
+   ],
+   [
+    "drop",
+    17.2,
+    24.94
+   ],
+   [
+    "break",
+    24.94,
+    28.81
+   ],
+   [
+    "drop2",
+    28.81,
+    42.36
+   ]
+  ],
+  "duration": 40.0,
+  "out": "template/public/tactical/blob/music-v2.mp3"
+ }
+}

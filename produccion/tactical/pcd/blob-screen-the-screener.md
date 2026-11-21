@@ -79,3 +79,29 @@
 | Variante | Plataforma | Ventana | Vistas | Retención / visionado medio | Interacción | Nota |
 | --- | --- | --- | --- | --- | --- | --- |
 | única | | | sin dato | sin dato | sin dato | |
+
+## V2 cinematográfica (2026-11-21)
+- **Episodio:** `blob-screen-the-screener-v2`, una única versión V2 de 40 s.
+  - Generador: `template/tactical/episodes/_gen-blob-v2.py`.
+  - Acabado: `template/tactical/episodes/_finish-blob-v2.py`.
+  - Entregable: `E2A-BLOB-ScreenTheScreener-V2-CINEMATIC.mp4`. No sustituye ni sobrescribe la V1 FINAL.
+- **Fuente:** brief del dueño `E2A_BLOB_V2_MASTER_PROMPT_CINEMATIC_3D_CAMERA_VFX.md`. Las jugadas y los dos finales son los mismos de la V1: `blob-a-rim` y `blob-b-three` no han cambiado.
+- **Voz:** UNA toma nueva de Deuce, eleven_v4 con etiquetas de emoción, con el guion de la sec. 3 del brief. Más energía en los 3 primeros segundos. Coste: 635,94 créditos; Scribe, 0 créditos.
+- **Música:** del motor propio, pista `cine_a`, sin efectos de sonido (`--no-sfx --soft-edges`).
+- **Cámaras (CameraQA, `scripts/qc-camera.mts`):**
+  - órbita de 203° alrededor de O3 a cámara lenta editorial (0,22×);
+  - cenital a 80° de elevación, mantenido 2,6 s;
+  - seguimiento de O2;
+  - plano heroico del tiro;
+  - plano de decisión detrás de X4.
+  - El plano final vuelve al encuadre del fotograma 0, para que el vídeo enlace en bucle.
+- **Efectos en coordenadas de pista:**
+  - `screenTag`: «O2 SCREENS X5» y «O4 SCREENS X2», con el número del bloqueo en un círculo;
+  - rutas bloqueadas en rojo discontinuo;
+  - rutas de corte en dorado;
+  - fantasmas de O2 (solo en el cenital);
+  - destello coral donde X4 abandona su zona;
+  - zona de recepción;
+  - bifurcación final RIM? / SWITCH?.
+  - Nunca hay más de 3 anotaciones a la vez.
+- **Iluminación:** `env: "cinema"`. Los fotogramas antes/después están en `v2-cinematic/antes-despues/`.

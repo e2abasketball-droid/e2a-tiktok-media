@@ -6,9 +6,9 @@ D = os.path.dirname(os.path.abspath(__file__))
 probes = json.load(open(sys.argv[1]))  # [{"id", "play": "A"|"B", "t": game s, "cam": orbit rig}]
 src = json.load(open(os.path.join(D, "blob-voice.json")))
 ep = {k: v for k, v in src.items() if k not in ("wordsRaw", "gaps", "voiceRaw", "gapFill")}
-ep.update({"id": "blob-probe", "title": "BLOB probe", "branches": {"a": "A", "b": "B"}, "env": "academy", "pinV2": True,
+ep.update({"id": "blob-probe", "title": "BLOB probe", "branches": {"a": "A", "b": "B"}, "env": sys.argv[2] if len(sys.argv) > 2 else "academy", "pinV2": True,
            "autoSfx": False, "subtitleHide": [[0, 999]], "tail": 0.0})
-ep["shots"] = [{"id": p["id"], "at": round(i / 30, 4), "play": p["play"], "branch": "a" if p["play"] == "A" else "b",
+ep["shots"] = [{"id": p["id"], "at": round(i / 30 - (0.0005 if i else 0), 4), "play": p["play"], "branch": "a" if p["play"] == "A" else "b",
                 "remap": [[0, p["t"]], [1 / 30, p["t"]]], "camera": [{"at": 0, "rig": p["cam"]}], "ov3": p.get("ov3", []),
                 "screen": []} for i, p in enumerate(probes)]
 n = len(probes)

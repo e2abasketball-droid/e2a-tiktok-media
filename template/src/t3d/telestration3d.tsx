@@ -28,7 +28,11 @@ export type TeleOv =
   | {type: 'ripple'; player?: string; at?: V2; color?: string; r?: number; rings?: number; period?: number}
   | {type: 'floorText'; text: string; at?: V2; player?: string; offset?: V2; yaw?: number; size?: number; color?: string; plate?: boolean}
   | {type: 'ballTrail'; len?: number; color?: string}
-  | {type: 'ghostTrail'; player: string; len?: number; n?: number; color?: string; columns?: boolean};
+  | {type: 'ghostTrail'; player: string; len?: number; n?: number; color?: string; columns?: boolean}
+  /** 2026-11-21 (BLOB V2, brief VFX 02 + 08): ONE screen annotation = floor stencil under the screener's feet with a
+   *  facing arrow toward the defender he screens, a circled screen number and a plated floor label ("O2 SCREENS X5").
+   *  Nothing is drawn before `plantAt` (play time of the two-foot plant); the stencil pops and pulses once from there. */
+  | {type: 'screenTag'; player: string; vs: string; n: number; label: string; plantAt: number; yaw?: number; labelOffset?: V2; size?: number};
 
 const radial = (() => {
   let t: THREE.Texture | null = null;
@@ -67,7 +71,7 @@ const beamTex = (() => {
 })();
 
 /** floor label texture (Anton, already loaded by the composition before the scene mounts) */
-const textTex = (() => {
+export const textTex = (() => {
   const cache = new Map<string, {tex: THREE.Texture; aspect: number}>();
   return (text: string, color: string, plate: boolean) => {
     const key = `${text}|${color}|${plate}`;
@@ -106,7 +110,7 @@ const textTex = (() => {
 })();
 
 /** quad lying on the floor: centre, baseline direction (screen right), height direction (screen up) */
-const floorQuad = (c: V2, right: V2, up: V2, w: number, h: number, z = 0.02, uMax = 1) => {
+export const floorQuad = (c: V2, right: V2, up: V2, w: number, h: number, z = 0.02, uMax = 1) => {
   const p = (sx: number, sy: number) => W3([c[0] + right[0] * sx * w * 0.5 + up[0] * sy * h * 0.5, c[1] + right[1] * sx * w * 0.5 + up[1] * sy * h * 0.5, z]);
   const g = new THREE.BufferGeometry();
   g.setAttribute('position', new THREE.Float32BufferAttribute([...p(-1, -1), ...p(1, -1), ...p(1, 1), ...p(-1, 1)], 3));
@@ -239,6 +243,56 @@ export const Telestration3D: React.FC<{play: Play; pt: number; o: TeleOv & {age:
               </group>
             );
           })}
+        </group>
+      );
+    }
+    case 'screenTag': {
+      const since = pt - o.plantAt;
+      if (since < -1e-6) return null;
+      const pop = eo(Math.max(since / 0.3, Math.min(1, o.age / 0.35) * (since > 0 ? 1 : 0.999)));
+      // drawn where the screen WAS set (screens are stationary, so this is also where the screener stands while it
+      // lasts); a recap after he has left keeps the marker on the real screen spot
+      const at = posAt(play.tracks[o.player], clamp(o.plantAt, 0, play.duration));
+      const me = at;
+      const vs = posAt(play.tracks[o.vs], clamp(o.plantAt, 0, play.duration));
+      const L = Math.hypot(vs[0] - at[0], vs[1] - at[1]) || 1;
+      const n: V2 = [(vs[0] - at[0]) / L, (vs[1] - at[1]) / L];
+      const side: V2 = [-n[1], n[0]];
+      const gold = '#F2C76A';
+      const c: V2 = [me[0] + n[0] * 0.18, me[1] + n[1] * 0.18];
+      // stencil: a short wide bar (the wall the defender meets) + a soft pad under both feet
+      const bar = floorQuad(c, side, n, 1.25 * pop, 0.16, 0.015);
+      const pad = floorQuad([me[0], me[1]], side, n, 1.05 * pop, 0.7 * pop, 0.012);
+      // facing arrow: triangle from the bar toward the defender
+      const tipD = 0.62;
+      const tri = new THREE.BufferGeometry();
+      const q = (a: number, b: number) => W3([c[0] + n[0] * a + side[0] * b, c[1] + n[1] * a + side[1] * b, 0.016]);
+      tri.setAttribute('position', new THREE.Float32BufferAttribute([...q(0.14, -0.2 * pop), ...q(0.14, 0.2 * pop), ...q(0.14 + (tipD - 0.14) * pop, 0)], 3));
+      tri.setIndex([0, 1, 2]);
+      // one pulse ring at the plant (play time, so a rewind / slow motion keeps it honest)
+      const pu = clamp(since / 0.5);
+      const {right, up} = yawAxes(o.yaw ?? 0);
+      const num = textTex(String(o.n), '#0B1C3D', false);
+      const lab = textTex(o.label, gold, true);
+      const hs = (o.size ?? 0.42) * pop;
+      const off = o.labelOffset ?? [0, 0];
+      const lc: V2 = [me[0] + off[0], me[1] + off[1]];
+      const nc: V2 = [me[0] - side[0] * 0.95, me[1] - side[1] * 0.95];
+      return (
+        <group>
+          <mesh geometry={pad} material={add(gold, 0.38 * a, radial())} />
+          <mesh geometry={bar} material={flat(gold, 0.95 * a)} />
+          <mesh geometry={tri} material={flat(gold, 0.95 * a)} />
+          {pu < 1 && (
+            <mesh position={W3([me[0], me[1], 0.017])} rotation={[-Math.PI / 2, 0, 0]} scale={0.4 + 1.1 * eo(pu)} material={flat(gold, 0.85 * (1 - pu) * a)}>
+              <ringGeometry args={[0.9, 1.0, 64]} />
+            </mesh>
+          )}
+          <mesh position={W3([nc[0], nc[1], 0.018])} rotation={[-Math.PI / 2, 0, 0]} scale={0.27 * pop} material={flat(gold, 0.97 * a)}>
+            <circleGeometry args={[1, 40]} />
+          </mesh>
+          <mesh geometry={floorQuad(nc, right, up, 0.3 * pop * num.aspect, 0.3 * pop, 0.019)} material={flat('#FFFFFF', a, num.tex)} />
+          {o.label && <mesh geometry={floorQuad(lc, right, up, Math.max(0.01, hs * lab.aspect), Math.max(0.01, hs), 0.02)} material={flat('#FFFFFF', 0.97 * a, lab.tex)} />}
         </group>
       );
     }

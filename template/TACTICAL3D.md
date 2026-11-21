@@ -153,3 +153,22 @@ Todo es opcional y se activa por jugada o por episodio. Lo que no lo usa no camb
   - `--cloth-cut legacy` reconstruye el glb anterior byte a byte.
 - **Lección:** `posAt` es un spline. Un cambio brusco de rumbo entre dos waypoints sobrepasa la trayectoria y provoca solapes de cuerpos. Se arregla con anclas intermedias, y después hay que repetir `qc-contact` sobre la jugada FINAL antes de renderizar.
   - En BLOB, el solape O2–X5 al iniciar el rizo (curl) de O2 en B (−0,078 m) solo apareció al repetir el QC tras un cambio tardío.
+
+## BLOB V2 cinematográfico (2026-11-21)
+- **Órbita con giro largo:** una clave de cámara con `"spin": true` interpola el yaw de forma lineal (no por el camino corto). Permite órbitas de más de 180° (BLOB V2: 203° alrededor de O3). Sin `spin`, el comportamiento no cambia.
+- **Entorno `"env": "cinema"`:** fondo y niebla `#071022`, suelo más mate (rugosidad 0,62), luz principal cálida, contraluz frío `#A9C4FF` y relleno cálido. Los jugadores usan el look `academy`. Los episodios existentes no cambian.
+- **`screenTag` (ov3):** `{player, vs, n, label, plantAt, yaw?, labelOffset?, size?}`. Dibuja en el suelo, en la posición del bloqueo en `plantAt`:
+  - una placa y una barra con un triángulo hacia el defensor bloqueado;
+  - un anillo de pulso;
+  - el número del bloqueo en un círculo dorado;
+  - la etiqueta (p. ej. «O2 SCREENS X5») con su placa, desplazada `labelOffset` metros.
+  - No aparece antes de `plantAt`. Sirve también para recapitular un bloqueo anterior.
+- **Etiquetas en flechas (`route`):** `label`, `labelYaw`, `labelOffset`, `labelSize`. La etiqueta aparece en la punta cuando la flecha ya está dibujada al 85 %.
+- **CameraQA:** `node --experimental-strip-types scripts/qc-camera.mts <episodio.json> --orbit <plano>:<jugador>:<grados> --topdown <plano>:<elevación>:<segundos>`. Por plano mide:
+  - el barrido azimutal real;
+  - la elevación mínima y máxima;
+  - el giro de la vista por fotograma;
+  - el paso de la cámara por fotograma;
+  - el roll.
+  - Falla si la órbita no llega a los grados pedidos o si el sujeto sale del encuadre seguro; también si el cenital no alcanza la elevación o no la mantiene el tiempo pedido.
+- **Lección (anclas):** las palabras repetidas en la narración («TWO», «Set.», «for», «Different», «They») se resuelven en la PRIMERA aparición. Usa una frase única («They collapse») o `#2`, y repite `qc-tactical3d` (anclas dentro de su plano) antes de renderizar.
