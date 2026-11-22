@@ -1,0 +1,56 @@
+{
+ "play": "realism-v3-2-abc",
+ "motion": "v32",
+ "hz": 120,
+ "players": {
+  "O1": {
+   "footContacts": 28,
+   "footSlideMax": 0.016,
+   "footSlideOver2cm": 0,
+   "floorMin": 0,
+   "floorMinAt": 1.658,
+   "kneeFlexMax": 102.725,
+   "kneeFlexMin": 5.126,
+   "elbowFlexMax": 144.217,
+   "neckYawMax": 69.901,
+   "accMax": {
+    "pelvis": {
+     "a": 237.448,
+     "t": 8.55
+    },
+    "head": {
+     "a": 237.652,
+     "t": 8.55
+    },
+    "wrL": {
+     "a": 994.269,
+     "t": 6.725
+    },
+    "wrR": {
+     "a": 525.61,
+     "t": 6.592
+    },
+    "anL": {
+     "a": 351.357,
+     "t": 7.917
+    },
+    "anR": {
+     "a": 549.599,
+     "t": 5.992
+    }
+   },
+   "palmGap": {
+    "median": 0.012,
+    "p95": 0.012,
+    "max": 0.018,
+    "n": 321
+   },
+   "firstContact": 4.925,
+   "ballBodyFrames120": 86,
+   "armReachMax": 0.999,
+   "legReachMax": 0.999,
+   "occludedSamples30": 0
+  }
+ },
+ "defects": 27
+}

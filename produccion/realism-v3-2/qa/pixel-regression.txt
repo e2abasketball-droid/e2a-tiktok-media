@@ -1,0 +1,10 @@
+legacy frame 0: differing pixels 0, sha(rv31)=82b696778488 sha(rv32)=82b696778488
+legacy frame 100: differing pixels 0, sha(rv31)=087592476801 sha(rv32)=087592476801
+legacy frame 148: differing pixels 0, sha(rv31)=bb6e3fdc1c39 sha(rv32)=bb6e3fdc1c39
+legacy frame 245: differing pixels 0, sha(rv31)=638916b1161e sha(rv32)=638916b1161e
+legacy frame 360: differing pixels 0, sha(rv31)=0c56327d5523 sha(rv32)=0c56327d5523
+v31 frame 0: differing pixels 0, sha(rv31)=63a88e23584d sha(rv32)=63a88e23584d
+v31 frame 100: differing pixels 0, sha(rv31)=3fd2575a38c9 sha(rv32)=3fd2575a38c9
+v31 frame 148: differing pixels 0, sha(rv31)=be51e4a23315 sha(rv32)=be51e4a23315
+v31 frame 245: differing pixels 0, sha(rv31)=fd0631f444b1 sha(rv32)=fd0631f444b1
+v31 frame 360: differing pixels 0, sha(rv31)=587c61c02014 sha(rv32)=587c61c02014

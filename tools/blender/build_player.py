@@ -48,10 +48,10 @@ ap.add_argument('--rig', choices=['v1', 'v3'], default='v1',
 ap.add_argument('--body', choices=['v1', 'v31'], default='v1',
                 help='v31 (Realism V3.1, 2026-11-22): athletic morph set on top of the variant EXTRA (broader shoulders / lats, '
                      'defined calves and forearms, trapezius / neck, narrower hips, longer thighs). v1 = byte-identical')
-ap.add_argument('--shoe', choices=['v1', 'v31'], default='v1',
+ap.add_argument('--shoe', choices=['v1', 'v31', 'v32'], default='v1',
                 help='v31: a separate sole slab (heel 3.2 cm -> toe 1.7 cm, toe spring, 5 mm wider than the upper) under the hull upper')
 ap.add_argument('--out-meta', default='', help='write a metadata JSON (bones, meshes, triangles, materials, morphs, animations)')
-ap.add_argument('--garment', choices=['v1', 'v2', 'v3', 'v31'], default='v1',
+ap.add_argument('--garment', choices=['v1', 'v2', 'v3', 'v31', 'v32'], default='v1',
                 help='v2 (Realism V2, 2026-11-21): looser jersey that HANGS from the chest (straight drape, not painted on the '
                      'belly), 5 cm longer, always outside the shorts waistband, hem weights off the thighs, and per-vertex '
                      '_E2A_HEM / _E2A_EASE attributes for the engine secondary motion (src/t3d/cloth2.ts). v1 = byte-identical')
@@ -242,6 +242,7 @@ def transfer_corrective(bone, Wg, extra, gate):
 
 
 CORR = []  # (name, delta, meta)
+JCORR = []  # V3.2 garment-only correctives (jersey + its trim): (name, None, meta)
 CORR_POSED = {}
 if RV3:
     for s_ in 'LR':
@@ -444,6 +445,42 @@ def smooth_loops(P, faces, iters=4, flat=None):
     return P
 
 
+def smooth_field(X, faces, mask, iters=20, lam=0.5, renorm=False):
+    """Realism V3.2: Laplacian smoothing of a per-vertex field (skin weights n x B, or a scalar n) over the garment's
+    edge graph, only on `mask` vertices (the rest stay fixed and act as boundary). Weights are renormalised per row.
+    Why: a skin-weight change over ONE ring of edges (strap: chest -> clavicle, shorts hem: hips -> thigh) is what
+    stretches those triangles by 2-3x in a raised-arm / high-knee pose (qc_cloth_v32 on V3.1); spreading the same
+    change over 6-10 rings keeps the stretch near the fabric's (<= ~1.3)."""
+    E = set()
+    for f in faces:
+        for i in range(len(f)):
+            a_, b_ = f[i], f[(i + 1) % len(f)]
+            E.add((min(a_, b_), max(a_, b_)))
+    E = np.array(sorted(E))
+    Y = np.array(X, dtype=np.float64, copy=True)
+    one = Y.ndim == 1
+    if one:
+        Y = Y[:, None]
+    n = len(Y)
+    deg = np.bincount(E.ravel(), minlength=n).astype(np.float64)
+    m = np.zeros(n, bool)
+    mk = np.asarray(mask)
+    if mk.dtype == bool:
+        m[:len(mk)] = mk
+    else:
+        m[mk] = True
+    m &= deg > 0
+    for _ in range(iters):
+        S = np.zeros_like(Y)
+        np.add.at(S, E[:, 0], Y[E[:, 1]])
+        np.add.at(S, E[:, 1], Y[E[:, 0]])
+        Nb = S / np.maximum(deg, 1)[:, None]
+        Y[m] = (1 - lam) * Y[m] + lam * Nb[m]
+        if renorm:
+            Y[m] /= np.maximum(Y[m].sum(1, keepdims=True), 1e-9)
+    return Y[:, 0] if one else Y
+
+
 def fourier_loops(P, faces, K=10, flat=None, min_len=12):
     """Realism V3: low-pass every boundary loop of a garment (keep the first K harmonics of the closed curve): the iso-cut
     hem / armhole / collar lines keep a few-mm ripple from the quads that the gold piping (a tube along the loop) turned
@@ -492,9 +529,10 @@ def taubin_garment(P, polys, Vsrc, Nsrc, iters=30, min_off=0.006, lam=0.5, mu=-0
     return P
 
 
-GV2 = a.garment in ('v2', 'v3', 'v31')  # v3 keeps the v2 jersey drape and adds the v3 shorts / trims / attributes below
-GV3 = a.garment in ('v3', 'v31')
-GV31 = a.garment == 'v31'  # Realism V3.1: loose jersey (deeper armholes, air gap) and looser shorts on top of v3
+GV2 = a.garment in ('v2', 'v3', 'v31', 'v32')  # v3 keeps the v2 jersey drape and adds the v3 shorts / trims / attributes below
+GV3 = a.garment in ('v3', 'v31', 'v32')
+GV31 = a.garment in ('v31', 'v32')  # Realism V3.1: loose jersey (deeper armholes, air gap) and looser shorts on top of v3
+GV32 = a.garment == 'v32'  # Realism V3.2: V3.1 cut + smoothed weights / hem fields, fold + strap correctives (see GV32 blocks)
 hem_j = hip_z - (0.085 if GV2 else 0.05)
 hem_s = knee_z + 0.12
 ISO_DIFF = 10  # graph diffusion steps (lam 0.5): rounds the staircase (quads ~2-3 cm) without eating the straps
@@ -644,9 +682,10 @@ def make_mesh(name, P, faces, mats, face_mat, uvs=None, W=None):
     return ob, used
 
 
-def pipe_loops(name, P, faces, W, radius=0.006, keep=lambda q: True, inset=0.004):
-    """gold piping: a thin tube along every boundary loop of a clothing mesh, skinned like its nearest vertex"""
-    verts, quads, wts = [], [], []
+def pipe_loops(name, P, faces, W, radius=0.006, keep=lambda q: True, inset=0.004, keys=None):
+    """gold piping: a thin tube along every boundary loop of a clothing mesh, skinned like its nearest vertex
+    (V3.2: keys = {shape key: delta per source vertex} -> the same shape keys on the tube, so it stays on its edge)"""
+    verts, quads, wts, src = [], [], [], []
     Nl = vnormals(P, faces)
     for lp in boundary_loops(faces):
         q = P[lp]
@@ -664,6 +703,7 @@ def pipe_loops(name, P, faces, W, radius=0.006, keep=lambda q: True, inset=0.004
                 ang = 2 * math.pi * r / 6
                 verts.append(c + radius * (math.cos(ang) * nn + math.sin(ang) * bn))
                 wts.append(W[lp[k]])
+                src.append(lp[k])
         for k in range(m):
             for r in range(6):
                 a0 = base + k * 6 + r; a1 = base + k * 6 + (r + 1) % 6
@@ -672,16 +712,26 @@ def pipe_loops(name, P, faces, W, radius=0.006, keep=lambda q: True, inset=0.004
     if not verts:
         return None
     verts = np.array(verts); wts = np.array(wts)
-    ob, _ = make_mesh(name, verts, quads, [M_TRIM], [0] * len(quads), None, wts)
+    ob, used_ = make_mesh(name, verts, quads, [M_TRIM], [0] * len(quads), None, wts)
+    if keys:
+        ob.shape_key_add(name='Basis', from_mix=False)
+        for nm, dl in keys.items():
+            kb = ob.shape_key_add(name=nm, from_mix=False)
+            for vi_new, vi_old in enumerate(used_):
+                kb.data[vi_new].co = (verts[vi_old] + dl[src[vi_old]]).tolist()
     return ob
 
 
 # body (skin + socks)
 ISO = a.cloth_cut == 'iso'
 sock_face = (cent[:, 2] < 0.26) & ((freg == 8) | (freg == 255))
+# V3.2 shoe: low open collar, so the sock of the ankle / upper foot (above FOOT_SHOW_Z) is kept and enters the collar
+FOOT_SHOW_Z = 0.075 if a.shoe == 'v32' else 9.0
+foot_show = (freg == 9) & (cent[:, 2] > FOOT_SHOW_Z)
+sock_face = sock_face | foot_show
 if ISO:
     UVa = np.asarray(UV, float)
-    bpoly, bextra, bsrc, bfid = iso_clip(np.where(freg != 9)[0], 1.0 - G_skin_hide, 0.5)  # feet: under the shoes
+    bpoly, bextra, bsrc, bfid = iso_clip(np.where((freg != 9) | foot_show)[0], 1.0 - G_skin_hide, 0.5)  # feet: under the shoes
     bmat = [1 if sock_face[fi] else 0 for fi in bfid]
     buv = [[(UVa[FU[fi][c0]] * (1 - t) + UVa[FU[fi][c1]] * t).tolist() for c0, c1, t in cs] for fi, cs in zip(bfid, bsrc)]
     ob_body, bused = make_mesh('E2A_Body', extend(V, bextra), bpoly, [M_SKIN, M_SOCK], bmat, buv, extend(WGT, bextra, weights=True))
@@ -933,6 +983,16 @@ if GV3:
 z0s, z1s = hem_s, hip_z + 0.12
 suv = cyl_uvs(Ps, spoly, z0s, z1s)
 shm = [0] * len(spoly)
+if GV32:
+    # V3.2 (owner review of V3.1 at 3.75 s: a triangular point on the shorts): (1) the hips -> thigh weight change of the
+    # leg tubes and the crotch is spread over ~8 rings (smooth_field) instead of 1-2; (2) the leg-opening cloth field
+    # _E2A_HEM is smoothed and capped at 0.45 (the runtime also gives the shorts their own small, thigh-relative swing)
+    _sv = np.unique(np.concatenate([np.asarray(f_) for f_ in spoly]))
+    _ms = np.zeros(len(Ps), bool); _ms[_sv] = True
+    _w0 = Wsh.copy()
+    Wsh = smooth_field(Wsh, spoly, _ms & (Vs[:, 2] < hip_z - 0.04), iters=28, lam=0.5, renorm=True)
+    S_HEM = np.clip(smooth_field(S_HEM, spoly, _ms, iters=12, lam=0.5), 0, None) * 0.5
+    print('garment v32 shorts: weights smoothed, max change', round(float(np.abs(Wsh - _w0)[_sv].max()), 3), 'hem max', round(float(S_HEM[_sv].max()), 3))
 ob_shorts, sused = make_mesh('E2A_Shorts', Ps, spoly, [M_SHORTS, M_TRIM], shm, suv, Wsh)
 if GV3:
     # leg openings swing with the engine cloth2 spring (same attributes as the jersey: _E2A_HEM free-ness, _E2A_EASE gap)
@@ -950,6 +1010,13 @@ if CORR and any(m_.get('mode') == 'flex' for _n, _d, m_ in CORR):
         if m_.get('mode') != 'flex':
             continue  # knee / elbow keys: present (same names on every mesh), zero delta
         ds = transfer_corrective(m_['bone'], Wsh, GEXTRA[id(G_shorts)], sg_)
+        if GV32:
+            # V3.2: hip flexion folds on the FRONT of that leg tube (3 soft creases +-5 mm, 6-20 cm below the waist)
+            _sd = 1.0 if nm.endswith('.L') else -1.0
+            _Ns = vnormals(Ps, spoly)
+            _fr = np.clip(-(Ps[:, 1] - 0.0) / 0.06, 0, 1) * (np.sign(Ps[:, 0]) == _sd)
+            _bd = np.clip((Ps[:, 2] - (hip_z - 0.24)) / 0.05, 0, 1) * np.clip(((hip_z - 0.05) - Ps[:, 2]) / 0.05, 0, 1)
+            ds = ds + _Ns * (0.005 * np.sin(2 * math.pi * (Ps[:, 2] - hip_z) / 0.05) * _fr * _bd)[:, None]
         for vi_new, vi_old in enumerate(sused):
             kb.data[vi_new].co = (Ps[vi_old] + ds[vi_old]).tolist()
         print(f'shorts {nm}: max fix {np.linalg.norm(ds, axis=1).max() * 100:.2f} cm')
@@ -996,16 +1063,60 @@ if GV2:
             mv = Wj[:, cl_] * low_
             Wj[:, cl_] -= mv
             Wj[:, ch_] += mv
+    if GV32:
+        # V3.2: the strap / armhole carries chest -> clavicle -> upperarm weights; with the change over one ring the strap
+        # stretched 3.4x and lifted off as a shell (qc_cloth_v32 on V3.1, 3.33 s). Spread over the top 14 cm
+        _jv = np.unique(np.concatenate([np.asarray(f_) for f_ in jpoly]))
+        _mj = np.zeros(len(Pj), bool); _mj[_jv] = True
+        _w0 = Wj.copy()
+        Wj = smooth_field(Wj, jpoly, _mj & (Pj[:, 2] > AH_Z - 0.14), iters=30, lam=0.5, renorm=True)
+        # and the spine -> chest band of the torso (the V3.1 chest counter-rotation of 0.55 rad at the 3.3 s plant stretched
+        # its 1 cm edges 2.6x): 40 passes over the whole trunk part above the waistband
+        Wj = smooth_field(Wj, jpoly, _mj, iters=150, lam=0.5, renorm=True)
+        print('garment v32 jersey: strap weights smoothed, max change', round(float(np.abs(Wj - _w0)[_jv].max()), 3))
     Pj = smooth_loops(Pj, jpoly, 4, flat=jflat)
     if GV3:
         Pj = fourier_loops(Pj, jpoly, 12, flat=jflat)
     juv = cyl_uvs(Pj, jpoly, z0j, z1j)
     ob_jersey, jused = make_mesh('E2A_Jersey', Pj, jpoly, [M_JERSEY, M_TRIM], jmat, juv, Wj)
     # V3: no gold ring on the jersey hem (read as a hard hoop): piping on the neck and armholes only
-    ob_jpipe = pipe_loops('E2A_JerseyTrim', Pj, jpoly, Wj, 0.0062, **({'keep': lambda q: q[:, 2].min() > hip_z + 0.12} if GV3 else {}))
+    JKEYS = {}
+    if GV32:
+        # ---- V3.2 garment correctives (pose-space shape keys, driven at runtime by the joint angles, rig correctives):
+        #   trunk       forward trunk flexion (chest vs hips, key 45 deg): 3 soft horizontal folds on the front belly band
+        #               (+-6 mm along the normal) and the front panel shortened 1 cm (fabric bunches instead of stretching)
+        #   shoulder.L/R arm raise (upperarm vs chest, key 90 deg): the strap / armhole edge on that side pulled 1 cm onto
+        #               the shoulder and 6 mm down (in V3.1 a raised arm lifted it off like a shell)
+        Nj_ = vnormals(Pj, jpoly)
+        zz = Pj[:, 2]
+        front = np.clip(-(Pj[:, 1] - J_YC) / 0.08, 0, 1)
+        band = np.clip((zz - (hip_z + 0.04)) / 0.05, 0, 1) * np.clip((chest_z + 0.02 - zz) / 0.06, 0, 1)
+        z0 = hip_z + 0.04
+        fold = 0.006 * np.sin(2 * math.pi * (zz - z0) / 0.055)
+        dT = Nj_ * (fold * front * band)[:, None]
+        dT[:, 2] += -0.010 * front * np.clip((zz - z0) / max(1e-6, chest_z - z0), 0, 1) * np.clip((chest_z + 0.1 - zz) / 0.1, 0, 1)
+        JKEYS['trunk'] = dT
+        for sd, sg in (('L', 1.0), ('R', -1.0)):
+            near = np.clip(1 - np.hypot(np.abs(Pj[:, 0]) - AH_X * 0.85, (zz - (AH_Z + 0.06)) * 1.2) / 0.12, 0, 1) * (np.sign(Pj[:, 0]) == sg)
+            near = near * near * (3 - 2 * near)
+            dS = -Nj_ * (0.010 * near)[:, None]
+            dS[:, 2] += -0.006 * near
+            JKEYS[f'shoulder.{sd}'] = dS
+        ob_jersey.shape_key_add(name='Basis', from_mix=False)
+        for nm, dl in JKEYS.items():
+            kb = ob_jersey.shape_key_add(name=nm, from_mix=False)
+            for vi_new, vi_old in enumerate(jused):
+                kb.data[vi_new].co = (Pj[vi_old] + dl[vi_old]).tolist()
+            print(f'jersey corrective {nm}: max {np.linalg.norm(dl[jused], axis=1).max() * 100:.2f} cm')
+        JCORR.extend([('trunk', None, {'bone': 'chest', 'parent': 'hips', 'key': 45, 'mode': 'flexUp'}),
+                      ('shoulder.L', None, {'bone': 'upperarm.L', 'parent': 'chest', 'key': 90, 'mode': 'raise'}),
+                      ('shoulder.R', None, {'bone': 'upperarm.R', 'parent': 'chest', 'key': 90, 'mode': 'raise'})])
+    ob_jpipe = pipe_loops('E2A_JerseyTrim', Pj, jpoly, Wj, 0.0062, **({'keep': lambda q: q[:, 2].min() > hip_z + 0.12} if GV3 else {}), keys=JKEYS or None)
     # per-vertex data for the engine secondary motion (src/t3d/cloth2.ts): _E2A_HEM 0 above the chest line -> 1 at the
     # hem (how free the cloth is), _E2A_EASE = horizontal gap to the body (m, how far the hem may swing inward)
     hem_w = np.clip((chest_z - 0.04 - Pj[:, 2]) / (chest_z - 0.04 - hem_j), 0, 1) ** 1.6
+    if GV32:  # V3.2: no single hem vertex freer than its ring (side "spikes" at 5.3-5.8 s in V3.1)
+        hem_w = np.clip(smooth_field(hem_w, jpoly, np.unique(np.concatenate([np.asarray(f_) for f_ in jpoly])), iters=10, lam=0.5), 0, 1)
     me_ = ob_jersey.data
     for nm, arr in (('_E2A_HEM', hem_w), ('_E2A_EASE', np.maximum(0.0, J_EASE))):
         at = me_.attributes.new(nm, 'FLOAT', 'POINT')
@@ -1043,7 +1154,7 @@ for s_, sg in (('L', 1), ('R', -1)):
         cz = sum(me.vertices[v].co.z for v in poly.vertices) / len(poly.vertices)
         poly.material_index = (1 if cz < 0.03 else 0) if a.shoe == 'v1' else 0
         poly.use_smooth = True
-    if a.shoe == 'v31':
+    if a.shoe in ('v31', 'v32'):
         # ---- Realism V3.1 sole: the V3 shoe was a convex hull of the foot ("a sock with a dark bottom"). A SEPARATE slab
         # under it: outline = 2-D hull of the upper's lower 6 cm + 5 mm (the wall shows round the upper), heel 3.2 cm -> forefoot 1.8 cm, toe spring (the
         # front 22 % lifts 1.3 cm off the floor), heel bevel 6 mm, a 3 mm outward bulge at mid height (cupsole wall)
@@ -1103,6 +1214,99 @@ for s_, sg in (('L', 1), ('R', -1)):
                 if WGT[src, bi] > 1e-4:
                     vgs_[bn].add([vv.index], float(WGT[src, bi]), 'REPLACE')
         shoe_obs.append(obs_)
+        if a.shoe == 'v32':
+            # ---- Realism V3.2 upper: a MODELED LAST lofted on the sole outline instead of the convex hull of the foot
+            # ("slipper" in the V3.1 review). Heel counter (near-vertical back wall), padded collar with a dark lining
+            # and an open ankle (the sock goes in), a rounded toe box lower than the instep, a vamp that closes over
+            # the foot; every height is kept >= the foot inside (+5 mm) so no hidden body face can show
+            footv = np.where(freg[np.arange(len(F))] == 9)[0]
+            fv = np.unique(F[footv]); fv = fv[np.sign(V[fv, 0]) == sg]
+            hv = np.array([[v.co.x, v.co.y, v.co.z] for v in me.vertices])
+            NB = 24
+            def _topin(P_, u_):
+                b_ = np.clip((u_ * NB).astype(int), 0, NB - 1)
+                out = np.zeros(NB)
+                np.maximum.at(out, b_, P_[:, 2])
+                for _ in range(2):
+                    out = np.maximum(out, np.maximum(np.r_[out[1:], 0], np.r_[0, out[:-1]]))
+                return out
+            hullTop = _topin(hv, np.clip((yh - hv[:, 1]) / (yh - yt), 0, 1))
+            fv = fv[V[fv, 2] < 0.112]  # the ankle above the throat passes through the opening
+            footTop = _topin(V[fv], np.clip((yh - V[fv, 1]) / (yh - yt), 0, 1))
+            ub = lambda u_: np.clip((u_ * NB).astype(int), 0, NB - 1)
+            closed = smo((uu - 0.36) / 0.14)  # 0 = collar region (open), 1 = vamp / toe box (closed over the foot)
+            # mid-top basketball profile: heel counter / collar 12.5 cm, throat 11.5, instep, low rounded toe box
+            Hprof = np.interp(uu, [0.0, 0.05, 0.2, 0.34, 0.45, 0.6, 0.8, 0.95, 1.0], [0.128, 0.126, 0.12, 0.114, 0.104, 0.088, 0.066, 0.05, 0.042])
+            # closed part: over every foot vertex (+5 mm); collar: over the hidden foot faces (FOOT_SHOW_Z) + 1.2 cm
+            Hmin = np.where(closed > 0.5, footTop[ub(uu)] + 0.005, FOOT_SHOW_Z + 0.012)
+            Htop = np.maximum(Hprof, Hmin)
+            for _ in range(12):  # smooth along the outline (no dents from the per-bin foot heights)
+                Htop = np.maximum(Htop, 0.5 * Htop + 0.25 * (np.roll(Htop, 1) + np.roll(Htop, -1))) if _ < 2 else 0.5 * Htop + 0.25 * (np.roll(Htop, 1) + np.roll(Htop, -1))
+            Htop = np.maximum(Htop, Hmin - 0.002)
+            # the collar wraps the ANKLE: top ring = 2-D hull of the leg at collar height + 1.3 cm, reached along rays
+            # from the ankle centre (the heel counter / collar is a shaft around the leg, not a slipper rim)
+            legv = np.where((V[:, 2] > 0.095) & (V[:, 2] < 0.14) & (np.sign(V[:, 0]) == sg))[0]
+            lp = V[legv][:, :2]
+            lc = 0.5 * (lp.min(0) + lp.max(0))
+            ax_ = 0.5 * (lp.max(0) - lp.min(0)) + 0.014  # ellipse round the leg, 1.4 cm clearance (smooth collar edge)
+            def ankle_pt(xy_):
+                th = math.atan2((xy_[1] - lc[1]) / ax_[1], (xy_[0] - lc[0]) / ax_[0])
+                return lc + ax_ * np.array([math.cos(th), math.sin(th)])
+            z0 = topz - 0.004
+            ring_u = ring + nrm2 * 0.002
+            NJ = 10
+            levels = [math.sin(0.5 * math.pi * j / (NJ - 1)) for j in range(NJ)]
+            uv, uf, umat = [], [], []
+            cx = cen[0]
+            heelc = (uu < 0.2)
+            for j, vj in enumerate(levels):
+                dome = 1 - math.sqrt(max(0.0, 1 - vj ** 2))
+                for k_ in range(NS):
+                    c_ = np.array([cx, ring_u[k_, 1]])
+                    xyd = c_ + (ring_u[k_] - c_) * (1 - dome)
+                    toe_ = smo((uu[k_] - 0.86) / 0.14)
+                    xyd = xyd + np.array([0.0, 0.035 * toe_ * dome])  # toe box rounds back over the toes (+y = back)
+                    a_ = ankle_pt(ring_u[k_])
+                    wv = float(smo((vj - 0.25) / 0.75))
+                    xyc = ring_u[k_] + (a_ - ring_u[k_]) * wv
+                    xy = xyc + (xyd - xyc) * closed[k_]
+                    uv.append([xy[0], xy[1], z0[k_] + vj * (Htop[k_] - z0[k_])])
+            # padded collar roll: one more level, 7 mm inward and 9 mm down (closed region: a duplicate, merged below)
+            for k_ in range(NS):
+                top_ = np.array(uv[(NJ - 1) * NS + k_])
+                d_ = np.array([lc[0] - top_[0], lc[1] - top_[1], 0.0]); n_ = np.linalg.norm(d_)
+                lip = float(1 - smo(closed[k_] / 0.5))
+                uv.append((top_ + d_ / max(n_, 1e-6) * 0.006 * lip + np.array([0, 0, -0.01 * lip])).tolist())
+            for j in range(NJ):
+                for k_ in range(NS):
+                    a0, a1 = j * NS + k_, j * NS + (k_ + 1) % NS
+                    uf.append([a0, a1, a1 + NS, a0 + NS])
+                    # dark lining on the collar roll, dark heel counter cap (a sneaker cue, not a slipper)
+                    # + lace panel over the instep (top 2 levels, u 0.4-0.66) and a mid-height side stripe (u 0.22-0.7)
+                    lace = j >= NJ - 2 and 0.4 < uu[k_] < 0.66 and closed[k_] > 0.5
+                    stripe = j == 3 and 0.22 < uu[k_] < 0.7
+                    umat.append(1 if (j == NJ - 1 and closed[k_] < 0.5) or (uu[k_] < 0.12 and j >= NJ // 2) or lace or stripe else 0)
+            bm = bmesh.new()
+            for p_ in uv:
+                bm.verts.new(p_)
+            bm.verts.ensure_lookup_table()
+            for f_, m_ in zip(uf, umat):
+                try:
+                    fc = bm.faces.new([bm.verts[i_] for i_ in f_])
+                    fc.material_index = m_
+                except ValueError:
+                    pass
+            bmesh.ops.remove_doubles(bm, verts=bm.verts[:], dist=0.0015)
+            # close the vamp seam: the left / right top edges meet on the centre line at slightly different y
+            topv = [v_ for v_ in bm.verts if abs(v_.co.x - cx) < 0.002 and v_.co.z > 0.03]
+            bmesh.ops.remove_doubles(bm, verts=topv, dist=0.006)
+            bmesh.ops.dissolve_degenerate(bm, edges=bm.edges[:], dist=1e-5)
+            bm.normal_update()
+            me.clear_geometry()
+            bm.to_mesh(me); bm.free()
+            for poly in me.polygons:
+                poly.use_smooth = True
+            print(f'upper v32 {s_}: {len(me.vertices)} verts, heel collar {100 * Htop[uu < 0.04].mean():.1f} cm, instep {100 * Htop[(uu > 0.4) & (uu < 0.5)].mean():.1f} cm, toe box {100 * Htop[(uu > 0.75) & (uu < 0.85)].mean():.1f} cm')
         print(f'sole v31 {s_}: {len(sv)} verts, length {100 * (yh - yt):.1f} cm, heel {100 * topz[uu < 0.05].mean():.1f} cm, toe {100 * topz[uu > 0.9].mean():.1f} cm, toe spring {100 * bot.max():.1f} cm')
     ob = bpy.data.objects.new('E2A_Shoe.' + s_, me)
     bpy.context.collection.objects.link(ob)
@@ -1114,6 +1318,21 @@ for s_, sg in (('L', 1), ('R', -1)):
             if WGT[src, bi] > 1e-4:
                 vgs[bn].add([vv.index], float(WGT[src, bi]), 'REPLACE')
     shoe_obs.append(ob)
+    if a.shoe == 'v32':
+        # V3.2: foot / toe split of upper AND sole at the ball joint (3 cm blend), so the shoe bends at the ball when the
+        # heel rises (motion32 keeps the toe bone flat on the floor) instead of the whole shoe tilting like a slipper
+        yb = J[f'toe3-1.{s_}____head'][1]
+        fi, ti = SK.NAMES.index('foot.' + s_), SK.NAMES.index('toe.' + s_)
+        for ob_ in (ob, *[o for o in shoe_obs if o.name.startswith('E2A_Sole.' + s_)]):
+            gF, gT = ob_.vertex_groups['foot.' + s_], ob_.vertex_groups['toe.' + s_]
+            for vv in ob_.data.vertices:
+                ws_ = {g.group: g.weight for g in vv.groups}
+                ft = ws_.get(gF.index, 0.0) + ws_.get(gT.index, 0.0)
+                if ft < 1e-4:
+                    continue
+                wt = float(smo((yb + 0.012 - vv.co.y) / 0.03))
+                gF.add([vv.index], ft * (1 - wt), 'REPLACE')
+                gT.add([vv.index], ft * wt, 'REPLACE')
 ob_shoes = shoe_obs[0]
 
 # hair: short shell, volume on top (5440: curly on top, short sides and nape)
@@ -1232,7 +1451,7 @@ if a.out_rig:
                    'wrist' + s_: rest['hand.' + s_]['head'], 'hand' + s_: lm['handtip' + s_],
                    'ball' + s_: np.array([lm['ball' + s_][0], lm['ball' + s_][1], 0.0]), 'heel' + s_: np.array([lm['heel' + s_][0], lm['heel' + s_][1], 0.0])})
     hv = np.where(np.isin(np.arange(len(V)), np.unique(np.concatenate([F[i] for i in body_f]))))[0]
-    rig = {'version': ('e2a-player-v31' if GV31 else 'e2a-player-v3') if RV3 else 'e2a-player-v1', 'variant': a.variant, 'H': round(float(sk['V'][:mh_body.NBODY, 2].max()), 4),
+    rig = {'version': ('e2a-player-v32' if GV32 else 'e2a-player-v31' if GV31 else 'e2a-player-v3') if RV3 else 'e2a-player-v1', 'variant': a.variant, 'H': round(float(sk['V'][:mh_body.NBODY, 2].max()), 4),
            'source': 'MakeHuman base mesh (ara3d-data 1.1.0, CC0-1.0) morphed by tools/blender/mh_body.py + build_player.py',
            'kit': {k: VAR[k] for k in ('jersey', 'trim', 'number', 'shoe', 'sole', 'sock', 'hair', 'skin')},
            'bones': [{'name': b, 'parent': rest[b]['parent'], 'head': np.round(rest[b]['head'], 5).tolist(), 'tail': np.round(rest[b]['tail'], 5).tolist(),
@@ -1258,7 +1477,7 @@ if a.out_rig:
             fing[s_] = {k: np.round(v, 5).tolist() for k, v in (('K', K_), ('M', M_), ('T', T_), ('TB', TB), ('TT', TT), ('W', W_), ('palm', palm),
                                                                ('axis', ax), ('thumbAxis', tax), ('palmN', pn))}
         rig['fingers'] = fing
-        rig['correctives'] = [{'name': nm, **m_} for nm, _d, m_ in CORR]
+        rig['correctives'] = [{'name': nm, **m_} for nm, _d, m_ in CORR + JCORR]
     os.makedirs(os.path.dirname(os.path.abspath(a.out_rig)), exist_ok=True)
     json.dump(rig, open(a.out_rig, 'w'), separators=(',', ':'))
     print('rig', a.out_rig, rig['H'])

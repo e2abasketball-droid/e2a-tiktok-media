@@ -40,6 +40,11 @@ type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: n
  *  rendered exactly as before. */
 export type Split3 = {play: string; remap: RemapKey[]; camera: CamKeyA[]; ov3?: (Timed & Ov3)[]; hide?: string[]; ratio?: number; athleteRenderer?: AthleteRenderer};
 type CamKeyA = Omit<CamKey3, 'at'> & {at: Anchor};
+/** 2026-11-22 Realism V3.2 comparison panels: N live 3D views stacked top to bottom with equal heights (same clock),
+ *  each with its own renderer / motion / mesh / material switches; play, remap and camera default to the shot's.
+ *  Shots without `panels` are rendered exactly as before. */
+export type Panel3 = {play?: string; remap?: RemapKey[]; camera?: CamKeyA[]; hide?: string[]; athleteRenderer?: AthleteRenderer;
+  athleteMotion?: 'engine' | 'v31' | 'v32'; athleteMesh?: 'v31' | 'v32'; neutral?: boolean; debug32?: boolean};
 export type Shot3 = {
   id: string;
   at: Anchor;
@@ -60,6 +65,12 @@ export type Shot3 = {
   split?: Split3;
   /** 2026-11-22 Realism V3: athlete renderer of this shot (default: the episode's, else 'legacy') */
   athleteRenderer?: AthleteRenderer;
+  /** 2026-11-22 Realism V3.2: stacked comparison panels (A/B/C, Test A / B / C) and single-view test switches */
+  panels?: Panel3[];
+  athleteMotion?: 'engine' | 'v31' | 'v32';
+  athleteMesh?: 'v31' | 'v32';
+  neutral?: boolean;
+  debug32?: boolean;
 };
 export type Episode3 = {
   id: string;
@@ -257,6 +268,17 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
         return {h1, play: play2, pt: pt2, cam: cam2, cam1: cam, ov: ov2, hide: sp.hide, renderer: sp.athleteRenderer};
       })()
     : undefined;
+  const panels = shot.panels
+    ? shot.panels.map((pn, i) => {
+        const n = shot.panels!.length;
+        const y0 = Math.round((H * i) / n), y1 = Math.round((H * (i + 1)) / n);
+        const playN = pn.play ? ep.plays[pn.play] : play;
+        const rmN = pn.remap ? resolveRemap(pn.remap, playN, toLocal) : rm;
+        const ptN = remapAt(rmN, lt);
+        const camN = camera3At(playN, (pn.camera ?? shot.camera).map((k) => ({...k, at: toLocal(k.at)})), lt, ptN);
+        return {pn, y0, h: y1 - y0, play: playN, pt: ptN, cam: camN};
+      })
+    : undefined;
   const proj = projector(cam, W, H);
   const freezeOn = scr.some((s) => s.type === 'freeze' || s.type === 'grade');
   const fx = sceneFx(scr as unknown as {type: string; age: number; dur: number; amount?: number; dir?: number}[]);
@@ -265,12 +287,26 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
   return (
     <AbsoluteFill style={{background: '#050A15'}}>
       <AbsoluteFill style={{filter: [freezeOn ? 'saturate(0.72) brightness(0.94) contrast(1.04)' : '', fx.blur > 0.05 ? `blur(${fx.blur.toFixed(2)}px)` : ''].join(' ').trim() || undefined, transform: fx.scale !== 1 || fx.tx !== 0 ? `translateX(${fx.tx.toFixed(1)}px) scale(${fx.scale.toFixed(4)})` : undefined}}>
-        {!qcProbe && !split && (
-          <Scene3D play={play} pt={pt} cam={cam} W={W} H={H} hide={shot.hide} logo={logo} env={shot.env ?? ep.env} faces={ep.faces} players3d={shot.players3d ?? ep.players3d} athleteRenderer={shot.athleteRenderer ?? ep.athleteRenderer}>
+        {!qcProbe && panels && (
+          <>
+            {panels.map((P, i) => (
+              <div key={i} style={{position: 'absolute', left: 0, top: P.y0, width: W, height: P.h, overflow: 'hidden'}}>
+                <Scene3D play={P.play} pt={P.pt} cam={P.cam} W={W} H={P.h} hide={P.pn.hide ?? shot.hide} logo={logo} env={shot.env ?? ep.env} faces={ep.faces} players3d={shot.players3d ?? ep.players3d} instNs={`p${i}:`}
+                  athleteRenderer={P.pn.athleteRenderer ?? shot.athleteRenderer ?? ep.athleteRenderer} athleteMotion={P.pn.athleteMotion} athleteMesh={P.pn.athleteMesh} neutral={P.pn.neutral} debug32={P.pn.debug32} />
+              </div>
+            ))}
+            {panels.slice(1).map((P, i) => (
+              <div key={`b${i}`} style={{position: 'absolute', left: 0, right: 0, top: P.y0 - 2, height: 4, background: '#FFC447', boxShadow: '0 0 12px rgba(0,0,0,0.6)'}} />
+            ))}
+          </>
+        )}
+        {!qcProbe && !split && !panels && (
+          <Scene3D play={play} pt={pt} cam={cam} W={W} H={H} hide={shot.hide} logo={logo} env={shot.env ?? ep.env} faces={ep.faces} players3d={shot.players3d ?? ep.players3d} athleteRenderer={shot.athleteRenderer ?? ep.athleteRenderer}
+            athleteMotion={shot.athleteMotion} athleteMesh={shot.athleteMesh} neutral={shot.neutral} debug32={shot.debug32}>
             <Overlays3D play={play} pt={pt} items={ov} />
           </Scene3D>
         )}
-        {!qcProbe && split && (
+        {!qcProbe && split && !panels && (
           <>
             <div style={{position: 'absolute', left: 0, top: 0, width: W, height: split.h1, overflow: 'hidden'}}>
               <Scene3D play={play} pt={pt} cam={split.cam1} W={W} H={split.h1} hide={shot.hide} logo={logo} env={shot.env ?? ep.env} faces={ep.faces} players3d={shot.players3d ?? ep.players3d} athleteRenderer={shot.athleteRenderer ?? ep.athleteRenderer}>

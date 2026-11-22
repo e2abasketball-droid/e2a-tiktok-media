@@ -10,10 +10,13 @@ import def from './rigs/e2a-def-v3.rig.json';
 
 //                    'v31'    (opt-in, Realism V3.1): e2a_player_{off,def}_v31.glb + AUTHORED body motion for players with a
 //                             hand-keyed clip (realism-v3-1/motion.ts), engine pose (V3 bridge) for the others
-export type AthleteRenderer = 'legacy' | 'v3' | 'v31';
+//                    'v32'    (opt-in, Realism V3.2): e2a_player_{off,def}_v32.glb + the parametrised motion library
+//                             (realism-v3-2/), separate jersey / shorts cloth; Test A / B can swap motion or mesh
+export type AthleteRenderer = 'legacy' | 'v3' | 'v31' | 'v32';
 export const DEFAULT_ATHLETE_RENDERER: AthleteRenderer = 'legacy';
 export const isV3 = (r?: AthleteRenderer) => (r ?? DEFAULT_ATHLETE_RENDERER) === 'v3';
 export const isV31 = (r?: AthleteRenderer) => (r ?? DEFAULT_ATHLETE_RENDERER) === 'v31';
+export const isV32 = (r?: AthleteRenderer) => (r ?? DEFAULT_ATHLETE_RENDERER) === 'v32';
 
 export const PLAYER3D_V3 = {
   version: 'e2a-player-v3',

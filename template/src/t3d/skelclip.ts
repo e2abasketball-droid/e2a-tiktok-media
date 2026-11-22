@@ -704,7 +704,8 @@ export const bonesFromPose = (c: SkelRig, P: Pose, scale = 1, hipsUp?: V3): {bon
     const v = sub(fkTo(`thigh.${s}`), add(P.ankle[i], [0, 0, ankleOff]));
     const L = (len(sub(Rj(`knee${s}`), Rj(`hip${s}`))) + len(sub(Rj(`ankle${s}`), Rj(`knee${s}`)))) * 0.998;
     const vh = Math.hypot(v[0], v[1]);
-    if (L > vh) drop = Math.max(drop, v[2] - Math.sqrt(L * L - vh * vh));
+    // V3.2 weighs each leg by its support (a swing foot behind the hip released the guard in one frame, QC 2.80 s)
+    if (L > vh) drop = Math.max(drop, (P.reachW?.[i] ?? 1) * (v[2] - Math.sqrt(L * L - vh * vh)));
   }
   drop = Math.min(0.08, Math.max(0, drop));
   if (drop > 0) {

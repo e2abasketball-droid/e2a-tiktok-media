@@ -59,6 +59,8 @@ export type Pose = {
   wrist: [V3, V3];
   hand: [V3, V3];
   airborne: number; // metres above the floor (jumps)
+  /** V3.2 only: per-leg weight of the mesh reach guard (bonesFromPose), by foot support; absent = 1 (V3 / V3.1 / legacy) */
+  reachW?: [number, number];
   headYaw: number; // where the head looks (radians): eyes on the ball, within the neck's range
   headPitch?: number; // + = chin down (character actions only)
   dims: Dims;

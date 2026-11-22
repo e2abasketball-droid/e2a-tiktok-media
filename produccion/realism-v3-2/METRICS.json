@@ -1,0 +1,835 @@
+{
+ "date": "2026-11-22",
+ "branch": "claude/realism-v3-2",
+ "base": "e014de3",
+ "environment": {
+  "gpu": null,
+  "gl": "swangle (SwiftShader CPU)",
+  "remotion": "4.0.539",
+  "chrome": "chromium_headless_shell-1243",
+  "bpy": "5.3",
+  "concurrency": 4,
+  "resolution": "1080x1920",
+  "fps": 30
+ },
+ "assets": {
+  "off": {
+   "glb_bytes": 1625980,
+   "tris": 30396,
+   "shoe": "v32",
+   "garment": "v32"
+  },
+  "def": {
+   "glb_bytes": 1609472,
+   "tris": 30360,
+   "shoe": "v32",
+   "garment": "v32"
+  }
+ },
+ "v31_asset_rebuild_sha256": "dce47ae890495cb19559b8f9452b8462d5890eaa2ee46e9616e6b5fd4c93e815 (identical to the installed V3.1 GLB)",
+ "renders": {
+  "slow-jump": {
+   "wall_s": 238.2,
+   "peakRSS_MB": 3497,
+   "frames": 138,
+   "s_per_frame": 1.73
+  },
+  "side": {
+   "wall_s": 268.0,
+   "peakRSS_MB": 3534,
+   "frames": 162,
+   "s_per_frame": 1.65
+  },
+  "bench-10-v32": {
+   "wall_s": 198.4,
+   "peakRSS_MB": 4263,
+   "frames": 60,
+   "s_per_frame": 3.31
+  },
+  "trio": {
+   "wall_s": 345.4,
+   "peakRSS_MB": 3738,
+   "frames": 225,
+   "s_per_frame": 1.54
+  },
+  "testB": {
+   "wall_s": 700.8,
+   "peakRSS_MB": 4520,
+   "frames": 375,
+   "s_per_frame": 1.87
+  },
+  "bench-1-v32": {
+   "wall_s": 105.4,
+   "peakRSS_MB": 3291,
+   "frames": 60,
+   "s_per_frame": 1.76
+  },
+  "testA": {
+   "wall_s": 731.4,
+   "peakRSS_MB": 4767,
+   "frames": 375,
+   "s_per_frame": 1.95
+  },
+  "slow-run": {
+   "wall_s": 516.5,
+   "peakRSS_MB": 3641,
+   "frames": 264,
+   "s_per_frame": 1.96
+  },
+  "abc": {
+   "wall_s": 913.5,
+   "peakRSS_MB": 5491,
+   "frames": 375,
+   "s_per_frame": 2.44
+  },
+  "debug": {
+   "wall_s": 266.7,
+   "peakRSS_MB": 3570,
+   "frames": 162,
+   "s_per_frame": 1.65
+  }
+ },
+ "bench_reference_v31_same_machine": {
+  "bench-1-legacy_s": 104.3,
+  "bench-1-v31_s": 105.4,
+  "bench-10-legacy_s": 164.1,
+  "bench-10-v31_s": 192.4,
+  "bench-10-v31_peakRSS_MB": 4213
+ },
+ "motion_cpu_ms_per_player_frame": {
+  "motionV32": 2.03,
+  "motionV32+framesV32 (cached motion)": 1.61
+ },
+ "motion_qc": {
+  "abc_O1": {
+   "engine": {
+    "footContacts": 41,
+    "footSlideMax": 0.516,
+    "footSlideOver2cm": 28,
+    "floorMin": -0.041,
+    "floorMinAt": 8.492,
+    "kneeFlexMax": 106.586,
+    "kneeFlexMin": 7.25,
+    "elbowFlexMax": 155.519,
+    "neckYawMax": 56.007,
+    "accMax": {
+     "pelvis": {
+      "a": 670.915,
+      "t": 3.983
+     },
+     "head": {
+      "a": 2076.775,
+      "t": 11.358
+     },
+     "wrL": {
+      "a": 3584.914,
+      "t": 7.592
+     },
+     "wrR": {
+      "a": 5785.714,
+      "t": 7.592
+     },
+     "anL": {
+      "a": 712.22,
+      "t": 2.733
+     },
+     "anR": {
+      "a": 963.701,
+      "t": 4.05
+     }
+    },
+    "palmGap": {
+     "median": -0.009,
+     "p95": 0.047,
+     "max": 0.204,
+     "n": 321
+    },
+    "firstContact": null,
+    "ballBodyFrames120": 26,
+    "armReachMax": 0.999,
+    "legReachMax": 0.998,
+    "occludedSamples30": 0
+   },
+   "v31": {
+    "footContacts": 38,
+    "footSlideMax": 0.006,
+    "footSlideOver2cm": 0,
+    "floorMin": 0,
+    "floorMinAt": 9.8,
+    "kneeFlexMax": 98.221,
+    "kneeFlexMin": 41.882,
+    "elbowFlexMax": 160.269,
+    "neckYawMax": 69.901,
+    "accMax": {
+     "pelvis": {
+      "a": 231.919,
+      "t": 7.95
+     },
+     "head": {
+      "a": 226.282,
+      "t": 7.95
+     },
+     "wrL": {
+      "a": 1030.644,
+      "t": 6.725
+     },
+     "wrR": {
+      "a": 2639.908,
+      "t": 8.275
+     },
+     "anL": {
+      "a": 390.706,
+      "t": 2.1
+     },
+     "anR": {
+      "a": 770.962,
+      "t": 5.992
+     }
+    },
+    "palmGap": {
+     "median": 0.012,
+     "p95": 0.012,
+     "max": 0.042,
+     "n": 321
+    },
+    "firstContact": null,
+    "ballBodyFrames120": 45,
+    "armReachMax": 0.999,
+    "legReachMax": 0.934,
+    "occludedSamples30": 0
+   },
+   "v32": {
+    "footContacts": 28,
+    "footSlideMax": 0.016,
+    "footSlideOver2cm": 0,
+    "floorMin": 0,
+    "floorMinAt": 1.658,
+    "kneeFlexMax": 102.725,
+    "kneeFlexMin": 5.126,
+    "elbowFlexMax": 144.217,
+    "neckYawMax": 69.901,
+    "accMax": {
+     "pelvis": {
+      "a": 237.448,
+      "t": 8.55
+     },
+     "head": {
+      "a": 237.652,
+      "t": 8.55
+     },
+     "wrL": {
+      "a": 994.269,
+      "t": 6.725
+     },
+     "wrR": {
+      "a": 525.61,
+      "t": 6.592
+     },
+     "anL": {
+      "a": 351.357,
+      "t": 7.917
+     },
+     "anR": {
+      "a": 549.599,
+      "t": 5.992
+     }
+    },
+    "palmGap": {
+     "median": 0.012,
+     "p95": 0.012,
+     "max": 0.018,
+     "n": 321
+    },
+    "firstContact": 4.925,
+    "ballBodyFrames120": 86,
+    "armReachMax": 0.999,
+    "legReachMax": 0.999,
+    "occludedSamples30": 0
+   }
+  },
+  "trio": {
+   "engine": {
+    "O1": {
+     "footContacts": 2,
+     "footSlideMax": 0.119,
+     "footSlideOver2cm": 2,
+     "floorMin": -0.012,
+     "floorMinAt": 1.5,
+     "kneeFlexMax": 53.717,
+     "kneeFlexMin": 33.89,
+     "elbowFlexMax": 106.244,
+     "neckYawMax": 56.007,
+     "accMax": {
+      "pelvis": {
+       "a": 1.531,
+       "t": 0.017
+      },
+      "head": {
+       "a": 80.174,
+       "t": 2.1
+      },
+      "wrL": {
+       "a": 3012.199,
+       "t": 2.708
+      },
+      "wrR": {
+       "a": 3109.635,
+       "t": 2.708
+      },
+      "anL": {
+       "a": 83.307,
+       "t": 0.175
+      },
+      "anR": {
+       "a": 0,
+       "t": 5.067
+      }
+     },
+     "palmGap": {
+      "median": -0.007,
+      "p95": -0.007,
+      "max": -0.006,
+      "n": 325
+     },
+     "firstContact": null,
+     "ballBodyFrames120": 0,
+     "armReachMax": 0.937,
+     "legReachMax": 0.957,
+     "occludedSamples30": 0
+    },
+    "O2": {
+     "footContacts": 19,
+     "footSlideMax": 0.404,
+     "footSlideOver2cm": 14,
+     "floorMin": -0.044,
+     "floorMinAt": 5.092,
+     "kneeFlexMax": 98.44,
+     "kneeFlexMin": 7.25,
+     "elbowFlexMax": 156.986,
+     "neckYawMax": 56.007,
+     "accMax": {
+      "pelvis": {
+       "a": 594.008,
+       "t": 1.35
+      },
+      "head": {
+       "a": 1342.591,
+       "t": 1.45
+      },
+      "wrL": {
+       "a": 3609.453,
+       "t": 4.808
+      },
+      "wrR": {
+       "a": 5481.989,
+       "t": 4.192
+      },
+      "anL": {
+       "a": 549.244,
+       "t": 2.375
+      },
+      "anR": {
+       "a": 593.212,
+       "t": 1.95
+      }
+     },
+     "palmGap": {
+      "median": -0.008,
+      "p95": 0.043,
+      "max": 0.195,
+      "n": 192
+     },
+     "firstContact": null,
+     "ballBodyFrames120": 6,
+     "armReachMax": 0.999,
+     "legReachMax": 0.998,
+     "occludedSamples30": 0
+    },
+    "X2": {
+     "footContacts": 17,
+     "footSlideMax": 0.235,
+     "footSlideOver2cm": 12,
+     "floorMin": -0.012,
+     "floorMinAt": 1.975,
+     "kneeFlexMax": 81.784,
+     "kneeFlexMin": 19.512,
+     "elbowFlexMax": 92.054,
+     "neckYawMax": 56.007,
+     "accMax": {
+      "pelvis": {
+       "a": 495.269,
+       "t": 1.65
+      },
+      "head": {
+       "a": 1545.791,
+       "t": 1.65
+      },
+      "wrL": {
+       "a": 1289.985,
+       "t": 1.65
+      },
+      "wrR": {
+       "a": 1282.259,
+       "t": 1.65
+      },
+      "anL": {
+       "a": 336.011,
+       "t": 3.05
+      },
+      "anR": {
+       "a": 410.063,
+       "t": 3.017
+      }
+     },
+     "palmGap": {
+      "median": null,
+      "p95": null,
+      "max": null,
+      "n": 0
+     },
+     "firstContact": null,
+     "ballBodyFrames120": 0,
+     "armReachMax": 0.947,
+     "legReachMax": 0.986,
+     "occludedSamples30": 0
+    }
+   },
+   "v32": {
+    "O1": {
+     "footContacts": 2,
+     "footSlideMax": 0,
+     "footSlideOver2cm": 0,
+     "floorMin": 0,
+     "floorMinAt": 3.55,
+     "kneeFlexMax": 70.249,
+     "kneeFlexMin": 43.756,
+     "elbowFlexMax": 152.333,
+     "neckYawMax": 4.831,
+     "accMax": {
+      "pelvis": {
+       "a": 36.471,
+       "t": 3.308
+      },
+      "head": {
+       "a": 47.006,
+       "t": 3.308
+      },
+      "wrL": {
+       "a": 326.618,
+       "t": 2.817
+      },
+      "wrR": {
+       "a": 279.937,
+       "t": 2.817
+      },
+      "anL": {
+       "a": 0,
+       "t": 3.55
+      },
+      "anR": {
+       "a": 0,
+       "t": 3.55
+      }
+     },
+     "palmGap": {
+      "median": 0.012,
+      "p95": 0.012,
+      "max": 0.012,
+      "n": 325
+     },
+     "firstContact": 0,
+     "ballBodyFrames120": 0,
+     "armReachMax": 0.801,
+     "legReachMax": 0.928,
+     "occludedSamples30": 0
+    },
+    "O2": {
+     "footContacts": 14,
+     "footSlideMax": 0.003,
+     "footSlideOver2cm": 0,
+     "floorMin": 0,
+     "floorMinAt": 3.05,
+     "kneeFlexMax": 96.954,
+     "kneeFlexMin": 5.126,
+     "elbowFlexMax": 152.317,
+     "neckYawMax": 69.901,
+     "accMax": {
+      "pelvis": {
+       "a": 193.831,
+       "t": 5.133
+      },
+      "head": {
+       "a": 469.88,
+       "t": 3.45
+      },
+      "wrL": {
+       "a": 764.883,
+       "t": 4.742
+      },
+      "wrR": {
+       "a": 340.987,
+       "t": 4.992
+      },
+      "anL": {
+       "a": 370.63,
+       "t": 5.142
+      },
+      "anR": {
+       "a": 370.63,
+       "t": 5.142
+      }
+     },
+     "palmGap": {
+      "median": 0.012,
+      "p95": 0.012,
+      "max": 0.012,
+      "n": 192
+     },
+     "firstContact": 3.192,
+     "ballBodyFrames120": 60,
+     "armReachMax": 0.999,
+     "legReachMax": 0.999,
+     "occludedSamples30": 0
+    },
+    "X2": {
+     "footContacts": 10,
+     "footSlideMax": 0.007,
+     "footSlideOver2cm": 0,
+     "floorMin": 0,
+     "floorMinAt": 2.642,
+     "kneeFlexMax": 85.485,
+     "kneeFlexMin": 5.126,
+     "elbowFlexMax": 148.355,
+     "neckYawMax": 65.967,
+     "accMax": {
+      "pelvis": {
+       "a": 54.357,
+       "t": 3.158
+      },
+      "head": {
+       "a": 127.33,
+       "t": 1.75
+      },
+      "wrL": {
+       "a": 153.906,
+       "t": 1.75
+      },
+      "wrR": {
+       "a": 133.369,
+       "t": 1.75
+      },
+      "anL": {
+       "a": 119.09,
+       "t": 3.7
+      },
+      "anR": {
+       "a": 141.378,
+       "t": 2.408
+      }
+     },
+     "palmGap": {
+      "median": null,
+      "p95": null,
+      "max": null,
+      "n": 0
+     },
+     "firstContact": null,
+     "ballBodyFrames120": 0,
+     "armReachMax": 0.862,
+     "legReachMax": 0.999,
+     "occludedSamples30": 0
+    }
+   }
+  }
+ },
+ "cloth_qc": {
+  "v31_full": {
+   "Jersey": {
+    "stretchMax": {
+     "value": 3.39,
+     "t": 3.33333
+    },
+    "stretchP99": {
+     "value": 1.567,
+     "t": 5.43333
+    },
+    "compressMin": {
+     "value": 0.429,
+     "t": 2.23333
+    },
+    "spike": {
+     "value": 0.0081,
+     "t": 3.63333
+    },
+    "dispMax": {
+     "value": 0.1265,
+     "t": 4.03333
+    },
+    "hemStretchMax": {
+     "value": 2.146,
+     "t": 3.63333
+    },
+    "hemStretchP95": {
+     "value": 1.365,
+     "t": 3.5
+    },
+    "strapStretchMax": {
+     "value": 3.39,
+     "t": 3.33333
+    },
+    "strapStretchP95": {
+     "value": 1.35,
+     "t": 3.33333
+    },
+    "framesHem130": 376,
+    "penMin": {
+     "value": -0.0388,
+     "t": 4.93333
+    },
+    "framesSpike2cm": 0,
+    "framesStretch125": 376,
+    "framesPen3cm": 9
+   },
+   "Shorts": {
+    "stretchMax": {
+     "value": 3.131,
+     "t": 3.63333
+    },
+    "stretchP99": {
+     "value": 1.81,
+     "t": 4.03333
+    },
+    "compressMin": {
+     "value": 0.028,
+     "t": 4.66667
+    },
+    "spike": {
+     "value": 0.0149,
+     "t": 4.03333
+    },
+    "dispMax": {
+     "value": 0.1317,
+     "t": 4.03333
+    },
+    "hemStretchMax": {
+     "value": 2.128,
+     "t": 4.03333
+    },
+    "hemStretchP95": {
+     "value": 1.827,
+     "t": 4.03333
+    },
+    "strapStretchMax": {
+     "value": 1.0,
+     "t": 0
+    },
+    "strapStretchP95": {
+     "value": 1.0,
+     "t": 0
+    },
+    "framesHem130": 89,
+    "penMin": {
+     "value": -0.0611,
+     "t": 3.73333
+    },
+    "framesSpike2cm": 0,
+    "framesStretch125": 376,
+    "framesPen3cm": 19
+   }
+  },
+  "asset_v32_motion_v31": {
+   "Jersey": {
+    "stretchMax": {
+     "value": 1.707,
+     "t": 3.36667
+    },
+    "stretchP99": {
+     "value": 1.274,
+     "t": 3.4
+    },
+    "compressMin": {
+     "value": 0.682,
+     "t": 3.76667
+    },
+    "spike": {
+     "value": 0.0052,
+     "t": 3.7
+    },
+    "dispMax": {
+     "value": 0.1233,
+     "t": 4.03333
+    },
+    "hemStretchMax": {
+     "value": 1.361,
+     "t": 3.43333
+    },
+    "hemStretchP95": {
+     "value": 1.224,
+     "t": 3.5
+    },
+    "strapStretchMax": {
+     "value": 1.707,
+     "t": 3.36667
+    },
+    "strapStretchP95": {
+     "value": 1.154,
+     "t": 3.33333
+    },
+    "framesHem130": 8,
+    "penMin": {
+     "value": -0.0385,
+     "t": 6.1
+    },
+    "framesSpike2cm": 0,
+    "framesStretch125": 90,
+    "framesPen3cm": 9
+   },
+   "Shorts": {
+    "stretchMax": {
+     "value": 2.693,
+     "t": 3.63333
+    },
+    "stretchP99": {
+     "value": 1.523,
+     "t": 3.5
+    },
+    "compressMin": {
+     "value": 0.023,
+     "t": 2.43333
+    },
+    "spike": {
+     "value": 0.0075,
+     "t": 2.06667
+    },
+    "dispMax": {
+     "value": 0.0545,
+     "t": 4.03333
+    },
+    "hemStretchMax": {
+     "value": 1.424,
+     "t": 3.2
+    },
+    "hemStretchP95": {
+     "value": 1.263,
+     "t": 4.03333
+    },
+    "strapStretchMax": {
+     "value": 1.0,
+     "t": 0
+    },
+    "strapStretchP95": {
+     "value": 1.0,
+     "t": 0
+    },
+    "framesHem130": 11,
+    "penMin": {
+     "value": -0.0581,
+     "t": 5.7
+    },
+    "framesSpike2cm": 0,
+    "framesStretch125": 376,
+    "framesPen3cm": 11
+   }
+  },
+  "v32_full": {
+   "Jersey": {
+    "stretchMax": {
+     "value": 1.892,
+     "t": 3.26667
+    },
+    "stretchP99": {
+     "value": 1.318,
+     "t": 3.26667
+    },
+    "compressMin": {
+     "value": 0.572,
+     "t": 3.26667
+    },
+    "spike": {
+     "value": 0.0033,
+     "t": 3.5
+    },
+    "dispMax": {
+     "value": 0.0599,
+     "t": 3.36667
+    },
+    "hemStretchMax": {
+     "value": 1.289,
+     "t": 3.13333
+    },
+    "hemStretchP95": {
+     "value": 1.135,
+     "t": 3.33333
+    },
+    "strapStretchMax": {
+     "value": 1.892,
+     "t": 3.26667
+    },
+    "strapStretchP95": {
+     "value": 1.198,
+     "t": 3.26667
+    },
+    "framesHem130": 0,
+    "penMin": {
+     "value": -0.0379,
+     "t": 6.2
+    },
+    "framesSpike2cm": 0,
+    "framesStretch125": 67,
+    "framesPen3cm": 8
+   },
+   "Shorts": {
+    "stretchMax": {
+     "value": 2.731,
+     "t": 2.6
+    },
+    "stretchP99": {
+     "value": 1.59,
+     "t": 11.26667
+    },
+    "compressMin": {
+     "value": 0.02,
+     "t": 2.16667
+    },
+    "spike": {
+     "value": 0.0086,
+     "t": 3.16667
+    },
+    "dispMax": {
+     "value": 0.0085,
+     "t": 3.4
+    },
+    "hemStretchMax": {
+     "value": 1.069,
+     "t": 6.36667
+    },
+    "hemStretchP95": {
+     "value": 1.054,
+     "t": 6.33333
+    },
+    "strapStretchMax": {
+     "value": 1.0,
+     "t": 0
+    },
+    "strapStretchP95": {
+     "value": 1.0,
+     "t": 0
+    },
+    "framesHem130": 0,
+    "penMin": {
+     "value": -0.0544,
+     "t": 3.06667
+    },
+    "framesSpike2cm": 0,
+    "framesStretch125": 374,
+    "framesPen3cm": 8
+   }
+  }
+ },
+ "visibility_abc_camera": {
+  "v31": 0,
+  "v32": 0
+ },
+ "pixel_regression": "legacy and v31, frames 0/100/148/245/360, V3.1 bundle vs V3.2 bundle: 0 differing pixels (qa/pixel-regression.txt)",
+ "determinism": "repeated cold stills (abc f245, trio f140): identical sha256"
+}

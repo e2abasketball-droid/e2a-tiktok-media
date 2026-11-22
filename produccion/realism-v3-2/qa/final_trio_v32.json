@@ -1,0 +1,152 @@
+{
+ "play": "realism-v3-2-trio",
+ "motion": "v32",
+ "hz": 120,
+ "players": {
+  "O1": {
+   "footContacts": 2,
+   "footSlideMax": 0,
+   "footSlideOver2cm": 0,
+   "floorMin": 0,
+   "floorMinAt": 3.55,
+   "kneeFlexMax": 70.249,
+   "kneeFlexMin": 43.756,
+   "elbowFlexMax": 152.333,
+   "neckYawMax": 4.831,
+   "accMax": {
+    "pelvis": {
+     "a": 36.471,
+     "t": 3.308
+    },
+    "head": {
+     "a": 47.006,
+     "t": 3.308
+    },
+    "wrL": {
+     "a": 326.618,
+     "t": 2.817
+    },
+    "wrR": {
+     "a": 279.937,
+     "t": 2.817
+    },
+    "anL": {
+     "a": 0,
+     "t": 3.55
+    },
+    "anR": {
+     "a": 0,
+     "t": 3.55
+    }
+   },
+   "palmGap": {
+    "median": 0.012,
+    "p95": 0.012,
+    "max": 0.012,
+    "n": 325
+   },
+   "firstContact": 0,
+   "ballBodyFrames120": 0,
+   "armReachMax": 0.801,
+   "legReachMax": 0.928,
+   "occludedSamples30": 0
+  },
+  "O2": {
+   "footContacts": 14,
+   "footSlideMax": 0.003,
+   "footSlideOver2cm": 0,
+   "floorMin": 0,
+   "floorMinAt": 3.05,
+   "kneeFlexMax": 96.954,
+   "kneeFlexMin": 5.126,
+   "elbowFlexMax": 152.317,
+   "neckYawMax": 69.901,
+   "accMax": {
+    "pelvis": {
+     "a": 193.831,
+     "t": 5.133
+    },
+    "head": {
+     "a": 469.88,
+     "t": 3.45
+    },
+    "wrL": {
+     "a": 764.883,
+     "t": 4.742
+    },
+    "wrR": {
+     "a": 340.987,
+     "t": 4.992
+    },
+    "anL": {
+     "a": 370.63,
+     "t": 5.142
+    },
+    "anR": {
+     "a": 370.63,
+     "t": 5.142
+    }
+   },
+   "palmGap": {
+    "median": 0.012,
+    "p95": 0.012,
+    "max": 0.012,
+    "n": 192
+   },
+   "firstContact": 3.192,
+   "ballBodyFrames120": 60,
+   "armReachMax": 0.999,
+   "legReachMax": 0.999,
+   "occludedSamples30": 0
+  },
+  "X2": {
+   "footContacts": 10,
+   "footSlideMax": 0.007,
+   "footSlideOver2cm": 0,
+   "floorMin": 0,
+   "floorMinAt": 2.642,
+   "kneeFlexMax": 85.485,
+   "kneeFlexMin": 5.126,
+   "elbowFlexMax": 148.355,
+   "neckYawMax": 65.967,
+   "accMax": {
+    "pelvis": {
+     "a": 54.357,
+     "t": 3.158
+    },
+    "head": {
+     "a": 127.33,
+     "t": 1.75
+    },
+    "wrL": {
+     "a": 153.906,
+     "t": 1.75
+    },
+    "wrR": {
+     "a": 133.369,
+     "t": 1.75
+    },
+    "anL": {
+     "a": 119.09,
+     "t": 3.7
+    },
+    "anR": {
+     "a": 141.378,
+     "t": 2.408
+    }
+   },
+   "palmGap": {
+    "median": null,
+    "p95": null,
+    "max": null,
+    "n": 0
+   },
+   "firstContact": null,
+   "ballBodyFrames120": 0,
+   "armReachMax": 0.862,
+   "legReachMax": 0.999,
+   "occludedSamples30": 0
+  }
+ },
+ "defects": 23
+}

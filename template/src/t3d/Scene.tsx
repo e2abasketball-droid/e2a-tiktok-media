@@ -21,7 +21,11 @@ import {bonesFromPose, getClip, meshScale, skelPoseAt} from './skelclip.ts';
 import {SkinnedAthlete, useGlbs} from './SkinnedAthlete';
 import {KITS} from './Athlete';
 import {PLAYER3D, describePlan, planPlayers3d, playWithPlan} from './player3d.ts';
-import {PLAYER3D_V3, isV3, isV31} from './realism-v3/index.ts';
+import {PLAYER3D_V3, isV3, isV31, isV32} from './realism-v3/index.ts';
+import {PLAYER3D_V32} from './realism-v3-2/index.ts';
+import {athleteV32} from './realism-v3-2/scene32.ts';
+import type {Athlete32, Motion} from './realism-v3-2/scene32.ts';
+import {ballV32} from './realism-v3-2/motion32.ts';
 import {PLAYER3D_V31} from './realism-v3-1/index.ts';
 import {ballV31, clothV31, framesV31, motionV31} from './realism-v3-1/motion.ts';
 import type {AthleteRenderer} from './realism-v3/index.ts';
@@ -181,6 +185,11 @@ export type SceneProps = {
   instNs?: string;
   /** 2026-11-22 Realism V3: 'legacy' (default) or 'v3' (AthleteV3, realism-v3/); only the deformable players change */
   athleteRenderer?: AthleteRenderer;
+  /** Realism V3.2 test switches (renderer 'v32' only): body motion source, mesh generation, neutral materials, contact debug */
+  athleteMotion?: Motion;
+  athleteMesh?: 'v31' | 'v32';
+  neutral?: boolean;
+  debug32?: boolean;
 };
 
 /** expression keys in PLAY time (so freezes and rewinds carry the face with the body) */
@@ -215,7 +224,7 @@ const autoBlink = (i: number, t: number) => {
   return ph < 0.13 ? Math.sin((Math.PI * ph) / 0.13) : 0;
 };
 
-export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], children, logo, env, faces, players3d, instNs, athleteRenderer}) => {
+export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], children, logo, env, faces, players3d, instNs, athleteRenderer, athleteMotion, athleteMesh, neutral, debug32}) => {
   const f = sample(play, pt);
   const ball = f.ball;
   // eyes first, head after (2026-11-17 V2): heads turn toward where the ball was 0.2 s ago, the eyes (faceOf) to where it is
@@ -263,11 +272,16 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
   const rv3 = realismV3(play);
   const av3 = isV3(athleteRenderer);
   const av31 = isV31(athleteRenderer);
-  const offGlb = av31 ? PLAYER3D_V31.off.glb : av3 ? PLAYER3D_V3.off.glb : rv2 ? PLAYER3D.off.glbV2 : PLAYER3D.off.glb;
-  const defGlb = av31 ? PLAYER3D_V31.def.glb : av3 ? PLAYER3D_V3.def.glb : rv2 ? PLAYER3D.def.glbV2 : PLAYER3D.def.glb;
+  const av32 = isV32(athleteRenderer);
+  const PK32 = athleteMesh === 'v31' ? PLAYER3D_V31 : PLAYER3D_V32;
+  const mot32: Motion = athleteMotion ?? 'v32';
+  const offGlb = av32 ? PK32.off.glb : av31 ? PLAYER3D_V31.off.glb : av3 ? PLAYER3D_V3.off.glb : rv2 ? PLAYER3D.off.glbV2 : PLAYER3D.off.glb;
+  const defGlb = av32 ? PK32.def.glb : av31 ? PLAYER3D_V31.def.glb : av3 ? PLAYER3D_V3.def.glb : rv2 ? PLAYER3D.def.glbV2 : PLAYER3D.def.glb;
   // Realism V3.1: while an authored clip holds the ball, the ball is its hand socket (else the engine ball)
   const rig31 = (id: string) => PLAYER3D_V31[play.players.find((q) => q.id === id)?.team === 'X' ? 'def' : 'off'].rig;
-  const ballPos = av31 ? ballV31(play, pt, rig31) ?? ball.pos : ball.pos;
+  const rig32 = (id: string) => PK32[play.players.find((q) => q.id === id)?.team === 'X' ? 'def' : 'off'].rig;
+  const ballPos = av32 ? (mot32 === 'v32' ? ballV32(play, pt, rig32) : mot32 === 'v31' ? ballV31(play, pt, rig32) : undefined) ?? ball.pos : av31 ? ballV31(play, pt, rig31) ?? ball.pos : ball.pos;
+  const dbg32: Athlete32[] = [];
   const glbs = useGlbs(anyC ? [offGlb, defGlb, ...labGlbs] : labGlbs);
   // the canvas only renders on frame changes (Remotion ThreeCanvas): mount it once the meshes are loaded (or failed)
   const glbWanted = anyC ? [offGlb, defGlb, ...labGlbs] : labGlbs;
@@ -297,7 +311,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
         const spec = skel?.[p.id];
         const variant = p.team === 'X' ? 'def' : 'off';
         const pkg = PLAYER3D[variant];
-        const pkgGlb = av31 ? PLAYER3D_V31[variant].glb : av3 ? PLAYER3D_V3[variant].glb : rv2 ? pkg.glbV2 : pkg.glb;
+        const pkgGlb = av32 ? PK32[variant].glb : av31 ? PLAYER3D_V31[variant].glb : av3 ? PLAYER3D_V3[variant].glb : rv2 ? pkg.glbV2 : pkg.glb;
         const glbSrc = spec?.glb ?? pkgGlb;
         const cloth = rv2 && !spec?.glb ? clothAt(play, p.id, pt) : undefined;
         const glb = glbs[glbSrc]?.scene ?? null;
@@ -315,6 +329,21 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
                 <Athlete pose={sp.pose} team={p.team} num={num} skin={skin} />
               )}
               <ContactShadows pose={sp.pose} />
+            </React.Fragment>
+          );
+        }
+        if (av32 && pp?.look === 'C' && glb) {
+          // Realism V3.2: parametrised library motion (or, for Test A, the V3.1 / engine motion on the same mesh), V3.2 or
+          // V3.1 mesh (Test B), separate jersey / shorts cloth; neutral materials for the motion-only comparison
+          const rig = PK32[variant].rig;
+          const a = athleteV32(play, p.id, pt, rig, {holder: ball.holder, pos: ball.pos, lag: ballLag}, mot32);
+          if (debug32 && a.debug) dbg32.push(a);
+          const meshV32 = athleteMesh !== 'v31';
+          return (
+            <React.Fragment key={p.id}>
+              <SkinnedAthlete scene={glb} clipBones={rig.bones} bones={a.fr.bones} hips={a.fr.hips} inst={`${instNs ?? ''}v32:${athleteMesh ?? 'v32'}:${mot32}:${neutral ? 'n' : 'c'}:${p.id}`} scale={a.sc} skin={skin} num={num} kit={KITS[p.team]}
+                look={env === 'academy' || env === 'cinema' ? 'academy' : undefined} cloth={meshV32 ? undefined : a.cloth.jersey} cloth32={meshV32 ? a.cloth : undefined} v3 morph={a.fr.morph} neutral={neutral} />
+              <ContactShadows pose={a.pose} />
             </React.Fragment>
           );
         }
@@ -405,7 +434,44 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
         );
       })}
       <Ball pos={ballPos} spin={spin} />
+      {debug32 && <Debug32 items={dbg32} ball={ballPos} />}
       {children}
     </ThreeCanvas>
+  );
+};
+
+// ---------------------------------------------------------------- Realism V3.2 contact debug (tests only)
+// planted foot = green disc under the ball of the foot, swinging foot = red; palm target = yellow (held) sphere;
+// ball halo colour = ball state (white FREE, cyan INCOMING / FIRST_CONTACT, green CONTROLLED / SECURED, orange
+// DRIBBLE, magenta SHOOT_PREP / RELEASE, grey FLIGHT / PASS)
+const STATE_COL: Record<string, string> = {FREE: '#FFFFFF', INCOMING: '#3FE0FF', FIRST_CONTACT: '#3FE0FF', CONTROLLED: '#43F06A', SECURED: '#43F06A', DRIBBLE: '#FF9A2E', SHOOT_PREP: '#FF4FD8', RELEASE: '#FF4FD8', FLIGHT: '#9A9A9A', PASS: '#9A9A9A'};
+const Debug32: React.FC<{items: Athlete32[]; ball: V3}> = ({items, ball}) => {
+  const held = items.find((a) => a.debug && a.debug.owner && a.debug.state !== 'FREE');
+  const st = held?.debug?.state ?? items[0]?.debug?.state ?? 'FREE';
+  return (
+    <group>
+      {items.flatMap((a, i) =>
+        (a.debug?.feet ?? []).map((f, k) => (
+          <mesh key={`f${i}${k}`} position={W3([f.g[0], f.g[1], 0.006])} rotation={[-Math.PI / 2, 0, 0]}>
+            <circleGeometry args={[0.07, 20]} />
+            <meshBasicMaterial color={f.planted ? '#2BE36B' : '#FF3B3B'} transparent opacity={0.85} depthWrite={false} />
+          </mesh>
+        )),
+      )}
+      {items.flatMap((a, i) =>
+        (a.debug?.palm ?? []).map((p, k) =>
+          p ? (
+            <mesh key={`p${i}${k}`} position={W3(p)}>
+              <sphereGeometry args={[0.022, 12, 8]} />
+              <meshBasicMaterial color="#FFE14A" depthTest={false} transparent opacity={0.9} />
+            </mesh>
+          ) : null,
+        ),
+      )}
+      <mesh position={W3(ball)}>
+        <sphereGeometry args={[0.15, 20, 14]} />
+        <meshBasicMaterial color={STATE_COL[st] ?? '#FFFFFF'} wireframe transparent opacity={0.8} depthTest={false} />
+      </mesh>
+    </group>
   );
 };

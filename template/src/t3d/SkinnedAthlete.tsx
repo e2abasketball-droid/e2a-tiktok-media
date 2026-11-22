@@ -240,7 +240,7 @@ const strapWeights = (g: THREE.BufferGeometry) => {
 // v2 meshes (build_player.py --garment v2) carry _E2A_HEM / _E2A_EASE on the jersey. The trim (piping) along the hem gets
 // the values of its nearest jersey vertex (bind pose), so the piping swings WITH the cloth. One set of uniforms per
 // instance (sway, twist, flutter, stride phase, pelvis; object space), updated every frame from clothAt().
-type ClothU = {uSway: {value: THREE.Vector3}; uTwist: {value: number}; uFlutter: {value: number}; uPhase: {value: number}; uPelvis: {value: THREE.Vector3}};
+type ClothU = {uSway: {value: THREE.Vector3}; uTwist: {value: number}; uFlutter: {value: number}; uPhase: {value: number}; uPelvis: {value: THREE.Vector3}; uMaxDisp?: {value: number}};
 const clothAttrsDone = new WeakSet<THREE.BufferGeometry>();
 const copyClothAttrs = (jersey: THREE.BufferGeometry, trim: THREE.BufferGeometry) => {
   if (clothAttrsDone.has(trim) || trim.getAttribute('_e2a_hem')) return;
@@ -267,11 +267,12 @@ const copyClothAttrs = (jersey: THREE.BufferGeometry, trim: THREE.BufferGeometry
 };
 /** v2 cloth material: secondary motion before the projection (object space), small depth bias after it (skin poking
  *  through at the straps / armholes), inside of the shirt drawn darker (DoubleSide: the loose hem shows its inside) */
-const cloth2Material = (mat: THREE.Material, U: ClothU, bias: number, strap: number, inside: boolean, v3 = false) => {
+const cloth2Material = (mat: THREE.Material, U: ClothU, bias: number, strap: number, inside: boolean, v3 = false, v32?: {panel: number}) => {
   mat.onBeforeCompile = (sh) => {
     Object.assign(sh.uniforms, U);
     sh.vertexShader =
       'uniform vec3 uSway; uniform float uTwist; uniform float uFlutter; uniform float uPhase; uniform vec3 uPelvis;\nattribute float _e2a_hem; attribute float _e2a_ease;\n' +
+      (v32 ? 'uniform float uMaxDisp;\n' : '') +
       (strap ? 'attribute float e2aStrap;\n' : '') +
       sh.vertexShader;
     sh.vertexShader = sh.vertexShader.replace('#include <skinning_vertex>', `#include <skinning_vertex>
@@ -282,12 +283,16 @@ const cloth2Material = (mat: THREE.Material, U: ClothU, bias: number, strap: num
       vec2 r = transformed.xz - uPelvis.xz;
       float a = uTwist * hem; float ca = cos(a); float sa = sin(a);
       vec2 rr = vec2(r.x * ca + r.y * sa, -r.x * sa + r.y * ca);
-      vec3 d = vec3(rr.x - r.x, 0.0, rr.y - r.y) + uSway * hem;${v3 ? `
+      vec3 d = vec3(rr.x - r.x, 0.0, rr.y - r.y) + uSway * hem;${v3 && !v32 ? `
       // garment3 panel: the hem flares more on the side it swings toward (no rigid ring)
       { vec2 sh2 = uSway.xz; float sl = length(sh2); float rl = length(r);
         if (sl > 1e-5 && rl > 1e-5) { float pf = ${GARMENT3.panel.toFixed(3)} * dot(r / rl, sh2 / sl) * min(1.0, sl / ${GARMENT3.panelRef.toFixed(4)}); d.xz += sh2 * hem * pf; } }` : ''}
-      float ang = atan(-r.y, r.x);
-      d += n * (uFlutter * hem * sin(6.0 * ang + 6.2831853 * uPhase));
+${v32 && v32.panel > 0 ? `      { vec2 sh2 = uSway.xz; float sl = length(sh2); float rl = length(r);
+        if (sl > 1e-5 && rl > 1e-5) { float pf = ${v32.panel.toFixed(3)} * dot(r / rl, sh2 / sl) * min(1.0, sl / ${GARMENT3.panelRef.toFixed(4)}); d.xz += sh2 * hem * pf; } }
+` : ''}      float ang = atan(-r.y, r.x);
+      d += n * (uFlutter * hem * sin(6.0 * ang + 6.2831853 * uPhase));${v32 ? `
+      // V3.2: no vertex moves more than uMaxDisp x its freedom (hem) -> no flag, no pulled point
+      { float dl = length(d); float lim = uMaxDisp * hem; if (dl > lim && dl > 1e-6) d *= lim / dl; }` : ''}
       vec2 nh = n.xz; float nl = length(nh);
       if (nl > 1e-5) { nh /= nl; float inward = -dot(d.xz, nh); float lim = 0.85 * _e2a_ease; if (inward > lim) d.xz += nh * (inward - lim); }
       transformed += d;
@@ -301,7 +306,7 @@ const cloth2Material = (mat: THREE.Material, U: ClothU, bias: number, strap: num
   }`);
     if (inside) sh.fragmentShader = sh.fragmentShader.replace('#include <map_fragment>', '#include <map_fragment>\n  if (!gl_FrontFacing) diffuseColor.rgb *= 0.42;');
   };
-  mat.customProgramCacheKey = () => `e2a-cloth2-${bias}-${strap}-${inside ? 1 : 0}${v3 ? '-g3' : ''}`;
+  mat.customProgramCacheKey = () => `e2a-cloth2-${bias}-${strap}-${inside ? 1 : 0}${v3 ? '-g3' : ''}${v32 ? `-v32-${v32.panel}` : ''}`;
   mat.needsUpdate = true;
 };
 
@@ -324,10 +329,10 @@ const g3Geometry = (src: THREE.BufferGeometry, out: {P: Float32Array; J: Uint16A
 };
 
 /** one independent instance of a player mesh: own skeleton (pose state), own skin and jersey materials */
-type Inst = {obj: THREE.Object3D; rig: Rig; cloth?: ClothU; morphs?: THREE.Mesh[]};
+type Inst = {obj: THREE.Object3D; rig: Rig; cloth?: ClothU; clothS?: ClothU; morphs?: THREE.Mesh[]};
 const instances = new Map<string, Inst>();
-const instanceOf = (template: THREE.Group, key: string, bonesDesc: ClipBone[], look: {skin?: string; num?: string; kit?: Record<string, string>; profile?: 'academy'; cloth2?: boolean; g3?: boolean; v3?: boolean}) => {
-  const k = `${template.uuid}|${key}|${look.skin}|${look.num}|${look.profile ?? ''}|${look.cloth2 ? 2 : 1}${look.g3 ? '|g3' : ''}${look.v3 ? '|v3' : ''}`;
+const instanceOf = (template: THREE.Group, key: string, bonesDesc: ClipBone[], look: {skin?: string; num?: string; kit?: Record<string, string>; profile?: 'academy'; cloth2?: boolean; g3?: boolean; v3?: boolean; v32?: boolean; neutral?: boolean}) => {
+  const k = `${template.uuid}|${key}|${look.skin}|${look.num}|${look.profile ?? ''}|${look.cloth2 ? 2 : 1}${look.g3 ? '|g3' : ''}${look.v3 ? '|v3' : ''}${look.v32 ? '|v32' : ''}${look.neutral ? '|neutral' : ''}`;
   let it = instances.get(k);
   if (it) return it;
   const obj = SkeletonUtils.clone(template);
@@ -354,6 +359,14 @@ const instanceOf = (template: THREE.Group, key: string, bonesDesc: ClipBone[], l
         c.envMapIntensity = 0.6;
         return c;
       };
+      if (look.neutral) {
+        // Realism V3.2 Test A (motion only): one neutral matte grey per part, no texture, no number, no sheen, so
+        // the three generations compare on movement only (skin lighter, cloth mid, shoes light, soles dark)
+        const c = new THREE.MeshStandardMaterial({name: mm.name, roughness: 0.85, metalness: 0});
+        const n = mm.name;
+        c.color = new THREE.Color(n.startsWith('E2A_skin') ? '#9A948C' : n.startsWith('E2A_sole') ? '#3A3A3A' : n.startsWith('E2A_shoe') || n.startsWith('E2A_sock') ? '#C9C6C0' : n.startsWith('E2A_hair') ? '#4A4642' : '#6E7378');
+        return c;
+      }
       if (mm.name.startsWith('E2A_skin') && look.skin) {
         const c = mm.clone();
         c.color = new THREE.Color(look.skin);
@@ -370,7 +383,40 @@ const instanceOf = (template: THREE.Group, key: string, bonesDesc: ClipBone[], l
     m.material = Array.isArray(m.material) ? mats : mats[0];
   });
   let clothU: ClothU | undefined;
-  if (look.cloth2) {
+  let clothUS: ClothU | undefined;
+  if (look.cloth2 && look.v32) {
+    // Realism V3.2: jersey and shorts get SEPARATE cloth uniforms (cloth32: the shorts swing a third, never twist) and the
+    // per-vertex clamp; the trims take the cloth attributes of their garment
+    const mk = (): ClothU => ({uSway: {value: new THREE.Vector3()}, uTwist: {value: 0}, uFlutter: {value: 0}, uPhase: {value: 0}, uPelvis: {value: new THREE.Vector3()}, uMaxDisp: {value: 0.06}});
+    clothU = mk();
+    clothUS = mk();
+    let jg: THREE.BufferGeometry | undefined, sg: THREE.BufferGeometry | undefined;
+    obj.traverse((o) => {
+      const m = o as THREE.Mesh;
+      if (m.isMesh && m.name.includes('Jersey') && !m.name.includes('Trim') && m.geometry.getAttribute('_e2a_hem')) jg = m.geometry;
+      if (m.isMesh && m.name.includes('Shorts') && !m.name.includes('Trim') && m.geometry.getAttribute('_e2a_hem')) sg = m.geometry;
+    });
+    obj.traverse((o) => {
+      const m = o as THREE.Mesh;
+      if (!m.isMesh) return;
+      const mats = Array.isArray(m.material) ? m.material : [m.material];
+      const jer = m.name.includes('Jersey');
+      if (!jer && !m.name.includes('Shorts')) return;
+      const src = jer ? jg : sg;
+      if (!src) return;
+      if (m.name.includes('Trim')) copyClothAttrs(src, m.geometry);
+      if (!m.geometry.getAttribute('_e2a_hem')) return;
+      if (jer && !m.geometry.getAttribute('e2aStrap')) strapWeights(m.geometry);
+      const ms = mats.map((mt) => mt.clone());
+      for (const mt of ms) {
+        const isTrim = mt.name.startsWith('E2A_trim');
+        mt.side = jer && !isTrim ? THREE.DoubleSide : THREE.FrontSide;
+        if (jer) cloth2Material(mt, clothU!, isTrim ? 0.016 : 0.012, 0.03, !isTrim, true, {panel: 0.15});
+        else cloth2Material(mt, clothUS!, isTrim ? 0.036 : 0.05, 0, false, true, {panel: 0});
+      }
+      m.material = Array.isArray(m.material) ? ms : ms[0];
+    });
+  } else if (look.cloth2) {
     // Realism V2: jersey + its trims swing with cloth2 (needs the v2 attributes; a v1 mesh keeps the v1 path below)
     let jg: THREE.BufferGeometry | undefined;
     obj.traverse((o) => {
@@ -463,7 +509,7 @@ const instanceOf = (template: THREE.Group, key: string, bonesDesc: ClipBone[], l
     const m = o as THREE.Mesh;
     if (m.isMesh && m.morphTargetDictionary && m.morphTargetInfluences) morphs.push(m);
   });
-  it = {obj, rig: rigOf(obj, bonesDesc), cloth: clothU, morphs};
+  it = {obj, rig: rigOf(obj, bonesDesc), cloth: clothU, clothS: clothUS, morphs};
   instances.set(k, it);
   return it;
 };
@@ -489,15 +535,32 @@ export const SkinnedAthlete: React.FC<{
   /** Realism V3 (athleteRenderer 'v3'): V3 materials / shorts cloth; morph = corrective weights by target name */
   v3?: boolean;
   morph?: Record<string, number>;
-}> = ({scene, clipBones, bones, hips, inst = 'lab', scale = 1, skin, num, kit, look, cloth, g3, v3, morph}) => {
-  const {obj, rig, cloth: cu, morphs} = instanceOf(scene, inst, clipBones, {skin, num, kit, profile: look, cloth2: !!cloth, g3: !!cloth && !!g3 && !v3, v3: !!v3});
+  /** Realism V3.2: separate jersey / shorts cloth states (+ per-vertex clamp), and the neutral-material look (Test A) */
+  cloth32?: {jersey?: Cloth & {maxDisp?: number}; shorts?: Cloth & {maxDisp?: number}};
+  neutral?: boolean;
+}> = ({scene, clipBones, bones, hips, inst = 'lab', scale = 1, skin, num, kit, look, cloth, g3, v3, morph, cloth32, neutral}) => {
+  const {obj, rig, cloth: cu, clothS: cus, morphs} = instanceOf(scene, inst, clipBones, {skin, num, kit, profile: look, cloth2: !!cloth || !!cloth32, g3: !!cloth && !!g3 && !v3, v3: !!v3, v32: !!cloth32, neutral});
   if (morphs?.length) {
     for (const m of morphs) {
       const d = m.morphTargetDictionary!;
       for (const [name, i] of Object.entries(d)) m.morphTargetInfluences![i] = morph?.[name] ?? 0;
     }
   }
-  if (cu && cloth) {
+  if (cloth32) {
+    const setU = (u: ClothU | undefined, c: (Cloth & {maxDisp?: number}) | undefined) => {
+      if (!u || !c) return;
+      const sw = W3(c.sway);
+      u.uSway.value.set(sw[0] / scale, sw[1] / scale, sw[2] / scale);
+      u.uTwist.value = c.twist;
+      u.uFlutter.value = c.flutter / scale;
+      u.uPhase.value = c.phase % 1;
+      const pv = W3(hips);
+      u.uPelvis.value.set(pv[0] / scale, pv[1] / scale, pv[2] / scale);
+      if (u.uMaxDisp) u.uMaxDisp.value = (c.maxDisp ?? 0.06) / scale;
+    };
+    setU(cu, cloth32.jersey);
+    setU(cus, cloth32.shorts);
+  } else if (cu && cloth) {
     // object space of the instance = three world / scale (no rotation, origin at 0)
     const sw = W3(cloth.sway);
     cu.uSway.value.set(sw[0] / scale, sw[1] / scale, sw[2] / scale);

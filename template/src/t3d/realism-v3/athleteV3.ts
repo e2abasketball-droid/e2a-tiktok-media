@@ -23,7 +23,7 @@ import type {Play} from '../../tactical/play.ts';
 import {posAt, sample} from '../../tactical/play.ts';
 
 export type FingerRest = {K: V3; M: V3; T: V3; TB: V3; TT: V3; W: V3; palm: V3; axis: V3; thumbAxis: V3; palmN: V3};
-export type CorrectiveDesc = {name: string; bone: string; parent: string; key: number; axis?: V3; mode?: 'angle' | 'flex'};
+export type CorrectiveDesc = {name: string; bone: string; parent: string; key: number; axis?: V3; mode?: 'angle' | 'flex' | 'raise' | 'flexUp'};
 export type RigV3 = SkelRig & {version: string; variant: 'off' | 'def'; H: number; kit: Record<string, string>; fingers: Record<'L' | 'R', FingerRest>; correctives: CorrectiveDesc[]};
 
 export const ATHLETE_V3 = {
@@ -275,6 +275,20 @@ export const bonesV3 = (rig: RigV3, P: Pose, scale: number, ball?: BallCtx, weig
     }
     const rest = Math.acos(clamp(dot(norm(sub(pb.tail, pb.head)), norm(sub(cb.tail, cb.head))), -1, 1));
     const now = Math.acos(clamp(dot(dirOf(c.parent, bones[c.parent]), dirOf(c.bone, bones[c.bone])), -1, 1));
+    // Realism V3.2 'raise' (garment strap correctives): the child swings TOWARD the parent's axis (arm raised toward
+    // the trunk's up axis) -> the angle shrinks; only V3.2 rigs carry such entries (V3 / V3.1 unchanged)
+    if (c.mode === 'flexUp') {
+      // V3.2: sagittal flexion of an UPWARD child (chest over hips): forward lean (toward -y, the rest facing) > 0
+      const Dp = qmul(bones[c.parent], qconj(pb.R));
+      const d = qrot(qconj(Dp), dirOf(c.bone, bones[c.bone]));
+      const r0 = norm(sub(cb.tail, cb.head));
+      morph[c.name] = clamp((Math.atan2(-d[1], d[2]) - Math.atan2(-r0[1], r0[2])) / ((c.key * Math.PI) / 180));
+      continue;
+    }
+    if (c.mode === 'raise') {
+      morph[c.name] = clamp((rest - now) / ((c.key * Math.PI) / 180));
+      continue;
+    }
     morph[c.name] = clamp((now - rest) / ((c.key * Math.PI) / 180));
   }
   return {bones, hips: hips0, morph, grip};
