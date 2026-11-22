@@ -21,7 +21,8 @@ import {bonesFromPose, getClip, meshScale, skelPoseAt} from './skelclip.ts';
 import {SkinnedAthlete, useGlbs} from './SkinnedAthlete';
 import {KITS} from './Athlete';
 import {PLAYER3D, describePlan, planPlayers3d, playWithPlan} from './player3d.ts';
-import {PLAYER3D_V3, isV3, isV31, isV32} from './realism-v3/index.ts';
+import {PLAYER3D_V3, isV3, isV31, isV32, isV33} from './realism-v3/index.ts';
+import {PLAYER3D_V33, athleteV33, ballV33} from './realism-v3-3/index.ts';
 import {PLAYER3D_V32} from './realism-v3-2/index.ts';
 import {athleteV32} from './realism-v3-2/scene32.ts';
 import type {Athlete32, Motion} from './realism-v3-2/scene32.ts';
@@ -273,14 +274,16 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
   const av3 = isV3(athleteRenderer);
   const av31 = isV31(athleteRenderer);
   const av32 = isV32(athleteRenderer);
+  // Realism V3.3 (opt-in): same V3.2 meshes, motion33 bodies and ONE ball (ballV33) for every player and the ball mesh
+  const av33 = isV33(athleteRenderer);
   const PK32 = athleteMesh === 'v31' ? PLAYER3D_V31 : PLAYER3D_V32;
   const mot32: Motion = athleteMotion ?? 'v32';
-  const offGlb = av32 ? PK32.off.glb : av31 ? PLAYER3D_V31.off.glb : av3 ? PLAYER3D_V3.off.glb : rv2 ? PLAYER3D.off.glbV2 : PLAYER3D.off.glb;
-  const defGlb = av32 ? PK32.def.glb : av31 ? PLAYER3D_V31.def.glb : av3 ? PLAYER3D_V3.def.glb : rv2 ? PLAYER3D.def.glbV2 : PLAYER3D.def.glb;
+  const offGlb = av33 ? PLAYER3D_V33.off.glb : av32 ? PK32.off.glb : av31 ? PLAYER3D_V31.off.glb : av3 ? PLAYER3D_V3.off.glb : rv2 ? PLAYER3D.off.glbV2 : PLAYER3D.off.glb;
+  const defGlb = av33 ? PLAYER3D_V33.def.glb : av32 ? PK32.def.glb : av31 ? PLAYER3D_V31.def.glb : av3 ? PLAYER3D_V3.def.glb : rv2 ? PLAYER3D.def.glbV2 : PLAYER3D.def.glb;
   // Realism V3.1: while an authored clip holds the ball, the ball is its hand socket (else the engine ball)
   const rig31 = (id: string) => PLAYER3D_V31[play.players.find((q) => q.id === id)?.team === 'X' ? 'def' : 'off'].rig;
   const rig32 = (id: string) => PK32[play.players.find((q) => q.id === id)?.team === 'X' ? 'def' : 'off'].rig;
-  const ballPos = av32 ? (mot32 === 'v32' ? ballV32(play, pt, rig32) : mot32 === 'v31' ? ballV31(play, pt, rig32) : undefined) ?? ball.pos : av31 ? ballV31(play, pt, rig31) ?? ball.pos : ball.pos;
+  const ballPos = av33 ? ballV33(play, pt) : av32 ? (mot32 === 'v32' ? ballV32(play, pt, rig32) : mot32 === 'v31' ? ballV31(play, pt, rig32) : undefined) ?? ball.pos : av31 ? ballV31(play, pt, rig31) ?? ball.pos : ball.pos;
   const dbg32: Athlete32[] = [];
   const glbs = useGlbs(anyC ? [offGlb, defGlb, ...labGlbs] : labGlbs);
   // the canvas only renders on frame changes (Remotion ThreeCanvas): mount it once the meshes are loaded (or failed)
@@ -311,7 +314,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
         const spec = skel?.[p.id];
         const variant = p.team === 'X' ? 'def' : 'off';
         const pkg = PLAYER3D[variant];
-        const pkgGlb = av32 ? PK32[variant].glb : av31 ? PLAYER3D_V31[variant].glb : av3 ? PLAYER3D_V3[variant].glb : rv2 ? pkg.glbV2 : pkg.glb;
+        const pkgGlb = av33 ? PLAYER3D_V33[variant].glb : av32 ? PK32[variant].glb : av31 ? PLAYER3D_V31[variant].glb : av3 ? PLAYER3D_V3[variant].glb : rv2 ? pkg.glbV2 : pkg.glb;
         const glbSrc = spec?.glb ?? pkgGlb;
         const cloth = rv2 && !spec?.glb ? clothAt(play, p.id, pt) : undefined;
         const glb = glbs[glbSrc]?.scene ?? null;
@@ -329,6 +332,19 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
                 <Athlete pose={sp.pose} team={p.team} num={num} skin={skin} />
               )}
               <ContactShadows pose={sp.pose} />
+            </React.Fragment>
+          );
+        }
+        if (av33 && pp?.look === 'C' && glb) {
+          // Realism V3.3: compiled / compat motion33 clip (engine pose fallback, reported by the QA), V3.2 mesh + cloth
+          const rig = PLAYER3D_V33[variant].rig;
+          const a = athleteV33(play, p.id, pt, rig, {holder: ball.holder, pos: ball.pos, lag: ballLag});
+          if (debug32 && a.debug) dbg32.push(a);
+          return (
+            <React.Fragment key={p.id}>
+              <SkinnedAthlete scene={glb} clipBones={rig.bones} bones={a.fr.bones} hips={a.fr.hips} inst={`${instNs ?? ''}v33:${neutral ? 'n' : 'c'}:${p.id}`} scale={a.sc} skin={skin} num={num} kit={KITS[p.team]}
+                look={env === 'academy' || env === 'cinema' ? 'academy' : undefined} cloth32={a.cloth} v3 morph={a.fr.morph} neutral={neutral} />
+              <ContactShadows pose={a.pose} />
             </React.Fragment>
           );
         }
