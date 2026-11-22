@@ -1,0 +1,8 @@
+PASS  [realism-v3-1-onetake] pass O2→O1: receiver under control at the catch (≤ 3.5 m/s) — 0.91 m/s
+PASS  [realism-v3-1-onetake] O1 is open (nearest defender ≥ 1.8 m) — Infinity m
+
+11/13 generic tactical checks passed
+PASS  [realism-v3-1-onetake] shot O1: after the net the ball reaches the floor — lowest 0.132 m
+PASS  [realism-v3-1-onetake] shot O1: ball leaves from the hands (≤ 0.30 m) — 0.119 m
+
+6/7 ball checks passed

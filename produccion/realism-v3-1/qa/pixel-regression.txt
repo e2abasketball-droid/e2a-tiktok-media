@@ -1,0 +1,15 @@
+blob-screen-the-screener-v2/f0300.jpg base 671c6614ce4a new 671c6614ce4a maxdiff 0 pixels>0 0
+chicago-action-v2/f0300.jpg base b01bc695bb9e new b01bc695bb9e maxdiff 0 pixels>0 0
+chicago-action-v2/f0700.jpg base 039da588bc62 new 039da588bc62 maxdiff 0 pixels>0 0
+chicago-action-v3/f0200.jpg base cac8da745568 new cac8da745568 maxdiff 0 pixels>0 0
+chicago-action-v3/f0600.jpg base 67689633c1fd new 67689633c1fd maxdiff 0 pixels>0 0
+rv3-legacy/f0095.jpg base 38f8a714ce56 new 38f8a714ce56 maxdiff 0 pixels>0 0
+rv3-legacy/f0350.jpg base 812586baa2e1 new 812586baa2e1 maxdiff 0 pixels>0 0
+rv3-v3-renderer/f0095.jpg base 49ef962c523d new 49ef962c523d maxdiff 0 pixels>0 0
+rv3-v3-renderer/f0220.jpg base 96abf95de6dc new 96abf95de6dc maxdiff 0 pixels>0 0
+rv31-legacy/f0099.jpg base 79989a64c63c new 79989a64c63c maxdiff 0 pixels>0 0
+rv31-legacy/f0246.jpg base 6fced1b1d323 new 6fced1b1d323 maxdiff 0 pixels>0 0
+zona-2-3-zone-v2/f0300.jpg base 365d1d3fb0a0 new 365d1d3fb0a0 maxdiff 0 pixels>0 0
+Rendered 103/375
+
+[exited with code 0]

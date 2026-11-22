@@ -8,9 +8,12 @@ import type {RigV3} from './athleteV3.ts';
 import off from './rigs/e2a-off-v3.rig.json';
 import def from './rigs/e2a-def-v3.rig.json';
 
-export type AthleteRenderer = 'legacy' | 'v3';
+//                    'v31'    (opt-in, Realism V3.1): e2a_player_{off,def}_v31.glb + AUTHORED body motion for players with a
+//                             hand-keyed clip (realism-v3-1/motion.ts), engine pose (V3 bridge) for the others
+export type AthleteRenderer = 'legacy' | 'v3' | 'v31';
 export const DEFAULT_ATHLETE_RENDERER: AthleteRenderer = 'legacy';
 export const isV3 = (r?: AthleteRenderer) => (r ?? DEFAULT_ATHLETE_RENDERER) === 'v3';
+export const isV31 = (r?: AthleteRenderer) => (r ?? DEFAULT_ATHLETE_RENDERER) === 'v31';
 
 export const PLAYER3D_V3 = {
   version: 'e2a-player-v3',

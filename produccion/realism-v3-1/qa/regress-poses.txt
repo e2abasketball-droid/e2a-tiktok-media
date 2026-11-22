@@ -1,0 +1,7 @@
+PASS  chicago-a-take  6948b3e085ce823f
+PASS  ram-v2-a-drop  05939aa379cb8e7b
+PASS  stack-b-roll  4a0a374cf08fb865
+12/12 legacy plays identical to d700987 (pre Realism V2 main), hashes computed with that engine's rig.ts/play.ts on 2026-11-21
+PASS  chicago-v2-a-trail  94582d5cb0483ee7
+PASS  chicago-v2-b-under  889ef3df0e60d02a
+2/2 legacy plays identical to 8e418e9 (claude/realism-v2, Realism V2 engine)

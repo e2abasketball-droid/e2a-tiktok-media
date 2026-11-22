@@ -1,0 +1,176 @@
+{
+ "play": "realism-v3-1-onetake",
+ "player": "O1",
+ "rig": "e2a-player-v31",
+ "frames": 376,
+ "jumpHeight": 0.505,
+ "footLock": {
+  "steps": 15,
+  "driftMax": 0.001,
+  "driftMedian": 0,
+  "worst": [
+   {
+    "side": "R",
+    "land": 4.93,
+    "drift": 0.001
+   },
+   {
+    "side": "L",
+    "land": 2.96,
+    "drift": 0
+   },
+   {
+    "side": "L",
+    "land": 4.72,
+    "drift": 0
+   },
+   {
+    "side": "L",
+    "land": 5.12,
+    "drift": 0
+   }
+  ]
+ },
+ "soleFlatZ": {
+  "min": 0,
+  "max": 0,
+  "median": 0,
+  "n": 285
+ },
+ "ballHeld": {
+  "palmGapMedian": 0.012,
+  "palmGapP95": 0.012,
+  "palmGapMax": 0.037,
+  "palmGapMin": -0.022,
+  "n": 164,
+  "worst": [
+   {
+    "t": 6.767,
+    "side": "R",
+    "gap": -0.022
+   },
+   {
+    "t": 7.833,
+    "side": "R",
+    "gap": -0.014
+   },
+   {
+    "t": 7.867,
+    "side": "R",
+    "gap": -0.014
+   },
+   {
+    "t": 8.167,
+    "side": "R",
+    "gap": 0.037
+   },
+   {
+    "t": 7.8,
+    "side": "R",
+    "gap": -0.006
+   },
+   {
+    "t": 7.9,
+    "side": "R",
+    "gap": -0.006
+   }
+  ]
+ },
+ "ballContinuity": {
+  "maxStep120": 0.077,
+  "at": 8.208,
+  "atEvents": [
+   {
+    "t": 4.933,
+    "d": 0.058
+   },
+   {
+    "t": 6.15,
+    "d": 0.001
+   },
+   {
+    "t": 6.717,
+    "d": 0.001
+   },
+   {
+    "t": 8.2,
+    "d": 0.002
+   }
+  ]
+ },
+ "jointAccelMax": {
+  "hips": {
+   "a": 129.404,
+   "t": 8.6
+  },
+  "head": {
+   "a": 128.125,
+   "t": 8.6
+  },
+  "handR": {
+   "a": 807.119,
+   "t": 8.283
+  },
+  "handL": {
+   "a": 428.525,
+   "t": 6.75
+  },
+  "footL": {
+   "a": 191.63,
+   "t": 2.65
+  },
+  "footR": {
+   "a": 202.557,
+   "t": 2.167
+  }
+ },
+ "seek": {
+  "orders": [
+   {
+    "order": [
+     100,
+     5,
+     250,
+     100
+    ],
+    "identical": true
+   },
+   {
+    "order": [
+     312,
+     17,
+     180,
+     312
+    ],
+    "identical": true
+   },
+   {
+    "order": [
+     60,
+     340,
+     222,
+     60
+    ],
+    "identical": true
+   }
+  ],
+  "identical": true,
+  "bytes": 2884
+ },
+ "amplitude": {
+  "legacy": {
+   "pelvisZRange": 0.559,
+   "leanRange": 0.53,
+   "headYawOffRange": 1.955,
+   "handFwdRange": 1.147,
+   "airMax": 0.418
+  },
+  "v31": {
+   "pelvisZRange": 0.71,
+   "leanRange": 0.72,
+   "headYawOffRange": 2.425,
+   "handFwdRange": 0.655,
+   "airMax": 0.524
+  }
+ }
+}

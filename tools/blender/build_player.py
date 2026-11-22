@@ -45,7 +45,13 @@ ap.add_argument('--cloth-cut', choices=['iso', 'legacy'], default='iso', help='g
 ap.add_argument('--rig', choices=['v1', 'v3'], default='v1',
                 help='v3 (Realism V3, 2026-11-22): + 6 finger bones (fingers1 / fingers2 / thumb per hand, skeleton.enable_fingers) and '
                      'pose-space corrective shape keys on the body (knee / elbow / hip, delta-mush, see corrective(); hip also carried to the shorts). v1 = byte-identical')
-ap.add_argument('--garment', choices=['v1', 'v2', 'v3'], default='v1',
+ap.add_argument('--body', choices=['v1', 'v31'], default='v1',
+                help='v31 (Realism V3.1, 2026-11-22): athletic morph set on top of the variant EXTRA (broader shoulders / lats, '
+                     'defined calves and forearms, trapezius / neck, narrower hips, longer thighs). v1 = byte-identical')
+ap.add_argument('--shoe', choices=['v1', 'v31'], default='v1',
+                help='v31: a separate sole slab (heel 3.2 cm -> toe 1.7 cm, toe spring, 5 mm wider than the upper) under the hull upper')
+ap.add_argument('--out-meta', default='', help='write a metadata JSON (bones, meshes, triangles, materials, morphs, animations)')
+ap.add_argument('--garment', choices=['v1', 'v2', 'v3', 'v31'], default='v1',
                 help='v2 (Realism V2, 2026-11-21): looser jersey that HANGS from the chest (straight drape, not painted on the '
                      'belly), 5 cm longer, always outside the shorts waistband, hem weights off the thighs, and per-vertex '
                      '_E2A_HEM / _E2A_EASE attributes for the engine secondary motion (src/t3d/cloth2.ts). v1 = byte-identical')
@@ -86,6 +92,20 @@ EXTRA = {
             'armslegs/l-hand-scale-incr': 0.12, 'armslegs/r-hand-scale-incr': 0.12,
             'armslegs/l-upperleg-muscle-incr': 0.35, 'armslegs/r-upperleg-muscle-incr': 0.35},
 }[a.variant]
+if a.body == 'v31':
+    # Realism V3.1 (2026-11-22): the owner read the V3 body as a mannequin (narrow shoulders, tube limbs, no neck). Athletic
+    # build on top of the variant set: muscle macro 0.45 -> 0.75 max, wide lats / V, shoulder caps, forearms, calves,
+    # trapezius (neck back depth) and a longer thigh. Every target exists in targets.pack (mh_body prints missing ones).
+    V31 = {'macrodetails/universal-male-young-averagemuscle-averageweight': -0.3, 'macrodetails/universal-male-young-maxmuscle-averageweight': 0.3,
+           'torso/torso-scale-horiz-incr': 0.35, 'torso/torso-vshape-incr': 0.5, 'torso/torso-muscle-dorsi-incr': 0.45,
+           'torso/torso-muscle-pectoral-incr': 0.35, 'neck/neck-scale-horiz-incr': 0.4, 'neck/neck-back-scale-depth-incr': 0.6,
+           'hip/hip-scale-horiz-decr': 0.25, 'buttocks/buttocks-volume-decr': 0.3, 'armslegs/upperlegs-height-incr': 0.2}
+    for s_ in 'lr':
+        V31.update({f'armslegs/{s_}-upperarm-shoulder-muscle-incr': 0.45, f'armslegs/{s_}-upperarm-muscle-incr': 0.4,
+                    f'armslegs/{s_}-lowerarm-muscle-incr': 0.6, f'armslegs/{s_}-lowerleg-muscle-incr': 0.7,
+                    f'armslegs/{s_}-upperleg-muscle-incr': 0.35, f'armslegs/{s_}-hand-scale-incr': 0.08})
+    for k_, w_ in V31.items():
+        EXTRA[k_] = EXTRA.get(k_, 0.0) + w_
 
 
 def hex2lin(h, alpha=1.0):
@@ -472,8 +492,9 @@ def taubin_garment(P, polys, Vsrc, Nsrc, iters=30, min_off=0.006, lam=0.5, mu=-0
     return P
 
 
-GV2 = a.garment in ('v2', 'v3')  # v3 keeps the v2 jersey drape and adds the v3 shorts / trims / attributes below
-GV3 = a.garment == 'v3'
+GV2 = a.garment in ('v2', 'v3', 'v31')  # v3 keeps the v2 jersey drape and adds the v3 shorts / trims / attributes below
+GV3 = a.garment in ('v3', 'v31')
+GV31 = a.garment == 'v31'  # Realism V3.1: loose jersey (deeper armholes, air gap) and looser shorts on top of v3
 hem_j = hip_z - (0.085 if GV2 else 0.05)
 hem_s = knee_z + 0.12
 ISO_DIFF = 10  # graph diffusion steps (lam 0.5): rounds the staircase (quads ~2-3 cm) without eating the straps
@@ -488,9 +509,18 @@ G_jersey = np.minimum(D_jersey, plane_up(hem_j))
 G_shorts = np.minimum(D_shorts, plane_up(hem_s))
 # skin hidden only DEEP inside a garment: the 0.80 iso-line of the diffused set and 4 cm above the hems
 G_skin_hide = np.maximum(np.minimum(D_jersey - 0.30, plane_up(hem_j + 0.04)), np.minimum(D_shorts - 0.30, plane_up(hem_s + 0.04)))
-if a.garment == 'v3':
+if GV3:
     # Realism V3: keep 10 cm of thigh skin inside the loose leg opening (the hem swings with cloth2: never a see-through hole)
     G_skin_hide = np.maximum(np.minimum(D_jersey - 0.30, plane_up(hem_j + 0.04)), np.minimum(D_shorts - 0.30, plane_up(hem_s + 0.10)))
+if GV31:
+    # Realism V3.1: DEEP armholes of a basketball jersey (the MakeHuman torso region stops at the shoulder joint, the V3
+    # jersey hugged the armpit like a tank top). An ellipse in the x-z plane round each shoulder joint (any y): the jersey
+    # ends on it (bottom 21 cm under the joint, 6 cm straps), the skin stays visible 3 cm inside it (the gap shows body)
+    _sh = J['upperarm01.L____head']; AH_X, AH_Z = abs(float(_sh[0])), float(_sh[2]) - 0.06
+    AH_R = (0.078, 0.15)
+    _ah = np.hypot((np.abs(V[:, 0]) - AH_X) / AH_R[0], (V[:, 2] - AH_Z) / AH_R[1])
+    G_jersey = np.minimum(G_jersey, 0.5 + (_ah - 1.0) / 0.08)
+    G_skin_hide = np.minimum(G_skin_hide, 0.5 + (_ah - 1.3) / 0.08)
 
 # ---------------------------------------------------------------- textures (PIL)
 from PIL import Image, ImageDraw, ImageFont
@@ -743,8 +773,18 @@ if GV2:
         rbody = np.hypot(Vj[:, 0], Vj[:, 1] - yc)
         s3 = np.clip((u - 0.08) / 0.55, 0, 1); s3 = s3 * s3 * (3 - 2 * s3)
         t3 = rch[bi] * (1 - s3) + (rbody + 0.022 + 0.014 * u) * s3
+        if GV31:
+            # V3.1 loose cut: 1.2 cm of air over the widest chest section, the taper 70 % of the way to the body and an
+            # ease of 3 -> 4.6 cm toward the hem (a real jersey hangs off the shoulders and lats, it never touches the belly)
+            s3h = s3 * 0.7
+            t3 = (rch[bi] + 0.012) * (1 - s3h) + (rbody + 0.03 + 0.016 * u) * s3h
         rn = np.where(inj & (u > 0), np.maximum(rbody + 0.012, rr + (t3 - rr) * wb), rn)
     Pj[:, 0] = np.cos(th) * rn; Pj[:, 1] = yc + np.sin(th) * rn
+    if GV31:
+        # air gap at the armhole edge / upper back: 0.9 cm along the normal from the shoulder line down to the chest
+        _g = inj & (Pj[:, 2] < AH_Z + 0.04) & (Pj[:, 2] > chest_z - 0.12)
+        Pj[_g] += Nj[_g] * (0.009 * np.clip((AH_Z + 0.04 - Pj[_g, 2]) / 0.06, 0, 1) * np.clip((Pj[_g, 2] - chest_z + 0.12) / 0.06, 0, 1))[:, None]
+        th = np.arctan2(Pj[:, 1] - yc, Pj[:, 0]); rn = np.hypot(Pj[:, 0], Pj[:, 1] - yc)
     J_EASE = rn - np.hypot(Vj[:, 0], Vj[:, 1] - yc)  # horizontal gap to the body surface it was cut from
     J_TH, J_YC = th, yc
 else:
@@ -846,6 +886,8 @@ if GV3:
         u = np.clip((top_leg - Vs[idx, 2]) / (top_leg - hem_s), 0, 1)
         # second pass (2026-11-22): looser, separate openings: ease 1.6 cm at the crotch -> 5.4 cm at the hem
         target = 0.55 * rmean[bi] + 0.45 * rb[bi, ai] + 0.016 + 0.038 * u ** 1.3
+        if GV31:  # V3.1: a little wider (2.0 cm at the crotch -> 5.8 cm at the hem): the V3.1 thighs are already bigger
+            target = 0.6 * rmean[bi] + 0.4 * rb[bi, ai] + 0.02 + 0.038 * u ** 1.2
         wt = sm(np.clip((top_leg + 0.02 - Vs[idx, 2]) / 0.08, 0, 1))
         newr = r + (target - r) * wt
         inner = (rn @ np.array([-sg, 0.0, 0.0])) > 0.3
@@ -941,6 +983,19 @@ if GV2:
         mv = Wj[:, ti] * uu
         Wj[:, ti] -= mv
         Wj[:, SK.NAMES.index('hips')] += mv
+    if GV31:
+        # V3.1 (coordinator review 2026-11-22): the deep armhole edge carried MakeHuman upper-arm weights, so a raised arm
+        # lifted the strap off the shoulder like a hard shell. A jersey hangs from the shoulder girdle: 85 % of every
+        # upperarm weight goes to the clavicle, and 40 % of the clavicle weight below the strap to the chest
+        for sd in 'LR':
+            ua, cl_, ch_ = SK.NAMES.index('upperarm.' + sd), SK.NAMES.index('clavicle.' + sd), SK.NAMES.index('chest')
+            mv = Wj[:, ua] * 0.85
+            Wj[:, ua] -= mv
+            Wj[:, cl_] += mv
+            low_ = np.clip((AH_Z + 0.02 - Pj[:, 2]) / 0.08, 0, 1) * 0.4
+            mv = Wj[:, cl_] * low_
+            Wj[:, cl_] -= mv
+            Wj[:, ch_] += mv
     Pj = smooth_loops(Pj, jpoly, 4, flat=jflat)
     if GV3:
         Pj = fourier_loops(Pj, jpoly, 12, flat=jflat)
@@ -986,8 +1041,69 @@ for s_, sg in (('L', 1), ('R', -1)):
     me.materials.append(M_SHOE); me.materials.append(M_SOLE)
     for poly in me.polygons:
         cz = sum(me.vertices[v].co.z for v in poly.vertices) / len(poly.vertices)
-        poly.material_index = 1 if cz < 0.03 else 0
+        poly.material_index = (1 if cz < 0.03 else 0) if a.shoe == 'v1' else 0
         poly.use_smooth = True
+    if a.shoe == 'v31':
+        # ---- Realism V3.1 sole: the V3 shoe was a convex hull of the foot ("a sock with a dark bottom"). A SEPARATE slab
+        # under it: outline = 2-D hull of the upper's lower 6 cm + 5 mm (the wall shows round the upper), heel 3.2 cm -> forefoot 1.8 cm, toe spring (the
+        # front 22 % lifts 1.3 cm off the floor), heel bevel 6 mm, a 3 mm outward bulge at mid height (cupsole wall)
+        fp = np.array([[v.co.x, v.co.y] for v in me.vertices if v.co.z < 0.06])  # widest part of the upper's lower 6 cm
+        o_ = np.lexsort((fp[:, 1], fp[:, 0])); fp = fp[o_]
+        def _half(pts):
+            h_ = []
+            for q in pts:
+                while len(h_) >= 2 and ((h_[-1][0] - h_[-2][0]) * (q[1] - h_[-2][1]) - (h_[-1][1] - h_[-2][1]) * (q[0] - h_[-2][0])) <= 0:
+                    h_.pop()
+                h_.append(q)
+            return h_
+        hull = np.array(_half(fp)[:-1] + _half(fp[::-1])[:-1])
+        seg = np.r_[0, np.cumsum(np.linalg.norm(np.diff(np.vstack([hull, hull[:1]]), axis=0), axis=1))]
+        NS = 72
+        ss = np.linspace(0, seg[-1], NS, endpoint=False)
+        ring = np.stack([np.interp(ss, seg, np.r_[hull[:, k], hull[0, k]]) for k in (0, 1)], 1)
+        for _ in range(3):  # round the hull corners
+            ring = 0.5 * ring + 0.25 * (np.roll(ring, 1, 0) + np.roll(ring, -1, 0))
+        cen = ring.mean(0)
+        tang = np.roll(ring, -1, 0) - np.roll(ring, 1, 0)
+        nrm2 = np.stack([tang[:, 1], -tang[:, 0]], 1); nrm2 /= np.linalg.norm(nrm2, axis=1, keepdims=True)
+        nrm2 *= np.sign(((ring - cen) * nrm2).sum(1))[:, None]
+        yh, yt = ring[:, 1].max(), ring[:, 1].min()
+        uu = (yh - ring[:, 1]) / (yh - yt)  # 0 heel -> 1 toe (the body faces -y)
+        smo = lambda x: np.clip(x, 0, 1) ** 2 * (3 - 2 * np.clip(x, 0, 1))
+        bot = 0.013 * smo((uu - 0.78) / 0.22) + 0.006 * smo((0.06 - uu) / 0.06)
+        topz = 0.032 - 0.014 * smo(uu / 0.75) + 0.004 * smo((uu - 0.8) / 0.2)
+        layers = [(bot, 0.004), (bot + 0.004, 0.006), (bot + 0.45 * (topz - bot), 0.008), (topz, 0.005)]
+        sv, sf = [], []
+        for zl, offl in layers:
+            for k_ in range(NS):
+                xy = ring[k_] + nrm2[k_] * offl
+                sv.append([xy[0], xy[1], zl[k_]])
+        for li in range(len(layers) - 1):
+            for k_ in range(NS):
+                a0, a1 = li * NS + k_, li * NS + (k_ + 1) % NS
+                sf.append([a0, a1, a1 + NS, a0 + NS])
+        cb = len(sv); sv.append([cen[0], cen[1], float(bot.mean() * 0.3)])
+        ct = len(sv); sv.append([cen[0], cen[1], float(topz.mean())])
+        for k_ in range(NS):
+            sf.append([cb, (k_ + 1) % NS, k_])
+            tb = (len(layers) - 1) * NS
+            sf.append([ct, tb + k_, tb + (k_ + 1) % NS])
+        mes = bpy.data.meshes.new('E2A_Sole.' + s_)
+        mes.from_pydata([tuple(v) for v in sv], [], [tuple(f) for f in sf])
+        mes.materials.append(M_SOLE)
+        for poly in mes.polygons:
+            poly.use_smooth = len(poly.vertices) == 4
+        obs_ = bpy.data.objects.new('E2A_Sole.' + s_, mes)
+        bpy.context.collection.objects.link(obs_)
+        vgs_ = {bn: obs_.vertex_groups.new(name=bn) for bn in SK.NAMES}
+        for vv in mes.vertices:
+            co, k_, dist = kd.find(vv.co)
+            src = ids[k_]
+            for bi, bn in enumerate(SK.NAMES):
+                if WGT[src, bi] > 1e-4:
+                    vgs_[bn].add([vv.index], float(WGT[src, bi]), 'REPLACE')
+        shoe_obs.append(obs_)
+        print(f'sole v31 {s_}: {len(sv)} verts, length {100 * (yh - yt):.1f} cm, heel {100 * topz[uu < 0.05].mean():.1f} cm, toe {100 * topz[uu > 0.9].mean():.1f} cm, toe spring {100 * bot.max():.1f} cm')
     ob = bpy.data.objects.new('E2A_Shoe.' + s_, me)
     bpy.context.collection.objects.link(ob)
     vgs = {bn: ob.vertex_groups.new(name=bn) for bn in SK.NAMES}
@@ -1116,7 +1232,7 @@ if a.out_rig:
                    'wrist' + s_: rest['hand.' + s_]['head'], 'hand' + s_: lm['handtip' + s_],
                    'ball' + s_: np.array([lm['ball' + s_][0], lm['ball' + s_][1], 0.0]), 'heel' + s_: np.array([lm['heel' + s_][0], lm['heel' + s_][1], 0.0])})
     hv = np.where(np.isin(np.arange(len(V)), np.unique(np.concatenate([F[i] for i in body_f]))))[0]
-    rig = {'version': 'e2a-player-v3' if RV3 else 'e2a-player-v1', 'variant': a.variant, 'H': round(float(sk['V'][:mh_body.NBODY, 2].max()), 4),
+    rig = {'version': ('e2a-player-v31' if GV31 else 'e2a-player-v3') if RV3 else 'e2a-player-v1', 'variant': a.variant, 'H': round(float(sk['V'][:mh_body.NBODY, 2].max()), 4),
            'source': 'MakeHuman base mesh (ara3d-data 1.1.0, CC0-1.0) morphed by tools/blender/mh_body.py + build_player.py',
            'kit': {k: VAR[k] for k in ('jersey', 'trim', 'number', 'shoe', 'sole', 'sock', 'hair', 'skin')},
            'bones': [{'name': b, 'parent': rest[b]['parent'], 'head': np.round(rest[b]['head'], 5).tolist(), 'tail': np.round(rest[b]['tail'], 5).tolist(),
@@ -1200,3 +1316,15 @@ bpy.ops.export_scene.gltf(filepath=os.path.abspath(a.out_glb), export_format='GL
                           export_materials='EXPORT', export_image_format='AUTO', export_def_bones=False, export_frame_range=True,
                           **({'export_attributes': True} if GV2 else {}))
 print('glb', a.out_glb, os.path.getsize(a.out_glb))
+if a.out_meta:
+    meta = {'glb': os.path.basename(a.out_glb), 'bytes': os.path.getsize(a.out_glb), 'args': {k: v for k, v in vars(a).items() if not k.startswith('out')},
+            'bones': SK.NAMES, 'meshes': [], 'materials': sorted({m.name for o in bpy.data.objects if o.type == 'MESH' and o.name.startswith('E2A_') for m in o.data.materials}),
+            'animations': [ac.name for ac in bpy.data.actions]}
+    for o in bpy.data.objects:
+        if o.type == 'MESH' and o.name.startswith('E2A_'):
+            o.data.calc_loop_triangles()
+            meta['meshes'].append({'name': o.name, 'verts': len(o.data.vertices), 'tris': len(o.data.loop_triangles),
+                                   'morphs': [k.name for k in o.data.shape_keys.key_blocks[1:]] if o.data.shape_keys else []})
+    meta['tris'] = sum(m['tris'] for m in meta['meshes'])
+    json.dump(meta, open(a.out_meta, 'w'), indent=1)
+    print('meta', a.out_meta, meta['tris'], 'tris')

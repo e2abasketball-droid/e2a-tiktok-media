@@ -568,12 +568,13 @@ const lerpPose = (a: Pose, b: Pose, u: number): Pose => {
 // ---------------------------------------------------------------- Pose -> bone rotations (for the mesh outside the clip)
 // Same two-vector frames as tools/blender/retarget.py, calibrated on the clip's rest joints.
 type Frames = Record<string, Q>;
-const framesOf = (J: Record<string, V3>, chestYaw?: number, hinge0?: Record<string, V3>): Frames => {
+const framesOf = (J: Record<string, V3>, chestYaw?: number, hinge0?: Record<string, V3>, hipsUp?: V3): Frames => {
   const side = sub(J.hipL, J.hipR);
   const midS = mul(add(J.shoulderL, J.shoulderR), 0.5);
   const up = sub(J.chest, J.pelvis);
   const F: Frames = {};
-  F.hips = twoVec(up, side);
+  // hipsUp (Realism V3.1 only): the pelvis tilts on its own axis instead of following the trunk line
+  F.hips = twoVec(hipsUp ?? up, side);
   F.chest = twoVec(up, sub(J.shoulderL, J.shoulderR));
   const hs: V3 = chestYaw !== undefined ? [-Math.sin(chestYaw), Math.cos(chestYaw), 0] : sub(J.shoulderL, J.shoulderR);
   F.head = twoVec(sub(J.head, J.chest), hs);
@@ -636,7 +637,7 @@ export const meshScale = (c: SkelRig, P: Pose) => {
  *  wrists (ball contact). The head is driven by the engine's gaze (headYaw) and headPitch around a neutral head that
  *  keeps the eyes level (2026-11-19: before, the head followed the chest->head vector of the capsule rig, ~12 deg behind
  *  the rest tilt, and the mesh looked up). */
-export const bonesFromPose = (c: SkelRig, P: Pose, scale = 1): {bones: Record<string, Q>; hips: V3} => {
+export const bonesFromPose = (c: SkelRig, P: Pose, scale = 1, hipsUp?: V3): {bones: Record<string, Q>; hips: V3} => {
   const {rest, hinge0, headTilt} = adapterRest(c);
   const R0 = c.restJoints;
   const Rj = (k: string): V3 => mul(R0[k], scale);
@@ -677,7 +678,7 @@ export const bonesFromPose = (c: SkelRig, P: Pose, scale = 1): {bones: Record<st
     out.spine = qslerp(out.hips, out.chest, 0.5);
     return out;
   };
-  let F = framesOf(J, P.chestYaw, hinge0);
+  let F = framesOf(J, P.chestYaw, hinge0, hipsUp);
   let bones = toBones(F);
   const hipsRest = mul(c.bones.find((b) => b.name === 'hips')!.head, scale);
   const midRest = mul(add(Rj('hipL'), Rj('hipR')), 0.5);
@@ -738,7 +739,7 @@ export const bonesFromPose = (c: SkelRig, P: Pose, scale = 1): {bones: Record<st
     J[`hand${s}`] = add(arm.end, mul(hd, A3));
   }
   const keep = {L: F['clavicle.L'], R: F['clavicle.R'], hips: F.hips, chest: F.chest};
-  F = framesOf(J, P.chestYaw, hinge0);
+  F = framesOf(J, P.chestYaw, hinge0, hipsUp);
   F['clavicle.L'] = keep.L; // keep the trunk and clavicles that placed the hips and shoulders
   F['clavicle.R'] = keep.R;
   F.hips = keep.hips;

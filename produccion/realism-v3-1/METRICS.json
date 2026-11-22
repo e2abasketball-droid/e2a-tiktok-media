@@ -1,0 +1,521 @@
+{
+ "date": "2026-11-22",
+ "branch": "claude/realism-v3-1",
+ "base": "a9db5d1",
+ "environment": {
+  "gpu": null,
+  "gl": "swangle (SwiftShader CPU)",
+  "remotion": "4.0.539",
+  "chrome": "chromium_headless_shell-1243",
+  "bpy": "5.3",
+  "concurrency": 4,
+  "resolution": "1080x1920",
+  "fps": 30
+ },
+ "asset_off": {
+  "bytes": 1538368,
+  "tris": 29958,
+  "bones": 27,
+  "meshes": [
+   {
+    "name": "E2A_Body",
+    "verts": 9814,
+    "tris": 19398,
+    "morphs": [
+     "knee.L",
+     "elbow.L",
+     "knee.R",
+     "elbow.R",
+     "hip.L",
+     "hip.R"
+    ]
+   },
+   {
+    "name": "E2A_Hair",
+    "verts": 301,
+    "tris": 524,
+    "morphs": []
+   },
+   {
+    "name": "E2A_Jersey",
+    "verts": 1499,
+    "tris": 2812,
+    "morphs": []
+   },
+   {
+    "name": "E2A_JerseyTrim",
+    "verts": 708,
+    "tris": 1416,
+    "morphs": []
+   },
+   {
+    "name": "E2A_Shoe.L",
+    "verts": 1555,
+    "tris": 1248,
+    "morphs": []
+   },
+   {
+    "name": "E2A_Shoe.R",
+    "verts": 1555,
+    "tris": 1248,
+    "morphs": []
+   },
+   {
+    "name": "E2A_Shorts",
+    "verts": 861,
+    "tris": 1632,
+    "morphs": [
+     "knee.L",
+     "elbow.L",
+     "knee.R",
+     "elbow.R",
+     "hip.L",
+     "hip.R"
+    ]
+   },
+   {
+    "name": "E2A_ShortsTrim",
+    "verts": 264,
+    "tris": 528,
+    "morphs": []
+   },
+   {
+    "name": "E2A_Sole.L",
+    "verts": 290,
+    "tris": 576,
+    "morphs": []
+   },
+   {
+    "name": "E2A_Sole.R",
+    "verts": 290,
+    "tris": 576,
+    "morphs": []
+   }
+  ],
+  "materials": 8,
+  "animations": [
+   "E2A_rest"
+  ],
+  "skinned_meshes": 10,
+  "garment_meshes": 4,
+  "footwear_meshes": 4,
+  "morph_targets": 12
+ },
+ "asset_def_bytes": 1524368,
+ "qc": {
+  "play": "realism-v3-1-onetake",
+  "player": "O1",
+  "rig": "e2a-player-v31",
+  "frames": 376,
+  "jumpHeight": 0.505,
+  "footLock": {
+   "steps": 15,
+   "driftMax": 0.001,
+   "driftMedian": 0,
+   "worst": [
+    {
+     "side": "R",
+     "land": 4.93,
+     "drift": 0.001
+    },
+    {
+     "side": "L",
+     "land": 2.96,
+     "drift": 0
+    },
+    {
+     "side": "L",
+     "land": 4.72,
+     "drift": 0
+    },
+    {
+     "side": "L",
+     "land": 5.12,
+     "drift": 0
+    }
+   ]
+  },
+  "soleFlatZ": {
+   "min": 0,
+   "max": 0,
+   "median": 0,
+   "n": 285
+  },
+  "ballHeld": {
+   "palmGapMedian": 0.012,
+   "palmGapP95": 0.012,
+   "palmGapMax": 0.037,
+   "palmGapMin": -0.022,
+   "n": 164,
+   "worst": [
+    {
+     "t": 6.767,
+     "side": "R",
+     "gap": -0.022
+    },
+    {
+     "t": 7.833,
+     "side": "R",
+     "gap": -0.014
+    },
+    {
+     "t": 7.867,
+     "side": "R",
+     "gap": -0.014
+    },
+    {
+     "t": 8.167,
+     "side": "R",
+     "gap": 0.037
+    },
+    {
+     "t": 7.8,
+     "side": "R",
+     "gap": -0.006
+    },
+    {
+     "t": 7.9,
+     "side": "R",
+     "gap": -0.006
+    }
+   ]
+  },
+  "ballContinuity": {
+   "maxStep120": 0.077,
+   "at": 8.208,
+   "atEvents": [
+    {
+     "t": 4.933,
+     "d": 0.058
+    },
+    {
+     "t": 6.15,
+     "d": 0.001
+    },
+    {
+     "t": 6.717,
+     "d": 0.001
+    },
+    {
+     "t": 8.2,
+     "d": 0.002
+    }
+   ]
+  },
+  "jointAccelMax": {
+   "hips": {
+    "a": 129.404,
+    "t": 8.6
+   },
+   "head": {
+    "a": 128.125,
+    "t": 8.6
+   },
+   "handR": {
+    "a": 807.119,
+    "t": 8.283
+   },
+   "handL": {
+    "a": 428.525,
+    "t": 6.75
+   },
+   "footL": {
+    "a": 191.63,
+    "t": 2.65
+   },
+   "footR": {
+    "a": 202.557,
+    "t": 2.167
+   }
+  },
+  "seek": {
+   "orders": [
+    {
+     "order": [
+      100,
+      5,
+      250,
+      100
+     ],
+     "identical": true
+    },
+    {
+     "order": [
+      312,
+      17,
+      180,
+      312
+     ],
+     "identical": true
+    },
+    {
+     "order": [
+      60,
+      340,
+      222,
+      60
+     ],
+     "identical": true
+    }
+   ],
+   "identical": true,
+   "bytes": 2884
+  },
+  "amplitude": {
+   "legacy": {
+    "pelvisZRange": 0.559,
+    "leanRange": 0.53,
+    "headYawOffRange": 1.955,
+    "handFwdRange": 1.147,
+    "airMax": 0.418
+   },
+   "v31": {
+    "pelvisZRange": 0.71,
+    "leanRange": 0.72,
+    "headYawOffRange": 2.425,
+    "handFwdRange": 0.655,
+    "airMax": 0.524
+   }
+  }
+ },
+ "cloth_l2_bake": {
+  "blend": "e2a_player_off_v31.blend",
+  "frames": 90,
+  "verts": 1499,
+  "bake_s": 5.13,
+  "per_frame_ms_median": 54.3,
+  "per_frame_ms_max": 98.5,
+  "finite": true,
+  "max_vertex_speed_mps": 1.68,
+  "max_vertex_speed_frame": 82,
+  "max_edge_stretch": 1.41,
+  "cloth_offset_hem_max_m": 0.231,
+  "cloth_offset_hem_median_m": 0.0101,
+  "cloth_offset_pinned_max_m": 0.0191,
+  "offset_by_frame_hem_max": [
+   0.0,
+   0.0054,
+   0.0163,
+   0.0276,
+   0.0373,
+   0.0449,
+   0.0519,
+   0.0598,
+   0.0672,
+   0.0734,
+   0.0777,
+   0.0805,
+   0.0827,
+   0.0846,
+   0.086,
+   0.0872,
+   0.0884,
+   0.0895,
+   0.0907,
+   0.0918,
+   0.0877,
+   0.075,
+   0.0745,
+   0.1148,
+   0.1503,
+   0.1753,
+   0.1909,
+   0.2068,
+   0.2235,
+   0.231,
+   0.231,
+   0.2233,
+   0.2081,
+   0.1868,
+   0.162,
+   0.1396,
+   0.1329,
+   0.1255,
+   0.1184,
+   0.1123,
+   0.1036,
+   0.089,
+   0.0936,
+   0.1314,
+   0.1619,
+   0.1821,
+   0.1938,
+   0.1992,
+   0.2002,
+   0.1976,
+   0.205,
+   0.2051,
+   0.1969,
+   0.1796,
+   0.1532,
+   0.123,
+   0.1128,
+   0.107,
+   0.1045,
+   0.1045,
+   0.1063,
+   0.1092,
+   0.1125,
+   0.1155,
+   0.1177,
+   0.119,
+   0.1199,
+   0.1209,
+   0.1217,
+   0.1216,
+   0.1207,
+   0.1186,
+   0.1149,
+   0.1101,
+   0.1047,
+   0.0987,
+   0.0859,
+   0.0692,
+   0.0998,
+   0.1199,
+   0.1109,
+   0.0791,
+   0.0971,
+   0.1085,
+   0.1178,
+   0.1256,
+   0.1314,
+   0.1347,
+   0.1353,
+   0.1338
+  ],
+  "size_estimate_375f": {
+   "float32_all_verts_MB": 6.75,
+   "float16_moving_verts_MB": 1.88,
+   "int8_quantised_delta_moving_MB": 0.94,
+   "moving_verts": 834,
+   "note": "per player and per authored take: a baked cache only exists for one fixed motion; any new play needs a new bake"
+  }
+ },
+ "cloth_l2_integrated": false,
+ "renders": {
+  "ab": {
+   "rc": 0.0,
+   "wall": 988.0,
+   "peakRSS_MB": 7509.0,
+   "frames": 375
+  },
+  "ab-close": {
+   "rc": 0.0,
+   "wall": 716.4,
+   "peakRSS_MB": 4274.0,
+   "frames": 375
+  },
+  "v31": {
+   "rc": 0.0,
+   "wall": 579.7,
+   "peakRSS_MB": 3597.0,
+   "frames": 375
+  },
+  "wide-v31": {
+   "rc": 0.0,
+   "wall": 486.2,
+   "peakRSS_MB": 3535.0,
+   "frames": 375
+  },
+  "bench-1-legacy": {
+   "rc": 0.0,
+   "wall": 104.3,
+   "peakRSS_MB": 3110.0,
+   "frames": 45
+  },
+  "bench-1-v31": {
+   "rc": 0.0,
+   "wall": 105.4,
+   "peakRSS_MB": 3240.0,
+   "frames": 45
+  },
+  "bench-10-legacy": {
+   "rc": 0.0,
+   "wall": 164.1,
+   "peakRSS_MB": 3377.0,
+   "frames": 45
+  },
+  "bench-10-v31": {
+   "rc": 0.0,
+   "wall": 192.4,
+   "peakRSS_MB": 4213.0,
+   "frames": 45
+  },
+  "gate1": {
+   "rc": 0.0,
+   "wall": 131.8,
+   "peakRSS_MB": 3358.0,
+   "frames": 60
+  }
+ },
+ "outputs_verified_ffprobe": {
+  "legacy_vs_v3_1_locked_ab.mp4": {
+   "w": 1080,
+   "h": 1920,
+   "fps": 30,
+   "frames": 375,
+   "duration_s": 12.5
+  },
+  "legacy_vs_v3_1_locked_ab_close.mp4": {
+   "w": 1080,
+   "h": 1920,
+   "fps": 30,
+   "frames": 375,
+   "duration_s": 12.5
+  },
+  "motion_v3_1_diagnostic.mp4": {
+   "w": 1080,
+   "h": 1920,
+   "fps": 30,
+   "frames": 375,
+   "duration_s": 12.5
+  },
+  "technical_diagnostics.mp4": {
+   "w": 1080,
+   "h": 1920,
+   "fps": 30,
+   "frames": 375,
+   "duration_s": 12.5
+  }
+ },
+ "seek_pixels": {
+  "cold_f100_vs_cold_f100_after_reorder": "identical sha",
+  "cold_vs_sequential": {
+   "f5": {
+    "px": 0,
+    "max": 0
+   },
+   "f100": {
+    "px": 7,
+    "max": 15
+   },
+   "f250": {
+    "px": 3,
+    "max": 14
+   }
+  }
+ },
+ "regression": {
+  "tsc_rc": 0,
+  "pixel_identical": "12/12",
+  "regress_poses": "14/14",
+  "test_play": "11/13",
+  "test_ball": "6/7"
+ },
+ "framing": {
+  "locked_ab": "hero ~35-40% of full frame height (~70% of each half)",
+  "locked_ab_close": "hero ~70-80% of each half; jump at 8.2 s crops head/ball"
+ },
+ "gate_E_reviewers": 0,
+ "gates": {
+  "A": "pass",
+  "B": "pass",
+  "C": "pass (provisional thresholds)",
+  "D": "partial (strap/armhole shell at 3.30 s, stiff fold at 4.93 s)",
+  "E": "not evaluated (no reviewers)",
+  "F": "measured",
+  "G": "pass",
+  "H": "pass"
+ }
+}

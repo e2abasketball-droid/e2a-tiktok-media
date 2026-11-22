@@ -1,0 +1,5 @@
+{
+ "licence_key": "3d/e2a-player-makehuman-cc0",
+ "source": "E2A player built by tools/blender/build_player.py --rig v3 --garment v31 --body v31 --shoe v31 (Realism V3.1, 2026-11-22: athletic MakeHuman morph set (shoulders/lats/trapezius/forearms/calves), separate shoe sole slab with heel-toe drop and toe spring, loose jersey with deep armholes and air gap, wider shorts) from the MakeHuman base mesh and morph targets of ara3d-data 1.1.0 (CC0-1.0, npm), clothes, textures and rig made by E2A; no MPFB, no third-party asset packs, no paid asset",
+ "sha256": "9182584f284355b57741c0f61ac34e1f49101b08d946d4e850a34e99ded3b735"
+}

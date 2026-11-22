@@ -197,8 +197,8 @@ const applyWeight = (rig: RigV3, bones: Record<string, Q>, hips: V3, scale: numb
 export type V3Frame = {bones: Record<string, Q>; hips: V3; morph: Record<string, number>; grip: GripInfo[]};
 
 /** the V3 bones of one player at one instant: body from bonesFromPose (unchanged engine solve), then head fix, hands, morphs */
-export const bonesV3 = (rig: RigV3, P: Pose, scale: number, ball?: BallCtx, weight?: WeightShift): V3Frame => {
-  const base = bonesFromPose(baseRig(rig), P, scale);
+export const bonesV3 = (rig: RigV3, P: Pose, scale: number, ball?: BallCtx, weight?: WeightShift, hipsUp?: V3): V3Frame => {
+  const base = bonesFromPose(baseRig(rig), P, scale, hipsUp);
   const bones: Record<string, Q> = {...base.bones};
   const hips0 = weight ? applyWeight(rig, bones, base.hips, scale, weight) : base.hips;
   const by = new Map(rig.bones.map((b) => [b.name, b] as const));
@@ -279,6 +279,16 @@ export const bonesV3 = (rig: RigV3, P: Pose, scale: number, ball?: BallCtx, weig
   }
   return {bones, hips: hips0, morph, grip};
 };
+
+/** Realism V3.1: world palm centre of one hand for solved bones (hand IK correction onto the ball) */
+export const palmWorld = (rig: RigV3, bones: Record<string, Q>, hips: V3, scale: number, s: 'L' | 'R'): V3 => {
+  const at = fkHeads(rig, bones, hips, scale);
+  const fr = rig.fingers[s];
+  const hb = rig.bones.find((b) => b.name === `hand.${s}`)!;
+  const D = qmul(bones[`hand.${s}`], qconj(hb.R));
+  return add(at(`hand.${s}`), qrot(D, mul(sub(fr.palm, fr.W), scale)));
+};
+export {baseRig, fkHeads};
 
 /** legacy hand (no finger bones: the fingers keep the rest curl, rigid on `hand`) measured with the same geometry, for QA */
 export const legacyTipGap = (rig: RigV3, P: Pose, scale: number, ball: V3) => {

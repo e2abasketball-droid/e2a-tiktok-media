@@ -21,7 +21,9 @@ import {bonesFromPose, getClip, meshScale, skelPoseAt} from './skelclip.ts';
 import {SkinnedAthlete, useGlbs} from './SkinnedAthlete';
 import {KITS} from './Athlete';
 import {PLAYER3D, describePlan, planPlayers3d, playWithPlan} from './player3d.ts';
-import {PLAYER3D_V3, isV3} from './realism-v3/index.ts';
+import {PLAYER3D_V3, isV3, isV31} from './realism-v3/index.ts';
+import {PLAYER3D_V31} from './realism-v3-1/index.ts';
+import {ballV31, clothV31, framesV31, motionV31} from './realism-v3-1/motion.ts';
 import type {AthleteRenderer} from './realism-v3/index.ts';
 import {bonesV3, weightShift} from './realism-v3/athleteV3.ts';
 
@@ -260,8 +262,12 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
   const rv2 = realismV2(play);
   const rv3 = realismV3(play);
   const av3 = isV3(athleteRenderer);
-  const offGlb = av3 ? PLAYER3D_V3.off.glb : rv2 ? PLAYER3D.off.glbV2 : PLAYER3D.off.glb;
-  const defGlb = av3 ? PLAYER3D_V3.def.glb : rv2 ? PLAYER3D.def.glbV2 : PLAYER3D.def.glb;
+  const av31 = isV31(athleteRenderer);
+  const offGlb = av31 ? PLAYER3D_V31.off.glb : av3 ? PLAYER3D_V3.off.glb : rv2 ? PLAYER3D.off.glbV2 : PLAYER3D.off.glb;
+  const defGlb = av31 ? PLAYER3D_V31.def.glb : av3 ? PLAYER3D_V3.def.glb : rv2 ? PLAYER3D.def.glbV2 : PLAYER3D.def.glb;
+  // Realism V3.1: while an authored clip holds the ball, the ball is its hand socket (else the engine ball)
+  const rig31 = (id: string) => PLAYER3D_V31[play.players.find((q) => q.id === id)?.team === 'X' ? 'def' : 'off'].rig;
+  const ballPos = av31 ? ballV31(play, pt, rig31) ?? ball.pos : ball.pos;
   const glbs = useGlbs(anyC ? [offGlb, defGlb, ...labGlbs] : labGlbs);
   // the canvas only renders on frame changes (Remotion ThreeCanvas): mount it once the meshes are loaded (or failed)
   const glbWanted = anyC ? [offGlb, defGlb, ...labGlbs] : labGlbs;
@@ -291,7 +297,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
         const spec = skel?.[p.id];
         const variant = p.team === 'X' ? 'def' : 'off';
         const pkg = PLAYER3D[variant];
-        const pkgGlb = av3 ? PLAYER3D_V3[variant].glb : rv2 ? pkg.glbV2 : pkg.glb;
+        const pkgGlb = av31 ? PLAYER3D_V31[variant].glb : av3 ? PLAYER3D_V3[variant].glb : rv2 ? pkg.glbV2 : pkg.glb;
         const glbSrc = spec?.glb ?? pkgGlb;
         const cloth = rv2 && !spec?.glb ? clothAt(play, p.id, pt) : undefined;
         const glb = glbs[glbSrc]?.scene ?? null;
@@ -309,6 +315,22 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
                 <Athlete pose={sp.pose} team={p.team} num={num} skin={skin} />
               )}
               <ContactShadows pose={sp.pose} />
+            </React.Fragment>
+          );
+        }
+        if (av31 && pp?.look === 'C' && glb) {
+          // Realism V3.1: AUTHORED body motion when this player has a hand-keyed clip (motion.ts), else the V3 bridge on
+          // the engine pose; V3.1 body / shoes / loose apparel; cloth driven by the authored pelvis
+          const rig = PLAYER3D_V31[variant].rig;
+          const m = motionV31(play, p.id, pt, rig);
+          const pose = m ? m.pose : poseAt(play, p.id, pt, {holder: ball.holder, pos: ball.pos, lag: ballLag}, RIM);
+          const sc = meshScale(rig, pose);
+          const fr = m ? framesV31(rig, m) : bonesV3(rig, pose, sc, {pos: ball.pos, held: ball.holder === p.id});
+          const cl = (m ? clothV31(play, p.id, pt, rig) : undefined) ?? clothAt(play, p.id, pt);
+          return (
+            <React.Fragment key={p.id}>
+              <SkinnedAthlete scene={glb} clipBones={rig.bones} bones={fr.bones} hips={fr.hips} inst={`${instNs ?? ''}v31:${p.id}`} scale={sc} skin={skin} num={num} kit={KITS[p.team]} look={env === 'academy' || env === 'cinema' ? 'academy' : undefined} cloth={cl} v3 morph={fr.morph} />
+              <ContactShadows pose={pose} />
             </React.Fragment>
           );
         }
@@ -382,7 +404,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
           </React.Fragment>
         );
       })}
-      <Ball pos={ball.pos} spin={spin} />
+      <Ball pos={ballPos} spin={spin} />
       {children}
     </ThreeCanvas>
   );
