@@ -6,7 +6,7 @@ import {useThree} from '@react-three/fiber';
 import * as THREE from 'three';
 import {FIBA} from '../tactical/geometry.ts';
 import type {V3} from '../tactical/geometry.ts';
-import {posAt, realismV2, sample} from '../tactical/play.ts';
+import {posAt, realismV2, realismV3, sample} from '../tactical/play.ts';
 import {clothAt} from './cloth2.ts';
 import {Athlete, SKINS, W3} from './Athlete';
 import type {FaceState} from './Athlete';
@@ -172,6 +172,8 @@ export type SceneProps = {
   faces?: FaceCfg;
   /** 2026-11-19: 'C' (default) = E2A deformable players (player3d.ts); 'A' = legacy capsule athletes */
   players3d?: 'A' | 'C';
+  /** 2026-11-22 (Chicago V3 split screen): instance namespace so the same player can live in two canvases at once */
+  instNs?: string;
 };
 
 /** expression keys in PLAY time (so freezes and rewinds carry the face with the body) */
@@ -206,7 +208,7 @@ const autoBlink = (i: number, t: number) => {
   return ph < 0.13 ? Math.sin((Math.PI * ph) / 0.13) : 0;
 };
 
-export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], children, logo, env, faces, players3d}) => {
+export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], children, logo, env, faces, players3d, instNs}) => {
   const f = sample(play, pt);
   const ball = f.ball;
   // eyes first, head after (2026-11-17 V2): heads turn toward where the ball was 0.2 s ago, the eyes (faceOf) to where it is
@@ -251,6 +253,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
   const labGlbs = skel ? [...new Set(Object.values(skel).filter((s) => s.look === 'C' && s.glb).map((s) => s.glb!))] : [];
   // Realism V2 (play.realism >= 2): v2 apparel meshes + cloth2 secondary motion; every other play keeps e2a-player-v1
   const rv2 = realismV2(play);
+  const rv3 = realismV3(play);
   const offGlb = rv2 ? PLAYER3D.off.glbV2 : PLAYER3D.off.glb;
   const defGlb = rv2 ? PLAYER3D.def.glbV2 : PLAYER3D.def.glb;
   const glbs = useGlbs(anyC ? [offGlb, defGlb, ...labGlbs] : labGlbs);
@@ -275,7 +278,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
       <color attach="background" args={[env === 'practice' ? '#1B140E' : env === 'academy' ? '#04070F' : env === 'cinema' ? '#071022' : '#050A15']} />
       <fog attach="fog" args={[env === 'practice' ? '#1B140E' : env === 'academy' ? '#04070F' : env === 'cinema' ? '#071022' : '#050A15', env === 'academy' ? 12 : env === 'cinema' ? 22 : 14, env === 'academy' ? 34 : env === 'cinema' ? 58 : 40]} />
       <ArenaLights focus={W3([cam.target[0] * 0.5, Math.max(2, cam.target[1] * 0.7 + 1.5), 0])} env={env} />
-      <Court3D logo={logo} swish={swish} env={env} />
+      <Court3D logo={logo} swish={swish} env={env} netSnap={realismV3(play)} />
       {play.players.map((p, i) => {
         if (hide.includes(p.id)) return null;
         const pp = plan[p.id];
@@ -295,7 +298,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
           return (
             <React.Fragment key={p.id}>
               {spec.look === 'C' && glb && clip && sp.bones && sp.hips ? (
-                <SkinnedAthlete scene={glb} clipBones={clip.bones} bones={sp.bones} hips={sp.hips} inst={p.id} skin={skin} num={num} kit={KITS[p.team]} look={env === 'academy' || env === 'cinema' ? 'academy' : undefined} cloth={cloth} />
+                <SkinnedAthlete scene={glb} clipBones={clip.bones} bones={sp.bones} hips={sp.hips} inst={`${instNs ?? ''}${p.id}`} skin={skin} num={num} kit={KITS[p.team]} look={env === 'academy' || env === 'cinema' ? 'academy' : undefined} cloth={cloth} g3={rv3} />
               ) : (
                 <Athlete pose={sp.pose} team={p.team} num={num} skin={skin} />
               )}
@@ -309,7 +312,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
           const r = bonesFromPose(pkg.rig, pose, sc);
           return (
             <React.Fragment key={p.id}>
-              <SkinnedAthlete scene={glb} clipBones={pkg.rig.bones} bones={r.bones} hips={r.hips} inst={p.id} scale={sc} skin={skin} num={num} kit={KITS[p.team]} look={env === 'academy' || env === 'cinema' ? 'academy' : undefined} cloth={cloth} />
+              <SkinnedAthlete scene={glb} clipBones={pkg.rig.bones} bones={r.bones} hips={r.hips} inst={`${instNs ?? ''}${p.id}`} scale={sc} skin={skin} num={num} kit={KITS[p.team]} look={env === 'academy' || env === 'cinema' ? 'academy' : undefined} cloth={cloth} g3={rv3} />
               <ContactShadows pose={pose} />
             </React.Fragment>
           );

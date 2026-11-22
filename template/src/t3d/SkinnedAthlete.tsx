@@ -14,6 +14,7 @@ import {continueRender, delayRender, staticFile} from 'remotion';
 import type {V3} from '../tactical/geometry.ts';
 import type {ClipBone, Q} from './skelclip.ts';
 import type {Cloth} from './cloth2.ts';
+import {GARMENT3, garment3Follow, garment3Shorts} from './garment3.ts';
 import {W3} from './Athlete';
 
 type GlbState = {scene: THREE.Group | null; error?: string};
@@ -209,7 +210,7 @@ const copyClothAttrs = (jersey: THREE.BufferGeometry, trim: THREE.BufferGeometry
 };
 /** v2 cloth material: secondary motion before the projection (object space), small depth bias after it (skin poking
  *  through at the straps / armholes), inside of the shirt drawn darker (DoubleSide: the loose hem shows its inside) */
-const cloth2Material = (mat: THREE.Material, U: ClothU, bias: number, strap: number, inside: boolean) => {
+const cloth2Material = (mat: THREE.Material, U: ClothU, bias: number, strap: number, inside: boolean, v3 = false) => {
   mat.onBeforeCompile = (sh) => {
     Object.assign(sh.uniforms, U);
     sh.vertexShader =
@@ -224,7 +225,10 @@ const cloth2Material = (mat: THREE.Material, U: ClothU, bias: number, strap: num
       vec2 r = transformed.xz - uPelvis.xz;
       float a = uTwist * hem; float ca = cos(a); float sa = sin(a);
       vec2 rr = vec2(r.x * ca + r.y * sa, -r.x * sa + r.y * ca);
-      vec3 d = vec3(rr.x - r.x, 0.0, rr.y - r.y) + uSway * hem;
+      vec3 d = vec3(rr.x - r.x, 0.0, rr.y - r.y) + uSway * hem;${v3 ? `
+      // garment3 panel: the hem flares more on the side it swings toward (no rigid ring)
+      { vec2 sh2 = uSway.xz; float sl = length(sh2); float rl = length(r);
+        if (sl > 1e-5 && rl > 1e-5) { float pf = ${GARMENT3.panel.toFixed(3)} * dot(r / rl, sh2 / sl) * min(1.0, sl / ${GARMENT3.panelRef.toFixed(4)}); d.xz += sh2 * hem * pf; } }` : ''}
       float ang = atan(-r.y, r.x);
       d += n * (uFlutter * hem * sin(6.0 * ang + 6.2831853 * uPhase));
       vec2 nh = n.xz; float nl = length(nh);
@@ -240,15 +244,33 @@ const cloth2Material = (mat: THREE.Material, U: ClothU, bias: number, strap: num
   }`);
     if (inside) sh.fragmentShader = sh.fragmentShader.replace('#include <map_fragment>', '#include <map_fragment>\n  if (!gl_FrontFacing) diffuseColor.rgb *= 0.42;');
   };
-  mat.customProgramCacheKey = () => `e2a-cloth2-${bias}-${strap}-${inside ? 1 : 0}`;
+  mat.customProgramCacheKey = () => `e2a-cloth2-${bias}-${strap}-${inside ? 1 : 0}${v3 ? '-g3' : ''}`;
   mat.needsUpdate = true;
+};
+
+// ---------------------------------------------------------------- Chicago V3 apparel (2026-11-22, garment3.ts)
+// realism >= 3: the shorts (and their piping) get the garment3 corrections (tuck under the shirt, looser leg openings with
+// a cloth band). Geometry is CLONED per template (a v2 player in the same render keeps the original buffers).
+const g3Cache = new WeakMap<THREE.BufferGeometry, THREE.BufferGeometry>();
+const g3Base = new WeakMap<THREE.BufferGeometry, ReturnType<typeof garment3Shorts>>();
+const arrOf = (g: THREE.BufferGeometry) => ({P: g.attributes.position.array as Float32Array, N: g.attributes.normal.array as Float32Array,
+  J: g.getAttribute('skinIndex').array as ArrayLike<number>, W: Float32Array.from(g.getAttribute('skinWeight').array as ArrayLike<number>)});
+const g3Geometry = (src: THREE.BufferGeometry, out: {P: Float32Array; J: Uint16Array; W: Float32Array; hem: Float32Array; ease: Float32Array}) => {
+  const g = src.clone();
+  g.setAttribute('position', new THREE.BufferAttribute(out.P, 3));
+  g.setAttribute('skinIndex', new THREE.Uint16BufferAttribute(out.J, 4));
+  g.setAttribute('skinWeight', new THREE.BufferAttribute(out.W, 4));
+  g.setAttribute('_e2a_hem', new THREE.BufferAttribute(out.hem, 1));
+  g.setAttribute('_e2a_ease', new THREE.BufferAttribute(out.ease, 1));
+  g.computeBoundingSphere();
+  return g;
 };
 
 /** one independent instance of a player mesh: own skeleton (pose state), own skin and jersey materials */
 type Inst = {obj: THREE.Object3D; rig: Rig; cloth?: ClothU};
 const instances = new Map<string, Inst>();
-const instanceOf = (template: THREE.Group, key: string, bonesDesc: ClipBone[], look: {skin?: string; num?: string; kit?: Record<string, string>; profile?: 'academy'; cloth2?: boolean}) => {
-  const k = `${template.uuid}|${key}|${look.skin}|${look.num}|${look.profile ?? ''}|${look.cloth2 ? 2 : 1}`;
+const instanceOf = (template: THREE.Group, key: string, bonesDesc: ClipBone[], look: {skin?: string; num?: string; kit?: Record<string, string>; profile?: 'academy'; cloth2?: boolean; g3?: boolean}) => {
+  const k = `${template.uuid}|${key}|${look.skin}|${look.num}|${look.profile ?? ''}|${look.cloth2 ? 2 : 1}${look.g3 ? '|g3' : ''}`;
   let it = instances.get(k);
   if (it) return it;
   const obj = SkeletonUtils.clone(template);
@@ -311,9 +333,37 @@ const instanceOf = (template: THREE.Group, key: string, bonesDesc: ClipBone[], l
           for (const mt of ms) {
             const isTrim = mt.name.startsWith('E2A_trim');
             if (!isTrim) mt.side = THREE.DoubleSide;
-            cloth2Material(mt, clothU!, isTrim ? 0.016 : 0.012, 0.03, !isTrim);
+            cloth2Material(mt, clothU!, isTrim ? 0.016 : 0.012, 0.03, !isTrim, !!look.g3);
           }
           m.material = Array.isArray(m.material) ? ms : ms[0];
+        } else if (look.g3 && m.name.includes('Shorts')) {
+          // garment3: corrected shorts / piping geometry + the cloth band on the leg openings (same uniforms as the jersey)
+          let sm: THREE.Mesh | undefined;
+          obj.traverse((o2) => { const q = o2 as THREE.Mesh; if (q.isMesh && q.name.includes('Shorts') && !q.name.includes('Trim')) sm = q; });
+          if (sm) {
+            const srcG = (m.geometry.userData.g3src as THREE.BufferGeometry | undefined) ?? m.geometry;
+            const shortsG = (sm.geometry.userData.g3src as THREE.BufferGeometry | undefined) ?? sm.geometry;
+            let g = g3Cache.get(srcG);
+            if (!g) {
+              let base = g3Base.get(shortsG);
+              if (!base) {
+                const hips = (sm as THREE.SkinnedMesh).skeleton?.bones.findIndex((b) => b.name === 'hips') ?? 0;
+                base = garment3Shorts(arrOf(jg!), arrOf(shortsG), Math.max(0, hips));
+                g3Base.set(shortsG, base);
+              }
+              g = srcG === shortsG ? g3Geometry(srcG, base) : g3Geometry(srcG, garment3Follow(arrOf(srcG), arrOf(shortsG), base));
+              g.userData.g3src = srcG;
+              g3Cache.set(srcG, g);
+            }
+            m.geometry = g;
+            const ms = mats.map((mt) => mt.clone());
+            for (const mt of ms) {
+              const isTrim = mt.name.startsWith('E2A_trim');
+              mt.side = THREE.FrontSide;
+              cloth2Material(mt, clothU!, isTrim ? 0.036 : 0.05, 0, false, true);
+            }
+            m.material = Array.isArray(m.material) ? ms : ms[0];
+          }
         } else if (look.profile === 'academy') {
           for (const mt of mats) {
             if (mt.name.startsWith('E2A_shorts')) { clothBias(mt, 0.05); mt.side = THREE.FrontSide; }
@@ -357,8 +407,10 @@ export const SkinnedAthlete: React.FC<{
   look?: 'academy';
   /** Realism V2 (cloth2.ts): the cloth state of this player at this frame (play space); needs a --garment v2 mesh */
   cloth?: Cloth;
-}> = ({scene, clipBones, bones, hips, inst = 'lab', scale = 1, skin, num, kit, look, cloth}) => {
-  const {obj, rig, cloth: cu} = instanceOf(scene, inst, clipBones, {skin, num, kit, profile: look, cloth2: !!cloth});
+  /** Chicago V3 (garment3.ts, play.realism >= 3): shorts tuck + loose leg openings + jersey panel swing */
+  g3?: boolean;
+}> = ({scene, clipBones, bones, hips, inst = 'lab', scale = 1, skin, num, kit, look, cloth, g3}) => {
+  const {obj, rig, cloth: cu} = instanceOf(scene, inst, clipBones, {skin, num, kit, profile: look, cloth2: !!cloth, g3: !!cloth && !!g3});
   if (cu && cloth) {
     // object space of the instance = three world / scale (no rotation, origin at 0)
     const sw = W3(cloth.sway);

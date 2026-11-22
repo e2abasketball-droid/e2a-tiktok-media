@@ -2,14 +2,18 @@
 // pre-V2 engine (commit d700987). Hashes every pose joint + ball position at 30 fps and compares with the stored hashes.
 //   npx tsx scripts/regress-poses.mts            -> compare with tactical/reports/realism-v2-2026-11-21/regression-hashes.json
 //   npx tsx scripts/regress-poses.mts --write    -> (re)write the hashes (only from the baseline engine!)
+//   (2026-11-22, Chicago V3) --ref <file> [--plays id,id] : another reference set, e.g. the Realism V2 plays hashed with
+//   the claude/realism-v2 engine (8e418e9): tactical/reports/chicago-v3-2026-11-22/regression-hashes-rv2.json
 import fs from 'node:fs';
 import crypto from 'node:crypto';
 import '../src/t3d/rig.ts';
 import {sample} from '../src/tactical/play.ts';
 import {poseAt} from '../src/t3d/rig.ts';
 import type {PlayWithActions} from '../src/t3d/rig.ts';
-const REF = 'tactical/reports/realism-v2-2026-11-21/regression-hashes.json';
-const ref = JSON.parse(fs.readFileSync(REF, 'utf8')) as {engine: string; plays: Record<string, string>};
+const argv = process.argv;
+const REF = argv.includes('--ref') ? argv[argv.indexOf('--ref') + 1] : 'tactical/reports/realism-v2-2026-11-21/regression-hashes.json';
+const only = argv.includes('--plays') ? argv[argv.indexOf('--plays') + 1].split(',') : undefined;
+const ref = (fs.existsSync(REF) ? JSON.parse(fs.readFileSync(REF, 'utf8')) : {engine: argv.includes('--engine') ? argv[argv.indexOf('--engine') + 1] : '?', plays: Object.fromEntries((only ?? []).map((k) => [k, '']))}) as {engine: string; plays: Record<string, string>};
 const out: Record<string, string> = {};
 let bad = 0;
 for (const id of Object.keys(ref.plays)) {

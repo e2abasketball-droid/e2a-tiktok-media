@@ -1,0 +1,43 @@
+{
+ "file": "/mnt/project-files/tactical-studio/chicago-v3/E2A-Chicago-Action-V3-FINAL.mp4",
+ "sha256": "1e17e6ca4c9cc74bb673c14b7529548fc10a49d000ef0a018f6b6e0045551e8a",
+ "raw": "/home/user/e2a-tiktok-media/template/out/blob/chicago-action-v3.raw.mp4",
+ "raw_sha256": "494facfa1480160d1186b4a2502ff273434dcd00cfd171967e17fb3f4bec6f86",
+ "encode": {
+  "master_I": -16.5,
+  "master_TP": -4.7,
+  "gain_db": 2.5,
+  "method": "fixed volume filter (no loudnorm/limiter)"
+ },
+ "I": -14.0,
+ "TP": -2.2,
+ "ffprobe": {
+  "programs": [],
+  "streams": [
+   {
+    "codec_type": "video",
+    "width": 1080,
+    "height": 1920,
+    "sample_aspect_ratio": "1:1",
+    "r_frame_rate": "30/1",
+    "avg_frame_rate": "30/1",
+    "nb_read_frames": "1140",
+    "side_data_list": [
+     {}
+    ]
+   },
+   {
+    "codec_type": "audio",
+    "sample_rate": "48000",
+    "r_frame_rate": "0/0",
+    "avg_frame_rate": "0/0",
+    "nb_read_frames": "1782"
+   }
+  ],
+  "format": {
+   "duration": "38.016000"
+  }
+ },
+ "sha256_at_encode": "68e85e5b03c564b8116756081b2d0afdb6e4cb99a967b6d6d59b9549404719e0",
+ "sha_note": "sha256_at_encode was read by the finish script right after ffmpeg wrote the file on the /mnt/project-files mount; a re-read minutes later gives sha256 (stable across reads and a local copy, decodes with 0 errors). All QC (qc-render-tech, qc-video, audio comparison, contact sheets) ran on the sha256 bytes."
+}

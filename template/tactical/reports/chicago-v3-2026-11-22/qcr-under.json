@@ -1,0 +1,156 @@
+{
+ "generated": "2026-11-22T10:02:22.660Z",
+ "legacy": false,
+ "reports": [
+  {
+   "id": "chicago-v3-under-three",
+   "gates": [
+    {
+     "gate": "foot_plant",
+     "status": "FAIL",
+     "value": "88 plants, worst drift 8.2 cm (X2 R @2.93s), >2 cm: 4, >5 cm: 2; pivots (yaw > 20°): 28; planted sole z min -4.5 cm / median -1.3 cm, plants dipping > 2 cm under the median: 2, floating > 4 cm: 0",
+     "detail": {
+      "plants": 88,
+      "warn": 4,
+      "fail": 2,
+      "worst": {
+       "id": "X2",
+       "foot": "R",
+       "from": 2.933333333333333,
+       "to": 5,
+       "drift": 0.08165424117181767,
+       "yaw": 4.139283466114849,
+       "zmin": -0.04477554567155962,
+       "zmax": 0.2027428723094145
+      }
+     }
+    },
+    {
+     "gate": "contact_pose",
+     "status": "PASS",
+     "value": "32 grip frames; deepest palm in the ball 0.0 cm (-), nearest palm farthest off 1.5 cm (O2@2.63)",
+     "detail": {
+      "buried": {
+       "v": 0,
+       "at": ""
+      },
+      "off": {
+       "v": 0.015260183033185132,
+       "at": "O2@2.63"
+      }
+     }
+    },
+    {
+     "gate": "swept_ball",
+     "status": "FAIL",
+     "value": "worst 4.0 cm into head (O2@2.858, limit 2 cm); 11 sub-steps over the limit",
+     "detail": {
+      "fails": [
+       "O2.trunk@2.829 2.3 cm",
+       "O2.trunk@2.833 2.1 cm",
+       "O2.head@2.837 2.1 cm",
+       "O2.head@2.842 2.5 cm",
+       "O2.head@2.846 2.8 cm",
+       "O2.head@2.850 3.2 cm",
+       "O2.head@2.854 3.6 cm",
+       "O2.head@2.858 4.0 cm",
+       "O2.head@2.862 4.0 cm",
+       "O2.head@2.867 3.5 cm",
+       "O2.head@2.871 2.4 cm"
+      ]
+     }
+    },
+    {
+     "gate": "ball_continuity",
+     "status": "PASS",
+     "value": "max step 4.57 cm / (1/240 s), max |dv| 2.85 m/s outside impacts; 0 violations",
+     "detail": {
+      "bad": []
+     }
+    },
+    {
+     "gate": "ik_reach",
+     "status": "WARN",
+     "value": "arm chain saturated in 6.1 % of hand-frames; elbow pole flips 0; knees bent backward 0"
+    },
+    {
+     "gate": "root_foot",
+     "status": "PASS",
+     "value": "max heading rate 688°/s (O1@4.00); frames gliding (> 0.6 m/s on two planted feet for > 0.25 s): 0"
+    },
+    {
+     "gate": "blocking",
+     "status": "FAIL",
+     "value": "O1 screen 2.67-2.87s on X2: max speed 0.00 m/s, closest 0.85 m @2.87s, both feet planted there: yes, trunk overlap 0.0 cm | O4 screen 1.00-2.20s on X2: max speed 0.07 m/s, closest 0.85 m @1.37s, both feet planted there: NO, trunk overlap 0.0 cm"
+    },
+    {
+     "gate": "cloth_clip",
+     "status": "FAIL",
+     "value": "skin out of jersey/shorts > 1 cm for > 3 frames: 2.3 cm (O2@3.03); arms inside the jersey > 1 cm for > 3 frames: 4.9 cm (O1@1.87); shorts through the jersey: 2.7 cm (O2@2.67)",
+     "detail": {
+      "skinOut": {
+       "v": 0.022803846434417352,
+       "at": "O2@3.03",
+       "run": 7
+      },
+      "armIn": {
+       "v": 0.048733546338382894,
+       "at": "O1@1.87",
+       "run": 6
+      },
+      "shortsOut": {
+       "v": 0.026663765447545007,
+       "at": "O2@2.67",
+       "run": 8
+      }
+     }
+    },
+    {
+     "gate": "cloth_stability",
+     "status": "FAIL",
+     "value": "jersey edge stretch (edges >= 1 cm) p99.9 ×2.07, max ×3.63 (X2@2.70); number region max ×1.83 (X2@1.87); hem band acceleration vs pelvis p99 24.2 m/s², max 83.2 m/s² (O1@3.00) [v2 apparel + cloth2]"
+    },
+    {
+     "gate": "court",
+     "status": "PASS",
+     "value": "ball r 0.121 m, rim 3.05 m at (0, 1.575); shot O2 make: crosses the rim plane 0.6 cm from the centre"
+    }
+   ],
+   "stats": {
+    "cloth": {
+     "clip": {
+      "skinOut": {
+       "v": 0.022803846434417352,
+       "at": "O2@3.03",
+       "run": 7
+      },
+      "armIn": {
+       "v": 0.048733546338382894,
+       "at": "O1@1.87",
+       "run": 6
+      },
+      "shortsOut": {
+       "v": 0.026663765447545007,
+       "at": "O2@2.67",
+       "run": 8
+      }
+     },
+     "stretchMax": {
+      "v": 3.625461901093806,
+      "at": "X2@2.70"
+     },
+     "st999": 2.067417960804573,
+     "numStretch": {
+      "v": 1.8346271780990948,
+      "at": "X2@1.87"
+     },
+     "accMax": {
+      "v": 83.17015657996056,
+      "at": "O1@3.00"
+     },
+     "acc99": 24.16263496634191
+    }
+   }
+  }
+ ]
+}

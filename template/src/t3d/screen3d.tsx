@@ -138,9 +138,9 @@ export const RewindTag: React.FC<{age: number; dur: number}> = ({age, dur}) => {
   );
 };
 
-export const Logo: React.FC<{age: number; big?: boolean}> = ({age, big}) => (
-  <div style={{position: 'absolute', left: 0, right: 0, top: big ? 1010 : 1640, display: 'flex', justifyContent: 'center', opacity: eo(age / 0.4)}}>
-    <Img data-qc="logo" src={staticFile(LOGO)} style={{width: big ? 380 : 170, opacity: 0.95}} />
+export const Logo: React.FC<{age: number; big?: boolean; y?: number; width?: number}> = ({age, big, y, width}) => (
+  <div style={{position: 'absolute', left: 0, right: 0, top: y ?? (big ? 1010 : 1640), display: 'flex', justifyContent: 'center', opacity: eo(age / 0.4)}}>
+    <Img data-qc="logo" src={staticFile(LOGO)} style={{width: width ?? (big ? 380 : 170), opacity: 0.95}} />
   </div>
 );
 

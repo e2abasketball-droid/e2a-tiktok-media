@@ -1,0 +1,18 @@
+== plays
+46/46 generic tactical checks passed
+== branches
+all branch checks passed
+== contacts
+qc-contact PASS
+qc-catch PASS
+qc-handoff PASS
+== audio lock
+audio lock OK: ELEVENLABS_CREDITS_SPENT_FOR_V3 = 0 (workflow assertion: reuse only)
+audio guard negative tests PASS
+== episode
+27/27 engine checks passed
+PASS  tactical overlays on screen ≤ 3 on every frame — max 3 at 02-watch@5.10s (ring:X2, route:O2, pin:PIN-DOWN); 0 frames over
+== regression
+12/12 legacy plays identical to d700987 (pre Realism V2 main), hashes computed with that engine's rig.ts/play.ts on 2026-11-21
+2/2 legacy plays identical to 8e418e9 (claude/realism-v2, Realism V2 engine)
+SMOKE CHICAGO V3 OK

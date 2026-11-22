@@ -70,15 +70,15 @@ const rayHit = (o: number[], q: number[], b: Box) => {
 const BOARD_Y = 1.2;
 
 const W3 = (p: number[]) => new THREE.Vector3(p[0], p[2], -p[1]);
-const project = (cam: {pos: number[]; target: number[]; up: number[]; fov: number}, p: number[]) => {
-  const c = new THREE.PerspectiveCamera(cam.fov, W / H, 0.1, 120);
+const project = (cam: {pos: number[]; target: number[]; up: number[]; fov: number}, p: number[], h = H) => {
+  const c = new THREE.PerspectiveCamera(cam.fov, W / h, 0.1, 120);
   c.position.copy(W3(cam.pos));
   c.up.copy(W3(cam.up));
   c.lookAt(W3(cam.target));
   c.updateMatrixWorld();
   c.updateProjectionMatrix();
   const v = W3(p).project(c);
-  return {x: ((v.x + 1) / 2) * W, y: ((1 - v.y) / 2) * H, z: v.z};
+  return {x: ((v.x + 1) / 2) * W, y: ((1 - v.y) / 2) * h, z: v.z};
 };
 
 // fraction of a 9x16 grid of view rays that cross the glass rectangle (plane y = BOARD_Y)
@@ -185,19 +185,32 @@ ep.shots.forEach((shot: any, i: number) => {
         pinBy[`${shot.id}:${pn.text}>${pl.on}`] = (pinBy[`${shot.id}:${pn.text}>${pl.on}`] ?? 0) + 1;
       }
     }
-    for (const r of rings) {
+    // 2026-11-22 split screen: the shot's view is the TOP panel (h1 px), shot.split the BOTTOM panel; each highlighted
+    // player must stay inside his own panel (and inside the global safe band)
+    const h1 = shot.split ? Math.round(H * (shot.split.ratio ?? 0.5)) : H;
+    const panels: {play: any; pt: number; cam: any; rings: any[]; y0: number; h: number; tag: string}[] = [{play, pt, cam, rings, y0: 0, h: h1, tag: ''}];
+    if (shot.split) {
+      const sp = shot.split, play2 = plays[sp.play];
+      const pt2 = remapAt(resolveRemap(sp.remap, play2, toLocal), lt);
+      const cam2 = camera3At(play2, sp.camera.map((k: any) => ({...k, at: toLocal(k.at)})), lt, pt2);
+      panels.push({play: play2, pt: pt2, cam: cam2, rings: (sp.ov3 ?? []).filter((o: any) => o.type === 'ring'), y0: h1, h: H - h1, tag: '/split'});
+    }
+    for (const pn of panels) for (const r of pn.rings) {
       const a = toLocal(r.from);
       const b = r.to !== undefined ? toLocal(r.to) : len;
       if (lt < a + 0.3 || lt > b) continue;
+      const play = pn.play, pt = pn.pt, cam = pn.cam;
       const p = posAt(play.tracks[r.player], Math.max(0, Math.min(play.duration, pt)));
-      const q = project(cam, [p[0], p[1], 1.0]);
+      const q0 = project(cam, [p[0], p[1], 1.0], pn.h);
+      const q = {...q0, y: q0.y + pn.y0};
+      const yMin = Math.max(230, pn.y0 + 30), yMax = Math.min(1560, pn.y0 + pn.h - 30);
       if (STRUCT.some((b) => rayHit(cam.pos as number[], [p[0], p[1], 1.2], b))) {
         occl++;
         if (!occlWho) occlWho = `${shot.id}:${r.player}@${(start + lt).toFixed(3)}s`;
       }
-      if (q.x < 60 || q.x > 1020 || q.y < 230 || q.y > 1560 || q.z > 1) {
+      if (q.x < 60 || q.x > 1020 || q.y < yMin || q.y > yMax || q.z > 1) {
         outOfFrame++;
-        ofByShot[`${shot.id}:${r.player}`] = (ofByShot[`${shot.id}:${r.player}`] ?? 0) + 1;
+        ofByShot[`${shot.id}${pn.tag}:${r.player}`] = (ofByShot[`${shot.id}${pn.tag}:${r.player}`] ?? 0) + 1;
         if (!ofWhere) ofWhere = `${shot.id}:${r.player}@${lt.toFixed(2)} (${q.x.toFixed(0)},${q.y.toFixed(0)})`;
       }
     }

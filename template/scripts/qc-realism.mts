@@ -31,13 +31,14 @@ import '../src/t3d/rig.ts';
 import '../src/t3d/players/index.ts';
 import {FIBA} from '../src/tactical/geometry.ts';
 import type {V3} from '../src/tactical/geometry.ts';
-import {posAt, realismV2, sample} from '../src/tactical/play.ts';
+import {posAt, realismV2, realismV3, sample} from '../src/tactical/play.ts';
 import {BALL_R, bodyRowAt, poseAt} from '../src/t3d/rig.ts';
 import type {PlayWithActions, Pose} from '../src/t3d/rig.ts';
 import {bonesFromPose, meshScale, qconj, qrot} from '../src/t3d/skelclip.ts';
 import type {ClipBone, Q} from '../src/t3d/skelclip.ts';
 import {PLAYER3D, planPlayers3d} from '../src/t3d/player3d.ts';
 import {clothAt, clothDisplace} from '../src/t3d/cloth2.ts';
+import {garment3Shorts} from '../src/t3d/garment3.ts';
 
 const args = process.argv.slice(2);
 const opt = (k: string) => (args.includes(k) ? args[args.indexOf(k) + 1] : undefined);
@@ -152,6 +153,7 @@ const runPlay = (file: string): {id: string; gates: Gate[]; stats: Record<string
   }
   const play = play0;
   const rv2 = realismV2(play);
+  const rv3 = realismV3(play);
   const plan = planPlayers3d(play, {});
   const t0 = range ? range[0] : 0, t1 = range ? range[1] : play.duration;
   const f0 = Math.ceil(t0 * FPS), f1 = Math.floor(t1 * FPS);
@@ -518,8 +520,11 @@ const runPlay = (file: string): {id: string; gates: Gate[]; stats: Record<string
       const {glb, rig} = meshOf(id);
       const joints = (glb as unknown as {__joints: string[]}).__joints;
       const rest = Object.fromEntries(rig.bones.map((b) => [b.name, b]));
-      const body = glb.E2A_Body, jer = glb.E2A_Jersey, sho = glb.E2A_Shorts;
-      const vkey = rv2 ? 'v2' : 'v1';
+      const body = glb.E2A_Body, jer = glb.E2A_Jersey;
+      // Chicago V3 (play.realism >= 3): the shorts the renderer draws = garment3-corrected shorts (tuck + loose openings)
+      const g3 = rv3 ? garment3Shorts({P: jer.P, N: jer.N}, {P: glb.E2A_Shorts.P, N: glb.E2A_Shorts.N, J: glb.E2A_Shorts.J, W: glb.E2A_Shorts.W}, Math.max(0, joints.indexOf('hips')), 2) : undefined;
+      const sho: Mesh = g3 ? {...glb.E2A_Shorts, P: g3.P, J: g3.J, W: g3.W, hem: g3.hem, ease: g3.ease} : glb.E2A_Shorts;
+      const vkey = rv3 ? 'v3' : rv2 ? 'v2' : 'v1';
       const armBones = new Set(['upperarm.L', 'upperarm.R', 'forearm.L', 'forearm.R'].map((n) => joints.indexOf(n)));
       const pBJ = pairs(`${vkey}|${id[0]}|bodyJ`, body, jer, 0.04, true);
       const pBS = pairs(`${vkey}|${id[0]}|bodyS`, body, sho, 0.04, true);
@@ -550,8 +555,14 @@ const runPlay = (file: string): {id: string; gates: Gate[]; stats: Record<string
           for (let v = 0; v < jer.n; v++) {
             const h = jer.hem[v];
             if (h <= 0) continue;
-            const q = clothDisplace([Jm.P[v * 3], Jm.P[v * 3 + 1], Jm.P[v * 3 + 2]], [Jm.N[v * 3], Jm.N[v * 3 + 1], Jm.N[v * 3 + 2]], h, (jer.ease?.[v] ?? 0) * st.s, c, st.hips);
+            const q = clothDisplace([Jm.P[v * 3], Jm.P[v * 3 + 1], Jm.P[v * 3 + 2]], [Jm.N[v * 3], Jm.N[v * 3 + 1], Jm.N[v * 3 + 2]], h, (jer.ease?.[v] ?? 0) * st.s, c, st.hips, rv3);
             Jm.P[v * 3] = q[0]; Jm.P[v * 3 + 1] = q[1]; Jm.P[v * 3 + 2] = q[2];
+          }
+          if (g3) for (let v = 0; v < sho.n; v++) {
+            const h = g3.hem[v];
+            if (h <= 0) continue;
+            const q = clothDisplace([S.P[v * 3], S.P[v * 3 + 1], S.P[v * 3 + 2]], [S.N[v * 3], S.N[v * 3 + 1], S.N[v * 3 + 2]], h, g3.ease[v] * st.s, c, st.hips, true);
+            S.P[v * 3] = q[0]; S.P[v * 3 + 1] = q[1]; S.P[v * 3 + 2] = q[2];
           }
         }
         const at = `${id}@${t.toFixed(2)}`;

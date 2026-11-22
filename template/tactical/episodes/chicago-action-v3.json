@@ -1,0 +1,1360 @@
+{
+ "id": "chicago-action-v3",
+ "title": "Chicago Action V3: one screen, two bad choices (audio-locked re-edit)",
+ "fps": 30,
+ "voice": "tactical/chicago-v2/voice.wav",
+ "voiceMix": "tactical/chicago-v2/voice.mix.wav",
+ "preroll": 0.12,
+ "plays": {
+  "D": "chicago-v3-trail-drive",
+  "U": "chicago-v3-under-three"
+ },
+ "branches": {
+  "trail": "D",
+  "under": "U"
+ },
+ "tail": 1.73,
+ "env": "cinema",
+ "shots": [
+  {
+   "id": "01-hook",
+   "name": "HOOK (split): TRAIL -> DRIVE layup on top, UNDER -> THREE make below, same action, same second",
+   "at": 0,
+   "play": "D",
+   "remap": [
+    [
+     0,
+     2.9
+    ],
+    [
+     "@end",
+     5.6
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2"
+       ],
+       "z": 1.0,
+       "window": 0.5
+      },
+      "dist": 7.8,
+      "pitch": 62,
+      "yaw": 14,
+      "fov": 40
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.45,
+       3.0,
+       1.6
+      ],
+      "dist": 7.2,
+      "pitch": 64,
+      "yaw": 20,
+      "fov": 40
+     },
+     "ease": "inOut"
+    }
+   ],
+   "split": {
+    "play": "U",
+    "remap": [
+     [
+      0,
+      2.55
+     ],
+     [
+      "@end",
+      4.75
+     ]
+    ],
+    "camera": [
+     {
+      "at": 0,
+      "rig": {
+       "type": "orbit",
+       "target": [
+        -2.3,
+        7.3,
+        1.4
+       ],
+       "dist": 8.2,
+       "pitch": 64,
+       "yaw": 70,
+       "fov": 40
+      }
+     },
+     {
+      "at": "@end",
+      "rig": {
+       "type": "orbit",
+       "target": [
+        -1.35,
+        5.1,
+        2.0
+       ],
+       "dist": 10.4,
+       "pitch": 66,
+       "yaw": 60,
+       "fov": 40
+      },
+      "ease": "inOut"
+     }
+    ],
+    "ov3": []
+   },
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "color": "#E5483A",
+     "from": -0.3,
+     "to": 1.4
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "ONE SCREEN.",
+      "TWO BAD CHOICES."
+     ],
+     "gold": [
+      1
+     ],
+     "from": -0.3,
+     "to": "@end",
+     "y": 250,
+     "size": 72
+    },
+    {
+     "type": "chip",
+     "text": "TRAIL → DRIVE",
+     "tone": "red",
+     "y": 440,
+     "from": -0.3,
+     "to": "@end",
+     "size": 52
+    },
+    {
+     "type": "chip",
+     "text": "UNDER → THREE",
+     "tone": "blue",
+     "y": 1050,
+     "from": -0.3,
+     "to": "@end",
+     "size": 52
+    }
+   ]
+  },
+  {
+   "id": "02-watch",
+   "name": "WATCH THE DEFENDER: elevated 3/4 on the trio (O2, X2, O4) + O1, X2 ringed, O2's path previewed",
+   "at": "Watch-0.1",
+   "play": "D",
+   "remap": [
+    [
+     0,
+     0.0
+    ],
+    [
+     "@end",
+     0.5
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.4,
+       6.3,
+       0.9
+      ],
+      "dist": 13.5,
+      "pitch": 46,
+      "yaw": -36,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.9,
+       5.0,
+       0.9
+      ],
+      "dist": 10.5,
+      "pitch": 52,
+      "yaw": 8,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "color": "#FFC447",
+     "pulse": true,
+     "from": 0.05,
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 0.55,
+     "t1": 2.45,
+     "fromPlay": "D",
+     "color": "#FFC447",
+     "draw": 0.6,
+     "dashed": true,
+     "width": 0.09,
+     "from": "decisions.",
+     "to": "seconds.-0.05"
+    }
+   ],
+   "screen": [
+    {
+     "type": "chip",
+     "text": "X2 = THE DEFENDER",
+     "tone": "gold",
+     "y": 250,
+     "from": "defender.",
+     "to": "@end",
+     "size": 50
+    },
+    {
+     "type": "pin",
+     "player": "O4",
+     "text": "PIN-DOWN",
+     "from": "Two",
+     "to": "@end",
+     "size": 38
+    },
+    {
+     "type": "pin",
+     "player": "O1",
+     "text": "HANDOFF",
+     "from": "seconds.",
+     "to": "@end",
+     "size": 38
+    }
+   ]
+  },
+  {
+   "id": "03a-pindown",
+   "name": "PIN-DOWN: ONE continuous medium-wide 3/4 - O4 arrives, plants (both feet) BEFORE O2 passes, O2 flies off",
+   "at": "First,-0.1",
+   "play": "D",
+   "remap": [
+    [
+     0,
+     0.45
+    ],
+    [
+     "@end",
+     2.3
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -4.45,
+       4.7,
+       1.0
+      ],
+      "dist": 9.4,
+      "pitch": 70,
+      "yaw": 74,
+      "fov": 40
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -4.2,
+       6.2,
+       1.0
+      ],
+      "dist": 9.8,
+      "pitch": 68,
+      "yaw": 62,
+      "fov": 40
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "screen",
+     "player": "O4",
+     "n": 1,
+     "facing": -1.85,
+     "from": "pin-down.-0.3",
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 0.55,
+     "t1": 2.4,
+     "trail": true,
+     "color": "#FFC447",
+     "width": 0.09,
+     "from": "shooter",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "PIN-DOWN"
+     ],
+     "gold": [
+      0
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 250,
+     "size": 96
+    }
+   ]
+  },
+  {
+   "id": "03b-chase",
+   "name": "THE CHASE: from behind X2, he has to go over the top of the screen, a step late (D 1.2 -> 2.38)",
+   "at": "and-0.06",
+   "play": "D",
+   "remap": [
+    [
+     0,
+     1.2
+    ],
+    [
+     "@end",
+     2.38
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "X2"
+       ],
+       "z": 1.0,
+       "window": 0.5
+      },
+      "dist": 8.2,
+      "pitch": 62,
+      "yaw": 70,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "X2",
+        "O2"
+       ],
+       "z": 1.0,
+       "window": 0.5
+      },
+      "dist": 8.6,
+      "pitch": 62,
+      "yaw": 62,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "color": "#E5483A",
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "X2",
+     "t0": 1.1,
+     "t1": 2.45,
+     "color": "#E5483A",
+     "trail": true,
+     "width": 0.08,
+     "from": 0.1,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "chip",
+     "text": "X2 CHASES",
+     "tone": "red",
+     "y": 230,
+     "from": "defender#2",
+     "to": "@end",
+     "size": 56
+    }
+   ]
+  },
+  {
+   "id": "04-handoff",
+   "name": "HANDOFF: ONE continuous low 3/4 medium-wide - offer, both hands on the ball, release, turn the corner",
+   "at": "Then,-0.1",
+   "play": "D",
+   "remap": [
+    [
+     0,
+     2.0
+    ],
+    [
+     "handoff.>",
+     2.66
+    ],
+    [
+     "@end",
+     2.82
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.95,
+       8.25,
+       1.0
+      ],
+      "dist": 7.4,
+      "pitch": 74,
+      "yaw": 150,
+      "fov": 40
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.8,
+       8.2,
+       1.0
+      ],
+      "dist": 7.0,
+      "pitch": 74,
+      "yaw": 146,
+      "fov": 40
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "glow",
+     "player": "O1",
+     "r": 0.5,
+     "color": "#FFC447",
+     "strength": 0.35,
+     "from": "handoff.-0.3",
+     "to": "handoff.>"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "HANDOFF"
+     ],
+     "gold": [
+      0
+     ],
+     "from": 0.05,
+     "to": "@end",
+     "y": 250,
+     "size": 96
+    }
+   ]
+  },
+  {
+   "id": "05-trail",
+   "name": "TRAIL -> DRIVE: X2 chases over the hand-off, O2 turns the corner, two dribbles, gather, layup, through the net",
+   "at": "Trail-0.1",
+   "play": "D",
+   "remap": [
+    [
+     0,
+     2.62
+    ],
+    [
+     "@end",
+     5.55
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": {
+       "follow": [
+        "O2"
+       ],
+       "z": 1.1,
+       "window": 0.6
+      },
+      "dist": 9.2,
+      "pitch": 60,
+      "yaw": 16,
+      "fov": 42
+     }
+    },
+    {
+     "at": "recover.",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.55,
+       3.4,
+       1.5
+      ],
+      "dist": 8.6,
+      "pitch": 63,
+      "yaw": 22,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "color": "#E5483A",
+     "from": 0,
+     "to": "turns-0.25"
+    },
+    {
+     "type": "route",
+     "player": "X2",
+     "t0": 2.55,
+     "t1": 3.6,
+     "color": "#E5483A",
+     "trail": true,
+     "width": 0.08,
+     "from": 0.1,
+     "to": "before"
+    },
+    {
+     "type": "openSpace",
+     "at": [
+      -1.2,
+      5.7
+     ],
+     "r": 0.55,
+     "rx": 2.3,
+     "angle": -1.42,
+     "color": "#FFC447",
+     "from": "turns",
+     "to": "before"
+    }
+   ],
+   "screen": [
+    {
+     "type": "chip",
+     "text": "TRAIL → DRIVE",
+     "tone": "red",
+     "y": 230,
+     "from": 0.05,
+     "to": "@end",
+     "size": 64
+    },
+    {
+     "type": "stamp",
+     "text": "LAYUP",
+     "badge": "+2",
+     "from": "recover.>+0.25",
+     "to": "@end",
+     "y": 340
+    }
+   ]
+  },
+  {
+   "id": "06-under",
+   "name": "SAME SETUP -> UNDER -> THREE: X2 goes under the pin-down and the hand-off, the gap, catch behind the arc, three",
+   "at": "But-0.1",
+   "play": "U",
+   "remap": [
+    [
+     0,
+     0.95
+    ],
+    [
+     "under?>",
+     2.0
+    ],
+    [
+     "up.>",
+     3.96
+    ],
+    [
+     "@end",
+     4.62
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.7,
+       4.6,
+       1.0
+      ],
+      "dist": 12.0,
+      "pitch": 60,
+      "yaw": 58,
+      "fov": 42
+     }
+    },
+    {
+     "at": "under?",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.7,
+       4.6,
+       1.0
+      ],
+      "dist": 12.0,
+      "pitch": 60,
+      "yaw": 58,
+      "fov": 42
+     },
+     "ease": "hold"
+    },
+    {
+     "at": "leave",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.55,
+       7.9,
+       1.2
+      ],
+      "dist": 11.0,
+      "pitch": 62,
+      "yaw": 54,
+      "fov": 42
+     },
+     "ease": "inOut"
+    },
+    {
+     "at": "up.",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.75,
+       6.3,
+       1.9
+      ],
+      "dist": 11.4,
+      "pitch": 64,
+      "yaw": 52,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "color": "#6EA8FF",
+     "from": 0.2,
+     "to": "under?>"
+    },
+    {
+     "type": "route",
+     "player": "X2",
+     "t0": 0.9,
+     "t1": 2.6,
+     "color": "#6EA8FF",
+     "trail": true,
+     "width": 0.08,
+     "from": 0.3,
+     "to": "space"
+    },
+    {
+     "type": "openSpace",
+     "at": [
+      -2.95,
+      8.05
+     ],
+     "r": 0.6,
+     "rx": 0.95,
+     "angle": 0.3,
+     "color": "#6EA8FF",
+     "from": "leave",
+     "to": "rise"
+    }
+   ],
+   "screen": [
+    {
+     "type": "rewind",
+     "from": 0,
+     "to": 0.4
+    },
+    {
+     "type": "micro",
+     "text": "SAME SETUP",
+     "y": 330,
+     "from": 0,
+     "to": 0.9
+    },
+    {
+     "type": "chip",
+     "text": "UNDER → THREE",
+     "tone": "blue",
+     "y": 230,
+     "from": "under?",
+     "to": "@end",
+     "size": 64
+    },
+    {
+     "type": "stamp",
+     "text": "THREE",
+     "badge": "+3",
+     "from": "up.>+0.55",
+     "to": "@end",
+     "y": 340
+    }
+   ]
+  },
+  {
+   "id": "07a-recap",
+   "name": "RECAP pin-down: one 3/4 angle, key trio, CHICAGO ACTION reveal (D 0.9 -> 2.25)",
+   "at": "That's-0.1",
+   "play": "D",
+   "remap": [
+    [
+     0,
+     0.85
+    ],
+    [
+     "@end",
+     2.25
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.9,
+       6.1,
+       1.0
+      ],
+      "dist": 12.5,
+      "pitch": 62,
+      "yaw": 60,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.3,
+       7.4,
+       1.0
+      ],
+      "dist": 11.0,
+      "pitch": 64,
+      "yaw": 64,
+      "fov": 42
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "screen",
+     "player": "O4",
+     "n": 1,
+     "facing": -1.85,
+     "from": 0.1,
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "O2",
+     "t0": 0.9,
+     "t1": 2.3,
+     "trail": true,
+     "color": "#FFC447",
+     "width": 0.09,
+     "from": "cut,-0.3",
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "title",
+     "lines": [
+      "CHICAGO ACTION"
+     ],
+     "gold": [
+      0
+     ],
+     "sub": "PIN-DOWN → DHO",
+     "from": 0.05,
+     "to": "@end",
+     "y": 250,
+     "size": 96
+    }
+   ]
+  },
+  {
+   "id": "07b-recap",
+   "name": "RECAP hand-off: SAME angle, the DHO (D 2.25 -> 2.75)",
+   "at": "one handoff,-0.06",
+   "play": "D",
+   "remap": [
+    [
+     0,
+     2.25
+    ],
+    [
+     "@end",
+     2.78
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.3,
+       7.4,
+       1.0
+      ],
+      "dist": 11.0,
+      "pitch": 64,
+      "yaw": 64,
+      "fov": 42
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -3.3,
+       7.4,
+       1.0
+      ],
+      "dist": 10.2,
+      "pitch": 64,
+      "yaw": 64,
+      "fov": 42
+     },
+     "ease": "linear"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "glow",
+     "player": "O1",
+     "r": 0.5,
+     "color": "#FFC447",
+     "strength": 0.3,
+     "from": 0.0,
+     "to": "@end"
+    }
+   ],
+   "screen": [
+    {
+     "type": "chip",
+     "text": "PIN-DOWN → DHO",
+     "tone": "gold",
+     "y": 230,
+     "from": 0,
+     "to": "@end",
+     "size": 56
+    }
+   ]
+  },
+  {
+   "id": "07c-recap",
+   "name": "RECAP payoffs (split): drive layup on top, three below, at speed",
+   "at": "two very-0.06",
+   "play": "D",
+   "remap": [
+    [
+     0,
+     3.55
+    ],
+    [
+     "@end",
+     5.05
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.45,
+       3.0,
+       1.6
+      ],
+      "dist": 7.2,
+      "pitch": 64,
+      "yaw": 20,
+      "fov": 40
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -0.45,
+       3.0,
+       1.6
+      ],
+      "dist": 9.0,
+      "pitch": 64,
+      "yaw": 20,
+      "fov": 40
+     },
+     "ease": "linear"
+    }
+   ],
+   "split": {
+    "play": "U",
+    "remap": [
+     [
+      0,
+      2.75
+     ],
+     [
+      "@end",
+      4.25
+     ]
+    ],
+    "camera": [
+     {
+      "at": 0,
+      "rig": {
+       "type": "orbit",
+       "target": [
+        -1.35,
+        5.1,
+        2.0
+       ],
+       "dist": 10.4,
+       "pitch": 66,
+       "yaw": 60,
+       "fov": 40
+      }
+     },
+     {
+      "at": "@end",
+      "rig": {
+       "type": "orbit",
+       "target": [
+        -1.35,
+        5.1,
+        2.0
+       ],
+       "dist": 10.6,
+       "pitch": 66,
+       "yaw": 60,
+       "fov": 40
+      },
+      "ease": "linear"
+     }
+    ]
+   },
+   "screen": [
+    {
+     "type": "chip",
+     "text": "TRAIL → DRIVE",
+     "tone": "red",
+     "y": 250,
+     "from": 0,
+     "to": "@end",
+     "size": 52
+    },
+    {
+     "type": "chip",
+     "text": "UNDER → THREE",
+     "tone": "blue",
+     "y": 1050,
+     "from": 0,
+     "to": "@end",
+     "size": 52
+    }
+   ]
+  },
+  {
+   "id": "08-cta",
+   "name": "CTA (split, moving): the same fork replayed slowly, X2's TRAIL route (red) vs UNDER route (blue)",
+   "at": "You're-0.1",
+   "play": "D",
+   "remap": [
+    [
+     0,
+     2.45
+    ],
+    [
+     "@end",
+     3.55
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -2.0,
+       7.1,
+       1.0
+      ],
+      "dist": 11.0,
+      "pitch": 58,
+      "yaw": 16,
+      "fov": 40
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       -1.6,
+       6.3,
+       1.0
+      ],
+      "dist": 10.0,
+      "pitch": 60,
+      "yaw": 22,
+      "fov": 40
+     },
+     "ease": "inOut"
+    }
+   ],
+   "ov3": [
+    {
+     "type": "ring",
+     "player": "X2",
+     "color": "#E5483A",
+     "from": 0,
+     "to": "@end"
+    },
+    {
+     "type": "route",
+     "player": "X2",
+     "t0": 2.3,
+     "t1": 3.7,
+     "color": "#E5483A",
+     "trail": true,
+     "width": 0.09,
+     "from": 0.2,
+     "to": "@end"
+    },
+    {
+     "type": "openSpace",
+     "at": [
+      -1.2,
+      5.7
+     ],
+     "r": 0.55,
+     "rx": 2.3,
+     "angle": -1.42,
+     "color": "#FFC447",
+     "from": "Trail#2",
+     "to": "@end"
+    }
+   ],
+   "split": {
+    "play": "U",
+    "remap": [
+     [
+      0,
+      1.6
+     ],
+     [
+      "@end",
+      2.95
+     ]
+    ],
+    "camera": [
+     {
+      "at": 0,
+      "rig": {
+       "type": "orbit",
+       "target": [
+        -3.0,
+        6.6,
+        1.0
+       ],
+       "dist": 11.0,
+       "pitch": 60,
+       "yaw": 58,
+       "fov": 40
+      }
+     },
+     {
+      "at": "@end",
+      "rig": {
+       "type": "orbit",
+       "target": [
+        -2.6,
+        7.0,
+        1.2
+       ],
+       "dist": 10.4,
+       "pitch": 62,
+       "yaw": 50,
+       "fov": 40
+      },
+      "ease": "inOut"
+     }
+    ],
+    "ov3": [
+     {
+      "type": "ring",
+      "player": "X2",
+      "color": "#6EA8FF",
+      "from": 0,
+      "to": "@end"
+     },
+     {
+      "type": "route",
+      "player": "X2",
+      "t0": 1.0,
+      "t1": 2.6,
+      "color": "#6EA8FF",
+      "trail": true,
+      "width": 0.09,
+      "from": 0.2,
+      "to": "@end"
+     },
+     {
+      "type": "openSpace",
+      "at": [
+       -2.95,
+       8.05
+      ],
+      "r": 0.6,
+      "rx": 0.95,
+      "angle": 0.3,
+      "color": "#6EA8FF",
+      "from": "under?#2",
+      "to": "@end"
+     }
+    ]
+   },
+   "screen": [
+    {
+     "type": "chip",
+     "text": "TRAIL",
+     "tone": "red",
+     "y": 390,
+     "from": "Trail#2",
+     "to": "@end",
+     "size": 60
+    },
+    {
+     "type": "chip",
+     "text": "UNDER",
+     "tone": "blue",
+     "y": 1050,
+     "from": "under?#2",
+     "to": "@end",
+     "size": 60
+    },
+    {
+     "type": "micro",
+     "text": "WHAT'S YOUR COVERAGE?",
+     "y": 290,
+     "from": "Tell",
+     "to": "@end"
+    }
+   ]
+  },
+  {
+   "id": "09-outro",
+   "name": "OUTRO: slow orbit round the net as the three drops through, E2A logo (no static hold)",
+   "at": "Follow-0.1",
+   "play": "U",
+   "remap": [
+    [
+     0,
+     3.6
+    ],
+    [
+     "@end",
+     5.0
+    ]
+   ],
+   "camera": [
+    {
+     "at": 0,
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       1.575,
+       2.55
+      ],
+      "dist": 4.2,
+      "pitch": 74,
+      "yaw": 25,
+      "fov": 44
+     }
+    },
+    {
+     "at": "@end",
+     "rig": {
+      "type": "orbit",
+      "target": [
+       0.0,
+       1.575,
+       2.6
+      ],
+      "dist": 4.0,
+      "pitch": 76,
+      "yaw": 62,
+      "fov": 44
+     },
+     "ease": "inOut"
+    }
+   ],
+   "screen": [
+    {
+     "type": "scrim",
+     "opacity": 0.2,
+     "from": 0.6,
+     "to": "@end"
+    },
+    {
+     "type": "logo",
+     "y": 1060,
+     "width": 300,
+     "from": 0.5,
+     "to": "@end"
+    }
+   ]
+  }
+ ],
+ "pinV2": true,
+ "autoSfx": false,
+ "keywords": [
+  "screen",
+  "defender.",
+  "pin-down.",
+  "chase.",
+  "handoff.",
+  "Trail",
+  "recover.",
+  "under?",
+  "rise",
+  "Chicago",
+  "problems.",
+  "read."
+ ],
+ "subtitleY": 1350,
+ "subtitleYAt": [
+  [
+   0,
+   "Watch-0.1",
+   905
+  ],
+  [
+   "two very-0.06",
+   "Follow-0.1",
+   905
+  ]
+ ],
+ "subtitleGroups": [
+  5,
+  5,
+  3,
+  2,
+  3,
+  3,
+  6,
+  6,
+  5,
+  5,
+  5,
+  3,
+  4,
+  5,
+  3,
+  4,
+  4,
+  3,
+  3,
+  4,
+  5
+ ],
+ "subtitleBlock": true,
+ "music": {
+  "src": "tactical/chicago-v2/music.mp3",
+  "volume": 1
+ },
+ "audioReuseOnly": true,
+ "disallowTTS": true,
+ "audioLock": {
+  "source": "Chicago V2 stems of 2026-11-21 (one Deuce take, generation YSsSfdFXlO54uKYjQCcI, already paid); reused unchanged",
+  "files": {
+   "tactical/chicago-v2/voice.wav": "9c44be15a8386550fbe5a78d34d6e2bf8814254cd5b4dd1eb10e49c8ee7cdcc0",
+   "tactical/chicago-v2/voice.mix.wav": "ee66ecd3fad84290707055e58d7ddaf2563aa29867b4eba08bfaa6857b9b3c27",
+   "tactical/chicago-v2/music.mp3": "b92497a5be1c48f5bdb9b9bda326a60f81bba7f865579057c4ccccc882a9a00e"
+  },
+  "words": {
+   "tactical/episodes/chicago-action-v2.words.json": "5b841bd9eb8f50489c81143d081591dbf478ecfa9909dcfeb31426e66052cea4"
+  },
+  "elevenlabsCreditsSpentForV3": 0
+ }
+}

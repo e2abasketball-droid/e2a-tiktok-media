@@ -11,7 +11,7 @@
 // World units: metres on the FIBA half court (x across, y from the baseline, z up), as play.ts.
 import type {V2, V3} from '../tactical/geometry.ts';
 import type {Play} from '../tactical/play.ts';
-import {catchV2, dribbleSide, posAt, rawBallAt, realismV2, sample, setBallHook, setTrunkHook, setYawHook, stateOf} from '../tactical/play.ts';
+import {catchV2, dribbleSide, posAt, rawBallAt, realismV2, realismV3, sample, setBallHook, setTrunkHook, setYawHook, stateOf} from '../tactical/play.ts';
 import type {Trunk} from '../tactical/play.ts';
 const sampleBall = (play: Play, t: number) => sample(play, t).ball.pos;
 import type {ChoreoPlay} from './choreo.ts';
@@ -929,12 +929,15 @@ export const poseAt = (play: PlayWithActions, id: string, t: number, ball: BallH
       const reach = add(sh, add(mul(toRim, armLen * 0.97), [0, 0, 0.0]));
       const carry = L(0.05, 0.3, -0.05);
       let tg = i === 1 ? lerp3(carry, reach, smooth((tt - 0.12) / 0.38)) : lerp3(carry, L(0.3, 0.25, -0.15), smooth((tt - 0.3) / 0.2));
-      if (isBallHolder) tg = add(add(ball.pos, mul(chestR, side * 0.1)), mul(chestF, -0.05));
+      // V3 (realism 3): the gather and the carry keep the palms ON the ball surface (contact IK), as the jump shot does
+      // since V2 (Chicago V3 drive: palm 6.6 cm inside the ball in the layup gather with the legacy target)
+      const rv3L = realismV3(play as unknown as Play) && cv2;
+      if (isBallHolder) tg = rv3L ? gripWrist(ball.pos, side) : add(add(ball.pos, mul(chestR, side * 0.1)), mul(chestF, -0.05));
       // 2026-11-19 (Blind Pig): a cutter who catches in stride just before the take-off keeps his hands on the incoming
       // ball; the layup carry takes over only once the ball is in his hands (ramp 0.08 s after the catch)
       const lastPass = play.ball.find((e) => e.type === 'pass' && e.to === id && e.t1 > layup.a!.from - 0.05 && e.t1 <= layup.a!.to);
       const afterCatch = lastPass && lastPass.type === 'pass' ? smooth((tc - lastPass.t1) / 0.08) : 1;
-      blend(layup.w * afterCatch, tg, norm(add(mul(chestR, side * 0.6), [0, 0, -0.6])));
+      blend(layup.w * afterCatch, tg, norm(add(mul(chestR, side * 0.6), [0, 0, -0.6])), rv3L && isBallHolder ? gripPalm(ball.pos, side) : undefined);
     }
     // character: hide (hands dead at the thighs), call (open hands at head height, a small ask), tap (chest)
     blend(hide.w * (1 - call.w), L(0.04, 0.05, -armLen * 0.97), norm(add(mul(chestF, -1), mul(chestR, side * 0.2))));

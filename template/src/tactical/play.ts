@@ -236,6 +236,8 @@ export const dribbleSide = (e: {hand?: 1 | -1; cross?: number[]}, t: number): nu
  *  ball BEHIND his own back, and the pick-up into the chest pocket swept the ball through his trunk (Chicago V2 baseline,
  *  qc-catch: 17.9 cm inside O1's trunk). Plays without the flag are unchanged. */
 export const realismV2 = (play: Play) => ((play as {realism?: number}).realism ?? 0) >= 2;
+/** Chicago V3 (2026-11-22): layup grip on the ball surface, garment3 apparel corrections, net snap; opt-in play.realism >= 3 */
+export const realismV3 = (play: Play) => ((play as {realism?: number}).realism ?? 0) >= 3;
 const avgFacing = (play: Play, id: string, t: number): number => {
   let cx = 0, cy = 0;
   const body = realismV2(play) && yawHook ? yawHook : undefined;
@@ -262,7 +264,10 @@ const handedSpot = (play: Play, e: Extract<BallEvent, {type: 'hold'}>, t: number
   // and pushed further ahead with speed (+0.04 m per m/s, max +0.14 m: the knee reaches ~0.4 m ahead in a sprint)
   const pa = posAt(play.tracks[e.player], Math.max(0, t - 0.05)), pb = posAt(play.tracks[e.player], Math.min(play.duration, t + 0.05));
   const spd = v2 ? Math.hypot(pb[0] - pa[0], pb[1] - pa[1]) / 0.1 : 0;
-  const lat = (v2 ? 0.34 : 0.27) * sd, fw = (v2 ? 0.36 + Math.min(0.14, 0.04 * spd) : 0.3) + 0.08 * (1 - Math.abs(sd));
+  // V3 (realism 3): and a little wider with speed (+0.016 m per m/s, max +0.08 m): at 5 m/s in the Chicago V3 drive the
+  // right thigh still swept 7 cm into the bounce at 0.34 m
+  const v3w = realismV3(play) ? Math.min(0.08, 0.016 * spd) : 0;
+  const lat = ((v2 ? 0.34 : 0.27) + v3w) * sd, fw = (v2 ? 0.36 + Math.min(0.14, 0.04 * spd) : 0.3) + 0.08 * (1 - Math.abs(sd));
   return [st.pos[0] + fx * fw + fy * lat, st.pos[1] + fy * fw - fx * lat, z];
 };
 /** PHASED overhead throw (2026-11-20, Double Drag V2 pass fix; opt-in `phased: true` on an overhead pass loaded from a

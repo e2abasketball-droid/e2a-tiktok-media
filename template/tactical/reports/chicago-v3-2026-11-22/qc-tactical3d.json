@@ -1,0 +1,151 @@
+{
+ "passed": 27,
+ "failed": 0,
+ "results": [
+  {
+   "check": "duration 30–40 s",
+   "ok": true,
+   "value": "38.00 s"
+  },
+  {
+   "check": "shots in narration order",
+   "ok": true,
+   "value": "0.00 3.52 7.97 11.19 13.84 16.42 20.80 25.67 28.18 29.06 30.88 34.22"
+  },
+  {
+   "check": "every graphic points at a player that exists",
+   "ok": true,
+   "value": "ok"
+  },
+  {
+   "check": "every anchor falls inside its shot",
+   "ok": true,
+   "value": "ok"
+  },
+  {
+   "check": "camera moves smoothly inside shots (≤ 0.9 m per frame)",
+   "ok": true,
+   "value": "0.38 m (06-under@1.03)"
+  },
+  {
+   "check": "camera never below 0.8 m",
+   "ok": true,
+   "value": "2.93 m"
+  },
+  {
+   "check": "camera stays ≥ 0.5 m from the basket structure",
+   "ok": true,
+   "value": "0 frame-structure hits, min 3.32 m (09-outro@37.956s board)"
+  },
+  {
+   "check": "camera never films through the backboard glass (> 10 % of the picture)",
+   "ok": true,
+   "value": "max 0 %"
+  },
+  {
+   "check": "every pin label sits on its own player (no other body under it)",
+   "ok": true,
+   "value": "ok"
+  },
+  {
+   "check": "highlighted players stay inside the safe frame",
+   "ok": true,
+   "value": "ok"
+  },
+  {
+   "check": "planted feet never slide (max drift per 1/120 s)",
+   "ok": true,
+   "value": "0.000 mm (none)"
+  },
+  {
+   "check": "feet never go under the floor",
+   "ok": true,
+   "value": "0 samples"
+  },
+  {
+   "check": "players3d e2a-player-v1: player meshes present in public/",
+   "ok": true,
+   "value": "players3d/e2a_player_off.glb, players3d/e2a_player_def.glb"
+  },
+  {
+   "check": "players3d D: mesh ankle on the engine ankle (≤ 15 mm)",
+   "ok": true,
+   "value": "0.0 mm (X5@5.93s)"
+  },
+  {
+   "check": "players3d D: planted mesh foot does not slide (≤ 2 mm/frame)",
+   "ok": true,
+   "value": "0.00 mm/frame (X2@3.93s)"
+  },
+  {
+   "check": "players3d D: ball holder: mesh fingertips on the engine hand point (≤ 40 mm)",
+   "ok": true,
+   "value": "0.0 mm (O2@3.87s)"
+  },
+  {
+   "check": "players3d D: other players: fingertips vs engine hand (info, arms at full stretch clamp)",
+   "ok": true,
+   "value": "0.1 mm (X4@4.27s)"
+  },
+  {
+   "check": "players3d D: head never looks up (face pitch ≤ +15°, +35° while a shot is up)",
+   "ok": true,
+   "value": "2.9° (O1@1.20s)"
+  },
+  {
+   "check": "players3d D: head not buried (face pitch ≥ -35°)",
+   "ok": true,
+   "value": "-10.9° (X4@3.43s)"
+  },
+  {
+   "check": "players3d D: same time, same bones (seek = playback)",
+   "ok": true,
+   "value": "0.0e+0"
+  },
+  {
+   "check": "players3d U: mesh ankle on the engine ankle (≤ 15 mm)",
+   "ok": true,
+   "value": "0.0 mm (X4@3.17s)"
+  },
+  {
+   "check": "players3d U: planted mesh foot does not slide (≤ 2 mm/frame)",
+   "ok": true,
+   "value": "0.00 mm/frame (X2@1.60s)"
+  },
+  {
+   "check": "players3d U: ball holder: mesh fingertips on the engine hand point (≤ 40 mm)",
+   "ok": true,
+   "value": "0.0 mm (O2@2.73s)"
+  },
+  {
+   "check": "players3d U: other players: fingertips vs engine hand (info, arms at full stretch clamp)",
+   "ok": true,
+   "value": "8.4 mm (O2@3.43s)"
+  },
+  {
+   "check": "players3d U: head never looks up (face pitch ≤ +15°, +35° while a shot is up)",
+   "ok": true,
+   "value": "2.9° (O1@1.20s)"
+  },
+  {
+   "check": "players3d U: head not buried (face pitch ≥ -35°)",
+   "ok": true,
+   "value": "-10.2° (X1@0.33s)"
+  },
+  {
+   "check": "players3d U: same time, same bones (seek = playback)",
+   "ok": true,
+   "value": "0.0e+0"
+  }
+ ],
+ "warnings": [
+  {
+   "check": "players3d plan D",
+   "value": "O1:C/off/rig | O2:C/off/rig | O3:C/off/rig | O4:C/off/rig | O5:C/off/rig | X1:C/def/rig | X2:C/def/rig | X3:C/def/rig | X4:C/def/rig | X5:C/def/rig"
+  },
+  {
+   "check": "players3d plan U",
+   "value": "O1:C/off/rig | O2:C/off/rig | O3:C/off/rig | O4:C/off/rig | O5:C/off/rig | X1:C/def/rig | X2:C/def/rig | X3:C/def/rig | X4:C/def/rig | X5:C/def/rig"
+  }
+ ]
+}

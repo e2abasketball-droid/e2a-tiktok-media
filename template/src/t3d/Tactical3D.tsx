@@ -24,14 +24,20 @@ import {LOGO} from '../brand';
 
 type Word = {text: string; start: number; end: number};
 type Timed = {from: Anchor; to?: Anchor};
-type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: number; gold?: number[]; sub?: string} | {type: 'stamp'; text: string; y?: number; tone?: 'gold' | 'white'; badge?: string; /** fully on from its first frame (hook frame 0: no fade-in) */ instant?: boolean} | {type: 'pin'; player: string; text: string; tone?: 'gold' | 'red' | 'white'; dy?: number; z?: number; size?: number} | {type: 'freeze'; label?: string} | {type: 'rewind'} | {type: 'logo'; big?: boolean} | {type: 'grade'} | {type: 'scrim'; opacity?: number} | {type: 'step'; n: number; text: string; y?: number} | {type: 'counter'; steps: Anchor[]; total?: number; y?: number; base?: number} | {type: 'stepCount'; player: string; labels: string[]; y?: number; gatherLabel?: boolean}
+type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: number; gold?: number[]; sub?: string} | {type: 'stamp'; text: string; y?: number; tone?: 'gold' | 'white'; badge?: string; /** fully on from its first frame (hook frame 0: no fade-in) */ instant?: boolean} | {type: 'pin'; player: string; text: string; tone?: 'gold' | 'red' | 'white'; dy?: number; z?: number; size?: number} | {type: 'freeze'; label?: string} | {type: 'rewind'} | {type: 'logo'; big?: boolean; y?: number; width?: number} | {type: 'grade'} | {type: 'scrim'; opacity?: number} | {type: 'step'; n: number; text: string; y?: number} | {type: 'counter'; steps: Anchor[]; total?: number; y?: number; base?: number} | {type: 'stepCount'; player: string; labels: string[]; y?: number; gatherLabel?: boolean}
   /** 2026-11-19 (Spain PnR 2.0): frame dims around one player; small read chip; punch-in / whip on the 3D layer; flash */
   | {type: 'focus'; player: string; r?: number; strength?: number; z?: number} | {type: 'hud'; tag: string; text: string; y?: number}
   /** 2026-11-19 (catch fix): DIAGNOSTIC ONLY, never in a delivered episode: ball phase, owner, play time and a label */
   | {type: 'debugPhase'; label?: string}
   | {type: 'punch'; amount?: number} | {type: 'whip'; amount?: number; dir?: number} | {type: 'flash'; color?: string; strength?: number}
   /** 2026-11-21 (2-3 Zone): small caption chip (ILLUSTRATIVE COVERAGE); WrongTempo red edge tint */
-  | {type: 'micro'; text: string; y?: number} | {type: 'tint'; color?: string; strength?: number});
+  | {type: 'micro'; text: string; y?: number} | {type: 'tint'; color?: string; strength?: number}
+  /** 2026-11-22 (Chicago V3): outcome chip (red TRAIL / blue UNDER / gold), anchored to a screen side and height */
+  | {type: 'chip'; text: string; y?: number; tone?: 'red' | 'blue' | 'gold'; align?: 'left' | 'center' | 'right'; size?: number});
+/** 2026-11-22 (Chicago V3 split screen): a SECOND live 3D view stacked under the shot's own view (same clock, own play,
+ *  remap, camera and world graphics). The shot's view takes the top `ratio` of the frame. Shots without `split` are
+ *  rendered exactly as before. */
+export type Split3 = {play: string; remap: RemapKey[]; camera: CamKeyA[]; ov3?: (Timed & Ov3)[]; hide?: string[]; ratio?: number};
 type CamKeyA = Omit<CamKey3, 'at'> & {at: Anchor};
 export type Shot3 = {
   id: string;
@@ -50,6 +56,7 @@ export type Shot3 = {
   players3d?: 'A' | 'C';
   /** 2026-11-18 (V4): gain on this shot's automatic sfx (0 = none, e.g. a quiet memory echo of the rim done by hand) */
   autoGain?: number;
+  split?: Split3;
 };
 export type Episode3 = {
   id: string;
@@ -232,6 +239,19 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
     return o;
   }) as unknown as LiveOv3[];
   const scr = live(shot.screen);
+  // split screen (2026-11-22): the second view runs on the same local clock
+  const split = shot.split
+    ? (() => {
+        const sp = shot.split;
+        const h1 = Math.round(H * (sp.ratio ?? 0.5));
+        const play2 = ep.plays[sp.play];
+        const rm2 = resolveRemap(sp.remap, play2, toLocal);
+        const pt2 = remapAt(rm2, lt);
+        const cam2 = camera3At(play2, sp.camera.map((k) => ({...k, at: toLocal(k.at)})), lt, pt2);
+        const ov2 = live(sp.ov3) as unknown as LiveOv3[];
+        return {h1, play: play2, pt: pt2, cam: cam2, cam1: cam, ov: ov2, hide: sp.hide};
+      })()
+    : undefined;
   const proj = projector(cam, W, H);
   const freezeOn = scr.some((s) => s.type === 'freeze' || s.type === 'grade');
   const fx = sceneFx(scr as unknown as {type: string; age: number; dur: number; amount?: number; dir?: number}[]);
@@ -240,10 +260,25 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
   return (
     <AbsoluteFill style={{background: '#050A15'}}>
       <AbsoluteFill style={{filter: [freezeOn ? 'saturate(0.72) brightness(0.94) contrast(1.04)' : '', fx.blur > 0.05 ? `blur(${fx.blur.toFixed(2)}px)` : ''].join(' ').trim() || undefined, transform: fx.scale !== 1 || fx.tx !== 0 ? `translateX(${fx.tx.toFixed(1)}px) scale(${fx.scale.toFixed(4)})` : undefined}}>
-        {!qcProbe && (
+        {!qcProbe && !split && (
           <Scene3D play={play} pt={pt} cam={cam} W={W} H={H} hide={shot.hide} logo={logo} env={shot.env ?? ep.env} faces={ep.faces} players3d={shot.players3d ?? ep.players3d}>
             <Overlays3D play={play} pt={pt} items={ov} />
           </Scene3D>
+        )}
+        {!qcProbe && split && (
+          <>
+            <div style={{position: 'absolute', left: 0, top: 0, width: W, height: split.h1, overflow: 'hidden'}}>
+              <Scene3D play={play} pt={pt} cam={split.cam1} W={W} H={split.h1} hide={shot.hide} logo={logo} env={shot.env ?? ep.env} faces={ep.faces} players3d={shot.players3d ?? ep.players3d}>
+                <Overlays3D play={play} pt={pt} items={ov} />
+              </Scene3D>
+            </div>
+            <div style={{position: 'absolute', left: 0, top: split.h1, width: W, height: H - split.h1, overflow: 'hidden'}}>
+              <Scene3D play={split.play} pt={split.pt} cam={split.cam} W={W} H={H - split.h1} hide={split.hide} logo={logo} env={shot.env ?? ep.env} faces={ep.faces} players3d={shot.players3d ?? ep.players3d} instNs="split:">
+                <Overlays3D play={split.play} pt={split.pt} items={split.ov} />
+              </Scene3D>
+            </div>
+            <div style={{position: 'absolute', left: 0, right: 0, top: split.h1 - 3, height: 6, background: 'linear-gradient(90deg, rgba(229,72,58,0.95), #FFC447 50%, rgba(110,168,255,0.95))', boxShadow: '0 0 18px rgba(0,0,0,0.6)'}} />
+          </>
         )}
       </AbsoluteFill>
       {/* cinematic grade: vignette + top/bottom falloff that also protects text */}
@@ -284,7 +319,7 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
           case 'counter':
             return <OfferCounter key={i} steps={s.steps.map((a) => toLocal(a) - (lt - s.age))} total={s.total ?? 3} base={s.base} age={s.age} dur={s.dur} y={s.y} />;
           case 'logo':
-            return <Logo key={i} age={s.age} big={s.big} />;
+            return <Logo key={i} age={s.age} big={s.big} y={s.y} width={s.width} />;
           case 'focus': {
             const p = posAt(play.tracks[s.player], Math.max(0, Math.min(play.duration, pt))) as V2;
             const q = proj([p[0], p[1], s.z ?? 1.1]);
@@ -307,6 +342,24 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
             return (
               <div key={i} style={{position: 'absolute', left: 0, right: 0, top: s.y ?? 330, display: 'flex', justifyContent: 'center', opacity: Math.max(0, o)}}>
                 <div data-qc="stamp" style={{padding: '8px 18px', borderRadius: 8, background: 'rgba(5,10,21,0.62)', border: '1.5px solid rgba(243,180,107,0.7)', color: '#FFE6B8', font: '700 30px Inter, sans-serif', letterSpacing: 3}}>{s.text}</div>
+              </div>
+            );
+          }
+          case 'chip': {
+            const o = Math.max(0, Math.min(1, s.age / 0.18, (s.dur - s.age) / 0.22));
+            const col = s.tone === 'red' ? '#E5483A' : s.tone === 'blue' ? '#6EA8FF' : '#FFC447';
+            const k = 0.92 + 0.08 * Math.min(1, s.age / 0.18);
+            const al = s.align ?? 'left';
+            return (
+              <div key={i} style={{position: 'absolute', left: 110, right: 110, top: s.y ?? 420, display: 'flex', justifyContent: al === 'left' ? 'flex-start' : al === 'right' ? 'flex-end' : 'center', opacity: o}}>
+                <div data-qc="stamp" style={{transform: `scale(${k.toFixed(3)})`, transformOrigin: al === 'left' ? 'left center' : al === 'right' ? 'right center' : 'center', padding: '10px 22px 8px', borderRadius: 10, background: 'rgba(5,10,21,0.78)', borderLeft: `8px solid ${col}`, color: '#FFFFFF', font: `400 ${s.size ?? 58}px Anton, Impact, sans-serif`, letterSpacing: 2, lineHeight: 1.05, boxShadow: '0 6px 22px rgba(0,0,0,0.45)'}}>
+                  {s.text.split('→').map((part, j, arr) => (
+                    <React.Fragment key={j}>
+                      <span style={{color: j === 0 ? '#FFFFFF' : col}}>{part.trim()}</span>
+                      {j < arr.length - 1 && <span style={{color: col, padding: '0 12px'}}>→</span>}
+                    </React.Fragment>
+                  ))}
+                </div>
               </div>
             );
           }

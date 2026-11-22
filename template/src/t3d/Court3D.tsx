@@ -180,12 +180,17 @@ const NetGeo = (() => {
   return new THREE.BufferGeometry().setFromPoints(pts);
 })();
 
-export const Basket: React.FC<{swish?: number}> = ({swish = 0}) => {
+export const Basket: React.FC<{swish?: number; snap?: boolean}> = ({swish = 0, snap = false}) => {
   const [bx, by, bz] = W3([FIBA.basket[0], FIBA.basket[1], FIBA.rimZ]);
   const boardZ = W3([0, FIBA.boardY, 0])[2];
   const boardW = FIBA.boardHalfW * 2;
   const boardH = FIBA.boardZ1 - FIBA.boardZ0;
   const netScale = 1 + 0.12 * Math.sin(swish * Math.PI) * (1 - swish);
+  // V3 net snap (2026-11-22, opt-in play.realism >= 3): the ball drags the net DOWN and narrow as it passes (0-0.25 of the
+  // 0.6 s window), the net then springs back past its rest length and settles (damped 6 Hz); legacy keeps the flare above
+  const sn = snap && swish > 0 ? swish * 0.6 : -1;
+  const netY = sn >= 0 ? 1 + 0.3 * Math.sin(Math.min(1, sn / 0.16) * Math.PI / 2) * (sn < 0.16 ? 1 : Math.exp(-(sn - 0.16) * 5) * Math.cos((sn - 0.16) * 2 * Math.PI * 6) * 0.9) : 1;
+  const netXZ = sn >= 0 ? 1 - 0.18 * Math.sin(Math.min(1, sn / 0.16) * Math.PI / 2) * (sn < 0.16 ? 1 : Math.exp(-(sn - 0.16) * 6)) : netScale;
   return (
     <group>
       {/* glass */}
@@ -235,7 +240,7 @@ export const Basket: React.FC<{swish?: number}> = ({swish = 0}) => {
         <boxGeometry args={[0.05, 0.02, Math.abs(bz - boardZ) - FIBA.rimR]} />
         <meshStandardMaterial color="#E2552A" roughness={0.4} />
       </mesh>
-      <lineSegments geometry={NetGeo} position={[bx, by, bz]} scale={[netScale, 1, netScale]}>
+      <lineSegments geometry={NetGeo} position={[bx, by, bz]} scale={snap ? [netXZ, netY, netXZ] : [netScale, 1, netScale]}>
         <lineBasicMaterial color="#f4f4f4" transparent opacity={0.85} />
       </lineSegments>
     </group>
@@ -250,7 +255,7 @@ export const Basket: React.FC<{swish?: number}> = ({swish = 0}) => {
  *  dark stands from ANY orbit direction, a slightly lifted navy background and a warmer key on faces. */
 export type SceneEnv = 'practice' | 'game' | 'academy' | 'cinema';
 
-export const Court3D: React.FC<{logo?: HTMLImageElement; swish?: number; env?: SceneEnv}> = ({logo, swish, env}) => {
+export const Court3D: React.FC<{logo?: HTMLImageElement; swish?: number; env?: SceneEnv; netSnap?: boolean}> = ({logo, swish, env, netSnap}) => {
   const tex = React.useMemo(() => buildFloor(logo), [logo]);
   const cx = 0;
   const cy = Y0 + SPAN / 2;
@@ -274,7 +279,7 @@ export const Court3D: React.FC<{logo?: HTMLImageElement; swish?: number; env?: S
         <meshStandardMaterial color="#070D1A" roughness={0.9} />
       </mesh>
       <Arena env={env} />
-      <Basket swish={swish} />
+      <Basket swish={swish} snap={netSnap} />
     </group>
   );
 };

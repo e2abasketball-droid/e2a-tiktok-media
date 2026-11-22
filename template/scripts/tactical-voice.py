@@ -19,6 +19,10 @@ import numpy as np
 SR = 44100
 ep_file = sys.argv[1]
 ep = json.load(open(ep_file))
+# 2026-11-22 (Chicago V3 audio guard): an episode that declares audioReuseOnly / disallowTTS reuses locked stems and must
+# never enter the voice pipeline (this script rewrites voice.wav from a take). See scripts/test-audio-lock.mjs.
+if ep.get('audioReuseOnly') or ep.get('disallowTTS'):
+    sys.exit(f"REFUSED: {ep_file} declares audioReuseOnly/disallowTTS: the voice is locked (audioLock), nothing is generated or rebuilt")
 words = json.load(open(os.path.join(os.path.dirname(ep_file), ep['wordsRaw'])))
 norm = lambda s: re.sub(r'[^a-z0-9]', '', s.lower())
 keys = [norm(w['text']) for w in words]

@@ -1,0 +1,8 @@
+pixel regression: bundle 8e418e9 (claude/realism-v2) vs claude/chicago-v3 working tree, Remotion stills (jpg)
+blob-screen-the-screener-v2/f0300.jpg maxdiff 0 pixels_diff 0
+blob-screen-the-screener-v2/f0700.jpg maxdiff 0 pixels_diff 0
+chicago-action-v2/f0300.jpg maxdiff 0 pixels_diff 0
+chicago-action-v2/f0450.jpg maxdiff 0 pixels_diff 0
+chicago-action-v2/f0700.jpg maxdiff 0 pixels_diff 0
+zona-2-3-zone-v2/f0300.jpg maxdiff 0 pixels_diff 0
+zona-2-3-zone-v2/f0700.jpg maxdiff 0 pixels_diff 0

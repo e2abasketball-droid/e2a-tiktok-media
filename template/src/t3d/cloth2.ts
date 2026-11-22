@@ -15,6 +15,7 @@ import type {V3} from '../tactical/geometry.ts';
 import {posAt} from '../tactical/play.ts';
 import type {PlayWithActions} from './rig.ts';
 import {bodyRowAt, jumpHeightAt} from './rig.ts';
+import {panelFactor} from './garment3.ts';
 
 export type Cloth = {sway: V3; twist: number; flutter: number; phase: number};
 export const CLOTH2 = {hz: 1.6, zeta: 0.32, gain: 0.45, drag: 0.0009, lift: 0.0025, maxH: 0.05, maxUp: 0.04, maxDown: 0.02, maxTwist: 0.14, flutter: 0.005, easeUse: 0.85};
@@ -68,14 +69,16 @@ export const clothAt = (play: PlayWithActions, id: string, t: number): Cloth => 
 
 /** the cloth displacement of one garment vertex in PLAY space (the GLSL in SkinnedAthlete does the same):
  *  p, n = skinned position and normal, hem = _E2A_HEM, ease = _E2A_EASE, pelvis = pelvis point (play space) */
-export const clothDisplace = (p: V3, n: V3, hem: number, ease: number, c: Cloth, pelvis: V3): V3 => {
+export const clothDisplace = (p: V3, n: V3, hem: number, ease: number, c: Cloth, pelvis: V3, panel = false): V3 => {
   if (hem <= 0) return p;
   const rx = p[0] - pelvis[0], ry = p[1] - pelvis[1];
   // twist about the vertical axis through the pelvis
   const a = c.twist * hem, ca = Math.cos(a), sa = Math.sin(a);
   let dx = rx * ca - ry * sa - rx, dy = rx * sa + ry * ca - ry;
-  dx += c.sway[0] * hem;
-  dy += c.sway[1] * hem;
+  // garment3 panel (Chicago V3): the hem flares more on the side it swings toward (GLSL twin in SkinnedAthlete)
+  const pf = panel ? panelFactor(rx, ry, c.sway[0], c.sway[1]) : 1;
+  dx += c.sway[0] * hem * pf;
+  dy += c.sway[1] * hem * pf;
   let dz = c.sway[2] * hem;
   // flutter: 6 lobes round the trunk, travelling with the stride phase, along the normal
   const ang = Math.atan2(ry, rx);

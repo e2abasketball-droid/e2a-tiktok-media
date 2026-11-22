@@ -1,0 +1,27 @@
+{
+ "format": {
+  "ok": true,
+  "value": "1080x1920 h264 yuv420p 30.00 fps (avg 30.00), audio aac 48000 Hz, 38.02 s"
+ },
+ "black": {
+  "ok": true,
+  "value": "0 black stretches []"
+ },
+ "frozen_list": [],
+ "frozen": {
+  "ok": true,
+  "value": "0 still stretches >= 0.6 s (planned freezes/holds are expected; listed for review): []"
+ },
+ "audio": {
+  "ok": true,
+  "value": "1 audio stream(s), 2 ch; digital silences > 1.2 s before the outro: []"
+ },
+ "bounce_sfx": {
+  "ok": true,
+  "value": "sfx used: []; autoSfx=False; music: tactical/chicago-v2/music.mp3"
+ },
+ "missing_tex": {
+  "ok": true,
+  "value": "max magenta fraction 0.000 % over 38 sampled frames"
+ }
+}
