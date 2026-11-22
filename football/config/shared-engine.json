@@ -1,0 +1,439 @@
+{
+ "version": "1.0",
+ "created": "2026-11-22",
+ "rule": "Football calls shared components read-only. Category A: direct use with football paths. B: through a football adapter or config (never by editing the basketball file). C: basketball-only, never used by football.",
+ "verify": "python3 football/scripts/fb.py shared verify (blob of each path at its ref must match)",
+ "components": [
+  {
+   "id": "narration.voice-splice",
+   "area": "Narration",
+   "category": "A",
+   "path": "template/scripts/tactical-voice.py",
+   "ref": "b3f0321b5b80e7252f811d0b643d7d8971393aee",
+   "ref_name": "main",
+   "on_main": true,
+   "blob": "a1fffee9168a2f8ae54022f57575ee74d2422c25",
+   "deps": [],
+   "usage": "Builds the narration from ONE approved take (cuts pauses in natural silences, no re-synthesis). Reads/writes paths relative to its cwd: run it with cwd = the FB production dir.",
+   "adapter": "fb.py shared resolve narration.voice-splice; run with cwd=<production>/voice",
+   "risk_to_basketball": "low",
+   "executable": true
+  },
+  {
+   "id": "audio.music-bed",
+   "area": "Audio",
+   "category": "A",
+   "path": "template/scripts/tactical-music-bed.py",
+   "ref": "b3f0321b5b80e7252f811d0b643d7d8971393aee",
+   "ref_name": "main",
+   "on_main": true,
+   "blob": "4b8652400add9f68274a4f0dbf58a9228a378b80",
+   "deps": [],
+   "usage": "Fits a licensed instrumental under the voice (ducking, loudness match). All paths are explicit arguments.",
+   "adapter": null,
+   "risk_to_basketball": "low",
+   "executable": true
+  },
+  {
+   "id": "audio.stems-report",
+   "area": "Audio",
+   "category": "B",
+   "path": "template/scripts/audio-stems.py",
+   "ref": "b3f0321b5b80e7252f811d0b643d7d8971393aee",
+   "ref_name": "main",
+   "on_main": true,
+   "blob": "bb62c869e21f533945a490a62e0dd4a34b987564",
+   "deps": [],
+   "usage": "Stem loudness report. Hard-codes template/public as its media root and reads a Tactical3D timeline: needs a football adapter (phase 2).",
+   "adapter": "football adapter needed (media root + FB timeline)",
+   "risk_to_basketball": "medium",
+   "executable": true
+  },
+  {
+   "id": "audio.music-library",
+   "area": "Audio",
+   "category": "A",
+   "path": "music/library.json",
+   "ref": "b3f0321b5b80e7252f811d0b643d7d8971393aee",
+   "ref_name": "main",
+   "on_main": true,
+   "blob": "ffec24ff80c1a9cc61bacf50b579ed7de4e66e5f",
+   "deps": [
+    {
+     "path": "music/cinematic",
+     "blob": "f985bcb8f9cbed1cd7e56e538aac993776dca184"
+    }
+   ],
+   "usage": "Licensed E2A instrumental library (music/cinematic/*.mp3), read only. Football logs its picks in its own production.json, never in music/history.json.",
+   "adapter": null,
+   "risk_to_basketball": "low",
+   "executable": false
+  },
+  {
+   "id": "qc.video-pro",
+   "area": "Quality Control",
+   "category": "A",
+   "path": "template/scripts/qc-pro.mjs",
+   "ref": "b3f0321b5b80e7252f811d0b643d7d8971393aee",
+   "ref_name": "main",
+   "on_main": true,
+   "blob": "3886231c96f0834cdd1ebdae0862eecc946208a4",
+   "deps": [],
+   "usage": "QC of a finished MP4: format, duration, loudness, black/frozen frames, contact sheet. Writes next to the given file (FB path).",
+   "adapter": null,
+   "risk_to_basketball": "low",
+   "executable": true
+  },
+  {
+   "id": "qc.video-real",
+   "area": "Quality Control",
+   "category": "A",
+   "path": "template/scripts/qc-video.py",
+   "ref": "e014de38e45394115eeee512694c4385fbbacd58",
+   "ref_name": "claude/realism-v3-1",
+   "on_main": false,
+   "blob": "fc584533a0f42e0490b0745479d6d3540808d602",
+   "deps": [],
+   "usage": "QC on the real render (format, −14 LUFS, true peak, transients, cuts). Branch-only: resolved into football/.cache.",
+   "adapter": "resolve from claude/realism-v3-1; episode argument must be an FB episode",
+   "risk_to_basketball": "low",
+   "executable": true
+  },
+  {
+   "id": "qc.bounds",
+   "area": "Quality Control",
+   "category": "B",
+   "path": "template/scripts/qc-bounds.mts",
+   "ref": "b3f0321b5b80e7252f811d0b643d7d8971393aee",
+   "ref_name": "main",
+   "on_main": true,
+   "blob": "528217e3551c56cb160727c9bcf19782b35777d9",
+   "deps": [],
+   "usage": "Safe-area check, but it selects the basketball Tactical3D composition: football needs its own bounds probe for FB compositions (phase 2).",
+   "adapter": "football composition probe",
+   "risk_to_basketball": "medium",
+   "executable": true
+  },
+  {
+   "id": "editing.episode-validator",
+   "area": "Video Editing",
+   "category": "A",
+   "path": "template/scripts/validate-episode.mjs",
+   "ref": "b3f0321b5b80e7252f811d0b643d7d8971393aee",
+   "ref_name": "main",
+   "on_main": true,
+   "blob": "1e6a97a35775d0b42989cbc464bf3afc3f9e662e",
+   "deps": [],
+   "usage": "Validates a Pro-format episode JSON (anchors, timings, retention warnings). Read-only on its argument.",
+   "adapter": null,
+   "risk_to_basketball": "low",
+   "executable": true
+  },
+  {
+   "id": "editing.pro-engine",
+   "area": "Video Editing / Subtitles / Motion Graphics",
+   "category": "B",
+   "path": "template/src/pro/Pro.tsx",
+   "ref": "b3f0321b5b80e7252f811d0b643d7d8971393aee",
+   "ref_name": "main",
+   "on_main": true,
+   "blob": "393e21094bde5f5182ffd4db4e4d9b21ae989cc7",
+   "deps": [
+    {
+     "path": "template/src/pro/subtitles.tsx",
+     "blob": "0ee6d9628392e784117f7a28c600092a897ea396"
+    },
+    {
+     "path": "template/src/pro/camera.tsx",
+     "blob": "967005810eb9f0e63d4a8b383c927a083c8982c4"
+    },
+    {
+     "path": "template/src/pro/graphics.tsx",
+     "blob": "4964d59b38d4b388112a7c08085d6331daac7efb"
+    },
+    {
+     "path": "template/src/pro/fx.tsx",
+     "blob": "aa073379efa762282e52bb82e12a4a7607864c33"
+    }
+   ],
+   "usage": "Pro composition (camera moves, subtitles, graphics, fx). Its render script works inside template/ and reads template/public: football will import these modules from a separate FB Remotion entry with its own public dir (phase 2), without editing them.",
+   "adapter": "FB Remotion entry imports template/src/pro/* read-only",
+   "risk_to_basketball": "medium",
+   "executable": false
+  },
+  {
+   "id": "rendering.pro-script",
+   "area": "Rendering",
+   "category": "B",
+   "path": "template/scripts/render-pro.sh",
+   "ref": "b3f0321b5b80e7252f811d0b643d7d8971393aee",
+   "ref_name": "main",
+   "on_main": true,
+   "blob": "38cac7c3dcd27904b6aafc6c3e34098e95392b3f",
+   "deps": [],
+   "usage": "Render + encode + QC pipeline for Pro. Must run inside template/ (would mix assets): football uses the same steps through its own FB entry.",
+   "adapter": "football render wrapper (phase 2)",
+   "risk_to_basketball": "high",
+   "executable": true
+  },
+  {
+   "id": "rendering.remotion-stack",
+   "area": "Rendering",
+   "category": "A",
+   "path": "template/package-lock.json",
+   "ref": "b3f0321b5b80e7252f811d0b643d7d8971393aee",
+   "ref_name": "main",
+   "on_main": true,
+   "blob": "602993979abd24d735288b99278fee8af8c2eeaf",
+   "deps": [
+    {
+     "path": "template/package.json",
+     "blob": "08dcd784339d96e6fdb29781d2d412bfe6cbb60f"
+    }
+   ],
+   "usage": "Pinned Remotion 4.0.539 + three 0.180 + React 19.1. Football pins the SAME versions (no second engine version).",
+   "adapter": "football package.json pins same versions",
+   "risk_to_basketball": "low",
+   "executable": false
+  },
+  {
+   "id": "trial.variant",
+   "area": "Video Editing",
+   "category": "A",
+   "path": "template/scripts/trial-variant.sh",
+   "ref": "e014de38e45394115eeee512694c4385fbbacd58",
+   "ref_name": "claude/realism-v3-1",
+   "on_main": false,
+   "blob": "ec80f75bafb06cbed57c38df0d77b0cd2f2cd8c8",
+   "deps": [],
+   "usage": "Second, slightly different file for the trial reel (zoom ~3 %, colour, voice EQ), same voice take. Explicit in/out paths.",
+   "adapter": "resolve from claude/realism-v3-1",
+   "risk_to_basketball": "low",
+   "executable": true
+  },
+  {
+   "id": "thumbnails.cover",
+   "area": "Branding",
+   "category": "B",
+   "path": "tools/make_cover.py",
+   "ref": "644682305e2bfcf438b801f3d8cdc1d4147da6b6",
+   "ref_name": "claude/project-thread-9ybhcw",
+   "on_main": false,
+   "blob": "b3ce18a81a58b2fb39b2c77384be51ac3be4a947",
+   "deps": [
+    {
+     "path": "tools/fonts/anton.ttf",
+     "blob": "61411a422ad33ebca47a2a1a1c87caa24480cdc7"
+    }
+   ],
+   "usage": "Cover from a frame of the reel, official palette, 2–5 word title, grid-crop checks. Its default logo is the OLD one: football calls make_cover(..., logo=<2026 logo>) through an adapter.",
+   "adapter": "football/scripts/fb_cover.py (phase 2) passes the 2026 logo",
+   "risk_to_basketball": "low",
+   "executable": true
+  },
+  {
+   "id": "research.pcd",
+   "area": "Video Editing",
+   "category": "A",
+   "path": "tools/pcd.py",
+   "ref": "e014de38e45394115eeee512694c4385fbbacd58",
+   "ref_name": "claude/realism-v3-1",
+   "on_main": false,
+   "blob": "42f9c8b8b903b7374cc7bd33873fcd377f8e7a9e",
+   "deps": [],
+   "usage": "PCD opening sheet (Promise, Curiosity, Disruption) checked before the storyboard.",
+   "adapter": "resolve from claude/realism-v3-1; FB sheets live in the FB production dir",
+   "risk_to_basketball": "low",
+   "executable": true
+  },
+  {
+   "id": "research.commons",
+   "area": "Assets",
+   "category": "A",
+   "path": "template/scripts/fetch-commons.mjs",
+   "ref": "b3f0321b5b80e7252f811d0b643d7d8971393aee",
+   "ref_name": "main",
+   "on_main": true,
+   "blob": "d2a978b66a589a35f43a3e2e9237bbe26f7ed3b9",
+   "deps": [],
+   "usage": "Downloads freely licensed images (PD/CC0/CC BY/CC BY-SA) with credit; explicit output path.",
+   "adapter": null,
+   "risk_to_basketball": "low",
+   "executable": true
+  },
+  {
+   "id": "branding.fonts",
+   "area": "Branding",
+   "category": "A",
+   "path": "template/public/anton.woff2",
+   "ref": "b3f0321b5b80e7252f811d0b643d7d8971393aee",
+   "ref_name": "main",
+   "on_main": true,
+   "blob": "69d48b9af8be985ae9ac4808be7c70a2c833405a",
+   "deps": [
+    {
+     "path": "template/public/inter.woff2",
+     "blob": "d15208de03cd1ad7c5199f0a0ce915fe841e4722"
+    }
+   ],
+   "usage": "Anton + Inter fonts (SIL OFL), read only.",
+   "adapter": null,
+   "risk_to_basketball": "low",
+   "executable": false
+  },
+  {
+   "id": "editing.reference-library",
+   "area": "Video Editing",
+   "category": "A",
+   "path": ".claude/skills/e2a-video-editing-intelligence/SKILL.md",
+   "ref": "b3f0321b5b80e7252f811d0b643d7d8971393aee",
+   "ref_name": "main",
+   "on_main": true,
+   "blob": "428bbe444fb2311950300ce78b8193d4b43fdc46",
+   "deps": [],
+   "usage": "Skill: analyse reference videos and apply verified techniques. Football reads it; football technique cards go under football/, never into editing-library/.",
+   "adapter": null,
+   "risk_to_basketball": "low",
+   "executable": false
+  },
+  {
+   "id": "publishing.metricool-publisher",
+   "area": "Publishing",
+   "category": "B",
+   "path": "tools/tactical_publisher.py",
+   "ref": "b3f0321b5b80e7252f811d0b643d7d8971393aee",
+   "ref_name": "main",
+   "on_main": true,
+   "blob": "02f65b1131fc670012ff3fa5600d7c60f2ee9afd",
+   "deps": [],
+   "usage": "Tactical Studio publisher: hard-wired to the basketball config, slots and delegation. Football will need its own publisher config + delegation; publishing is disabled in phase 1.",
+   "adapter": "own FB publisher config and delegation (later phase, owner approval)",
+   "risk_to_basketball": "high",
+   "executable": true
+  },
+  {
+   "id": "state.studio-sync",
+   "area": "Publishing",
+   "category": "C",
+   "path": "tools/studio_sync.py",
+   "ref": "b3f0321b5b80e7252f811d0b643d7d8971393aee",
+   "ref_name": "main",
+   "on_main": true,
+   "blob": "d00ad31e3b1823bd3ea49c013748b61297898543",
+   "deps": [],
+   "usage": "Basketball studio-state branch sync. Not used by football (future football-state branch).",
+   "adapter": null,
+   "risk_to_basketball": "high",
+   "executable": true
+  },
+  {
+   "id": "bb.tactical3d",
+   "area": "3D",
+   "category": "C",
+   "path": "template/src/t3d/Court3D.tsx",
+   "ref": "b3f0321b5b80e7252f811d0b643d7d8971393aee",
+   "ref_name": "main",
+   "on_main": true,
+   "blob": "32e1d329195c1c38fb0cf6ce0da573bbb6c9750c",
+   "deps": [
+    {
+     "path": "template/src/t3d/rig.ts",
+     "blob": "0915485998af8d89642d29aea6dbbf08d9ab0259"
+    },
+    {
+     "path": "template/src/t3d/Tactical3D.tsx",
+     "blob": "04ee7ae6d2a063990d9371b787a0623f42095b05"
+    }
+   ],
+   "usage": "Basketball court, rig and Tactical3D composition: basketball-only geometry and actions.",
+   "adapter": null,
+   "risk_to_basketball": "high",
+   "executable": false
+  },
+  {
+   "id": "bb.tactical2d",
+   "area": "Motion Graphics",
+   "category": "C",
+   "path": "template/src/tactical/Court.tsx",
+   "ref": "b3f0321b5b80e7252f811d0b643d7d8971393aee",
+   "ref_name": "main",
+   "on_main": true,
+   "blob": "fd97bcfb5a53ea815c9b08c00677eff574fec36a",
+   "deps": [
+    {
+     "path": "template/src/tactical/play.ts",
+     "blob": "5dc657ed099bb8b4d91e300d24e4f324504a21f2"
+    }
+   ],
+   "usage": "Basketball 2D court and play format.",
+   "adapter": null,
+   "risk_to_basketball": "high",
+   "executable": false
+  },
+  {
+   "id": "bb.studio",
+   "area": "Publishing",
+   "category": "C",
+   "path": "tools/tactical_studio.py",
+   "ref": "b3f0321b5b80e7252f811d0b643d7d8971393aee",
+   "ref_name": "main",
+   "on_main": true,
+   "blob": "14d70873cdc785f4daa8fb2502131cb63763dfe5",
+   "deps": [],
+   "usage": "Basketball daily studio (concepts, gates, budget). Football keeps the idea, not the code.",
+   "adapter": null,
+   "risk_to_basketball": "high",
+   "executable": true
+  },
+  {
+   "id": "bb.config",
+   "area": "Publishing",
+   "category": "C",
+   "path": "config/tactical_studio.json",
+   "ref": "b3f0321b5b80e7252f811d0b643d7d8971393aee",
+   "ref_name": "main",
+   "on_main": true,
+   "blob": "c0ae36274671f970cae13f948a1c8b2fc77cd440",
+   "deps": [
+    {
+     "path": "config/delegation.tactical-studio.json",
+     "blob": "0b418054d56be64f1b621f43bec0e94f0923f8f9"
+    }
+   ],
+   "usage": "Basketball studio config and delegation. Never read as football config.",
+   "adapter": null,
+   "risk_to_basketball": "high",
+   "executable": false
+  }
+ ],
+ "services": [
+  {
+   "id": "svc.elevenlabs",
+   "area": "Narration",
+   "category": "A",
+   "what": "ElevenLabs connector, voice Deuce (DaueUomjhh8LFuAV8aGj), Creator plan commercial licence",
+   "rule": "one take per video, written approval per video, never regenerate"
+  },
+  {
+   "id": "svc.metricool",
+   "area": "Publishing",
+   "category": "B",
+   "what": "Metricool brand 7681319 (includes the E2A Sports YouTube channel)",
+   "rule": "disabled for football in phase 1; own queue, catalogue and delegation before any write"
+  },
+  {
+   "id": "svc.blender",
+   "area": "3D",
+   "category": "B",
+   "what": "Blender/MPFB tooling (tools/blender/* on branches claude/e2a-3d-next, claude/realism-v3-1); bpy via pip venv; no Blender binary in the container",
+   "rule": "body/garment pipeline reusable; football kit and motions are new (phase 2)"
+  },
+  {
+   "id": "svc.remotion-skills",
+   "area": "Rendering",
+   "category": "A",
+   "what": "Claude Code Remotion skills (remotion:*)",
+   "rule": "read-only guidance"
+  }
+ ]
+}

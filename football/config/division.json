@@ -1,0 +1,28 @@
+{
+ "division": "E2A Football",
+ "sport": "football",
+ "id_prefix": "FB",
+ "other_divisions": {"basketball": {"label_prefix": "BB", "note": "Basketball keeps its existing ids (e.g. E2A-TACTICAL-{date}-V{n}); BB- is only the label football uses to refer to it. Renaming basketball ids needs owner approval."}},
+ "phase": {"current": 1, "name": "Arquitectura, aislamiento y agente", "approved_by_owner": "2026-11-22T20:52Z", "next_requires_approval": true},
+ "timezone": "Australia/Sydney",
+ "ids": {
+  "production": "FB-{yyyymmdd}-{slug}",
+  "content": "FB-TACTICAL-{yyyymmdd}-V{n:02d}",
+  "play": "FB-PLAY-{slug}",
+  "concept": "FB-C{nn}",
+  "composition_prefix": "FB",
+  "regex": {"production": "^FB-[0-9]{8}-[a-z0-9]+(-[a-z0-9]+)*$", "content": "^FB-TACTICAL-[0-9]{8}-V[0-9]{2}$", "play": "^FB-PLAY-[a-z0-9]+(-[a-z0-9]+)*$", "concept": "^FB-C[0-9]{2}$"}
+ },
+ "paths": {
+  "repo_root": "football",
+  "agent": ".claude/agents/e2a-football-director.md",
+  "productions_root": "/mnt/project-files/football/productions",
+  "deliveries_root": "/mnt/project-files/football",
+  "production_subdirs": ["script", "voice", "scenes", "renders", "thumbnails", "qa", "analytics"],
+  "cache": "football/.cache"
+ },
+ "write_allow": ["football/", ".claude/agents/e2a-football-director.md", "/mnt/project-files/football/"],
+ "write_deny": ["template/", "tools/", "config/", "produccion/", "music/", "videos/", "editing-library/", "references/", "studio-state/", "assets/", "test/", ".claude/skills/", "/mnt/project-files/tactical-studio/", "/mnt/project-files/elevator-screen-pilot/", "/mnt/project-files/reels-v2/", "/mnt/project-files/film-room/"],
+ "protected_branches": ["main", "tactical-media", "studio-state"],
+ "video": {"width": 1080, "height": 1920, "fps": 30, "vcodec": "h264", "acodec": "aac", "lufs_target": -14.0, "true_peak_max": -1.0, "duration_s": {"min": 30, "max": 45}, "versions": ["main", "trial"]}
+}

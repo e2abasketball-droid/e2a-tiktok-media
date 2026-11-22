@@ -1,0 +1,15 @@
+{
+ "note": "Football concept catalogue (FB-Cnn). status: needs_spec = idea only; spec = play file exists; validated = checker + review passed.",
+ "concepts": [
+  {"id": "FB-C01", "name": "Third-man run", "family": "attack", "status": "spec", "play": "plays/FB-PLAY-third-man-run.json", "hook": "The pass that beats a press is the one nobody watches."},
+  {"id": "FB-C02", "name": "Pass between the lines", "family": "attack", "status": "needs_spec"},
+  {"id": "FB-C03", "name": "High press trigger (back pass)", "family": "defence", "status": "needs_spec"},
+  {"id": "FB-C04", "name": "Holding a high defensive line", "family": "defence", "status": "needs_spec"},
+  {"id": "FB-C05", "name": "Overload to isolate (2v1 on the wing)", "family": "attack", "status": "needs_spec"},
+  {"id": "FB-C06", "name": "Run in behind (blind-side)", "family": "attack", "status": "needs_spec"},
+  {"id": "FB-C07", "name": "Occupying the half-spaces", "family": "attack", "status": "needs_spec"},
+  {"id": "FB-C08", "name": "Counter-press after losing the ball", "family": "transition", "status": "needs_spec"},
+  {"id": "FB-C09", "name": "Fast break: three lanes", "family": "transition", "status": "needs_spec"},
+  {"id": "FB-C10", "name": "Rest defence shape", "family": "transition", "status": "needs_spec"}
+ ]
+}

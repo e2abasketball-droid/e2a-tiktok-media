@@ -1,0 +1,34 @@
+{
+ "id": "FB-PLAY-third-man-run",
+ "version": 1,
+ "title": "Third-man run beats the press",
+ "concept": "FB-C01",
+ "fictional": true,
+ "note": "Reference data for checker tests and the phase-2 engine. Fictional teams; not a real match.",
+ "pitch": {"length": 105, "width": 68},
+ "duration": 6.0,
+ "teams": {"attack": {"name": "E2A Navy", "formation": "4-3-3", "colour": "#0B1C3D"}, "defence": {"name": "White XI", "formation": "4-4-2", "colour": "#FFFFFF"}},
+ "players": [
+  {"id": "A6", "team": "attack", "role": "DM", "number": 6, "track": [[0, -22, 0], [6, -20, 2]]},
+  {"id": "A9", "team": "attack", "role": "ST", "number": 9, "track": [[0, 6, 0], [1.2, -2, 0], [6, -1, -1]]},
+  {"id": "A8", "team": "attack", "role": "RCM", "number": 8, "track": [[0, -12, -12], [2.0, -6, -8], [3.4, 8, -4], [6, 24, -2]]},
+  {"id": "D6", "team": "defence", "role": "RCM", "number": 6, "track": [[0, -14, -4], [1.2, -18, -2], [6, -17, -2]]},
+  {"id": "D4", "team": "defence", "role": "LCB", "number": 4, "track": [[0, 14, -6], [1.6, 9, -3], [6, 14, -3]]},
+  {"id": "D5", "team": "defence", "role": "RCB", "number": 5, "track": [[0, 15, 6], [6, 18, 2]]},
+  {"id": "D1", "team": "defence", "role": "GK", "number": 1, "track": [[0, 50, 0], [6, 46, 0]]}
+ ],
+ "ball": {"events": [
+  {"t": 0.0, "type": "hold", "by": "A6"},
+  {"t": 0.6, "type": "pass", "by": "A6", "to": "A9", "height": "ground", "speed": 16},
+  {"t": 1.6, "type": "pass", "by": "A9", "to": "A8", "height": "ground", "speed": 12},
+  {"t": 3.4, "type": "dribble", "by": "A8", "speed": 7},
+  {"t": 6.0, "type": "hold", "by": "A8"}
+ ]},
+ "marks": [
+  {"t0": 0.6, "t1": 1.6, "kind": "passLine"},
+  {"t0": 1.2, "t1": 2.0, "kind": "highlight"},
+  {"t0": 1.6, "t1": 3.4, "kind": "arrow"},
+  {"t0": 3.4, "t1": 4.2, "kind": "freeze"},
+  {"t0": 0.0, "t1": 6.0, "kind": "defLine"}
+ ]
+}

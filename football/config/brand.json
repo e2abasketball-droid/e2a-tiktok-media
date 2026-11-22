@@ -1,0 +1,13 @@
+{
+ "palette": {"navy": "#0B1C3D", "gold": "#C9A24D", "gold_deep": "#A9842F", "white": "#FFFFFF",
+  "usage": "navy = main/backgrounds; gold = accents on navy; gold_deep = gold on white; white = text on navy"},
+ "note_palette": "Official E2A palette. The basketball engine theme (template/src/theme.ts: #081428/#E2B33C) is NOT used by football.",
+ "logo": {"white": "football/assets/brand/e2a_logo_2026_white.png", "navy": "football/assets/brand/e2a_logo_2026_navy.png",
+  "source": "/mnt/project-files/brand/ (owner rule 2026-11-19: new 2026 logo everywhere)", "old_logo_forbidden": "e2a_logo_white.png / E2A-Logo-White.png"},
+ "fonts": {"display": "Anton (SIL OFL)", "body": "Inter (SIL OFL)", "note": "font files are read from the shared engine, not copied"},
+ "voice": {"provider": "ElevenLabs", "name": "Deuce", "voice_id": "DaueUomjhh8LFuAV8aGj", "language": "en",
+  "rule": "one approved take per video; never regenerate it; the trial version reuses the same take", "licence_ref": "config/asset_licences.json (basketball file, read only) — football records its own entry in football/config/asset_licences.json before first use"},
+ "audio_rules": {"ball_bounce_sfx": false, "sfx_default": "none", "music": "under the voice (ducked), from the licensed E2A library", "lufs": -14},
+ "language": {"owner": "es", "content": "en-AU/UK"},
+ "content_rules": ["fictional players and teams only", "no club crests, kits or trademarks", "no copies of third-party footage", "no claims of partnerships with clubs", "no AI label unless required (owner decision 2026-11-13, re-evaluate for realistic people)"]
+}

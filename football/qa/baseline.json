@@ -1,0 +1,12 @@
+{
+ "taken_at": "2026-11-22T20:58Z",
+ "repo": "e2abasketball-droid/e2a-tiktok-media",
+ "base_branch": "main",
+ "base_commit": "b3f0321b5b80e7252f811d0b643d7d8971393aee",
+ "base_tree": "7ff806e677d725668a51e2977671e1f2517a5ad4",
+ "tracked_files_at_base": 292,
+ "working_tree_clean_at_base": true,
+ "basketball_tests_at_base": "python3 -m unittest discover -s tools/tests: 103 tests OK",
+ "allowed_new_paths": ["football/", ".claude/agents/e2a-football-director.md"],
+ "scheduled_tasks_at_base": "5 enabled (Knowledge Hub sync, weekly Instagram, CRM sync, email follow-up, partnership research); all basketball video tasks (TACTICAL STUDIO x4, TACTICAL CHECK, TRIAL REELS x2, VIDEO REFERENCES) disabled since 2026-11-18. Read with list_triggers by the session; not stored in git."
+}

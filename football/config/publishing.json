@@ -1,0 +1,14 @@
+{
+ "mode": "disabled",
+ "why": "Phase 1: no real publishing. Owner approval required before any change (2026-11-22).",
+ "allowed_modes": ["disabled", "shadow", "direct_delegated"],
+ "networks": {
+  "youtube": {"enabled": false, "channel": "E2A Sports (existing channel, shared with basketball)", "catalogue": "FB", "queue": "football", "playlist": "TBD by owner", "note": "own catalogue, scripts, metrics, publishing config and editorial calendar; never mixed with basketball queues or logs"},
+  "instagram": {"enabled": false, "prepared": true, "note": "owner decision 2026-11-22: do not publish football on existing accounts; do not create accounts"},
+  "tiktok": {"enabled": false, "prepared": true, "note": "same as instagram"}
+ },
+ "metricool": {"brand_id": "7681319", "writes_allowed": false, "reads_allowed": "only when the owner asks",
+  "rule": "do not alter connections, calendars or automations; football never calls createScheduledPost, updateScheduledPost or review tools while mode is disabled"},
+ "delegation": {"file": null, "note": "football will need its own delegation file (football/config/delegation.json) approved by the owner; it never uses config/delegation.tactical-studio.json"},
+ "state": {"queue_file": "/mnt/project-files/football/queue.json", "log_file": "/mnt/project-files/football/publications.jsonl", "branches_future": ["football-media", "football-state"]}
+}
