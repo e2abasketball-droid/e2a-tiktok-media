@@ -1,0 +1,35 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "e2a/football/fb-play.schema.json",
+ "title": "E2A Football play (FB-PLAY)",
+ "description": "Data that MOVES players and the ball on a football pitch. Units: metres and seconds. Origin at the centre spot, the attacking team attacks towards +x. Checked by football/scripts/fb.py check-play (the checker does not need a JSON-Schema library).",
+ "type": "object",
+ "required": ["id", "version", "title", "pitch", "duration", "teams", "players", "ball"],
+ "properties": {
+  "id": {"type": "string", "pattern": "^FB-PLAY-[a-z0-9]+(-[a-z0-9]+)*$"},
+  "version": {"type": "integer", "minimum": 1},
+  "title": {"type": "string"},
+  "concept": {"type": "string", "pattern": "^FB-C[0-9]{2}$"},
+  "fictional": {"const": true, "description": "players and teams are fictional"},
+  "pitch": {"type": "object", "properties": {"length": {"type": "number"}, "width": {"type": "number"}}},
+  "duration": {"type": "number", "exclusiveMinimum": 0},
+  "teams": {"type": "object", "required": ["attack", "defence"],
+   "properties": {"attack": {"$ref": "#/$defs/team"}, "defence": {"$ref": "#/$defs/team"}}},
+  "players": {"type": "array", "minItems": 2, "maxItems": 22, "items": {"$ref": "#/$defs/player"}},
+  "ball": {"type": "object", "required": ["events"],
+   "properties": {"events": {"type": "array", "items": {"$ref": "#/$defs/ballEvent"}}}},
+  "marks": {"type": "array", "description": "graphics synced to time: arrows, pass lines, zones, defensive lines, freezes", "items": {"$ref": "#/$defs/mark"}},
+  "checks": {"type": "array", "description": "tactical claims the checker verifies (e.g. onside at a pass)", "items": {"type": "object"}}
+ },
+ "$defs": {
+  "team": {"type": "object", "required": ["name", "formation", "colour"], "properties": {"name": {"type": "string"}, "formation": {"type": "string"}, "colour": {"type": "string"}}},
+  "player": {"type": "object", "required": ["id", "team", "role", "track"],
+   "properties": {"id": {"type": "string"}, "team": {"enum": ["attack", "defence"]}, "role": {"type": "string"}, "number": {"type": "integer"},
+    "track": {"type": "array", "minItems": 1, "description": "keyframes [t, x, y] in seconds and metres", "items": {"type": "array", "minItems": 3, "maxItems": 3}}}},
+  "ballEvent": {"type": "object", "required": ["t", "type"],
+   "properties": {"t": {"type": "number"}, "type": {"enum": ["hold", "dribble", "pass", "cross", "through", "shot", "clear", "out"]}, "by": {"type": "string"}, "to": {"type": "string"},
+    "height": {"enum": ["ground", "low", "lofted"]}, "speed": {"type": "number", "description": "m/s"}}},
+  "mark": {"type": "object", "required": ["t0", "t1", "kind"],
+   "properties": {"t0": {"type": "number"}, "t1": {"type": "number"}, "kind": {"enum": ["arrow", "passLine", "zone", "defLine", "highlight", "freeze", "label"]}}}
+ }
+}
