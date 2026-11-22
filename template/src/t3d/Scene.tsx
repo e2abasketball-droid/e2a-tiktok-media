@@ -21,6 +21,9 @@ import {bonesFromPose, getClip, meshScale, skelPoseAt} from './skelclip.ts';
 import {SkinnedAthlete, useGlbs} from './SkinnedAthlete';
 import {KITS} from './Athlete';
 import {PLAYER3D, describePlan, planPlayers3d, playWithPlan} from './player3d.ts';
+import {PLAYER3D_V3, isV3} from './realism-v3/index.ts';
+import type {AthleteRenderer} from './realism-v3/index.ts';
+import {bonesV3, weightShift} from './realism-v3/athleteV3.ts';
 
 /** render log (once per tab and play): which character / animation each player uses and why */
 const logged = new Set<string>();
@@ -174,6 +177,8 @@ export type SceneProps = {
   players3d?: 'A' | 'C';
   /** 2026-11-22 (Chicago V3 split screen): instance namespace so the same player can live in two canvases at once */
   instNs?: string;
+  /** 2026-11-22 Realism V3: 'legacy' (default) or 'v3' (AthleteV3, realism-v3/); only the deformable players change */
+  athleteRenderer?: AthleteRenderer;
 };
 
 /** expression keys in PLAY time (so freezes and rewinds carry the face with the body) */
@@ -208,7 +213,7 @@ const autoBlink = (i: number, t: number) => {
   return ph < 0.13 ? Math.sin((Math.PI * ph) / 0.13) : 0;
 };
 
-export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], children, logo, env, faces, players3d, instNs}) => {
+export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], children, logo, env, faces, players3d, instNs, athleteRenderer}) => {
   const f = sample(play, pt);
   const ball = f.ball;
   // eyes first, head after (2026-11-17 V2): heads turn toward where the ball was 0.2 s ago, the eyes (faceOf) to where it is
@@ -254,8 +259,9 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
   // Realism V2 (play.realism >= 2): v2 apparel meshes + cloth2 secondary motion; every other play keeps e2a-player-v1
   const rv2 = realismV2(play);
   const rv3 = realismV3(play);
-  const offGlb = rv2 ? PLAYER3D.off.glbV2 : PLAYER3D.off.glb;
-  const defGlb = rv2 ? PLAYER3D.def.glbV2 : PLAYER3D.def.glb;
+  const av3 = isV3(athleteRenderer);
+  const offGlb = av3 ? PLAYER3D_V3.off.glb : rv2 ? PLAYER3D.off.glbV2 : PLAYER3D.off.glb;
+  const defGlb = av3 ? PLAYER3D_V3.def.glb : rv2 ? PLAYER3D.def.glbV2 : PLAYER3D.def.glb;
   const glbs = useGlbs(anyC ? [offGlb, defGlb, ...labGlbs] : labGlbs);
   // the canvas only renders on frame changes (Remotion ThreeCanvas): mount it once the meshes are loaded (or failed)
   const glbWanted = anyC ? [offGlb, defGlb, ...labGlbs] : labGlbs;
@@ -285,7 +291,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
         const spec = skel?.[p.id];
         const variant = p.team === 'X' ? 'def' : 'off';
         const pkg = PLAYER3D[variant];
-        const pkgGlb = rv2 ? pkg.glbV2 : pkg.glb;
+        const pkgGlb = av3 ? PLAYER3D_V3[variant].glb : rv2 ? pkg.glbV2 : pkg.glb;
         const glbSrc = spec?.glb ?? pkgGlb;
         const cloth = rv2 && !spec?.glb ? clothAt(play, p.id, pt) : undefined;
         const glb = glbs[glbSrc]?.scene ?? null;
@@ -303,6 +309,19 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
                 <Athlete pose={sp.pose} team={p.team} num={num} skin={skin} />
               )}
               <ContactShadows pose={sp.pose} />
+            </React.Fragment>
+          );
+        }
+        if (av3 && pp?.look === 'C' && glb) {
+          // Realism V3: same engine pose (rig.ts), V3 bones + hands + correctives (athleteV3.ts), V3 apparel / cloth
+          const rig3 = PLAYER3D_V3[variant].rig;
+          const pose = poseAt(play, p.id, pt, {holder: ball.holder, pos: ball.pos, lag: ballLag}, RIM);
+          const sc = meshScale(rig3, pose);
+          const fr = bonesV3(rig3, pose, sc, {pos: ball.pos, held: ball.holder === p.id}, weightShift(play, p.id, pt));
+          return (
+            <React.Fragment key={p.id}>
+              <SkinnedAthlete scene={glb} clipBones={rig3.bones} bones={fr.bones} hips={fr.hips} inst={`${instNs ?? ''}v3:${p.id}`} scale={sc} skin={skin} num={num} kit={KITS[p.team]} look={env === 'academy' || env === 'cinema' ? 'academy' : undefined} cloth={clothAt(play, p.id, pt)} v3 morph={fr.morph} />
+              <ContactShadows pose={pose} />
             </React.Fragment>
           );
         }

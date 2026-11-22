@@ -4,6 +4,8 @@
 // motion of v2 meshes. Any play; legacy plays are measured with their own (v1) meshes.
 //   npx tsx scripts/qc-realism.mts tactical/plays/<id>.json [--legacy] [--range t0:t1] [--json out.json] [--no-cloth]
 //     --legacy   drop play.realism (the A/B baseline: same play, engine without the Realism V2 module, v1 meshes)
+//     --v3       (Realism V3, 2026-11-22) measure the athleteRenderer 'v3' meshes: e2a_player_*_v3.glb, bonesV3 (27 bones,
+//                head fix, finger grip) and the corrective morph targets applied before skinning, v3 shorts cloth attributes
 // Gates (thresholds are CALIBRATION STARTING POINTS from the brief, not universal truths; every value is reported):
 //   foot_plant      planted sole (mesh heel + ball of the foot) horizontal drift over each plant window: WARN > 2 cm,
 //                   FAIL > 5 cm; planted sole below the floor (< -1 cm) or floating (> 4 cm) counted; pivots (yaw > 20°)
@@ -39,10 +41,13 @@ import type {ClipBone, Q} from '../src/t3d/skelclip.ts';
 import {PLAYER3D, planPlayers3d} from '../src/t3d/player3d.ts';
 import {clothAt, clothDisplace} from '../src/t3d/cloth2.ts';
 import {garment3Shorts} from '../src/t3d/garment3.ts';
+import {PLAYER3D_V3} from '../src/t3d/realism-v3/index.ts';
+import {bonesV3, weightShift} from '../src/t3d/realism-v3/athleteV3.ts';
 
 const args = process.argv.slice(2);
 const opt = (k: string) => (args.includes(k) ? args[args.indexOf(k) + 1] : undefined);
 const legacy = args.includes('--legacy');
+const V3R = args.includes('--v3');
 const noCloth = args.includes('--no-cloth');
 const jsonOut = opt('--json');
 const range = opt('--range')?.split(':').map(Number);
@@ -62,7 +67,7 @@ const segDist = (p: V3, a: V3, b: V3) => {
 };
 
 // ---------------------------------------------------------------- GLB (node: fs + manual parse)
-type Mesh = {P: Float32Array; N: Float32Array; J: Uint16Array | Uint8Array; W: Float32Array; n: number; idx: Uint32Array; hem?: Float32Array; ease?: Float32Array; uv?: Float32Array};
+type Mesh = {P: Float32Array; N: Float32Array; J: Uint16Array | Uint8Array; W: Float32Array; n: number; idx: Uint32Array; hem?: Float32Array; ease?: Float32Array; uv?: Float32Array; morph?: Record<string, Float32Array>};
 const glbCache = new Map<string, Record<string, Mesh>>();
 const loadGlb = (file: string) => {
   const hit = glbCache.get(file);
@@ -71,9 +76,26 @@ const loadGlb = (file: string) => {
   const jl = b.readUInt32LE(12);
   const J = JSON.parse(b.subarray(20, 20 + jl).toString());
   const bin0 = 20 + jl + 8;
-  const acc = (i: number) => {
-    const a = J.accessors[i], bv = J.bufferViews[a.bufferView];
+  const raw = (bvi: number, byteOff: number, count: number, ct: number, n: number) => {
+    const bv = J.bufferViews[bvi];
+    const off = bin0 + (bv.byteOffset ?? 0) + byteOff;
+    const buf = b.buffer.slice(b.byteOffset + off, b.byteOffset + off + count * n * ({5126: 4, 5123: 2, 5121: 1, 5125: 4} as Record<number, number>)[ct]);
+    return ct === 5126 ? new Float32Array(buf) : ct === 5123 ? new Uint16Array(buf) : ct === 5121 ? new Uint8Array(buf) : new Uint32Array(buf);
+  };
+  const acc = (i: number): Float32Array | Uint16Array | Uint8Array | Uint32Array => {
+    const a = J.accessors[i];
     const n = ({SCALAR: 1, VEC2: 2, VEC3: 3, VEC4: 4} as Record<string, number>)[a.type];
+    if (a.bufferView === undefined) {
+      // sparse accessor (morph targets): zeros + the listed values
+      const out = new Float32Array(a.count * n);
+      if (a.sparse) {
+        const ix = raw(a.sparse.indices.bufferView, a.sparse.indices.byteOffset ?? 0, a.sparse.count, a.sparse.indices.componentType, 1);
+        const vs = raw(a.sparse.values.bufferView, a.sparse.values.byteOffset ?? 0, a.sparse.count, a.componentType, n);
+        for (let k = 0; k < a.sparse.count; k++) for (let c = 0; c < n; c++) out[ix[k] * n + c] = vs[k * n + c];
+      }
+      return out;
+    }
+    const bv = J.bufferViews[a.bufferView];
     const off = bin0 + (bv.byteOffset ?? 0) + (a.byteOffset ?? 0);
     const buf = b.buffer.slice(b.byteOffset + off, b.byteOffset + off + a.count * n * ({5126: 4, 5123: 2, 5121: 1, 5125: 4} as Record<number, number>)[a.componentType]);
     return a.componentType === 5126 ? new Float32Array(buf) : a.componentType === 5123 ? new Uint16Array(buf) : a.componentType === 5121 ? new Uint8Array(buf) : new Uint32Array(buf);
@@ -88,11 +110,14 @@ const loadGlb = (file: string) => {
       H: p.attributes._E2A_HEM !== undefined ? (acc(p.attributes._E2A_HEM) as Float32Array) : undefined,
       E: p.attributes._E2A_EASE !== undefined ? (acc(p.attributes._E2A_EASE) as Float32Array) : undefined,
       U: p.attributes.TEXCOORD_0 !== undefined ? (acc(p.attributes.TEXCOORD_0) as Float32Array) : undefined,
+      T: ((p as {targets?: {POSITION: number}[]}).targets ?? []).map((t) => acc(t.POSITION) as Float32Array),
     }));
+    const tnames: string[] = m.extras?.targetNames ?? [];
     const n = parts.reduce((s: number, p: {P: Float32Array}) => s + p.P.length / 3, 0);
     const P = new Float32Array(n * 3), N = new Float32Array(n * 3), Jx = new Uint16Array(n * 4), W = new Float32Array(n * 4);
     const hem = parts[0].H ? new Float32Array(n) : undefined, ease = parts[0].E ? new Float32Array(n) : undefined, uv = parts[0].U ? new Float32Array(n * 2) : undefined;
     const idx: number[] = [];
+    const morph: Record<string, Float32Array> | undefined = tnames.length ? Object.fromEntries(tnames.map((nm) => [nm, new Float32Array(n * 3)])) : undefined;
     let o = 0;
     for (const p of parts) {
       const k = p.P.length / 3;
@@ -107,11 +132,15 @@ const loadGlb = (file: string) => {
         if (hem && p.H) hem[o + i] = p.H[i];
         if (ease && p.E) ease[o + i] = p.E[i];
         if (uv && p.U) { uv[(o + i) * 2] = p.U[i * 2]; uv[(o + i) * 2 + 1] = p.U[i * 2 + 1]; }
+        if (morph) tnames.forEach((nm, ti) => {
+          const d = p.T[ti];
+          if (d) { morph[nm][(o + i) * 3] = d[i * 3]; morph[nm][(o + i) * 3 + 1] = -d[i * 3 + 2]; morph[nm][(o + i) * 3 + 2] = d[i * 3 + 1]; }
+        });
       }
       for (const v of p.I) idx.push(v + o);
       o += k;
     }
-    out[m.name] = {P, N, J: Jx, W, n, idx: new Uint32Array(idx), hem, ease, uv};
+    out[m.name] = {P, N, J: Jx, W, n, idx: new Uint32Array(idx), hem, ease, uv, morph};
   }
   // joint order of the skin = node names
   (out as unknown as {__joints: string[]}).__joints = J.skins[0].joints.map((i: number) => J.nodes[i].name);
@@ -161,11 +190,12 @@ const runPlay = (file: string): {id: string; gates: Gate[]; stats: Record<string
   const gates: Gate[] = [];
   const meshOf = (id: string) => {
     const v = play.players.find((p) => p.id === id)!.team === 'X' ? 'def' : 'off';
+    if (V3R) return {rig: PLAYER3D_V3[v].rig as unknown as NonNullable<typeof PLAYER3D.off.rig>, glb: loadGlb(`public/${PLAYER3D_V3[v].glb}`)};
     const pkg = PLAYER3D[v];
     return {rig: pkg.rig!, glb: loadGlb(`public/${rv2 ? pkg.glbV2 : pkg.glb}`)};
   };
   // per frame, per player: engine pose + mesh joints (cached by time key)
-  type St = {pose: Pose; rot: Record<string, Q>; hips: V3; s: number; J: Record<string, V3>; desc: ClipBone[]};
+  type St = {pose: Pose; rot: Record<string, Q>; hips: V3; s: number; J: Record<string, V3>; desc: ClipBone[]; morph?: Record<string, number>};
   const cache = new Map<string, St>();
   const stateAt = (id: string, t: number): St => {
     const k = `${id}|${t.toFixed(5)}`;
@@ -176,8 +206,8 @@ const runPlay = (file: string): {id: string; gates: Gate[]; stats: Record<string
     const pose = poseAt(play, id, t, {holder: b.holder, pos: b.pos, lag}, RIM);
     const {rig} = meshOf(id);
     const s = meshScale(rig, pose);
-    const r = bonesFromPose(rig, pose, s);
-    const st = {pose, rot: r.bones, hips: r.hips, s, J: fk(rig.bones, r.bones, r.hips, s), desc: rig.bones};
+    const r: {bones: Record<string, Q>; hips: V3; morph?: Record<string, number>} = V3R ? bonesV3(rig as never, pose, s, {pos: b.pos, held: b.holder === id}, weightShift(play, id, t)) : bonesFromPose(rig, pose, s);
+    const st = {pose, rot: r.bones, hips: r.hips, s, J: fk(rig.bones, r.bones, r.hips, s), desc: rig.bones, morph: r.morph};
     if (cache.size > 60000) cache.clear();
     cache.set(k, st);
     return st;
@@ -469,6 +499,10 @@ const runPlay = (file: string): {id: string; gates: Gate[]; stats: Record<string
       for (const nm of joints) dq[nm] = qmul(st.rot[nm], qconj(rest[nm].R));
       for (let v = 0; v < m.n; v++) {
         const p: V3 = [m.P[v * 3], m.P[v * 3 + 1], m.P[v * 3 + 2]];
+        if (m.morph && st.morph && !process.env.QC_NOMORPH) for (const [nm, w] of Object.entries(st.morph)) {
+          const d = m.morph[nm];
+          if (d && w > 0) { p[0] += w * d[v * 3]; p[1] += w * d[v * 3 + 1]; p[2] += w * d[v * 3 + 2]; }
+        }
         const n: V3 = [m.N[v * 3], m.N[v * 3 + 1], m.N[v * 3 + 2]];
         let x = 0, y = 0, z = 0, nx = 0, ny = 0, nz = 0;
         for (let c = 0; c < 4; c++) {
@@ -522,9 +556,9 @@ const runPlay = (file: string): {id: string; gates: Gate[]; stats: Record<string
       const rest = Object.fromEntries(rig.bones.map((b) => [b.name, b]));
       const body = glb.E2A_Body, jer = glb.E2A_Jersey;
       // Chicago V3 (play.realism >= 3): the shorts the renderer draws = garment3-corrected shorts (tuck + loose openings)
-      const g3 = rv3 ? garment3Shorts({P: jer.P, N: jer.N}, {P: glb.E2A_Shorts.P, N: glb.E2A_Shorts.N, J: glb.E2A_Shorts.J, W: glb.E2A_Shorts.W}, Math.max(0, joints.indexOf('hips')), 2) : undefined;
+      const g3 = rv3 && !V3R ? garment3Shorts({P: jer.P, N: jer.N}, {P: glb.E2A_Shorts.P, N: glb.E2A_Shorts.N, J: glb.E2A_Shorts.J, W: glb.E2A_Shorts.W}, Math.max(0, joints.indexOf('hips')), 2) : undefined;
       const sho: Mesh = g3 ? {...glb.E2A_Shorts, P: g3.P, J: g3.J, W: g3.W, hem: g3.hem, ease: g3.ease} : glb.E2A_Shorts;
-      const vkey = rv3 ? 'v3' : rv2 ? 'v2' : 'v1';
+      const vkey = V3R ? 'a3' : rv3 ? 'v3' : rv2 ? 'v2' : 'v1';
       const armBones = new Set(['upperarm.L', 'upperarm.R', 'forearm.L', 'forearm.R'].map((n) => joints.indexOf(n)));
       const pBJ = pairs(`${vkey}|${id[0]}|bodyJ`, body, jer, 0.04, true);
       const pBS = pairs(`${vkey}|${id[0]}|bodyS`, body, sho, 0.04, true);
@@ -558,6 +592,12 @@ const runPlay = (file: string): {id: string; gates: Gate[]; stats: Record<string
             const q = clothDisplace([Jm.P[v * 3], Jm.P[v * 3 + 1], Jm.P[v * 3 + 2]], [Jm.N[v * 3], Jm.N[v * 3 + 1], Jm.N[v * 3 + 2]], h, (jer.ease?.[v] ?? 0) * st.s, c, st.hips, rv3);
             Jm.P[v * 3] = q[0]; Jm.P[v * 3 + 1] = q[1]; Jm.P[v * 3 + 2] = q[2];
           }
+          if (V3R && sho.hem && !process.env.QC_NOSC) for (let v = 0; v < sho.n; v++) {
+            const h = sho.hem[v];
+            if (h <= 0) continue;
+            const q = clothDisplace([S.P[v * 3], S.P[v * 3 + 1], S.P[v * 3 + 2]], [S.N[v * 3], S.N[v * 3 + 1], S.N[v * 3 + 2]], h, (sho.ease?.[v] ?? 0) * st.s, c, st.hips, true);
+            S.P[v * 3] = q[0]; S.P[v * 3 + 1] = q[1]; S.P[v * 3 + 2] = q[2];
+          }
           if (g3) for (let v = 0; v < sho.n; v++) {
             const h = g3.hem[v];
             if (h <= 0) continue;
@@ -569,7 +609,7 @@ const runPlay = (file: string): {id: string; gates: Gate[]; stats: Record<string
         const track = (kind: keyof typeof runs, v: number, pen: number) => {
           const r = (runs[kind].get(v) ?? 0) + 1;
           runs[kind].set(v, r);
-          if (r > 3 && pen > clip[kind].v) clip[kind] = {v: pen, at, run: r};
+          if (r > 3 && pen > clip[kind].v) clip[kind] = {v: pen, at, run: r, vert: v} as typeof clip[typeof kind];
         };
         const resetMissing = (kind: keyof typeof runs, seen: Set<number>) => {
           for (const k of runs[kind].keys()) if (!seen.has(k)) runs[kind].delete(k);

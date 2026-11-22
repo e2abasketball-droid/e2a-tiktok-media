@@ -1,0 +1,153 @@
+{
+ "generated": "2026-11-22T13:26:16.375Z",
+ "legacy": false,
+ "reports": [
+  {
+   "id": "realism-v3-onetake",
+   "gates": [
+    {
+     "gate": "foot_plant",
+     "status": "WARN",
+     "value": "27 plants, worst drift 4.4 cm (O1 L @6.67s), >2 cm: 1, >5 cm: 0; pivots (yaw > 20°): 11; planted sole z min -1.2 cm / median -1.2 cm, plants dipping > 2 cm under the median: 0, floating > 4 cm: 0",
+     "detail": {
+      "plants": 27,
+      "warn": 1,
+      "fail": 0,
+      "worst": {
+       "id": "O1",
+       "foot": "L",
+       "from": 6.666666666666667,
+       "to": 10.133333333333333,
+       "drift": 0.04375963833712265,
+       "yaw": 0.03477388551315557,
+       "zmin": -0.011649858947542488,
+       "zmax": 0.3678976186280376
+      }
+     }
+    },
+    {
+     "gate": "contact_pose",
+     "status": "FAIL",
+     "value": "151 grip frames; deepest palm in the ball 6.4 cm (O1@7.37), nearest palm farthest off 27.2 cm (O1@7.27)",
+     "detail": {
+      "buried": {
+       "v": 0.06363831865130458,
+       "at": "O1@7.37"
+      },
+      "off": {
+       "v": 0.27160575563153644,
+       "at": "O1@7.27"
+      }
+     }
+    },
+    {
+     "gate": "swept_ball",
+     "status": "FAIL",
+     "value": "worst 2.1 cm into head (O1@7.729, limit 2 cm); 2 sub-steps over the limit",
+     "detail": {
+      "fails": [
+       "O1.head@7.729 2.1 cm",
+       "O1.head@7.733 2.1 cm"
+      ]
+     }
+    },
+    {
+     "gate": "ball_continuity",
+     "status": "PASS",
+     "value": "max step 3.75 cm / (1/240 s), max |dv| 1.58 m/s outside impacts; 0 violations",
+     "detail": {
+      "bad": []
+     }
+    },
+    {
+     "gate": "ik_reach",
+     "status": "WARN",
+     "value": "arm chain saturated in 10.0 % of hand-frames; elbow pole flips 0; knees bent backward 0"
+    },
+    {
+     "gate": "root_foot",
+     "status": "PASS",
+     "value": "max heading rate 688°/s (O1@5.10); frames gliding (> 0.6 m/s on two planted feet for > 0.25 s): 0"
+    },
+    {
+     "gate": "blocking",
+     "status": "PASS",
+     "value": "no screen in range"
+    },
+    {
+     "gate": "cloth_clip",
+     "status": "FAIL",
+     "value": "skin out of jersey/shorts > 1 cm for > 3 frames: 1.6 cm (O1@11.33); arms inside the jersey > 1 cm for > 3 frames: 5.0 cm (O1@4.93); shorts through the jersey: 2.7 cm (O1@3.33)",
+     "detail": {
+      "skinOut": {
+       "v": 0.015680160567271173,
+       "at": "O1@11.33",
+       "run": 4,
+       "vert": 6669
+      },
+      "armIn": {
+       "v": 0.0495810941857755,
+       "at": "O1@4.93",
+       "run": 4,
+       "vert": 3529
+      },
+      "shortsOut": {
+       "v": 0.02727582010387586,
+       "at": "O1@3.33",
+       "run": 6,
+       "vert": 31
+      }
+     }
+    },
+    {
+     "gate": "cloth_stability",
+     "status": "FAIL",
+     "value": "jersey edge stretch (edges >= 1 cm) p99.9 ×2.32, max ×3.44 (O1@7.87); number region max ×1.61 (O1@2.37); hem band acceleration vs pelvis p99 17.3 m/s², max 59.3 m/s² (O1@10.33) [v2 apparel + cloth2]"
+    },
+    {
+     "gate": "court",
+     "status": "PASS",
+     "value": "ball r 0.121 m, rim 3.05 m at (0, 1.575); shot O1 make: crosses the rim plane 0.6 cm from the centre"
+    }
+   ],
+   "stats": {
+    "cloth": {
+     "clip": {
+      "skinOut": {
+       "v": 0.015680160567271173,
+       "at": "O1@11.33",
+       "run": 4,
+       "vert": 6669
+      },
+      "armIn": {
+       "v": 0.0495810941857755,
+       "at": "O1@4.93",
+       "run": 4,
+       "vert": 3529
+      },
+      "shortsOut": {
+       "v": 0.02727582010387586,
+       "at": "O1@3.33",
+       "run": 6,
+       "vert": 31
+      }
+     },
+     "stretchMax": {
+      "v": 3.4375023894350507,
+      "at": "O1@7.87"
+     },
+     "st999": 2.3188180457542114,
+     "numStretch": {
+      "v": 1.6125421808406804,
+      "at": "O1@2.37"
+     },
+     "accMax": {
+      "v": 59.28668085794233,
+      "at": "O1@10.33"
+     },
+     "acc99": 17.27606122723342
+    }
+   }
+  }
+ ]
+}

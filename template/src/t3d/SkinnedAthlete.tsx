@@ -128,6 +128,63 @@ export const jerseyTexture = (kit: Record<string, string>, num: string) => {
   return t;
 };
 
+// ---------------------------------------------------------------- Realism V3 jersey texture (2026-11-22, athleteRenderer 'v3')
+// The v1 texture (1024 x 512, gold digits with a GOLD outline on navy) read as a gold blob at phone size: no edge between
+// fill and outline, digits squashed to 0.74. V3: 2048 x 1024, digits with a navy KEYLINE between the fill and the trim
+// outline (two-layer tackle-twill look), proportions from the measured UV stretch, lower-contrast fabric speckle (no moire
+// once mip-mapped) and anisotropy 8.
+const jerseyTexV3 = new Map<string, THREE.Texture>();
+export const jerseyTextureV3 = (kit: Record<string, string>, num: string) => {
+  const key = `${kit.jersey}|${kit.trim}|${kit.number}|${num}`;
+  const hit = jerseyTexV3.get(key);
+  if (hit) return hit;
+  const W = 2048;
+  const H = 1024;
+  const c = document.createElement('canvas');
+  c.width = W;
+  c.height = H;
+  const g = c.getContext('2d')!;
+  g.fillStyle = kit.jersey;
+  g.fillRect(0, 0, W, H);
+  const dark = new THREE.Color(kit.jersey).getHSL({h: 0, s: 0, l: 0}).l < 0.5;
+  const n1 = shade(kit.jersey, dark ? 1.18 : 1.015);
+  const n2 = shade(kit.jersey, dark ? 0.82 : 0.97);
+  for (let i = 0; i < 36000; i++) {
+    g.fillStyle = i % 2 ? n1 : n2;
+    g.fillRect((i * 7919) % W, (i * 3571) % H, 1, 1);
+  }
+  g.fillStyle = kit.trim;
+  for (const u of [0, 0.5, 1]) g.fillRect(u * W - 7, 0, 14, H);
+  const key2 = shade(kit.jersey, dark ? 0.55 : 0.35);
+  g.textAlign = 'center';
+  g.textBaseline = 'middle';
+  for (const [u, s] of [
+    [0.25, 1.0],
+    [0.75, 1.22],
+  ] as const) {
+    g.save();
+    g.translate(u * W, H * 0.42);
+    g.scale(1.0 * s, 0.86 * s);
+    g.font = '900 440px Anton, Impact, sans-serif';
+    g.lineJoin = 'round';
+    g.lineWidth = 34;
+    g.strokeStyle = kit.trim;
+    g.strokeText(num, 0, 0);
+    g.lineWidth = 16;
+    g.strokeStyle = key2;
+    g.strokeText(num, 0, 0);
+    g.fillStyle = kit.number;
+    g.fillText(num, 0, 0);
+    g.restore();
+  }
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.flipY = false;
+  t.anisotropy = 8;
+  jerseyTexV3.set(key, t);
+  return t;
+};
+
 type Rig = {bones: Map<string, THREE.Bone>; rest3: Map<string, THREE.Quaternion>; root: THREE.Object3D};
 const rigOf = (scene: THREE.Object3D, clipBones: ClipBone[]): Rig => {
   scene.updateMatrixWorld(true);
@@ -267,10 +324,10 @@ const g3Geometry = (src: THREE.BufferGeometry, out: {P: Float32Array; J: Uint16A
 };
 
 /** one independent instance of a player mesh: own skeleton (pose state), own skin and jersey materials */
-type Inst = {obj: THREE.Object3D; rig: Rig; cloth?: ClothU};
+type Inst = {obj: THREE.Object3D; rig: Rig; cloth?: ClothU; morphs?: THREE.Mesh[]};
 const instances = new Map<string, Inst>();
-const instanceOf = (template: THREE.Group, key: string, bonesDesc: ClipBone[], look: {skin?: string; num?: string; kit?: Record<string, string>; profile?: 'academy'; cloth2?: boolean; g3?: boolean}) => {
-  const k = `${template.uuid}|${key}|${look.skin}|${look.num}|${look.profile ?? ''}|${look.cloth2 ? 2 : 1}${look.g3 ? '|g3' : ''}`;
+const instanceOf = (template: THREE.Group, key: string, bonesDesc: ClipBone[], look: {skin?: string; num?: string; kit?: Record<string, string>; profile?: 'academy'; cloth2?: boolean; g3?: boolean; v3?: boolean}) => {
+  const k = `${template.uuid}|${key}|${look.skin}|${look.num}|${look.profile ?? ''}|${look.cloth2 ? 2 : 1}${look.g3 ? '|g3' : ''}${look.v3 ? '|v3' : ''}`;
   let it = instances.get(k);
   if (it) return it;
   const obj = SkeletonUtils.clone(template);
@@ -304,7 +361,7 @@ const instanceOf = (template: THREE.Group, key: string, bonesDesc: ClipBone[], l
       }
       if (mm.name.startsWith('E2A_jersey') && look.num && look.kit) {
         const c = mm.clone();
-        c.map = jerseyTexture(look.kit, look.num);
+        c.map = look.v3 ? jerseyTextureV3(look.kit, look.num) : jerseyTexture(look.kit, look.num);
         c.color = new THREE.Color('#ffffff');
         return matte(c);
       }
@@ -336,6 +393,21 @@ const instanceOf = (template: THREE.Group, key: string, bonesDesc: ClipBone[], l
             cloth2Material(mt, clothU!, isTrim ? 0.016 : 0.012, 0.03, !isTrim, !!look.g3);
           }
           m.material = Array.isArray(m.material) ? ms : ms[0];
+        } else if (look.v3 && m.name.includes('Shorts')) {
+          // Realism V3: the tube-cut shorts carry their own _E2A_HEM / _E2A_EASE (leg openings, build_player --garment v3):
+          // same cloth2 spring as the jersey, no runtime garment3 re-cut; the piping takes the values of the nearest shorts vertex
+          let sm: THREE.Mesh | undefined;
+          obj.traverse((o2) => { const q = o2 as THREE.Mesh; if (q.isMesh && q.name.includes('Shorts') && !q.name.includes('Trim')) sm = q; });
+          if (sm && m !== sm && sm.geometry.getAttribute('_e2a_hem')) copyClothAttrs(sm.geometry, m.geometry);
+          if (m.geometry.getAttribute('_e2a_hem')) {
+            const ms = mats.map((mt) => mt.clone());
+            for (const mt of ms) {
+              const isTrim = mt.name.startsWith('E2A_trim');
+              mt.side = THREE.FrontSide;
+              cloth2Material(mt, clothU!, isTrim ? 0.036 : 0.05, 0, false, true);
+            }
+            m.material = Array.isArray(m.material) ? ms : ms[0];
+          }
         } else if (look.g3 && m.name.includes('Shorts')) {
           // garment3: corrected shorts / piping geometry + the cloth band on the leg openings (same uniforms as the jersey)
           let sm: THREE.Mesh | undefined;
@@ -386,7 +458,12 @@ const instanceOf = (template: THREE.Group, key: string, bonesDesc: ClipBone[], l
     });
   }
   // rest orientations measured on the template's bind pose (the clone shares it)
-  it = {obj, rig: rigOf(obj, bonesDesc), cloth: clothU};
+  const morphs: THREE.Mesh[] = [];
+  obj.traverse((o) => {
+    const m = o as THREE.Mesh;
+    if (m.isMesh && m.morphTargetDictionary && m.morphTargetInfluences) morphs.push(m);
+  });
+  it = {obj, rig: rigOf(obj, bonesDesc), cloth: clothU, morphs};
   instances.set(k, it);
   return it;
 };
@@ -409,8 +486,17 @@ export const SkinnedAthlete: React.FC<{
   cloth?: Cloth;
   /** Chicago V3 (garment3.ts, play.realism >= 3): shorts tuck + loose leg openings + jersey panel swing */
   g3?: boolean;
-}> = ({scene, clipBones, bones, hips, inst = 'lab', scale = 1, skin, num, kit, look, cloth, g3}) => {
-  const {obj, rig, cloth: cu} = instanceOf(scene, inst, clipBones, {skin, num, kit, profile: look, cloth2: !!cloth, g3: !!cloth && !!g3});
+  /** Realism V3 (athleteRenderer 'v3'): V3 materials / shorts cloth; morph = corrective weights by target name */
+  v3?: boolean;
+  morph?: Record<string, number>;
+}> = ({scene, clipBones, bones, hips, inst = 'lab', scale = 1, skin, num, kit, look, cloth, g3, v3, morph}) => {
+  const {obj, rig, cloth: cu, morphs} = instanceOf(scene, inst, clipBones, {skin, num, kit, profile: look, cloth2: !!cloth, g3: !!cloth && !!g3 && !v3, v3: !!v3});
+  if (morphs?.length) {
+    for (const m of morphs) {
+      const d = m.morphTargetDictionary!;
+      for (const [name, i] of Object.entries(d)) m.morphTargetInfluences![i] = morph?.[name] ?? 0;
+    }
+  }
   if (cu && cloth) {
     // object space of the instance = three world / scale (no rotation, origin at 0)
     const sw = W3(cloth.sway);

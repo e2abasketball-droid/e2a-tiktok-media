@@ -30,6 +30,31 @@ for s in 'LR':
     ]
 NAMES = [b[0] for b in BONES]
 
+# ---- Realism V3 (2026-11-22, opt-in: enable_fingers()): 3 finger bones per hand so the hand can CLOSE on the ball
+# (the 21-bone rig weights every finger to `hand`: a rigid open hand, fingertips 4+ cm off the ball).
+#   fingers1.s  proximal phalanges of fingers 2-5 (pivot on the middle knuckle, finger3-1 head)
+#   fingers2.s  middle + distal phalanges of fingers 2-5 (pivot on finger3-2 head)
+#   thumb.s     thumb phalanges 2-3 (finger1-1 = thumb metacarpal stays on `hand`)
+# One bone drives four fingers (one curl angle): a deliberate simplification (cheap, deterministic, glTF-safe).
+FINGERS = []
+for _s in 'LR':
+    FINGERS += [
+        (f'fingers1.{_s}', f'hand.{_s}', f'finger3-1.{_s}____head', f'finger3-2.{_s}____head', 'fwd'),
+        (f'fingers2.{_s}', f'fingers1.{_s}', f'finger3-2.{_s}____head', f'finger3-3.{_s}____tail', 'fwd'),
+        (f'thumb.{_s}', f'hand.{_s}', f'finger1-2.{_s}____head', f'finger1-3.{_s}____tail', 'fwd'),
+    ]
+FINGERS_ON = False
+
+
+def enable_fingers():
+    """switch this module to the V3 skeleton (21 + 6 = 27 bones). Call before build()."""
+    global FINGERS_ON
+    if FINGERS_ON:
+        return
+    FINGERS_ON = True
+    BONES.extend(FINGERS)
+    NAMES[:] = [b[0] for b in BONES]
+
 
 def mh2e2a(mh):
     """MakeHuman bone -> E2A bone (skin weights)."""
@@ -50,6 +75,10 @@ def mh2e2a(mh):
         return 'upperarm' + S
     if base.startswith('lowerarm'):
         return 'forearm' + S
+    if FINGERS_ON and base.startswith('finger') and base != 'finger1-1':
+        if base.startswith('finger1-'):
+            return 'thumb' + S
+        return ('fingers1' if base.endswith('-1') else 'fingers2') + S
     if base in ('wrist',) or base.startswith(('metacarpal', 'finger')):
         return 'hand' + S
     if base.startswith('upperleg'):

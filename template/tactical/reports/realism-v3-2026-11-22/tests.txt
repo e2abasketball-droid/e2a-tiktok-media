@@ -1,0 +1,11 @@
+test-ball: 0/0 ball checks passed
+test-motion: 0/0 motion checks passed
+test-tactical: 0/0 tactical checks passed
+test-branches: Node.js v22.23.4
+test-stagger: 0/0 tactical checks passed
+PASS  [realism-v3-onetake] O1 is open (nearest defender ≥ 1.8 m) — Infinity m
+
+12/13 generic tactical checks passed
+test-ball: FAIL  [realism-v3-onetake] held ball: a hand on it the whole time (gap ≤ 0.10 m) — 0.288 m O1@7.27
+6/7 ball checks passed
+test-motion: 7/7 motion checks passed

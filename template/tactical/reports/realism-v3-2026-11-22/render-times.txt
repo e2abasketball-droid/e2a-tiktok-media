@@ -1,0 +1,9 @@
+/tmp/claude-0/rv3/render-main.log:v3 rc=0 wall=581.4 peakRSS_MB=4386
+/tmp/claude-0/rv3/render-main.log:hero-v3 rc=0 wall=659.4 peakRSS_MB=3423
+/tmp/claude-0/rv3/render-main.log:hero-legacy rc=0 wall=658.0 peakRSS_MB=3254
+/tmp/claude-0/rv3/render-main.log:sbs rc=0 wall=659.7 peakRSS_MB=4172
+/tmp/claude-0/rv3/render2.log:sbs-close rc=0 wall=732.4 peakRSS_MB=6830
+/tmp/claude-0/rv3/render2.log:v3 rc=0 wall=561.1 peakRSS_MB=6124
+/tmp/claude-0/rv3/render2.log:sbs rc=0 wall=668.9 peakRSS_MB=6858
+/tmp/claude-0/rv3/render2.log:hero-v3 rc=0 wall=662.3 peakRSS_MB=6124
+legacy (first pass, monitor lost): start 1795349998 end 1795350772 -> 774 s

@@ -1,0 +1,11 @@
+=== realism-v3-onetake  [8.7 s]
+WARN  foot_plant       27 plants, worst drift 4.4 cm (O1 L @6.67s), >2 cm: 1, >5 cm: 0; pivots (yaw > 20°): 11; planted sole z min -1.2 cm / median -1.2 cm, plants dipping > 2 cm under the median: 0, floating > 4 cm: 0
+FAIL  contact_pose     151 grip frames; deepest palm in the ball 6.4 cm (O1@7.37), nearest palm farthest off 27.2 cm (O1@7.27)
+PASS  swept_ball       worst 1.6 cm into head (O1@7.729, limit 2 cm); 0 sub-steps over the limit
+PASS  ball_continuity  max step 3.75 cm / (1/240 s), max |dv| 1.58 m/s outside impacts; 0 violations
+WARN  ik_reach         arm chain saturated in 10.0 % of hand-frames; elbow pole flips 0; knees bent backward 0
+PASS  root_foot        max heading rate 688°/s (O1@5.10); frames gliding (> 0.6 m/s on two planted feet for > 0.25 s): 0
+PASS  blocking         no screen in range
+FAIL  cloth_clip       skin out of jersey/shorts > 1 cm for > 3 frames: 2.2 cm (O1@8.00); arms inside the jersey > 1 cm for > 3 frames: 5.0 cm (O1@4.93); shorts through the jersey: 3.2 cm (O1@3.33)
+FAIL  cloth_stability  jersey edge stretch (edges >= 1 cm) p99.9 ×2.28, max ×3.69 (O1@2.13); number region max ×1.72 (O1@2.10); hem band acceleration vs pelvis p99 19.1 m/s², max 69.1 m/s² (O1@10.33) [v2 apparel + cloth2]
+PASS  court            ball r 0.121 m, rim 3.05 m at (0, 1.575); shot O1 make: crosses the rim plane 0.6 cm from the centre

@@ -42,11 +42,17 @@ ap.add_argument('--out-glb', required=True)
 ap.add_argument('--number', default='')
 ap.add_argument('--skin', default='')
 ap.add_argument('--cloth-cut', choices=['iso', 'legacy'], default='iso', help='garment / hidden-skin edges (see iso_clip)')
-ap.add_argument('--garment', choices=['v1', 'v2'], default='v1',
+ap.add_argument('--rig', choices=['v1', 'v3'], default='v1',
+                help='v3 (Realism V3, 2026-11-22): + 6 finger bones (fingers1 / fingers2 / thumb per hand, skeleton.enable_fingers) and '
+                     'pose-space corrective shape keys on the body (knee / elbow / hip, delta-mush, see corrective(); hip also carried to the shorts). v1 = byte-identical')
+ap.add_argument('--garment', choices=['v1', 'v2', 'v3'], default='v1',
                 help='v2 (Realism V2, 2026-11-21): looser jersey that HANGS from the chest (straight drape, not painted on the '
                      'belly), 5 cm longer, always outside the shorts waistband, hem weights off the thighs, and per-vertex '
                      '_E2A_HEM / _E2A_EASE attributes for the engine secondary motion (src/t3d/cloth2.ts). v1 = byte-identical')
 a = ap.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else sys.argv[1:])
+RV3 = a.rig == 'v3'
+if RV3:
+    SK.enable_fingers()
 
 # kits = engine KITS (src/t3d/Athlete.tsx) so the capsule (A) and the mesh (C) read the same on screen
 VAR = {
@@ -154,6 +160,87 @@ def top4(W):
 
 
 WGT = top4(WGT)
+
+
+# ---------------------------------------------------------------- Realism V3 pose-space correctives (2026-11-22, --rig v3)
+# Linear blend skinning collapses the knee and the elbow when they bend (the MakeHuman weights blend thigh/shin over
+# ~10 cm: a deep knee flexion folds the back of the knee and flattens the front). Per joint: pose the bind mesh with
+# LBS at a key angle, run DELTA MUSH on the posed region (Laplacian smoothing + the rest-pose detail offsets rotated by
+# the per-vertex blended rotation) and store the difference, carried back to the bind space through the LBS linear map,
+# as a shape key. glTF exports it as a morph target; the engine drives its weight from the joint angle (0 at rest,
+# 1 at the key angle) -> deterministic, no simulation, no state.
+def _rot(axis, th):
+    k = axis / np.linalg.norm(axis)
+    K_ = np.array([[0, -k[2], k[1]], [k[2], 0, -k[0]], [-k[1], k[0], 0]])
+    return np.eye(3) + math.sin(th) * K_ + (1 - math.cos(th)) * K_ @ K_
+
+
+def _desc(b):
+    out = [b]
+    for n_, par, *_ in SK.BONES:
+        if par in out and n_ not in out:
+            out.append(n_)
+    return out
+
+
+def corrective(bone, pivot, axis, theta, radius, iters=24):
+    moved = _desc(bone)
+    wm = WGT[:, [SK.NAMES.index(n_) for n_ in moved]].sum(1)
+    R = _rot(axis, theta)
+    Pp = V + wm[:, None] * ((V - pivot) @ R.T + pivot - V)
+    d = np.linalg.norm(V - pivot, axis=1)
+    mask = np.exp(-(d / radius) ** 2)
+    mask[mask < 0.03] = 0
+    idx = np.where(mask > 0)[0]
+
+    def dm(P):
+        Q = P.copy()
+        for _ in range(iters):
+            avg = np.array([Q[nbl[i]].mean(0) for i in idx])
+            Q[idx] += (avg - Q[idx]) * 0.5 * mask[idx, None]
+        return Q
+    off = V - dm(V)
+    k = axis / np.linalg.norm(axis)
+    ang = (wm * theta)[:, None]
+    roff = off * np.cos(ang) + np.cross(k, off) * np.sin(ang) + np.outer(off @ k, k) * (1 - np.cos(ang))
+    corr = dm(Pp) + roff - Pp
+    corr[mask == 0] = 0
+    M_ = (1 - wm)[:, None, None] * np.eye(3)[None] + wm[:, None, None] * R[None]
+    delta = np.linalg.solve(M_, corr[..., None])[..., 0]
+    CORR_POSED[bone] = (corr, moved, R)
+    return delta, float(np.linalg.norm(corr, axis=1).max())
+
+
+def transfer_corrective(bone, Wg, extra, gate):
+    """the body's posed-space fix of one corrective, carried to a garment built on the body (same iso-cut source
+    vertices), re-solved through the GARMENT's own skin weights, faded by gate (0 = untouched, e.g. waistband / trim)"""
+    corr, moved, R = CORR_POSED[bone]
+    cg = extend(corr, extra) * gate[:, None]
+    wm = Wg[:, [SK.NAMES.index(n_) for n_ in moved]].sum(1)
+    M_ = (1 - wm)[:, None, None] * np.eye(3)[None] + wm[:, None, None] * R[None]
+    return np.linalg.solve(M_, cg[..., None])[..., 0]
+
+
+CORR = []  # (name, delta, meta)
+CORR_POSED = {}
+if RV3:
+    for s_ in 'LR':
+        kp = J[f'lowerleg01.{s_}____head']
+        dk, mk = corrective(f'shin.{s_}', kp, np.array([1.0, 0, 0]), math.radians(110), 0.12)
+        CORR.append((f'knee.{s_}', dk, {'bone': f'shin.{s_}', 'parent': f'thigh.{s_}', 'key': 110}))
+        ep_ = J[f'lowerarm01.{s_}____head']
+        ua = ep_ - J[f'upperarm01.{s_}____head']; ua /= np.linalg.norm(ua)
+        eax = np.cross(ua, np.array([0, -1.0, 0])); eax /= np.linalg.norm(eax)
+        de, me_ = corrective(f'forearm.{s_}', ep_, eax, math.radians(100), 0.09)
+        CORR.append((f'elbow.{s_}', de, {'bone': f'forearm.{s_}', 'parent': f'upperarm.{s_}', 'key': 100, 'axis': np.round(eax, 5).tolist()}))
+        print(f'corrective knee.{s_}: max posed-space fix {mk * 100:.2f} cm; elbow.{s_}: {me_ * 100:.2f} cm')
+    # hip flexion (defensive stance / gather): LBS on the thigh-weighted seat folds the glute into a bulge. Signed
+    # sagittal flexion at runtime (mode 'flex'), key 80 deg; the same posed-space fix is carried to the shorts.
+    for s_ in 'LR':
+        hp = J[f'upperleg01.{s_}____head']
+        dh, mh = corrective(f'thigh.{s_}', hp, np.array([-1.0, 0, 0]), math.radians(80), 0.2)
+        CORR.append((f'hip.{s_}', dh, {'bone': f'thigh.{s_}', 'parent': 'hips', 'key': 80, 'mode': 'flex'}))
+        print(f'corrective hip.{s_}: max posed-space fix {mh * 100:.2f} cm')
 
 
 # vertex normals (area weighted from quads)
@@ -337,7 +424,56 @@ def smooth_loops(P, faces, iters=4, flat=None):
     return P
 
 
-GV2 = a.garment == 'v2'
+def fourier_loops(P, faces, K=10, flat=None, min_len=12):
+    """Realism V3: low-pass every boundary loop of a garment (keep the first K harmonics of the closed curve): the iso-cut
+    hem / armhole / collar lines keep a few-mm ripple from the quads that the gold piping (a tube along the loop) turned
+    into a visibly WAVY trim. Only the loop vertices move (sub-cm)."""
+    P = P.copy()
+    for lp in boundary_loops(faces):
+        idx = np.array(lp)
+        if len(idx) < min_len:
+            continue
+        Fq = np.fft.rfft(P[idx], axis=0)
+        Fq[min(K, len(Fq) - 1) + 1:] = 0
+        P[idx] = np.fft.irfft(Fq, n=len(idx), axis=0)
+        if flat is not None:
+            z = flat(P[idx])
+            if z is not None:
+                P[idx, 2] = z
+    return P
+
+
+def taubin_garment(P, polys, Vsrc, Nsrc, iters=30, min_off=0.006, lam=0.5, mu=-0.53):
+    """Realism V3: fabric does not follow every muscle. Taubin (lambda/mu, no shrink) smoothing of a garment surface over its
+    own mesh graph, boundary loops (hems, armholes, collar) pinned, then every vertex pushed back out to >= min_off along the
+    body normal of the vertex it was cut from (no penetration). Removes the lumpy back / seat of the v1-v2 garments."""
+    P = P.copy()
+    E_ = set()
+    for f_ in polys:
+        for k in range(len(f_)):
+            i_, j_ = f_[k], f_[(k + 1) % len(f_)]
+            E_.add((min(i_, j_), max(i_, j_)))
+    E_ = np.array(sorted(E_))
+    used = np.unique(E_)
+    pinned = np.zeros(len(P), bool)
+    for lp in boundary_loops(polys):
+        pinned[np.array(lp)] = True
+    deg = np.zeros(len(P)); np.add.at(deg, E_.ravel(), 1)
+    free = np.zeros(len(P), bool); free[used] = True; free &= ~pinned
+    for it in range(iters):
+        for f_ in (lam, mu):
+            acc = np.zeros_like(P)
+            np.add.at(acc, E_[:, 0], P[E_[:, 1]]); np.add.at(acc, E_[:, 1], P[E_[:, 0]])
+            L = acc / np.maximum(deg, 1)[:, None] - P
+            P[free] += f_ * L[free]
+        off = np.einsum('ij,ij->i', P - Vsrc, Nsrc)
+        low = free & (off < min_off)
+        P[low] += Nsrc[low] * (min_off - off[low])[:, None]
+    return P
+
+
+GV2 = a.garment in ('v2', 'v3')  # v3 keeps the v2 jersey drape and adds the v3 shorts / trims / attributes below
+GV3 = a.garment == 'v3'
 hem_j = hip_z - (0.085 if GV2 else 0.05)
 hem_s = knee_z + 0.12
 ISO_DIFF = 10  # graph diffusion steps (lam 0.5): rounds the staircase (quads ~2-3 cm) without eating the straps
@@ -352,6 +488,9 @@ G_jersey = np.minimum(D_jersey, plane_up(hem_j))
 G_shorts = np.minimum(D_shorts, plane_up(hem_s))
 # skin hidden only DEEP inside a garment: the 0.80 iso-line of the diffused set and 4 cm above the hems
 G_skin_hide = np.maximum(np.minimum(D_jersey - 0.30, plane_up(hem_j + 0.04)), np.minimum(D_shorts - 0.30, plane_up(hem_s + 0.04)))
+if a.garment == 'v3':
+    # Realism V3: keep 10 cm of thigh skin inside the loose leg opening (the hem swings with cloth2: never a see-through hole)
+    G_skin_hide = np.maximum(np.minimum(D_jersey - 0.30, plane_up(hem_j + 0.04)), np.minimum(D_shorts - 0.30, plane_up(hem_s + 0.10)))
 
 # ---------------------------------------------------------------- textures (PIL)
 from PIL import Image, ImageDraw, ImageFont
@@ -515,7 +654,15 @@ if ISO:
     bpoly, bextra, bsrc, bfid = iso_clip(np.where(freg != 9)[0], 1.0 - G_skin_hide, 0.5)  # feet: under the shoes
     bmat = [1 if sock_face[fi] else 0 for fi in bfid]
     buv = [[(UVa[FU[fi][c0]] * (1 - t) + UVa[FU[fi][c1]] * t).tolist() for c0, c1, t in cs] for fi, cs in zip(bfid, bsrc)]
-    ob_body, _ = make_mesh('E2A_Body', extend(V, bextra), bpoly, [M_SKIN, M_SOCK], bmat, buv, extend(WGT, bextra, weights=True))
+    ob_body, bused = make_mesh('E2A_Body', extend(V, bextra), bpoly, [M_SKIN, M_SOCK], bmat, buv, extend(WGT, bextra, weights=True))
+    if CORR:
+        Vext = extend(V, bextra)
+        ob_body.shape_key_add(name='Basis', from_mix=False)
+        for nm, dl, _m in CORR:
+            kb = ob_body.shape_key_add(name=nm, from_mix=False)
+            de = extend(dl, bextra)
+            for vi_new, vi_old in enumerate(bused):
+                kb.data[vi_new].co = (Vext[vi_old] + de[vi_old]).tolist()
 else:
     bf = [F[i] for i in body_f]
     bmat = [1 if sock_face[i] else 0 for i in body_f]
@@ -527,8 +674,13 @@ def garment(G, face_set):
     """(polygons, vertices, normals, weights) of a garment: iso-cut of G (default) or the legacy face set"""
     if ISO:
         poly, extra, _, _ = iso_clip(np.where((G[F] >= 0.5).any(1))[0], G, 0.5)
+        GEXTRA[id(G)] = extra
         return poly, extend(V, extra), extend(NRM, extra, unit=True), extend(WGT, extra, weights=True)
+    GEXTRA[id(G)] = []
     return [list(F[i]) for i in face_set], V.copy(), NRM, WGT
+
+
+GEXTRA = {}
 
 
 # cylindrical UV around the trunk axis: u = 0 his left side, 0.25 front, 0.5 right side, 0.75 back
@@ -583,6 +735,15 @@ if GV2:
     tgt = rch[bi] * (1 - 0.05 * u) + 0.015 * u ** 2
     wb = np.clip(u / 0.35, 0, 1); wb = wb * wb * (3 - 2 * wb)
     rn = np.maximum(rr, rr + (tgt - rr) * wb)
+    if GV3:
+        # ---- Realism V3 drape (2026-11-22 second pass): V2 fell STRAIGHT from the widest chest/back section -> a stiff
+        # box with a flat back panel. V3 hangs from the shoulders and TAPERS to the hips: below the chest the target
+        # radius moves from the chest section to the body's own radius at that height + an ease that grows toward the
+        # hem (2.2 -> 3.6 cm), so the hem follows the body (Taubin + the shorts clearance below keep it smooth / outside)
+        rbody = np.hypot(Vj[:, 0], Vj[:, 1] - yc)
+        s3 = np.clip((u - 0.08) / 0.55, 0, 1); s3 = s3 * s3 * (3 - 2 * s3)
+        t3 = rch[bi] * (1 - s3) + (rbody + 0.022 + 0.014 * u) * s3
+        rn = np.where(inj & (u > 0), np.maximum(rbody + 0.012, rr + (t3 - rr) * wb), rn)
     Pj[:, 0] = np.cos(th) * rn; Pj[:, 1] = yc + np.sin(th) * rn
     J_EASE = rn - np.hypot(Vj[:, 0], Vj[:, 1] - yc)  # horizontal gap to the body surface it was cut from
     J_TH, J_YC = th, yc
@@ -613,6 +774,10 @@ hips_i = SK.NAMES.index('hips')
 for s in 'LR':
     ti = SK.NAMES.index('thigh.' + s)
     u = np.clip((hip_z - Vs[:, 2]) / 0.4, 0, 1) * 0.3
+    if GV3:
+        # Realism V3: the leg TUBE follows the thigh rigidly (the 30 % hips share made it lag ~0.3 x the thigh swing on
+        # a sprint stride and opened the hidden-skin hole at the hem); swing comes from the cloth2 hem band instead
+        u = u * np.clip((Vs[:, 2] - (hip_z - 0.12)) / 0.08, 0, 1)
     mv = Wsh[:, ti] * u
     Wsh[:, ti] -= mv
     Wsh[:, hips_i] += mv
@@ -625,19 +790,133 @@ if GV2:
         mv = Wsh[:, ti] * uu
         Wsh[:, ti] -= mv
         Wsh[:, hips_i] += mv
+S_HEM = S_EASE = None
+if GV3:
+    # ---- Realism V3 shorts (2026-11-22). V1/V2 = body surface + 2.2 cm along the normal + a per-vertex push of the leg
+    # (1.2 -> 4.7 cm): every bump of the glutes and thighs is kept and inflated -> "balloon shorts". V3 = fabric cut:
+    #   waistband snug (0.6 cm ease, elastic), seat / hips 1.0 cm, and each leg a TUBE round the thigh axis whose
+    #   cross-section is 55 % the mean radius at that height + 45 % the (angularly smoothed) body radius, plus an ease
+    #   growing from 1.6 cm at the crotch to 3.4 cm at the hem (A-line, room for the stride); the inner side near the
+    #   crotch gets at most 1.2 cm so the two legs never meet. Never closer than 0.8 cm to the body.
+    inS = np.zeros(len(Vs), bool); inS[np.unique(np.concatenate([np.asarray(f_) for f_ in spoly]))] = True
+    sm = lambda x: x * x * (3 - 2 * x)
+    wz = sm(np.clip((Vs[:, 2] - (hip_z + 0.02)) / 0.06, 0, 1))
+    Ps = Vs + Ns * (0.010 * (1 - wz) + 0.006 * wz)[:, None]
+    S_EASE = np.full(len(Vs), 0.008)
+    S_HEM = np.zeros(len(Vs))
+    top_leg = hip_z - 0.04
+    for s_, sg in (('L', 1), ('R', -1)):
+        h0 = J[f'upperleg01.{s_}____head']; k0 = J[f'lowerleg01.{s_}____head']
+        ax = (k0 - h0) / np.linalg.norm(k0 - h0)
+        e1 = np.array([1.0, 0, 0]) - ax * ax[0]; e1 /= np.linalg.norm(e1); e2 = np.cross(ax, e1)
+        legp = inS & (np.sign(Vs[:, 0]) == sg) & (Vs[:, 2] < top_leg + 0.02)
+        idx = np.where(legp)[0]
+        rel = Vs[idx] - h0
+        along = rel @ ax
+        rad = rel - np.outer(along, ax)
+        r = np.linalg.norm(rad, axis=1)
+        rn = rad / np.maximum(r[:, None], 1e-9)
+        ang = np.arctan2(rn @ e2, rn @ e1)
+        NB, NA = 20, 24
+        a0, a1 = along.min(), along.max()
+        bi = np.clip(((along - a0) / max(1e-6, a1 - a0) * NB).astype(int), 0, NB - 1)
+        ai = ((ang + math.pi) / (2 * math.pi) * NA).astype(int) % NA
+        rmean = np.array([r[bi == k].mean() if (bi == k).any() else r.mean() for k in range(NB)])
+        rb = np.zeros((NB, NA))
+        for k in range(NB):
+            for q in range(NA):
+                m_ = (bi == k) & (ai == q)
+                rb[k, q] = r[m_].max() if m_.any() else np.nan
+        for k in range(NB):  # empty angle bins: circular fill, then a 5-bin circular moving average
+            row = rb[k]
+            if np.isnan(row).all():
+                row[:] = rmean[k]
+            for q in range(NA):
+                if np.isnan(row[q]):
+                    j_ = q
+                    while np.isnan(row[j_ % NA]):
+                        j_ += 1
+                    row[q] = row[j_ % NA]
+            rb[k] = np.mean([np.roll(row, d) for d in (-2, -1, 0, 1, 2)], axis=0)
+        # second pass: the BACK of each leg hangs straight down from the widest glute section (cumulative max along
+        # the leg for back-facing angles): fabric bridges the under-glute fold instead of following it ("seat bulge")
+        qa = (np.arange(NA) + 0.5) / NA * 2 * math.pi - math.pi
+        backq = ((np.cos(qa) * e1[1] + np.sin(qa) * e2[1]) > 0.15)[None, :]
+        rb = np.where(backq, np.maximum.accumulate(rb, axis=0), rb)
+        u = np.clip((top_leg - Vs[idx, 2]) / (top_leg - hem_s), 0, 1)
+        # second pass (2026-11-22): looser, separate openings: ease 1.6 cm at the crotch -> 5.4 cm at the hem
+        target = 0.55 * rmean[bi] + 0.45 * rb[bi, ai] + 0.016 + 0.038 * u ** 1.3
+        wt = sm(np.clip((top_leg + 0.02 - Vs[idx, 2]) / 0.08, 0, 1))
+        newr = r + (target - r) * wt
+        inner = (rn @ np.array([-sg, 0.0, 0.0])) > 0.3
+        cap = np.where(inner & (Vs[idx, 2] > hip_z - 0.22), r + 0.012, np.inf)
+        newr = np.clip(newr, r + 0.008, cap)
+        P_tube = h0 + np.outer(along, ax) + rn * newr[:, None]
+        Ps[idx] = Ps[idx] * (1 - wt[:, None]) + P_tube * wt[:, None]
+        S_EASE[idx] = newr - r
+        S_HEM[idx] = 0.9 * np.clip(1 - (Vs[idx, 2] - hem_s) / 0.18, 0, 1) ** 1.3
+    # second pass: the SEAT (above the leg tubes, back half) bridges the gluteal cleft: per 2 cm height slice the radius
+    # about the vertical pelvis axis is the circular max over +-20 deg (a sheet of fabric over two round shapes)
+    yc_s = float((J['upperleg01.L____head'][1] + J['upperleg01.R____head'][1]) / 2)
+    mid = inS & (np.abs(Vs[:, 0]) < 0.015) & (Vs[:, 1] > yc_s)
+    crotch_z = float(Vs[mid, 2].min()) if mid.any() else top_leg - 0.03  # the back seam meets the legs here
+    seat = inS & (Ps[:, 1] > yc_s) & (Vs[:, 2] > crotch_z + 0.01) & (Vs[:, 2] < hip_z + 0.02)
+    if seat.any():
+        sidx = np.where(seat)[0]
+        thS = np.arctan2(Ps[sidx, 1] - yc_s, Ps[sidx, 0]); rS = np.hypot(Ps[sidx, 0], Ps[sidx, 1] - yc_s)
+        NQ = 72
+        qi = ((thS + math.pi) / (2 * math.pi) * NQ).astype(int) % NQ
+        zi = ((Vs[sidx, 2] - crotch_z) / 0.02).astype(int)
+        newr = rS.copy()
+        for zz in np.unique(zi):
+            m_ = zi == zz
+            mx = np.full(NQ, -1.0)
+            np.maximum.at(mx, qi[m_], rS[m_])
+            filt = np.max([np.roll(mx, d) for d in range(-4, 5)], axis=0)
+            newr[m_] = np.minimum(np.maximum(rS[m_], filt[qi[m_]] - 0.004), rS[m_] + 0.03)  # at most 3 cm of fill
+        wS = np.clip((hip_z + 0.02 - Vs[sidx, 2]) / 0.05, 0, 1)
+        newr = rS + (newr - rS) * wS
+        Ps[sidx, 0] = np.cos(thS) * newr; Ps[sidx, 1] = yc_s + np.sin(thS) * newr
+        S_EASE[sidx] += newr - rS
+        print('garment v3 seat bridge: crotch z', round(crotch_z, 3), 'hip z', round(hip_z, 3), 'max fill (cm)', round(float((newr - rS).max() * 100), 2))
+    print('garment v3 shorts: leg ease (m) min/med/max', round(float(S_EASE[inS].min()), 3), round(float(np.median(S_EASE[inS])), 3), round(float(S_EASE[inS].max()), 3))
 sflat = lambda q: hem_s if q[:, 2].max() < hip_z - 0.1 else None
 if ISO:
     Ps = smooth_loops(Ps, spoly, 4, flat=sflat)
 else:
     Ps, son = smooth_boundary(Ps, spoly, 22, 8, flat=sflat)
+if GV3:
+    Ps = taubin_garment(Ps, spoly, Vs, Ns, iters=24, min_off=0.007)
+    Ps = fourier_loops(Ps, spoly, 10, flat=sflat)
 z0s, z1s = hem_s, hip_z + 0.12
 suv = cyl_uvs(Ps, spoly, z0s, z1s)
 shm = [0] * len(spoly)
-ob_shorts, _ = make_mesh('E2A_Shorts', Ps, spoly, [M_SHORTS, M_TRIM], shm, suv, Wsh)
+ob_shorts, sused = make_mesh('E2A_Shorts', Ps, spoly, [M_SHORTS, M_TRIM], shm, suv, Wsh)
+if GV3:
+    # leg openings swing with the engine cloth2 spring (same attributes as the jersey: _E2A_HEM free-ness, _E2A_EASE gap)
+    for nm, arr in (('_E2A_HEM', S_HEM), ('_E2A_EASE', S_EASE)):
+        at = ob_shorts.data.attributes.new(nm, 'FLOAT', 'POINT')
+        for vi_new, vi_old in enumerate(sused):
+            at.data[vi_new].value = float(arr[vi_old])
+if CORR and any(m_.get('mode') == 'flex' for _n, _d, m_ in CORR):
+    # hip correctives on the shorts: the skin's fix, gated off at the waistband (stays with its trim) and the leg hem
+    sg_ = np.clip((hip_z - 0.01 - Vs[:, 2]) / 0.05, 0, 1) * np.clip((Vs[:, 2] - hem_s - 0.03) / 0.06, 0, 1)
+    sg_ = sg_ * sg_ * (3 - 2 * sg_)
+    ob_shorts.shape_key_add(name='Basis', from_mix=False)
+    for nm, _dl, m_ in CORR:
+        kb = ob_shorts.shape_key_add(name=nm, from_mix=False)
+        if m_.get('mode') != 'flex':
+            continue  # knee / elbow keys: present (same names on every mesh), zero delta
+        ds = transfer_corrective(m_['bone'], Wsh, GEXTRA[id(G_shorts)], sg_)
+        for vi_new, vi_old in enumerate(sused):
+            kb.data[vi_new].co = (Ps[vi_old] + ds[vi_old]).tolist()
+        print(f'shorts {nm}: max fix {np.linalg.norm(ds, axis=1).max() * 100:.2f} cm')
 ob_spipe = pipe_loops('E2A_ShortsTrim', Ps, spoly, Wsh, 0.006, keep=lambda q: q[:, 2].min() > hip_z)
 
 if GV2:
     # ---- Realism V2: the jersey stays OUTSIDE the shorts waistband (>= 1.4 cm radially over the nearest shorts vertex)
+    if GV3:  # smooth fabric first, so the waistband clearance below is enforced on the final surface
+        Pj = taubin_garment(Pj, jpoly, Vj, Nj, iters=30, min_off=0.008)
     from mathutils import kdtree as _kd
     kd_s = _kd.KDTree(len(Ps))
     for i_, p_ in enumerate(Ps):
@@ -663,9 +942,12 @@ if GV2:
         Wj[:, ti] -= mv
         Wj[:, SK.NAMES.index('hips')] += mv
     Pj = smooth_loops(Pj, jpoly, 4, flat=jflat)
+    if GV3:
+        Pj = fourier_loops(Pj, jpoly, 12, flat=jflat)
     juv = cyl_uvs(Pj, jpoly, z0j, z1j)
     ob_jersey, jused = make_mesh('E2A_Jersey', Pj, jpoly, [M_JERSEY, M_TRIM], jmat, juv, Wj)
-    ob_jpipe = pipe_loops('E2A_JerseyTrim', Pj, jpoly, Wj, 0.0062)
+    # V3: no gold ring on the jersey hem (read as a hard hoop): piping on the neck and armholes only
+    ob_jpipe = pipe_loops('E2A_JerseyTrim', Pj, jpoly, Wj, 0.0062, **({'keep': lambda q: q[:, 2].min() > hip_z + 0.12} if GV3 else {}))
     # per-vertex data for the engine secondary motion (src/t3d/cloth2.ts): _E2A_HEM 0 above the chest line -> 1 at the
     # hem (how free the cloth is), _E2A_EASE = horizontal gap to the body (m, how far the hem may swing inward)
     hem_w = np.clip((chest_z - 0.04 - Pj[:, 2]) / (chest_z - 0.04 - hem_j), 0, 1) ** 1.6
@@ -834,12 +1116,33 @@ if a.out_rig:
                    'wrist' + s_: rest['hand.' + s_]['head'], 'hand' + s_: lm['handtip' + s_],
                    'ball' + s_: np.array([lm['ball' + s_][0], lm['ball' + s_][1], 0.0]), 'heel' + s_: np.array([lm['heel' + s_][0], lm['heel' + s_][1], 0.0])})
     hv = np.where(np.isin(np.arange(len(V)), np.unique(np.concatenate([F[i] for i in body_f]))))[0]
-    rig = {'version': 'e2a-player-v1', 'variant': a.variant, 'H': round(float(sk['V'][:mh_body.NBODY, 2].max()), 4),
+    rig = {'version': 'e2a-player-v3' if RV3 else 'e2a-player-v1', 'variant': a.variant, 'H': round(float(sk['V'][:mh_body.NBODY, 2].max()), 4),
            'source': 'MakeHuman base mesh (ara3d-data 1.1.0, CC0-1.0) morphed by tools/blender/mh_body.py + build_player.py',
            'kit': {k: VAR[k] for k in ('jersey', 'trim', 'number', 'shoe', 'sole', 'sock', 'hair', 'skin')},
            'bones': [{'name': b, 'parent': rest[b]['parent'], 'head': np.round(rest[b]['head'], 5).tolist(), 'tail': np.round(rest[b]['tail'], 5).tolist(),
                       'R': rot_to_quat(rest[b]['R']).round(6).tolist()} for b in SK.NAMES],
            'restJoints': {k: np.round(np.asarray(v, float), 5).tolist() for k, v in rj.items()}}
+    if RV3:
+        # finger rest geometry for the engine grip solver (src/t3d/realism-v3/hands.ts): knuckle K, middle joint M, tip T of
+        # the middle finger, thumb base / tip, and the CURL axes (rotating +angle about them closes the hand toward the palm)
+        fing = {}
+        for s_ in 'LR':
+            g_ = lambda k: np.asarray(J[k.replace('#', s_)], float)
+            K_, M_, T_ = g_('finger3-1.#____head'), g_('finger3-2.#____head'), g_('finger3-3.#____tail')
+            TB, TT, W_ = g_('finger1-2.#____head'), g_('finger1-3.#____tail'), g_('wrist.#____head')
+            seg = (M_ - K_) / np.linalg.norm(M_ - K_)
+            pn = (T_ - M_) - seg * ((T_ - M_) @ seg)  # rest curl of the MakeHuman hand: the tip bends toward the palm
+            if np.linalg.norm(pn) < 1e-4 or pn @ (TT - K_) < 0:
+                pn = (TT - K_) - seg * ((TT - K_) @ seg)
+            pn /= np.linalg.norm(pn)
+            ax = np.cross(seg, pn); ax /= np.linalg.norm(ax)
+            tseg = (TT - TB) / np.linalg.norm(TT - TB)
+            tax = np.cross(tseg, pn); tax /= np.linalg.norm(tax)
+            palm = (W_ + K_) / 2 + pn * 0.012
+            fing[s_] = {k: np.round(v, 5).tolist() for k, v in (('K', K_), ('M', M_), ('T', T_), ('TB', TB), ('TT', TT), ('W', W_), ('palm', palm),
+                                                               ('axis', ax), ('thumbAxis', tax), ('palmN', pn))}
+        rig['fingers'] = fing
+        rig['correctives'] = [{'name': nm, **m_} for nm, _d, m_ in CORR]
     os.makedirs(os.path.dirname(os.path.abspath(a.out_rig)), exist_ok=True)
     json.dump(rig, open(a.out_rig, 'w'), separators=(',', ':'))
     print('rig', a.out_rig, rig['H'])
@@ -882,10 +1185,10 @@ if S is not None and Mo is not None:
 bpy.ops.mesh.primitive_plane_add(size=12, location=(0.5, 0, 0))
 bpy.context.object.name = 'REF_floor'
 txt = bpy.data.texts.new('E2A_README')
-txt.write('E2A player (%s variant, e2a-player-v1). Armature E2A_Rig: 21 deforming bones, metres, z up, rest faces -y.\n'
-          'Actions: E2A_rest + %s (head-calibrated motions, fix_head.py). REF_5452_cam = solved camera of 5452 when present.\n'
-          'Rebuild: tools/blender/build_player.py (see template/tactical/reports/3d-animation-mpfb-2026-11-19/INFORME.md).\n'
-          % (a.variant, ', '.join(x.split('=')[0] for x in a.action)))
+txt.write(('E2A player (%s variant, %s). Armature E2A_Rig: %d deforming bones, metres, z up, rest faces -y.\n'
+           'Actions: E2A_rest + %s (head-calibrated motions, fix_head.py). REF_5452_cam = solved camera of 5452 when present.\n'
+           'Rebuild: tools/blender/build_player.py (see template/tactical/reports/3d-animation-mpfb-2026-11-19/INFORME.md).\n')
+          % (a.variant, 'e2a-player-v3' if RV3 else 'e2a-player-v1', len(SK.NAMES), ', '.join(x.split('=')[0] for x in a.action)))
 os.makedirs(os.path.dirname(os.path.abspath(a.out_blend)), exist_ok=True)
 bpy.ops.wm.save_as_mainfile(filepath=os.path.abspath(a.out_blend), relative_remap=True)
 print('saved', a.out_blend)

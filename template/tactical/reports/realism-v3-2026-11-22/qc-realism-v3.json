@@ -1,0 +1,174 @@
+{
+ "play": "realism-v3-onetake",
+ "player": "O1",
+ "frames": 376,
+ "rig": "e2a-player-v3",
+ "grip": {
+  "framesHeldTwoHand": 28,
+  "tipGapMm": {
+   "legacy": {
+    "p50": -11.596,
+    "p95": 51.42,
+    "max": 77.022
+   },
+   "v3": {
+    "p50": -0.457,
+    "p95": 6.893,
+    "max": 7.657,
+    "min": -34.194
+   }
+  },
+  "absTipGapMm": {
+   "legacy": {
+    "p50": 38.176,
+    "within10": 5
+   },
+   "v3": {
+    "p50": 7.373,
+    "within10": 17
+   }
+  },
+  "thumbGapMm": {
+   "legacy": -39.949,
+   "v3": 0.445
+  },
+  "palmGapMm": {
+   "p50": -17.319
+  },
+  "curlRad": {
+   "min": -0.3,
+   "max": 1.45
+  }
+ },
+ "weight": {
+  "maxDropCm": 6,
+  "atS": 2.333,
+  "maxTiltDeg": 11.459,
+  "tiltAtS": 2.4,
+  "framesDropOver2cm": 16,
+  "at": {
+   "60": {
+    "dropCm": 0,
+    "tiltDeg": 0,
+    "brake": 0,
+    "lat": 0.313
+   },
+   "85": {
+    "dropCm": 0,
+    "tiltDeg": 0,
+    "brake": 0,
+    "lat": -0.083
+   },
+   "95": {
+    "dropCm": 2.181,
+    "tiltDeg": 4.166,
+    "brake": 4.798,
+    "lat": -0.003
+   },
+   "99": {
+    "dropCm": 0.037,
+    "tiltDeg": 0.08,
+    "brake": 1.906,
+    "lat": 2.358
+   },
+   "105": {
+    "dropCm": 0,
+    "tiltDeg": 0,
+    "brake": 0,
+    "lat": 0.256
+   },
+   "115": {
+    "dropCm": 0,
+    "tiltDeg": 0,
+    "brake": 0,
+    "lat": -0.29
+   },
+   "300": {
+    "dropCm": 0,
+    "tiltDeg": 0,
+    "brake": 0,
+    "lat": 0
+   },
+   "322": {
+    "dropCm": 0,
+    "tiltDeg": 0,
+    "brake": 0,
+    "lat": 0.236
+   }
+  }
+ },
+ "morphs": {
+  "knee.L": {
+   "max": 0.891,
+   "min": 0.003,
+   "framesOver0_25": 335
+  },
+  "elbow.L": {
+   "max": 1,
+   "min": 0,
+   "framesOver0_25": 168
+  },
+  "knee.R": {
+   "max": 0.917,
+   "min": 0.003,
+   "framesOver0_25": 350
+  },
+  "elbow.R": {
+   "max": 0.737,
+   "min": 0,
+   "framesOver0_25": 207
+  },
+  "hip.L": {
+   "max": 1,
+   "min": 0,
+   "framesOver0_25": 228
+  },
+  "hip.R": {
+   "max": 1,
+   "min": 0,
+   "framesOver0_25": 271
+  }
+ },
+ "morphAt": {
+  "95": {
+   "knee.L": 0.361,
+   "elbow.L": 0,
+   "knee.R": 0.551,
+   "elbow.R": 0,
+   "hip.L": 0,
+   "hip.R": 0.317
+  },
+  "140": {
+   "knee.L": 0.553,
+   "elbow.L": 0.948,
+   "knee.R": 0.244,
+   "elbow.R": 0.463,
+   "hip.L": 0.417,
+   "hip.R": 0.607
+  },
+  "226": {
+   "knee.L": 0.515,
+   "elbow.L": 0.761,
+   "knee.R": 0.512,
+   "elbow.R": 0.428,
+   "hip.L": 0.314,
+   "hip.R": 0.385
+  },
+  "262": {
+   "knee.L": 0.266,
+   "elbow.L": 0,
+   "knee.R": 0.262,
+   "elbow.R": 0,
+   "hip.L": 0.175,
+   "hip.R": 0.237
+  },
+  "350": {
+   "knee.L": 0.528,
+   "elbow.L": 0.055,
+   "knee.R": 0.554,
+   "elbow.R": 0.254,
+   "hip.L": 0.56,
+   "hip.R": 0.705
+  }
+ }
+}

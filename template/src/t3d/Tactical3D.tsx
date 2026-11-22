@@ -14,6 +14,7 @@ import type {LiveOv3, Ov3} from './overlays3d';
 import {Overlays3D, projector} from './overlays3d';
 import type {PlayWithActions} from './rig.ts';
 import {Scene3D} from './Scene';
+import type {AthleteRenderer} from './realism-v3/index.ts';
 import type {FaceCfg} from './Scene';
 import {choosePin, placePin} from './pinPlace';
 import {FocusVignette, FreezeFrame, KineticTitle, Logo, OfferCounter, PinLabel, PremiumSubtitles, RewindTag, Stamp, StepBadge, StepCounter, TacticalHUD, sceneFx} from './screen3d';
@@ -37,7 +38,7 @@ type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: n
 /** 2026-11-22 (Chicago V3 split screen): a SECOND live 3D view stacked under the shot's own view (same clock, own play,
  *  remap, camera and world graphics). The shot's view takes the top `ratio` of the frame. Shots without `split` are
  *  rendered exactly as before. */
-export type Split3 = {play: string; remap: RemapKey[]; camera: CamKeyA[]; ov3?: (Timed & Ov3)[]; hide?: string[]; ratio?: number};
+export type Split3 = {play: string; remap: RemapKey[]; camera: CamKeyA[]; ov3?: (Timed & Ov3)[]; hide?: string[]; ratio?: number; athleteRenderer?: AthleteRenderer};
 type CamKeyA = Omit<CamKey3, 'at'> & {at: Anchor};
 export type Shot3 = {
   id: string;
@@ -57,6 +58,8 @@ export type Shot3 = {
   /** 2026-11-18 (V4): gain on this shot's automatic sfx (0 = none, e.g. a quiet memory echo of the rim done by hand) */
   autoGain?: number;
   split?: Split3;
+  /** 2026-11-22 Realism V3: athlete renderer of this shot (default: the episode's, else 'legacy') */
+  athleteRenderer?: AthleteRenderer;
 };
 export type Episode3 = {
   id: string;
@@ -87,6 +90,8 @@ export type Episode3 = {
   players3d?: 'A' | 'C';
   /** 2026-11-20: look profile for every shot that does not set its own `env` ('academy' = master prompt 3D sec. 7.1) */
   env?: 'practice' | 'game' | 'academy' | 'cinema';
+  /** 2026-11-22 Realism V3 feature flag: 'legacy' (default when omitted) | 'v3' (AthleteV3, src/t3d/realism-v3/) */
+  athleteRenderer?: AthleteRenderer;
 };
 
 type Cue = {t: number; name: string; volume: number};
@@ -249,7 +254,7 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
         const pt2 = remapAt(rm2, lt);
         const cam2 = camera3At(play2, sp.camera.map((k) => ({...k, at: toLocal(k.at)})), lt, pt2);
         const ov2 = live(sp.ov3) as unknown as LiveOv3[];
-        return {h1, play: play2, pt: pt2, cam: cam2, cam1: cam, ov: ov2, hide: sp.hide};
+        return {h1, play: play2, pt: pt2, cam: cam2, cam1: cam, ov: ov2, hide: sp.hide, renderer: sp.athleteRenderer};
       })()
     : undefined;
   const proj = projector(cam, W, H);
@@ -261,19 +266,19 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
     <AbsoluteFill style={{background: '#050A15'}}>
       <AbsoluteFill style={{filter: [freezeOn ? 'saturate(0.72) brightness(0.94) contrast(1.04)' : '', fx.blur > 0.05 ? `blur(${fx.blur.toFixed(2)}px)` : ''].join(' ').trim() || undefined, transform: fx.scale !== 1 || fx.tx !== 0 ? `translateX(${fx.tx.toFixed(1)}px) scale(${fx.scale.toFixed(4)})` : undefined}}>
         {!qcProbe && !split && (
-          <Scene3D play={play} pt={pt} cam={cam} W={W} H={H} hide={shot.hide} logo={logo} env={shot.env ?? ep.env} faces={ep.faces} players3d={shot.players3d ?? ep.players3d}>
+          <Scene3D play={play} pt={pt} cam={cam} W={W} H={H} hide={shot.hide} logo={logo} env={shot.env ?? ep.env} faces={ep.faces} players3d={shot.players3d ?? ep.players3d} athleteRenderer={shot.athleteRenderer ?? ep.athleteRenderer}>
             <Overlays3D play={play} pt={pt} items={ov} />
           </Scene3D>
         )}
         {!qcProbe && split && (
           <>
             <div style={{position: 'absolute', left: 0, top: 0, width: W, height: split.h1, overflow: 'hidden'}}>
-              <Scene3D play={play} pt={pt} cam={split.cam1} W={W} H={split.h1} hide={shot.hide} logo={logo} env={shot.env ?? ep.env} faces={ep.faces} players3d={shot.players3d ?? ep.players3d}>
+              <Scene3D play={play} pt={pt} cam={split.cam1} W={W} H={split.h1} hide={shot.hide} logo={logo} env={shot.env ?? ep.env} faces={ep.faces} players3d={shot.players3d ?? ep.players3d} athleteRenderer={shot.athleteRenderer ?? ep.athleteRenderer}>
                 <Overlays3D play={play} pt={pt} items={ov} />
               </Scene3D>
             </div>
             <div style={{position: 'absolute', left: 0, top: split.h1, width: W, height: H - split.h1, overflow: 'hidden'}}>
-              <Scene3D play={split.play} pt={split.pt} cam={split.cam} W={W} H={H - split.h1} hide={split.hide} logo={logo} env={shot.env ?? ep.env} faces={ep.faces} players3d={shot.players3d ?? ep.players3d} instNs="split:">
+              <Scene3D play={split.play} pt={split.pt} cam={split.cam} W={W} H={H - split.h1} hide={split.hide} logo={logo} env={shot.env ?? ep.env} faces={ep.faces} players3d={shot.players3d ?? ep.players3d} instNs="split:" athleteRenderer={split.renderer ?? shot.athleteRenderer ?? ep.athleteRenderer}>
                 <Overlays3D play={split.play} pt={split.pt} items={split.ov} />
               </Scene3D>
             </div>

@@ -1,0 +1,3 @@
+12/12 legacy plays identical to d700987 (pre Realism V2 main), hashes computed with that engine's rig.ts/play.ts on 2026-11-21
+2/2 legacy plays identical to 8e418e9 (claude/realism-v2, Realism V2 engine)
+tsc rc=0

@@ -1,0 +1,132 @@
+[
+ {
+  "file": "e2a_player_off_v2.glb",
+  "bytes": 1320852,
+  "sha": "82d78bf9fab4",
+  "triangles": 29318,
+  "vertices": 15907,
+  "primitives": 11,
+  "materials": 8,
+  "images": 2,
+  "external_uris": [],
+  "joints": 21,
+  "maxMorphTargets": 0,
+  "morphNames": [],
+  "meshes": {
+   "E2A_Body": 19066,
+   "E2A_Hair": 516,
+   "E2A_Jersey": 2972,
+   "E2A_JerseyTrim": 2088,
+   "E2A_Shoe.L": 1256,
+   "E2A_Shoe.R": 1256,
+   "E2A_Shorts": 1636,
+   "E2A_ShortsTrim": 528
+  }
+ },
+ {
+  "file": "e2a_player_def_v2.glb",
+  "bytes": 1298848,
+  "sha": "22a16f0063f4",
+  "triangles": 29386,
+  "vertices": 15945,
+  "primitives": 11,
+  "materials": 8,
+  "images": 2,
+  "external_uris": [],
+  "joints": 21,
+  "maxMorphTargets": 0,
+  "morphNames": [],
+  "meshes": {
+   "E2A_Body": 19082,
+   "E2A_Hair": 516,
+   "E2A_Jersey": 2980,
+   "E2A_JerseyTrim": 2136,
+   "E2A_Shoe.L": 1256,
+   "E2A_Shoe.R": 1256,
+   "E2A_Shorts": 1632,
+   "E2A_ShortsTrim": 528
+  }
+ },
+ {
+  "file": "e2a_player_off_v3.glb",
+  "bytes": 1471924,
+  "sha": "d16acc05aee2",
+  "triangles": 28662,
+  "vertices": 15580,
+  "primitives": 11,
+  "materials": 8,
+  "images": 2,
+  "external_uris": [],
+  "joints": 27,
+  "maxMorphTargets": 6,
+  "morphNames": [
+   [
+    "knee.L",
+    "elbow.L",
+    "knee.R",
+    "elbow.R",
+    "hip.L",
+    "hip.R"
+   ],
+   [
+    "knee.L",
+    "elbow.L",
+    "knee.R",
+    "elbow.R",
+    "hip.L",
+    "hip.R"
+   ]
+  ],
+  "meshes": {
+   "E2A_Body": 19178,
+   "E2A_Hair": 516,
+   "E2A_Jersey": 2972,
+   "E2A_JerseyTrim": 1320,
+   "E2A_Shoe.L": 1256,
+   "E2A_Shoe.R": 1256,
+   "E2A_Shorts": 1636,
+   "E2A_ShortsTrim": 528
+  }
+ },
+ {
+  "file": "e2a_player_def_v3.glb",
+  "bytes": 1457584,
+  "sha": "c6d104ca0cfa",
+  "triangles": 28670,
+  "vertices": 15584,
+  "primitives": 11,
+  "materials": 8,
+  "images": 2,
+  "external_uris": [],
+  "joints": 27,
+  "maxMorphTargets": 6,
+  "morphNames": [
+   [
+    "knee.L",
+    "elbow.L",
+    "knee.R",
+    "elbow.R",
+    "hip.L",
+    "hip.R"
+   ],
+   [
+    "knee.L",
+    "elbow.L",
+    "knee.R",
+    "elbow.R",
+    "hip.L",
+    "hip.R"
+   ]
+  ],
+  "meshes": {
+   "E2A_Body": 19182,
+   "E2A_Hair": 516,
+   "E2A_Jersey": 2980,
+   "E2A_JerseyTrim": 1320,
+   "E2A_Shoe.L": 1256,
+   "E2A_Shoe.R": 1256,
+   "E2A_Shorts": 1632,
+   "E2A_ShortsTrim": 528
+  }
+ }
+]
