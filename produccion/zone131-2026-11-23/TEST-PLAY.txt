@@ -1,0 +1,98 @@
+### zone131-a-corner-trap
+PASS  [zone131-a-corner-trap] 5 attackers and 5 defenders — 5 O / 5 X
+PASS  [zone131-a-corner-trap] every player has a track over the whole play — tracks
+PASS  [zone131-a-corner-trap] zone 1-3-1: every defender owns a floor area — X1,X2,X3,X4,X5
+PASS  [zone131-a-corner-trap] top speed ≤ 7.5 m/s (no teleports) — 4.85 m/s (X4@2.92)
+PASS  [zone131-a-corner-trap] acceleration ≤ 22 m/s² (no jerks) — 18.2 m/s² (X4@2.41)
+PASS  [zone131-a-corner-trap] no two bodies overlap (≥ 0.5 m centre to centre) — 0.93 m (O4-X4@3.45)
+PASS  [zone131-a-corner-trap] everyone stays in bounds — ok
+PASS  [zone131-a-corner-trap] ball horizontal speed ≤ 15 m/s and continuous — 9.3 m/s
+PASS  [zone131-a-corner-trap] ball always held, in flight or dropping after a make — 0 orphan samples
+PASS  [zone131-a-corner-trap] pass O1→O2: lane open (ball ≥ 0.6 m from every defender) — 1.14 m (X2@1.41)
+PASS  [zone131-a-corner-trap] pass O1→O2: speed 6–14 m/s — 9.2 m/s over 6.9 m
+PASS  [zone131-a-corner-trap] pass O1→O2: receiver under control at the catch (≤ 3.5 m/s) — 0.00 m/s
+PASS  [zone131-a-corner-trap] pass O2→O4: lane open (ball ≥ 0.6 m from every defender) — 1.18 m (X2@2.47)
+PASS  [zone131-a-corner-trap] pass O2→O4: speed 6–14 m/s — 9.6 m/s over 4.8 m
+PASS  [zone131-a-corner-trap] pass O2→O4: receiver under control at the catch (≤ 3.5 m/s) — 0.00 m/s
+PASS  [zone131-a-corner-trap] claim "One up top. One runner behind the zone." — X1–X4 5.60 m (≥ 5)
+PASS  [zone131-a-corner-trap] claim "Three across the middle. (X2-X5-X3 line)" — X2–X3 6.80 m (≤ 7)
+PASS  [zone131-a-corner-trap] claim "X4 shades to the ball side once the ball is on the wing" — X4–O4 4.24 m (≤ 4.5)
+PASS  [zone131-a-corner-trap] claim "The wing and the runner trap. (X4 on the baseline side)" — X4–O4 0.93 m (≤ 1.2)
+PASS  [zone131-a-corner-trap] claim "The wing and the runner trap. (X2 on the top side)" — X2–O4 1.01 m (≤ 1.2)
+PASS  [zone131-a-corner-trap] claim "the two trappers take two angles, no collision" — X2–X4 1.37 m (≥ 0.9)
+PASS  [zone131-a-corner-trap] claim "The top drops to the elbow. (guards the high post, not O2)" — X1–O5 1.76 m (≤ 2.8)
+PASS  [zone131-a-corner-trap] claim "X1 at the elbow is NOT man-to-man on O2" — X1–O2 3.61 m (≥ 2.5)
+PASS  [zone131-a-corner-trap] claim "The middle protects inside. (ball-side block)" — X5–O4 4.93 m (≤ 5)
+PASS  [zone131-a-corner-trap] claim "X5 is not a third trapper" — X5–O4 4.93 m (≥ 3.5)
+PASS  [zone131-a-corner-trap] claim "And the far wing drops. (weak-side block, not the corner)" — X3–O3 5.56 m (≥ 4)
+PASS  [zone131-a-corner-trap] claim "Watch the ball reach the corner. The wing and the runner trap." — 2.35 < 2.85 < 3.35 < 3.5
+
+27/27 generic tactical checks passed
+
+### zone131-b-skip-corner
+PASS  [zone131-b-skip-corner] 5 attackers and 5 defenders — 5 O / 5 X
+PASS  [zone131-b-skip-corner] every player has a track over the whole play — tracks
+PASS  [zone131-b-skip-corner] zone 1-3-1: every defender owns a floor area — X1,X2,X3,X4,X5
+PASS  [zone131-b-skip-corner] top speed ≤ 7.5 m/s (no teleports) — 6.44 m/s (X4@3.34)
+PASS  [zone131-b-skip-corner] acceleration ≤ 22 m/s² (no jerks) — 18.4 m/s² (X3@5.71)
+PASS  [zone131-b-skip-corner] no two bodies overlap (≥ 0.5 m centre to centre) — 0.68 m (O3-X4@5.28)
+PASS  [zone131-b-skip-corner] everyone stays in bounds — ok
+PASS  [zone131-b-skip-corner] ball horizontal speed ≤ 15 m/s and continuous — 10.9 m/s
+PASS  [zone131-b-skip-corner] ball always held, in flight or dropping after a make — 0 orphan samples
+PASS  [zone131-b-skip-corner] pass O1→O2: lane open (ball ≥ 0.6 m from every defender) — 1.14 m (X2@1.41)
+PASS  [zone131-b-skip-corner] pass O1→O2: speed 6–14 m/s — 9.2 m/s over 6.9 m
+PASS  [zone131-b-skip-corner] pass O1→O2: receiver under control at the catch (≤ 3.5 m/s) — 0.00 m/s
+PASS  [zone131-b-skip-corner] pass O2→O3: lane open (ball ≥ 0.6 m from every defender) — 0.67 m (X2@2.17)
+PASS  [zone131-b-skip-corner] pass O2→O3: speed 6–14 m/s — 11.5 m/s over 13.8 m
+PASS  [zone131-b-skip-corner] pass O2→O3: receiver under control at the catch (≤ 3.5 m/s) — 0.00 m/s
+PASS  [zone131-b-skip-corner] O3 shoots from behind the FIBA 3-pt line — 6.89 m from the basket
+PASS  [zone131-b-skip-corner] shot flight 0.9–1.3 s — 1.10 s
+PASS  [zone131-b-skip-corner] O3 is open (nearest defender ≥ 1.8 m) — 1.97 m
+PASS  [zone131-b-skip-corner] claim "One up top. One runner behind the zone." — X1–X4 5.60 m (≥ 5)
+PASS  [zone131-b-skip-corner] claim "Three across the middle. (X2-X5-X3 line)" — X2–X3 6.80 m (≤ 7)
+PASS  [zone131-b-skip-corner] claim "X4 shades to the ball side once the ball is on the wing" — X4–O4 4.24 m (≤ 4.5)
+PASS  [zone131-b-skip-corner] claim "skip it straight to the opposite corner (catch behind the arc)" — 6.89 m
+PASS  [zone131-b-skip-corner] claim "corner three (feet behind the FIBA line at the release)" — 6.89 m
+PASS  [zone131-b-skip-corner] claim "One defender. Two corners. (X4 is on the far side at the skip)" — X4–O3 9.53 m (≥ 8)
+PASS  [zone131-b-skip-corner] claim "The runner sprints across to take over." — 2.1 < 2.3200000000000003 < 3.3 < 5.2700000000000005
+PASS  [zone131-b-skip-corner] claim "the bump: X4 takes the corner, X3 goes back to the wing" — 5.2700000000000005 < 5.720000000000001
+PASS  [zone131-b-skip-corner] claim "The far wing closes out first." — 2.22 < 2.3200000000000003
+PASS  [zone131-b-skip-corner] claim "The far wing closes out first. The runner sprints across to take over." — 4.05 < 4.37
+PASS  [zone131-b-skip-corner] claim "If they arrive late... corner three." — nearest defender 1.97 m (≥ 1.8)
+PASS  [zone131-b-skip-corner] claim "The far wing closes out first (he gets there, late)." — X3–O3 1.41 m (≤ 1.6)
+PASS  [zone131-b-skip-corner] claim "X4 still on his way along the baseline at the release" — X4–O3 3.17 m (≥ 1.8)
+
+31/31 generic tactical checks passed
+
+### zone131-c-early-closeout
+PASS  [zone131-c-early-closeout] 5 attackers and 5 defenders — 5 O / 5 X
+PASS  [zone131-c-early-closeout] every player has a track over the whole play — tracks
+PASS  [zone131-c-early-closeout] zone 1-3-1: every defender owns a floor area — X1,X2,X3,X4,X5
+PASS  [zone131-c-early-closeout] top speed ≤ 7.5 m/s (no teleports) — 6.44 m/s (X4@3.20)
+PASS  [zone131-c-early-closeout] acceleration ≤ 22 m/s² (no jerks) — 18.5 m/s² (X3@4.54)
+PASS  [zone131-c-early-closeout] no two bodies overlap (≥ 0.5 m centre to centre) — 0.68 m (O3-X4@5.13)
+PASS  [zone131-c-early-closeout] everyone stays in bounds — ok
+PASS  [zone131-c-early-closeout] ball horizontal speed ≤ 15 m/s and continuous — 10.9 m/s
+PASS  [zone131-c-early-closeout] ball always held, in flight or dropping after a make — 0 orphan samples
+PASS  [zone131-c-early-closeout] pass O1→O2: lane open (ball ≥ 0.6 m from every defender) — 1.14 m (X2@1.41)
+PASS  [zone131-c-early-closeout] pass O1→O2: speed 6–14 m/s — 9.2 m/s over 6.9 m
+PASS  [zone131-c-early-closeout] pass O1→O2: receiver under control at the catch (≤ 3.5 m/s) — 0.00 m/s
+PASS  [zone131-c-early-closeout] pass O2→O3: lane open (ball ≥ 0.6 m from every defender) — 0.67 m (X3@3.21)
+PASS  [zone131-c-early-closeout] pass O2→O3: speed 6–14 m/s — 11.5 m/s over 13.8 m
+PASS  [zone131-c-early-closeout] pass O2→O3: receiver under control at the catch (≤ 3.5 m/s) — 0.00 m/s
+PASS  [zone131-c-early-closeout] O3 shoots from behind the FIBA 3-pt line — 6.89 m from the basket
+PASS  [zone131-c-early-closeout] shot flight 0.9–1.3 s — 1.10 s
+PASS  [zone131-c-early-closeout] claim "One up top. One runner behind the zone." — X1–X4 5.60 m (≥ 5)
+PASS  [zone131-c-early-closeout] claim "Three across the middle. (X2-X5-X3 line)" — X2–X3 6.80 m (≤ 7)
+PASS  [zone131-c-early-closeout] claim "X4 shades to the ball side once the ball is on the wing" — X4–O4 4.24 m (≤ 4.5)
+PASS  [zone131-c-early-closeout] claim "skip it straight to the opposite corner (catch behind the arc)" — 6.89 m
+PASS  [zone131-c-early-closeout] claim "corner three (feet behind the FIBA line at the release)" — 6.89 m
+PASS  [zone131-c-early-closeout] claim "One defender. Two corners. (X4 is on the far side at the skip)" — X4–O3 9.53 m (≥ 8)
+PASS  [zone131-c-early-closeout] claim "The runner sprints across to take over." — 2.1 < 2.18 < 3.3 < 5.130000000000001
+PASS  [zone131-c-early-closeout] claim "the bump: X4 takes the corner, X3 goes back to the wing" — 5.130000000000001 < 5.58
+PASS  [zone131-c-early-closeout] claim "The far wing closes out first." — 2.12 < 2.18
+PASS  [zone131-c-early-closeout] claim "The far wing closes out first. The runner sprints across to take over." — 3.43 < 4.23
+PASS  [zone131-c-early-closeout] claim "Recover on the pass? Contested." — X3–O3 1.31 m (≤ 1.35)
+
+28/28 generic tactical checks passed
+

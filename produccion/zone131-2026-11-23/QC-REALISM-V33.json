@@ -1,0 +1,47 @@
+{
+ "a-corner-trap": {
+  "defectRows": 14,
+  "kinds": {
+   "pop:head": 7,
+   "pop:pelvis": 2,
+   "palmGap": 1,
+   "ballBody": 2,
+   "elbowFlex": 2
+  },
+  "footSlideOver2cm": 0,
+  "footSlideMax_m": 0.008,
+  "ballBodyFrames120": 2,
+  "pelvisAccMax": 276.343,
+  "anatomicalVisible": 1
+ },
+ "b-skip-corner": {
+  "defectRows": 43,
+  "kinds": {
+   "pop:head": 18,
+   "pop:pelvis": 8,
+   "pop:wrL": 4,
+   "pop:wrR": 2,
+   "elbowFlex": 11
+  },
+  "footSlideOver2cm": 0,
+  "footSlideMax_m": 0.012,
+  "ballBodyFrames120": 0,
+  "pelvisAccMax": 384.086,
+  "anatomicalVisible": 0
+ },
+ "c-early-closeout": {
+  "defectRows": 43,
+  "kinds": {
+   "pop:head": 19,
+   "pop:pelvis": 7,
+   "pop:wrL": 5,
+   "pop:wrR": 4,
+   "elbowFlex": 8
+  },
+  "footSlideOver2cm": 0,
+  "footSlideMax_m": 0.01,
+  "ballBodyFrames120": 0,
+  "pelvisAccMax": 384.086,
+  "anatomicalVisible": 0
+ }
+}

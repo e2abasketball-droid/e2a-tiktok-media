@@ -74,7 +74,7 @@ key = lambda at, rig, ease=None: {"at": at, "rig": rig, **({"ease": ease} if eas
 # fit-search (scripts/fit-search.mts, safe band 380-1330 px, all ten feet + head + ball, side 20 px): basket up, behind the offence
 MAIN = orb([0.3, 7.81, 0.6], 24.75, 48)            # A 0-5.4 / B 0-5.4: every player and the ball in the band
 TOPV = orb([0.12, 8.84, 0.6], 26.5, 24)            # near top-down for the shape (A frozen 0)
-TRAP = orb([5.5, 1.3, 0.6], 10.5, 50)              # A 2.9-3.6: O4, X2, X4, O2 (left corner, screen left), basket up
+TRAP = orb([5.6, 0.9, 0.6], 10.5, 46)              # A 2.9-3.6: O4, X2, X4, O2 (left corner, screen left), basket up
 THREE = orb([-3.4, 1.5, 1.2], 16.0, 58)            # B 3.3-4.9 / C 3.4-5.3: O3, X3, X4 + the shot to the rim, basket up
 BASE_L = [[0.0, 0.8], [3.3, 0.78], [6.55, 0.85]]   # baseline runner path, to the LEFT corner (screen left)
 BASE_R = [[0.0, 0.8], [-3.3, 0.78], [-6.55, 0.85]]
