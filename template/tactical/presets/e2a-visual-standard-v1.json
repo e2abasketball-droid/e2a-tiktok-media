@@ -1,0 +1,23 @@
+{
+ "preset": "e2a-visual-standard-v1",
+ "name": "E2A Basketball Visual Standard v1",
+ "since": "2026-11-23",
+ "status": "DEFAULT for every NEW E2A basketball video unless the owner asks for the old look",
+ "note": "Owner rule 2026-11-23 (HORNS V2): this is the new default visual and editing standard for E2A basketball videos. Born from HORNS: THE DEFENDER'S DILEMMA (produccion/horns-roll-pop-minimal). Merge episode_keys into every new episode generator output; follow the rules below. It does NOT flip the global engine default in code (legacy stays the fallback) and it does NOT change the live Tactical Studio daily task: that switch needs the owner's say-so because it publishes unattended.",
+ "episode_keys": {"athleteRenderer": "v33", "env": "cinema", "pinV2": true, "autoSfx": false},
+ "characters": "Improved 3D athletes via the v33 renderer (athleteRenderer 'v33'): better silhouette, apparel and presence than legacy/v31/v32. v33 compiles motion per player (play key \"v33\":\"compile\"); ball-body contact must be 0 (qc-realism-v33.mts).",
+ "court_scene": "env 'cinema': current court finish and lighting. Keep the clean, professional look; do not add fire, particles, flashes or crowd effects.",
+ "overlays": {
+   "palette": {"navy": "#0B1C3D", "gold": "#C9A24D", "deep_gold": "#A9842F", "white": "#FFFFFF", "roll_blue": "#8EC5F0"},
+   "player_markers": "Use the 'marker' Ov3 (overlays3d.tsx), not plain 'ring', to point at players: attack = solid gold ring + soft floor glow; defence = thinner white SEGMENTED ring. Shape AND colour differ, so it reads at phone size. One soft ripple on appearance; `focusKeys` lifts the key player.",
+   "legend": "Show the 'legend' HUD (ATTACK / DEFENSE key) whenever markers introduce a formation.",
+   "reveal": "Introduce the formation by revealing players in sequence (attack, then defence), ~0.15-0.18 s apart.",
+   "routes": "Thin routes with a floor label: offence gold, defensive/roll reads in roll_blue. Max 2 tactical overlays on screen at once. White pass line only while the ball is in flight. One-word pins (HELP, STAY, ROLL) and short outcome chips (THREE., LAYUP.).",
+   "limit": "Never crowd the screen; every element must help understand the play."
+ },
+ "cameras": "One clear tactical camera per idea, basket up, behind the offence. Frame with fit-search.mts and VERIFY the whole edit with frame-fit.mts (0 flagged frames in the 380-1330 px safe band). Move the camera only when it adds understanding; no gratuitous orbits/roll. If a zoom pushes any player out of frame, drop it.",
+ "rhythm": "Calm and clear, but always moving toward a conclusion. No silence longer than ~2.9 s, and any long beat must sit over a real payoff (a shot/finish) with a short on-screen chip, never dead air. Reuse the approved voice take and only insert silences between lines (scripts/tactical-voice.py, gapFill silence); regenerate voice only if strictly necessary.",
+ "audio": "One calm voice + own minimal music bed (tools/audio/horns_minimal_bed.py or equivalent), ducked under the voice. Mix offline to -14 LUFS +/-1, peak <= -1 dBTP. No ball-bounce sound, squeaks or whooshes.",
+ "brand": "Palette above; 2026 logo small in the last second.",
+ "qa": "test-play.mts (claims per line), test-branches.mts when there are branches, qc-realism-v33.mts (ball-body 0), frame-fit.mts (0 flagged), ffprobe + loudness, a 12-frame contact sheet from the final MP4, and a phone-size preview review."
+}

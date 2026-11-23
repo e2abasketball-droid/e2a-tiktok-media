@@ -100,6 +100,10 @@ const cut = (pts: V2[], u: number): V2[] => {
 
 export type Ov3 =
   | {type: 'ring'; player: string; color?: string; pulse?: boolean; size?: number}
+  /** 2026-11-23 E2A Basketball Visual Standard v1: player marker. Attack = solid gold ring + soft floor glow;
+   *  defence = thinner, segmented white ring (shape AND colour differ, readable at phone size). Pops in with a slight
+   *  overshoot and ONE soft ripple; `focus` (0..1, keyed in shot seconds via focusKeys) lifts size/opacity, `dim` lowers. */
+  | {type: 'marker'; player: string; team?: 'attack' | 'defense'; color?: string; ripple?: boolean; focusKeys?: [number, number][]}
   /** consume (2026-11-19): the route ahead of the player only (born under him, eaten as he runs it) */
   | {type: 'route'; player: string; t0: number; t1: number; color?: string; draw?: number; dashed?: boolean; width?: number; pts?: V2[]; trail?: boolean; consume?: boolean;
      /** 2026-11-21 (BLOB V2 fork): a plated floor label at the arrow tip, read from camera yaw `labelYaw` */
@@ -507,6 +511,65 @@ export const Overlays3D: React.FC<{play: Play; pt: number; items: LiveOv3[]}> = 
                 <mesh material={basic(col, 0.22 * a)}>
                   <circleGeometry args={[0.46, 48]} />
                 </mesh>
+              </group>
+            );
+          }
+          case 'marker': {
+            const p = P(o.player);
+            const att = (o.team ?? (o.player.startsWith('O') ? 'attack' : 'defense')) === 'attack';
+            const col = o.color ?? (att ? '#C9A24D' : '#FFFFFF');
+            // focus level from keys [[shotSecond, level], ...] (linear), default 0.65 = normal
+            const fk = o.focusKeys ?? [];
+            let lv = 0.65;
+            if (fk.length) {
+              lv = fk[0][1];
+              for (let k = 0; k < fk.length; k++) {
+                if (o.age >= fk[k][0]) lv = fk[k][1];
+                if (k + 1 < fk.length && o.age >= fk[k][0] && o.age < fk[k + 1][0]) {
+                  const u = clamp((o.age - fk[k][0]) / Math.max(0.01, Math.min(0.3, fk[k + 1][0] - fk[k][0])));
+                  lv = fk[k][1] + (fk[k + 1][1] - fk[k][1]) * clamp(u / 1);
+                  lv = fk[k][1];
+                }
+              }
+              // smooth 0.25 s transition into each key
+              for (let k = 1; k < fk.length; k++) {
+                const dt = o.age - fk[k][0];
+                if (dt >= 0 && dt < 0.25) lv = fk[k - 1][1] + (fk[k][1] - fk[k - 1][1]) * easeOut(dt / 0.25);
+              }
+            }
+            const op = (0.35 + 0.65 * lv) * a;
+            const x = clamp(o.age / 0.38);
+            const back = 1 + 2.2 * Math.pow(x - 1, 3) + 1.2 * Math.pow(x - 1, 2); // easeOutBack
+            const sz = (0.55 + 0.45 * back) * (0.9 + 0.22 * lv);
+            const rip = o.ripple !== false ? clamp(o.age / 0.65) : 1;
+            const segs = att ? null : Array.from({length: 10}, (_, k) => k);
+            return (
+              <group key={i} position={W3([p[0], p[1], att ? 0.016 : 0.018])} rotation={[-Math.PI / 2, 0, 0]}>
+                {att && (
+                  <mesh scale={sz * 1.9} material={new THREE.MeshBasicMaterial({color: col, map: glowTex(), transparent: true, opacity: 0.42 * op * (0.6 + 0.4 * lv), depthWrite: false, toneMapped: false, blending: THREE.AdditiveBlending})}>
+                    <planeGeometry args={[1, 1]} />
+                  </mesh>
+                )}
+                <group scale={sz}>
+                  {att ? (
+                    <>
+                      <mesh material={basic(col, 0.98 * op)}><ringGeometry args={[0.44, 0.6, 64]} /></mesh>
+                      <mesh material={basic(col, 0.2 * op)}><circleGeometry args={[0.44, 64]} /></mesh>
+                    </>
+                  ) : (
+                    <>
+                      {segs!.map((k) => (
+                        <mesh key={k} material={basic(col, 0.95 * op)}><ringGeometry args={[0.5, 0.58, 12, 1, (k / 10) * Math.PI * 2 + 0.06, (Math.PI * 2) / 10 - 0.16]} /></mesh>
+                      ))}
+                      <mesh material={basic(col, 0.08 * op)}><circleGeometry args={[0.5, 48]} /></mesh>
+                    </>
+                  )}
+                </group>
+                {rip < 1 && (
+                  <mesh scale={sz * (1 + 0.9 * easeOut(rip))} material={basic(col, 0.55 * (1 - rip) * a)}>
+                    <ringGeometry args={[0.56, 0.6, 64]} />
+                  </mesh>
+                )}
               </group>
             );
           }

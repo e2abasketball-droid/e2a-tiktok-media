@@ -3,9 +3,9 @@
  "source_sec": 26.32,
  "preroll": 0.0,
  "output": "public/tactical/horns/voice.wav",
- "output_sec": 40.6,
- "inserted_total_sec": 14.28,
- "last_word_end": 40.68,
+ "output_sec": 35.77,
+ "inserted_total_sec": 9.45,
+ "last_word_end": 35.85,
  "gaps": [
   {
    "after": "watch the ball.",
@@ -98,8 +98,8 @@
     13.64
    ],
    "natural_sec": 0.51,
-   "target_sec": 2.4,
-   "inserted_sec": 1.89,
+   "target_sec": 1.35,
+   "inserted_sec": 0.84,
    "cut_at_source": 13.485,
    "why": "'read' starts on its shot (guide 16.95 s)"
   },
@@ -134,8 +134,8 @@
     18.95
    ],
    "natural_sec": 0.48,
-   "target_sec": 5.56,
-   "inserted_sec": 5.08,
+   "target_sec": 3.3,
+   "inserted_sec": 2.82,
    "cut_at_source": 18.675,
    "why": "'stay' starts on its shot (guide 28.3 s)"
   },
@@ -158,8 +158,8 @@
     22.05
    ],
    "natural_sec": 0.42,
-   "target_sec": 4.42,
-   "inserted_sec": 4.0,
+   "target_sec": 2.9,
+   "inserted_sec": 2.48,
    "cut_at_source": 21.935,
    "why": "'setup' starts on its shot (guide 35.5 s)"
   },

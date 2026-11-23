@@ -1,0 +1,4 @@
+# HORNS V2 mix (2026-11-23): same chain as MEZCLA.txt, same Deuce take (0 new credits)
+voice: template/public/tactical/horns/voice.wav rebuilt by scripts/tactical-voice.py with shorter gaps (behind the arc 1.35, open for three 3.3, might be there 2.9)
+music: tools/audio/horns_minimal_bed.py --duration 38.85 --accents 16.79,30.82, padded to 38.867 s
+result: -14.1 LUFS, -1.5 dBTP, LRA 5.2

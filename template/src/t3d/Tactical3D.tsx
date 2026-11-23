@@ -33,6 +33,8 @@ type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: n
   | {type: 'punch'; amount?: number} | {type: 'whip'; amount?: number; dir?: number} | {type: 'flash'; color?: string; strength?: number}
   /** 2026-11-21 (2-3 Zone): small caption chip (ILLUSTRATIVE COVERAGE); WrongTempo red edge tint */
   | {type: 'micro'; text: string; y?: number} | {type: 'tint'; color?: string; strength?: number}
+  /** 2026-11-23 E2A Visual Standard v1: small ATTACK / DEFENSE key, top-left, so the two marker styles read instantly */
+  | {type: 'legend'; y?: number}
   /** 2026-11-22 (Chicago V3): outcome chip (red TRAIL / blue UNDER / gold), anchored to a screen side and height */
   | {type: 'chip'; text: string; y?: number; tone?: 'red' | 'blue' | 'gold'; align?: 'left' | 'center' | 'right'; size?: number});
 /** 2026-11-22 (Chicago V3 split screen): a SECOND live 3D view stacked under the shot's own view (same clock, own play,
@@ -401,6 +403,20 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
                     </React.Fragment>
                   ))}
                 </div>
+              </div>
+            );
+          }
+          case 'legend': {
+            const o = Math.max(0, Math.min(1, s.age / 0.3, (s.dur - s.age) / 0.3));
+            const dot = (fill: string, ring: string, dash: boolean): React.CSSProperties => ({width: 26, height: 26, borderRadius: '50%', border: `4px ${dash ? 'dashed' : 'solid'} ${ring}`, background: fill, boxSizing: 'border-box'});
+            return (
+              <div key={i} style={{position: 'absolute', left: 40, top: s.y ?? 150, display: 'flex', flexDirection: 'column', gap: 12, opacity: o}}>
+                {[['#C9A24D33', '#C9A24D', false, 'ATTACK'], ['#FFFFFF14', '#FFFFFF', true, 'DEFENSE']].map(([f, r, d, lab]) => (
+                  <div key={lab as string} style={{display: 'flex', alignItems: 'center', gap: 12}}>
+                    <span style={dot(f as string, r as string, d as boolean)} />
+                    <span style={{color: '#FFFFFF', font: '700 30px Inter, sans-serif', letterSpacing: 3, textShadow: '0 2px 8px rgba(0,0,0,0.7)'}}>{lab as string}</span>
+                  </div>
+                ))}
               </div>
             );
           }

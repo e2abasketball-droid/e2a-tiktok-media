@@ -87,10 +87,10 @@ def build(words, voice, music, preview):
     T0 = 0.0
     t_setup = L["hook2"][1] + 0.45                  # hook ends after "Watch this defender." + a breath
     t_action = L["corners"][1] + 1.0
-    t_read = L["pop"][1] + 1.6
+    t_read = L["pop"][1] + 1.0
     t_a = L["read"][1] + 0.65
-    t_b = L["three"][1] + 4.2                       # the three flies, drops, the shooter lands
-    t_close = L["inside"][1] + 3.0                  # the catch, the finish, the make
+    t_b = L["three"][1] + 2.3                       # the three flies in (tightened 2026-11-23: no dead air)
+    t_close = L["inside"][1] + 1.9                  # the finish (tightened 2026-11-23)
     t_end = L["pressure"][1] + 3.0
     shots = []
     # 1 HOOK: the critical moment (play 5.95 -> 6.6), then a short freeze on X4 with the gold halo
@@ -105,13 +105,24 @@ def build(words, voice, music, preview):
     d = t_action - t_setup
     lb = L["bigs"][0] - t_setup
     lc = L["corners"][0] - t_setup
-    shots.append({"id": "setup", "name": "Setup - Horns 1-2-2: bigs at the elbows, shooters in the corners", "at": t_setup, "play": "A",
+    # E2A Visual Standard v1: the ten players appear in sequence (attack O1..O5, then defence X1..X5),
+    # each a premium marker (gold solid ring = attack, white segmented ring = defence) with one soft ripple.
+    # A small ATTACK / DEFENSE key reads the two styles at a glance; X4 (the player the hook named) stays lit.
+    seq = [("O1", "attack"), ("O5", "attack"), ("O4", "attack"), ("O3", "attack"), ("O2", "attack"),
+           ("X1", "defense"), ("X5", "defense"), ("X4", "defense"), ("X3", "defense"), ("X2", "defense")]
+    t0m = 0.55                                       # markers start once the formation is close to set
+    step = 0.17
+    mk = []
+    for j, (pid, team) in enumerate(seq):
+        f = round(t0m + j * step, 3)
+        # X4 brightens near the end of the shot to carry the hook's focus into the action
+        fk = [[0.0, 0.85], [max(0.0, d - 1.6 - f), 0.85], [max(0.0, d - 1.3 - f), 1.0]] if pid == "X4" else None
+        mk.append({"type": "marker", "player": pid, "team": team, "from": f, "to": d - 0.15, **({"focusKeys": fk} if fk else {})})
+    shots.append({"id": "setup", "name": "Setup - Horns 1-2-2: five attackers then five defenders appear in sequence", "at": t_setup, "play": "A",
                   "remap": [[0, 0.0], [2.55, 2.55], [d, 3.9]], "camera": [key(0, MAIN)],
-                  "ov3": [{"type": "ring", "player": "O4", "color": GOLD, "from": lb, "to": lb + 2.6},
-                          {"type": "ring", "player": "O5", "color": GOLD, "from": lb, "to": lb + 2.6},
-                          {"type": "ring", "player": "O2", "color": WHITE, "from": lc, "to": d - 0.2},
-                          {"type": "ring", "player": "O3", "color": WHITE, "from": lc, "to": d - 0.2}],
-                  "screen": [{"type": "title", "lines": ["HORNS"], "gold": [0], "from": 0.15, "to": d - 0.15, "y": 236, "size": 110}]})
+                  "ov3": mk,
+                  "screen": [{"type": "title", "lines": ["HORNS"], "gold": [0], "from": 0.15, "to": d - 0.15, "y": 236, "size": 110},
+                             {"type": "legend", "from": t0m, "to": d - 0.15, "y": 150}]})
     # 3 ACTION: screen (0.67x), then the roll and the pop at ~0.24x with one arrow each, stopping on the decision frame
     d = t_read - t_action
     lr, lp = L["roll"][0] - t_action, L["pop"][0] - t_action
@@ -135,23 +146,26 @@ def build(words, voice, music, preview):
     d = t_b - t_a
     lh, l3 = L["help"][0] - t_a, L["three"][0] - t_a
     shots.append({"id": "branchA", "name": "A - he tags the roll, Four is open for three", "at": t_a, "play": "A",
-                  "remap": [[0, DEC], [2.4, 7.55], [4.6, 8.75], [d, 10.2]],
+                  "remap": [[0, DEC], [d * 0.42, 7.55], [d * 0.78, 8.9], [d, 10.2]],
                   "camera": [key(0, MAIN)],
-                  "ov3": [{"type": "ring", "player": "X4", "color": GOLD, "from": 0.0, "to": 2.4},
-                          {"type": "passLane", "src": "O1", "dst": "O4", "color": WHITE, "from": 2.3, "to": 3.4}],
+                  "ov3": [{"type": "ring", "player": "X4", "color": GOLD, "from": 0.0, "to": d * 0.42},
+                          {"type": "passLane", "src": "O1", "dst": "O4", "color": WHITE, "from": d * 0.4, "to": d * 0.68}],
                   "screen": [{"type": "pin", "player": "X4", "text": "HELP", "tone": "gold", "from": lh + 0.1, "to": lh + 0.9, "size": 40},
-                             {"type": "pin", "player": "O4", "text": "OPEN THREE", "tone": "white", "from": l3 + 0.2, "to": l3 + 1.3, "size": 40}]})
+                             {"type": "pin", "player": "O4", "text": "OPEN THREE", "tone": "white", "from": l3 + 0.2, "to": l3 + 1.3, "size": 40},
+                             {"type": "chip", "text": "THREE.", "tone": "gold", "align": "right", "size": 64, "from": d - 0.8, "to": d, "y": 1230}]})
     # 6 BRANCH B: back to the same moment (0.3 s before the decision frame), X4 stays, the pass inside, the finish
     d = t_close - t_b
     ls, li = L["stay"][0] - t_b, L["inside"][0] - t_b
+    kp, kc = min(ls + 1.6, d * 0.52), min(li + 1.6, d * 0.78)   # pass / catch keys, kept monotonic inside the tighter window
     shots.append({"id": "branchB", "name": "B - same action, different help: he stays, the pass inside", "at": t_b, "play": "B",
-                  "remap": [[0, 6.3], [1.1, DEC], [ls + 1.6, 7.55], [li + 1.6, 8.2], [d - 0.5, 9.7], [d, 9.75]],
+                  "remap": [[0, 6.3], [min(1.1, d * 0.2), DEC], [kp, 7.55], [kc, 8.2], [d - 0.4, 9.7], [d, 9.75]],
                   "camera": [key(0, MAIN)],
                   "ov3": [{"type": "ring", "player": "X4", "color": GOLD, "from": 0.9, "to": ls + 1.6},
                           {"type": "passLane", "src": "O1", "dst": "O5", "color": WHITE, "from": ls + 1.5, "to": li + 1.4}],
                   "screen": [{"type": "stamp", "text": "SAME ACTION. DIFFERENT HELP.", "tone": "white", "from": 0.0, "to": 0.85, "y": 250, "instant": True},
                              {"type": "pin", "player": "X4", "text": "STAY", "tone": "gold", "from": ls + 0.1, "to": ls + 0.8, "size": 40},
-                             {"type": "pin", "player": "O5", "text": "ROLL", "tone": "white", "from": li + 0.3, "to": li + 1.2, "size": 40}]})
+                             {"type": "pin", "player": "O5", "text": "ROLL", "tone": "white", "from": li + 0.3, "to": li + 1.2, "size": 40},
+                             {"type": "chip", "text": "LAYUP.", "tone": "gold", "align": "right", "size": 64, "from": d - 0.8, "to": d, "y": 1230}]})
     # 7 CLOSE: the decision frame again, the two reads as clean lines, ONE SET. TWO READS., HELP OR STAY?, logo
     d = t_end - t_close
     shots.append({"id": "close", "name": "Close - one set, two reads", "at": t_close, "play": "A",

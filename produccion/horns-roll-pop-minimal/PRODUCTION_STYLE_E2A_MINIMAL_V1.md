@@ -1,6 +1,6 @@
-# E2A MINIMAL V1 — estilo de producción (propuesta, NO activado)
+# E2A MINIMAL V1 — estilo de producción (SUSTITUIDO)
 
-Nace con el Reel HORNS (2026-11-23). Es un estándar documentado para revisar, **no** un cambio del pipeline. No se ha aplicado a ningún otro episodio ni tarea programada.
+> 2026-11-23: este borrador queda sustituido por **E2A Basketball Visual Standard v1** (`E2A_BASKETBALL_VISUAL_STANDARD_V1.md`), que el propietario fijó como estándar por defecto. Se conserva como histórico.
 
 ## Principio
 Claridad editorial antes que realismo, y realismo antes que efectos. Una idea por vídeo. La tensión sale de causa → efecto y de seguir a **un** jugador, no del movimiento de cámara.
