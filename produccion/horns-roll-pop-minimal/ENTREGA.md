@@ -1,4 +1,30 @@
-# HORNS: THE DEFENDER'S DILEMMA — entrega v1 (2026-11-23)
+# HORNS: THE DEFENDER'S DILEMMA — entrega FINAL con voz (2026-11-23)
+
+**Estado: FINAL con voz aprobada.** El propietario autorizó la voz el 23-11 a las 09:26 (Madrid). **No se ha subido, publicado ni programado nada**, ni se ha tocado Metricool o ninguna tarea. Coste: 461 créditos de ElevenLabs (una toma de Deuce, eleven_v4); Scribe 0 créditos; 0 €.
+
+## Archivos FINAL (`tactical-studio/horns/entrega-final/`)
+| Archivo | Qué es |
+|---|---|
+| `E2A-HORNS-ROLL-POP-FINAL.mp4` | 1080×1920, 30 fps, H.264 High, yuv420p, 1311 fotogramas, 43,70 s, 12,5 MB. AAC 48 kHz: −14,5 LUFS, pico −1,7 dBTP, LRA 6,8. md5 `56216d46e62aa944fde3ddc7eded0990` |
+| `E2A-HORNS-ROLL-POP-FINAL-TRIAL.mp4` | Versión para el trial reel (regla del propietario): zoom 3 %, más saturación, contraste y nitidez, EQ suave de voz, misma toma. SSIM 0,70 frente al FINAL. md5 `f93ff2d127e0e903c00911f8d526ec95` |
+| `horns-roll-pop-minimal-PREVIEW.mp4` | FINAL a 540×960 |
+| `contact_sheet.jpg` | 12 fotogramas del FINAL (también en esta carpeta del repo) |
+
+## Qué cambió con la voz
+- Una sola toma con el guion exacto (73 palabras) y tres etiquetas de tono. No se estiró ni se aceleró: solo se añadieron silencios digitales entre frases (`scripts/tactical-voice.py`, `gapFill: silence`) para que cada frase caiga en su toma. Episodio de voz: `template/tactical/episodes/horns/`.
+- Cortes y subtítulos recalculados con los tiempos reales (Scribe): hook 0, setup 3,49, action 9,26, read 17,39, branchA 20,73, branchB 28,15, close 35,23; fin 43,70 s.
+- `frame-fit` con los nuevos cortes: 0 fotogramas marcados de 1311.
+- Mezcla offline (`MEZCLA.txt`): voz comprimida suave, música propia regenerada a 43,7 s con acentos en el rehook y el cierre, con ducking. Sin bote, chirridos ni whooshes.
+- Dentro de cada frase Deuce habla a su ritmo natural (~165 palabras por minuto); contando las pausas, el vídeo va a ~108. Es más rápido por frase que las 112–122 del estilo propuesto.
+- Scribe da tiempos por palabra algo aproximados; revisé la sincronía en fotogramas sueltos, no palabra por palabra.
+
+## Veredicto FINAL
+- **GO para tu revisión** y, si te gusta, para programarlo cuando lo pidas.
+- Siguen abiertos los pendientes de movimiento de abajo (ninguno de balón-cuerpo).
+
+---
+
+# Entrega v1 anterior (sin voz)
 
 **Estado: VISUAL_MASTER_PENDING_AUDIO. NO-GO para publicar** hasta que haya voz aprobada. No se ha subido, publicado ni programado nada. No se ha tocado Metricool ni ninguna tarea. Coste: 0 € y 0 créditos de ElevenLabs.
 
@@ -36,7 +62,7 @@ En el repositorio, rama `claude/horns-roll-pop-minimal-v1` (sin fusionar):
 El primer montaje tenía un zoom del 10 % en el rehook. `frame-fit` mostró que **O3 y X3 salían del cuadro** por la derecha. Quité el zoom y volví a renderizar solo esos 124 fotogramas.
 
 ## Pendientes y defectos conocidos (sin esconder)
-1. **Sin voz.** No hay TTS local. La voz necesita tu autorización (~400 créditos de ElevenLabs, una toma con Deuce). Con ella: re-timing automático desde las palabras, render de ~45 min y mezcla con ducking. Hasta entonces, los subtítulos van con tiempos guía.
+1. ~~Sin voz~~ Resuelto en el FINAL (arriba).
 2. **Movimiento (QC v33, avisos P1/P2, ninguno de balón):**
    - O1, muñeca izquierda, 541–666 m/s² a 5,3–5,8 s, al usar el bloqueo. Compartido por las dos ramas.
    - O4, muñecas, ~450–460 m/s² en la recepción de A (8,2 s).

@@ -1,0 +1,85 @@
+{
+ "id": "horns-roll-pop",
+ "voiceRaw": "tactical/horns/voice-raw.mp3",
+ "voice": "tactical/horns/voice.wav",
+ "wordsRaw": "horns-roll-pop.words-raw.json",
+ "gapFill": "silence",
+ "preroll": 0,
+ "gaps": [
+  {
+   "after": "watch the ball.",
+   "sec": 0.49,
+   "why": "'hook2' starts on its shot (guide 1.3 s)"
+  },
+  {
+   "after": "Watch this defender.",
+   "sec": 0.61,
+   "why": "'horns' starts on its shot (guide 3.0 s)"
+  },
+  {
+   "after": "This is Horns.",
+   "sec": 0.47,
+   "why": "'bigs' starts on its shot (guide 4.25 s)"
+  },
+  {
+   "after": "at the elbows,",
+   "sec": 0.08,
+   "why": "'corners' starts on its shot (guide 5.7 s)"
+  },
+  {
+   "after": "in both corners.",
+   "sec": 1.71,
+   "why": "'screen' starts on its shot (guide 8.7 s)"
+  },
+  {
+   "after": "takes Five's screen.",
+   "sec": 0.86,
+   "why": "'roll' starts on its shot (guide 11.0 s)"
+  },
+  {
+   "after": "to the rim.",
+   "sec": 0.91,
+   "why": "'pop' starts on its shot (guide 13.3 s)"
+  },
+  {
+   "after": "behind the arc.",
+   "sec": 2.4,
+   "why": "'read' starts on its shot (guide 16.95 s)"
+  },
+  {
+   "after": "to read both.",
+   "sec": 1.46,
+   "why": "'help' starts on its shot (guide 20.3 s)"
+  },
+  {
+   "after": "tags the roll,",
+   "sec": 0.08,
+   "why": "'three' starts on its shot (guide 21.7 s)"
+  },
+  {
+   "after": "open for three.",
+   "sec": 5.56,
+   "why": "'stay' starts on its shot (guide 28.3 s)"
+  },
+  {
+   "after": "stays with Four,",
+   "sec": 0.026,
+   "why": "'inside' starts on its shot (guide 29.8 s)"
+  },
+  {
+   "after": "might be there.",
+   "sec": 4.42,
+   "why": "'setup' starts on its shot (guide 35.5 s)"
+  },
+  {
+   "after": "there. Same setup.",
+   "sec": 0.51,
+   "why": "'threats' starts on its shot (guide 36.65 s)"
+  },
+  {
+   "after": "setup. Two threats.",
+   "sec": 0.56,
+   "why": "'pressure' starts on its shot (guide 37.95 s)"
+  }
+ ]
+}

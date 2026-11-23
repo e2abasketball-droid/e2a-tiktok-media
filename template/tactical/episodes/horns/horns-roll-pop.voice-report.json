@@ -1,0 +1,192 @@
+{
+ "source": "public/tactical/horns/voice-raw.mp3",
+ "source_sec": 26.32,
+ "preroll": 0.0,
+ "output": "public/tactical/horns/voice.wav",
+ "output_sec": 40.6,
+ "inserted_total_sec": 14.28,
+ "last_word_end": 40.68,
+ "gaps": [
+  {
+   "after": "watch the ball.",
+   "natural_silence": [
+    1.15,
+    1.64
+   ],
+   "natural_sec": 0.49,
+   "target_sec": 0.49,
+   "inserted_sec": 0.0,
+   "cut_at_source": 1.305,
+   "why": "'hook2' starts on its shot (guide 1.3 s)"
+  },
+  {
+   "after": "Watch this defender.",
+   "natural_silence": [
+    2.72,
+    3.31
+   ],
+   "natural_sec": 0.59,
+   "target_sec": 0.61,
+   "inserted_sec": 0.02,
+   "cut_at_source": 3.155,
+   "why": "'horns' starts on its shot (guide 3.0 s)"
+  },
+  {
+   "after": "This is Horns.",
+   "natural_silence": [
+    4.49,
+    4.96
+   ],
+   "natural_sec": 0.47,
+   "target_sec": 0.47,
+   "inserted_sec": 0.0,
+   "cut_at_source": 4.705,
+   "why": "'bigs' starts on its shot (guide 4.25 s)"
+  },
+  {
+   "after": "at the elbows,",
+   "natural_silence": [
+    6.15,
+    6.25
+   ],
+   "natural_sec": 0.1,
+   "target_sec": 0.08,
+   "inserted_sec": 0.0,
+   "cut_at_source": 6.195,
+   "why": "'corners' starts on its shot (guide 5.7 s)"
+  },
+  {
+   "after": "in both corners.",
+   "natural_silence": [
+    7.77,
+    8.27
+   ],
+   "natural_sec": 0.5,
+   "target_sec": 1.71,
+   "inserted_sec": 1.21,
+   "cut_at_source": 7.925,
+   "why": "'screen' starts on its shot (guide 8.7 s)"
+  },
+  {
+   "after": "takes Five's screen.",
+   "natural_silence": [
+    9.65,
+    10.09
+   ],
+   "natural_sec": 0.44,
+   "target_sec": 0.86,
+   "inserted_sec": 0.42,
+   "cut_at_source": 9.785,
+   "why": "'roll' starts on its shot (guide 11.0 s)"
+  },
+  {
+   "after": "to the rim.",
+   "natural_silence": [
+    11.49,
+    11.86
+   ],
+   "natural_sec": 0.37,
+   "target_sec": 0.91,
+   "inserted_sec": 0.54,
+   "cut_at_source": 11.725,
+   "why": "'pop' starts on its shot (guide 13.3 s)"
+  },
+  {
+   "after": "behind the arc.",
+   "natural_silence": [
+    13.13,
+    13.64
+   ],
+   "natural_sec": 0.51,
+   "target_sec": 2.4,
+   "inserted_sec": 1.89,
+   "cut_at_source": 13.485,
+   "why": "'read' starts on its shot (guide 16.95 s)"
+  },
+  {
+   "after": "to read both.",
+   "natural_silence": [
+    15.57,
+    16.04
+   ],
+   "natural_sec": 0.47,
+   "target_sec": 1.46,
+   "inserted_sec": 0.99,
+   "cut_at_source": 15.905,
+   "why": "'help' starts on its shot (guide 20.3 s)"
+  },
+  {
+   "after": "tags the roll,",
+   "natural_silence": [
+    17.15,
+    17.29
+   ],
+   "natural_sec": 0.14,
+   "target_sec": 0.08,
+   "inserted_sec": 0.0,
+   "cut_at_source": 17.245,
+   "why": "'three' starts on its shot (guide 21.7 s)"
+  },
+  {
+   "after": "open for three.",
+   "natural_silence": [
+    18.47,
+    18.95
+   ],
+   "natural_sec": 0.48,
+   "target_sec": 5.56,
+   "inserted_sec": 5.08,
+   "cut_at_source": 18.675,
+   "why": "'stay' starts on its shot (guide 28.3 s)"
+  },
+  {
+   "after": "stays with Four,",
+   "natural_silence": [
+    20.06,
+    20.26
+   ],
+   "natural_sec": 0.2,
+   "target_sec": 0.026,
+   "inserted_sec": 0.0,
+   "cut_at_source": 20.195,
+   "why": "'inside' starts on its shot (guide 29.8 s)"
+  },
+  {
+   "after": "might be there.",
+   "natural_silence": [
+    21.63,
+    22.05
+   ],
+   "natural_sec": 0.42,
+   "target_sec": 4.42,
+   "inserted_sec": 4.0,
+   "cut_at_source": 21.935,
+   "why": "'setup' starts on its shot (guide 35.5 s)"
+  },
+  {
+   "after": "there. Same setup.",
+   "natural_silence": [
+    22.7,
+    23.18
+   ],
+   "natural_sec": 0.48,
+   "target_sec": 0.51,
+   "inserted_sec": 0.03,
+   "cut_at_source": 23.035,
+   "why": "'threats' starts on its shot (guide 36.65 s)"
+  },
+  {
+   "after": "setup. Two threats.",
+   "natural_silence": [
+    23.94,
+    24.4
+   ],
+   "natural_sec": 0.46,
+   "target_sec": 0.56,
+   "inserted_sec": 0.1,
+   "cut_at_source": 24.265,
+   "why": "'pressure' starts on its shot (guide 37.95 s)"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}

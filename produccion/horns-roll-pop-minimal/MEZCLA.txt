@@ -1,0 +1,5 @@
+# HORNS FINAL mix (2026-11-23): voice + own music bed, offline ffmpeg, -14.5 LUFS integrated, -1.7 dBTP, LRA 6.8
+voice: template/public/tactical/horns/voice.wav (one Deuce take, silences inserted by scripts/tactical-voice.py, gapFill=silence)
+  -> 48 kHz stereo, highpass 70 Hz, acompressor thr 0.06 ratio 3 att 5 rel 120, +6 dB
+music: tools/audio/horns_minimal_bed.py --duration 43.68 --accents 17.39,35.23 (+1 dB); bed: --duration 43.68, padded to 43.7 s, ducked by sidechaincompress keyed on the voice (thr 0.03, ratio 6, att 40, rel 450)
+sum: amix normalize=0, +8.6 dB fixed gain, alimiter limit 0.79 (no loudnorm)

@@ -1,6 +1,8 @@
 # HORNS: THE DEFENDER'S DILEMMA — guion y tiempos
 
-> **Los tiempos de este documento son tiempos GUÍA, no de una locución real.** No hay voz aprobada (no se han gastado créditos de ElevenLabs). Los subtítulos y los cortes siguen estos tiempos guía. Cuando exista una toma aprobada, se recalculan solos desde sus palabras (ver «Ruta editable»).
+> **Actualización FINAL (2026-11-23):** ya hay voz real (Deuce, una toma). Los tiempos reales están en `template/tactical/episodes/horns/horns-roll-pop.words.json` y los cortes finales en `ENTREGA.md`; cada frase empieza ~0,3–0,8 s después de su tiempo guía.
+>
+> **Los tiempos de la tabla de abajo son tiempos GUÍA, no de una locución real.** No hay voz aprobada (no se han gastado créditos de ElevenLabs). Los subtítulos y los cortes siguen estos tiempos guía. Cuando exista una toma aprobada, se recalculan solos desde sus palabras (ver «Ruta editable»).
 
 ## Guion (fijo, del documento maestro): 16 frases, 73 palabras
 
