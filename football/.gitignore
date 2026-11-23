@@ -3,3 +3,7 @@ __pycache__/
 *.mp4
 *.mov
 *.wav
+
+remotion/node_modules/
+remotion/public/
+remotion/out/

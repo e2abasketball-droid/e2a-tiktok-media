@@ -46,7 +46,7 @@ def allowed(p):
 def football_files():
     out = []
     for root, dirs, files in os.walk(FOOTBALL):
-        dirs[:] = [d for d in dirs if d not in ('.cache', '__pycache__')]
+        dirs[:] = [d for d in dirs if d not in ('.cache', '__pycache__', 'node_modules', 'public', 'out')]
         out += [os.path.join(root, f) for f in files]
     return out + [os.path.join(REPO, AGENT)]
 
@@ -104,8 +104,24 @@ def run():
     deps = ['template/package.json', 'template/package-lock.json', 'template/tsconfig.json']
     dchg = [d for d in deps if git('diff', '--name-only', BASE['base_commit'], '--', d).strip()]
     add('dependencies: basketball package files unchanged', not dchg, ', '.join(dchg) or ', '.join(deps))
-    fpkg = [f for f in football_files() if os.path.basename(f) in ('package.json', 'package-lock.json', 'requirements.txt')]
-    add('dependencies: football adds no new package manifest in phase 1', not fpkg, ', '.join(fpkg) or 'none')
+    fpkg = [f for f in football_files() if os.path.basename(f) in ('package.json', 'package-lock.json', 'requirements.txt') and '/node_modules/' not in f]
+    fpkg = [os.path.relpath(f, REPO) if os.path.isabs(f) else f for f in fpkg]
+    own = {'football/remotion/package.json', 'football/remotion/package-lock.json'}
+    extra = sorted(set(fpkg) - own)
+    add('dependencies: football has only its own Remotion manifest (phase 2)', not extra, ', '.join(extra) if extra else (', '.join(sorted(fpkg)) or 'none'))
+    # same engine versions as basketball: Remotion / three / React pinned to the versions in template/package-lock.json
+    mism = []
+    flock = os.path.join(REPO, 'football/remotion/package-lock.json')
+    if os.path.exists(flock):
+        bl = json.loads(git('show', f"{BASE['base_commit']}:template/package-lock.json"))['packages']
+        with open(flock, encoding='utf-8') as fh:
+            fl = json.load(fh)['packages']
+        for k in ('remotion', '@remotion/cli', '@remotion/three', '@react-three/fiber', 'three', 'react', 'react-dom'):
+            a1 = bl.get(f'node_modules/{k}', {}).get('version')
+            b1 = fl.get(f'node_modules/{k}', {}).get('version')
+            if a1 != b1:
+                mism.append(f'{k} {a1} != {b1}')
+    add('dependencies: football Remotion stack = basketball versions (one engine, no fork)', not mism, '; '.join(mism) or 'remotion, three, react, r3f identical')
 
     # 5 configs separate
     cfg_dir = os.path.join(FOOTBALL, 'config')
