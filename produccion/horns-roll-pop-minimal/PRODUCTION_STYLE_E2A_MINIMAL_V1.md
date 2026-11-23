@@ -7,8 +7,8 @@ Claridad editorial antes que realismo, y realismo antes que efectos. Una idea po
 
 ## Cámara
 - Una cámara táctica fija para todo el vídeo, canasta arriba, sin órbitas, sin roll y sin cambiar de lado.
-- Se encuadra con `scripts/fit-search.mts` para que los 10 jugadores (pies y cabeza) quepan en la banda segura 380–1330 px durante toda la acción.
-- Como mucho un zoom del 5–10 % en una pausa. La cámara llega a su sitio antes del pase importante.
+- Se encuadra con `scripts/fit-search.mts` para que los 10 jugadores (pies y cabeza) quepan en la banda segura 380–1330 px durante toda la acción, y se comprueba con `scripts/frame-fit.mts` en **todos** los fotogramas del montaje.
+- Zoom solo si `frame-fit` sigue dando 0 fotogramas marcados. En HORNS, con tiradores en las dos esquinas, no cabe ninguno: un zoom del 10 % sacaba del cuadro a O3 y X3, así que se quitó.
 
 ## Montaje
 - Una toma por frase y tomas de 4–8 s.

@@ -1,0 +1,554 @@
+{
+ "reel": "HORNS: THE DEFENDER'S DILEMMA",
+ "date": "2026-11-23",
+ "plays": [
+  "horns-rp-a-help",
+  "horns-rp-b-stay"
+ ],
+ "engine": "Tactical3DV2 + athleteRenderer v33 (per-props flag; Legacy remains the default)",
+ "test_play": {
+  "passed": 49,
+  "failed": 0,
+  "results": [
+   {
+    "play": "horns-rp-a-help",
+    "check": "5 attackers and 5 defenders",
+    "ok": true,
+    "value": "5 O / 5 X"
+   },
+   {
+    "play": "horns-rp-a-help",
+    "check": "every player has a track over the whole play",
+    "ok": true,
+    "value": "tracks"
+   },
+   {
+    "play": "horns-rp-a-help",
+    "check": "every defender guards an existing attacker",
+    "ok": true,
+    "value": "O1,O2,O3,O4,O5"
+   },
+   {
+    "play": "horns-rp-a-help",
+    "check": "top speed ≤ 7.5 m/s (no teleports)",
+    "ok": true,
+    "value": "5.95 m/s (X4@8.53)"
+   },
+   {
+    "play": "horns-rp-a-help",
+    "check": "acceleration ≤ 22 m/s² (no jerks)",
+    "ok": true,
+    "value": "20.5 m/s² (X4@7.96)"
+   },
+   {
+    "play": "horns-rp-a-help",
+    "check": "no two bodies overlap (≥ 0.5 m centre to centre)",
+    "ok": true,
+    "value": "0.61 m (O1-X1@7.70)"
+   },
+   {
+    "play": "horns-rp-a-help",
+    "check": "everyone stays in bounds",
+    "ok": true,
+    "value": "ok"
+   },
+   {
+    "play": "horns-rp-a-help",
+    "check": "ball horizontal speed ≤ 15 m/s and continuous",
+    "ok": true,
+    "value": "11.4 m/s"
+   },
+   {
+    "play": "horns-rp-a-help",
+    "check": "ball always held, in flight or dropping after a make",
+    "ok": true,
+    "value": "0 orphan samples"
+   },
+   {
+    "play": "horns-rp-a-help",
+    "check": "pass O1→O4: lane open (ball ≥ 0.6 m from every defender)",
+    "ok": true,
+    "value": "1.00 m (X1@7.59)"
+   },
+   {
+    "play": "horns-rp-a-help",
+    "check": "pass O1→O4: speed 6–14 m/s",
+    "ok": true,
+    "value": "12.3 m/s over 8.0 m"
+   },
+   {
+    "play": "horns-rp-a-help",
+    "check": "pass O1→O4: receiver under control at the catch (≤ 3.5 m/s)",
+    "ok": true,
+    "value": "0.00 m/s"
+   },
+   {
+    "play": "horns-rp-a-help",
+    "check": "O4 shoots from behind the FIBA 3-pt line",
+    "ok": true,
+    "value": "7.27 m from the basket"
+   },
+   {
+    "play": "horns-rp-a-help",
+    "check": "shot flight 0.9–1.3 s",
+    "ok": true,
+    "value": "1.05 s"
+   },
+   {
+    "play": "horns-rp-a-help",
+    "check": "O4 is open (nearest defender ≥ 1.8 m)",
+    "ok": true,
+    "value": "2.77 m"
+   },
+   {
+    "play": "horns-rp-a-help",
+    "check": "O5 screen 5.15–5.95s is legal (stationary ≤ 0.15 m/s)",
+    "ok": true,
+    "value": "0.000 m/s"
+   },
+   {
+    "play": "horns-rp-a-help",
+    "check": "claim \"The guard takes Five's screen.\"",
+    "ok": true,
+    "value": "O5–X1 0.86 m (≤ 1)"
+   },
+   {
+    "play": "horns-rp-a-help",
+    "check": "claim \"Five rolls, Four pops: the bigs split\"",
+    "ok": true,
+    "value": "O4–O5 5.18 m (≥ 5)"
+   },
+   {
+    "play": "horns-rp-a-help",
+    "check": "claim \"X5 contains the ball\"",
+    "ok": true,
+    "value": "X5–O1 0.88 m (≤ 1.2)"
+   },
+   {
+    "play": "horns-rp-a-help",
+    "check": "claim \"If he tags the roll,\"",
+    "ok": true,
+    "value": "X4–O5 0.94 m (≤ 1.6)"
+   },
+   {
+    "play": "horns-rp-a-help",
+    "check": "claim \"Four is open\"",
+    "ok": true,
+    "value": "X4–O4 5.56 m (≥ 3)"
+   },
+   {
+    "play": "horns-rp-a-help",
+    "check": "claim \"open for three\"",
+    "ok": true,
+    "value": "7.27 m"
+   },
+   {
+    "play": "horns-rp-a-help",
+    "check": "claim \"Four is open for three\"",
+    "ok": true,
+    "value": "nearest defender 2.77 m (≥ 1.8)"
+   },
+   {
+    "play": "horns-rp-a-help",
+    "check": "claim \"the help comes from the decision frame\"",
+    "ok": true,
+    "value": "moves 0.13 s after decision (≥ 0.03)"
+   },
+   {
+    "play": "horns-rp-a-help",
+    "check": "claim \"screen, roll + pop, the help, the kick-out, the three\"",
+    "ok": true,
+    "value": "5.1 < 5.25 < 6 < 6.75 < 6.8 < 7.55 < 8.2 < 8.649999999999999 < 9.7"
+   },
+   {
+    "play": "horns-rp-b-stay",
+    "check": "5 attackers and 5 defenders",
+    "ok": true,
+    "value": "5 O / 5 X"
+   },
+   {
+    "play": "horns-rp-b-stay",
+    "check": "every player has a track over the whole play",
+    "ok": true,
+    "value": "tracks"
+   },
+   {
+    "play": "horns-rp-b-stay",
+    "check": "every defender guards an existing attacker",
+    "ok": true,
+    "value": "O1,O2,O3,O4,O5"
+   },
+   {
+    "play": "horns-rp-b-stay",
+    "check": "top speed ≤ 7.5 m/s (no teleports)",
+    "ok": true,
+    "value": "4.86 m/s (X5@8.10)"
+   },
+   {
+    "play": "horns-rp-b-stay",
+    "check": "acceleration ≤ 22 m/s² (no jerks)",
+    "ok": true,
+    "value": "21.1 m/s² (X4@6.81)"
+   },
+   {
+    "play": "horns-rp-b-stay",
+    "check": "no two bodies overlap (≥ 0.5 m centre to centre)",
+    "ok": true,
+    "value": "0.60 m (O1-X1@8.05)"
+   },
+   {
+    "play": "horns-rp-b-stay",
+    "check": "everyone stays in bounds",
+    "ok": true,
+    "value": "ok"
+   },
+   {
+    "play": "horns-rp-b-stay",
+    "check": "ball horizontal speed ≤ 15 m/s and continuous",
+    "ok": true,
+    "value": "9.6 m/s"
+   },
+   {
+    "play": "horns-rp-b-stay",
+    "check": "ball always held, in flight or dropping after a make",
+    "ok": true,
+    "value": "0 orphan samples"
+   },
+   {
+    "play": "horns-rp-b-stay",
+    "check": "pass O1→O5: lane open (ball ≥ 0.6 m from every defender)",
+    "ok": true,
+    "value": "0.95 m (X5@7.59)"
+   },
+   {
+    "play": "horns-rp-b-stay",
+    "check": "pass O1→O5: speed 6–14 m/s",
+    "ok": true,
+    "value": "11.3 m/s over 5.1 m"
+   },
+   {
+    "play": "horns-rp-b-stay",
+    "check": "pass O1→O5: receiver under control at the catch (≤ 3.5 m/s)",
+    "ok": true,
+    "value": "0.00 m/s"
+   },
+   {
+    "play": "horns-rp-b-stay",
+    "check": "O5 lays up within 1.5 m of the rim",
+    "ok": true,
+    "value": "1.32 m"
+   },
+   {
+    "play": "horns-rp-b-stay",
+    "check": "O5 is open (nearest defender ≥ 1 m)",
+    "ok": true,
+    "value": "1.99 m"
+   },
+   {
+    "play": "horns-rp-b-stay",
+    "check": "O5 screen 5.15–5.95s is legal (stationary ≤ 0.15 m/s)",
+    "ok": true,
+    "value": "0.000 m/s"
+   },
+   {
+    "play": "horns-rp-b-stay",
+    "check": "claim \"The guard takes Five's screen.\"",
+    "ok": true,
+    "value": "O5–X1 0.86 m (≤ 1)"
+   },
+   {
+    "play": "horns-rp-b-stay",
+    "check": "claim \"Five rolls, Four pops: the bigs split\"",
+    "ok": true,
+    "value": "O4–O5 5.18 m (≥ 5)"
+   },
+   {
+    "play": "horns-rp-b-stay",
+    "check": "claim \"X5 contains the ball\"",
+    "ok": true,
+    "value": "X5–O1 0.88 m (≤ 1.2)"
+   },
+   {
+    "play": "horns-rp-b-stay",
+    "check": "claim \"If he stays with Four,\"",
+    "ok": true,
+    "value": "X4–O4 1.09 m (≤ 1.8)"
+   },
+   {
+    "play": "horns-rp-b-stay",
+    "check": "claim \"the pass inside might be there\"",
+    "ok": true,
+    "value": "X4–O5 5.38 m (≥ 3.5)"
+   },
+   {
+    "play": "horns-rp-b-stay",
+    "check": "claim \"X5 is still on the ball\"",
+    "ok": true,
+    "value": "X5–O5 3.57 m (≥ 2)"
+   },
+   {
+    "play": "horns-rp-b-stay",
+    "check": "claim \"X1 is still behind\"",
+    "ok": true,
+    "value": "X1–O1 1.12 m (≥ 1)"
+   },
+   {
+    "play": "horns-rp-b-stay",
+    "check": "claim \"finish near the rim\"",
+    "ok": true,
+    "value": "1.32 m (≤ 1.6)"
+   },
+   {
+    "play": "horns-rp-b-stay",
+    "check": "claim \"screen, roll + pop, X4 stays, the pass inside, the finish\"",
+    "ok": true,
+    "value": "5.1 < 5.25 < 6 < 6.75 < 6.8 < 7.55 < 8 < 8.85 < 9.299999999999999"
+   }
+  ]
+ },
+ "test_branches": {
+  "passed": 13,
+  "failed": 0,
+  "lines": [
+   "PASS  two plays given, both with branch metadata in the same group — horns-rp-a-help:horns-roll-pop / horns-rp-b-stay:horns-roll-pop",
+   "PASS  all 10 players identical until the fork (6.750 s) — max 0.12 cm O5@6.717",
+   "PASS  drawn ball identical until the fork (≤ 1.5 cm) — max 0.00 cm",
+   "PASS  offence tracks identical until the hand-off (6.750 s): only the defence has read — max 0.12 cm O5@6.717",
+   "PASS  drawn ball identical until the hand-off (≤ 1.5 cm) — max 0.00 cm",
+   "PASS  the defence actually reads differently after the fork (X4 ≥ 0.5 m apart at fork + 0.6 s) — 3.44 m",
+   "PASS  [horns-rp-a-help] HELP -> three_point_shot: last ball event is a made SHOT released behind the arc — shot make=true at 7.27 m from the basket",
+   "PASS  [horns-rp-a-help] payoff metadata matches the ball event — {\"type\":\"shot\",\"three\":true,\"make\":true,\"t\":9.7}",
+   "PASS  [horns-rp-b-stay] STAY -> rim_finish: last ball event is a made LAYUP within 1.5 m of the rim — layup make=true at 1.32 m",
+   "PASS  [horns-rp-b-stay] the finisher catches a pass after the read (no carry) — 1 pass(es) to O5",
+   "PASS  [horns-rp-b-stay] payoff metadata matches the ball event — {\"type\":\"layup\",\"make\":true,\"t\":9.299999999999999}",
+   "PASS  the two branches have different results — three_point_shot vs rim_finish",
+   "PASS  different end states: the finishers end ≥ 4 m apart — 6.68 m"
+  ]
+ },
+ "qc_realism_v33": {
+  "A_help": {
+   "players": 10,
+   "ball_body_contacts": 0,
+   "flagged_rows": [
+    {
+     "t": 5.3,
+     "id": "O1",
+     "kind": "pop:wrL",
+     "v": 541.217
+    },
+    {
+     "t": 5.533,
+     "id": "O1",
+     "kind": "pop:wrL",
+     "v": 631.951
+    },
+    {
+     "t": 5.767,
+     "id": "O1",
+     "kind": "pop:wrL",
+     "v": 666.339
+    },
+    {
+     "t": 1.267,
+     "id": "O2",
+     "kind": "pop:pelvis",
+     "v": 72.219
+    },
+    {
+     "t": 1.267,
+     "id": "O2",
+     "kind": "pop:head",
+     "v": 82.196
+    },
+    {
+     "t": 6.6,
+     "id": "O4",
+     "kind": "elbowFlex",
+     "v": 155.413
+    },
+    {
+     "t": 6.333,
+     "id": "O4",
+     "kind": "pop:pelvis",
+     "v": 158.544
+    },
+    {
+     "t": 6.333,
+     "id": "O4",
+     "kind": "pop:head",
+     "v": 162.808
+    },
+    {
+     "t": 7.167,
+     "id": "O4",
+     "kind": "pop:head",
+     "v": 129.905
+    },
+    {
+     "t": 8.2,
+     "id": "O4",
+     "kind": "pop:wrL",
+     "v": 462.648
+    },
+    {
+     "t": 8.2,
+     "id": "O4",
+     "kind": "pop:wrR",
+     "v": 446.581
+    },
+    {
+     "t": 4.6,
+     "id": "O5",
+     "kind": "pop:pelvis",
+     "v": 109.196
+    },
+    {
+     "t": 4.6,
+     "id": "O5",
+     "kind": "pop:head",
+     "v": 108.42
+    },
+    {
+     "t": 9.233,
+     "id": "X4",
+     "kind": "elbowFlex",
+     "v": 160.933
+    },
+    {
+     "t": 7.2,
+     "id": "X4",
+     "kind": "pop:head",
+     "v": 82.246
+    },
+    {
+     "t": 8.667,
+     "id": "X4",
+     "kind": "pop:wrL",
+     "v": 479.293
+    },
+    {
+     "t": 8.3,
+     "id": "X5",
+     "kind": "pop:pelvis",
+     "v": 281.114
+    },
+    {
+     "t": 8.3,
+     "id": "X5",
+     "kind": "pop:head",
+     "v": 280.612
+    }
+   ],
+   "note": "pop:<joint> = aceleración de la articulación en m/s² (segunda diferencia a 120 Hz). Umbrales de aviso: pelvis/cabeza 60, muñecas 400, tobillos 600. elbowFlex = flexión de codo > 155°. Ninguna fila es contacto balón-cuerpo."
+  },
+  "B_stay": {
+   "players": 10,
+   "ball_body_contacts": 0,
+   "flagged_rows": [
+    {
+     "t": 5.3,
+     "id": "O1",
+     "kind": "pop:wrL",
+     "v": 541.217
+    },
+    {
+     "t": 5.533,
+     "id": "O1",
+     "kind": "pop:wrL",
+     "v": 631.951
+    },
+    {
+     "t": 5.767,
+     "id": "O1",
+     "kind": "pop:wrL",
+     "v": 666.339
+    },
+    {
+     "t": 1.267,
+     "id": "O2",
+     "kind": "pop:pelvis",
+     "v": 72.219
+    },
+    {
+     "t": 1.267,
+     "id": "O2",
+     "kind": "pop:head",
+     "v": 82.196
+    },
+    {
+     "t": 6.6,
+     "id": "O4",
+     "kind": "elbowFlex",
+     "v": 155.414
+    },
+    {
+     "t": 6.333,
+     "id": "O4",
+     "kind": "pop:pelvis",
+     "v": 158.544
+    },
+    {
+     "t": 6.333,
+     "id": "O4",
+     "kind": "pop:head",
+     "v": 162.808
+    },
+    {
+     "t": 7.2,
+     "id": "O5",
+     "kind": "elbowFlex",
+     "v": 155.277
+    },
+    {
+     "t": 4.6,
+     "id": "O5",
+     "kind": "pop:pelvis",
+     "v": 109.196
+    },
+    {
+     "t": 4.6,
+     "id": "O5",
+     "kind": "pop:head",
+     "v": 108.42
+    },
+    {
+     "t": 8.167,
+     "id": "O5",
+     "kind": "pop:head",
+     "v": 210.451
+    },
+    {
+     "t": 8,
+     "id": "O5",
+     "kind": "pop:wrL",
+     "v": 405.28
+    },
+    {
+     "t": 8.5,
+     "id": "O5",
+     "kind": "pop:anR",
+     "v": 921.558
+    },
+    {
+     "t": 6.9,
+     "id": "X1",
+     "kind": "pop:head",
+     "v": 69.656
+    },
+    {
+     "t": 8.6,
+     "id": "X5",
+     "kind": "pop:head",
+     "v": 71.341
+    },
+    {
+     "t": 8.667,
+     "id": "X5",
+     "kind": "pop:head",
+     "v": 60.007
+    }
+   ],
+   "note": "pop:<joint> = aceleración de la articulación en m/s² (segunda diferencia a 120 Hz). Umbrales de aviso: pelvis/cabeza 60, muñecas 400, tobillos 600. elbowFlex = flexión de codo > 155°. Ninguna fila es contacto balón-cuerpo."
+  }
+ }
+}

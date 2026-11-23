@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """E2A HORNS: THE DEFENDER'S DILEMMA (owner brief 2026-11-22) - the edit, as Remotion props for Tactical3DV2.
-One fixed tactical camera (basket up, behind the offence, all ten players), one micro zoom at the decision, two
+One fixed tactical camera (basket up, behind the offence, all ten players), no zoom (frame-fit: the corners leave the frame on any zoom), two
 branches from the SAME decision frame (play A horns-rp-a-help / play B horns-rp-b-stay, sample-identical to 6.6 s).
 Timing source: --words <words.json> (real narration, from scripts/tactical-voice.py) or the GUIDE timings below
 (no approved voice yet: subtitles follow the guide and the MP4 is labelled VISUAL_MASTER_PENDING_AUDIO).
@@ -74,7 +74,7 @@ def pos(play, pid, t):
 orb = lambda tg, dist, pitch, yaw=0, fov=50: {"type": "orbit", "target": tg, "dist": dist, "pitch": pitch, "yaw": yaw, "fov": fov}
 key = lambda at, rig, ease=None: {"at": at, "rig": rig, **({"ease": ease} if ease else {})}
 MAIN = orb([0.0, 7.45, 0.6], 22.0, 52)                 # fit-search: all ten, feet + head, safe 440-1360 px, 2.4-9.4 s
-ZOOM = orb([1.0, 6.45, 0.6], 19.8, 52)                  # decision: ~10 % closer on the X4 / O5 / O4 triangle, same axis
+ZOOM = orb([1.0, 6.45, 0.6], 19.8, 52)                  # NOT USED: frame-fit showed O3/X3 leave the frame (x up to 1213 px); the corners sit 17-25 px from the edges on MAIN, so no zoom fits
 
 
 def build(words, voice, music, preview):
@@ -123,20 +123,20 @@ def build(words, voice, music, preview):
                           {"type": "route", "player": "O4", "t0": 0, "t1": 1, "pts": POP_PTS, "color": GOLD, "dashed": False, "width": 0.09,
                            "label": "POP", "labelYaw": 0, "labelSize": 0.9, "from": lp - 0.2, "to": d}],
                   "screen": []})
-    # 4 READ (rehook): the decision frame held, ~10 % closer, X4 outlined, his two options as thin dashed lines
+    # 4 READ (rehook): the decision frame held on the same wide camera, X4 outlined, his two options as thin dashed lines
     d = t_a - t_read
     shots.append({"id": "read", "name": "Rehook - now this defender has to read both", "at": t_read, "play": "A",
-                  "remap": [[0, DEC], [d, DEC]], "camera": [key(0, MAIN), key(0.9, ZOOM, "inOut"), key(d, ZOOM)],
+                  "remap": [[0, DEC], [d, DEC]], "camera": [key(0, MAIN)],
                   "ov3": [{"type": "ring", "player": "X4", "color": GOLD, "from": 0.1, "to": d},
                           {"type": "route", "player": "X4", "t0": 0, "t1": 1, "pts": [x4, helpTo], "color": ROLLC, "dashed": True, "width": 0.1, "from": 1.1, "to": d},
                           {"type": "route", "player": "X4", "t0": 0, "t1": 1, "pts": [x4, stayTo], "color": GOLD, "dashed": True, "width": 0.1, "from": 1.1, "to": d}],
                   "screen": [{"type": "freeze", "from": 0.0, "to": d}]})
-    # 5 BRANCH A: X4 tags the roll -> kick-out -> the three (the camera is back on the wide frame BEFORE the pass)
+    # 5 BRANCH A: X4 tags the roll -> kick-out -> the three (same wide camera all through)
     d = t_b - t_a
     lh, l3 = L["help"][0] - t_a, L["three"][0] - t_a
     shots.append({"id": "branchA", "name": "A - he tags the roll, Four is open for three", "at": t_a, "play": "A",
                   "remap": [[0, DEC], [2.4, 7.55], [4.6, 8.75], [d, 10.2]],
-                  "camera": [key(0, ZOOM), key(0.8, MAIN, "inOut"), key(d, MAIN)],
+                  "camera": [key(0, MAIN)],
                   "ov3": [{"type": "ring", "player": "X4", "color": GOLD, "from": 0.0, "to": 2.4},
                           {"type": "passLane", "src": "O1", "dst": "O4", "color": WHITE, "from": 2.3, "to": 3.4}],
                   "screen": [{"type": "pin", "player": "X4", "text": "HELP", "tone": "gold", "from": lh + 0.1, "to": lh + 0.9, "size": 40},
