@@ -5,7 +5,7 @@ import {FBTactical3D} from './FBTactical3D';
 import {thirdManRun} from './episodes/thirdManRun';
 import {simpleShortCorner} from './episodes/simpleShortCorner';
 import {shortCornerCutback, shortCornerCutbackHookB, shortCornerCutbackV04} from './episodes/shortCornerCutback';
-import {nearPostDecoyV05} from './episodes/nearPostDecoy';
+import {nearPostDecoyV05, nearPostDecoyV06} from './episodes/nearPostDecoy';
 
 export const Root: React.FC = () => (
   <>
@@ -19,5 +19,6 @@ export const Root: React.FC = () => (
     <Composition id="FBSetPiece001V03HookB" component={FBTactical3D} durationInFrames={Math.round(shortCornerCutbackHookB.duration * 30)} fps={30} width={1080} height={1920} defaultProps={{episode: shortCornerCutbackHookB}} />
     {/* FB-SETPIECE-001 V05 (owner directive V05): mixed defence first, near-post decoy + late arrival; silent cut */}
     <Composition id="FBSetPiece001V05" component={FBTactical3D} durationInFrames={Math.round(nearPostDecoyV05.duration * 30)} fps={30} width={1080} height={1920} defaultProps={{episode: nearPostDecoyV05}} />
+    <Composition id="FBSetPiece001V06" component={FBTactical3D} durationInFrames={Math.round(nearPostDecoyV06.duration * 30)} fps={30} width={1080} height={1920} defaultProps={{episode: nearPostDecoyV06}} />
   </>
 );

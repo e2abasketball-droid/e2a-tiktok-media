@@ -215,3 +215,40 @@ export const nearPostDecoyV05: Episode = {
     },
   ],
 };
+
+/** V06 (after the V05 review in motion): the hook ends closer on the box (players were small), the tactical
+ *  action keeps the passer off the frame edge, and the goal camera is wider and turned towards the shooter so
+ *  the strike, the ball path and the keeper's dive are in one picture. Play, graphics and timing unchanged. */
+const v05 = nearPostDecoyV05.shots;
+export const nearPostDecoyV06: Episode = {
+  ...nearPostDecoyV05,
+  shots: [
+    {...v05[0], cam: [v05[0].cam[0], {...v05[0].cam[1], dist: 52}, {...v05[0].cam[2], focus: [{p: [47.4, -11.5]}], dist: 46}]},
+    v05[1],
+    {
+      ...v05[2],
+      cam: [
+        {...v05[2].cam[0], focus: [{p: [44.8, -12.0]}]},
+        {...v05[2].cam[1], focus: [{p: [46.0, -11.4]}]},
+        v05[2].cam[2],
+      ],
+      // LINE SHIFTS under D5 (it sat on top of DECOY in V05)
+      screen: v05[2].screen!.map((x) => (x.type === 'chip' && x.text === 'LINE SHIFTS' ? {...x, dy: 130, dx: 110} : x)),
+    },
+    {
+      ...v05[3],
+      cam: [
+        {at: 0, mode: 'detail', focus: [{p: [49.4, -2.2]}], dist: 12.5, elev: 12, azim: 202, fov: 50, z: 0.9},
+        {at: 1.8, mode: 'detail', focus: [{p: [50.2, -0.6]}], dist: 11.0, elev: 12, azim: 198, fov: 50, z: 0.9},
+      ],
+    },
+    {
+      ...v05[4],
+      // FACING THE BALL and ARRIVES NOW stacked on each other in the V05 pause: one at a time, apart
+      screen: v05[4].screen!.map((x) =>
+        x.type === 'chip' && x.text === 'FACING THE BALL' ? {...x, to: 2.6} : x.type === 'chip' && x.text === 'ARRIVES NOW' ? {...x, dy: 130, dx: 120} : x,
+      ),
+    },
+    ...v05.slice(5),
+  ],
+};
