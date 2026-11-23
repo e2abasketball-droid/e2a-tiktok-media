@@ -1,0 +1,79 @@
+{
+ "id": "zone131-voice",
+ "title": "1-3-1 Zone",
+ "fps": 30,
+ "voiceRaw": "tactical/zone131/voice-raw.mp3",
+ "wordsRaw": "zone131-voice.words-raw.json",
+ "voice": "tactical/zone131/voice.wav",
+ "preroll": 0.1,
+ "tail": 1.2,
+ "gapFill": "silence",
+ "gaps": [
+  {
+   "after": "Two corners.",
+   "sec": 0.55,
+   "why": "hook beat: the path reaches the second corner"
+  },
+  {
+   "after": "gamble of the one-three-one.",
+   "sec": 0.6,
+   "why": "the coverage areas finish rising"
+  },
+  {
+   "after": "behind the zone.",
+   "sec": 0.6,
+   "why": "TAIL label, cut to the ball movement"
+  },
+  {
+   "after": "reach the corner.",
+   "sec": 1.1,
+   "why": "the two passes O1-O2-O4 play out"
+  },
+  {
+   "after": "runner trap.",
+   "sec": 0.9,
+   "why": "freeze on the trap"
+  },
+  {
+   "after": "far wing drops.",
+   "sec": 0.6,
+   "why": "WEAK BLOCK pin holds"
+  },
+  {
+   "after": "Now reset.",
+   "sec": 0.65,
+   "why": "NEW POSSESSION stamp"
+  },
+  {
+   "after": "opposite corner.",
+   "sec": 0.8,
+   "why": "the skip in flight"
+  },
+  {
+   "after": "closes out first.",
+   "sec": 0.6,
+   "why": "X3 resumes"
+  },
+  {
+   "after": "take over.",
+   "sec": 0.7,
+   "why": "the catch"
+  },
+  {
+   "after": "corner three.",
+   "sec": 1.1,
+   "why": "ball through the net + THREE. chip"
+  },
+  {
+   "after": "Contested.",
+   "sec": 0.75,
+   "why": "contest + miss, X4 arrives"
+  }
+ ],
+ "plays": {
+  "A": "zone131-a-corner-trap",
+  "B": "zone131-b-skip-corner",
+  "C": "zone131-c-early-closeout"
+ },
+ "shots": []
+}

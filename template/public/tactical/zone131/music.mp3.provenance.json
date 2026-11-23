@@ -1,0 +1,5 @@
+{
+ "licence_key": "music/synth/tactical",
+ "source": "E2A in-house synth engine music/e2a_music.py --story tactical --track cine_b (same family as the 2-3 Zone MASTER) --duration 42.94 --drop-at 13.26 (trap) --payoff-at 31.92 (three) --no-sfx --soft-edges --history '' (no samples, no ball sounds)",
+ "sha256": "7a0e2727a56a5dfecaca516c8f19329ea6d1854e43120af4e17a6bd0f40f114f"
+}

@@ -1,0 +1,507 @@
+[
+{
+"text": "One",
+"start": 0.16,
+"end": 0.24
+},
+{
+"text": "defender.",
+"start": 0.32,
+"end": 1.08
+},
+{
+"text": "Two",
+"start": 1.28,
+"end": 1.44
+},
+{
+"text": "corners.",
+"start": 1.52,
+"end": 2.28
+},
+{
+"text": "That's",
+"start": 2.48,
+"end": 2.72
+},
+{
+"text": "the",
+"start": 2.8,
+"end": 2.88
+},
+{
+"text": "gamble",
+"start": 3.0,
+"end": 3.36
+},
+{
+"text": "of",
+"start": 3.44,
+"end": 3.52
+},
+{
+"text": "the",
+"start": 3.6,
+"end": 3.68
+},
+{
+"text": "one-three-one.",
+"start": 3.8,
+"end": 4.88
+},
+{
+"text": "One",
+"start": 4.92,
+"end": 4.96
+},
+{
+"text": "up",
+"start": 5.04,
+"end": 5.12
+},
+{
+"text": "top.",
+"start": 5.2,
+"end": 5.84
+},
+{
+"text": "Three",
+"start": 5.92,
+"end": 6.0
+},
+{
+"text": "across",
+"start": 6.08,
+"end": 6.4
+},
+{
+"text": "the",
+"start": 6.48,
+"end": 6.56
+},
+{
+"text": "middle.",
+"start": 6.68,
+"end": 7.2
+},
+{
+"text": "One",
+"start": 7.28,
+"end": 7.44
+},
+{
+"text": "runner",
+"start": 7.52,
+"end": 7.76
+},
+{
+"text": "behind",
+"start": 7.84,
+"end": 8.08
+},
+{
+"text": "the",
+"start": 8.12,
+"end": 8.16
+},
+{
+"text": "zone.",
+"start": 8.24,
+"end": 8.96
+},
+{
+"text": "Watch",
+"start": 9.08,
+"end": 9.2
+},
+{
+"text": "the",
+"start": 9.28,
+"end": 9.36
+},
+{
+"text": "ball",
+"start": 9.48,
+"end": 9.6
+},
+{
+"text": "reach",
+"start": 9.68,
+"end": 9.92
+},
+{
+"text": "the",
+"start": 9.96,
+"end": 10.0
+},
+{
+"text": "corner.",
+"start": 10.08,
+"end": 10.8
+},
+{
+"text": "The",
+"start": 10.84,
+"end": 10.88
+},
+{
+"text": "wing",
+"start": 10.96,
+"end": 11.28
+},
+{
+"text": "and",
+"start": 11.32,
+"end": 11.36
+},
+{
+"text": "the",
+"start": 11.44,
+"end": 11.48
+},
+{
+"text": "runner",
+"start": 11.52,
+"end": 11.84
+},
+{
+"text": "trap.",
+"start": 11.92,
+"end": 12.64
+},
+{
+"text": "The",
+"start": 12.72,
+"end": 12.8
+},
+{
+"text": "top",
+"start": 12.96,
+"end": 13.12
+},
+{
+"text": "drops",
+"start": 13.2,
+"end": 13.52
+},
+{
+"text": "to",
+"start": 13.56,
+"end": 13.6
+},
+{
+"text": "the",
+"start": 13.64,
+"end": 13.68
+},
+{
+"text": "elbow.",
+"start": 13.76,
+"end": 14.4
+},
+{
+"text": "The",
+"start": 14.44,
+"end": 14.48
+},
+{
+"text": "middle",
+"start": 14.56,
+"end": 14.8
+},
+{
+"text": "protects",
+"start": 14.88,
+"end": 15.28
+},
+{
+"text": "inside.",
+"start": 15.56,
+"end": 16.08
+},
+{
+"text": "And",
+"start": 16.12,
+"end": 16.16
+},
+{
+"text": "the",
+"start": 16.24,
+"end": 16.32
+},
+{
+"text": "far",
+"start": 16.4,
+"end": 16.56
+},
+{
+"text": "wing",
+"start": 16.64,
+"end": 16.88
+},
+{
+"text": "drops.",
+"start": 16.96,
+"end": 17.84
+},
+{
+"text": "Now",
+"start": 17.92,
+"end": 18.08
+},
+{
+"text": "reset.",
+"start": 18.16,
+"end": 18.96
+},
+{
+"text": "Move",
+"start": 19.04,
+"end": 19.2
+},
+{
+"text": "the",
+"start": 19.24,
+"end": 19.28
+},
+{
+"text": "ball",
+"start": 19.4,
+"end": 19.52
+},
+{
+"text": "to",
+"start": 19.6,
+"end": 19.68
+},
+{
+"text": "one",
+"start": 19.76,
+"end": 19.92
+},
+{
+"text": "wing...",
+"start": 20.0,
+"end": 20.64
+},
+{
+"text": "then",
+"start": 20.72,
+"end": 20.8
+},
+{
+"text": "skip",
+"start": 20.88,
+"end": 21.04
+},
+{
+"text": "it",
+"start": 21.12,
+"end": 21.28
+},
+{
+"text": "straight",
+"start": 21.48,
+"end": 21.68
+},
+{
+"text": "to",
+"start": 21.72,
+"end": 21.76
+},
+{
+"text": "the",
+"start": 21.84,
+"end": 21.88
+},
+{
+"text": "opposite",
+"start": 21.92,
+"end": 22.32
+},
+{
+"text": "corner.",
+"start": 22.48,
+"end": 23.04
+},
+{
+"text": "The",
+"start": 23.12,
+"end": 23.2
+},
+{
+"text": "far",
+"start": 23.28,
+"end": 23.36
+},
+{
+"text": "wing",
+"start": 23.44,
+"end": 23.68
+},
+{
+"text": "closes",
+"start": 23.76,
+"end": 24.08
+},
+{
+"text": "out",
+"start": 24.16,
+"end": 24.32
+},
+{
+"text": "first.",
+"start": 24.52,
+"end": 25.04
+},
+{
+"text": "The",
+"start": 25.08,
+"end": 25.12
+},
+{
+"text": "runner",
+"start": 25.2,
+"end": 25.52
+},
+{
+"text": "sprints",
+"start": 25.6,
+"end": 25.92
+},
+{
+"text": "across",
+"start": 26.0,
+"end": 26.32
+},
+{
+"text": "to",
+"start": 26.36,
+"end": 26.4
+},
+{
+"text": "take",
+"start": 26.48,
+"end": 26.64
+},
+{
+"text": "over.",
+"start": 26.72,
+"end": 27.36
+},
+{
+"text": "If",
+"start": 27.44,
+"end": 27.52
+},
+{
+"text": "they",
+"start": 27.56,
+"end": 27.6
+},
+{
+"text": "arrive",
+"start": 27.68,
+"end": 28.0
+},
+{
+"text": "late...",
+"start": 28.08,
+"end": 28.64
+},
+{
+"text": "corner",
+"start": 28.8,
+"end": 28.96
+},
+{
+"text": "three.",
+"start": 29.04,
+"end": 29.68
+},
+{
+"text": "Recover",
+"start": 29.76,
+"end": 30.08
+},
+{
+"text": "on",
+"start": 30.12,
+"end": 30.16
+},
+{
+"text": "the",
+"start": 30.24,
+"end": 30.32
+},
+{
+"text": "pass?",
+"start": 30.52,
+"end": 31.04
+},
+{
+"text": "Contested.",
+"start": 31.2,
+"end": 32.24
+},
+{
+"text": "That's",
+"start": 32.32,
+"end": 32.56
+},
+{
+"text": "the",
+"start": 32.6,
+"end": 32.64
+},
+{
+"text": "one-three-one.",
+"start": 32.72,
+"end": 33.76
+},
+{
+"text": "Pressure",
+"start": 34.0,
+"end": 34.24
+},
+{
+"text": "creates",
+"start": 34.44,
+"end": 34.64
+},
+{
+"text": "the",
+"start": 34.72,
+"end": 34.8
+},
+{
+"text": "trap.",
+"start": 35.0,
+"end": 35.52
+},
+{
+"text": "Quick",
+"start": 35.64,
+"end": 35.76
+},
+{
+"text": "passing",
+"start": 35.84,
+"end": 36.32
+},
+{
+"text": "tests",
+"start": 36.4,
+"end": 36.64
+},
+{
+"text": "the",
+"start": 36.68,
+"end": 36.72
+},
+{
+"text": "recovery.",
+"start": 36.8,
+"end": 37.6
+}
+]
