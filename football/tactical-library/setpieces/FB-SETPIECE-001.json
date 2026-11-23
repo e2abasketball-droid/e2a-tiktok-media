@@ -1,0 +1,31 @@
+{
+ "id": "FB-SETPIECE-001",
+ "name": "The simple short corner",
+ "category": "attacking_corner",
+ "subcategory": "short corner routine",
+ "level": 1,
+ "tactical_difficulty": 1,
+ "tactical_objective": "Use a short corner to pull the defender who protects the space near the corner out of position, then return the ball to the taker in the space he left.",
+ "participants": {"attack": [{"id": "A7", "label": "A", "role": "corner taker"}, {"id": "A10", "label": "B", "role": "support player"}], "defence": [{"id": "D4", "label": "D", "role": "defender guarding the short option"}], "context": [{"id": "D1", "role": "goalkeeper (static)"}, {"id": "D2", "role": "near-post defender (static)"}]},
+ "pitch_frame": "metres, origin at the centre spot, attack towards +x; corner at (52.5, -34)",
+ "initial_positions": {"ball": [52.0, -33.4], "A7": [54.3, -32.95], "A10": [45.0, -28.6], "D4": [45.6, -25.4], "D1": [51.6, -1.0], "D2": [52.05, -4.4]},
+ "movements": [
+  {"player": "A7", "from_s": 1.55, "to_s": 3.0, "description": "run-up from behind the goal line, strikes at 3.0 s"},
+  {"player": "A10", "from_s": 1.55, "to_s": 3.85, "description": "comes short towards the ball, brakes and receives facing it"},
+  {"player": "D4", "from_s": 3.0, "to_s": 5.25, "description": "reacts to the pass and closes A10 from the inside"},
+  {"player": "A7", "from_s": 3.0, "to_s": 6.25, "description": "support run infield along the goal line into the space D4 left"}
+ ],
+ "pass_sequence": [
+  {"t": 3.0, "by": "A7", "to": "A10", "type": "ground pass (short corner)", "length_m": 4.3, "speed_mps": "5.8 -> 4.3 (approx)", "rule": "in play when kicked and clearly moving; no offside offence from a corner kick"},
+  {"t": 5.4, "by": "A10", "to": "A7", "type": "ground pass (return)", "length_m": 4.3, "rule": "A7 onside: x 51.04 vs second-last defender 51.6"}
+ ],
+ "defensive_response": "D4 steps out from 10 m to close A10 (arrives 5.25 s); after the return pass he is 3-4 m from A7 and behind the play.",
+ "explanation": "A short pass forces one defender to choose. When he steps out to the receiver, the space he protected opens for the taker's support run. Result: a small positional advantage (time and a free lane towards the box), not a goal chance.",
+ "rules_basis": {"law_17": "ball placed in the corner area and stationary; opponents at least 9.15 m from the corner arc until the ball is in play; in play when kicked and clearly moves; the kicker must not touch it again before another player", "law_11": "no offside offence when receiving directly from a corner kick; afterwards offside position = nearer to the goal line than both the ball and the second-last opponent", "source_status": "from the IFAB Laws of the Game as known; the official text could not be downloaded in this session (network blocked), NEEDS REVIEW against the current edition"},
+ "future_variations": ["one-two corner (FB-SETPIECE-002)", "taker overlaps outside B", "B turns and drives if D does not step out", "D2 steps out instead: near-post space opens"],
+ "script": "/mnt/project-files/football/productions/FB-SETPIECE-001/script/script-EN.md",
+ "animation_source": {"spec": "football/tactical-library/setpieces/FB-SETPIECE-001.spec.json", "play": "football/tactical-library/plays/FB-PLAY-SP001-simple-short-corner.json", "episode": "football/remotion/src/episodes/simpleShortCorner.ts", "composition": "FBSetPiece001"},
+ "renders": {"V01": "/mnt/project-files/football/productions/FB-SETPIECE-001/renders/FB-SETPIECE-001_V01_silent.mp4"},
+ "graphic_assets": ["ring", "pass line", "run arrow", "circle (ghost spot / 9.15 m arc)", "straight arrow", "zone", "offside line", "pins A/B/D", "stamps", "freeze tag"],
+ "validation_status": {"rules_validator": "35/35 PASS (fb_motion.py)", "motion_qc": "24/24 PASS (qc_play_motion.mjs)", "owner_review": "pending"}
+}

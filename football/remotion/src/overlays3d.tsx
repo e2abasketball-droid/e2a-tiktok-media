@@ -9,12 +9,15 @@ import type {FBPlay, V2} from './play';
 import {ballPath, offsideLine, playerAt, routeOf, smooth} from './play';
 
 export type Ov =
-  | {type: 'pass'; t0: number; t1: number; color?: string; dashed?: boolean; width?: number}
+  | {type: 'pass'; t0: number; t1: number; color?: string; dashed?: boolean; width?: number; trail?: boolean} // trail: the line follows the real ball (head at the ball)
   | {type: 'run'; player: string; t0: number; t1: number; color?: string; width?: number; dashed?: boolean}
   | {type: 'zone'; c: V2; r: V2; color?: string; label?: string; follow?: string}
   | {type: 'defline'; players: string[]; at?: number; color?: string}
   | {type: 'ring'; player: string; color?: string; r?: number}
-  | {type: 'offside'; at: number; color?: string; span?: [number, number]};
+  | {type: 'offside'; at: number; color?: string; span?: [number, number]}
+  // FB-SETPIECE-001: a ring at a fixed point (ghost of a player's start spot, a legal distance) and a straight arrow
+  | {type: 'circle'; c: V2; r: number; color?: string; dashed?: boolean; arc?: [number, number]; width?: number; fill?: number}
+  | {type: 'arrow'; p0: V2; p1: V2; color?: string; dashed?: boolean; width?: number};
 export type LiveOv = Ov & {age: number; dur: number; draw?: number};
 
 const H = 0.03;
@@ -139,9 +142,13 @@ const Paint: React.FC<{g: THREE.BufferGeometry | null; color: string; opacity: n
 
 const fade = (o: LiveOv) => Math.min(1, o.age / 0.18) * Math.min(1, Math.max(0, (o.dur - o.age) / 0.2));
 
-const PassLine: React.FC<{play: FBPlay; o: Extract<LiveOv, {type: 'pass'}>}> = ({play, o}) => {
+const PassLine: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'pass'}>}> = ({play, pt, o}) => {
   const prog = smooth(o.age / (o.draw ?? 0.6));
-  const g = React.useMemo(() => ribbon(cut(ballPath(play, o.t0, o.t1), prog), o.width ?? 0.16, o.dashed ?? true, true), [play, o.t0, o.t1, prog, o.width, o.dashed]);
+  const end = o.trail ? Math.max(o.t0, Math.min(o.t1, pt)) : o.t1;
+  const g = React.useMemo(
+    () => (o.trail ? (end - o.t0 > 0.02 ? ribbon(ballPath(play, o.t0, end, 1 / 60), o.width ?? 0.16, o.dashed ?? true, true) : null) : ribbon(cut(ballPath(play, o.t0, o.t1), prog), o.width ?? 0.16, o.dashed ?? true, true)),
+    [play, o.t0, o.t1, end, o.trail, prog, o.width, o.dashed],
+  );
   return <Paint g={g} color={o.color ?? GOLD} opacity={0.95 * fade(o)} />;
 };
 
@@ -223,12 +230,44 @@ const Ring: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'ring'
   );
 };
 
+const Circle: React.FC<{o: Extract<LiveOv, {type: 'circle'}>}> = ({o}) => {
+  const prog = smooth(o.age / (o.draw ?? 0.5));
+  const [a0, a1] = o.arc ?? [0, Math.PI * 2];
+  const g = React.useMemo(() => {
+    const n = Math.max(12, Math.round(Math.abs(a1 - a0) * o.r * 3));
+    const pts: V2[] = [];
+    for (let i = 0; i <= n; i++) {
+      const a = a0 + ((a1 - a0) * i) / n;
+      pts.push([o.c[0] + Math.cos(a) * o.r, o.c[1] + Math.sin(a) * o.r]);
+    }
+    return ribbon(cut(pts, prog), o.width ?? 0.07, o.dashed ?? true, false);
+  }, [o.c[0], o.c[1], o.r, a0, a1, prog, o.dashed, o.width]);
+  const a = fade(o);
+  return (
+    <>
+      <Paint g={g} color={o.color ?? WHITE} opacity={0.95 * a} />
+      {o.fill ? (
+        <mesh position={W3([o.c[0], o.c[1], H - 0.012])} rotation={[-Math.PI / 2, 0, 0]} renderOrder={3}>
+          <circleGeometry args={[o.r, 48]} />
+          <meshBasicMaterial color={o.color ?? WHITE} transparent opacity={o.fill * a * smooth(o.age / 0.4)} depthWrite={false} toneMapped={false} />
+        </mesh>
+      ) : null}
+    </>
+  );
+};
+
+const Arrow: React.FC<{o: Extract<LiveOv, {type: 'arrow'}>}> = ({o}) => {
+  const prog = smooth(o.age / (o.draw ?? 0.6));
+  const g = React.useMemo(() => ribbon(cut([o.p0, o.p1], prog), o.width ?? 0.16, o.dashed ?? false, true), [o.p0[0], o.p0[1], o.p1[0], o.p1[1], prog, o.width, o.dashed]);
+  return <Paint g={g} color={o.color ?? GOLD} opacity={0.92 * fade(o)} />;
+};
+
 export const Overlays3D: React.FC<{play: FBPlay; pt: number; items: LiveOv[]}> = ({play, pt, items}) => (
   <group>
     {items.map((o, i) => {
       switch (o.type) {
         case 'pass':
-          return <PassLine key={i} play={play} o={o} />;
+          return <PassLine key={i} play={play} pt={pt} o={o} />;
         case 'run':
           return <Run key={i} play={play} o={o} />;
         case 'zone':
@@ -239,6 +278,10 @@ export const Overlays3D: React.FC<{play: FBPlay; pt: number; items: LiveOv[]}> =
           return <Offside key={i} play={play} o={o} />;
         case 'ring':
           return <Ring key={i} play={play} pt={pt} o={o} />;
+        case 'circle':
+          return <Circle key={i} o={o} />;
+        case 'arrow':
+          return <Arrow key={i} o={o} />;
         default:
           return null;
       }

@@ -80,6 +80,7 @@ export type AthleteProps = {
   hairIdx: number;
   kicks: Kick[];
   actions?: Action[];
+  receives?: number[]; // arrival times of passes to this player (reception pose)
   dim?: number; // 0..1 fade for non-focus players
 };
 
@@ -105,7 +106,7 @@ type Pose = {
 
 const clamp = (x: number, a: number, b: number) => Math.max(a, Math.min(b, x));
 
-export const computePose = (s: PlayerState, t: number, kicks: Kick[], actions: Action[] = []): Pose => {
+export const computePose = (s: PlayerState, t: number, kicks: Kick[], actions: Action[] = [], receives: number[] = []): Pose => {
   const v = s.speed;
   const run = smooth((v - 0.2) / 0.9);
   const k = clamp(v / 8, 0, 1);
@@ -135,6 +136,43 @@ export const computePose = (s: PlayerState, t: number, kicks: Kick[], actions: A
     roll: 0,
     shift: [0, 0],
   };
+  // idle (FB-SETPIECE-001): slow weight shift from foot to foot instead of a frozen pose
+  if (idle > 0) {
+    const ws = Math.sin(t * 1.25 + s.phase * 0.7);
+    p.bank += idle * 0.028 * ws;
+    p.hipL += idle * 0.05 * ws;
+    p.hipR -= idle * 0.05 * ws;
+    p.kneeL += idle * 0.06 * Math.max(0, -ws);
+    p.kneeR += idle * 0.06 * Math.max(0, ws);
+    p.twist += idle * 0.04 * Math.sin(t * 0.8 + s.phase);
+    p.head += idle * 0.03 * Math.sin(t * 0.9 + 1.3 + s.phase);
+  }
+  // reception (inside of the right foot): the foot meets the ball slightly in front, then gives with it
+  for (const rt of receives) {
+    const r = t - rt;
+    if (r < -0.4 || r > 0.4) continue;
+    let hip: number;
+    let kn: number;
+    if (r < 0) {
+      const u = smooth((r + 0.4) / 0.4);
+      hip = 0.38 * u;
+      kn = 0.25 + 0.15 * u;
+    } else {
+      const u = smooth(r / 0.3);
+      hip = 0.38 - 0.3 * u;
+      kn = 0.4 - 0.12 * u;
+    }
+    const w = r < -0.3 ? smooth((r + 0.4) / 0.1) : r > 0.3 ? 1 - smooth((r - 0.3) / 0.1) : 1;
+    const ww = w * (1 - smooth((s.speed - 2.5) / 1.5)); // a fast runner receives in stride
+    p.hipR += (hip - p.hipR) * ww;
+    p.kneeR += (kn - p.kneeR) * ww;
+    p.kneeL += (0.38 - p.kneeL) * ww; // flexed standing leg
+    p.hipL += (0.16 - p.hipL) * ww;
+    p.y += -0.03 * ww;
+    p.head += (-0.32 - p.head) * ww; // eyes on the ball
+    p.abL += (0.3 - p.abL) * ww;
+    p.abR += (0.3 - p.abR) * ww;
+  }
   // kicks (right foot): back-swing, strike at the kick time, follow-through
   for (const kk of kicks) {
     const r = t - kk.t;
@@ -193,9 +231,9 @@ export const computePose = (s: PlayerState, t: number, kicks: Kick[], actions: A
 
 const HIP = 0.93;
 
-export const Athlete: React.FC<AthleteProps> = ({s, t, kit, number, skin, hairIdx, kicks, actions, dim = 0}) => {
+export const Athlete: React.FC<AthleteProps> = ({s, t, kit, number, skin, hairIdx, kicks, actions, receives, dim = 0}) => {
   const g = G();
-  const p = computePose(s, t, kicks, actions);
+  const p = computePose(s, t, kicks, actions, receives);
   const h = s.heading;
   // world -> three: rotation about Y so local +Z points along the heading
   const rotY = Math.atan2(Math.cos(h), -Math.sin(h));

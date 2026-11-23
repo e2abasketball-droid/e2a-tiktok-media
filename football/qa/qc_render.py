@@ -51,6 +51,7 @@ def main():
     ap.add_argument('video')
     ap.add_argument('--out')
     ap.add_argument('--silent', action='store_true')
+    ap.add_argument('--duration', help='MIN-MAX seconds, overrides division.json (set pieces: 20-25)')
     a = ap.parse_args()
     spec = L.division()['video']
     res = []
@@ -66,6 +67,9 @@ def main():
     add('30 fps', v['r_frame_rate'] in ('30/1', '30000/1000'), v['r_frame_rate'])
     add('codecs h264 + aac', v['codec_name'] == 'h264' and bool(au) and au[0]['codec_name'] == 'aac', f"{v['codec_name']} + {au[0]['codec_name'] if au else 'none'}")
     ds = spec.get('duration_s', {'min': 30, 'max': 45})
+    if a.duration:
+        lo_, hi_ = (float(x) for x in a.duration.split('-'))
+        ds = {'min': lo_, 'max': hi_}
     lo, hi = ds['min'], ds['max']
     add(f'duration {lo}-{hi} s', lo <= dur <= hi + 0.05, f'{dur:.2f} s')
     if a.silent:

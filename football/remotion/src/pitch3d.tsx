@@ -394,10 +394,45 @@ export const Lights: React.FC<{focus: [number, number]}> = ({focus}) => {
   );
 };
 
+/** corner flagposts (Law 1: at least 1.5 m high, non-pointed top), set on the corner point */
+const CornerFlags: React.FC = () => {
+  const pole = React.useMemo(() => new THREE.MeshStandardMaterial({color: '#F1F2F4', roughness: 0.4}), []);
+  const flag = React.useMemo(() => {
+    const g = new THREE.PlaneGeometry(0.42, 0.3, 8, 4);
+    const pos = g.getAttribute('position') as THREE.BufferAttribute;
+    for (let i = 0; i < pos.count; i++) {
+      const x = pos.getX(i) + 0.21; // 0 at the pole
+      pos.setZ(i, Math.sin(x * 7) * 0.035 * x * 2.4);
+    }
+    g.computeVertexNormals();
+    return g;
+  }, []);
+  const cloth = React.useMemo(() => new THREE.MeshStandardMaterial({color: '#C9A24D', roughness: 0.7, side: THREE.DoubleSide}), []);
+  const HL = PITCH.L / 2;
+  const HW = PITCH.W / 2;
+  return (
+    <>
+      {[1, -1].flatMap((sx) =>
+        [1, -1].map((sy) => (
+          <group key={`${sx}${sy}`} position={W3([sx * HL, sy * HW, 0])}>
+            <mesh position={[0, 0.8, 0]} material={pole} castShadow>
+              <cylinderGeometry args={[0.018, 0.022, 1.6, 10]} />
+            </mesh>
+            <group position={[0, 1.43, 0]} rotation={[0, sx > 0 ? Math.PI * 0.75 : Math.PI * 0.25, 0]}>
+              <mesh position={[0.21, 0, 0]} geometry={flag} material={cloth} castShadow />
+            </group>
+          </group>
+        )),
+      )}
+    </>
+  );
+};
+
 export const Pitch3D: React.FC<{hit: NetHit}> = ({hit}) => (
   <group>
     <Grass />
     <Lines />
+    <CornerFlags />
     <Goal side={1} hit={hit} />
     <Goal side={-1} hit={null} />
     <Surroundings />

@@ -9,7 +9,7 @@ export type Action = {type: 'dive'; t0: number; t1: number; side: 1 | -1};
 export type FBPlayer = {id: string; team: 'attack' | 'defence'; role: string; number: number; track: Key[]; actions?: Action[]};
 export type BallEvent = {
   t: number;
-  type: 'hold' | 'dribble' | 'pass' | 'cross' | 'through' | 'shot' | 'clear' | 'out';
+  type: 'hold' | 'dribble' | 'pass' | 'cross' | 'through' | 'shot' | 'clear' | 'out' | 'rest';
   by?: string;
   to?: string;
   height?: 'ground' | 'low' | 'lofted';
@@ -17,6 +17,15 @@ export type BallEvent = {
   target?: [number, number];
   lift?: number;
   net?: [number, number];
+  /** 'rest': the ball lies still at this point (corner arc, free-kick spot) until the next event */
+  at?: [number, number];
+  /** ground-pass physics v2 (FB-SETPIECE-001): constant rolling deceleration in m/s^2 (grass ~1-2.5).
+   *  When set, the pass starts from where the ball really is (no snap to the foot), the speed profile is
+   *  derived from it, and the receiver cushions the ball (see `cushion`). Plays without it are unchanged. */
+  decel?: number;
+  /** reception cushion time constant in s (default 0.07): the ball keeps its arrival speed for a few cm
+   *  in front of the receiving foot and is absorbed, so the velocity is continuous at the first touch */
+  cushion?: number;
 };
 export type FBPlay = {
   id: string;
@@ -26,6 +35,10 @@ export type FBPlay = {
   teams: {attack: {name: string; colour: string}; defence: {name: string; colour: string}};
   players: FBPlayer[];
   ball: {events: BallEvent[]};
+  /** FB-SETPIECE-001+: animate the reception pose for passes received (older plays keep their look) */
+  receivePose?: boolean;
+  /** optional set-piece context (for QC and the library), not rendered */
+  setPiece?: Record<string, unknown>;
 };
 export type V2 = [number, number];
 export type V3 = [number, number, number];
@@ -103,8 +116,16 @@ export const strideLen = (v: number) => clamp(0.75 + 0.45 * v - 0.012 * v * v, 0
 
 const sortedEvents = (play: FBPlay) => [...play.ball.events].sort((a, b) => a.t - b.t);
 
-/** pass profile: the ball leaves fast and arrives slower (rolling friction), never stops mid-way */
+/** pass profile: the ball leaves fast and arrives slower (rolling friction), never stops mid-way.
+ *  s(u) = u + k u (1-u) is quadratic in time, i.e. a constant deceleration a = 2 k D / T^2. */
 const passS = (u: number, k = 0.45) => u + k * u * (1 - u);
+/** k for a measured rolling deceleration (m/s^2) over distance D in time T; capped so the ball never stops early */
+export const decelK = (a: number, T: number, D: number) => (D > 1e-6 ? clamp((a * T * T) / (2 * D), 0, 0.9) : 0);
+/** speed (m/s) at the start and at the arrival of a v2 ground pass */
+export const passSpeeds = (a: number, T: number, D: number) => {
+  const k = decelK(a, T, D);
+  return {v0: ((1 + k) * D) / T, v1: ((1 - k) * D) / T, k};
+};
 
 const precompute = (play: FBPlay): Pre => {
   const n = Math.ceil(play.duration / DT) + 1;
@@ -128,6 +149,7 @@ const precompute = (play: FBPlay): Pre => {
     let cur = ev[0];
     for (const e of ev) if (e.t <= t) cur = e;
     const at = (id: string, tt: number) => trackPos(byId[id].track, tt);
+    if (cur.type === 'rest') return cur.at!;
     if ((cur.type === 'pass' || cur.type === 'through' || cur.type === 'shot' || cur.type === 'cross') && cur.t1 !== undefined && t < cur.t1) {
       const a = at(cur.by!, cur.t);
       const b = cur.target ?? at(cur.to!, cur.t1);
@@ -194,6 +216,7 @@ const precompute = (play: FBPlay): Pre => {
   };
   const bpos: V3[] = [];
   const holder: (string | undefined)[] = [];
+  const passStart: Record<number, V2> = {};
   let netHit: Pre['netHit'];
   for (let i = 0; i < n; i++) {
     const t = i * DT;
@@ -201,11 +224,16 @@ const precompute = (play: FBPlay): Pre => {
     for (let j = 0; j < ev.length; j++) if (ev[j].t <= t) k = j;
     const e = ev[k];
     const flying = (e.type === 'pass' || e.type === 'through' || e.type === 'cross' || e.type === 'shot') && e.t1 !== undefined;
-    if (flying && t < e.t1!) {
-      const a = foot(e.by!, e.t, 0.38);
+    const prev = k > 0 ? ev[k - 1] : undefined;
+    if (e.type === 'rest') {
+      bpos.push([e.at![0], e.at![1], BALL_R]);
+      holder.push(undefined);
+    } else if (flying && t < e.t1!) {
+      if (e.decel !== undefined && passStart[k] === undefined) passStart[k] = i > 0 ? [bpos[i - 1][0], bpos[i - 1][1]] : foot(e.by!, e.t, 0.38);
+      const a = e.decel !== undefined ? passStart[k] : foot(e.by!, e.t, 0.38);
       const b = e.target ?? foot(e.to!, e.t1!, 0.4);
       const u = (t - e.t) / (e.t1! - e.t);
-      const s = e.type === 'shot' ? passS(u, 0.15) : passS(u);
+      const s = e.type === 'shot' ? passS(u, 0.15) : passS(u, e.decel !== undefined ? decelK(e.decel, e.t1! - e.t, Math.hypot(b[0] - a[0], b[1] - a[1])) : 0.45);
       const z = BALL_R + (e.type === 'shot' ? (e.lift ?? 0.4) * Math.sin(Math.PI * Math.min(1, u * 1.05)) : 0) + (e.height === 'lofted' ? 4 * u * (1 - u) * 3 : 0);
       bpos.push([a[0] + (b[0] - a[0]) * s, a[1] + (b[1] - a[1]) * s, z]);
       holder.push(undefined);
@@ -228,6 +256,26 @@ const precompute = (play: FBPlay): Pre => {
       const hId = e.type === 'hold' || e.type === 'dribble' ? e.by! : (e.to ?? e.by!);
       const P = players[hId];
       const ii = idx(t);
+      // v2 reception: the arriving ball is absorbed in front of the foot (continuous velocity)
+      const rcv = e.decel !== undefined && e.t1 !== undefined ? e : prev && prev.decel !== undefined && prev.t1 !== undefined && prev.to === hId && (e.type === 'hold' || e.type === 'dribble') ? prev : undefined;
+      if (rcv && rcv.to === hId && t >= rcv.t1!) {
+        const dtc = t - rcv.t1!;
+        const tau = rcv.cushion ?? 0.07;
+        if (dtc < tau * 8) {
+          const ri = ev.indexOf(rcv);
+          const a0 = passStart[ri] ?? foot(rcv.by!, rcv.t, 0.38);
+          const b0 = foot(hId, rcv.t1!, 0.4);
+          const D = Math.hypot(b0[0] - a0[0], b0[1] - a0[1]);
+          const T = rcv.t1! - rcv.t;
+          const vEnd = ((1 - decelK(rcv.decel!, T, D)) * D) / T;
+          const dir: V2 = D > 1e-6 ? [(b0[0] - a0[0]) / D, (b0[1] - a0[1]) / D] : [0, 0];
+          const off = vEnd * dtc * Math.exp(-dtc / tau);
+          const f = foot(hId, t, 0.4);
+          bpos.push([f[0] + dir[0] * off, f[1] + dir[1] * off, BALL_R]);
+          holder.push(hId);
+          continue;
+        }
+      }
       let ahead = 0.4;
       if (e.type === 'dribble' || P.speed[ii] > 2.5) {
         // close control: a touch every two strides, the runner then catches the ball up
@@ -311,6 +359,10 @@ export const ballAt = (play: FBPlay, t: number): BallState => {
 };
 
 export const kicksOf = (play: FBPlay, id: string) => pre(play).kicks[id] ?? [];
+
+/** arrival times of passes to this player (for the reception pose) */
+export const receivesOf = (play: FBPlay, id: string): number[] =>
+  play.ball.events.filter((e) => e.to === id && e.t1 !== undefined && ['pass', 'through', 'cross'].includes(e.type)).map((e) => e.t1!);
 
 /** route of a player between two play times (for run arrows) */
 export const routeOf = (play: FBPlay, id: string, t0: number, t1: number, step = 1 / 30): V2[] => {

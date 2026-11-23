@@ -64,7 +64,7 @@ export const Pin: React.FC<{x: number; y: number; text: string; age: number; dur
   const a = inOut(age, dur, 0.2, 0.18);
   const col = tone === 'gold' ? GOLD : tone === 'red' ? RED : WHITE;
   const lx = clamp(x + dx, SAFE.left + 150, 1080 - SAFE.right - 150);
-  const ly = clamp(y - dy, SAFE.top + 30, 1920 - SAFE.bottom - 60);
+  const ly = clamp(y - dy, SAFE.top + 90, 1920 - SAFE.bottom - 60); // +90: clear of the logo bug
   return (
     <div style={{position: 'absolute', left: 0, top: 0, width: 1080, height: 1920, opacity: a, pointerEvents: 'none'}}>
       <svg width={1080} height={1920} style={{position: 'absolute', left: 0, top: 0}}>

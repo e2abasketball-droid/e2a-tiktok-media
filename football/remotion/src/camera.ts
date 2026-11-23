@@ -11,7 +11,9 @@ import {ballAt, playerAt, smooth} from './play';
 
 export type FocusItem = {player?: string; ball?: boolean; p?: V2; w?: number};
 export type CamMode = 'overview' | 'tracking' | 'detail';
-export type CamKey = {at: number; mode: CamMode; focus: FocusItem[]; dist: number; elev: number; azim: number; fov: number; z?: number; shake?: number};
+export type CamKey = {at: number; mode: CamMode; focus: FocusItem[]; dist: number; elev: number; azim: number; fov: number; z?: number; shake?: number; lift?: number};
+// lift (m): the camera aims this far in front of the focus, towards itself, so the focus sits higher in the
+// vertical frame (clear of the subtitles) without changing the angle. Default 0 (older episodes unchanged).
 export type Cam = {pos: V3; target: V3; fov: number; mode: CamMode};
 
 const focusAt = (play: FBPlay, f: FocusItem[], pt: number): V2 => {
@@ -49,11 +51,12 @@ export const camAt = (play: FBPlay, keys: CamKey[], lt: number, pt: number): Cam
   const fa = focusAt(play, a.focus, pt);
   const fb = b === a ? fa : focusAt(play, b.focus, pt);
   const tz = lerp(a.z ?? 0.9, b.z ?? 0.9, u);
-  const target: V3 = [lerp(fa[0], fb[0], u), lerp(fa[1], fb[1], u), tz];
   const dist = lerp(a.dist, b.dist, u);
   const el = (lerp(a.elev, b.elev, u) * Math.PI) / 180;
   const shake = lerp(a.shake ?? 0, b.shake ?? 0, u);
   const az = ((lerpAng(a.azim, b.azim, u) + shake * (Math.sin(lt * 1.7) * 0.6 + Math.sin(lt * 3.1 + 1) * 0.4)) * Math.PI) / 180;
+  const lift = lerp(a.lift ?? 0, b.lift ?? 0, u);
+  const target: V3 = [lerp(fa[0], fb[0], u) - Math.cos(az) * lift, lerp(fa[1], fb[1], u) - Math.sin(az) * lift, tz];
   const pos: V3 = [target[0] - Math.cos(az) * Math.cos(el) * dist, target[1] - Math.sin(az) * Math.cos(el) * dist, target[2] + Math.sin(el) * dist + shake * 0.05 * Math.sin(lt * 2.3)];
   return {pos, target, fov: lerp(a.fov, b.fov, u), mode: u < 0.5 ? a.mode : b.mode};
 };

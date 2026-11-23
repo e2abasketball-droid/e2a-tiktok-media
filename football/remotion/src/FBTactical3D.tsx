@@ -11,7 +11,7 @@ import {camAt, projector} from './camera';
 import type {LiveOv, Ov} from './overlays3d';
 import {Overlays3D} from './overlays3d';
 import type {FBPlay, V2, V3} from './play';
-import {BALL_R, ballAt, kicksOf, playerAt} from './play';
+import {BALL_R, ballAt, kicksOf, playerAt, receivesOf} from './play';
 import {Lights, Pitch3D} from './pitch3d';
 import type {Word} from './screen';
 import {EndCard, Flash, KineticTitle, LogoBug, Pin, Stamp, Subtitles, Tag} from './screen';
@@ -37,7 +37,7 @@ export type Shot = {
   freeze?: [number, number][]; // local ranges with the freeze grade
   flash?: number;
 };
-export type Episode = {id: string; title: string; duration: number; play: FBPlay; words: Word[]; keywords: string[]; shots: Shot[]; music?: {src: string; volume: number}; logoBug?: boolean; subtitleHide?: [number, number][]};
+export type Episode = {id: string; title: string; duration: number; play: FBPlay; words: Word[]; keywords: string[]; shots: Shot[]; music?: {src: string; volume: number}; logoBug?: boolean; subtitleHide?: [number, number][]; subtitleY?: number};
 
 const remapAt = (r: [number, number][], lt: number) => {
   if (lt <= r[0][0]) return r[0][1];
@@ -161,6 +161,7 @@ const Scene: React.FC<{play: FBPlay; pt: number; cam: Cam; W: number; H: number;
           hairIdx={i}
           kicks={kicksOf(play, p.id)}
           actions={p.actions}
+          receives={play.receivePose ? receivesOf(play, p.id) : undefined}
         />
       ))}
       <Ball pos={ball.pos} q={ball.spin} />
@@ -225,7 +226,7 @@ export const FBTactical3D: React.FC<{episode: Episode}> = ({episode: ep}) => {
             return null;
         }
       })}
-      {!ending && !(ep.subtitleHide ?? []).some(([a, b]) => t >= a && t < b) && <Subtitles words={ep.words} t={t} keys={ep.keywords} />}
+      {!ending && !(ep.subtitleHide ?? []).some(([a, b]) => t >= a && t < b) && <Subtitles words={ep.words} t={t} keys={ep.keywords} y={ep.subtitleY} />}
       {ep.logoBug !== false && !ending && <LogoBug opacity={0.92} />}
       {shot.flash !== undefined && lt < 0.25 && <Flash age={lt} strength={shot.flash} />}
       {ep.music && <Audio src={staticFile(ep.music.src)} volume={ep.music.volume} />}

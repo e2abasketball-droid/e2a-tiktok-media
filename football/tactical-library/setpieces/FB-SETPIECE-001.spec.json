@@ -1,0 +1,288 @@
+{
+ "id": "FB-PLAY-SP001-simple-short-corner",
+ "version": 1,
+ "title": "The simple short corner",
+ "duration": 7.6,
+ "receivePose": true,
+ "teams": {
+  "attack": {
+   "name": "Navy (fictional)",
+   "colour": "#0B1C3D"
+  },
+  "defence": {
+   "name": "White (fictional)",
+   "colour": "#F4F5F7"
+  }
+ },
+ "setPiece": {
+  "type": "corner",
+  "corner": [
+   52.5,
+   -34.0
+  ],
+  "side": "right corner, attacking towards +x",
+  "fragment": "only the players relevant to the short corner are modelled; D1 (goalkeeper) and D2 (near-post defender) are static context, as in any real corner"
+ },
+ "players": [
+  {
+   "id": "A7",
+   "team": "attack",
+   "role": "CT",
+   "number": 7
+  },
+  {
+   "id": "A10",
+   "team": "attack",
+   "role": "SUP",
+   "number": 10
+  },
+  {
+   "id": "D4",
+   "team": "defence",
+   "role": "DEF",
+   "number": 4
+  },
+  {
+   "id": "D2",
+   "team": "defence",
+   "role": "NP",
+   "number": 2,
+   "track": [
+    [
+     0,
+     52.05,
+     -4.4
+    ]
+   ]
+  },
+  {
+   "id": "D1",
+   "team": "defence",
+   "role": "GK",
+   "number": 1,
+   "track": [
+    [
+     0,
+     51.6,
+     -1.0
+    ]
+   ]
+  }
+ ],
+ "motion": {
+  "A7": [
+   {
+    "t": 0,
+    "p": [
+     54.3,
+     -32.95
+    ]
+   },
+   {
+    "t": 1.55,
+    "p": [
+     54.3,
+     -32.95
+    ]
+   },
+   {
+    "t": 3.0,
+    "p": [
+     52.33,
+     -33.59
+    ],
+    "v": [
+     -1.7,
+     0.2
+    ]
+   },
+   {
+    "t": 3.45,
+    "p": [
+     51.85,
+     -33.15
+    ],
+    "v": [
+     -0.6,
+     1.5
+    ]
+   },
+   {
+    "t": 4.55,
+    "p": [
+     51.6,
+     -31.0
+    ],
+    "v": [
+     -0.4,
+     2.6
+    ]
+   },
+   {
+    "t": 5.55,
+    "p": [
+     50.95,
+     -28.75
+    ],
+    "v": [
+     -0.6,
+     1.9
+    ]
+   },
+   {
+    "t": 6.25,
+    "p": [
+     50.6,
+     -27.8
+    ],
+    "v": [
+     -0.3,
+     0.7
+    ]
+   },
+   {
+    "t": 6.9,
+    "p": [
+     50.45,
+     -27.35
+    ]
+   }
+  ],
+  "A10": [
+   {
+    "t": 0,
+    "p": [
+     45.0,
+     -28.6
+    ]
+   },
+   {
+    "t": 1.55,
+    "p": [
+     45.0,
+     -28.6
+    ]
+   },
+   {
+    "t": 3.0,
+    "p": [
+     46.8,
+     -30.1
+    ],
+    "v": [
+     1.5,
+     -1.2
+    ]
+   },
+   {
+    "t": 3.85,
+    "p": [
+     47.55,
+     -30.85
+    ],
+    "v": [
+     0.3,
+     -0.25
+    ]
+   },
+   {
+    "t": 4.5,
+    "p": [
+     47.65,
+     -30.95
+    ]
+   },
+   {
+    "t": 5.6,
+    "p": [
+     47.65,
+     -30.95
+    ]
+   },
+   {
+    "t": 7.1,
+    "p": [
+     48.3,
+     -30.0
+    ]
+   }
+  ],
+  "D4": [
+   {
+    "t": 0,
+    "p": [
+     45.6,
+     -25.4
+    ]
+   },
+   {
+    "t": 3.0,
+    "p": [
+     45.6,
+     -25.4
+    ]
+   },
+   {
+    "t": 5.25,
+    "p": [
+     46.45,
+     -28.85
+    ]
+   },
+   {
+    "t": 5.7,
+    "p": [
+     46.47,
+     -28.87
+    ]
+   },
+   {
+    "t": 6.9,
+    "p": [
+     47.3,
+     -28.3
+    ]
+   }
+  ]
+ },
+ "ball": {
+  "events": [
+   {
+    "t": 0,
+    "type": "rest",
+    "at": [
+     52.0,
+     -33.4
+    ]
+   },
+   {
+    "t": 3.0,
+    "type": "pass",
+    "by": "A7",
+    "to": "A10",
+    "t1": 3.85,
+    "height": "ground",
+    "decel": 1.8
+   },
+   {
+    "t": 3.85,
+    "type": "hold",
+    "by": "A10"
+   },
+   {
+    "t": 5.4,
+    "type": "pass",
+    "by": "A10",
+    "to": "A7",
+    "t1": 6.25,
+    "height": "ground",
+    "decel": 1.8
+   },
+   {
+    "t": 6.25,
+    "type": "hold",
+    "by": "A7"
+   }
+  ]
+ }
+}

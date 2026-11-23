@@ -1,6 +1,17 @@
 # Cambios de E2A Football
 Historial propio de la división Football (independiente del de Basketball). La más reciente arriba.
 
+## 2026-11-23 — Set Pieces Studio: FB-SETPIECE-001 «The simple short corner»
+- Directiva del propietario SET PIECES STUDIO V1.0 (01:55 Madrid): Football se centra solo en balón parado; hoja de
+  ruta de 8 vídeos registrada (`tactical-library/setpieces/roadmap.json`), cada vídeo necesita aprobación del anterior.
+- Rama `claude/football-setpiece-001` derivada de la Fase 2 (sin fusionar nada).
+- Motor (solo Football): autoría de movimiento con waypoints y validador de reglas/física (`scripts/fb_motion.py`),
+  pase raso v2 con frenado real, control amortiguado, balón en reposo, postura de recepción, idle con cambio de peso,
+  banderines de córner, gráficos `circle`/`arrow`/línea de pase que sigue al balón, `lift` de cámara, QC de
+  movimiento sin render (`qa/qc_play_motion.mjs`), `qc_render.py --duration`, 8 pruebas nuevas.
+- Producción `FB-SETPIECE-001`: V01 y V02 mudas (25 s), guiones A/B en inglés, ficha educativa, log de aprendizaje.
+  0 créditos de ElevenLabs. Nada publicado.
+
 ## 2026-11-23 — Fase 2: motor 3D de fútbol y piloto «The Third-Man Run» (VIDEO 001)
 - Aprobación del propietario (23-nov, 00:27 Madrid): desarrollo audiovisual local y renders de prueba solo dentro de
   Football. **No** aprobado: publicar, fusionar, tocar Basketball, servicios de pago.
