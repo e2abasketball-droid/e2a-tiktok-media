@@ -25,7 +25,7 @@
  "future_variations": ["one-two corner (FB-SETPIECE-002)", "taker overlaps outside B", "B turns and drives if D does not step out", "D2 steps out instead: near-post space opens"],
  "script": "/mnt/project-files/football/productions/FB-SETPIECE-001/script/script-EN.md",
  "animation_source": {"spec": "football/tactical-library/setpieces/FB-SETPIECE-001.spec.json", "play": "football/tactical-library/plays/FB-PLAY-SP001-simple-short-corner.json", "episode": "football/remotion/src/episodes/simpleShortCorner.ts", "composition": "FBSetPiece001"},
- "renders": {"V01": "/mnt/project-files/football/productions/FB-SETPIECE-001/renders/FB-SETPIECE-001_V01_silent.mp4"},
+ "renders": {"V01": "/mnt/project-files/football/productions/FB-SETPIECE-001/renders/FB-SETPIECE-001_V01_silent.mp4", "V02": "/mnt/project-files/football/productions/FB-SETPIECE-001/renders/FB-SETPIECE-001_V02_silent.mp4"}, "report": "https://claude.ai/artifact/97gnrNUZVaDoCHixHFpdHE",
  "graphic_assets": ["ring", "pass line", "run arrow", "circle (ghost spot / 9.15 m arc)", "straight arrow", "zone", "offside line", "pins A/B/D", "stamps", "freeze tag"],
  "validation_status": {"rules_validator": "35/35 PASS (fb_motion.py)", "motion_qc": "24/24 PASS (qc_play_motion.mjs)", "owner_review": "pending"}
 }

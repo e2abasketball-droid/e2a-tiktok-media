@@ -4,7 +4,7 @@
  "rule": "one video = one new technical challenge; no video starts before the owner approves the previous one; quality before complexity",
  "status_values": ["planned", "in_production", "delivered_for_review", "approved", "rejected"],
  "videos": [
-  {"id": "FB-SETPIECE-001", "level": 1, "title": "The simple short corner", "category": "attacking_corner", "tactical_difficulty": 1, "new_capability": "player-ball synchronisation: ground passes, one simple run, elevated camera, basic tactical graphics", "status": "in_production"},
+  {"id": "FB-SETPIECE-001", "level": 1, "title": "The simple short corner", "category": "attacking_corner", "tactical_difficulty": 1, "new_capability": "player-ball synchronisation: ground passes, one simple run, elevated camera, basic tactical graphics", "status": "delivered_for_review"},
   {"id": "FB-SETPIECE-002", "level": 2, "title": "The one-two corner", "category": "attacking_corner", "tactical_difficulty": 2, "new_capability": "wall passes, changes of pace, turns, directional first touch, two-attacker timing", "status": "planned"},
   {"id": "FB-SETPIECE-003", "level": 3, "title": "The near-post run", "category": "attacking_corner", "tactical_difficulty": 2, "new_capability": "aerial crosses, parabolic trajectories, near-post run, ball-run sync, first simple headers/finishes", "status": "planned"},
   {"id": "FB-SETPIECE-004", "level": 4, "title": "The dummy run", "category": "attacking_corner", "tactical_difficulty": 3, "new_capability": "simultaneous movements, decoy runs, defensive reactions, changes of direction, space occupation", "status": "planned"},
