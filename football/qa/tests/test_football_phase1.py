@@ -31,7 +31,8 @@ class Config(unittest.TestCase):
     def test_configs_parse_and_are_football(self):
         d = L.division()
         self.assertEqual(d['id_prefix'], 'FB')
-        self.assertEqual(d['phase']['current'], 1)
+        self.assertIn(d['phase']['current'], (1, 2))  # phase 2 approved 2026-11-23 (local production only)
+        self.assertTrue(d['phase']['next_requires_approval'])
         b = L.load('brand.json')
         self.assertEqual(b['palette'], {**b['palette'], 'navy': '#0B1C3D', 'gold': '#C9A24D', 'gold_deep': '#A9842F', 'white': '#FFFFFF'})
         self.assertFalse(b['audio_rules']['ball_bounce_sfx'])

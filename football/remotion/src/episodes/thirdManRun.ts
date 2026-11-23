@@ -53,6 +53,7 @@ export const thirdManRun: Episode = {
   duration: 35,
   play,
   words,
+  music: {src: 'music-bed.mp3', volume: 1},
   subtitleHide: [[0, 3.0], [30.1, 35]],
   keywords: ['trap', 'third', 'man', 'hole', 'space', 'onside', 'nobody', 'sees', 'goal.'],
   shots: [
@@ -85,8 +86,8 @@ export const thirdManRun: Episode = {
       flash: 0.3,
       remap: [[0, 0.3], [6.0, 3.75]],
       cam: [
-        {at: 0, mode: 'overview', focus: [{p: [3, 0]}], dist: 46, elev: 56, azim: 0, fov: 46},
-        {at: 6.0, mode: 'overview', focus: [{p: [5, 0.5]}], dist: 40, elev: 50, azim: 6, fov: 46},
+        {at: 0, mode: 'overview', focus: [{p: [1, 0]}], dist: 36, elev: 46, azim: -6, fov: 46},
+        {at: 6.0, mode: 'overview', focus: [{p: [3, 0.5]}], dist: 31, elev: 42, azim: 8, fov: 46},
       ],
       ov: [
         {from: 0.3, to: 6.0, type: 'ring', player: 'A6', color: GOLD},
@@ -95,7 +96,7 @@ export const thirdManRun: Episode = {
         {from: 3.0, to: 6.0, type: 'zone', c: [8.6, 0.6], r: [4.4, 9.5], color: RED},
       ],
       screen: [
-        {from: 0.4, to: 2.6, type: 'pin', player: 'A6', text: 'NAVY 6', tone: 'gold', dy: 150},
+        {from: 0.4, to: 2.6, type: 'pin', player: 'A6', text: 'NAVY 6', tone: 'gold', dy: 90, dx: 200},
         {from: 1.2, to: 3.0, type: 'stamp', text: 'COMPACT 4-4-2', y: 260, tone: 'white'},
         {from: 3.0, to: 6.0, type: 'stamp', text: 'NO SPACE BETWEEN THE LINES', y: 260, tone: 'gold'},
       ],
@@ -107,8 +108,8 @@ export const thirdManRun: Episode = {
       flash: 0.3,
       remap: [[0, 3.55], [1.55, 4.35], [2.9, 5.0]],
       cam: [
-        {at: 0, mode: 'tracking', focus: [{player: 'A9'}, {ball: true, w: 0.6}, {player: 'D4'}], dist: 22, elev: 22, azim: 12, fov: 34},
-        {at: 2.9, mode: 'tracking', focus: [{player: 'A9'}, {player: 'D4'}, {p: HOLE, w: 0.6}], dist: 21, elev: 26, azim: 6, fov: 34},
+        {at: 0, mode: 'tracking', focus: [{player: 'A9'}, {ball: true, w: 0.6}, {player: 'D4'}], dist: 17, elev: 20, azim: 12, fov: 36},
+        {at: 2.9, mode: 'tracking', focus: [{player: 'A9'}, {player: 'D4'}, {p: HOLE, w: 0.6}], dist: 19, elev: 26, azim: 6, fov: 36},
         {at: 6.4, mode: 'overview', focus: [{player: 'D4', w: 0.8}, {p: HOLE}], dist: 33, elev: 48, azim: -24, fov: 40},
         {at: 8.0, mode: 'overview', focus: [{player: 'D4', w: 0.8}, {p: HOLE}], dist: 32, elev: 52, azim: -30, fov: 40},
       ],
@@ -121,7 +122,7 @@ export const thirdManRun: Episode = {
         {from: 4.6, to: 8.0, type: 'zone', c: HOLE, r: [3.6, 3.4], color: GOLD},
       ],
       screen: [
-        {from: 0.4, to: 2.9, type: 'pin', player: 'A9', text: 'THE 9 DROPS', tone: 'gold', dy: 150},
+        {from: 0.4, to: 2.9, type: 'pin', player: 'A9', text: 'THE 9 DROPS', tone: 'gold', dy: 70, dx: -230},
         {from: 3.0, to: 6.2, type: 'pin', player: 'D4', text: 'CENTRE-BACK JUMPS', tone: 'red', dy: 170},
         {from: 4.9, to: 8.0, type: 'pin', p: HOLE, z: 0.2, text: 'THE HOLE', tone: 'gold', dy: 190},
         {from: 2.9, to: 8.0, type: 'tag', text: 'PAUSE', icon: 'pause'},

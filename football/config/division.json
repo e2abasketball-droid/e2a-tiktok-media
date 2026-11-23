@@ -3,7 +3,7 @@
  "sport": "football",
  "id_prefix": "FB",
  "other_divisions": {"basketball": {"label_prefix": "BB", "note": "Basketball keeps its existing ids (e.g. E2A-TACTICAL-{date}-V{n}); BB- is only the label football uses to refer to it. Renaming basketball ids needs owner approval."}},
- "phase": {"current": 1, "name": "Arquitectura, aislamiento y agente", "approved_by_owner": "2026-11-22T20:52Z", "next_requires_approval": true},
+ "phase": {"current": 2, "name": "Producción audiovisual local (piloto The Third-Man Run)", "approved_by_owner": "2026-11-23T00:27+01:00 (Madrid): desarrollo audiovisual local y renders de prueba solo dentro de Football", "not_approved": ["publicación", "fusiones", "cambios en Basketball", "servicios externos de pago (ElevenLabs)"], "phase1_approved_by_owner": "2026-11-22T20:52Z", "next_requires_approval": true},
  "timezone": "Australia/Sydney",
  "ids": {
   "production": "FB-{yyyymmdd}-{slug}",

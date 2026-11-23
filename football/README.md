@@ -52,6 +52,9 @@ python3 football/scripts/fb.py new-production "third man run"     # crea FB-AAAA
 ```
 Pasos completos en [documentation/PRODUCCION.md](documentation/PRODUCCION.md).
 
+### Render 3D (fase 2)
+Motor y comandos en [remotion/README.md](remotion/README.md). Primer vídeo: `FB-20261123-third-man-run`.
+
 ## 7. Dónde se guardan los vídeos
 `/mnt/project-files/football/productions/FB-AAAAMMDD-<slug>/` con `script/ voice/ scenes/ renders/ thumbnails/ qa/
 analytics/` y `production.json`. Nunca en Git ni en carpetas de baloncesto. Cada archivo generado lleva un id `FB-`.
@@ -62,6 +65,7 @@ python3 football/qa/check_isolation.py                 # baloncesto intacto + re
 python3 -m unittest discover -s football/qa/tests      # pruebas de fútbol (sin red ni créditos)
 python3 football/scripts/fb.py shared verify           # piezas compartidas iguales a lo registrado
 python3 football/scripts/fb.py check-play <jugada.json> # jugada válida (campo, velocidades, fuera de juego)
+python3 football/qa/qc_render.py <video.mp4>           # QC del MP4: formato, 30 fps, duración, -14 LUFS, negros, saltos
 ```
 
 ## 9. Cómo mejorar el sistema

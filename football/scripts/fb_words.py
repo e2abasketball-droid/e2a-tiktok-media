@@ -10,7 +10,8 @@ import sys
 
 
 def words_from_ts(path):
-    src = open(path, encoding='utf-8').read()
+    with open(path, encoding='utf-8') as fh:
+        src = fh.read()
     block = src.split('export const SCRIPT', 1)[1].split('];', 1)[0]
     out = []
     for a, b, q, text in re.findall(r"\[([\d.]+),\s*([\d.]+),\s*(['\"])(.*?)\3\]", block):

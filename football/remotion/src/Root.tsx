@@ -7,5 +7,6 @@ import {thirdManRun} from './episodes/thirdManRun';
 export const Root: React.FC = () => (
   <>
     <Composition id="FBTactical3D" component={FBTactical3D} durationInFrames={Math.round(thirdManRun.duration * 30)} fps={30} width={1080} height={1920} defaultProps={{episode: thirdManRun}} />
+    <Composition id="FBTactical3DSilent" component={FBTactical3D} durationInFrames={Math.round(thirdManRun.duration * 30)} fps={30} width={1080} height={1920} defaultProps={{episode: {...thirdManRun, music: undefined}}} />
   </>
 );
