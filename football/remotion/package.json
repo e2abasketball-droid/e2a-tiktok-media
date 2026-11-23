@@ -1,0 +1,22 @@
+{
+  "name": "e2a-football-remotion",
+  "private": true,
+  "version": "0.2.0",
+  "description": "E2A Football Remotion entry (FB compositions). Own manifest so basketball template/ is never touched; versions pinned to the same ones basketball uses.",
+  "dependencies": {
+    "@react-three/fiber": "9.8.2",
+    "@remotion/cli": "4.0.539",
+    "@remotion/fonts": "4.0.539",
+    "@remotion/google-fonts": "4.0.539",
+    "@remotion/three": "4.0.539",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "remotion": "4.0.539",
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.8",
+    "@types/three": "0.180.0",
+    "typescript": "^5.6.3"
+  }
+}

@@ -1,34 +1,217 @@
 {
  "id": "FB-PLAY-third-man-run",
- "version": 1,
- "title": "Third-man run beats the press",
+ "version": 2,
+ "title": "Third-man run behind a centre-back who jumps",
  "concept": "FB-C01",
  "fictional": true,
- "note": "Reference data for checker tests and the phase-2 engine. Fictional teams; not a real match.",
- "pitch": {"length": 105, "width": 68},
- "duration": 6.0,
- "teams": {"attack": {"name": "E2A Navy", "formation": "4-3-3", "colour": "#0B1C3D"}, "defence": {"name": "White XI", "formation": "4-4-2", "colour": "#FFFFFF"}},
+ "note": "v2 (Phase 2, 2026-11-23): causal version for FB-20261123-third-man-run. After a 3 s build-up (White shuffles into a compact 4-4-2 block), A6 plays into A9, who drops; White's D4 follows A9 out of the line; D6 watches the ball and loses A8; A9 sets first time into the space D4 left; A8 arrives onside, behind the line, and finishes low at the far post. Fictional teams, not a real match.",
+ "pitch": {
+  "length": 105,
+  "width": 68
+ },
+ "duration": 9.4,
+ "teams": {
+  "attack": {
+   "name": "E2A Navy",
+   "formation": "4-3-3",
+   "colour": "#0B1C3D"
+  },
+  "defence": {
+   "name": "White XI",
+   "formation": "4-4-2",
+   "colour": "#FFFFFF"
+  }
+ },
  "players": [
-  {"id": "A6", "team": "attack", "role": "DM", "number": 6, "track": [[0, -22, 0], [6, -20, 2]]},
-  {"id": "A9", "team": "attack", "role": "ST", "number": 9, "track": [[0, 6, 0], [1.2, -2, 0], [6, -1, -1]]},
-  {"id": "A8", "team": "attack", "role": "RCM", "number": 8, "track": [[0, -12, -12], [2.0, -6, -8], [3.4, 8, -4], [6, 24, -2]]},
-  {"id": "D6", "team": "defence", "role": "RCM", "number": 6, "track": [[0, -14, -4], [1.2, -18, -2], [6, -17, -2]]},
-  {"id": "D4", "team": "defence", "role": "LCB", "number": 4, "track": [[0, 14, -6], [1.6, 9, -3], [6, 14, -3]]},
-  {"id": "D5", "team": "defence", "role": "RCB", "number": 5, "track": [[0, 15, 6], [6, 18, 2]]},
-  {"id": "D1", "team": "defence", "role": "GK", "number": 1, "track": [[0, 50, 0], [6, 46, 0]]}
+  {
+   "id": "A6",
+   "team": "attack",
+   "role": "DM",
+   "number": 6,
+   "track": [[0, -10.1, -3.1], [1.6, -8.41, -2.71], [3.0, -7.5, -2.5], [3.9, -7.0, -2.2], [5.5, -5.6, -1.6], [9.4, -3.0, -1.0]]
+  },
+  {
+   "id": "A9",
+   "team": "attack",
+   "role": "ST",
+   "number": 9,
+   "track": [[0, 11.4, 2.0], [1.6, 12.18, 1.48], [3.0, 12.6, 1.2], [3.3, 12.3, 1.2], [4.75, 5.6, 1.0], [5.0, 5.3, 0.9], [5.6, 5.7, 0.7], [7.0, 9.0, 0.5], [9.4, 14.0, 0.4]]
+  },
+  {
+   "id": "A8",
+   "team": "attack",
+   "role": "RCM",
+   "number": 8,
+   "track": [[0, -3.8, 10.7], [1.6, -2.63, 9.92], [3.0, -2.0, 9.5], [3.7, -1.3, 9.2], [5.0, 7.0, 5.6], [6.2, 16.9, 4.0], [7.3, 25.0, 1.6], [7.6, 26.5, 1.2], [9.4, 28.4, 0.8]]
+  },
+  {
+   "id": "A10",
+   "team": "attack",
+   "role": "LCM",
+   "number": 10,
+   "track": [[0, 2.5, -9.3], [1.6, 3.48, -8.78], [3.0, 4.0, -8.5], [5.0, 6.5, -8.0], [9.4, 11.0, -7.0]]
+  },
+  {
+   "id": "A7",
+   "team": "attack",
+   "role": "RW",
+   "number": 7,
+   "track": [[0, 10.5, 23.0], [1.6, 11.47, 22.35], [3.0, 12.0, 22.0], [9.4, 15.0, 19.5]]
+  },
+  {
+   "id": "A11",
+   "team": "attack",
+   "role": "LW",
+   "number": 11,
+   "track": [[0, 11.0, -22.0], [1.6, 11.97, -21.35], [3.0, 12.5, -21.0], [9.4, 15.5, -18.5]]
+  },
+  {
+   "id": "A4",
+   "team": "attack",
+   "role": "LCB",
+   "number": 4,
+   "track": [[0, -23.0, -6.0], [1.6, -21.7, -6.0], [3.0, -21.0, -6.0], [9.4, -17.0, -5.0]]
+  },
+  {
+   "id": "A5",
+   "team": "attack",
+   "role": "RCB",
+   "number": 5,
+   "track": [[0, -23.0, 7.0], [1.6, -21.7, 7.0], [3.0, -21.0, 7.0], [9.4, -17.0, 6.0]]
+  },
+  {
+   "id": "A2",
+   "team": "attack",
+   "role": "RB",
+   "number": 2,
+   "track": [[0, -11.0, 25.0], [1.6, -9.7, 24.35], [3.0, -9.0, 24.0], [9.4, -5.0, 23.0]]
+  },
+  {
+   "id": "A3",
+   "team": "attack",
+   "role": "LB",
+   "number": 3,
+   "track": [[0, -12.0, -25.0], [1.6, -10.7, -24.35], [3.0, -10.0, -24.0], [9.4, -6.0, -23.0]]
+  },
+  {
+   "id": "D1",
+   "team": "defence",
+   "role": "GK",
+   "number": 1,
+   "track": [[0, 50.0, 0.3], [1.6, 49.67, 0.1], [3.0, 49.5, 0.0], [6.0, 50.0, 0.2], [7.4, 50.2, 0.3]],
+   "actions": [
+    {"type": "dive", "t0": 7.95, "t1": 8.6, "side": -1}
+   ]
+  },
+  {
+   "id": "D4",
+   "team": "defence",
+   "role": "RCB",
+   "number": 4,
+   "track": [[0, 14.8, 3.6], [1.6, 14.28, 3.21], [3.0, 14.0, 3.0], [3.8, 13.6, 2.6], [5.0, 7.6, -1.0], [5.3, 8.0, -0.8], [6.4, 14.0, 0.8], [7.4, 20.0, 0.9], [9.4, 25.5, 0.6]]
+  },
+  {
+   "id": "D5",
+   "team": "defence",
+   "role": "LCB",
+   "number": 5,
+   "track": [[0, 14.8, -4.6], [1.6, 14.28, -4.21], [3.0, 14.0, -4.0], [5.2, 14.5, -2.5], [5.6, 14.8, -2.2], [6.2, 16.0, -1.5], [7.3, 22.5, -0.2], [7.7, 24.5, 0.3], [9.4, 27.5, 0.2]]
+  },
+  {
+   "id": "D2",
+   "team": "defence",
+   "role": "RB",
+   "number": 2,
+   "track": [[0, 14.1, 17.2], [1.6, 13.71, 16.42], [3.0, 13.5, 16.0], [5.5, 13.5, 13.5], [9.4, 17.0, 11.0]]
+  },
+  {
+   "id": "D3",
+   "team": "defence",
+   "role": "LB",
+   "number": 3,
+   "track": [[0, 14.1, -17.2], [1.6, 13.71, -16.42], [3.0, 13.5, -16.0], [5.5, 14.0, -12.5], [9.4, 17.0, -10.0]]
+  },
+  {
+   "id": "D6",
+   "team": "defence",
+   "role": "RCM",
+   "number": 6,
+   "track": [[0, 4.0, 8.2], [1.6, 3.35, 7.42], [3.0, 3.0, 7.0], [3.9, 3.2, 6.6], [4.8, 4.5, 4.0], [5.3, 4.9, 3.8], [6.5, 8.0, 4.0], [9.4, 13.0, 3.5]]
+  },
+  {
+   "id": "D8",
+   "team": "defence",
+   "role": "LCM",
+   "number": 8,
+   "track": [[0, 4.0, -4.8], [1.6, 3.35, -4.28], [3.0, 3.0, -4.0], [4.8, 2.6, -2.6], [9.4, 7.0, -3.0]]
+  },
+  {
+   "id": "D7",
+   "team": "defence",
+   "role": "RM",
+   "number": 7,
+   "track": [[0, 4.0, 17.5], [1.6, 3.35, 16.52], [3.0, 3.0, 16.0], [9.4, 5.0, 13.0]]
+  },
+  {
+   "id": "D11",
+   "team": "defence",
+   "role": "LM",
+   "number": 11,
+   "track": [[0, 4.0, -15.5], [1.6, 3.35, -14.53], [3.0, 3.0, -14.0], [9.4, 5.0, -12.0]]
+  },
+  {
+   "id": "D9",
+   "team": "defence",
+   "role": "ST",
+   "number": 9,
+   "track": [[0, -7.5, -2.5], [1.6, -8.47, -2.83], [3.0, -9.0, -3.0], [4.5, -7.5, -4.0], [9.4, -6.0, -3.0]]
+  },
+  {
+   "id": "D10",
+   "team": "defence",
+   "role": "ST",
+   "number": 10,
+   "track": [[0, -7.5, 6.5], [1.6, -8.47, 5.53], [3.0, -9.0, 5.0], [4.5, -6.5, 1.5], [9.4, -4.0, 1.0]]
+  }
  ],
- "ball": {"events": [
-  {"t": 0.0, "type": "hold", "by": "A6"},
-  {"t": 0.6, "type": "pass", "by": "A6", "to": "A9", "height": "ground", "speed": 16},
-  {"t": 1.6, "type": "pass", "by": "A9", "to": "A8", "height": "ground", "speed": 12},
-  {"t": 3.4, "type": "dribble", "by": "A8", "speed": 7},
-  {"t": 6.0, "type": "hold", "by": "A8"}
- ]},
+ "ball": {
+  "events": [
+   {"t": 0.0, "type": "dribble", "by": "A6"},
+   {"t": 2.4, "type": "hold", "by": "A6"},
+   {"t": 3.9, "type": "pass", "by": "A6", "to": "A9", "height": "ground", "t1": 4.75},
+   {
+    "t": 5.0,
+    "type": "through",
+    "by": "A9",
+    "to": "A8",
+    "height": "ground",
+    "t1": 6.2,
+    "target": [17.3, 3.9]
+   },
+   {"t": 6.2, "type": "dribble", "by": "A8"},
+   {
+    "t": 7.4,
+    "type": "shot",
+    "by": "A8",
+    "height": "low",
+    "t1": 8.5,
+    "target": [52.6, -2.9],
+    "lift": 0.45,
+    "net": [54.2, -3.0]
+   }
+  ]
+ },
  "marks": [
-  {"t0": 0.6, "t1": 1.6, "kind": "passLine"},
-  {"t0": 1.2, "t1": 2.0, "kind": "highlight"},
-  {"t0": 1.6, "t1": 3.4, "kind": "arrow"},
-  {"t0": 3.4, "t1": 4.2, "kind": "freeze"},
-  {"t0": 0.0, "t1": 6.0, "kind": "defLine"}
+  {"t0": 0.0, "t1": 3.9, "kind": "defLine"},
+  {"t0": 3.9, "t1": 4.75, "kind": "passLine"},
+  {"t0": 3.9, "t1": 5.0, "kind": "highlight"},
+  {"t0": 5.0, "t1": 5.0, "kind": "freeze"},
+  {"t0": 5.0, "t1": 6.2, "kind": "zone"},
+  {"t0": 3.7, "t1": 6.2, "kind": "arrow"},
+  {"t0": 5.0, "t1": 6.2, "kind": "passLine"}
+ ],
+ "checks": [
+  {"type": "onside", "player": "A8", "at": 5.0},
+  {"type": "onside", "player": "A9", "at": 3.9}
  ]
 }
