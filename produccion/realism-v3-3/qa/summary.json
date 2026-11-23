@@ -1,0 +1,239 @@
+{
+ "onetake_v32": {
+  "rows": 27,
+  "kinds": {
+   "pop:head": 1,
+   "pop:wrL": 3,
+   "pop:wrR": 1,
+   "ballBody": 22
+  },
+  "ballBody120": 86,
+  "footSlideMax_m": 0.016,
+  "wristAccMax": 994.269,
+  "pelvisAccMax": 237.448,
+  "headAccMax": 237.652,
+  "palmGapMedian": [
+   0.012
+  ],
+  "anatVisibleSamples": null,
+  "anatMaxDepth_m": null,
+  "sources": {
+   "v32": 1
+  }
+ },
+ "onetake_v31": {
+  "rows": 27,
+  "kinds": {
+   "elbowFlex": 3,
+   "pop:pelvis": 3,
+   "pop:head": 4,
+   "pop:wrL": 1,
+   "pop:wrR": 5,
+   "ballBody": 11
+  },
+  "ballBody120": 45,
+  "footSlideMax_m": 0.006,
+  "wristAccMax": 2639.908,
+  "pelvisAccMax": 231.919,
+  "headAccMax": 226.282,
+  "palmGapMedian": [
+   0.012
+  ],
+  "anatVisibleSamples": null,
+  "anatMaxDepth_m": null,
+  "sources": {
+   "v32": 1
+  }
+ },
+ "onetake_engine": {
+  "rows": 218,
+  "kinds": {
+   "footSlide": 28,
+   "floorPen": 1,
+   "elbowFlex": 1,
+   "pop:pelvis": 51,
+   "pop:head": 98,
+   "pop:wrL": 14,
+   "pop:wrR": 14,
+   "pop:anL": 1,
+   "ballBody": 6,
+   "palmGap": 4
+  },
+  "ballBody120": 26,
+  "footSlideMax_m": 0.516,
+  "wristAccMax": 5785.714,
+  "pelvisAccMax": 670.915,
+  "headAccMax": 2076.775,
+  "palmGapMedian": [
+   -0.009
+  ],
+  "anatVisibleSamples": null,
+  "anatMaxDepth_m": null,
+  "sources": {
+   "v32": 1
+  }
+ },
+ "onetake_v33": {
+  "rows": 2,
+  "kinds": {
+   "pop:head": 1,
+   "pop:wrL": 1
+  },
+  "ballBody120": 0,
+  "footSlideMax_m": 0.016,
+  "wristAccMax": 432.915,
+  "pelvisAccMax": 120.378,
+  "headAccMax": 155.49,
+  "palmGapMedian": [
+   0.012
+  ],
+  "anatVisibleSamples": 0,
+  "anatMaxDepth_m": 0.013,
+  "sources": {
+   "v33-compat-script": 1
+  }
+ },
+ "trio_v32": {
+  "rows": 23,
+  "kinds": {
+   "pop:pelvis": 1,
+   "pop:head": 7,
+   "ballBody": 15
+  },
+  "ballBody120": 60,
+  "footSlideMax_m": 0.007,
+  "wristAccMax": 764.883,
+  "pelvisAccMax": 193.831,
+  "headAccMax": 469.88,
+  "palmGapMedian": [
+   0.012,
+   0.012
+  ],
+  "anatVisibleSamples": null,
+  "anatMaxDepth_m": null,
+  "sources": {
+   "v32": 3
+  }
+ },
+ "trio_v33": {
+  "rows": 5,
+  "kinds": {
+   "pop:head": 5
+  },
+  "ballBody120": 0,
+  "footSlideMax_m": 0.007,
+  "wristAccMax": 392.607,
+  "pelvisAccMax": 67.492,
+  "headAccMax": 404.409,
+  "palmGapMedian": [
+   0.012,
+   0.012
+  ],
+  "anatVisibleSamples": 0,
+  "anatMaxDepth_m": 0.01,
+  "sources": {
+   "v33-compat-script": 3
+  }
+ },
+ "5v5_engine": {
+  "rows": 899,
+  "kinds": {
+   "footSlide": 182,
+   "floorPen": 10,
+   "pop:pelvis": 254,
+   "pop:head": 380,
+   "pop:wrL": 31,
+   "pop:wrR": 28,
+   "ballBody": 8,
+   "elbowFlex": 1,
+   "pop:anL": 3,
+   "pop:anR": 2
+  },
+  "ballBody120": 24,
+  "footSlideMax_m": 0.557,
+  "wristAccMax": 8985.414,
+  "pelvisAccMax": 1256.527,
+  "headAccMax": 1264.035,
+  "palmGapMedian": [
+   0.033,
+   0.028
+  ],
+  "anatVisibleSamples": 250,
+  "anatMaxDepth_m": 0.049,
+  "sources": {
+   "engine": 10
+  }
+ },
+ "5v5_v33": {
+  "rows": 20,
+  "kinds": {
+   "pop:pelvis": 4,
+   "pop:head": 9,
+   "pop:wrR": 4,
+   "pop:wrL": 2,
+   "elbowFlex": 1
+  },
+  "ballBody120": 0,
+  "footSlideMax_m": 0.014,
+  "wristAccMax": 795.083,
+  "pelvisAccMax": 456.998,
+  "headAccMax": 456.586,
+  "palmGapMedian": [
+   -0.004,
+   0.012
+  ],
+  "anatVisibleSamples": 25,
+  "anatMaxDepth_m": 0.021,
+  "sources": {
+   "v33-compiled": 10
+  }
+ },
+ "5v5_v33_rigoff": {
+  "rows": 20,
+  "kinds": {
+   "pop:pelvis": 4,
+   "pop:head": 9,
+   "pop:wrR": 4,
+   "pop:wrL": 2,
+   "elbowFlex": 1
+  },
+  "ballBody120": 0,
+  "footSlideMax_m": 0.014,
+  "wristAccMax": 795.083,
+  "pelvisAccMax": 458.338,
+  "headAccMax": 457.926,
+  "palmGapMedian": [
+   -0.004,
+   0.012
+  ],
+  "anatVisibleSamples": 25,
+  "anatMaxDepth_m": 0.021,
+  "sources": {
+   "v33-compiled": 10
+  }
+ },
+ "5v5_v33_rigdef": {
+  "rows": 20,
+  "kinds": {
+   "pop:pelvis": 4,
+   "pop:head": 9,
+   "pop:wrR": 4,
+   "pop:wrL": 2,
+   "elbowFlex": 1
+  },
+  "ballBody120": 0,
+  "footSlideMax_m": 0.014,
+  "wristAccMax": 795.284,
+  "pelvisAccMax": 456.998,
+  "headAccMax": 456.586,
+  "palmGapMedian": [
+   -0.004,
+   0.012
+  ],
+  "anatVisibleSamples": 25,
+  "anatMaxDepth_m": 0.021,
+  "sources": {
+   "v33-compiled": 10
+  }
+ }
+}

@@ -1,0 +1,200 @@
+{
+ "play": "realism-v3-2-trio",
+ "motion": "v33",
+ "hz": 120,
+ "players": {
+  "O1": {
+   "footContacts": 2,
+   "footSlideMax": 0,
+   "footSlideOver2cm": 0,
+   "floorMin": 0,
+   "floorMinAt": 6.725,
+   "kneeFlexMax": 70.86,
+   "kneeFlexMin": 43.501,
+   "elbowFlexMax": 132.987,
+   "neckYawMax": 4.734,
+   "accMax": {
+    "pelvis": {
+     "a": 36.473,
+     "t": 3.308
+    },
+    "head": {
+     "a": 47.011,
+     "t": 3.308
+    },
+    "wrL": {
+     "a": 112.332,
+     "t": 2.567
+    },
+    "wrR": {
+     "a": 196.991,
+     "t": 2.75
+    },
+    "anL": {
+     "a": 0,
+     "t": 7.492
+    },
+    "anR": {
+     "a": 0,
+     "t": 7.492
+    }
+   },
+   "palmGap": {
+    "median": 0.012,
+    "p95": 0.012,
+    "max": 0.012,
+    "n": 325
+   },
+   "firstContact": 0,
+   "ballBodyFrames120": 0,
+   "anatomical": {
+    "contactAllowed": 304,
+    "minor": 0,
+    "visible": 0,
+    "maxDepth": 0.01,
+    "maxAt": 2.475,
+    "maxRegion": "forearmR",
+    "events": [
+     {
+      "t0": 0,
+      "t1": 2.525,
+      "region": "forearmR",
+      "depthMax": 0.01,
+      "cls": "contactAllowed",
+      "state": "SECURED"
+     }
+    ]
+   },
+   "source": "v33-compat-script",
+   "armReachMax": 0.9,
+   "legReachMax": 0.929,
+   "occludedSamples30": 0
+  },
+  "O2": {
+   "footContacts": 14,
+   "footSlideMax": 0.003,
+   "footSlideOver2cm": 0,
+   "floorMin": 0,
+   "floorMinAt": 3.05,
+   "kneeFlexMax": 103.385,
+   "kneeFlexMin": 5.126,
+   "elbowFlexMax": 152.316,
+   "neckYawMax": 69.901,
+   "accMax": {
+    "pelvis": {
+     "a": 67.492,
+     "t": 3.625
+    },
+    "head": {
+     "a": 404.409,
+     "t": 3.45
+    },
+    "wrL": {
+     "a": 375.342,
+     "t": 3.2
+    },
+    "wrR": {
+     "a": 392.607,
+     "t": 3.2
+    },
+    "anL": {
+     "a": 450.088,
+     "t": 1.267
+    },
+    "anR": {
+     "a": 370.63,
+     "t": 5.142
+    }
+   },
+   "palmGap": {
+    "median": 0.012,
+    "p95": 0.012,
+    "max": 0.028,
+    "n": 192
+   },
+   "firstContact": 3.2,
+   "ballBodyFrames120": 0,
+   "anatomical": {
+    "contactAllowed": 21,
+    "minor": 0,
+    "visible": 0,
+    "maxDepth": 0.009,
+    "maxAt": 4.467,
+    "maxRegion": "forearmR",
+    "events": [
+     {
+      "t0": 4.367,
+      "t1": 4.533,
+      "region": "forearmR",
+      "depthMax": 0.009,
+      "cls": "contactAllowed",
+      "state": "SHOOT_PREP"
+     }
+    ]
+   },
+   "source": "v33-compat-script",
+   "armReachMax": 0.999,
+   "legReachMax": 0.999,
+   "occludedSamples30": 0
+  },
+  "X2": {
+   "footContacts": 10,
+   "footSlideMax": 0.007,
+   "footSlideOver2cm": 0,
+   "floorMin": 0,
+   "floorMinAt": 2.642,
+   "kneeFlexMax": 95.438,
+   "kneeFlexMin": 5.126,
+   "elbowFlexMax": 148.355,
+   "neckYawMax": 66.001,
+   "accMax": {
+    "pelvis": {
+     "a": 54.019,
+     "t": 3.158
+    },
+    "head": {
+     "a": 127.027,
+     "t": 1.75
+    },
+    "wrL": {
+     "a": 153.596,
+     "t": 1.75
+    },
+    "wrR": {
+     "a": 133.049,
+     "t": 1.75
+    },
+    "anL": {
+     "a": 194.585,
+     "t": 2.775
+    },
+    "anR": {
+     "a": 149.223,
+     "t": 2.408
+    }
+   },
+   "palmGap": {
+    "median": null,
+    "p95": null,
+    "max": null,
+    "n": 0
+   },
+   "firstContact": null,
+   "ballBodyFrames120": 0,
+   "anatomical": {
+    "contactAllowed": 0,
+    "minor": 0,
+    "visible": 0,
+    "maxDepth": 0,
+    "maxAt": 0,
+    "maxRegion": "",
+    "events": []
+   },
+   "source": "v33-compat-script",
+   "armReachMax": 0.886,
+   "legReachMax": 0.999,
+   "occludedSamples30": 0
+  }
+ },
+ "defects": 5
+}

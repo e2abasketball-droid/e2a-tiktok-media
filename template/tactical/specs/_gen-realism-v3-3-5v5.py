@@ -90,9 +90,9 @@ def build():
         last = (tr[-1][1], tr[-1][2])
         tr.append([R4(go), last[0], last[1]])
         tr += path(last, target, go, arr, bow)[1:]
-    post("O4", (-1.05, 2.55), SHIFT + 4.05, SHIFT + 5.4, 0.2)    # crash: starts as the shot goes up -> rim side
-    post("X4", (-1.55, 2.95), SHIFT + 4.25, SHIFT + 5.5, 0.1)    # box-out: reacts 0.2 s later, gets between O4 and the rim
-    post("O1", (-2.2, 9.6), SET_END + 0.2, SET_END + 1.6, 0.0)   # drifts back for balance
+    post("O4", (-2.15, 2.95), SHIFT + 4.05, SHIFT + 5.4, 0.1)    # crash: starts as the shot goes up, held up behind X4
+    post("X4", (-1.6, 2.5), SHIFT + 4.25, SHIFT + 5.3, 0.1)    # box-out: reacts 0.2 s later, gets between O4 and the rim
+    post("O1", (-0.7, 9.5), SET_END + 0.2, SET_END + 1.6, 0.0)   # drifts back to the top for balance (away from O2)
     post("X1", (-1.5, 8.2), SET_END + 0.4, SET_END + 1.7, 0.0)
     post("O3", (5.4, 2.6), SET_END + 0.1, SET_END + 1.5, 0.0)
     post("X5", (2.6, 5.2), SET_END + 0.2, SET_END + 1.6, 0.0)
@@ -135,7 +135,7 @@ def build():
     for a in acts["O4"]:
         if a["to"] > SHIFT + 4.05:
             a["to"] = R4(SHIFT + 4.05)
-    acts["O4"].append({"type": "face", "from": R4(SHIFT + 4.05), "to": END, "face": "path"})
+    acts["O4"].append({"type": "face", "from": R4(SHIFT + 4.05), "to": END, "face": "ball"})  # crash: eyes on the ball
     play["actions"] = acts
     play["marks"] = {k: R4(v + SHIFT) for k, v in SRC["marks"].items()}
     play["marks"].update({"setup": 0.0, "setEnd": SET_END, "end": END})

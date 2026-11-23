@@ -1,0 +1,12 @@
+bench-10-v33 exit=0 sec=158
+full-raw exit=0 sec=736
+full-ed exit=0 sec=655
+contact exit=0 sec=694
+debug exit=0 sec=642
+trio exit=0 sec=336
+motion exit=0 sec=632
+slow exit=0 sec=541
+DONE
+bench-10-v32 exit=1 sec=48
+bench-10-v32 exit=0 sec=170
+bench-10-v32-same exit=0 sec=142

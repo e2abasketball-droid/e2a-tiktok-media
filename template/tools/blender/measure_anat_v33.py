@@ -1,3 +1,6 @@
+"""E2A Realism V3.3 (2026-11-22): measure the anatomical volumes of the V3.2 player GLB for the V3.3 contact solver /
+QC (anat33.ts): per-bone P50 distance of the skinned body vertices to the bone axis. Trunk ellipse: see the report 01.
+  python3 -I template/tools/blender/measure_anat_v33.py -- template/public/players3d/e2a_player_off_v32.glb"""
 import bpy, sys, json, mathutils, statistics
 glb = sys.argv[sys.argv.index('--')+1]
 bpy.ops.wm.read_factory_settings(use_empty=True)

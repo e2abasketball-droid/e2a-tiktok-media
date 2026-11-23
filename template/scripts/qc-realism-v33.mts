@@ -61,7 +61,9 @@ const segDist = (p: V3, a: V3, b: V3) => {
   const u = Math.max(0, Math.min(1, dot(sub(p, a), ab) / Math.max(1e-9, dot(ab, ab))));
   return len(sub(p, add(a, mul(ab, u))));
 };
-const rigOf = (id: string) => PLAYER3D_V32[play.players.find((p) => p.id === id)?.team === 'X' ? 'def' : 'off'].rig;
+// --rig off|def forces every player onto one body (robustness: the same motion on the other body profile)
+const rigForce = args.includes('--rig') ? (args[args.indexOf('--rig') + 1] as 'off' | 'def') : null;
+const rigOf = (id: string) => PLAYER3D_V32[rigForce ?? (play.players.find((p) => p.id === id)?.team === 'X' ? 'def' : 'off')].rig;
 const ballAt = (t: number): V3 => {
   const e = sample(play, t).ball.pos as V3;
   if (motion === 'v33') return ballV33(play, t);

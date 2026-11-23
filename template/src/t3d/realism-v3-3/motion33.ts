@@ -119,6 +119,7 @@ export const shotPhase = (clip: Clip32, t: number, baseDrop: number): ShotP => {
   const v0 = Math.sqrt(2 * G * s.H);
   const DIP = (0.24 + 0.4 * (clip.vary.k.drop ?? 0)) * (s.quick ? 0.6 : 1); // V3.3: a quick release dips less
   const zTo = 0.035; // pelvis over its standing height at toe-off (heels up, legs straight)
+  const LL = s.quick ? 0.2 : 0.3; // V3.3: a quick release loads with less forward lean (0.3 -> 0.05 in 0.17 s: head 313 m/s^2)
   const loadT = s.t0 - PUSH;
   const w = smooth((t - s.gatherT) / 0.2) * (1 - smooth((t - (s.recoverT - 0.25)) / 0.25));
   if (t < s.dipT) {
@@ -127,12 +128,12 @@ export const shotPhase = (clip: Clip32, t: number, baseDrop: number): ShotP => {
   }
   if (t < loadT) {
     const u = (t - s.dipT) / (loadT - s.dipT);
-    return {stage: u < 0.7 ? 'dip' : 'load', dz: -lerp(0.12, DIP, smooth(u)), lean: lerp(0.18, 0.3, smooth(u)), air: 0, w, v0};
+    return {stage: u < 0.7 ? 'dip' : 'load', dz: -lerp(0.12, DIP, smooth(u)), lean: lerp(0.18, LL, smooth(u)), air: 0, w, v0};
   }
   if (t < s.t0) {
     const u = (t - loadT) / PUSH;
     // leg extension: from the bottom of the dip (at rest) to toe-off with the take-off velocity (C1 into the flight)
-    return {stage: 'takeoff', dz: herm(-DIP, 0, zTo, v0 * PUSH, u), lean: lerp(0.3, 0.05, smooth(u * 1.2)), air: 0, w, v0};
+    return {stage: 'takeoff', dz: herm(-DIP, 0, zTo, v0 * PUSH, u), lean: lerp(LL, 0.05, smooth(u * 1.2)), air: 0, w, v0};
   }
   if (t < s.t1) {
     const tau = t - s.t0;
@@ -797,7 +798,9 @@ const modeOut = (x: Ctx, m: ArmKey32['m'], b: Body): ArmOut => {
       const ct = clip.catches.filter((q) => q.t >= t - 0.02).sort((a, z) => a.t - z.t)[0];
       const ev = ct ? passTo(play, x.id, ct.t) : undefined;
       if (!ev) return modeOut(x, 'ready', b);
-      return grip2(b, c, t < ev.t0 ? presentSpot(play, ev, ev.t0) : flightAt(play, flightOf(play, ev, play.ball.indexOf(ev)), t).p);
+      // before the exchange the hands track the presented ball where it is NOW (a fixed t0 target, reached from a run at
+      // 3.6 m/s, hit the reach limit: 1 km/s^2 wrist pops, 5v5 O2 5.78 s)
+      return grip2(b, c, t < ev.t0 ? presentSpot(play, ev, t) : flightAt(play, flightOf(play, ev, play.ball.indexOf(ev)), t).p);
     }
     case 'give': {
       // catch absorption: the ball keeps its incoming velocity into the hands (C1), then the elbows absorb it to the pocket
@@ -1078,8 +1081,13 @@ const lookAt = (x: Ctx, b: Body): {yaw: number; pitch: number} => {
       p = [q[0], q[1], 1.45];
     }
     const d = sub(p, eye);
-    if (Math.hypot(d[0], d[1]) < 0.5) return [b.chestYaw, 0.35]; // own ball in the hands: eyes up the floor, slightly down
-    return [Math.atan2(d[1], d[0]), clamp(Math.atan2(-d[2], Math.hypot(d[0], d[1])), -0.45, 0.45)];
+    // own ball in the hands: eyes up the floor, slightly down; blended over 0.3-0.7 m (a hard switch at 0.5 m stepped
+    // the head 2.4 cm in one frame: 5v5 O2 6.20 s)
+    const hd = Math.hypot(d[0], d[1]);
+    const far: [number, number] = [Math.atan2(d[1], d[0]), clamp(Math.atan2(-d[2], Math.max(1e-3, hd)), -0.45, 0.45)];
+    const wn = 1 - smooth((hd - 0.3) / 0.4);
+    if (wn <= 0) return far;
+    return [far[0] + wrap(b.chestYaw - far[0]) * wn, lerp(far[1], 0.35, wn)];
   };
   let k = 0;
   while (k + 1 < ks.length && ks[k + 1].t <= b.t) k++;

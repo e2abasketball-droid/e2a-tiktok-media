@@ -1,0 +1,28 @@
+{
+ "glb": "e2a_player_off_v32.glb",
+ "welded": true,
+ "frames": 90,
+ "preroll": 30,
+ "verts": 1499,
+ "bake_s": 10.27,
+ "per_frame_ms_median": 88.2,
+ "finite": true,
+ "max_vertex_speed_mps": 1.55,
+ "max_edge_stretch": 3.575,
+ "edge_stretch_p99_max": 1.117,
+ "rest_drop_vs_skinned_hem_median_m": 0.0018,
+ "rest_drift_after_preroll_m": 0.0011,
+ "cloth_offset_hem_median_m": 0.0086,
+ "cloth_offset_hem_max_m": 0.2155,
+ "cloth_offset_pinned_max_m": 0.0126,
+ "v31_reference": {
+  "max_edge_stretch": 1.41,
+  "rest_drop_m": "0.04-0.09"
+ },
+ "export": {
+  "path": "jersey_l2w_morph.glb",
+  "seconds": 0.14,
+  "morph_targets": 90,
+  "bytes": 1902552
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "play": "realism-v3-3-5v5",
+ "fps": 30,
+ "frames": 331,
+ "players": 10,
+ "values": 1113,
+ "descending": {
+  "maxAbsDiff": 0,
+  "atFrame": -1
+ },
+ "random": {
+  "maxAbsDiff": 0,
+  "atFrame": -1
+ },
+ "randomWarm": {
+  "maxAbsDiff": 0,
+  "atFrame": -1
+ },
+ "seconds": 12.064,
+ "pass": true
+}

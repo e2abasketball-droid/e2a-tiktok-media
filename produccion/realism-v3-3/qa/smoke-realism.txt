@@ -1,0 +1,42 @@
+PASS  zone23-a-nail  73b979fdb490205b
+PASS  zone23-b-skip  b76a58affb0eb52f
+PASS  blob-a-rim  6a605102c670f09c
+PASS  blob-b-three  c0c1d9dd8d19633f
+PASS  pfh-give  d550171776a3e8ce
+PASS  ddtr-a-roll  a8bd89623f5cd3c3
+PASS  slip-b-pullup  9c59c12794fdef4a
+PASS  blindpig2-b-kick  259479797d563160
+PASS  spanoulis-a-trail  eac7b0f753491d78
+PASS  chicago-a-take  6948b3e085ce823f
+PASS  ram-v2-a-drop  05939aa379cb8e7b
+PASS  stack-b-roll  4a0a374cf08fb865
+12/12 legacy plays identical to d700987 (pre Realism V2 main), hashes computed with that engine's rig.ts/play.ts on 2026-11-21
+PASS test-play chicago-v2-a-trail
+PASS qc-contact chicago-v2-a-trail
+PASS qc-catch chicago-v2-a-trail
+PASS qc-handoff chicago-v2-a-trail
+  V2     
+  V2     === chicago-v2-a-trail  [3.3 s]
+  V2     WARN  foot_plant       97 plants, worst drift 4.6 cm (O2 R @3.70s), >2 cm: 3, >5 cm: 0; pivots (yaw > 20°): 31; planted sole z min -4.5 cm / median -1.3 cm, plants dipping > 2 cm under the median: 2, floating > 4 cm: 0
+  V2     WARN  contact_pose     35 grip frames; deepest palm in the ball 0.3 cm (O2@3.53), nearest palm farthest off 3.9 cm (O2@2.70)
+  V2     FAIL  swept_ball       worst 4.5 cm into thigh.R (O2@3.408, limit 3 cm); 9 sub-steps over the limit
+  V2     PASS  ball_continuity  max step 4.37 cm / (1/240 s), max |dv| 1.59 m/s outside impacts; 0 violations
+  V2     WARN  ik_reach         arm chain saturated in 5.9 % of hand-frames; elbow pole flips 0; knees bent backward 0
+  V2     PASS  root_foot        max heading rate 688°/s (O4@2.30); frames gliding (> 0.6 m/s on two planted feet for > 0.25 s): 0
+  V2     FAIL  blocking         O1 screen 2.67-2.80s on X2: max speed 0.00 m/s, closest 1.45 m @2.67s, both feet planted there: NO, trunk overlap 0.0 cm | O4 screen 1.00-2.20s on X2: max speed 0.07 m/s, closest 0.85 m @1.60s, both feet planted there: yes, trunk overlap 0.0 cm
+  V2     PASS  court            ball r 0.121 m, rim 3.05 m at (0, 1.575); shot O2 make: crosses the rim plane 0.6 cm from the centre
+PASS test-play chicago-v2-b-under
+PASS qc-contact chicago-v2-b-under
+PASS qc-catch chicago-v2-b-under
+PASS qc-handoff chicago-v2-b-under
+  V2     
+  V2     === chicago-v2-b-under  [2.8 s]
+  V2     FAIL  foot_plant       88 plants, worst drift 8.2 cm (X2 R @2.93s), >2 cm: 4, >5 cm: 2; pivots (yaw > 20°): 28; planted sole z min -4.5 cm / median -1.3 cm, plants dipping > 2 cm under the median: 2, floating > 4 cm: 0
+  V2     PASS  contact_pose     32 grip frames; deepest palm in the ball 0.0 cm (-), nearest palm farthest off 1.5 cm (O2@2.63)
+  V2     FAIL  swept_ball       worst 4.0 cm into head (O2@2.858, limit 2 cm); 11 sub-steps over the limit
+  V2     PASS  ball_continuity  max step 4.57 cm / (1/240 s), max |dv| 2.85 m/s outside impacts; 0 violations
+  V2     WARN  ik_reach         arm chain saturated in 6.1 % of hand-frames; elbow pole flips 0; knees bent backward 0
+  V2     PASS  root_foot        max heading rate 688°/s (O1@4.00); frames gliding (> 0.6 m/s on two planted feet for > 0.25 s): 0
+  V2     FAIL  blocking         O1 screen 2.67-2.87s on X2: max speed 0.00 m/s, closest 0.85 m @2.87s, both feet planted there: yes, trunk overlap 0.0 cm | O4 screen 1.00-2.20s on X2: max speed 0.07 m/s, closest 0.85 m @1.37s, both feet planted there: NO, trunk overlap 0.0 cm
+  V2     PASS  court            ball r 0.121 m, rim 3.05 m at (0, 1.575); shot O2 make: crosses the rim plane 0.6 cm from the centre
+exit=0

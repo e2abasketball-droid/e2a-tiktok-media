@@ -1,0 +1,99 @@
+{
+ "play": "realism-v3-2-abc",
+ "motion": "v33",
+ "hz": 120,
+ "players": {
+  "O1": {
+   "footContacts": 28,
+   "footSlideMax": 0.016,
+   "footSlideOver2cm": 0,
+   "floorMin": 0,
+   "floorMinAt": 1.658,
+   "kneeFlexMax": 112.467,
+   "kneeFlexMin": 5.126,
+   "elbowFlexMax": 144.23,
+   "neckYawMax": 41.48,
+   "accMax": {
+    "pelvis": {
+     "a": 120.378,
+     "t": 4.117
+    },
+    "head": {
+     "a": 155.49,
+     "t": 3.092
+    },
+    "wrL": {
+     "a": 432.915,
+     "t": 2.4
+    },
+    "wrR": {
+     "a": 355.731,
+     "t": 2.667
+    },
+    "anL": {
+     "a": 436.242,
+     "t": 4.9
+    },
+    "anR": {
+     "a": 589.334,
+     "t": 6.158
+    }
+   },
+   "palmGap": {
+    "median": 0.012,
+    "p95": 0.013,
+    "max": 0.033,
+    "n": 321
+   },
+   "firstContact": 4.925,
+   "ballBodyFrames120": 0,
+   "anatomical": {
+    "contactAllowed": 87,
+    "minor": 0,
+    "visible": 0,
+    "maxDepth": 0.013,
+    "maxAt": 5.892,
+    "maxRegion": "forearmR",
+    "events": [
+     {
+      "t0": 5.85,
+      "t1": 6.067,
+      "region": "forearmR",
+      "depthMax": 0.013,
+      "cls": "contactAllowed",
+      "state": "SECURED"
+     },
+     {
+      "t0": 6.875,
+      "t1": 6.992,
+      "region": "forearmR",
+      "depthMax": 0.008,
+      "cls": "contactAllowed",
+      "state": "DRIBBLE"
+     },
+     {
+      "t0": 7.75,
+      "t1": 7.925,
+      "region": "forearmR",
+      "depthMax": 0.011,
+      "cls": "contactAllowed",
+      "state": "SHOOT_PREP"
+     },
+     {
+      "t0": 7.933,
+      "t1": 8.117,
+      "region": "forearmL",
+      "depthMax": 0.001,
+      "cls": "contactAllowed",
+      "state": "SHOOT_PREP"
+     }
+    ]
+   },
+   "source": "v33-compat-script",
+   "armReachMax": 0.999,
+   "legReachMax": 0.999,
+   "occludedSamples30": 0
+  }
+ },
+ "defects": 2
+}
