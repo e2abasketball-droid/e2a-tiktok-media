@@ -1,0 +1,69 @@
+{
+ "voiceRaw": "tactical/zone131/voice-raw.mp3",
+ "wordsRaw": "../zone131/zone131-voice.words-raw.json",
+ "voice": "tactical/zone131v2/voice.wav",
+ "preroll": 0.08,
+ "tail": 0.8,
+ "segments": [
+  {
+   "text": "One defender. Two corners.",
+   "gap": 0.3,
+   "why": "hook: skip in flight, cut before the answer"
+  },
+  {
+   "text": "One up top. Three across the middle. One runner behind the zone.",
+   "gap": 0.3,
+   "why": "1 / 3 / 1 sequence"
+  },
+  {
+   "text": "Watch the ball reach the corner.",
+   "gap": 0.7,
+   "why": "O2 -> O4 pass plays out"
+  },
+  {
+   "text": "The wing and the runner trap.",
+   "gap": 0.6,
+   "why": "trap freeze"
+  },
+  {
+   "text": "The top drops to the elbow. The middle protects inside.",
+   "gap": 0.3,
+   "why": "ELBOW / INSIDE"
+  },
+  {
+   "text": "Now reset.",
+   "gap": 0.15,
+   "why": "NEW POSSESSION <= 0.6 s"
+  },
+  {
+   "text": "Move the ball to one wing... then skip it straight to the opposite corner.",
+   "gap": 0.7,
+   "why": "skip in flight"
+  },
+  {
+   "text": "The far wing closes out first.",
+   "gap": 0.2,
+   "why": "X3 FIRST"
+  },
+  {
+   "text": "The runner sprints across to take over.",
+   "gap": 0.45,
+   "why": "X4 takeover"
+  },
+  {
+   "text": "If they arrive late... corner three.",
+   "gap": 0.5,
+   "why": "split: LATE -> OPEN LOOK"
+  },
+  {
+   "text": "Recover on the pass? Contested.",
+   "gap": 0.95,
+   "why": "split: ON TIME -> CONTESTED, both shots land"
+  },
+  {
+   "text": "Pressure creates the trap. Quick passing tests the recovery.",
+   "gap": 0,
+   "why": "close + question on screen"
+  }
+ ]
+}

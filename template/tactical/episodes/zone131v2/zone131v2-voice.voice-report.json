@@ -1,0 +1,185 @@
+{
+ "source": "tactical/zone131/voice-raw.mp3",
+ "duration": 33.71,
+ "segments": [
+  {
+   "text": "One defender. Two corners.",
+   "take_words": [
+    0,
+    3
+   ],
+   "cut_in": 0.04,
+   "cut_out": 2.205,
+   "lead_kept": 0.12,
+   "tail_kept": 0.145,
+   "why": "hook: skip in flight, cut before the answer",
+   "gap_target": 0.3,
+   "gap_real": 0.3,
+   "inserted": 0.06
+  },
+  {
+   "text": "One up top. Three across the middle. One runner behind the zone.",
+   "take_words": [
+    10,
+    21
+   ],
+   "cut_in": 4.765,
+   "cut_out": 8.755,
+   "lead_kept": 0.095,
+   "tail_kept": 0.145,
+   "why": "1 / 3 / 1 sequence",
+   "gap_target": 0.3,
+   "gap_real": 0.3,
+   "inserted": 0.0
+  },
+  {
+   "text": "Watch the ball reach the corner.",
+   "take_words": [
+    22,
+    27
+   ],
+   "cut_in": 8.835,
+   "cut_out": 10.585,
+   "lead_kept": 0.155,
+   "tail_kept": 0.135,
+   "why": "O2 -> O4 pass plays out",
+   "gap_target": 0.7,
+   "gap_real": 0.7,
+   "inserted": 0.44
+  },
+  {
+   "text": "The wing and the runner trap.",
+   "take_words": [
+    28,
+    33
+   ],
+   "cut_in": 10.705,
+   "cut_out": 12.465,
+   "lead_kept": 0.125,
+   "tail_kept": 0.175,
+   "why": "trap freeze",
+   "gap_target": 0.6,
+   "gap_real": 0.6,
+   "inserted": 0.28
+  },
+  {
+   "text": "The top drops to the elbow. The middle protects inside.",
+   "take_words": [
+    34,
+    43
+   ],
+   "cut_in": 12.575,
+   "cut_out": 15.935,
+   "lead_kept": 0.145,
+   "tail_kept": 0.135,
+   "why": "ELBOW / INSIDE",
+   "gap_target": 0.3,
+   "gap_real": 0.3,
+   "inserted": 0.0
+  },
+  {
+   "text": "Now reset.",
+   "take_words": [
+    49,
+    50
+   ],
+   "cut_in": 17.725,
+   "cut_out": 18.765,
+   "lead_kept": 0.165,
+   "tail_kept": 0.155,
+   "why": "NEW POSSESSION <= 0.6 s",
+   "gap_target": 0.15,
+   "gap_real": 0.31,
+   "inserted": 0.0
+  },
+  {
+   "text": "Move the ball to one wing... then skip it straight to the opposite corner.",
+   "take_words": [
+    51,
+    64
+   ],
+   "cut_in": 18.855,
+   "cut_out": 22.805,
+   "lead_kept": 0.155,
+   "tail_kept": 0.115,
+   "why": "skip in flight",
+   "gap_target": 0.7,
+   "gap_real": 0.7,
+   "inserted": 0.43
+  },
+  {
+   "text": "The far wing closes out first.",
+   "take_words": [
+    65,
+    70
+   ],
+   "cut_in": 22.925,
+   "cut_out": 24.845,
+   "lead_kept": 0.155,
+   "tail_kept": 0.155,
+   "why": "X3 FIRST",
+   "gap_target": 0.2,
+   "gap_real": 0.29,
+   "inserted": 0.0
+  },
+  {
+   "text": "The runner sprints across to take over.",
+   "take_words": [
+    71,
+    77
+   ],
+   "cut_in": 24.975,
+   "cut_out": 27.145,
+   "lead_kept": 0.135,
+   "tail_kept": 0.135,
+   "why": "X4 takeover",
+   "gap_target": 0.45,
+   "gap_real": 0.45,
+   "inserted": 0.17
+  },
+  {
+   "text": "If they arrive late... corner three.",
+   "take_words": [
+    78,
+    83
+   ],
+   "cut_in": 27.295,
+   "cut_out": 29.475,
+   "lead_kept": 0.145,
+   "tail_kept": 0.135,
+   "why": "split: LATE -> OPEN LOOK",
+   "gap_target": 0.5,
+   "gap_real": 0.5,
+   "inserted": 0.24
+  },
+  {
+   "text": "Recover on the pass? Contested.",
+   "take_words": [
+    84,
+    88
+   ],
+   "cut_in": 29.635,
+   "cut_out": 31.985,
+   "lead_kept": 0.125,
+   "tail_kept": 0.095,
+   "why": "split: ON TIME -> CONTESTED, both shots land",
+   "gap_target": 0.95,
+   "gap_real": 0.95,
+   "inserted": 0.7
+  },
+  {
+   "text": "Pressure creates the trap. Quick passing tests the recovery.",
+   "take_words": [
+    92,
+    100
+   ],
+   "cut_in": 33.645,
+   "cut_out": 37.52,
+   "lead_kept": 0.155,
+   "tail_kept": -0.08,
+   "why": "close + question on screen"
+  }
+ ],
+ "synthesised": 0,
+ "time_stretch": 0
+}

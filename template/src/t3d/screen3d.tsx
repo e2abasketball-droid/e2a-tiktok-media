@@ -11,14 +11,22 @@ const eo = (x: number) => 1 - Math.pow(1 - clamp(x), 3);
 const inOut = (age: number, dur: number, fin = 0.28, fout = 0.22) => Math.min(eo(age / fin), eo((dur - age) / fout));
 
 /** big kinetic title: mask-wipe reveal per line, gold rule, gentle settle */
-export const KineticTitle: React.FC<{lines: string[]; age: number; dur: number; y?: number; size?: number; gold?: number[]; sub?: string}> = ({lines, age, dur, y = 300, size = 120, gold = [], sub}) => {
-  const out = clamp((dur - age) / 0.22);
+/** reveal 'mask' (default, unchanged): each line slides up inside a clipping mask (half glyphs for ~0.2 s).
+ *  reveal 'block' (2026-11-23, 1-3-1 V2 typography fix): no clipping at all; the whole block fades + rises 18 px, so every
+ *  glyph is complete on every frame. */
+export const KineticTitle: React.FC<{lines: string[]; age: number; dur: number; y?: number; size?: number; gold?: number[]; sub?: string; reveal?: 'mask' | 'block'; hold?: number; noOut?: boolean}> = ({lines, age, dur, y = 300, size = 120, gold = [], sub, reveal = 'mask', hold = 0, noOut = false}) => {
+  // block mode: `hold` first lines are already on screen (continuation of the previous title, no re-entry = no ghost),
+  // `noOut` = hard cut at the end (the next title takes over on the same frame)
+  const out = noOut ? 1 : clamp((dur - age) / 0.22);
+  const block = reveal === 'block';
+  const bin = hold > 0 ? 1 : eo(age / 0.2);
   return (
-    <div style={{position: 'absolute', left: 70, right: 160, top: y, opacity: eo(out)}}>
+    <div style={{position: 'absolute', left: 70, right: 160, top: y, opacity: block ? eo(out) * bin : eo(out), transform: block ? `translateY(${(1 - bin) * 18}px)` : undefined}}>
       {lines.map((l, i) => {
-        const a = eo((age - i * 0.14) / 0.32);
+        const a = block ? 1 : eo((age - i * 0.14) / 0.32);
+        const lo = block && hold > 0 && i >= hold ? eo(age / 0.2) : 1;
         return (
-          <div key={i} style={{overflow: 'hidden', height: size * 1.04}}>
+          <div key={i} style={{overflow: block ? 'visible' : 'hidden', height: size * 1.04, opacity: lo, transform: lo < 1 ? `translateY(${(1 - lo) * 18}px)` : undefined}}>
             <div
               data-qc="title"
               data-qc-text="1"
@@ -28,7 +36,7 @@ export const KineticTitle: React.FC<{lines: string[]; age: number; dur: number; 
                 lineHeight: 1.04,
                 letterSpacing: 1,
                 color: gold.includes(i) ? GOLD : WHITE,
-                transform: `translateY(${(1 - a) * 100}%) scale(${1 + 0.04 * (1 - eo(age / 0.6))})`,
+                transform: block ? undefined : `translateY(${(1 - a) * 100}%) scale(${1 + 0.04 * (1 - eo(age / 0.6))})`,
                 transformOrigin: 'left bottom',
                 textShadow: '0 6px 30px rgba(0,0,0,0.65), 0 2px 0 rgba(0,0,0,0.35)',
               }}
@@ -38,7 +46,7 @@ export const KineticTitle: React.FC<{lines: string[]; age: number; dur: number; 
           </div>
         );
       })}
-      <div style={{height: 7, width: `${eo((age - 0.15) / 0.4) * 180}px`, background: GOLD, marginTop: 14, borderRadius: 4}} />
+      <div style={{height: 7, width: `${(hold > 0 ? 1 : eo((age - 0.15) / 0.4)) * 180}px`, background: GOLD, marginTop: 14, borderRadius: 4}} />
       {sub && (
         <div data-qc="title-sub" data-qc-text="1" style={{fontFamily: BODY, fontWeight: 800, fontSize: 38, letterSpacing: 4, color: 'rgba(255,255,255,0.85)', marginTop: 16, opacity: eo((age - 0.25) / 0.3), textTransform: 'uppercase'}}>{sub}</div>
       )}

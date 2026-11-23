@@ -25,7 +25,7 @@ import {LOGO} from '../brand';
 
 type Word = {text: string; start: number; end: number};
 type Timed = {from: Anchor; to?: Anchor};
-type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: number; gold?: number[]; sub?: string} | {type: 'stamp'; text: string; y?: number; tone?: 'gold' | 'white'; badge?: string; /** fully on from its first frame (hook frame 0: no fade-in) */ instant?: boolean} | {type: 'pin'; player: string; text: string; tone?: 'gold' | 'red' | 'white'; dy?: number; z?: number; size?: number} | {type: 'freeze'; label?: string} | {type: 'rewind'} | {type: 'logo'; big?: boolean; y?: number; width?: number} | {type: 'grade'} | {type: 'scrim'; opacity?: number} | {type: 'step'; n: number; text: string; y?: number} | {type: 'counter'; steps: Anchor[]; total?: number; y?: number; base?: number} | {type: 'stepCount'; player: string; labels: string[]; y?: number; gatherLabel?: boolean}
+type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: number; gold?: number[]; sub?: string; reveal?: 'mask' | 'block'; hold?: number; noOut?: boolean} | {type: 'stamp'; text: string; y?: number; tone?: 'gold' | 'white'; badge?: string; /** fully on from its first frame (hook frame 0: no fade-in) */ instant?: boolean} | {type: 'pin'; player: string; text: string; tone?: 'gold' | 'red' | 'white'; dy?: number; z?: number; size?: number} | {type: 'freeze'; label?: string} | {type: 'rewind'} | {type: 'logo'; big?: boolean; y?: number; width?: number} | {type: 'grade'} | {type: 'scrim'; opacity?: number} | {type: 'step'; n: number; text: string; y?: number} | {type: 'counter'; steps: Anchor[]; total?: number; y?: number; base?: number} | {type: 'stepCount'; player: string; labels: string[]; y?: number; gatherLabel?: boolean}
   /** 2026-11-19 (Spain PnR 2.0): frame dims around one player; small read chip; punch-in / whip on the 3D layer; flash */
   | {type: 'focus'; player: string; r?: number; strength?: number; z?: number} | {type: 'hud'; tag: string; text: string; y?: number}
   /** 2026-11-19 (catch fix): DIAGNOSTIC ONLY, never in a delivered episode: ball phase, owner, play time and a label */
@@ -330,7 +330,7 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
       {scr.map((s, i) => {
         switch (s.type) {
           case 'title':
-            return <KineticTitle key={i} lines={s.lines} age={s.age} dur={s.dur} y={s.y} size={s.size} gold={s.gold} sub={s.sub} />;
+            return <KineticTitle key={i} lines={s.lines} age={s.age} dur={s.dur} y={s.y} size={s.size} gold={s.gold} sub={s.sub} reveal={s.reveal} hold={s.hold} noOut={s.noOut} />;
           case 'stamp':
             return <Stamp key={i} text={s.text} age={s.instant ? s.age + 0.3 : s.age} dur={s.instant ? s.dur + 0.3 : s.dur} y={s.y} tone={s.tone} badge={s.badge} />;
           case 'pin': {

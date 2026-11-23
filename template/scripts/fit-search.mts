@@ -14,7 +14,7 @@ const fov = +opt('--fov', '44');
 const yaws = opt('--yaws', '-120,-110,-100,-90,-80,-70,-60,-50,-40,-30,-20,-10,0').split(',').map(Number);
 const pitches = opt('--pitches', '30,38,46,54').split(',').map(Number);
 const ball = !rest.includes('--noball');
-const W = 1080, H = 1920;
+const W = 1080, H = +opt('--h', '1920');
 const sub = (p: number[], q: number[]) => [p[0] - q[0], p[1] - q[1], p[2] - q[2]];
 const dot = (p: number[], q: number[]) => p[0] * q[0] + p[1] * q[1] + p[2] * q[2];
 const cross = (p: number[], q: number[]) => [p[1] * q[2] - p[2] * q[1], p[2] * q[0] - p[0] * q[2], p[0] * q[1] - p[1] * q[0]];
