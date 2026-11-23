@@ -30,7 +30,7 @@ const all = frames.flat();
 const cx = all.reduce((s, p) => s + p[0], 0) / all.length, cy = all.reduce((s, p) => s + p[1], 0) / all.length;
 const res: any[] = [];
 for (const yaw of yaws) for (const pitch of pitches) for (let dx = -5; dx <= 5; dx += 0.5) for (let dy = -5; dy <= 5; dy += 0.5) {
-  for (let dist = 7; dist <= 22; dist += 0.25) {
+  for (let dist = 7; dist <= +opt('--dmax', '22'); dist += 0.25) {
     const cam = toCam({target: [cx + dx, cy + dy, 0.6], dist, pitch, yaw, fov});
     const fw = nrm(sub(cam.target, cam.pos)); const rt = nrm(cross(fw, cam.up)); const up = cross(rt, fw);
     const th = Math.tan((fov * Math.PI) / 360);

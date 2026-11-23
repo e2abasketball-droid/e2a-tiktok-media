@@ -57,6 +57,21 @@ export const COVERAGE_SCHEMES: Record<string, CoverageScheme> = {
       X5: {label: 'X5 · CENTER', r: [1.55, 1.45], rh: 1.3, labelOff: [0, -1.2]},
     },
   },
+  // 2026-11-23 (1-3-1 Zone reel): half-court corner-trapping 1-3-1. X1 chaser/top, X2 left wing (repo x > 0), X3 right
+  // wing, X5 center, X4 tail/warrior: a wide, shallow band along the baseline (both corners over time, never at once).
+  '1-3-1': {
+    name: '1-3-1 zone',
+    ids: ['X1', 'X2', 'X3', 'X4', 'X5'],
+    gap: 0.16,
+    reveal: ['X1', 'X2', 'X5', 'X3', 'X4'],
+    roles: {
+      X1: {label: 'X1 · TOP', r: [1.95, 1.3], rh: 1.3, labelOff: [0, 1.3]},
+      X2: {label: 'X2 · WING', r: [1.55, 1.55], rh: 1.25, labelOff: [0, 1.2]},
+      X3: {label: 'X3 · WING', r: [1.55, 1.55], rh: 1.25, labelOff: [0, 1.2]},
+      X5: {label: 'X5 · CENTER', r: [1.35, 1.25], rh: 1.15, labelOff: [0, -1.05]},
+      X4: {label: 'X4 · TAIL', r: [3.1, 0.85], rh: 1.1, labelOff: [0, -0.95]},
+    },
+  },
 };
 
 // ---------------------------------------------------------------- overlay types
