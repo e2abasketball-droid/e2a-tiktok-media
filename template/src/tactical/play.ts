@@ -28,7 +28,7 @@ export type BallEvent =
      present?: {toward: string; from: number; peak: number; hold?: number; to: number; amt: number; dz?: number}}
   /** eyes (2026-11-19, Blind Pig): seconds before t0 the passer's eyes go to the receiver (default 0.6);
    *  lead: a lead pass caught in stride (test-play allows a faster receiver at the catch) */
-  | {type: 'pass'; from: string; to: string; t0: number; t1: number; style?: 'chest' | 'bounce' | 'overhead' | 'handoff'; side?: number; eyes?: number; lead?: boolean; phased?: boolean}
+  | {type: 'pass'; from: string; to: string; t0: number; t1: number; style?: 'chest' | 'bounce' | 'overhead' | 'handoff'; side?: number; eyes?: number; lead?: boolean; phased?: boolean; /** overhead only: peak height of the arc (m, default 2.4); 2026-11-23 1-3-1 skip over the zone */ arc?: number}
   | {type: 'shot'; player: string; t0: number; t1: number; make?: boolean; side?: 1 | -1}
   | {type: 'layup'; player: string; t0: number; t1: number; make?: boolean};
 
@@ -655,7 +655,7 @@ const ballAtRaw = (play: Play, t: number, ps: Record<string, PlayerState>): Ball
         // continuous from wherever the ball is at the release (above the head when the pass was loaded,
         // 2026-11-13; the old fixed 2.1 m start teleported the ball up out of a dribble), arcing to ~2.4 m
         const z0 = a0[2];
-        z = z0 + (b1[2] - z0) * u + Math.max(0.25, 2.4 - (z0 + b1[2]) / 2) * Math.sin(Math.PI * u);
+        z = z0 + (b1[2] - z0) * u + Math.max(0.25, (cur.arc ?? 2.4) - (z0 + b1[2]) / 2) * Math.sin(Math.PI * u);
       } else if (cur.style === 'handoff') {
         // 2026-11-15 dribble hand-off: the ball never flies. It goes hand to hand at hip height along the
         // straight line between the passer's hand at t0 and the receiver's hand at t1 (eased, no arc), so both
