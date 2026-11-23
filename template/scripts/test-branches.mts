@@ -48,12 +48,14 @@ check(`drawn ball identical until the fork (≤ 1.5 cm)`, s1.ball <= 0.015, `max
 const s2 = diff(offShared, (id) => team[id] === 'O');
 check(`offence tracks identical until the hand-off (${offShared.toFixed(3)} s): only the defence has read`, s2.worst <= 0.003, `max ${(s2.worst * 100).toFixed(2)} cm ${s2.who}`);
 check(`drawn ball identical until the hand-off (≤ 1.5 cm)`, s2.ball <= 0.015, `max ${(s2.ball * 100).toFixed(2)} cm ${s2.bwho}`);
+// the defender who makes the read: `branch.reader` (HORNS 2026-11-23: X4), X2 by default (Chicago)
+const reader: string = A.branch.reader ?? 'X2';
 const x2fork = (p: typeof A) => {
-  const a = posAt(p.tracks.X2 ?? p.tracks[ids.find((i) => team[i] === 'X')!], fork + 0.6);
+  const a = posAt(p.tracks[reader] ?? p.tracks[ids.find((i) => team[i] === 'X')!], fork + 0.6);
   return a;
 };
 const xa = x2fork(A), xb = x2fork(B);
-check('the defence actually reads differently after the fork (X2 ≥ 0.5 m apart at fork + 0.6 s)', Math.hypot(xa[0] - xb[0], xa[1] - xb[1]) >= 0.5, `${Math.hypot(xa[0] - xb[0], xa[1] - xb[1]).toFixed(2)} m`);
+check(`the defence actually reads differently after the fork (${reader} ≥ 0.5 m apart at fork + 0.6 s)`, Math.hypot(xa[0] - xb[0], xa[1] - xb[1]) >= 0.5, `${Math.hypot(xa[0] - xb[0], xa[1] - xb[1]).toFixed(2)} m`);
 const ends: Record<string, [number, number]> = {};
 for (const p of plays) {
   const ev = p.ball.filter((e: {type: string}) => e.type === 'shot' || e.type === 'layup');
@@ -66,6 +68,12 @@ for (const p of plays) {
       `${last?.type} make=${last?.make} at ${distToBasket(at).toFixed(2)} m`);
     const dribbles = p.ball.filter((e: {type: string; player?: string; dribble?: boolean; from?: number}) => e.type === 'hold' && e.player === who && e.dribble && e.from >= p.branch.offenceSharedUntil);
     check(`[${p.id}] the drive is a live dribble before the gather (no carry)`, dribbles.length >= 1, `${dribbles.length} dribble hold(s)`);
+  } else if (p.branch.result === 'rim_finish') {
+    // a CATCH-and-finish at the rim (roll man): made layup within 1.5 m, the finisher caught a pass after the fork
+    check(`[${p.id}] ${p.branch.read} -> rim_finish: last ball event is a made LAYUP within 1.5 m of the rim`, last?.type === 'layup' && last.make !== false && distToBasket(at) <= 1.5,
+      `${last?.type} make=${last?.make} at ${distToBasket(at).toFixed(2)} m`);
+    const fed = p.ball.filter((e: {type: string; to?: string; t0?: number}) => e.type === 'pass' && e.to === who && (e.t0 ?? 0) >= p.branch.fork);
+    check(`[${p.id}] the finisher catches a pass after the read (no carry)`, fed.length >= 1, `${fed.length} pass(es) to ${who}`);
   } else if (p.branch.result === 'three_point_shot') {
     check(`[${p.id}] ${p.branch.read} -> three_point_shot: last ball event is a made SHOT released behind the arc`, last?.type === 'shot' && last.make !== false && isThree(at as [number, number]),
       `${last?.type} make=${last?.make} at ${distToBasket(at).toFixed(2)} m from the basket`);

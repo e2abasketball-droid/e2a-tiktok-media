@@ -274,6 +274,9 @@ const compilePlayer = (play: Play, id: string): Compiled33 => {
     posture: def ? 0.4 : big ? 0.15 : 0,
     hand: (holds.find((h) => h.hand)?.hand ?? 1) as 1 | -1,
   };
+  // opt-in per play (HORNS 2026-11-23): two branches of one action need the SAME body profile before the fork, even
+  // when only one branch gives the player the ball (the profile otherwise depends on post-fork events)
+  Object.assign(profile, ((play as Play & {v33profile?: Record<string, Partial<Profile>>}).v33profile ?? {})[id] ?? {});
   const role = (P as {role?: string}).role ?? (def ? 'defender' : 'attacker');
   script.sort((a, b) => tOf(a) - tOf(b));
   return {script, profile, role, unsupported, summary};
