@@ -13,11 +13,11 @@
   {
    "id": "FB-SETPIECE-001",
    "level": 1,
-   "title": "The short corner cutback",
+   "title": "Short corner: near-post decoy + late arrival",
    "category": "attacking_corner",
    "tactical_difficulty": 1,
-   "new_capability": "player-ball synchronisation: ground passes and runs; V03 (owner review): 3-pass corner routine ending in a legal goal, 11 v 11, animation v2, day look, continuous opening camera, graphics v2",
-   "status": "v03_delivered_for_review"
+   "new_capability": "player-ball synchronisation: ground passes and runs; V03 (owner review): 3-pass corner routine ending in a legal goal, 11 v 11, animation v2, day look, continuous opening camera, graphics v2; V05 (owner directive V05, first-team standard): mixed defence built first with reusable defensive behaviours (mark/zone/press/chase), tactical validator (marking, pressure, shift, advantage window, keeper bisector, no contact), head look-at, analytical graphics (marking links, orientation cone, passing window, finishing lane, timed runs)",
+   "status": "v05_delivered_for_review"
   },
   {
    "id": "FB-SETPIECE-002",

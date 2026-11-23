@@ -85,6 +85,7 @@ export type AthleteProps = {
   v2?: boolean; // animation v2 (FB-SETPIECE-001 V03+)
   keeper?: boolean; // goalkeeper set position (v2)
   guard?: number; // 0..1 defensive stance (v2): knees bent, low centre, arms out
+  lookAt?: [number, number]; // V05+: world point the head turns towards (the ball)
 };
 export type PoseOpts = {v2?: boolean; keeper?: boolean; guard?: number};
 
@@ -448,10 +449,20 @@ const computePoseV2 = (s: PlayerState, t: number, kicks: Kick[], actions: Action
 
 const HIP = 0.93;
 
-export const Athlete: React.FC<AthleteProps> = ({s, t, kit, number, skin, hairIdx, kicks, actions, receives, dim = 0, v2, keeper, guard}) => {
+export const Athlete: React.FC<AthleteProps> = ({s, t, kit, number, skin, hairIdx, kicks, actions, receives, dim = 0, v2, keeper, guard, lookAt}) => {
   const g = G();
   const p = computePose(s, t, kicks, actions, receives, {v2, keeper, guard});
   const h = s.heading;
+  // V05+: head turns towards what the player watches (the ball), up to ~66 deg each way; when the target is
+  // behind him the turn fades out instead of snapping from one shoulder to the other
+  let headYaw = 0;
+  if (lookAt) {
+    let d = Math.atan2(lookAt[1] - s.pos[1], lookAt[0] - s.pos[0]) - h;
+    while (d > Math.PI) d -= 2 * Math.PI;
+    while (d < -Math.PI) d += 2 * Math.PI;
+    const behind = Math.max(0, Math.min(1, (Math.PI - Math.abs(d)) / 0.7));
+    headYaw = Math.sign(d) * Math.min(Math.abs(d), 1.15) * behind * (p.y < -0.35 ? 0 : 1);
+  }
   // world -> three: rotation about Y so local +Z points along the heading
   const rotY = Math.atan2(Math.cos(h), -Math.sin(h));
   const leftX = Math.cos(h + Math.PI / 2);
@@ -514,7 +525,7 @@ export const Athlete: React.FC<AthleteProps> = ({s, t, kit, number, skin, hairId
             </mesh>
             {arm(1, p.shL, p.abL, p.elL)}
             {arm(-1, p.shR, p.abR, p.elR)}
-            <group position={[0, 0.72, 0.01]} rotation={[p.head, 0, 0]}>
+            <group position={[0, 0.72, 0.01]} rotation={[p.head, lookAt ? headYaw - p.twist * 0.5 : 0, 0]}>
               <mesh geometry={g.head} material={skinM} scale={[0.95, 1.1, 1]} castShadow />
               <mesh geometry={g.hair} material={hairM} position={[0, 0.02, -0.008]} scale={[0.97, 1.05, 1.02]} />
             </group>

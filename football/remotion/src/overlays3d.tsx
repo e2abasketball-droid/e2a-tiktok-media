@@ -10,14 +10,19 @@ import {ballPath, offsideLine, playerAt, routeOf, smooth} from './play';
 
 export type Ov =
   | {type: 'pass'; t0: number; t1: number; color?: string; dashed?: boolean; width?: number; trail?: boolean} // trail: the line follows the real ball (head at the ball)
-  | {type: 'run'; player: string; t0: number; t1: number; color?: string; width?: number; dashed?: boolean}
+  | {type: 'run'; player: string; t0: number; t1: number; color?: string; width?: number; dashed?: boolean; trail?: boolean} // trail (V05): drawn up to the player in play time — shows the TIMING of the run
   | {type: 'zone'; c: V2; r: V2; color?: string; label?: string; follow?: string}
   | {type: 'defline'; players: string[]; at?: number; color?: string}
   | {type: 'ring'; player: string; color?: string; r?: number}
   | {type: 'offside'; at: number; color?: string; span?: [number, number]}
   // FB-SETPIECE-001: a ring at a fixed point (ghost of a player's start spot, a legal distance) and a straight arrow
   | {type: 'circle'; c: V2; r: number; color?: string; dashed?: boolean; arc?: [number, number]; width?: number; fill?: number}
-  | {type: 'arrow'; p0: V2; p1: V2; color?: string; dashed?: boolean; width?: number};
+  | {type: 'arrow'; p0: V2; p1: V2; color?: string; dashed?: boolean; width?: number}
+  // V05 analytical graphics: a marking connection between two players (follows them), and a ground wedge
+  // from a player or a point — orientation / line of sight (dir 'heading'), passing window or finishing lane
+  // (dir = a point or a player). `len` metres, `half` = half-angle in radians.
+  | {type: 'link'; a: string; b: string; color?: string; dashed?: boolean; width?: number}
+  | {type: 'cone'; player?: string; p?: V2; dir: 'heading' | V2 | string; len: number; half: number; color?: string; opacity?: number};
 export type LiveOv = Ov & {age: number; dur: number; draw?: number};
 
 const H = 0.03;
@@ -290,8 +295,13 @@ const PassLine: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'p
   return <Paint g={g} color={o.color ?? GOLD} opacity={0.95 * fade(o)} />;
 };
 
-const Run: React.FC<{play: FBPlay; o: Extract<LiveOv, {type: 'run'}>; v2?: boolean}> = ({play, o, v2}) => {
+const Run: React.FC<{play: FBPlay; o: Extract<LiveOv, {type: 'run'}>; v2?: boolean; pt?: number}> = ({play, o, v2, pt}) => {
   const prog = smooth(o.age / (o.draw ?? 0.8));
+  if (v2 && o.trail) {
+    const end = Math.max(o.t0, Math.min(o.t1, pt ?? o.t1));
+    const pts = end - o.t0 > 0.05 ? routeOf(play, o.player, o.t0, end) : [];
+    return <Paint2 pts={pts} w={o.width ?? 0.085} dashed={o.dashed ?? true} head color={o.color ?? WHITE} opacity={0.95 * fade(o)} />;
+  }
   if (v2) return <Paint2 pts={cut(routeOf(play, o.player, o.t0, o.t1), prog)} w={o.width ?? 0.085} dashed={o.dashed ?? true} head color={o.color ?? WHITE} opacity={0.95 * fade(o)} />;
   const g = React.useMemo(() => ribbon(cut(routeOf(play, o.player, o.t0, o.t1), prog), o.width ?? 0.2, o.dashed ?? false, true), [play, o.player, o.t0, o.t1, prog, o.width, o.dashed]);
   return <Paint g={g} color={o.color ?? WHITE} opacity={0.92 * fade(o)} />;
@@ -450,6 +460,56 @@ const Arrow: React.FC<{o: Extract<LiveOv, {type: 'arrow'}>; v2?: boolean}> = ({o
   return <Paint g={g} color={o.color ?? GOLD} opacity={0.92 * fade(o)} />;
 };
 
+const Link: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'link'}>}> = ({play, pt, o}) => {
+  const a = playerAt(play, o.a, pt).pos;
+  const b = playerAt(play, o.b, pt).pos;
+  const L = Math.hypot(b[0] - a[0], b[1] - a[1]);
+  if (L < 0.5) return null;
+  // stop 0.45 m short of each body so the line connects the players without crossing their feet
+  const u: V2 = [(b[0] - a[0]) / L, (b[1] - a[1]) / L];
+  const g = smooth(o.age / 0.35);
+  const p0: V2 = [a[0] + u[0] * 0.45, a[1] + u[1] * 0.45];
+  const p1: V2 = [p0[0] + u[0] * (L - 0.9) * g, p0[1] + u[1] * (L - 0.9) * g];
+  return <Paint2 pts={[p0, p1]} w={o.width ?? 0.05} dashed={o.dashed ?? false} head={false} color={o.color ?? WHITE} opacity={0.9 * fade(o)} />;
+};
+
+let fanTex: THREE.Texture | null = null;
+/** linear fade along the wedge (bright at the apex, gone at the end) */
+const fanTexture = () => {
+  if (fanTex) return fanTex;
+  const c = document.createElement('canvas');
+  c.width = 256;
+  c.height = 256;
+  const x = c.getContext('2d')!;
+  const g = x.createRadialGradient(128, 128, 0, 128, 128, 128);
+  g.addColorStop(0, 'rgba(255,255,255,1)');
+  g.addColorStop(0.55, 'rgba(255,255,255,0.55)');
+  g.addColorStop(1, 'rgba(255,255,255,0)');
+  x.fillStyle = g;
+  x.fillRect(0, 0, 256, 256);
+  fanTex = new THREE.CanvasTexture(c);
+  return fanTex;
+};
+
+const Cone: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'cone'}>}> = ({play, pt, o}) => {
+  const st = o.player ? playerAt(play, o.player, pt) : null;
+  const c: V2 = st ? st.pos : o.p!;
+  let ang: number;
+  if (o.dir === 'heading') ang = st!.heading;
+  else {
+    const q: V2 = typeof o.dir === 'string' ? playerAt(play, o.dir, pt).pos : o.dir;
+    ang = Math.atan2(q[1] - c[1], q[0] - c[0]);
+  }
+  const grow = smooth(o.age / 0.45);
+  // world angle -> three: the ground circle lies in x/z with z = -y, rotated -90 deg about x
+  return (
+    <mesh position={W3([c[0], c[1], H - 0.008])} rotation={[-Math.PI / 2, 0, 0]} renderOrder={3} scale={[o.len * grow, o.len * grow, 1]}>
+      <circleGeometry args={[1, 48, ang - o.half, 2 * o.half]} />
+      <meshBasicMaterial color={o.color ?? WHITE} alphaMap={fanTexture()} transparent opacity={(o.opacity ?? 0.34) * fade(o)} depthWrite={false} toneMapped={false} side={THREE.DoubleSide} />
+    </mesh>
+  );
+};
+
 export const Overlays3D: React.FC<{play: FBPlay; pt: number; items: LiveOv[]; v2?: boolean}> = ({play, pt, items, v2}) => (
   <group>
     {items.map((o, i) => {
@@ -457,7 +517,7 @@ export const Overlays3D: React.FC<{play: FBPlay; pt: number; items: LiveOv[]; v2
         case 'pass':
           return <PassLine key={i} play={play} pt={pt} o={o} v2={v2} />;
         case 'run':
-          return <Run key={i} play={play} o={o} v2={v2} />;
+          return <Run key={i} play={play} o={o} v2={v2} pt={pt} />;
         case 'zone':
           return <Zone key={i} play={play} pt={pt} o={o} v2={v2} />;
         case 'defline':
@@ -470,6 +530,10 @@ export const Overlays3D: React.FC<{play: FBPlay; pt: number; items: LiveOv[]; v2
           return <Circle key={i} o={o} />;
         case 'arrow':
           return <Arrow key={i} o={o} v2={v2} />;
+        case 'link':
+          return <Link key={i} play={play} pt={pt} o={o} />;
+        case 'cone':
+          return <Cone key={i} play={play} pt={pt} o={o} />;
         default:
           return null;
       }

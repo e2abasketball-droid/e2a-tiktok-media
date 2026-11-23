@@ -119,7 +119,7 @@ def sample_spline(wps, duration):
 
 
 def build(spec):
-    play = {k: v for k, v in spec.items() if k not in ('motion', 'interp')}
+    play = {k: v for k, v in spec.items() if k not in ('motion', 'interp', 'behaviours')}
     out = []
     for p in spec['players']:
         q = dict(p)
@@ -127,6 +127,12 @@ def build(spec):
         if wps:
             q['track'] = sample_spline(wps, spec['duration']) if spec.get('interp') == 'spline' else sample_waypoints(wps, spec['duration'])
         out.append(q)
+    if spec.get('behaviours'):
+        # V05+: defenders driven by reusable behaviours (mark / zone / press / chase) reacting to the attack
+        import os
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        from fb_defence import resolve
+        resolve(spec, out, track_pos)
     play['players'] = out
     return play
 
@@ -269,6 +275,9 @@ def validate(play):
         add(f'Law 10: shot by {e["by"]} between the posts', abs(ty) <= 3.66 - 0.06 - 0.11, f'|y| {abs(ty):.2f} m (inner post face 3.60, ball radius 0.11)')
         add(f'Law 10: shot by {e["by"]} under the crossbar', 0.11 + lift <= 2.44 - 0.06 - 0.11, f'max ball centre height {0.11 + lift:.2f} m')
         a = track_pos(byid[e['by']]['track'], e['t'])
+        # the lane starts 0.5 m in front of the strike point: a player behind the shooter cannot block it
+        L0 = math.hypot(tx - a[0], ty - a[1])
+        a = [a[0] + (tx - a[0]) * 0.5 / L0, a[1] + (ty - a[1]) * 0.5 / L0]
         worst, who = 1e9, '-'
         for p in play['players']:
             if p['id'] == e['by'] or p['role'] == 'GK':

@@ -44,6 +44,8 @@ export type FBPlay = {
   /** FB-SETPIECE-001 V03+: animation v2 (run cycle, side-foot kicks, guard / keeper stances, side-steps and
    *  backpedal, smooth dribble touches). Older plays keep the v1 look exactly. */
   animV2?: boolean;
+  /** V05+: heads turn towards the ball (older plays keep a fixed head) */
+  headLook?: boolean;
 };
 export type V2 = [number, number];
 export type V3 = [number, number, number];

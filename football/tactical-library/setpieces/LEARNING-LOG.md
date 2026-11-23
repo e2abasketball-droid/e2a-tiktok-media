@@ -78,3 +78,31 @@ Validator additions: shot legality (wholly over the line, between the posts, und
 all outfield players, keeper beaten fairly (reach model 2.15 m with a dive), dive after the strike, pass lanes
 clear of team-mates. Engine QC additions: goal really crosses the line in the rendered ball, net hit + ball
 settles, ball never passes through a player, shot speed ≤ 32 m/s.
+
+## FB-SETPIECE-001 V05 — Near-post decoy + late arrival (2026-11-23, owner directive V05 "first-team standard")
+
+### PERMANENT METHOD (owner rule, applies to every set-piece video from now on)
+TACTICAL RESEARCH → REALISTIC DEFENSIVE STRUCTURE → OFFENSIVE ROUTINE DESIGN → DEFENSIVE CHALLENGE →
+TACTICAL VALIDATION → 3D ANIMATION → CINEMATIC EDITING → QUALITY CONTROL → HUMAN REVIEW.
+"A simple, credible play perfectly represented beats a spectacular play that would never work against an organised defence."
+Research rule: only cite sources actually read; if a source cannot be reached, say so (V05: thefa.com, theifab.com,
+spielverlagerung.com and elitesoccercoaching.net all failed DNS from the sandbox → rules from memory, NEEDS REVIEW).
+
+### V04 → V05 (problem · cause · fix · component · reuse)
+| # | Owner problem (V04) | Technical cause | Fix | Component | Reuse |
+|---|---|---|---|---|---|
+| 01 | Too much space in the box | Defenders were hand-placed waypoints; nothing tied them to the attackers | Defence designed first: mixed system (post + 3 zones + 3 markers + short + edge + outlet + GK), 9 in the box at the kick; every outfield defender driven by behaviours | `scripts/fb_defence.py` (`behaviours` in a spec) | Any set piece: write `behaviours` instead of defender waypoints |
+| 02 | Passive defenders | No reaction model | `mark` (goal-side, ball-biased, reaction delay), `zone` (shade towards ball/player, capped), `press` (stop short, inside), `chase` (recovery run), `to`; critically damped follower with velocity feed-forward, speed/accel clamps | fb_defence.py | Same |
+| 03 | Goal looked predetermined | Scorer free from the start | Scorer starts outside the box; advantage comes from a shift (D5 1.75 m to the near post) + a late run from the edge defender's blind side; 3.0 m at the strike, window 1.4 s | spec V05 + `scripts/fb_tactics.py` | Tactical validator on every play with a `tactics` block |
+| 04 | No collective coordination | Runs were independent | Trigger = the return pass; decoy 1 → decoy 2 (+0.5 s) → late runner, timed to the delivery | spec V05 | — |
+| 05 | Finish / keeper not credible | Keeper shift arbitrary | Keeper near post with the ball wide, shuffles back during the cutback, SET at the strike (0.18 m/s), 0.25 m off the bisector, dive 0.17 s after the strike; low far-corner shot 0.46 m inside the post at 23 m/s | fb_tactics keeper checks | Every goal |
+| 06 | Replay too long | 7.2 s + payoff overview | 6.6 s analytical replay from above (same orientation as the opening), one 0.6 s pause on the cutback | episode | — |
+| 07 | Graphics descriptive | Only passes/runs/zone | Marking links, red defensive shift + ghost start ring, orientation cone, passing window, finishing lane, runs drawn in play time (timing) | overlays3d.tsx `link`, `cone`, `run.trail` | `graphicsV2` episodes |
+
+Other engine changes: `headLook` (heads turn to the ball, fade when it is behind; old plays unchanged),
+shot-lane check starts 0.5 m in front of the strike (a player behind the shooter cannot block), generator kept in
+the repo (`tactical-library/setpieces/gen/FB-SETPIECE-001-V05.gen.py`) so the spec is reproducible.
+
+Framing rule learnt: for a corner from the right, an overhead at azimuth 90 (camera on the corner side, looking
+across the pitch) puts the goal line vertical on the right, the corner at the bottom and the box in the middle —
+passer, shifted line, late runner and finishing zone all fit the vertical frame. Azimuth 60-80 loses the passer.

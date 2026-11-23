@@ -199,6 +199,7 @@ const Scene: React.FC<{play: FBPlay; pt: number; cam: Cam; W: number; H: number;
           v2={play.animV2}
           keeper={play.animV2 && p.role === 'GK'}
           guard={play.animV2 ? guardOf(play, p.id, pt, ball) : undefined}
+          lookAt={play.headLook ? [ball.pos[0], ball.pos[1]] : undefined}
         />
       ))}
       <Ball pos={ball.pos} q={ball.spin} />
