@@ -50,14 +50,82 @@ def sample_waypoints(wps, duration):
     return keys
 
 
+def _clamped_spline(ts, xs, v0, v1):
+    """C2 cubic spline through (ts, xs) with end velocities v0, v1; returns the knot velocities"""
+    n = len(ts)
+    h = [ts[i + 1] - ts[i] for i in range(n - 1)]
+    # unknowns: second derivatives M_i; clamped end conditions
+    A = [[0.0] * n for _ in range(n)]
+    r = [0.0] * n
+    A[0][0], A[0][1] = 2 * h[0], h[0]
+    r[0] = 6 * ((xs[1] - xs[0]) / h[0] - v0)
+    A[n - 1][n - 2], A[n - 1][n - 1] = h[-1], 2 * h[-1]
+    r[n - 1] = 6 * (v1 - (xs[-1] - xs[-2]) / h[-1])
+    for i in range(1, n - 1):
+        A[i][i - 1], A[i][i], A[i][i + 1] = h[i - 1], 2 * (h[i - 1] + h[i]), h[i]
+        r[i] = 6 * ((xs[i + 1] - xs[i]) / h[i] - (xs[i] - xs[i - 1]) / h[i - 1])
+    # Thomas algorithm
+    c = [0.0] * n
+    d = [0.0] * n
+    for i in range(n):
+        a_ = A[i][i - 1] if i > 0 else 0.0
+        b_ = A[i][i] - a_ * (c[i - 1] if i > 0 else 0.0)
+        c[i] = (A[i][i + 1] if i < n - 1 else 0.0) / b_
+        d[i] = (r[i] - a_ * (d[i - 1] if i > 0 else 0.0)) / b_
+    M = [0.0] * n
+    for i in range(n - 1, -1, -1):
+        M[i] = d[i] - (c[i] * M[i + 1] if i < n - 1 else 0.0)
+    return M
+
+
+def sample_spline(wps, duration):
+    """V03+ authoring ('interp': 'spline'): within each moving chunk (between two holds) the route is a C2 cubic
+    spline in time through the waypoints, clamped to the given start/end velocities (default 0). Acceleration
+    is continuous everywhere (no zero-acceleration kinks at via points as with the quintic segments)."""
+    chunks = []
+    cur = [wps[0]]
+    for w in wps[1:]:
+        if w['p'] == cur[-1]['p'] and not cur[-1].get('v') and not w.get('v'):
+            if len(cur) > 1:
+                chunks.append(cur)
+            cur = [w]
+        else:
+            cur.append(w)
+    if len(cur) > 1:
+        chunks.append(cur)
+    keys = []
+    n = int(round(duration / DT_KEYS))
+    for i in range(n + 1):
+        t = i * DT_KEYS
+        p = None
+        for ch in chunks:
+            if ch[0]['t'] <= t <= ch[-1]['t']:
+                ts = [w['t'] for w in ch]
+                out = []
+                for k in range(2):
+                    xs = [w['p'][k] for w in ch]
+                    M = _clamped_spline(ts, xs, ch[0].get('v', [0, 0])[k], ch[-1].get('v', [0, 0])[k])
+                    j = max(m for m in range(len(ts) - 1) if ts[m] <= t)
+                    hh = ts[j + 1] - ts[j]
+                    a, b = ts[j + 1] - t, t - ts[j]
+                    out.append(M[j] * a ** 3 / (6 * hh) + M[j + 1] * b ** 3 / (6 * hh) + (xs[j] / hh - M[j] * hh / 6) * a + (xs[j + 1] / hh - M[j + 1] * hh / 6) * b)
+                p = out
+                break
+        if p is None:
+            prev = [w for w in wps if w['t'] <= t]
+            p = (prev[-1] if prev else wps[0])['p']
+        keys.append([round(t, 3), round(p[0], 3), round(p[1], 3)])
+    return keys
+
+
 def build(spec):
-    play = {k: v for k, v in spec.items() if k != 'motion'}
+    play = {k: v for k, v in spec.items() if k not in ('motion', 'interp')}
     out = []
     for p in spec['players']:
         q = dict(p)
         wps = spec['motion'].get(p['id'])
         if wps:
-            q['track'] = sample_waypoints(wps, spec['duration'])
+            q['track'] = sample_spline(wps, spec['duration']) if spec.get('interp') == 'spline' else sample_waypoints(wps, spec['duration'])
         out.append(q)
     play['players'] = out
     return play
@@ -90,6 +158,12 @@ def track_pos(tr, t):
     h01 = -2 * u ** 3 + 3 * u ** 2
     h11 = u ** 3 - u ** 2
     return [h00 * x0 + h10 * h * m0[0] + h01 * x1 + h11 * h * m1[0], h00 * y0 + h10 * h * m0[1] + h01 * y1 + h11 * h * m1[1]]
+
+
+def seg_dist(q, a, b):
+    L2 = (b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2
+    s = max(0, min(1, ((q[0] - a[0]) * (b[0] - a[0]) + (q[1] - a[1]) * (b[1] - a[1])) / L2)) if L2 > 0 else 0
+    return math.hypot(q[0] - a[0] - (b[0] - a[0]) * s, q[1] - a[1] - (b[1] - a[1]) * s)
 
 
 def validate(play):
@@ -168,11 +242,53 @@ def validate(play):
                 if dd < worst:
                     worst, who = dd, p['id']
         add(f'pass lane {e["by"]}->{e["to"]} clear of defenders (>= 1.2 m)', worst >= 1.2, f'closest {who} {worst:.2f} m')
+        if play.get('animV2'):
+            # V03+: team-mates must not stand in the lane either (the ball would pass through them)
+            wa, wh = 1e9, '-'
+            for p in play['players']:
+                if p['team'] != 'attack' or p['id'] in (e['by'], e['to']):
+                    continue
+                for k in range(11):
+                    tt = e['t'] + (e['t1'] - e['t']) * k / 10
+                    dd = seg_dist(track_pos(p['track'], tt), a, b)
+                    if dd < wa:
+                        wa, wh = dd, p['id']
+            add(f'pass lane {e["by"]}->{e["to"]} clear of team-mates (>= 0.8 m)', wa >= 0.8, f'closest {wh} {wa:.2f} m')
         if e.get('decel') is not None:
             T = e['t1'] - e['t']
             k = max(0, min(0.9, e['decel'] * T * T / (2 * L)))
             v0, v1 = (1 + k) * L / T, (1 - k) * L / T
             add(f'ground pass speed {e["by"]}->{e["to"]} plausible (3-14 m/s)', 3 <= v1 and v0 <= 14, f'{L:.1f} m in {T:.2f} s: leaves {v0:.1f} m/s, arrives {v1:.1f} m/s, decel {e["decel"]} m/s2')
+    # shots (V03+): the goal is legal and physically clean
+    for e in ev:
+        if e['type'] != 'shot':
+            continue
+        tx, ty = e['target']
+        lift = e.get('lift', 0.4)
+        add(f'Law 10: shot by {e["by"]} wholly crosses the goal line', tx >= HL + 0.06 + 0.11, f'ball centre x {tx:.2f} (line outer edge {HL + 0.06:.2f} + radius 0.11)')
+        add(f'Law 10: shot by {e["by"]} between the posts', abs(ty) <= 3.66 - 0.06 - 0.11, f'|y| {abs(ty):.2f} m (inner post face 3.60, ball radius 0.11)')
+        add(f'Law 10: shot by {e["by"]} under the crossbar', 0.11 + lift <= 2.44 - 0.06 - 0.11, f'max ball centre height {0.11 + lift:.2f} m')
+        a = track_pos(byid[e['by']]['track'], e['t'])
+        worst, who = 1e9, '-'
+        for p in play['players']:
+            if p['id'] == e['by'] or p['role'] == 'GK':
+                continue
+            for k in range(11):
+                tt = e['t'] + (e['t1'] - e['t']) * k / 10
+                dd = seg_dist(track_pos(p['track'], tt), a, [tx, ty])
+                if dd < worst:
+                    worst, who = dd, p['id']
+        add(f'shot lane {e["by"]} clear of every outfield player (>= 1.0 m)', worst >= 1.0, f'closest {who} {worst:.2f} m')
+        for p in play['players']:
+            if p['role'] != 'GK' or p['team'] == byid[e['by']]['team']:
+                continue
+            dive = next((x for x in p.get('actions', []) if x['type'] == 'dive'), None)
+            q = track_pos(p['track'], e['t1'])
+            reach = 1.15 + 1.0 if dive else 1.0  # body shift of the dive + arms
+            dd = seg_dist(q, a, [tx, ty])
+            add(f'keeper {p["id"]} beaten fairly (ball path beyond reach {reach:.2f} m)', dd >= reach + 0.15, f'keeper {dd:.2f} m from the ball path at the arrival, {"dives" if dive else "no dive"}')
+            if dive:
+                add(f'keeper {p["id"]} reacts after the strike', dive['t0'] >= e['t'] + 0.08, f'dive starts {dive["t0"] - e["t"]:.2f} s after the strike')
     # nobody runs through a corner flagpost (body radius ~0.25 m)
     for p in play['players']:
         dmin = min(min(math.hypot(track_pos(p['track'], i * dt)[0] - sx * HL, track_pos(p['track'], i * dt)[1] - sy * HW) for sx in (1, -1) for sy in (1, -1)) for i in range(0, n + 1, 4))

@@ -17,14 +17,24 @@ const rnd = (i: number) => {
 };
 
 let grassTex: THREE.Texture | null = null;
-const grassDetail = () => {
+let grassTexDay: THREE.Texture | null = null;
+/** day: the same blades around a light base (sRGB 128 is only ~0.22 in linear light, which made the V02 pitch dark) */
+const grassDetail = (day = false) => {
+  if (day) {
+    if (!grassTexDay) grassTexDay = makeGrassDetail(214, 175, 70);
+    return grassTexDay;
+  }
   if (grassTex) return grassTex;
+  grassTex = makeGrassDetail(128, 95, 75);
+  return grassTex;
+};
+const makeGrassDetail = (baseV: number, bladeMin: number, bladeRange: number) => {
   const S = 512;
   const c = document.createElement('canvas');
   c.width = S;
   c.height = S;
   const g = c.getContext('2d')!;
-  g.fillStyle = 'rgb(128,128,128)';
+  g.fillStyle = `rgb(${baseV},${baseV},${baseV})`;
   g.fillRect(0, 0, S, S);
   // blades: short strokes with random tone, tileable (wrap around edges)
   for (let i = 0; i < 26000; i++) {
@@ -32,7 +42,7 @@ const grassDetail = () => {
     const y = rnd(i + 7.3) * S;
     const l = 2 + rnd(i + 1.7) * 6;
     const a = -Math.PI / 2 + (rnd(i + 3.1) - 0.5) * 0.9;
-    const v = 95 + rnd(i + 5.9) * 75;
+    const v = bladeMin + rnd(i + 5.9) * bladeRange;
     g.strokeStyle = `rgba(${v},${v},${v},0.55)`;
     g.lineWidth = 1;
     for (const dx of [0, -S, S])
@@ -49,9 +59,9 @@ const grassDetail = () => {
     const y = rnd(i + 199) * S;
     const r = 20 + rnd(i + 299) * 60;
     const grd = g.createRadialGradient(x, y, 0, x, y, r);
-    const v = rnd(i + 399) > 0.5 ? 150 : 105;
+    const v = rnd(i + 399) > 0.5 ? baseV + 22 : baseV - 23;
     grd.addColorStop(0, `rgba(${v},${v},${v},0.18)`);
-    grd.addColorStop(1, 'rgba(128,128,128,0)');
+    grd.addColorStop(1, `rgba(${baseV},${baseV},${baseV},0)`);
     g.fillStyle = grd;
     g.fillRect(x - r, y - r, 2 * r, 2 * r);
   }
@@ -59,7 +69,6 @@ const grassDetail = () => {
   t.wrapS = t.wrapT = THREE.RepeatWrapping;
   t.anisotropy = 8;
   t.colorSpace = THREE.SRGBColorSpace;
-  grassTex = t;
   return t;
 };
 
@@ -124,8 +133,11 @@ const Lines: React.FC = () => {
   );
 };
 
-const Grass: React.FC = () => {
-  const det = grassDetail();
+export type Look = 'night' | 'day';
+
+const Grass: React.FC<{look?: Look}> = ({look = 'night'}) => {
+  const day = look === 'day';
+  const det = grassDetail(day);
   const stripes = 18;
   const w = PITCH.L / stripes;
   const mk = (color: string, rx: number, ry: number) => {
@@ -134,9 +146,10 @@ const Grass: React.FC = () => {
     t.repeat.set(rx, ry);
     return new THREE.MeshStandardMaterial({color, map: t, roughness: 0.96, metalness: 0});
   };
-  const mA = React.useMemo(() => mk('#3F8A3A', w / 1.6, PITCH.W / 1.6), []);
-  const mB = React.useMemo(() => mk('#4A9A43', w / 1.6, PITCH.W / 1.6), []);
-  const mOut = React.useMemo(() => mk('#356F31', 60, 40), []);
+  // day (V03): natural, brighter mown stripes; the detail texture keeps the blades visible
+  const mA = React.useMemo(() => mk(day ? '#4E9A3E' : '#3F8A3A', w / 1.6, PITCH.W / 1.6), [day]);
+  const mB = React.useMemo(() => mk(day ? '#5BA847' : '#4A9A43', w / 1.6, PITCH.W / 1.6), [day]);
+  const mOut = React.useMemo(() => mk(day ? '#4A8C3A' : '#356F31', 60, 40), [day]);
   return (
     <group>
       {Array.from({length: stripes}, (_, i) => (
@@ -309,9 +322,48 @@ const boardTexture = () => {
   return t;
 };
 
-const Surroundings: React.FC = () => {
-  const stands = React.useMemo(() => new THREE.MeshStandardMaterial({color: '#141C2C', roughness: 0.95}), []);
-  const seats = React.useMemo(() => new THREE.MeshStandardMaterial({color: '#1E2B45', roughness: 0.9}), []);
+let crowdTex: THREE.Texture | null = null;
+/** day stands: a dense, muted crowd pattern (thousands of small heads / shirts), tileable, no faces */
+const crowdTexture = () => {
+  if (crowdTex) return crowdTex;
+  const c = document.createElement('canvas');
+  c.width = 1024;
+  c.height = 256;
+  const g = c.getContext('2d')!;
+  g.fillStyle = '#5B6676';
+  g.fillRect(0, 0, 1024, 256);
+  const cols = ['#E9E6DF', '#C9CED6', '#2B3A55', '#0B1C3D', '#8C2F35', '#D7B46A', '#3F4E66', '#B8BEC8', '#F4F1EA', '#6C7A8F'];
+  for (let row = 0; row < 32; row++)
+    for (let i = 0; i < 150; i++) {
+      const x = (i + rnd(row * 400 + i) * 0.8) * (1024 / 150);
+      const y = row * 8 + 3 + rnd(row * 900 + i) * 2;
+      g.fillStyle = cols[Math.floor(rnd(row * 77 + i * 3) * cols.length)];
+      g.fillRect(x, y, 5, 4);
+      g.fillStyle = rnd(i * 5 + row) > 0.5 ? '#5E3B26' : '#C68B63';
+      g.fillRect(x + 1, y - 2, 3, 2);
+    }
+  for (let row = 0; row < 32; row++) {
+    g.fillStyle = 'rgba(20,28,44,0.35)';
+    g.fillRect(0, row * 8 + 7, 1024, 1);
+  }
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.anisotropy = 4;
+  crowdTex = t;
+  return t;
+};
+
+const Surroundings: React.FC<{look?: Look}> = ({look = 'night'}) => {
+  const day = look === 'day';
+  const stands = React.useMemo(() => {
+    if (!day) return new THREE.MeshStandardMaterial({color: '#141C2C', roughness: 0.95});
+    const t = crowdTexture().clone();
+    t.needsUpdate = true;
+    t.repeat.set(10, 1);
+    return new THREE.MeshStandardMaterial({color: '#FFFFFF', map: t, roughness: 0.95});
+  }, [day]);
+  const seats = React.useMemo(() => new THREE.MeshStandardMaterial({color: day ? '#56637E' : '#1E2B45', roughness: 0.9}), [day]);
   const boardL = React.useMemo(() => {
     const t = boardTexture().clone();
     t.needsUpdate = true;
@@ -357,7 +409,43 @@ const Surroundings: React.FC = () => {
   );
 };
 
-export const Lights: React.FC<{focus: [number, number]}> = ({focus}) => {
+export const Lights: React.FC<{focus: [number, number]; look?: Look}> = ({focus, look = 'night'}) => (look === 'day' ? <DayLights focus={focus} /> : <NightLights focus={focus} />);
+
+/** V03 match lighting: high afternoon sun, sky fill, bounce from the grass. Soft shadows, no clipping. */
+const DayLights: React.FC<{focus: [number, number]}> = ({focus}) => {
+  const tgt = React.useMemo(() => new THREE.Object3D(), []);
+  const f = W3([focus[0], focus[1], 0]);
+  tgt.position.set(f[0], f[1], f[2]);
+  tgt.updateMatrixWorld();
+  return (
+    <>
+      <hemisphereLight args={['#DDEBFF', '#58803F', 1.05]} />
+      <ambientLight intensity={0.22} />
+      <primitive object={tgt} />
+      <directionalLight
+        position={W3([focus[0] - 30, focus[1] + 24, 58])}
+        target={tgt}
+        intensity={2.5}
+        color="#FFF3E0"
+        castShadow
+        shadow-mapSize-width={2048}
+        shadow-mapSize-height={2048}
+        shadow-camera-left={-40}
+        shadow-camera-right={40}
+        shadow-camera-top={40}
+        shadow-camera-bottom={-40}
+        shadow-camera-near={10}
+        shadow-camera-far={160}
+        shadow-bias={-0.0004}
+        shadow-normalBias={0.02}
+        shadow-radius={4}
+      />
+      <directionalLight position={W3([focus[0] + 34, focus[1] - 26, 30])} intensity={0.45} color="#E4EEFF" />
+    </>
+  );
+};
+
+const NightLights: React.FC<{focus: [number, number]}> = ({focus}) => {
   const ref = React.useRef<THREE.DirectionalLight>(null);
   const tgt = React.useMemo(() => new THREE.Object3D(), []);
   const f = W3([focus[0], focus[1], 0]);
@@ -428,13 +516,13 @@ const CornerFlags: React.FC = () => {
   );
 };
 
-export const Pitch3D: React.FC<{hit: NetHit}> = ({hit}) => (
+export const Pitch3D: React.FC<{hit: NetHit; look?: Look}> = ({hit, look}) => (
   <group>
-    <Grass />
+    <Grass look={look} />
     <Lines />
     <CornerFlags />
     <Goal side={1} hit={hit} />
     <Goal side={-1} hit={null} />
-    <Surroundings />
+    <Surroundings look={look} />
   </group>
 );

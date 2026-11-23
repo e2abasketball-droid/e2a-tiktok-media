@@ -54,3 +54,27 @@ Football component, with a test, and must not be solved again.
 3. Change of pace inside a run (waypoints already support it) and a sharper cut with plant foot.
 4. Head turn towards the ball for receivers (scanning).
 Reuse unchanged: fb_motion.py, pass v2, cushion, rest, cameras A/B with lift, trail lines, QC scripts.
+
+## FB-SETPIECE-001 V03 — The Short Corner Cutback (2026-11-23, after the owner's V02 review)
+
+Owner's 10 problems with V02 → what changed in the reusable engine (problem · technical cause · fix · component · reuse).
+
+| # | Problem | Technical cause | Fix | Component | Reuse |
+|---|---|---|---|---|---|
+| 1 | Pitch too dark | Night floodlight preset + grass detail texture on a mid-grey base (sRGB 128 ≈ 0.22 linear: the texture divided the grass colour by ~4.5), vignette and top/bottom falloff | `look: 'day'`: sun + sky fill, light detail texture (base 214), natural stripes, crowd-textured stands, sky background, exposure 1.08; `grade: 'clean'` (no vignette) | pitch3d.tsx (Lights/Grass/Surroundings), FBTactical3D.tsx | Any episode: `look: 'day'`, `grade: 'clean'` (defaults keep old episodes identical) |
+| 2 | No spatial context | Hook started on a close camera | One continuous opening move (stadium → attacking third → corner) with `spline: true` camera keys (Catmull-Rom, no stop at mid keys) | camera.ts `camSpline` | Every opening / any long camera move |
+| 3 | Rigid players | v1 gait: small arm/knee amplitudes, forward gait even when moving sideways/backwards, generic instep kick | `animV2`: speed-driven stride and knee drive, arms bent and swinging, lean from speed + acceleration, level head, backpedal and side-steps, side-foot technique (leg external rotation, plant leg, follow-through), keeper set stance, defender guard stance, keeper dive v2 | athlete.tsx `computePoseV2`, play.ts Kick.inside | `animV2: true` in a play |
+| 4 | Too much empty grass | Cameras too far / wrong azimuth for a vertical frame | Cameras chosen so the action runs along the frame's vertical axis (goal at the top) | episode cameras | Rule of thumb in this log |
+| 5/9/10 | Too long, no finish, nothing memorable | Level-1 play ended on a pass | New 3-pass play ending in a legal goal + behind-the-goal net angle | spec V03, qc | — |
+| 6 | White flashes | `flash` on every shot | Removed (cut on the action) | episode | — |
+| 7 | Graphics not professional | Straight ribbons, thick rings, flat zones, big stamps | Graphics v2: Chaikin-smoothed tapered ribbons with notched heads and dark under-stroke, curved arrows, thin proportioned rings, radial soft zones, compact label chips | overlays3d.tsx (`graphicsV2`), screen.tsx `Chip` | `graphicsV2: true` |
+| 8 | Irrelevant messages | ONSIDE / 9.15 m / ONE PASS stamps | Only SHORT PASS, DEFENDER STEPS OUT, RETURN, CUTBACK, FINISH | episode | — |
+
+Motion authoring: `interp: 'spline'` (C2 clamped cubic splines per moving chunk) replaced the quintic-per-segment
+for V03: the quintic forces zero acceleration at every via point, which produced 10-24 m/s² spikes; the spline
+kept every player ≤ 6 m/s². Dribble touches now fade in/out (no ball jump when a carrier slows before a pass).
+
+Validator additions: shot legality (wholly over the line, between the posts, under the bar), shot lane clear of
+all outfield players, keeper beaten fairly (reach model 2.15 m with a dive), dive after the strike, pass lanes
+clear of team-mates. Engine QC additions: goal really crosses the line in the rendered ball, net hit + ball
+settles, ball never passes through a player, shot speed ≤ 32 m/s.

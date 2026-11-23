@@ -26,6 +26,8 @@ export type BallEvent = {
   /** reception cushion time constant in s (default 0.07): the ball keeps its arrival speed for a few cm
    *  in front of the receiving foot and is absorbed, so the velocity is continuous at the first touch */
   cushion?: number;
+  /** animation v2: 'inside' = side-foot technique (turned-out foot, short back-swing, follow-through to the target) */
+  foot?: 'inside' | 'instep';
 };
 export type FBPlay = {
   id: string;
@@ -39,6 +41,9 @@ export type FBPlay = {
   receivePose?: boolean;
   /** optional set-piece context (for QC and the library), not rendered */
   setPiece?: Record<string, unknown>;
+  /** FB-SETPIECE-001 V03+: animation v2 (run cycle, side-foot kicks, guard / keeper stances, side-steps and
+   *  backpedal, smooth dribble touches). Older plays keep the v1 look exactly. */
+  animV2?: boolean;
 };
 export type V2 = [number, number];
 export type V3 = [number, number, number];
@@ -80,7 +85,7 @@ export const trackPos = (tr: Key[], t: number): V2 => {
   return [h00 * x0 + h10 * h * m0[0] + h01 * x1 + h11 * h * m1[0], h00 * y0 + h10 * h * m0[1] + h01 * y1 + h11 * h * m1[1]];
 };
 
-export type Kick = {t: number; power: number}; // a kick by this player at time t
+export type Kick = {t: number; power: number; inside?: boolean; shot?: boolean}; // a kick by this player at time t
 export type PlayerState = {
   pos: V2;
   vel: V2;
@@ -204,7 +209,7 @@ const precompute = (play: FBPlay): Pre => {
   const kicks: Record<string, Kick[]> = {};
   for (const e of ev) {
     if (!e.by || !['pass', 'through', 'shot', 'cross', 'clear'].includes(e.type)) continue;
-    (kicks[e.by] ??= []).push({t: e.t, power: e.type === 'shot' ? 1 : e.type === 'through' ? 0.55 : 0.7});
+    (kicks[e.by] ??= []).push({t: e.t, power: e.type === 'shot' ? 1 : e.type === 'through' ? 0.55 : 0.7, inside: e.foot === 'inside', shot: e.type === 'shot'});
   }
   // pass 3: exact ball (at the foot, in front of the body)
   const idx = (t: number) => clamp(Math.round(t / DT), 0, n - 1);
@@ -277,7 +282,14 @@ const precompute = (play: FBPlay): Pre => {
         }
       }
       let ahead = 0.4;
-      if (e.type === 'dribble' || P.speed[ii] > 2.5) {
+      if (play.animV2) {
+        // v2: touches fade in with speed and after the reception, and fade out before the next kick (no jumps)
+        const nk = ev.find((x) => x.t > t && x.by === hId && ['pass', 'through', 'shot', 'cross', 'clear'].includes(x.type));
+        const w = smooth((P.speed[ii] - 1.6) / 1.4) * smooth((t - e.t - 0.45) / 0.4) * (nk ? smooth((nk.t - t - 0.12) / 0.45) : 1);
+        const u = ((P.phase[ii] / (4 * Math.PI)) % 1 + 1) % 1;
+        const push = 0.3 + 0.07 * P.speed[ii];
+        ahead = 0.4 + w * (u < 0.18 ? push * smooth(u / 0.18) : push * (1 - smooth((u - 0.18) / 0.82)));
+      } else if (e.type === 'dribble' || P.speed[ii] > 2.5) {
         // close control: a touch every two strides, the runner then catches the ball up
         const u = ((P.phase[ii] / (4 * Math.PI)) % 1 + 1) % 1;
         const push = 0.35 + 0.08 * P.speed[ii];
@@ -361,8 +373,14 @@ export const ballAt = (play: FBPlay, t: number): BallState => {
 export const kicksOf = (play: FBPlay, id: string) => pre(play).kicks[id] ?? [];
 
 /** arrival times of passes to this player (for the reception pose) */
-export const receivesOf = (play: FBPlay, id: string): number[] =>
-  play.ball.events.filter((e) => e.to === id && e.t1 !== undefined && ['pass', 'through', 'cross'].includes(e.type)).map((e) => e.t1!);
+export const receivesOf = (play: FBPlay, id: string): number[] => {
+  // a first-time strike (the same player kicks within 0.3 s of the arrival) has no cushioning pose
+  const kicks = play.ball.events.filter((e) => e.by === id && ['pass', 'through', 'shot', 'cross', 'clear'].includes(e.type)).map((e) => e.t);
+  return play.ball.events
+    .filter((e) => e.to === id && e.t1 !== undefined && ['pass', 'through', 'cross'].includes(e.type))
+    .map((e) => e.t1!)
+    .filter((t1) => !kicks.some((k) => k >= t1 - 0.05 && k <= t1 + 0.3));
+};
 
 /** route of a player between two play times (for run arrows) */
 export const routeOf = (play: FBPlay, id: string, t0: number, t1: number, step = 1 / 30): V2[] => {

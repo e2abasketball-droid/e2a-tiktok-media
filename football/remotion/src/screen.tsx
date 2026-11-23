@@ -175,3 +175,42 @@ export const Flash: React.FC<{age: number; strength?: number}> = ({age, strength
   if (age > 0.25) return null;
   return <div style={{position: 'absolute', inset: 0, background: '#FFFFFF', opacity: strength * (1 - eo(age / 0.25))}} />;
 };
+
+/** V03 label chip: compact pill anchored to a player or a pitch point, short leader line, accent bar.
+ *  Replaces the big pins/stamps for in-play annotations (SHORT PASS, DEFENDER STEPS OUT, ...). */
+export const Chip: React.FC<{x: number; y: number; text: string; age: number; dur: number; tone?: 'gold' | 'white' | 'red'; dy?: number; dx?: number; size?: number; letter?: boolean}> = ({x, y, text, age, dur, tone = 'gold', dy = 110, dx = 0, size = 34, letter}) => {
+  const a = inOut(age, dur, 0.22, 0.2);
+  const col = tone === 'gold' ? GOLD : tone === 'red' ? RED : WHITE;
+  const lx = clamp(x + dx, SAFE.left + 60, 1080 - SAFE.right - 60);
+  const ly = clamp(y - dy, SAFE.top + 90, 1920 - 260);
+  const grow = eo(age / 0.3);
+  const ex = x + (lx - x) * grow;
+  const ey = y - 6 + (ly + 24 - (y - 6)) * grow;
+  return (
+    <div style={{position: 'absolute', left: 0, top: 0, width: 1080, height: 1920, opacity: a, pointerEvents: 'none'}}>
+      <svg width={1080} height={1920} style={{position: 'absolute', left: 0, top: 0}}>
+        <line x1={x} y1={y - 6} x2={ex} y2={ey} stroke="rgba(6,18,42,0.55)" strokeWidth={6} strokeLinecap="round" />
+        <line x1={x} y1={y - 6} x2={ex} y2={ey} stroke={col} strokeWidth={2.5} strokeLinecap="round" />
+        <circle cx={x} cy={y - 6} r={5.5} fill={col} stroke="rgba(6,18,42,0.6)" strokeWidth={2} />
+      </svg>
+      <div
+        data-qc="chip"
+        style={{
+          position: 'absolute',
+          left: lx,
+          top: ly,
+          transform: `translate(-50%, -50%) translateX(${(1 - grow) * -18}px)`,
+          display: 'flex',
+          alignItems: 'stretch',
+          background: 'rgba(11,28,61,0.92)',
+          borderRadius: 10,
+          overflow: 'hidden',
+          boxShadow: '0 8px 24px rgba(0,0,0,0.35)',
+        }}
+      >
+        <div style={{width: letter ? 0 : 8, background: col}} />
+        <div style={{fontFamily: letter ? DISPLAY : BODY, fontWeight: 900, fontSize: letter ? size + 8 : size, letterSpacing: letter ? 1 : 3, color: letter ? col : WHITE, padding: letter ? '2px 16px' : '8px 18px 8px 14px', whiteSpace: 'nowrap', textTransform: 'uppercase', lineHeight: 1.15}}>{text}</div>
+      </div>
+    </div>
+  );
+};

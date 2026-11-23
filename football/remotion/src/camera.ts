@@ -11,7 +11,10 @@ import {ballAt, playerAt, smooth} from './play';
 
 export type FocusItem = {player?: string; ball?: boolean; p?: V2; w?: number};
 export type CamMode = 'overview' | 'tracking' | 'detail';
-export type CamKey = {at: number; mode: CamMode; focus: FocusItem[]; dist: number; elev: number; azim: number; fov: number; z?: number; shake?: number; lift?: number};
+export type CamKey = {at: number; mode: CamMode; focus: FocusItem[]; dist: number; elev: number; azim: number; fov: number; z?: number; shake?: number; lift?: number; spline?: boolean};
+// spline (set on the first key, V03+): the whole shot is ONE continuous move: every parameter follows a
+// Catmull-Rom curve through the keys (continuous velocity), eased only at the first and last key, so a
+// wide-to-close approach never stops at the intermediate keys.
 // lift (m): the camera aims this far in front of the focus, towards itself, so the focus sits higher in the
 // vertical frame (clear of the subtitles) without changing the angle. Default 0 (older episodes unchanged).
 export type Cam = {pos: V3; target: V3; fov: number; mode: CamMode};
@@ -42,7 +45,51 @@ const lerpAng = (a: number, b: number, u: number) => {
   return a + d * u;
 };
 
+const cr = (ts: number[], vs: number[], t: number) => {
+  // Catmull-Rom in time (non-uniform), zero tangent at the ends
+  const n = ts.length;
+  if (t <= ts[0]) return vs[0];
+  if (t >= ts[n - 1]) return vs[n - 1];
+  let i = 0;
+  while (i < n - 2 && t > ts[i + 1]) i++;
+  const tan = (k: number) => (k === 0 || k === n - 1 ? 0 : (vs[k + 1] - vs[k - 1]) / (ts[k + 1] - ts[k - 1]));
+  const h = ts[i + 1] - ts[i];
+  const u = (t - ts[i]) / h;
+  const u2 = u * u;
+  const u3 = u2 * u;
+  return (2 * u3 - 3 * u2 + 1) * vs[i] + (u3 - 2 * u2 + u) * h * tan(i) + (-2 * u3 + 3 * u2) * vs[i + 1] + (u3 - u2) * h * tan(i + 1);
+};
+
+const camSpline = (play: FBPlay, keys: CamKey[], lt: number, pt: number): Cam => {
+  const ts = keys.map((k) => k.at);
+  const unwrap: number[] = [];
+  for (const k of keys) {
+    let a = k.azim;
+    if (unwrap.length) {
+      const prev = unwrap[unwrap.length - 1];
+      while (a - prev > 180) a -= 360;
+      while (a - prev < -180) a += 360;
+    }
+    unwrap.push(a);
+  }
+  const f = keys.map((k) => focusAt(play, k.focus, pt));
+  const P = (vs: number[]) => cr(ts, vs, lt);
+  const az = (P(unwrap) * Math.PI) / 180;
+  const el = (P(keys.map((k) => k.elev)) * Math.PI) / 180;
+  const dist = P(keys.map((k) => k.dist));
+  const lift = P(keys.map((k) => k.lift ?? 0));
+  const tz = P(keys.map((k) => k.z ?? 0.9));
+  const fx = P(f.map((q) => q[0]));
+  const fy = P(f.map((q) => q[1]));
+  const target: V3 = [fx - Math.cos(az) * lift, fy - Math.sin(az) * lift, tz];
+  const pos: V3 = [target[0] - Math.cos(az) * Math.cos(el) * dist, target[1] - Math.sin(az) * Math.cos(el) * dist, target[2] + Math.sin(el) * dist];
+  let i = 0;
+  while (i < keys.length - 1 && lt >= keys[i + 1].at) i++;
+  return {pos, target, fov: P(keys.map((k) => k.fov)), mode: keys[i].mode};
+};
+
 export const camAt = (play: FBPlay, keys: CamKey[], lt: number, pt: number): Cam => {
+  if (keys[0].spline && keys.length > 2) return camSpline(play, keys, lt, pt);
   let i = 0;
   while (i < keys.length - 1 && lt >= keys[i + 1].at) i++;
   const a = keys[i];
