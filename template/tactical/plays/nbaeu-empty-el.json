@@ -1,0 +1,56 @@
+{
+ "id": "nbaeu-empty-el",
+ "title": "Empty EL court before the tip (scoreboard background)",
+ "branch": {
+  "group": "nbaeu"
+ },
+ "duration": 8.0,
+ "concept": "nbaeu-empty-el",
+ "source": "original E2A background (no action)",
+ "v33": "compile",
+ "realism": 3,
+ "courtRules": "fiba",
+ "courtLook": {
+  "paint": "rgba(168,78,22,0.88)",
+  "word": "EUROLEAGUE",
+  "ink": "rgba(255,255,255,0.88)"
+ },
+ "players": [
+  {
+   "id": "R",
+   "team": "O",
+   "role": "hidden ball holder far behind the camera"
+  }
+ ],
+ "tracks": {
+  "R": [
+   [
+    0.0,
+    0.0,
+    34.0
+   ],
+   [
+    8.0,
+    0.0,
+    34.0
+   ]
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "R",
+   "from": 0,
+   "to": 8.0
+  }
+ ],
+ "actions": {
+  "R": []
+ },
+ "screens": [],
+ "marks": {},
+ "claims": [],
+ "notes": [
+  "Shots must hide R."
+ ]
+}

@@ -1,0 +1,152 @@
+{
+ "tone": "highpass=f=85,equalizer=f=300:t=q:w=1.0:g=-2,equalizer=f=2800:t=q:w=1.4:g=3,equalizer=f=7000:t=q:w=1.5:g=-1.5,deesser=i=0.45,acompressor=threshold=-18dB:ratio=1.6:attack=8:release=140:makeup=2",
+ "reference_db": -19.39,
+ "voice_in": {
+  "I": -14.9,
+  "LRA": 4.5,
+  "TP": -0.4
+ },
+ "voice_out": {
+  "I": -16.1,
+  "LRA": 3.8,
+  "TP": -2.0
+ },
+ "lines": [
+  {
+   "text": "NBA and EuroLeague look pretty similar.",
+   "phase": "A",
+   "target_off": 0,
+   "level_in_db": -17.77,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.57
+  },
+  {
+   "text": "But the rules can change the game.",
+   "phase": "A",
+   "target_off": 0,
+   "level_in_db": -19.8,
+   "gain_db": 0.0,
+   "level_out_rel_db": -0.38
+  },
+  {
+   "text": "Watch this.",
+   "phase": "A",
+   "target_off": 0,
+   "level_in_db": -19.88,
+   "gain_db": 0.0,
+   "level_out_rel_db": -0.47
+  },
+  {
+   "text": "In the NBA, each quarter lasts twelve minutes.",
+   "phase": "B",
+   "target_off": 0,
+   "level_in_db": -18.5,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.91
+  },
+  {
+   "text": "In EuroLeague, it's ten.",
+   "phase": "B",
+   "target_off": 0,
+   "level_in_db": -18.15,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.27
+  },
+  {
+   "text": "Now check this shot.",
+   "phase": "C",
+   "target_off": 0,
+   "level_in_db": -19.61,
+   "gain_db": 0.0,
+   "level_out_rel_db": -0.55
+  },
+  {
+   "text": "From the exact same spot, it's a three in EuroLeague...",
+   "phase": "C",
+   "target_off": 0,
+   "level_in_db": -18.68,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.73
+  },
+  {
+   "text": "but only two in the NBA.",
+   "phase": "C",
+   "target_off": 0,
+   "level_in_db": -19.88,
+   "gain_db": 0.0,
+   "level_out_rel_db": -0.47
+  },
+  {
+   "text": "Different arc.",
+   "phase": "C",
+   "target_off": 0,
+   "level_in_db": -22.58,
+   "gain_db": 1.69,
+   "level_out_rel_db": -2.44
+  },
+  {
+   "text": "Fouls?",
+   "phase": "D",
+   "target_off": 0,
+   "level_in_db": -17.02,
+   "gain_db": 0.0,
+   "level_out_rel_db": 2.4
+  },
+  {
+   "text": "Five and you're out in EuroLeague.",
+   "phase": "D",
+   "target_off": 0,
+   "level_in_db": -16.37,
+   "gain_db": 0.0,
+   "level_out_rel_db": 2.9
+  },
+  {
+   "text": "In the NBA, it's six.",
+   "phase": "D",
+   "target_off": 0,
+   "level_in_db": -17.93,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.4
+  },
+  {
+   "text": "And this one actually changes defense.",
+   "phase": "B",
+   "target_off": 0,
+   "level_in_db": -20.12,
+   "gain_db": 0.0,
+   "level_out_rel_db": -0.75
+  },
+  {
+   "text": "In the NBA, you can't just camp in the paint for more than three seconds without actively guarding anyone.",
+   "phase": "B",
+   "target_off": 0,
+   "level_in_db": -20.17,
+   "gain_db": 0.0,
+   "level_out_rel_db": -0.75
+  },
+  {
+   "text": "That's defensive three seconds.",
+   "phase": "B",
+   "target_off": 0,
+   "level_in_db": -21.56,
+   "gain_db": 0.67,
+   "level_out_rel_db": -1.69
+  },
+  {
+   "text": "EuroLeague doesn't have that violation, so bigs can protect the rim differently.",
+   "phase": "B",
+   "target_off": 0,
+   "level_in_db": -18.66,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.75
+  },
+  {
+   "text": "Which rules would you rather play under?",
+   "phase": "E",
+   "target_off": 0,
+   "level_in_db": -16.46,
+   "gain_db": 0.0,
+   "level_out_rel_db": 2.94
+  }
+ ]
+}

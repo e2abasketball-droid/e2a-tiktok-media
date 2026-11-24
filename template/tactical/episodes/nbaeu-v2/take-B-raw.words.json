@@ -1,0 +1,879 @@
+[
+{
+"text": "NBA",
+"start": 0.1,
+"end": 0.69,
+"_tok": [
+"nba"
+]
+},
+{
+"text": "and",
+"start": 0.69,
+"end": 0.78,
+"_tok": [
+"and"
+]
+},
+{
+"text": "EuroLeague",
+"start": 0.78,
+"end": 1.27,
+"_tok": [
+"euro(2)",
+"league"
+]
+},
+{
+"text": "look",
+"start": 1.27,
+"end": 1.46,
+"_tok": [
+"look"
+]
+},
+{
+"text": "pretty",
+"start": 1.46,
+"end": 1.69,
+"_tok": [
+"pretty"
+]
+},
+{
+"text": "similar.",
+"start": 1.69,
+"end": 2.19,
+"_tok": [
+"similar"
+]
+},
+{
+"text": "But",
+"start": 2.42,
+"end": 2.57,
+"_tok": [
+"but"
+]
+},
+{
+"text": "the",
+"start": 2.57,
+"end": 2.65,
+"_tok": [
+"the"
+]
+},
+{
+"text": "rules",
+"start": 2.65,
+"end": 3.11,
+"_tok": [
+"rules"
+]
+},
+{
+"text": "can",
+"start": 3.11,
+"end": 3.3,
+"_tok": [
+"can"
+]
+},
+{
+"text": "change",
+"start": 3.3,
+"end": 3.76,
+"_tok": [
+"change"
+]
+},
+{
+"text": "the",
+"start": 3.76,
+"end": 3.84,
+"_tok": [
+"the"
+]
+},
+{
+"text": "game.",
+"start": 3.84,
+"end": 4.3,
+"_tok": [
+"game"
+]
+},
+{
+"text": "Watch",
+"start": 4.42,
+"end": 4.76,
+"_tok": [
+"watch(2)"
+]
+},
+{
+"text": "this.",
+"start": 4.76,
+"end": 5.2,
+"_tok": [
+"this"
+]
+},
+{
+"text": "In",
+"start": 5.56,
+"end": 5.65,
+"_tok": [
+"in"
+]
+},
+{
+"text": "the",
+"start": 5.65,
+"end": 5.78,
+"_tok": [
+"the(2)"
+]
+},
+{
+"text": "NBA,",
+"start": 5.78,
+"end": 6.34,
+"_tok": [
+"nba"
+]
+},
+{
+"text": "each",
+"start": 6.34,
+"end": 6.56,
+"_tok": [
+"each"
+]
+},
+{
+"text": "quarter",
+"start": 6.56,
+"end": 6.9,
+"_tok": [
+"quarter"
+]
+},
+{
+"text": "lasts",
+"start": 6.9,
+"end": 7.21,
+"_tok": [
+"lasts"
+]
+},
+{
+"text": "twelve",
+"start": 7.21,
+"end": 7.68,
+"_tok": [
+"twelve"
+]
+},
+{
+"text": "minutes.",
+"start": 7.68,
+"end": 8.15,
+"_tok": [
+"minutes"
+]
+},
+{
+"text": "In",
+"start": 8.45,
+"end": 8.55,
+"_tok": [
+"in"
+]
+},
+{
+"text": "EuroLeague,",
+"start": 8.55,
+"end": 9.35,
+"_tok": [
+"euro(2)",
+"league"
+]
+},
+{
+"text": "it's",
+"start": 9.35,
+"end": 9.53,
+"_tok": [
+"it's"
+]
+},
+{
+"text": "ten.",
+"start": 9.53,
+"end": 10.01,
+"_tok": [
+"ten"
+]
+},
+{
+"text": "Now",
+"start": 10.29,
+"end": 10.42,
+"_tok": [
+"now"
+]
+},
+{
+"text": "check",
+"start": 10.42,
+"end": 10.77,
+"_tok": [
+"check"
+]
+},
+{
+"text": "this",
+"start": 10.77,
+"end": 10.95,
+"_tok": [
+"this"
+]
+},
+{
+"text": "shot.",
+"start": 10.95,
+"end": 11.39,
+"_tok": [
+"shot"
+]
+},
+{
+"text": "From",
+"start": 11.56,
+"end": 11.72,
+"_tok": [
+"from"
+]
+},
+{
+"text": "the",
+"start": 11.72,
+"end": 11.83,
+"_tok": [
+"the(2)"
+]
+},
+{
+"text": "exact",
+"start": 11.83,
+"end": 12.33,
+"_tok": [
+"exact"
+]
+},
+{
+"text": "same",
+"start": 12.33,
+"end": 12.57,
+"_tok": [
+"same"
+]
+},
+{
+"text": "spot,",
+"start": 12.57,
+"end": 13.13,
+"_tok": [
+"spot"
+]
+},
+{
+"text": "it's",
+"start": 13.13,
+"end": 13.29,
+"_tok": [
+"it's"
+]
+},
+{
+"text": "a",
+"start": 13.29,
+"end": 13.34,
+"_tok": [
+"a"
+]
+},
+{
+"text": "three",
+"start": 13.34,
+"end": 13.83,
+"_tok": [
+"three"
+]
+},
+{
+"text": "in",
+"start": 13.83,
+"end": 13.92,
+"_tok": [
+"in"
+]
+},
+{
+"text": "EuroLeague...",
+"start": 13.92,
+"end": 14.6,
+"_tok": [
+"euro(2)",
+"league"
+]
+},
+{
+"text": "but",
+"start": 14.75,
+"end": 14.92,
+"_tok": [
+"but"
+]
+},
+{
+"text": "only",
+"start": 14.92,
+"end": 15.2,
+"_tok": [
+"only"
+]
+},
+{
+"text": "two",
+"start": 15.2,
+"end": 15.56,
+"_tok": [
+"two"
+]
+},
+{
+"text": "in",
+"start": 15.56,
+"end": 15.63,
+"_tok": [
+"in"
+]
+},
+{
+"text": "the",
+"start": 15.63,
+"end": 15.76,
+"_tok": [
+"the(2)"
+]
+},
+{
+"text": "NBA.",
+"start": 15.76,
+"end": 16.33,
+"_tok": [
+"nba"
+]
+},
+{
+"text": "Different",
+"start": 16.5,
+"end": 16.85,
+"_tok": [
+"different(2)"
+]
+},
+{
+"text": "arc.",
+"start": 16.85,
+"end": 17.22,
+"_tok": [
+"arc"
+]
+},
+{
+"text": "Fouls?",
+"start": 17.45,
+"end": 18.12,
+"_tok": [
+"fouls"
+]
+},
+{
+"text": "Five",
+"start": 18.35,
+"end": 18.72,
+"_tok": [
+"five"
+]
+},
+{
+"text": "and",
+"start": 18.72,
+"end": 18.81,
+"_tok": [
+"and"
+]
+},
+{
+"text": "you're",
+"start": 18.81,
+"end": 18.93,
+"_tok": [
+"you're"
+]
+},
+{
+"text": "out",
+"start": 18.93,
+"end": 19.14,
+"_tok": [
+"out"
+]
+},
+{
+"text": "in",
+"start": 19.14,
+"end": 19.22,
+"_tok": [
+"in"
+]
+},
+{
+"text": "EuroLeague.",
+"start": 19.22,
+"end": 19.9,
+"_tok": [
+"euro(2)",
+"league"
+]
+},
+{
+"text": "In",
+"start": 20.14,
+"end": 20.24,
+"_tok": [
+"in"
+]
+},
+{
+"text": "the",
+"start": 20.24,
+"end": 20.37,
+"_tok": [
+"the(2)"
+]
+},
+{
+"text": "NBA,",
+"start": 20.37,
+"end": 21.05,
+"_tok": [
+"nba"
+]
+},
+{
+"text": "it's",
+"start": 21.05,
+"end": 21.32,
+"_tok": [
+"it's"
+]
+},
+{
+"text": "six.",
+"start": 21.32,
+"end": 21.83,
+"_tok": [
+"six"
+]
+},
+{
+"text": "And",
+"start": 22.08,
+"end": 22.23,
+"_tok": [
+"and(2)"
+]
+},
+{
+"text": "this",
+"start": 22.23,
+"end": 22.43,
+"_tok": [
+"this"
+]
+},
+{
+"text": "one",
+"start": 22.43,
+"end": 22.55,
+"_tok": [
+"one"
+]
+},
+{
+"text": "actually",
+"start": 22.55,
+"end": 22.91,
+"_tok": [
+"actually(2)"
+]
+},
+{
+"text": "changes",
+"start": 22.91,
+"end": 23.32,
+"_tok": [
+"changes(2)"
+]
+},
+{
+"text": "defense.",
+"start": 23.32,
+"end": 23.92,
+"_tok": [
+"defense"
+]
+},
+{
+"text": "In",
+"start": 24.19,
+"end": 24.29,
+"_tok": [
+"in"
+]
+},
+{
+"text": "the",
+"start": 24.29,
+"end": 24.4,
+"_tok": [
+"the(2)"
+]
+},
+{
+"text": "NBA,",
+"start": 24.4,
+"end": 25.04,
+"_tok": [
+"nba"
+]
+},
+{
+"text": "you",
+"start": 25.04,
+"end": 25.2,
+"_tok": [
+"you"
+]
+},
+{
+"text": "can't",
+"start": 25.2,
+"end": 25.5,
+"_tok": [
+"can't"
+]
+},
+{
+"text": "just",
+"start": 25.5,
+"end": 25.68,
+"_tok": [
+"just(2)"
+]
+},
+{
+"text": "camp",
+"start": 25.68,
+"end": 25.98,
+"_tok": [
+"camp"
+]
+},
+{
+"text": "in",
+"start": 25.98,
+"end": 26.05,
+"_tok": [
+"in"
+]
+},
+{
+"text": "the",
+"start": 26.05,
+"end": 26.12,
+"_tok": [
+"the"
+]
+},
+{
+"text": "paint",
+"start": 26.12,
+"end": 26.43,
+"_tok": [
+"paint"
+]
+},
+{
+"text": "for",
+"start": 26.43,
+"end": 26.54,
+"_tok": [
+"for(2)"
+]
+},
+{
+"text": "more",
+"start": 26.54,
+"end": 26.74,
+"_tok": [
+"more"
+]
+},
+{
+"text": "than",
+"start": 26.74,
+"end": 26.91,
+"_tok": [
+"than(2)"
+]
+},
+{
+"text": "three",
+"start": 26.91,
+"end": 27.19,
+"_tok": [
+"three"
+]
+},
+{
+"text": "seconds",
+"start": 27.19,
+"end": 27.7,
+"_tok": [
+"seconds"
+]
+},
+{
+"text": "without",
+"start": 27.7,
+"end": 27.99,
+"_tok": [
+"without(2)"
+]
+},
+{
+"text": "actively",
+"start": 27.99,
+"end": 28.48,
+"_tok": [
+"actively"
+]
+},
+{
+"text": "guarding",
+"start": 28.48,
+"end": 28.82,
+"_tok": [
+"guarding"
+]
+},
+{
+"text": "anyone.",
+"start": 28.82,
+"end": 29.32,
+"_tok": [
+"anyone"
+]
+},
+{
+"text": "That's",
+"start": 29.47,
+"end": 29.74,
+"_tok": [
+"that's"
+]
+},
+{
+"text": "defensive",
+"start": 29.74,
+"end": 30.29,
+"_tok": [
+"defensive"
+]
+},
+{
+"text": "three",
+"start": 30.29,
+"end": 30.53,
+"_tok": [
+"three"
+]
+},
+{
+"text": "seconds.",
+"start": 30.53,
+"end": 31.13,
+"_tok": [
+"seconds"
+]
+},
+{
+"text": "EuroLeague",
+"start": 31.45,
+"end": 32.02,
+"_tok": [
+"euro(2)",
+"league"
+]
+},
+{
+"text": "doesn't",
+"start": 32.02,
+"end": 32.27,
+"_tok": [
+"doesn't(2)"
+]
+},
+{
+"text": "have",
+"start": 32.27,
+"end": 32.48,
+"_tok": [
+"have"
+]
+},
+{
+"text": "that",
+"start": 32.48,
+"end": 32.66,
+"_tok": [
+"that"
+]
+},
+{
+"text": "violation,",
+"start": 32.66,
+"end": 33.39,
+"_tok": [
+"violation"
+]
+},
+{
+"text": "so",
+"start": 33.51,
+"end": 33.68,
+"_tok": [
+"so"
+]
+},
+{
+"text": "bigs",
+"start": 33.68,
+"end": 34.05,
+"_tok": [
+"bigs"
+]
+},
+{
+"text": "can",
+"start": 34.05,
+"end": 34.2,
+"_tok": [
+"can(2)"
+]
+},
+{
+"text": "protect",
+"start": 34.2,
+"end": 34.6,
+"_tok": [
+"protect"
+]
+},
+{
+"text": "the",
+"start": 34.6,
+"end": 34.67,
+"_tok": [
+"the"
+]
+},
+{
+"text": "rim",
+"start": 34.67,
+"end": 34.95,
+"_tok": [
+"rim"
+]
+},
+{
+"text": "differently.",
+"start": 34.95,
+"end": 35.53,
+"_tok": [
+"differently"
+]
+},
+{
+"text": "Which",
+"start": 35.84,
+"end": 36.04,
+"_tok": [
+"which"
+]
+},
+{
+"text": "rules",
+"start": 36.04,
+"end": 36.35,
+"_tok": [
+"rules"
+]
+},
+{
+"text": "would",
+"start": 36.35,
+"end": 36.45,
+"_tok": [
+"would"
+]
+},
+{
+"text": "you",
+"start": 36.45,
+"end": 36.56,
+"_tok": [
+"you"
+]
+},
+{
+"text": "rather",
+"start": 36.56,
+"end": 36.81,
+"_tok": [
+"rather"
+]
+},
+{
+"text": "play",
+"start": 36.81,
+"end": 37.06,
+"_tok": [
+"play"
+]
+},
+{
+"text": "under?",
+"start": 37.06,
+"end": 37.44,
+"_tok": [
+"under"
+]
+}
+]

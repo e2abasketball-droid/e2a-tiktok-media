@@ -20,6 +20,8 @@ import {choosePin, placePin} from './pinPlace';
 import {FocusVignette, FreezeFrame, KineticTitle, Logo, OfferCounter, PinLabel, PremiumSubtitles, RewindTag, Stamp, StepBadge, StepCounter, TacticalHUD, sceneFx} from './screen3d';
 import {Flash} from '../pro/fx';
 import {ClockDuel, Count3, FoulTrack, LeagueTag, VsTitle} from './leagues';
+import {BroadcastScoreboard, LeagueLogo} from './broadcast';
+import type {SbTeam} from './broadcast';
 import type {League} from './leagues';
 import {countedSteps} from './overlays3d';
 import '../theme';
@@ -50,11 +52,15 @@ type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: n
   | {type: 'vs'; y?: number; size?: number; question?: string}
   | {type: 'clocks'; nba: Anchor; nbaTotal: Anchor; el: Anchor; elTotal: Anchor; y?: number; sub?: string}
   | {type: 'fouls'; league: League; max: number; ticks: Anchor[]; out: Anchor; y?: number; label?: string}
-  | {type: 'count3'; ticks: Anchor[]; y?: number; size?: number});
+  | {type: 'count3'; ticks: Anchor[]; y?: number; size?: number}
+  /** 2026-11-24 V2 (opt-in): E2A Broadcast Scoreboard + official league logo slot (src null = marked placeholder) */
+  | {type: 'scoreboard'; league: League; logo?: string | null; teams: [SbTeam, SbTeam]; period: string; clock: string; shot?: number | null; run?: Anchor | null; highlight?: Anchor | null; dim?: Anchor | null; y?: number; width?: number}
+  | {type: 'leagueLogo'; league: League; src?: string | null; y: number; h?: number; w?: number; delay?: number; align?: 'left' | 'center'});
 /** 2026-11-22 (Chicago V3 split screen): a SECOND live 3D view stacked under the shot's own view (same clock, own play,
  *  remap, camera and world graphics). The shot's view takes the top `ratio` of the frame. Shots without `split` are
  *  rendered exactly as before. */
-export type Split3 = {play: string; remap: RemapKey[]; camera: CamKeyA[]; ov3?: (Timed & Ov3)[]; hide?: string[]; ratio?: number; athleteRenderer?: AthleteRenderer};
+export type Split3 = {play: string; remap: RemapKey[]; camera: CamKeyA[]; ov3?: (Timed & Ov3)[]; hide?: string[]; ratio?: number; athleteRenderer?: AthleteRenderer;
+  /** 2026-11-24 V2: 'brand' = thin navy/gold seam (default: the original red/gold/blue seam) */ seam?: 'brand'};
 type CamKeyA = Omit<CamKey3, 'at'> & {at: Anchor};
 /** 2026-11-22 Realism V3.2 comparison panels: N live 3D views stacked top to bottom with equal heights (same clock),
  *  each with its own renderer / motion / mesh / material switches; play, remap and camera default to the shot's.
@@ -281,7 +287,7 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
         const pt2 = remapAt(rm2, lt);
         const cam2 = camera3At(play2, sp.camera.map((k) => ({...k, at: toLocal(k.at)})), lt, pt2);
         const ov2 = live(sp.ov3) as unknown as LiveOv3[];
-        return {h1, play: play2, pt: pt2, cam: cam2, cam1: cam, ov: ov2, hide: sp.hide, renderer: sp.athleteRenderer};
+        return {h1, play: play2, pt: pt2, cam: cam2, cam1: cam, ov: ov2, hide: sp.hide, renderer: sp.athleteRenderer, seam: sp.seam};
       })()
     : undefined;
   const panels = shot.panels
@@ -334,7 +340,7 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
                 <Overlays3D play={split.play} pt={split.pt} items={split.ov} />
               </Scene3D>
             </div>
-            <div style={{position: 'absolute', left: 0, right: 0, top: split.h1 - 3, height: 6, background: 'linear-gradient(90deg, rgba(229,72,58,0.95), #FFC447 50%, rgba(110,168,255,0.95))', boxShadow: '0 0 18px rgba(0,0,0,0.6)'}} />
+            <div style={split.seam === 'brand' ? {position: 'absolute', left: 0, right: 0, top: split.h1 - 4, height: 8, background: '#0B1C3D', borderTop: '2px solid #C9A24D', borderBottom: '2px solid #C9A24D', boxShadow: '0 0 18px rgba(0,0,0,0.6)'} : {position: 'absolute', left: 0, right: 0, top: split.h1 - 3, height: 6, background: 'linear-gradient(90deg, rgba(229,72,58,0.95), #FFC447 50%, rgba(110,168,255,0.95))', boxShadow: '0 0 18px rgba(0,0,0,0.6)'}} />
           </>
         )}
       </AbsoluteFill>
@@ -493,6 +499,12 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
             const r = (a: Anchor) => toLocal(a) - (lt - s.age);
             return <Count3 key={i} ticks={s.ticks.map(r)} age={s.age} dur={s.dur} y={s.y} size={s.size} />;
           }
+          case 'scoreboard': {
+            const r = (a: Anchor | null | undefined) => (a == null ? null : toLocal(a) - (lt - s.age));
+            return <BroadcastScoreboard key={i} league={s.league} logo={s.logo} teams={s.teams} period={s.period} clock={s.clock} shot={s.shot} run={r(s.run)} highlight={r(s.highlight)} dim={r(s.dim)} age={s.age} dur={s.dur} y={s.y} width={s.width} />;
+          }
+          case 'leagueLogo':
+            return <LeagueLogo key={i} league={s.league} src={s.src} age={s.age} dur={s.dur} y={s.y} h={s.h} w={s.w} delay={s.delay} align={s.align} />;
           case 'flash':
             return <Flash key={i} age={s.age} color={s.color} strength={s.strength ?? 0.35} />;
           case 'stepCount': {
