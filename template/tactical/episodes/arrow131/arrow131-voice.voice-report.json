@@ -1,0 +1,108 @@
+{
+ "source": "public/tactical/arrow131/voice-raw.mp3",
+ "source_sec": 39.845,
+ "preroll": 0.1,
+ "output": "public/tactical/arrow131/voice.wav",
+ "output_sec": 40.745,
+ "inserted_total_sec": 0.8,
+ "last_word_end": 40.746,
+ "gaps": [
+  {
+   "after": "It's a trap.",
+   "natural_silence": [
+    2.41,
+    3.1
+   ],
+   "natural_sec": 0.69,
+   "target_sec": 0.6,
+   "inserted_sec": 0.0,
+   "cut_at_source": 2.615,
+   "why": "hook beat: the trap holds on screen"
+  },
+  {
+   "after": "Trap!",
+   "natural_silence": [
+    2.41,
+    3.1
+   ],
+   "natural_sec": 0.69,
+   "target_sec": 0.85,
+   "inserted_sec": 0.16,
+   "cut_at_source": 2.615,
+   "why": "freeze on the trap, chip TRAP."
+  },
+  {
+   "after": "arrow press.",
+   "natural_silence": [
+    4.96,
+    5.18
+   ],
+   "natural_sec": 0.22,
+   "target_sec": 0.5,
+   "inserted_sec": 0.28,
+   "cut_at_source": 5.115,
+   "why": "the press areas finish rising"
+  },
+  {
+   "after": "and the wing jumps.",
+   "natural_silence": [
+    16.29,
+    16.69
+   ],
+   "natural_sec": 0.4,
+   "target_sec": 0.35,
+   "inserted_sec": 0.0,
+   "cut_at_source": 16.545,
+   "why": "the jump lands before TRAP"
+  },
+  {
+   "after": "two extra defenders.",
+   "natural_silence": [
+    21.15,
+    21.62
+   ],
+   "natural_sec": 0.47,
+   "target_sec": 0.6,
+   "inserted_sec": 0.13,
+   "cut_at_source": 21.495,
+   "why": "both lit lines held"
+  },
+  {
+   "after": "guards the long pass.",
+   "natural_silence": [
+    27.99,
+    28.55
+   ],
+   "natural_sec": 0.56,
+   "target_sec": 0.55,
+   "inserted_sec": 0.0,
+   "cut_at_source": 28.185,
+   "why": "the escape pass starts on a beat"
+  },
+  {
+   "after": "Sprint back.",
+   "natural_silence": [
+    31.59,
+    32.05
+   ],
+   "natural_sec": 0.46,
+   "target_sec": 0.6,
+   "inserted_sec": 0.14,
+   "cut_at_source": 31.715,
+   "why": "the five routes back draw"
+  },
+  {
+   "after": "one-three-one zone.",
+   "natural_silence": [
+    36.55,
+    37.16
+   ],
+   "natural_sec": 0.61,
+   "target_sec": 0.7,
+   "inserted_sec": 0.09,
+   "cut_at_source": 36.945,
+   "why": "the 1-3-1 areas rise"
+  }
+ ],
+ "note": "one approved take, never re-synthesised or time-stretched; only room tone inserted at acoustic silences"
+}
