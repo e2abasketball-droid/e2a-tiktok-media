@@ -106,3 +106,32 @@ the repo (`tactical-library/setpieces/gen/FB-SETPIECE-001-V05.gen.py`) so the sp
 Framing rule learnt: for a corner from the right, an overhead at azimuth 90 (camera on the corner side, looking
 across the pitch) puts the goal line vertical on the right, the corner at the bottom and the box in the middle —
 passer, shifted line, late runner and finishing zone all fit the vertical frame. Azimuth 60-80 loses the passer.
+
+## FB-SETPIECE-001 V07 — Off-ball timing (2026-11-24, owner directive V07 "off-ball intelligence")
+
+### PERMANENT RULE (owner, applies to every set-piece video from now on)
+**THE BALL IS VISIBLE. THE MOVEMENT IS THE STORY.** OFF-BALL FIRST: name the decoy, the space creator, the
+late runner, the final receiver and the defensive reference; show WHEN each one moves and WHY. "No necesito más
+gráficos porque sí. Necesito gráficos más inteligentes." Research rule unchanged: FIFA Training Centre and IFAB
+were DNS-blocked from the sandbox (2026-11-24) → not consulted, rules from memory, NEEDS REVIEW.
+
+### V06 → V07 (problem · measured cause · fix · component · reuse)
+Measured with the new `qa/qc_edit.mjs` (same camera + play functions as the video, safe area of a Short).
+| # | Owner problem (V06) | Measured cause | Fix | Component | Reuse |
+|---|---|---|---|---|---|
+| P1 | Camera follows the ball at the corner | kick → delivery: 3.37 s of 5.77 s showed only the corner area, 2.4 s the box | CAMERA A master view behind the attack (azimuth 0, high) holds the box; the corner plays in a 3.9 s inset (CAMERA B) placed on empty grass | `Shot.pip` in FBTactical3D | Every set piece with action far from the box |
+| P2 | Timing of the run starts unclear | Labels were names (DECOY, LATE RUN), not cues; no shared clock | MASTER MATCH TIMELINE (18 named events, reactions measured from the tracks) + run cues (ON THE FIRST TOUCH, ON THE RETURN, WAIT, NOW) placed at the measured instants + trigger steps bar driven by play time | spec `timeline`/`runs`, `scripts/fb_timeline.py`, `ev()` in play.ts, screen `cue`/`steps` | Every play: author the timeline first, edit by event names |
+| P3 | Too many players/arrows at 8-13 s | All runs same weight; up to 8 pitch graphics + 3 labels | Focus shift (non-protagonists desaturated, `dim` on athlete materials), role-based lines (only the decisive run is solid gold), max 2 labels | `Shot.focus`, `run.role` | Same |
+| P4 | Replay too long | 6.6 s replay | 4.4 s reveal from the master angle with ghosts at the real positions of the key moments, numbered 1-2-3 | overlay `ghost` | Same |
+| P5 | Arrows too big | Head min 0.32 m half-width, width 0.085-0.11 | Role widths 0.04-0.075, head scale 0.5-0.7 | `ribbon2(headK)` | Same |
+| P6 | Finish lacks impact | Behind-net view, the strike not always in frame | CAMERA C behind the shooter (contact, keeper, ball in), micro slow motion by remap only, reverse net-side payoff, gold edge accent | screen `accent` | FB GOAL PAYOFF SYSTEM |
+| P7 | Static close | 3.8 s static payoff + 1.2 s end card | 2.9 s rising camera over the live play, title, discreet signature (0 s static) | screen `sig` | Same |
+| P8 | Body animation | Runs started from a standstill, no pre-run | Pre-run behaviour: A4 feint step + real sprint (4.8 m/s), A6 hides two slow steps then accelerates, A9 shuffle; all within physics limits | spec V07 | Same |
+Also: V06 rewound the play at the cut to the goal camera (8.49 → 7.62 s): 'live' shots now share one clock and the
+edit QC fails on any restart/rewind.
+
+Framing rule learnt (replaces the V05 one when the corner is in an inset): with the corner in a picture-in-picture,
+the master camera goes BEHIND THE ATTACK (azimuth 0, elevation ~70, focus = box point + 0.75 × late runner) —
+the run depth (x 33 → 52.5) becomes the vertical of the Short and players are larger than in the azimuth-90 wide.
+The single wide shot (azimuth 90, corner at the bottom) was tested: the late runner is in the safe frame only
+5.43 of 7.4 s (fails), so the PiP version was chosen. Check framing with `qc_edit.mjs` BEFORE rendering.

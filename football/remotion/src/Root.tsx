@@ -6,6 +6,7 @@ import {thirdManRun} from './episodes/thirdManRun';
 import {simpleShortCorner} from './episodes/simpleShortCorner';
 import {shortCornerCutback, shortCornerCutbackHookB, shortCornerCutbackV04} from './episodes/shortCornerCutback';
 import {nearPostDecoyV05, nearPostDecoyV06} from './episodes/nearPostDecoy';
+import {offBallTimingV07, offBallTimingV07Wide, offBallTimingV08} from './episodes/offBallTiming';
 
 export const Root: React.FC = () => (
   <>
@@ -20,5 +21,9 @@ export const Root: React.FC = () => (
     {/* FB-SETPIECE-001 V05 (owner directive V05): mixed defence first, near-post decoy + late arrival; silent cut */}
     <Composition id="FBSetPiece001V05" component={FBTactical3D} durationInFrames={Math.round(nearPostDecoyV05.duration * 30)} fps={30} width={1080} height={1920} defaultProps={{episode: nearPostDecoyV05}} />
     <Composition id="FBSetPiece001V06" component={FBTactical3D} durationInFrames={Math.round(nearPostDecoyV06.duration * 30)} fps={30} width={1080} height={1920} defaultProps={{episode: nearPostDecoyV06}} />
+    {/* FB-SETPIECE-001 V07 (owner directive V07): off-ball timing — master timeline, box-first camera + corner inset */}
+    <Composition id="FBSetPiece001V07" component={FBTactical3D} durationInFrames={Math.round(offBallTimingV07.duration * 30)} fps={30} width={1080} height={1920} defaultProps={{episode: offBallTimingV07}} />
+    <Composition id="FBSetPiece001V08" component={FBTactical3D} durationInFrames={Math.round(offBallTimingV08.duration * 30)} fps={30} width={1080} height={1920} defaultProps={{episode: offBallTimingV08}} />
+    <Composition id="FBSetPiece001V07WideTest" component={FBTactical3D} durationInFrames={Math.round(offBallTimingV07Wide.duration * 30)} fps={30} width={1080} height={1920} defaultProps={{episode: offBallTimingV07Wide}} />
   </>
 );

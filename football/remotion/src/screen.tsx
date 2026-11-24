@@ -214,3 +214,96 @@ export const Chip: React.FC<{x: number; y: number; text: string; age: number; du
     </div>
   );
 };
+
+/** V07 run-trigger marker: WHEN a player moves (a small gold kicker label over the cue text), anchored to the
+ *  player like a chip. `now` = the decisive "go" moment: gold text, one short pulse. */
+export const Cue: React.FC<{x: number; y: number; text: string; kicker?: string; age: number; dur: number; dy?: number; dx?: number; now?: boolean}> = ({x, y, text, kicker, age, dur, dy = 120, dx = 0, now}) => {
+  const a = inOut(age, dur, 0.18, 0.2);
+  const lx = clamp(x + dx, SAFE.left + 80, 1080 - SAFE.right - 40);
+  const ly = clamp(y - dy, SAFE.top + 90, 1920 - 260);
+  const grow = eo(age / 0.25);
+  const pulse = now ? 1 + 0.1 * Math.exp(-age * 5) * Math.sin(age * 16) : 1;
+  return (
+    <div style={{position: 'absolute', left: 0, top: 0, width: 1080, height: 1920, opacity: a, pointerEvents: 'none'}}>
+      <svg width={1080} height={1920} style={{position: 'absolute', left: 0, top: 0}}>
+        <line x1={x} y1={y - 6} x2={x + (lx - x) * grow} y2={y - 6 + (ly + 26 - (y - 6)) * grow} stroke="rgba(6,18,42,0.5)" strokeWidth={5} strokeLinecap="round" />
+        <line x1={x} y1={y - 6} x2={x + (lx - x) * grow} y2={y - 6 + (ly + 26 - (y - 6)) * grow} stroke={GOLD} strokeWidth={2} strokeLinecap="round" />
+      </svg>
+      <div
+        data-qc="chip"
+        style={{
+          position: 'absolute',
+          left: lx,
+          top: ly,
+          transform: `translate(-50%, -50%) scale(${pulse})`,
+          background: now ? 'rgba(201,162,77,0.96)' : 'rgba(11,28,61,0.9)',
+          border: now ? 'none' : `2px solid ${GOLD}`,
+          borderRadius: 10,
+          padding: now ? '6px 20px' : '6px 16px 7px',
+          boxShadow: '0 8px 22px rgba(0,0,0,0.32)',
+          textAlign: 'center',
+        }}
+      >
+        {kicker && <div style={{fontFamily: BODY, fontWeight: 800, fontSize: 18, letterSpacing: 4, color: now ? NAVY : GOLD, lineHeight: 1.2}}>{kicker}</div>}
+        <div style={{fontFamily: now ? DISPLAY : BODY, fontWeight: 900, fontSize: now ? 46 : 28, letterSpacing: now ? 2 : 2.5, color: now ? NAVY : WHITE, whiteSpace: 'nowrap', textTransform: 'uppercase', lineHeight: 1.15}}>{text}</div>
+      </div>
+    </div>
+  );
+};
+
+/** V07 trigger timeline: CORNER -> DECOY -> LATE RUN -> DELIVERY -> FINISH; the step whose play time has been
+ *  reached is lit (driven by the master timeline, not by video time — it is NOT a playback bar) */
+export const Steps: React.FC<{steps: [string, number][]; pt: number; age: number; dur: number; y?: number; x?: number; fin?: number; fout?: number}> = ({steps, pt, age, dur, y = 1470, x, fin = 0.25, fout = 0.25}) => {
+  // fin / fout 0 (V08): the bar continues across a cut without blinking
+  const a = Math.min(fin > 0 ? eo(age / fin) : 1, fout > 0 ? eo((dur - age) / fout) : 1);
+  let cur = -1;
+  steps.forEach(([, t], i) => {
+    if (pt >= t) cur = i;
+  });
+  return (
+    <div style={{position: 'absolute', left: x ?? 0, right: x === undefined ? 0 : undefined, top: y, display: 'flex', justifyContent: x === undefined ? 'center' : 'flex-start', alignItems: 'center', gap: 8, opacity: a}}>
+      {steps.map(([label], i) => {
+        const on = i === cur;
+        const past = i < cur;
+        return (
+          <React.Fragment key={label}>
+            {i > 0 && <div style={{width: 18, height: 2, background: past || on ? GOLD : 'rgba(255,255,255,0.45)'}} />}
+            <div
+              style={{
+                fontFamily: BODY,
+                fontWeight: 900,
+                fontSize: 21,
+                letterSpacing: 2,
+                padding: '6px 11px',
+                borderRadius: 8,
+                color: on ? NAVY : past ? GOLD : 'rgba(255,255,255,0.78)',
+                background: on ? GOLD : 'rgba(11,28,61,0.78)',
+                transform: `scale(${on ? 1.06 : 1})`,
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {label}
+            </div>
+          </React.Fragment>
+        );
+      })}
+    </div>
+  );
+};
+
+/** V07 goal payoff accent: a thin gold light along the frame edges that breathes once (no flash, no text) */
+export const GoalAccent: React.FC<{age: number; dur: number}> = ({age, dur}) => {
+  const a = Math.sin(Math.PI * Math.min(1, Math.max(0, age / dur)));
+  return <div style={{position: 'absolute', inset: 0, boxShadow: `inset 0 0 ${60 + 60 * a}px rgba(201,162,77,${0.42 * a})`, border: `3px solid rgba(201,162,77,${0.5 * a})`, pointerEvents: 'none'}} />;
+};
+
+/** V07 discreet signature: small logo + line at the bottom, over the still-moving picture (no scrim, no card) */
+export const Signature: React.FC<{age: number}> = ({age}) => {
+  const a = eo(age / 0.35);
+  return (
+    <div style={{position: 'absolute', left: 0, right: 0, top: 1300, display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: a}}>
+      <Img src={staticFile(LOGO)} style={{height: 150, filter: 'drop-shadow(0 6px 18px rgba(0,0,0,0.55))', transform: `translateY(${(1 - a) * 14}px)`}} />
+      <div style={{marginTop: 10, fontFamily: BODY, fontWeight: 900, fontSize: 24, letterSpacing: 7, color: GOLD, textShadow: '0 2px 8px rgba(0,0,0,0.6)'}}>E2A FOOTBALL · TACTICS</div>
+    </div>
+  );
+};

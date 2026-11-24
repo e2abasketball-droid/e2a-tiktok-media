@@ -10,7 +10,7 @@ import {ballPath, offsideLine, playerAt, routeOf, smooth} from './play';
 
 export type Ov =
   | {type: 'pass'; t0: number; t1: number; color?: string; dashed?: boolean; width?: number; trail?: boolean} // trail: the line follows the real ball (head at the ball)
-  | {type: 'run'; player: string; t0: number; t1: number; color?: string; width?: number; dashed?: boolean; trail?: boolean} // trail (V05): drawn up to the player in play time — shows the TIMING of the run
+  | {type: 'run'; player: string; t0: number; t1: number; color?: string; width?: number; dashed?: boolean; trail?: boolean; role?: RunRole} // trail (V05): drawn up to the player in play time — shows the TIMING of the run; role (V07): style by job
   | {type: 'zone'; c: V2; r: V2; color?: string; label?: string; follow?: string}
   | {type: 'defline'; players: string[]; at?: number; color?: string}
   | {type: 'ring'; player: string; color?: string; r?: number}
@@ -22,8 +22,21 @@ export type Ov =
   // from a player or a point — orientation / line of sight (dir 'heading'), passing window or finishing lane
   // (dir = a point or a player). `len` metres, `half` = half-angle in radians.
   | {type: 'link'; a: string; b: string; color?: string; dashed?: boolean; width?: number}
-  | {type: 'cone'; player?: string; p?: V2; dir: 'heading' | V2 | string; len: number; half: number; color?: string; opacity?: number};
-export type LiveOv = Ov & {age: number; dur: number; draw?: number};
+  | {type: 'cone'; player?: string; p?: V2; dir: 'heading' | V2 | string; len: number; half: number; color?: string; opacity?: number}
+  // V07 off-ball timing graphics: an activation halo under the player who is ABOUT to make the decisive move
+  // (before the arrow exists), and ghost bodies at the player's REAL earlier positions (tactical ghost replay)
+  | {type: 'halo'; player: string; color?: string; r?: number}
+  | {type: 'ghost'; player: string; times: number[]; color?: string; opacity?: number};
+export type LiveOv = Ov & {age: number; dur: number; draw?: number; contIn?: boolean; contOut?: boolean};
+/** V07 role-based line language: the decisive run is the only solid gold line; decoy runs are thin white
+ *  dashes; defensive movements thin red dashes; support runs faint. Heads are smaller than V05's. */
+export type RunRole = 'decisive' | 'decoy' | 'defence' | 'support';
+const ROLE: Record<RunRole, {color: string; w: number; dashed: boolean; op: number; head: number}> = {
+  decisive: {color: GOLD, w: 0.075, dashed: false, op: 1, head: 0.7},
+  decoy: {color: WHITE, w: 0.055, dashed: true, op: 0.85, head: 0.6},
+  defence: {color: RED, w: 0.05, dashed: true, op: 0.8, head: 0.55},
+  support: {color: WHITE, w: 0.04, dashed: true, op: 0.5, head: 0.5},
+};
 
 const H = 0.03;
 
@@ -150,14 +163,14 @@ const decimate = (pts: V2[], minStep = 0.25): V2[] => {
   out.push(pts[pts.length - 1]);
   return out;
 };
-const ribbon2 = (raw: V2[], w: number, dashed: boolean, head: boolean, h = H) => {
+const ribbon2 = (raw: V2[], w: number, dashed: boolean, head: boolean, h = H, headK = 1) => {
   const pts = chaikin(decimate(raw));
   if (pts.length < 2) return null;
   const L: number[] = [0];
   for (let i = 1; i < pts.length; i++) L.push(L[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
   const total = L[L.length - 1];
   if (total < 0.08) return null;
-  const headL = head ? Math.min(1.25, Math.max(0.45, total * 0.3)) : 0;
+  const headL = head ? Math.min(1.25, Math.max(0.45, total * 0.3)) * headK : 0;
   const bodyEnd = total - headL * 0.72;
   const pos: number[] = [];
   const push = (p: V2, z = h) => pos.push(...W3([p[0], p[1], z]));
@@ -202,7 +215,7 @@ const ribbon2 = (raw: V2[], w: number, dashed: boolean, head: boolean, h = H) =>
     const tip = at(total).p;
     const base = at(total - headL);
     const notch = at(total - headL * 0.72).p;
-    const hw = Math.max(w * 2.6, 0.32);
+    const hw = Math.max(w * 2.6, 0.32 * headK);
     const l1: V2 = [base.p[0] + base.n[0] * hw, base.p[1] + base.n[1] * hw];
     const r1: V2 = [base.p[0] - base.n[0] * hw, base.p[1] - base.n[1] * hw];
     push(l1, h + 0.001);
@@ -218,10 +231,10 @@ const ribbon2 = (raw: V2[], w: number, dashed: boolean, head: boolean, h = H) =>
 };
 
 /** v2 paint: dark under-stroke (legible on bright grass) + the colour stroke */
-const Paint2: React.FC<{pts: V2[]; w: number; dashed: boolean; head: boolean; color: string; opacity: number}> = ({pts, w, dashed, head, color, opacity}) => {
-  const key = pts.length ? `${pts.length}:${pts[pts.length - 1][0].toFixed(3)},${pts[pts.length - 1][1].toFixed(3)}:${w}:${dashed}:${head}` : '';
-  const g = React.useMemo(() => ribbon2(pts, w, dashed, head, H + 0.004), [key]);
-  const gs = React.useMemo(() => ribbon2(pts, w * 1.7, dashed, head, H), [key]);
+const Paint2: React.FC<{pts: V2[]; w: number; dashed: boolean; head: boolean; color: string; opacity: number; headK?: number}> = ({pts, w, dashed, head, color, opacity, headK = 1}) => {
+  const key = pts.length ? `${pts.length}:${pts[pts.length - 1][0].toFixed(3)},${pts[pts.length - 1][1].toFixed(3)}:${w}:${dashed}:${head}:${headK}` : '';
+  const g = React.useMemo(() => ribbon2(pts, w, dashed, head, H + 0.004, headK), [key]);
+  const gs = React.useMemo(() => ribbon2(pts, w * 1.7, dashed, head, H, headK), [key]);
   useDispose(g);
   useDispose(gs);
   if (!g) return null;
@@ -278,7 +291,8 @@ const Paint: React.FC<{g: THREE.BufferGeometry | null; color: string; opacity: n
   );
 };
 
-const fade = (o: LiveOv) => Math.min(1, o.age / 0.18) * Math.min(1, Math.max(0, (o.dur - o.age) / 0.2));
+// V08: contIn / contOut = the graphic continues from / into the neighbouring shot (no blink at a continuous cut)
+const fade = (o: LiveOv) => (o.contIn ? 1 : Math.min(1, o.age / 0.18)) * (o.contOut ? 1 : Math.min(1, Math.max(0, (o.dur - o.age) / 0.2)));
 
 const PassLine: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'pass'}>; v2?: boolean}> = ({play, pt, o, v2}) => {
   const prog = smooth(o.age / (o.draw ?? 0.6));
@@ -297,6 +311,13 @@ const PassLine: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'p
 
 const Run: React.FC<{play: FBPlay; o: Extract<LiveOv, {type: 'run'}>; v2?: boolean; pt?: number}> = ({play, o, v2, pt}) => {
   const prog = smooth(o.age / (o.draw ?? 0.8));
+  if (v2 && o.role) {
+    const R = ROLE[o.role];
+    const end = o.trail ? Math.max(o.t0, Math.min(o.t1, pt ?? o.t1)) : o.t1;
+    const raw = end - o.t0 > 0.05 ? routeOf(play, o.player, o.t0, end) : [];
+    const pts = o.trail ? raw : cut(raw, prog);
+    return <Paint2 pts={pts} w={o.width ?? R.w} dashed={o.dashed ?? R.dashed} head color={o.color ?? R.color} opacity={R.op * fade(o)} headK={R.head} />;
+  }
   if (v2 && o.trail) {
     const end = Math.max(o.t0, Math.min(o.t1, pt ?? o.t1));
     const pts = end - o.t0 > 0.05 ? routeOf(play, o.player, o.t0, end) : [];
@@ -510,6 +531,65 @@ const Cone: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'cone'
   );
 };
 
+/** V07 activation halo: a soft gold light under the player plus two slow ripples — "this one is about to go" */
+const Halo: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'halo'}>}> = ({play, pt, o}) => {
+  const p = playerAt(play, o.player, pt).pos;
+  const a = fade(o) * smooth(o.age / 0.25);
+  const r = o.r ?? 0.85;
+  const col = o.color ?? GOLD;
+  const wave = (k: number) => ((o.age * 1.1 + k) % 1 + 1) % 1;
+  return (
+    <group position={W3([p[0], p[1], H - 0.004])}>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} renderOrder={3} scale={[r * 1.35, r * 1.35, 1]}>
+        <circleGeometry args={[1, 48]} />
+        <meshBasicMaterial color={col} alphaMap={zoneTexture()} transparent opacity={0.55 * a} depthWrite={false} toneMapped={false} />
+      </mesh>
+      {[0, 0.5].map((k) => {
+        const u = wave(k);
+        const rr = r * (0.75 + 0.9 * u);
+        return (
+          <mesh key={k} rotation={[-Math.PI / 2, 0, 0]} renderOrder={6}>
+            <ringGeometry args={[rr * 0.93, rr, 64]} />
+            <meshBasicMaterial color={col} transparent opacity={0.85 * a * (1 - u)} depthWrite={false} toneMapped={false} />
+          </mesh>
+        );
+      })}
+    </group>
+  );
+};
+
+/** V07 tactical ghost: translucent bodies at the player's REAL positions at earlier play times (only times
+ *  already played are drawn, so the ghosts appear as the replay runs) */
+const Ghost: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'ghost'}>}> = ({play, pt, o}) => {
+  const a = fade(o);
+  const col = o.color ?? WHITE;
+  const shown = o.times.filter((t) => t <= pt + 1e-6);
+  return (
+    <group>
+      {shown.map((t, i) => {
+        const s = playerAt(play, o.player, t);
+        const k = (o.opacity ?? 0.34) * a * (0.55 + 0.45 * ((i + 1) / Math.max(1, shown.length)));
+        return (
+          <group key={t} position={W3([s.pos[0], s.pos[1], 0])}>
+            <mesh position={[0, 0.82, 0]} renderOrder={7}>
+              <capsuleGeometry args={[0.2, 1.05, 4, 10]} />
+              <meshBasicMaterial color={col} transparent opacity={k} depthWrite={false} toneMapped={false} />
+            </mesh>
+            <mesh position={[0, 1.66, 0]} renderOrder={7}>
+              <sphereGeometry args={[0.12, 12, 10]} />
+              <meshBasicMaterial color={col} transparent opacity={k} depthWrite={false} toneMapped={false} />
+            </mesh>
+            <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, H, 0]} renderOrder={5}>
+              <ringGeometry args={[0.3, 0.38, 32]} />
+              <meshBasicMaterial color={col} transparent opacity={k * 1.6} depthWrite={false} toneMapped={false} />
+            </mesh>
+          </group>
+        );
+      })}
+    </group>
+  );
+};
+
 export const Overlays3D: React.FC<{play: FBPlay; pt: number; items: LiveOv[]; v2?: boolean}> = ({play, pt, items, v2}) => (
   <group>
     {items.map((o, i) => {
@@ -534,6 +614,10 @@ export const Overlays3D: React.FC<{play: FBPlay; pt: number; items: LiveOv[]; v2
           return <Link key={i} play={play} pt={pt} o={o} />;
         case 'cone':
           return <Cone key={i} play={play} pt={pt} o={o} />;
+        case 'halo':
+          return <Halo key={i} play={play} pt={pt} o={o} />;
+        case 'ghost':
+          return <Ghost key={i} play={play} pt={pt} o={o} />;
         default:
           return null;
       }

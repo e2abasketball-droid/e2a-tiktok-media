@@ -46,6 +46,17 @@ export type FBPlay = {
   animV2?: boolean;
   /** V05+: heads turn towards the ball (older plays keep a fixed head) */
   headLook?: boolean;
+  /** V07+: MASTER MATCH TIMELINE — named events (one time source for runs, contacts, reactions, camera and
+   *  graphics), run book and off-ball roles; validated by scripts/fb_timeline.py, not rendered */
+  timeline?: {id: string; t: number; who: string[]; kind: 'ball' | 'run' | 'reaction'; what: string}[];
+  runs?: Record<string, unknown>[];
+  offBallRoles?: Record<string, string[]>;
+};
+/** V07: event time by name from the master timeline (throws if the name does not exist: no silent drift) */
+export const ev = (play: FBPlay, id: string): number => {
+  const e = (play.timeline ?? []).find((x) => x.id === id);
+  if (!e) throw new Error(`timeline event ${id} not found`);
+  return e.t;
 };
 export type V2 = [number, number];
 export type V3 = [number, number, number];

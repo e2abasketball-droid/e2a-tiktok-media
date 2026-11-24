@@ -65,9 +65,17 @@ const numberTexture = (n: number, color: string) => {
 };
 
 const mats = new Map<string, THREE.Material>();
-const mat = (color: string, rough = 0.75, sheen = 0) => {
-  const k = `${color}-${rough}-${sheen}`;
-  if (!mats.has(k)) mats.set(k, new THREE.MeshStandardMaterial({color, roughness: rough, metalness: 0}));
+// V07 focus shift: dim (0..1, quantised to 0.1) desaturates and darkens a non-protagonist towards a muted
+// grass grey, so the protagonists read first without hiding anybody (dim 0 = the original material)
+const DIM_TO = new THREE.Color('#6B786F');
+const mat = (color: string, rough = 0.75, sheen = 0, dim = 0) => {
+  const dq = Math.round(Math.max(0, Math.min(1, dim)) * 10) / 10;
+  const k = `${color}-${rough}-${sheen}-${dq}`;
+  if (!mats.has(k)) {
+    const c = new THREE.Color(color);
+    if (dq > 0) c.lerp(DIM_TO, 0.62 * dq).multiplyScalar(1 - 0.18 * dq);
+    mats.set(k, new THREE.MeshStandardMaterial({color: c, roughness: rough, metalness: 0}));
+  }
   return mats.get(k)!;
 };
 
@@ -471,13 +479,13 @@ export const Athlete: React.FC<AthleteProps> = ({s, t, kit, number, skin, hairId
   const toLeft = p.shift[1] * leftY + p.shift[0] * leftX;
   const roll = toLeft !== 0 ? -Math.sign(toLeft) * Math.abs(p.roll) : 0;
   const pos = W3([s.pos[0] + p.shift[0], s.pos[1] + p.shift[1], 0]);
-  const shirt = mat(kit.shirt, 0.8);
-  const shorts = mat(kit.shorts, 0.8);
-  const socks = mat(kit.socks, 0.85);
-  const skinM = mat(skin, 0.6);
-  const hairM = mat(HAIR[hairIdx % HAIR.length], 0.9);
-  const boot = mat('#14161A', 0.45);
-  const trim = mat(kit.trim, 0.6);
+  const shirt = mat(kit.shirt, 0.8, 0, dim);
+  const shorts = mat(kit.shorts, 0.8, 0, dim);
+  const socks = mat(kit.socks, 0.85, 0, dim);
+  const skinM = mat(skin, 0.6, 0, dim);
+  const hairM = mat(HAIR[hairIdx % HAIR.length], 0.9, 0, dim);
+  const boot = mat('#14161A', 0.45, 0, dim);
+  const trim = mat(kit.trim, 0.6, 0, dim);
   const tex = numberTexture(number, kit.number);
   // yaw: + turns the toe outwards (left leg is +X local, so its outward rotation is the opposite sign)
   const leg = (side: 1 | -1, hip: number, kn: number, yaw = 0, abd = 0) => (

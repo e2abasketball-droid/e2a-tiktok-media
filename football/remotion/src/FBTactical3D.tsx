@@ -15,7 +15,7 @@ import {BALL_R, ballAt, kicksOf, playerAt, receivesOf} from './play';
 import type {Look} from './pitch3d';
 import {Lights, Pitch3D} from './pitch3d';
 import type {Word} from './screen';
-import {Chip, EndCard, Flash, KineticTitle, LogoBug, Pin, Stamp, Subtitles, Tag} from './screen';
+import {Chip, Cue, EndCard, Flash, GoalAccent, KineticTitle, LogoBug, Pin, Signature, Stamp, Steps, Subtitles, Tag} from './screen';
 import './brand';
 
 type Timed = {from: number; to?: number};
@@ -28,16 +28,30 @@ export type ScreenItem = Timed &
     | {type: 'tag'; text: string; icon?: 'pause' | 'replay' | 'slow'}
     | {type: 'scrim'; opacity?: number}
     | {type: 'end'}
+    // V07 off-ball timing layer
+    | {type: 'cue'; player?: string; p?: V2; text: string; kicker?: string; now?: boolean; dy?: number; dx?: number; z?: number}
+    | {type: 'steps'; steps: [string, number][]; y?: number; x?: number; fin?: number; fout?: number}
+    | {type: 'accent'}
+    | {type: 'sig'}
   );
+/** V07 picture-in-picture: a second camera on the SAME play instant (e.g. the corner execution while the main
+ *  picture holds the box). x/y/w/h in composition pixels. */
+export type Pip = {from: number; to: number; cam: CamKey[]; x: number; y: number; w: number; h: number; label?: string};
+/** V07 focus shift: everybody except `keep` is muted (k 0..1) */
+export type Focus = {from: number; to?: number; keep: string[]; k?: number};
 export type Shot = {
   name: string;
   from: number; // video seconds
   remap: [number, number][]; // [local video s, play s], linear between keys, held after the last
   cam: CamKey[];
-  ov?: (Timed & Ov & {draw?: number})[];
+  ov?: (Timed & Ov & {draw?: number; contIn?: boolean; contOut?: boolean})[];
   screen?: ScreenItem[];
   freeze?: [number, number][]; // local ranges with the freeze grade
   flash?: number;
+  /** V07: 'live' shots continue the same play clock across cuts (checked by qa/qc_edit.mjs); 'replay' may rewind */
+  kind?: 'live' | 'replay';
+  pip?: Pip[];
+  focus?: Focus[];
 };
 export type Episode = {
   id: string;
@@ -164,7 +178,7 @@ const guardOf = (play: FBPlay, id: string, pt: number, ball: {pos: V3; holder?: 
   return Math.max(near, inBox);
 };
 
-const Scene: React.FC<{play: FBPlay; pt: number; cam: Cam; W: number; H: number; ov: LiveOv[]; look?: Look; gv2?: boolean}> = ({play, pt, cam, W, H, ov, look, gv2}) => {
+const Scene: React.FC<{play: FBPlay; pt: number; cam: Cam; W: number; H: number; ov: LiveOv[]; look?: Look; gv2?: boolean; dimOf?: (id: string) => number; shadows?: boolean}> = ({play, pt, cam, W, H, ov, look, gv2, dimOf, shadows = true}) => {
   const ball = ballAt(play, pt);
   const day = look === 'day';
   const hit = ball.netHit && pt >= ball.netHit.t && pt - ball.netHit.t < 2.5 ? {age: pt - ball.netHit.t, at: ball.netHit.at} : null;
@@ -172,7 +186,7 @@ const Scene: React.FC<{play: FBPlay; pt: number; cam: Cam; W: number; H: number;
     <ThreeCanvas
       width={W}
       height={H}
-      shadows
+      shadows={shadows}
       gl={{antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: day ? 1.08 : 1.0, outputColorSpace: THREE.SRGBColorSpace}}
       onCreated={({gl}) => {
         gl.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -200,6 +214,7 @@ const Scene: React.FC<{play: FBPlay; pt: number; cam: Cam; W: number; H: number;
           keeper={play.animV2 && p.role === 'GK'}
           guard={play.animV2 ? guardOf(play, p.id, pt, ball) : undefined}
           lookAt={play.headLook ? [ball.pos[0], ball.pos[1]] : undefined}
+          dim={dimOf ? dimOf(p.id) : undefined}
         />
       ))}
       <Ball pos={ball.pos} q={ball.spin} />
@@ -235,11 +250,26 @@ export const FBTactical3D: React.FC<{episode: Episode}> = ({episode: ep}) => {
   const proj = projector(cam, W, H);
   const frozen = (shot.freeze ?? []).some(([a, b]) => lt >= a && lt < b);
   const ending = scr.some((s) => s.type === 'end');
+  // V07 focus shift (fades in/out over 0.25 s)
+  const foc = (shot.focus ?? []).find((f) => lt >= f.from && lt < (f.to ?? end - shot.from));
+  const fk = foc ? (foc.k ?? 0.75) * Math.min(1, (lt - foc.from) / 0.25, ((foc.to ?? end - shot.from) - lt) / 0.25) : 0;
+  const dimOf = foc ? (id: string) => (foc.keep.includes(id) ? 0 : fk) : undefined;
+  const pips = (shot.pip ?? []).filter((p) => lt >= p.from && lt < p.to);
   return (
     <AbsoluteFill style={{background: '#070D1A'}}>
       <AbsoluteFill style={{filter: frozen ? (ep.grade === 'clean' ? 'saturate(0.82) contrast(1.04)' : 'saturate(0.7) brightness(0.92) contrast(1.05)') : 'saturate(1.04) contrast(1.03)'}}>
-        <Scene play={play} pt={pt} cam={cam} W={W} H={H} ov={ov} look={ep.look} gv2={ep.graphicsV2} />
+        <Scene play={play} pt={pt} cam={cam} W={W} H={H} ov={ov} look={ep.look} gv2={ep.graphicsV2} dimOf={dimOf} />
       </AbsoluteFill>
+      {pips.map((p, i) => {
+        const a = Math.min(1, (lt - p.from) / 0.22, (p.to - lt) / 0.22);
+        const pc = camAt(play, p.cam, lt - p.from, pt);
+        return (
+          <div key={`pip${i}`} style={{position: 'absolute', left: p.x, top: p.y, width: p.w, height: p.h, opacity: a, transform: `scale(${0.94 + 0.06 * a})`, borderRadius: 18, overflow: 'hidden', border: '4px solid #C9A24D', boxShadow: '0 14px 36px rgba(0,0,0,0.45)'}}>
+            <Scene play={play} pt={pt} cam={pc} W={p.w} H={p.h} ov={[]} look={ep.look} gv2={ep.graphicsV2} shadows={false} />
+            {p.label && <div style={{position: 'absolute', left: 12, top: 10, fontFamily: 'Inter, Arial, sans-serif', fontWeight: 900, fontSize: 20, letterSpacing: 3, color: '#FFFFFF', background: 'rgba(11,28,61,0.85)', padding: '4px 10px', borderRadius: 6}}>{p.label}</div>}
+          </div>
+        );
+      })}
       {ep.grade === 'clean' ? (
         // clean grade (V03): no vignette; a light navy band only at the top, behind the titles and the logo
         <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(11,28,61,0.42) 0%, rgba(11,28,61,0.12) 15%, rgba(11,28,61,0) 24%)'}} />
@@ -272,6 +302,17 @@ export const FBTactical3D: React.FC<{episode: Episode}> = ({episode: ep}) => {
             return <AbsoluteFill key={i} style={{background: '#0B1C3D', opacity: (s.opacity ?? 0.55) * Math.min(1, s.age / 0.4)}} />;
           case 'end':
             return <EndCard key={i} age={s.age} />;
+          case 'cue': {
+            const p = s.p ?? playerAt(play, s.player!, pt).pos;
+            const q = proj([p[0], p[1], s.z ?? 2.05]);
+            return q.visible ? <Cue key={i} x={q.x} y={q.y} text={s.text} kicker={s.kicker} now={s.now} age={s.age} dur={s.dur} dy={s.dy} dx={s.dx} /> : null;
+          }
+          case 'steps':
+            return <Steps key={i} steps={s.steps} pt={pt} age={s.age} dur={s.dur} y={s.y} x={s.x} fin={s.fin} fout={s.fout} />;
+          case 'accent':
+            return <GoalAccent key={i} age={s.age} dur={s.dur} />;
+          case 'sig':
+            return <Signature key={i} age={s.age} />;
           default:
             return null;
         }
