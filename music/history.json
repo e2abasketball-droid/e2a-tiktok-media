@@ -1,1 +1,12 @@
-[]
+[
+ {
+  "track": "trap_a",
+  "story": "highlight",
+  "out": "template/public/rules4/music.wav"
+ },
+ {
+  "track": "trap_b",
+  "story": "highlight",
+  "out": "public/rules4/music.mp3"
+ }
+]

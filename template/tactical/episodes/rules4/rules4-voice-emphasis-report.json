@@ -1,0 +1,110 @@
+{
+ "peak_norm": 0.795,
+ "words": [
+  {
+   "word": "understand.",
+   "t": 3.178,
+   "gain_db": 3.0,
+   "rms_before_dbfs": -25.0,
+   "rms_after_dbfs_first500ms": -22.9
+  },
+  {
+   "word": "TRAVELING.",
+   "t": 5.333,
+   "gain_db": 2.0,
+   "rms_before_dbfs": -16.7,
+   "rms_after_dbfs_first500ms": -14.1
+  },
+  {
+   "word": "TRAVEL!",
+   "t": 13.04,
+   "gain_db": 5.0,
+   "rms_before_dbfs": -17.9,
+   "rms_after_dbfs_first500ms": -15.1
+  },
+  {
+   "word": "DRIBBLE.",
+   "t": 14.693,
+   "gain_db": 1.5,
+   "rms_before_dbfs": -15.3,
+   "rms_after_dbfs_first500ms": -17.3
+  },
+  {
+   "word": "SCORING.",
+   "t": 21.525,
+   "gain_db": 2.0,
+   "rms_before_dbfs": -17.0,
+   "rms_after_dbfs_first500ms": -15.2
+  },
+  {
+   "word": "ONE!",
+   "t": 23.225,
+   "gain_db": 3.5,
+   "rms_before_dbfs": -18.9,
+   "rms_after_dbfs_first500ms": -16.8
+  },
+  {
+   "word": "TWO!",
+   "t": 24.785,
+   "gain_db": 4.5,
+   "rms_before_dbfs": -18.0,
+   "rms_after_dbfs_first500ms": -15.5
+  },
+  {
+   "word": "THREE!",
+   "t": 26.525,
+   "gain_db": 6.0,
+   "rms_before_dbfs": -17.1,
+   "rms_after_dbfs_first500ms": -11.8
+  },
+  {
+   "word": "two!",
+   "t": 29.125,
+   "gain_db": 3.5,
+   "rms_before_dbfs": -19.5,
+   "rms_after_dbfs_first500ms": -19.9
+  },
+  {
+   "word": "FOULS.",
+   "t": 30.405,
+   "gain_db": 2.0,
+   "rms_before_dbfs": -16.0,
+   "rms_after_dbfs_first500ms": -14.2
+  },
+  {
+   "word": "foul.",
+   "t": 34.405,
+   "gain_db": 2.5,
+   "rms_before_dbfs": -20.3,
+   "rms_after_dbfs_first500ms": -20.8
+  },
+  {
+   "word": "throws.",
+   "t": 37.441,
+   "gain_db": 2.0,
+   "rms_before_dbfs": -29.8,
+   "rms_after_dbfs_first500ms": -29.2
+  },
+  {
+   "word": "rules.",
+   "t": 38.439,
+   "gain_db": 2.0,
+   "rms_before_dbfs": -15.4,
+   "rms_after_dbfs_first500ms": -13.8
+  },
+  {
+   "word": "smarter.",
+   "t": 39.432,
+   "gain_db": 5.0,
+   "rms_before_dbfs": -21.5,
+   "rms_after_dbfs_first500ms": -17.3
+  },
+  {
+   "word": "more!",
+   "t": 41.036,
+   "gain_db": 3.0,
+   "rms_before_dbfs": -20.5,
+   "rms_after_dbfs_first500ms": -19.5
+  }
+ ]
+}

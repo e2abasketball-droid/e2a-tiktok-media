@@ -1,0 +1,73 @@
+{
+ "id": "rules4-line",
+ "title": "ON THE LINE: still +2",
+ "branch": {
+  "group": "rules4"
+ },
+ "duration": 3.6,
+ "concept": "rules4-line",
+ "source": "original E2A rule demonstration (FIBA Official Basketball Rules: Art. 16, 24, 25, 33, 34, team-foul penalty)",
+ "v33": "compile",
+ "squareUp": true,
+ "catchV2": 2,
+ "handBallClear": true,
+ "realism": 3,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Shooter"
+  }
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0.0,
+    -3.0379,
+    7.8036
+   ],
+   [
+    3.6,
+    -3.0379,
+    7.8036
+   ]
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 1.5
+  },
+  {
+   "type": "shot",
+   "player": "O1",
+   "t0": 1.5,
+   "t1": 2.55,
+   "make": true,
+   "H": 0.36
+  }
+ ],
+ "actions": {
+  "O1": [
+   {
+    "type": "face",
+    "from": 0,
+    "to": 3.6,
+    "face": -1.117
+   }
+  ]
+ },
+ "screens": [],
+ "marks": {
+  "release": 1.5,
+  "make": 2.55,
+  "end": 3.6
+ },
+ "claims": [],
+ "notes": [
+  "The three-point line is NOT part of the three-point field goal area (Art. 16): a foot on it = 2 points.",
+  "Body centre 6.93 m from the basket, toe on the line (measured)."
+ ]
+}

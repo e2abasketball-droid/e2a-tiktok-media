@@ -72,9 +72,13 @@ const compilePlayer = (play: Play, id: string): Compiled33 => {
   const DT = 0.02;
   const mv: boolean[] = [];
   let on = false;
+  // opt-in (2026-11-24, 4 Rules reel): intervals where the body centre glides over planted feet (a pivot, a jab) stay
+  // 'stand' whatever the track speed; the feet move only through explicit v33extra steps / pivots
+  const still = ((play as Play & {v33still?: Record<string, [number, number][]>}).v33still ?? {})[id] ?? [];
   for (let t = 0; t <= dur + 1e-9; t += DT) {
     const v = speed(t);
     on = on ? v > 0.1 : v > 0.18;
+    if (still.some(([a, b]) => t >= a - 1e-6 && t <= b + 1e-6)) on = false;
     mv.push(on);
   }
   type Iv = {a: number; b: number; moving: boolean};
@@ -258,7 +262,9 @@ const compilePlayer = (play: Play, id: string): Compiled33 => {
   for (const s of [...shots, ...layups]) {
     const lastCatch = Math.max(-Infinity, ...passesIn.map((p) => p.t1).filter((x) => x < s.t0));
     const quick = Number.isFinite(lastCatch) && s.t0 - lastCatch < 0.7;
-    script.push({k: 'jumpshot', release: r3(s.t0), H: quick ? 0.22 : 0.44, quick});
+    // opt-in (2026-11-24, 4 Rules reel): a shot event may carry its own jump height H (free throw = a small hop)
+    const Hx = (s as {H?: number}).H;
+    script.push({k: 'jumpshot', release: r3(s.t0), H: Hx ?? (quick ? 0.22 : 0.44), quick: Hx !== undefined ? Hx < 0.3 : quick});
     summary.push(`jump shot release ${r3(s.t0)} s${quick ? ' (quick catch-and-shoot, low jump)' : ''}`);
   }
   // ---------------------------------------------------------------- profile (deterministic per role / id)
@@ -278,6 +284,13 @@ const compilePlayer = (play: Play, id: string): Compiled33 => {
   // when only one branch gives the player the ball (the profile otherwise depends on post-fork events)
   Object.assign(profile, ((play as Play & {v33profile?: Record<string, Partial<Profile>>}).v33profile ?? {})[id] ?? {});
   const role = (P as {role?: string}).role ?? (def ? 'defender' : 'attacker');
+  // opt-in per play (2026-11-24, 4 Rules reel): explicit footwork primitives added to the compiled script (a pivot,
+  // a lifted pivot foot that comes back down = travelling) — plays without the key compile exactly as before
+  const extra = ((play as Play & {v33extra?: Record<string, Seg[]>}).v33extra ?? {})[id];
+  if (extra?.length) {
+    script.push(...extra.map((x) => ({...x})));
+    summary.push(`${extra.length} explicit primitives (v33extra)`);
+  }
   script.sort((a, b) => tOf(a) - tOf(b));
   return {script, profile, role, unsupported, summary};
 };

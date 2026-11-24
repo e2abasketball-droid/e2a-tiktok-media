@@ -1117,6 +1117,43 @@ const ballOf = (x: Ctx, t: number): V3 => {
 };
 
 const mcache = new Map<string, Motion33 | null>();
+/** opt-in (2026-11-24, 4 Rules reel, illegal hold): `play.v33grab = [{player, target, hand: 0 | 1, from, to}]` puts the
+ *  free hand of `player` on the waist of `target` (surface of the near hip, solved on the target's own V3.3 body) with a
+ *  0.18 s blend in / out. Plays without the key are unchanged. */
+export type Grab33 = {player: string; target: string; hand: 0 | 1; from: number; to: number; z?: number; reach?: number};
+const grab33 = (play: Play, id: string, t: number, b: Body, a: ArmOut): ArmOut => {
+  const gs = ((play as Play & {v33grab?: Grab33[]}).v33grab ?? []).filter((g) => g.player === id);
+  let out = a;
+  for (const g of gs) {
+    const w = smooth((t - g.from) / 0.18) * smooth((g.to - t) / 0.18);
+    if (w <= 1e-4) continue;
+    const team = play.players.find((p) => p.id === g.target)?.team === 'X' ? 'def' : 'off';
+    const m = motionV33(play, g.target, t, PLAYER3D_V32[team].rig);
+    if (!m) continue;
+    const tb = m.body;
+    const sh = b.shoulders[g.hand];
+    // the near hip of the target (to the grabber's shoulder), pushed out to the body surface at waist height
+    const hip = len(sub(tb.hips[0], sh)) < len(sub(tb.hips[1], sh)) ? tb.hips[0] : tb.hips[1];
+    const side = norm([hip[0] - tb.pelvis[0], hip[1] - tb.pelvis[1], 0]);
+    const toG = norm([sh[0] - tb.pelvis[0], sh[1] - tb.pelvis[1], 0]);
+    const out3 = norm(add(side, mul(toG, 0.8)));
+    let P: V3 = add([tb.pelvis[0], tb.pelvis[1], tb.pelvis[2] + (g.z ?? 0.08)], mul(out3, 0.19));
+    // the PALM sits on the surface: the hand tip goes 7 cm further along the reach (fingers wrap the jersey)
+    P = add(P, mul(norm(sub(P, sh)), 0.07));
+    const reach = g.reach ?? 0.64;
+    const d = sub(P, sh);
+    if (len(d) > reach) P = add(sh, mul(norm(d), reach));
+    const tip = [...out.tip] as [V3, V3];
+    const dir = [...out.dir] as [V3, V3];
+    const palm = [...out.palm] as [V3 | null, V3 | null];
+    tip[g.hand] = lerp3(out.tip[g.hand], P, w);
+    dir[g.hand] = norm(lerp3(out.dir[g.hand], norm(sub(P, sh)), w));
+    if (w > 0.5) palm[g.hand] = tip[g.hand];
+    out = {...out, tip, dir, palm, contact: out.contact ?? (w > 0.5 ? `grab ${g.target}` : undefined)};
+  }
+  return out;
+};
+
 export const motionV33 = (play: Play, id: string, t: number, rig: RigV3): Motion33 | null => {
   const clip = clip33For(play, id);
   if (!clip) return null;
@@ -1126,7 +1163,7 @@ export const motionV33 = (play: Play, id: string, t: number, rig: RigV3): Motion
   const c = rigConsts(rig, id);
   const x: Ctx = {clip, play, id, c};
   const b = bodyAt(clip, play, id, c, t);
-  let a = armsAt(x, b);
+  let a = grab33(play, id, t, b, armsAt(x, b));
   const held = inWindow(clip, t) && !!a.ball;
   const look = lookAt(x, b);
   const dz: V3 = [0, 0, -c.ankleOff];

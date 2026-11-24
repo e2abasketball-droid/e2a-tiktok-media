@@ -1,0 +1,72 @@
+{
+ "id": "rules4-ft",
+ "title": "FREE THROW: +1",
+ "branch": {
+  "group": "rules4"
+ },
+ "duration": 3.1,
+ "concept": "rules4-ft",
+ "source": "original E2A rule demonstration (FIBA Official Basketball Rules: Art. 16, 24, 25, 33, 34, team-foul penalty)",
+ "v33": "compile",
+ "squareUp": true,
+ "catchV2": 2,
+ "handBallClear": true,
+ "realism": 3,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Shooter"
+  }
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0.0,
+    0.0,
+    6.12
+   ],
+   [
+    3.1,
+    0.0,
+    6.12
+   ]
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 1.0
+  },
+  {
+   "type": "shot",
+   "player": "O1",
+   "t0": 1.0,
+   "t1": 2.1,
+   "make": true,
+   "H": 0.05
+  }
+ ],
+ "actions": {
+  "O1": [
+   {
+    "type": "face",
+    "from": 0,
+    "to": 3.1,
+    "face": -1.5708
+   }
+  ]
+ },
+ "screens": [],
+ "marks": {
+  "release": 1.0,
+  "make": 2.1,
+  "end": 3.1
+ },
+ "claims": [],
+ "notes": [
+  "Feet behind the free-throw line (5.80 m), set shot with a small rise."
+ ]
+}

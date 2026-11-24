@@ -1,0 +1,115 @@
+{
+ "about": "E2A Voice Dynamics curve, 4 Rules (2026-11-24): dB offset vs the explanation level; owner energy curve hook 8, travel 7, double dribble 8.5, scoring 9 (crescendo ONE<TWO<THREE), fouls 7.5, close 8.",
+ "lines": [
+  [
+   "These are the FOUR RULES every basketball player needs to understand.",
+   2.0,
+   "A"
+  ],
+  [
+   "First: TRAVELING.",
+   1.0,
+   "B"
+  ],
+  [
+   "Catch the ball, set your pivot foot...",
+   0,
+   "B"
+  ],
+  [
+   "then lift it and put it back down while you're still holding the ball?",
+   0.5,
+   "C"
+  ],
+  [
+   "That's a TRAVEL!",
+   2.5,
+   "C"
+  ],
+  [
+   "Second: DOUBLE DRIBBLE.",
+   1.5,
+   "B"
+  ],
+  [
+   "Stop your dribble, hold the ball...",
+   0.5,
+   "B"
+  ],
+  [
+   "and start bouncing again?",
+   1.0,
+   "C"
+  ],
+  [
+   "VIOLATION!",
+   3.0,
+   "C"
+  ],
+  [
+   "Third: SCORING.",
+   2.0,
+   "C"
+  ],
+  [
+   "Free throw: ONE!",
+   1.5,
+   "C"
+  ],
+  [
+   "Inside the arc: TWO!",
+   2.0,
+   "C"
+  ],
+  [
+   "Beyond the arc: THREE!",
+   3.0,
+   "C"
+  ],
+  [
+   "But step on that line?",
+   0.5,
+   "D"
+  ],
+  [
+   "Still two!",
+   1.5,
+   "D"
+  ],
+  [
+   "Fourth: FOULS.",
+   1.5,
+   "B"
+  ],
+  [
+   "Push or hold an opponent and restrict their movement?",
+   0.5,
+   "B"
+  ],
+  [
+   "That's a foul.",
+   1.5,
+   "C"
+  ],
+  [
+   "But remember: not every foul means free throws.",
+   1.5,
+   "C"
+  ],
+  [
+   "Four rules.",
+   1.5,
+   "E"
+  ],
+  [
+   "Play smarter.",
+   2.0,
+   "E"
+  ],
+  [
+   "Follow E2A for more!",
+   2.0,
+   "E"
+  ]
+ ]
+}

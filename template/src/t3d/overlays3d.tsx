@@ -19,6 +19,8 @@ import type {ZoneGridOv} from './zone3d';
 import {ZoneGrid3D} from './zone3d';
 import type {CoverageFamilyOv} from './coverage3d';
 import {Coverage3D, CoverageFx3D} from './coverage3d';
+import type {RulesOv} from './rules3d';
+import {Rules3D} from './rules3d';
 
 export const GOLD3 = '#E0B455';
 export const RED3 = '#E5483A';
@@ -134,7 +136,8 @@ export type Ov3 =
   /** 2026-11-21 (2-3 Zone): ZoneGridMorph, five zone areas that move with their defenders (zone3d.tsx) */
   | ZoneGridOv
   /** 2026-11-21 (2-3 Zone V2): E2A Dynamic Defensive Coverage + its effects (coverage3d.tsx) */
-  | CoverageFamilyOv;
+  | CoverageFamilyOv
+  | RulesOv;
 
 /** counted steps of a choreo player: the first plants after the gather, in order */
 export const countedSteps = (play: Play, id: string) => {
@@ -797,6 +800,12 @@ export const Overlays3D: React.FC<{play: Play; pt: number; items: LiveOv3[]}> = 
           case 'motionTrail':
           case 'debugCatch':
             return <TelestrationBP key={i} play={play} pt={pt} o={o} a={a} />;
+          case 'footRing':
+          case 'ballRing':
+          case 'handRing':
+          case 'area2':
+          case 'arc3':
+            return <Rules3D key={i} play={play} pt={pt} o={o} a={a} />;
           default:
             return null;
         }

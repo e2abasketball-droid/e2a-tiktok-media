@@ -36,7 +36,12 @@ type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: n
   /** 2026-11-23 E2A Visual Standard v1: small ATTACK / DEFENSE key, top-left, so the two marker styles read instantly */
   | {type: 'legend'; y?: number}
   /** 2026-11-22 (Chicago V3): outcome chip (red TRAIL / blue UNDER / gold), anchored to a screen side and height */
-  | {type: 'chip'; text: string; y?: number; tone?: 'red' | 'blue' | 'gold'; align?: 'left' | 'center' | 'right'; size?: number});
+  | {type: 'chip'; text: string; y?: number; tone?: 'red' | 'blue' | 'gold'; align?: 'left' | 'center' | 'right'; size?: number}
+  /** 2026-11-24 (4 Rules): score number (+1 / +2 / +3) that pops (scale 1.45 -> 0.94 -> 1, 0.32 s), settles and fades;
+   *  verdict badge with a round icon (red X = violation / foul, green check = legal); section tag "01 TRAVELING" */
+  | {type: 'score'; text: string; y?: number; size?: number; sub?: string}
+  | {type: 'verdict'; text: string; tone: 'red' | 'green'; y?: number; size?: number}
+  | {type: 'section'; n: string; text: string; y?: number});
 /** 2026-11-22 (Chicago V3 split screen): a SECOND live 3D view stacked under the shot's own view (same clock, own play,
  *  remap, camera and world graphics). The shot's view takes the top `ratio` of the frame. Shots without `split` are
  *  rendered exactly as before. */
@@ -402,6 +407,45 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
                       {j < arr.length - 1 && <span style={{color: col, padding: '0 12px'}}>→</span>}
                     </React.Fragment>
                   ))}
+                </div>
+              </div>
+            );
+          }
+          case 'score': {
+            const u = Math.min(1, s.age / 0.32);
+            const k = u < 0.55 ? 1.45 - 0.51 * (u / 0.55) : 0.94 + 0.06 * ((u - 0.55) / 0.45);
+            const o = Math.max(0, Math.min(1, s.age / 0.08, (s.dur - s.age) / 0.25));
+            return (
+              <div key={i} style={{position: 'absolute', left: 0, right: 0, top: s.y ?? 520, display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: o}}>
+                <div data-qc="stamp" style={{transform: `scale(${k.toFixed(3)})`, font: `400 ${s.size ?? 230}px Anton, Impact, sans-serif`, color: '#FFC447', lineHeight: 1, letterSpacing: 4, textShadow: '0 0 34px rgba(255,196,71,0.55), 0 8px 26px rgba(0,0,0,0.6)', WebkitTextStroke: '3px #0B1C3D'}}>{s.text}</div>
+                {s.sub && <div style={{marginTop: 10, padding: '6px 18px', borderRadius: 8, background: 'rgba(5,10,21,0.78)', color: '#FFFFFF', font: '700 34px Inter, sans-serif', letterSpacing: 3}}>{s.sub}</div>}
+              </div>
+            );
+          }
+          case 'verdict': {
+            const o = Math.max(0, Math.min(1, s.age / 0.12, (s.dur - s.age) / 0.22));
+            const k = 0.86 + 0.14 * Math.min(1, s.age / 0.16) + 0.05 * Math.max(0, 1 - Math.abs(s.age - 0.2) / 0.1);
+            const col = s.tone === 'red' ? '#E5483A' : '#2FBF71';
+            const sz = s.size ?? 64;
+            return (
+              <div key={i} style={{position: 'absolute', left: 60, right: 60, top: s.y ?? 300, display: 'flex', justifyContent: 'center', opacity: o}}>
+                <div data-qc="stamp" style={{transform: `scale(${k.toFixed(3)})`, display: 'flex', alignItems: 'center', gap: 18, padding: '10px 26px 10px 12px', borderRadius: 14, background: col, boxShadow: '0 8px 26px rgba(0,0,0,0.45)'}}>
+                  <svg width={sz * 0.95} height={sz * 0.95} viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#FFFFFF" />
+                    {s.tone === 'red' ? <path d="M13 13 L27 27 M27 13 L13 27" stroke={col} strokeWidth="5" strokeLinecap="round" /> : <path d="M11 21 L17.5 27 L29 14" stroke={col} strokeWidth="5" fill="none" strokeLinecap="round" strokeLinejoin="round" />}
+                  </svg>
+                  <span style={{font: `400 ${sz}px Anton, Impact, sans-serif`, color: '#FFFFFF', letterSpacing: 2, lineHeight: 1.05}}>{s.text}</span>
+                </div>
+              </div>
+            );
+          }
+          case 'section': {
+            const o = Math.max(0, Math.min(1, s.age / 0.2, (s.dur - s.age) / 0.25));
+            const x = 1 - Math.min(1, s.age / 0.25);
+            return (
+              <div key={i} style={{position: 'absolute', left: 0, right: 0, top: s.y ?? 200, display: 'flex', justifyContent: 'center', opacity: o, transform: `translateY(${(-14 * x * x).toFixed(1)}px)`}}>
+                <div data-qc="stamp" style={{display: 'flex', alignItems: 'stretch', borderRadius: 10, overflow: 'hidden', boxShadow: '0 6px 22px rgba(0,0,0,0.45)'}}>
+                  <span style={{background: '#C9A24D', color: '#0B1C3D', font: '400 60px Anton, Impact, sans-serif', padding: '6px 18px 2px'}}>{s.n}</span>
+                  <span style={{background: 'rgba(11,28,61,0.92)', color: '#FFFFFF', font: '400 60px Anton, Impact, sans-serif', letterSpacing: 3, padding: '6px 22px 2px'}}>{s.text}</span>
                 </div>
               </div>
             );

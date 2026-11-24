@@ -1,0 +1,248 @@
+{
+ "id": "rules4-throwin",
+ "title": "Consequence: throw-in from the sideline, no free throws",
+ "branch": {
+  "group": "rules4"
+ },
+ "duration": 3.0,
+ "concept": "rules4-throwin",
+ "source": "original E2A rule demonstration (FIBA Official Basketball Rules: Art. 16, 24, 25, 33, 34, team-foul penalty)",
+ "v33": "compile",
+ "squareUp": true,
+ "catchV2": 2,
+ "handBallClear": true,
+ "realism": 3,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Inbounder (out of bounds)"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Receiver"
+  }
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0.0,
+    7.95,
+    8.4
+   ],
+   [
+    3.0,
+    7.95,
+    8.4
+   ]
+  ],
+  "O2": [
+   [
+    0.0,
+    5.6,
+    9.6
+   ],
+   [
+    0.1,
+    5.6,
+    9.6
+   ],
+   [
+    0.2,
+    5.6,
+    9.6
+   ],
+   [
+    0.3,
+    5.5961,
+    9.5941
+   ],
+   [
+    0.4,
+    5.5731,
+    9.5596
+   ],
+   [
+    0.5,
+    5.5226,
+    9.484
+   ],
+   [
+    0.6,
+    5.446,
+    9.369
+   ],
+   [
+    0.7,
+    5.3509,
+    9.2263
+   ],
+   [
+    0.8,
+    5.2491,
+    9.0737
+   ],
+   [
+    0.9,
+    5.154,
+    8.931
+   ],
+   [
+    1.0,
+    5.0774,
+    8.816
+   ],
+   [
+    1.1,
+    5.0269,
+    8.7404
+   ],
+   [
+    1.2,
+    5.0039,
+    8.7059
+   ],
+   [
+    1.3,
+    5.0,
+    8.7
+   ],
+   [
+    1.4,
+    5.0,
+    8.7
+   ],
+   [
+    1.5,
+    5.0,
+    8.7
+   ],
+   [
+    1.6,
+    5.0,
+    8.7
+   ],
+   [
+    1.7,
+    5.0,
+    8.7
+   ],
+   [
+    1.8,
+    5.0,
+    8.7
+   ],
+   [
+    1.9,
+    5.0,
+    8.7
+   ],
+   [
+    2.0,
+    5.0,
+    8.7
+   ],
+   [
+    2.1,
+    5.0,
+    8.7
+   ],
+   [
+    2.2,
+    5.0,
+    8.7
+   ],
+   [
+    2.3,
+    5.0,
+    8.7
+   ],
+   [
+    2.4,
+    5.0,
+    8.7
+   ],
+   [
+    2.5,
+    5.0,
+    8.7
+   ],
+   [
+    2.6,
+    5.0,
+    8.7
+   ],
+   [
+    2.7,
+    5.0,
+    8.7
+   ],
+   [
+    2.8,
+    5.0,
+    8.7
+   ],
+   [
+    2.9,
+    5.0,
+    8.7
+   ],
+   [
+    3.0,
+    5.0,
+    8.7
+   ]
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 1.0
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O2",
+   "t0": 1.0,
+   "t1": 1.55,
+   "style": "chest"
+  },
+  {
+   "type": "hold",
+   "player": "O2",
+   "from": 1.55,
+   "to": 3.0
+  }
+ ],
+ "actions": {
+  "O1": [
+   {
+    "type": "face",
+    "from": 0,
+    "to": 3.0,
+    "face": "O2"
+   }
+  ],
+  "O2": [
+   {
+    "type": "face",
+    "from": 0,
+    "to": 3.0,
+    "face": "O1"
+   }
+  ]
+ },
+ "screens": [],
+ "marks": {
+  "pass": 1.0,
+  "catch": 1.55,
+  "end": 3.0
+ },
+ "claims": [],
+ "notes": [
+  "Sideline throw-in: the inbounder stands outside the court."
+ ]
+}

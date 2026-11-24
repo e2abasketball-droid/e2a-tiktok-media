@@ -1,0 +1,197 @@
+{
+ "tone": "highpass=f=85,equalizer=f=300:t=q:w=1.0:g=-2,equalizer=f=2800:t=q:w=1.4:g=3,equalizer=f=7000:t=q:w=1.5:g=-1.5,deesser=i=0.45,acompressor=threshold=-18dB:ratio=1.6:attack=8:release=140:makeup=2",
+ "reference_db": -19.86,
+ "voice_in": {
+  "I": -15.6,
+  "LRA": 3.3,
+  "TP": -0.2
+ },
+ "voice_out": {
+  "I": -16.1,
+  "LRA": 2.7,
+  "TP": -2.0
+ },
+ "lines": [
+  {
+   "text": "These are the FOUR RULES every basketball player needs to understand.",
+   "phase": "A",
+   "target_off": 2.0,
+   "level_in_db": -18.39,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.53
+  },
+  {
+   "text": "First: TRAVELING.",
+   "phase": "B",
+   "target_off": 1.0,
+   "level_in_db": -20.53,
+   "gain_db": 0.16,
+   "level_out_rel_db": -0.73
+  },
+  {
+   "text": "Catch the ball, set your pivot foot...",
+   "phase": "B",
+   "target_off": 0,
+   "level_in_db": -19.96,
+   "gain_db": 0.0,
+   "level_out_rel_db": -0.15
+  },
+  {
+   "text": "then lift it and put it back down while you're still holding the ball?",
+   "phase": "C",
+   "target_off": 0.5,
+   "level_in_db": -19.35,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.58
+  },
+  {
+   "text": "That's a TRAVEL!",
+   "phase": "C",
+   "target_off": 2.5,
+   "level_in_db": -18.16,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.37
+  },
+  {
+   "text": "Second: DOUBLE DRIBBLE.",
+   "phase": "B",
+   "target_off": 1.5,
+   "level_in_db": -19.69,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.23
+  },
+  {
+   "text": "Stop your dribble, hold the ball...",
+   "phase": "B",
+   "target_off": 0.5,
+   "level_in_db": -19.77,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.15
+  },
+  {
+   "text": "and start bouncing again?",
+   "phase": "C",
+   "target_off": 1.0,
+   "level_in_db": -20.28,
+   "gain_db": 0.0,
+   "level_out_rel_db": -0.36
+  },
+  {
+   "text": "VIOLATION!",
+   "phase": "C",
+   "target_off": 3.0,
+   "level_in_db": -15.56,
+   "gain_db": 0.0,
+   "level_out_rel_db": 4.33
+  },
+  {
+   "text": "Third: SCORING.",
+   "phase": "C",
+   "target_off": 2.0,
+   "level_in_db": -19.48,
+   "gain_db": 0.11,
+   "level_out_rel_db": 0.58
+  },
+  {
+   "text": "Free throw: ONE!",
+   "phase": "C",
+   "target_off": 1.5,
+   "level_in_db": -19.36,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.55
+  },
+  {
+   "text": "Inside the arc: TWO!",
+   "phase": "C",
+   "target_off": 2.0,
+   "level_in_db": -17.99,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.92
+  },
+  {
+   "text": "Beyond the arc: THREE!",
+   "phase": "C",
+   "target_off": 3.0,
+   "level_in_db": -18.2,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.72
+  },
+  {
+   "text": "But step on that line?",
+   "phase": "D",
+   "target_off": 0.5,
+   "level_in_db": -17.1,
+   "gain_db": 0.0,
+   "level_out_rel_db": 2.82
+  },
+  {
+   "text": "Still two!",
+   "phase": "D",
+   "target_off": 1.5,
+   "level_in_db": -19.05,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.87
+  },
+  {
+   "text": "Fourth: FOULS.",
+   "phase": "B",
+   "target_off": 1.5,
+   "level_in_db": -21.36,
+   "gain_db": 1.5,
+   "level_out_rel_db": -0.51
+  },
+  {
+   "text": "Push or hold an opponent and restrict their movement?",
+   "phase": "B",
+   "target_off": 0.5,
+   "level_in_db": -19.25,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.67
+  },
+  {
+   "text": "That's a foul.",
+   "phase": "C",
+   "target_off": 1.5,
+   "level_in_db": -20.66,
+   "gain_db": 0.79,
+   "level_out_rel_db": -0.26
+  },
+  {
+   "text": "But remember: not every foul means free throws.",
+   "phase": "C",
+   "target_off": 1.5,
+   "level_in_db": -19.33,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.59
+  },
+  {
+   "text": "Four rules.",
+   "phase": "E",
+   "target_off": 1.5,
+   "level_in_db": -16.67,
+   "gain_db": 0.0,
+   "level_out_rel_db": 3.23
+  },
+  {
+   "text": "Play smarter.",
+   "phase": "E",
+   "target_off": 2.0,
+   "level_in_db": -18.47,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.16
+  },
+  {
+   "text": "Follow E2A for more!",
+   "phase": "E",
+   "target_off": 2.0,
+   "level_in_db": -18.49,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.43
+  }
+ ],
+ "mix": {
+  "I": -14.3,
+  "LRA": 2.6,
+  "TP": -1.5
+ }
+}

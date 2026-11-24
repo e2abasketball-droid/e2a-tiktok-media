@@ -1,0 +1,507 @@
+[
+{
+"text": "These",
+"start": 0.083,
+"end": 0.16
+},
+{
+"text": "are",
+"start": 0.18,
+"end": 0.24
+},
+{
+"text": "the",
+"start": 0.28,
+"end": 0.4
+},
+{
+"text": "FOUR",
+"start": 0.448,
+"end": 0.64
+},
+{
+"text": "RULES",
+"start": 0.736,
+"end": 1.4
+},
+{
+"text": "every",
+"start": 1.447,
+"end": 1.68
+},
+{
+"text": "basketball",
+"start": 1.731,
+"end": 2.24
+},
+{
+"text": "player",
+"start": 2.297,
+"end": 2.64
+},
+{
+"text": "needs",
+"start": 2.707,
+"end": 3.04
+},
+{
+"text": "to",
+"start": 3.04,
+"end": 3.12
+},
+{
+"text": "understand.",
+"start": 3.178,
+"end": 3.84
+},
+{
+"text": "First:",
+"start": 4.587,
+"end": 5.2
+},
+{
+"text": "TRAVELING.",
+"start": 5.333,
+"end": 6.24
+},
+{
+"text": "Catch",
+"start": 6.28,
+"end": 6.48
+},
+{
+"text": "the",
+"start": 6.48,
+"end": 6.56
+},
+{
+"text": "ball,",
+"start": 6.624,
+"end": 6.96
+},
+{
+"text": "set",
+"start": 7.06,
+"end": 7.36
+},
+{
+"text": "your",
+"start": 7.376,
+"end": 7.44
+},
+{
+"text": "pivot",
+"start": 7.48,
+"end": 7.68
+},
+{
+"text": "foot...",
+"start": 7.76,
+"end": 8.32
+},
+{
+"text": "then",
+"start": 8.462,
+"end": 8.56
+},
+{
+"text": "lift",
+"start": 8.64,
+"end": 8.96
+},
+{
+"text": "it",
+"start": 9.013,
+"end": 9.12
+},
+{
+"text": "and",
+"start": 9.18,
+"end": 9.36
+},
+{
+"text": "put",
+"start": 9.4,
+"end": 9.52
+},
+{
+"text": "it",
+"start": 9.573,
+"end": 9.68
+},
+{
+"text": "back",
+"start": 9.744,
+"end": 10.0
+},
+{
+"text": "down",
+"start": 10.08,
+"end": 10.4
+},
+{
+"text": "while",
+"start": 10.493,
+"end": 10.96
+},
+{
+"text": "you're",
+"start": 10.98,
+"end": 11.2
+},
+{
+"text": "still",
+"start": 11.24,
+"end": 11.44
+},
+{
+"text": "holding",
+"start": 11.49,
+"end": 11.84
+},
+{
+"text": "the",
+"start": 11.88,
+"end": 12.0
+},
+{
+"text": "ball?",
+"start": 12.064,
+"end": 12.321
+},
+{
+"text": "That's",
+"start": 12.784,
+"end": 12.88
+},
+{
+"text": "a",
+"start": 12.88,
+"end": 12.96
+},
+{
+"text": "TRAVEL!",
+"start": 13.04,
+"end": 13.52
+},
+{
+"text": "Second:",
+"start": 14.074,
+"end": 14.32
+},
+{
+"text": "DOUBLE",
+"start": 14.366,
+"end": 14.64
+},
+{
+"text": "DRIBBLE.",
+"start": 14.693,
+"end": 15.041
+},
+{
+"text": "Stop",
+"start": 15.152,
+"end": 15.6
+},
+{
+"text": "your",
+"start": 15.616,
+"end": 15.68
+},
+{
+"text": "dribble,",
+"start": 15.728,
+"end": 16.16
+},
+{
+"text": "hold",
+"start": 16.256,
+"end": 16.64
+},
+{
+"text": "the",
+"start": 16.64,
+"end": 16.72
+},
+{
+"text": "ball...",
+"start": 16.816,
+"end": 17.839
+},
+{
+"text": "and",
+"start": 17.845,
+"end": 17.925
+},
+{
+"text": "start",
+"start": 17.992,
+"end": 18.325
+},
+{
+"text": "bouncing",
+"start": 18.387,
+"end": 18.885
+},
+{
+"text": "again?",
+"start": 18.952,
+"end": 19.365
+},
+{
+"text": "VIOLATION!",
+"start": 19.965,
+"end": 20.765
+},
+{
+"text": "Third:",
+"start": 21.138,
+"end": 21.445
+},
+{
+"text": "SCORING.",
+"start": 21.525,
+"end": 22.285
+},
+{
+"text": "Free",
+"start": 22.325,
+"end": 22.485
+},
+{
+"text": "throw:",
+"start": 22.552,
+"end": 23.125
+},
+{
+"text": "ONE!",
+"start": 23.225,
+"end": 23.845
+},
+{
+"text": "Inside",
+"start": 23.891,
+"end": 24.165
+},
+{
+"text": "the",
+"start": 24.185,
+"end": 24.245
+},
+{
+"text": "arc:",
+"start": 24.345,
+"end": 24.646
+},
+{
+"text": "TWO!",
+"start": 24.785,
+"end": 25.285
+},
+{
+"text": "Beyond",
+"start": 25.776,
+"end": 25.845
+},
+{
+"text": "the",
+"start": 25.885,
+"end": 26.005
+},
+{
+"text": "arc:",
+"start": 26.085,
+"end": 26.405
+},
+{
+"text": "THREE!",
+"start": 26.525,
+"end": 27.205
+},
+{
+"text": "But",
+"start": 27.3,
+"end": 27.365
+},
+{
+"text": "step",
+"start": 27.429,
+"end": 27.685
+},
+{
+"text": "on",
+"start": 27.685,
+"end": 27.765
+},
+{
+"text": "that",
+"start": 27.813,
+"end": 28.005
+},
+{
+"text": "line?",
+"start": 28.101,
+"end": 28.645
+},
+{
+"text": "Still",
+"start": 28.712,
+"end": 29.045
+},
+{
+"text": "two!",
+"start": 29.125,
+"end": 29.445
+},
+{
+"text": "Fourth:",
+"start": 29.999,
+"end": 30.325
+},
+{
+"text": "FOULS.",
+"start": 30.405,
+"end": 31.165
+},
+{
+"text": "Push",
+"start": 31.221,
+"end": 31.445
+},
+{
+"text": "or",
+"start": 31.498,
+"end": 31.605
+},
+{
+"text": "hold",
+"start": 31.669,
+"end": 31.925
+},
+{
+"text": "an",
+"start": 31.925,
+"end": 32.005
+},
+{
+"text": "opponent",
+"start": 32.058,
+"end": 32.485
+},
+{
+"text": "and",
+"start": 32.545,
+"end": 32.725
+},
+{
+"text": "restrict",
+"start": 32.769,
+"end": 33.125
+},
+{
+"text": "their",
+"start": 33.152,
+"end": 33.285
+},
+{
+"text": "movement?",
+"start": 33.338,
+"end": 34.005
+},
+{
+"text": "That's",
+"start": 34.053,
+"end": 34.285
+},
+{
+"text": "a",
+"start": 34.285,
+"end": 34.325
+},
+{
+"text": "foul.",
+"start": 34.405,
+"end": 34.805
+},
+{
+"text": "But",
+"start": 34.992,
+"end": 35.052
+},
+{
+"text": "remember:",
+"start": 35.114,
+"end": 35.852
+},
+{
+"text": "not",
+"start": 35.912,
+"end": 36.092
+},
+{
+"text": "every",
+"start": 36.159,
+"end": 36.492
+},
+{
+"text": "foul",
+"start": 36.572,
+"end": 36.892
+},
+{
+"text": "means",
+"start": 36.932,
+"end": 37.132
+},
+{
+"text": "free",
+"start": 37.18,
+"end": 37.372
+},
+{
+"text": "throws.",
+"start": 37.441,
+"end": 38.012
+},
+{
+"text": "Four",
+"start": 38.25,
+"end": 38.332
+},
+{
+"text": "rules.",
+"start": 38.439,
+"end": 39.172
+},
+{
+"text": "Play",
+"start": 39.212,
+"end": 39.372
+},
+{
+"text": "smarter.",
+"start": 39.432,
+"end": 40.092
+},
+{
+"text": "Follow",
+"start": 40.126,
+"end": 40.332
+},
+{
+"text": "E2A",
+"start": 40.412,
+"end": 40.812
+},
+{
+"text": "for",
+"start": 40.852,
+"end": 40.972
+},
+{
+"text": "more!",
+"start": 41.036,
+"end": 41.452
+}
+]

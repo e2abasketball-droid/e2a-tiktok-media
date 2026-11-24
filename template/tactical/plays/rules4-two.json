@@ -1,0 +1,72 @@
+{
+ "id": "rules4-two",
+ "title": "INSIDE THE ARC: +2",
+ "branch": {
+  "group": "rules4"
+ },
+ "duration": 3.1,
+ "concept": "rules4-two",
+ "source": "original E2A rule demonstration (FIBA Official Basketball Rules: Art. 16, 24, 25, 33, 34, team-foul penalty)",
+ "v33": "compile",
+ "squareUp": true,
+ "catchV2": 2,
+ "handBallClear": true,
+ "realism": 3,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Shooter"
+  }
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0.0,
+    -3.3,
+    5.05
+   ],
+   [
+    3.1,
+    -3.3,
+    5.05
+   ]
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 1.0
+  },
+  {
+   "type": "shot",
+   "player": "O1",
+   "t0": 1.0,
+   "t1": 2.05,
+   "make": true,
+   "H": 0.38
+  }
+ ],
+ "actions": {
+  "O1": [
+   {
+    "type": "face",
+    "from": 0,
+    "to": 3.1,
+    "face": -0.8112
+   }
+  ]
+ },
+ "screens": [],
+ "marks": {
+  "release": 1.0,
+  "make": 2.05,
+  "end": 3.1
+ },
+ "claims": [],
+ "notes": [
+  "4.79 m from the basket, inside the 6.75 m arc."
+ ]
+}

@@ -1,0 +1,990 @@
+{
+ "episode": "rules4",
+ "mp4": "/tmp/claude-0/rules4/E2A-4-BASKETBALL-RULES-FINAL.mp4",
+ "result": "PASS",
+ "checks": {
+  "technical": {
+   "pass": true,
+   "width": 1080,
+   "height": 1920,
+   "fps": 30.0,
+   "vcodec": "h264",
+   "acodec": "aac",
+   "duration": 41.952,
+   "mb": 31.683622
+  },
+  "audio": {
+   "pass": true,
+   "I": -14.3,
+   "TP": -1.5,
+   "margin_lu": 0.7,
+   "tp_headroom_db": 0.5
+  }
+ },
+ "warnings": [
+  {
+   "check": "flat_band",
+   "why": "wide flat bright band in front of the lens",
+   "items": [
+    {
+     "frame": 29,
+     "t": 0.967,
+     "width_pct": 14.8
+    },
+    {
+     "frame": 30,
+     "t": 1.0,
+     "width_pct": 14.8
+    },
+    {
+     "frame": 31,
+     "t": 1.033,
+     "width_pct": 14.8
+    },
+    {
+     "frame": 32,
+     "t": 1.067,
+     "width_pct": 14.8
+    },
+    {
+     "frame": 33,
+     "t": 1.1,
+     "width_pct": 14.8
+    },
+    {
+     "frame": 34,
+     "t": 1.133,
+     "width_pct": 14.8
+    },
+    {
+     "frame": 35,
+     "t": 1.167,
+     "width_pct": 14.8
+    },
+    {
+     "frame": 36,
+     "t": 1.2,
+     "width_pct": 14.8
+    },
+    {
+     "frame": 37,
+     "t": 1.233,
+     "width_pct": 14.8
+    },
+    {
+     "frame": 38,
+     "t": 1.267,
+     "width_pct": 14.1
+    },
+    {
+     "frame": 39,
+     "t": 1.3,
+     "width_pct": 14.8
+    },
+    {
+     "frame": 40,
+     "t": 1.333,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 41,
+     "t": 1.367,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 42,
+     "t": 1.4,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 43,
+     "t": 1.433,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 44,
+     "t": 1.467,
+     "width_pct": 11.1
+    },
+    {
+     "frame": 45,
+     "t": 1.5,
+     "width_pct": 9.6
+    },
+    {
+     "frame": 46,
+     "t": 1.533,
+     "width_pct": 8.1
+    },
+    {
+     "frame": 55,
+     "t": 1.833,
+     "width_pct": 8.1
+    },
+    {
+     "frame": 56,
+     "t": 1.867,
+     "width_pct": 8.1
+    },
+    {
+     "frame": 57,
+     "t": 1.9,
+     "width_pct": 8.1
+    },
+    {
+     "frame": 58,
+     "t": 1.933,
+     "width_pct": 8.1
+    },
+    {
+     "frame": 420,
+     "t": 14.0,
+     "width_pct": 17.8
+    },
+    {
+     "frame": 421,
+     "t": 14.033,
+     "width_pct": 10.4
+    },
+    {
+     "frame": 422,
+     "t": 14.067,
+     "width_pct": 9.6
+    },
+    {
+     "frame": 427,
+     "t": 14.233,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 437,
+     "t": 14.567,
+     "width_pct": 14.1
+    },
+    {
+     "frame": 438,
+     "t": 14.6,
+     "width_pct": 12.6
+    },
+    {
+     "frame": 439,
+     "t": 14.633,
+     "width_pct": 13.3
+    },
+    {
+     "frame": 440,
+     "t": 14.667,
+     "width_pct": 14.8
+    },
+    {
+     "frame": 441,
+     "t": 14.7,
+     "width_pct": 8.1
+    },
+    {
+     "frame": 442,
+     "t": 14.733,
+     "width_pct": 14.8
+    },
+    {
+     "frame": 444,
+     "t": 14.8,
+     "width_pct": 10.4
+    },
+    {
+     "frame": 446,
+     "t": 14.867,
+     "width_pct": 10.4
+    },
+    {
+     "frame": 464,
+     "t": 15.467,
+     "width_pct": 8.1
+    },
+    {
+     "frame": 466,
+     "t": 15.533,
+     "width_pct": 8.1
+    },
+    {
+     "frame": 468,
+     "t": 15.6,
+     "width_pct": 9.6
+    },
+    {
+     "frame": 469,
+     "t": 15.633,
+     "width_pct": 10.4
+    },
+    {
+     "frame": 477,
+     "t": 15.9,
+     "width_pct": 9.6
+    },
+    {
+     "frame": 480,
+     "t": 16.0,
+     "width_pct": 8.9
+    },
+    {
+     "frame": 481,
+     "t": 16.033,
+     "width_pct": 9.6
+    },
+    {
+     "frame": 534,
+     "t": 17.8,
+     "width_pct": 8.9
+    },
+    {
+     "frame": 536,
+     "t": 17.867,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 539,
+     "t": 17.967,
+     "width_pct": 9.6
+    },
+    {
+     "frame": 540,
+     "t": 18.0,
+     "width_pct": 8.1
+    },
+    {
+     "frame": 541,
+     "t": 18.033,
+     "width_pct": 8.1
+    },
+    {
+     "frame": 542,
+     "t": 18.067,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 543,
+     "t": 18.1,
+     "width_pct": 11.1
+    },
+    {
+     "frame": 544,
+     "t": 18.133,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 545,
+     "t": 18.167,
+     "width_pct": 11.1
+    },
+    {
+     "frame": 546,
+     "t": 18.2,
+     "width_pct": 11.1
+    },
+    {
+     "frame": 547,
+     "t": 18.233,
+     "width_pct": 11.1
+    },
+    {
+     "frame": 548,
+     "t": 18.267,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 549,
+     "t": 18.3,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 550,
+     "t": 18.333,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 551,
+     "t": 18.367,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 552,
+     "t": 18.4,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 553,
+     "t": 18.433,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 554,
+     "t": 18.467,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 555,
+     "t": 18.5,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 556,
+     "t": 18.533,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 557,
+     "t": 18.567,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 558,
+     "t": 18.6,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 559,
+     "t": 18.633,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 560,
+     "t": 18.667,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 561,
+     "t": 18.7,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 562,
+     "t": 18.733,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 563,
+     "t": 18.767,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 564,
+     "t": 18.8,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 565,
+     "t": 18.833,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 566,
+     "t": 18.867,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 567,
+     "t": 18.9,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 568,
+     "t": 18.933,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 569,
+     "t": 18.967,
+     "width_pct": 11.9
+    },
+    {
+     "frame": 571,
+     "t": 19.033,
+     "width_pct": 9.6
+    },
+    {
+     "frame": 575,
+     "t": 19.167,
+     "width_pct": 9.6
+    },
+    {
+     "frame": 582,
+     "t": 19.4,
+     "width_pct": 9.6
+    },
+    {
+     "frame": 583,
+     "t": 19.433,
+     "width_pct": 9.6
+    },
+    {
+     "frame": 584,
+     "t": 19.467,
+     "width_pct": 9.6
+    },
+    {
+     "frame": 585,
+     "t": 19.5,
+     "width_pct": 9.6
+    },
+    {
+     "frame": 586,
+     "t": 19.533,
+     "width_pct": 9.6
+    },
+    {
+     "frame": 589,
+     "t": 19.633,
+     "width_pct": 10.4
+    },
+    {
+     "frame": 590,
+     "t": 19.667,
+     "width_pct": 10.4
+    },
+    {
+     "frame": 591,
+     "t": 19.7,
+     "width_pct": 10.4
+    },
+    {
+     "frame": 592,
+     "t": 19.733,
+     "width_pct": 10.4
+    },
+    {
+     "frame": 593,
+     "t": 19.767,
+     "width_pct": 10.4
+    },
+    {
+     "frame": 594,
+     "t": 19.8,
+     "width_pct": 10.4
+    },
+    {
+     "frame": 595,
+     "t": 19.833,
+     "width_pct": 10.4
+    },
+    {
+     "frame": 596,
+     "t": 19.867,
+     "width_pct": 10.4
+    },
+    {
+     "frame": 597,
+     "t": 19.9,
+     "width_pct": 10.4
+    },
+    {
+     "frame": 598,
+     "t": 19.933,
+     "width_pct": 10.4
+    },
+    {
+     "frame": 599,
+     "t": 19.967,
+     "width_pct": 10.4
+    },
+    {
+     "frame": 631,
+     "t": 21.033,
+     "width_pct": 14.1
+    }
+   ]
+  }
+ ],
+ "planned_shots": [
+  {
+   "shot": "h2",
+   "start": 0.95,
+   "hard_cut": true
+  },
+  {
+   "shot": "h3",
+   "start": 1.95,
+   "hard_cut": true
+  },
+  {
+   "shot": "h4",
+   "start": 2.95,
+   "hard_cut": true
+  },
+  {
+   "shot": "travel",
+   "start": 4.467,
+   "hard_cut": true
+  },
+  {
+   "shot": "dribble",
+   "start": 13.974,
+   "hard_cut": true
+  },
+  {
+   "shot": "ft",
+   "start": 21.038,
+   "hard_cut": true
+  },
+  {
+   "shot": "two",
+   "start": 23.791,
+   "hard_cut": true
+  },
+  {
+   "shot": "three",
+   "start": 25.676,
+   "hard_cut": true
+  },
+  {
+   "shot": "lineD",
+   "start": 27.22,
+   "hard_cut": true
+  },
+  {
+   "shot": "lineW",
+   "start": 28.652,
+   "hard_cut": true
+  },
+  {
+   "shot": "foul",
+   "start": 29.899,
+   "hard_cut": true
+  },
+  {
+   "shot": "throw",
+   "start": 34.892,
+   "hard_cut": true
+  },
+  {
+   "shot": "end",
+   "start": 38.17,
+   "hard_cut": true
+  }
+ ],
+ "moments": [
+  {
+   "t": 0.06666666666666667,
+   "label": "h1: lift",
+   "shot": "h1",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 0.6,
+   "label": "h1: land",
+   "shot": "h1",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 0.967,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 1.033,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 1.1,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 1.167,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 1.233,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 1.2833333333333332,
+   "label": "h2: hold1",
+   "shot": "h2",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 1.367,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 1.433,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 1.5,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 1.833,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 1.9,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 2.1166666666666667,
+   "label": "h3: release",
+   "shot": "h3",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 2.8166666666666664,
+   "label": "h3: make",
+   "shot": "h3",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 3.8000000000000003,
+   "label": "h4: freeze FREEZE",
+   "shot": "h4",
+   "kind": "freeze",
+   "prio": 1
+  },
+  {
+   "t": 6.100333333333333,
+   "label": "travel: pass",
+   "shot": "travel",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 6.900333333333332,
+   "label": "travel: catch",
+   "shot": "travel",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 8.267,
+   "label": "travel: pivot1",
+   "shot": "travel",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 8.733666666666666,
+   "label": "travel: lift",
+   "shot": "travel",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 10.200333333333333,
+   "label": "travel: land",
+   "shot": "travel",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 14.0,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 14.067,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 14.233,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 14.567,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 14.633,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 14.7,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 14.8,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 14.867,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 15.467,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 15.533,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 15.6,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 15.940666666666667,
+   "label": "dribble: stop",
+   "shot": "dribble",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 16.0,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 17.8,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 17.867,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 17.940666666666665,
+   "label": "dribble: hold1",
+   "shot": "dribble",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 18.0,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 18.067,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 18.133,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 18.2,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 18.267,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 18.333,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 18.4,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 18.467,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 18.533,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 18.6,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 18.667,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 18.733,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 18.8,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 18.867,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 18.933,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 19.033,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 19.167,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 19.365000000000002,
+   "label": "dribble: freeze FREEZE",
+   "shot": "dribble",
+   "kind": "freeze",
+   "prio": 1
+  },
+  {
+   "t": 19.433,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 19.5,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 19.633,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 19.7,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 19.767,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 19.833,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 19.9,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 19.967,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 21.033,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 22.304666666666666,
+   "label": "ft: release",
+   "shot": "ft",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 23.304666666666666,
+   "label": "ft: make",
+   "shot": "ft",
+   "kind": "mark",
+   "prio": 1
+  }
+ ],
+ "timing": {
+  "moments_s": 0.15,
+  "probe_loudness_s": 0.44,
+  "frame_analysis_s": 4.2,
+  "contact_sheet_s": 27.35,
+  "total_s": 32.14
+ },
+ "contact_sheet": "/tmp/claude-0/rules4/qcv/contact-sheet.png",
+ "not_measured": [
+  "player-on-player occlusion (needs depth or an ID pass)",
+  "text over a key player (needs projected player boxes per frame: see qc-tactical3d rays)"
+ ]
+}
