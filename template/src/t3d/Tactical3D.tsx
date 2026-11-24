@@ -54,8 +54,8 @@ type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: n
   | {type: 'fouls'; league: League; max: number; ticks: Anchor[]; out: Anchor; y?: number; label?: string}
   | {type: 'count3'; ticks: Anchor[]; y?: number; size?: number}
   /** 2026-11-24 V2 (opt-in): E2A Broadcast Scoreboard + official league logo slot (src null = marked placeholder) */
-  | {type: 'scoreboard'; league: League; logo?: string | null; teams: [SbTeam, SbTeam]; period: string; clock: string; shot?: number | null; run?: Anchor | null; highlight?: Anchor | null; dim?: Anchor | null; y?: number; width?: number}
-  | {type: 'leagueLogo'; league: League; src?: string | null; y: number; h?: number; w?: number; delay?: number; align?: 'left' | 'center'});
+  | {type: 'scoreboard'; league: League; logo?: string | null; teams: [SbTeam, SbTeam]; period: string; clock: string; shot?: number | null; run?: Anchor | null; highlight?: Anchor | null; dim?: Anchor | null; y?: number; width?: number; plate?: string}
+  | {type: 'leagueLogo'; league: League; src?: string | null; y: number; h?: number; w?: number; delay?: number; align?: 'left' | 'center'; plate?: string});
 /** 2026-11-22 (Chicago V3 split screen): a SECOND live 3D view stacked under the shot's own view (same clock, own play,
  *  remap, camera and world graphics). The shot's view takes the top `ratio` of the frame. Shots without `split` are
  *  rendered exactly as before. */
@@ -501,10 +501,10 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
           }
           case 'scoreboard': {
             const r = (a: Anchor | null | undefined) => (a == null ? null : toLocal(a) - (lt - s.age));
-            return <BroadcastScoreboard key={i} league={s.league} logo={s.logo} teams={s.teams} period={s.period} clock={s.clock} shot={s.shot} run={r(s.run)} highlight={r(s.highlight)} dim={r(s.dim)} age={s.age} dur={s.dur} y={s.y} width={s.width} />;
+            return <BroadcastScoreboard key={i} league={s.league} logo={s.logo} teams={s.teams} period={s.period} clock={s.clock} shot={s.shot} run={r(s.run)} highlight={r(s.highlight)} dim={r(s.dim)} age={s.age} dur={s.dur} y={s.y} width={s.width} plate={s.plate} />;
           }
           case 'leagueLogo':
-            return <LeagueLogo key={i} league={s.league} src={s.src} age={s.age} dur={s.dur} y={s.y} h={s.h} w={s.w} delay={s.delay} align={s.align} />;
+            return <LeagueLogo key={i} league={s.league} src={s.src} age={s.age} dur={s.dur} y={s.y} h={s.h} w={s.w} delay={s.delay} align={s.align} plate={s.plate} />;
           case 'flash':
             return <Flash key={i} age={s.age} color={s.color} strength={s.strength ?? 0.35} />;
           case 'stepCount': {

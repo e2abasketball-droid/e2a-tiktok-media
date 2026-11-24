@@ -2,7 +2,7 @@
 
 **Archivo:** `E2A-NBA-VS-EUROLEAGUE-V2.mp4`. Sin publicar. La V1 sigue intacta en la carpeta superior.
 
-**Pendiente para cerrar la V2:** los logotipos oficiales. No estaban en el proyecto y no he podido comprobar que tengamos permiso para usarlos. En su lugar la intro y el cierre muestran huecos marcados como «LOGO PLACEHOLDER». Cuando lleguen `nba.svg|png` y `euroleague.svg|png` se colocan solos, y hace falta un render de unos 14 minutos. Después se hará también la copia trial.
+**Logotipos:** integrados con los archivos aportados por el propietario. La licencia para uso comercial sigue sin confirmar (ver el apartado 4).
 
 ## 1. Diagnóstico de la V1 (por qué sonaba leída)
 - **Voz:** Deuce con eleven_v3, una sola toma de 49,4 s. No estaba hecha a trozos: la segmentación **no** era la causa.
@@ -45,16 +45,20 @@
   - Música E2A sin SFX, unos 21 LU por debajo de la voz.
 
 ## 4. Logotipos
-- **Procedencia:** ninguna en el vídeo. El propietario indicó como referencia los SVG de Wikimedia Commons (NBA 2017-present y EuroLeague) y el brand center de EuroLeague, sin licencia confirmada para uso comercial.
-- Commons marca los dos archivos como «Public domain» para el derecho de autor, pero también como **trademarked**: el uso como marca sigue restringido.
-- Por indicación del propietario se mantienen los **placeholders**. Los SVG solo se usaron como referencia de proporciones: NBA 915 × 2079 (vertical) y EuroLeague 960 × 219 (horizontal). Las placas tienen ya esas proporciones, así que al colocar los archivos encajarán sin deformarse.
-- No se ha inventado, trazado ni modificado ningún logotipo, y ninguno se ha copiado al repositorio.
-- **Integración preparada:**
-  - Cada logotipo va sobre una placa blanca, sin deformarse.
-  - Aparece cuando la voz nombra su liga: NBA a 0,1 s y EuroLeague a 0,8 s.
-  - En el marcador sustituye al nombre escrito.
-  - En el cierre aparece en pequeño.
-- **Aviso:** el vídeo no se presenta como colaboración ni patrocinio de ninguna competición.
+- **Origen:** los dos archivos los aportó el propietario en el hilo el 24-11-2026 a las 22:50 (hora de Madrid):
+  - NBA: PNG transparente de 500 × 500
+  - EuroLeague: JPG de 950 × 500 sobre fondo gris #E6E6E6
+- Antes, el propietario había indicado como referencia los SVG de Wikimedia Commons y el brand center de EuroLeague. Commons marca los dos como «Public domain» para el derecho de autor, pero también como **trademarked**.
+- **Tratamiento:** solo se ha recortado el margen vacío, sin cambiar la escala relativa:
+  - NBA: 207 × 470, proporción 0,44
+  - EuroLeague: 804 × 204, recortado con 12 px de margen del propio fondo
+- No se ha cambiado ningún color ni proporción y no se ha quitado ningún fondo. La placa del logotipo de EuroLeague usa su mismo gris, así que el archivo se ve tal como se entregó.
+- **Dónde aparecen:**
+  - En la intro, con entrada suave de opacidad y escala cuando la voz nombra cada liga.
+  - En el bloque de identificación de cada marcador.
+  - En pequeño en el cierre.
+- **Licencia:** sigue **sin confirmar para uso comercial**. Publicar es decisión del propietario. El vídeo no dice ni sugiere colaboración ni patrocinio oficial: no hay textos de «official», «partner» ni «presented by».
+- **Versión segura:** si no se confirma el permiso, basta con quitar `template/public/leagues/` y volver a renderizar (unos 14 min). Los huecos marcados vuelven solos.
 
 ## 5. Nuevo marcador (E2A Broadcast Scoreboard)
 - Dos marcadores originales a la misma escala, uno encima del otro.
@@ -82,8 +86,8 @@
 - **3 segundos:** la cuenta va a velocidad real, 1 s por número, y la técnica salta con «That's defensive three seconds».
 
 ## 8. Defectos pendientes
-- Logotipos pendientes (huecos visibles en la intro y el cierre). La V2 **no es publicable** hasta colocarlos.
-- Falta la copia trial, que se hará con los logotipos ya puestos.
+- Licencia de los logotipos sin confirmar: no publicar hasta que el propietario lo decida.
+- En el marcador, el logotipo horizontal de EuroLeague queda pequeño (190 px de ancho) porque la celda de identificación es estrecha.
 - En el plano «Different arc» el suelo es el de EuroLeague. Los dos arcos y sus medidas se ven encima en sus colores, pero la palabra EUROLEAGUE del suelo asoma bajo el subtítulo.
 - La elección de toma se ha hecho por medidas, no de oído.
 
@@ -104,7 +108,7 @@
   - Ningún atacante pisa la zona.
   - Solo O1 toca el balón, en campo delantero.
 
-## 10. QC del MP4 exportado
+## 10. QC del MP4 exportado (versión con logotipos)
 - **Formato:** 1080 × 1920 a 30 fps constantes, 41,5 s, H.264 y AAC.
 - **Sonido:** -14,1 LUFS, pico real -2,4 dBFS, sin saturación.
 - **qc-video:** PASS, sin avisos.
@@ -120,3 +124,5 @@
   - cuenta 1-2-3, técnica congelada y versión EuroLeague
   - cierre en tres líneas
   - los subtítulos no tapan jugadores ni líneas clave
+- **Versión trial** (`E2A-NBA-VS-EUROLEAGUE-V2-TRIAL.mp4`): misma toma y mismo montaje, con zoom del 3 %, color y nitidez algo más altos y EQ suave en la voz. SSIM 0,62 frente al original, -14,7 LUFS.
+- **Versión sin logotipos** (`E2A-NBA-VS-EUROLEAGUE-V2-SIN-LOGOS.mp4`): render anterior, con los huecos de logotipo al tamaño provisional.

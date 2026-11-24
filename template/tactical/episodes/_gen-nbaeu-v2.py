@@ -29,6 +29,7 @@ def logo_file(name):
 
 
 LOGO = {"nba": logo_file("nba"), "el": logo_file("euroleague")}
+PLATE = {"nba": "#FFFFFF", "el": "#E6E6E6"}   # EuroLeague file supplied as a JPG on #E6E6E6: plate = that colour
 # plates sized to the real artwork proportions (Wikimedia Commons metadata, 2026-11-24): NBA 915 x 2079 (0.44:1, tall),
 # EuroLeague 960 x 219 (4.38:1, wide). The files are NOT in the project: no licence confirmed for commercial use.
 
@@ -131,15 +132,15 @@ def build(words, voice, music):
       ov3=[{"type": "arc3", "rules": "nba", "color": NBA_C, "width": 0.13, "draw": 0.6, "z": 0.014, "from": t_r, "to": d, "fout": 0}],
       split={"play": "d3s-el", "remap": [[0, 0.4], [d, 0.4 + d * 0.5]], "camera": [key(0, HALF_A), key(d, HALF_B, "inOut")], "ratio": 0.5, "seam": "brand",
              "ov3": [{"type": "arc3", "rules": "fiba", "color": EL_C, "width": 0.13, "draw": 0.6, "z": 0.014, "from": t_r + 0.15, "to": d, "fout": 0}]},
-      screen=[{"type": "leagueLogo", "league": "nba", "src": LOGO["nba"], "y": 40, "w": 220, "h": 330, "from": 0.0, "to": d, "delay": max(0.0, L(ws("o1", "NBA"), sh) - 0.05)},
-              {"type": "leagueLogo", "league": "el", "src": LOGO["el"], "y": 1040, "w": 600, "h": 180, "from": 0.0, "to": d, "delay": L(ws("o1", "EuroLeague"), sh)}])
+      screen=[{"type": "leagueLogo", "league": "nba", "plate": PLATE["nba"], "src": LOGO["nba"], "y": 40, "w": 220, "h": 330, "from": 0.0, "to": d, "delay": max(0.0, L(ws("o1", "NBA"), sh) - 0.05)},
+              {"type": "leagueLogo", "league": "el", "plate": PLATE["el"], "src": LOGO["el"], "y": 1040, "w": 600, "h": 180, "from": 0.0, "to": d, "delay": L(ws("o1", "EuroLeague"), sh)}])
 
     # ------------------------------------------------------------------ 01 QUARTER LENGTH: E2A Broadcast Scoreboard
     sh = "qNBA"
     d = dur[sh]
     off = cuts["qEL"] - cuts["qNBA"]
     t_hl = L(ws("q2", "ten") + 0.2, "qEL")
-    board = lambda lg, clock, y, t0, sh_: {"type": "scoreboard", "league": lg, "logo": LOGO[lg], "teams": TEAMS, "period": "Q1", "clock": clock,
+    board = lambda lg, clock, y, t0, sh_: {"type": "scoreboard", "league": lg, "logo": LOGO[lg], "plate": PLATE[lg], "teams": TEAMS, "period": "Q1", "clock": clock,
                                           "shot": 24, "highlight": round(t_hl + (cuts["qEL"] - cuts[sh_]), 3), "y": y, "from": t0, "to": 99}
     S(id=sh, name="QUARTER LENGTH: NBA board Q1 12:00 (before the tip, empty NBA court)", at=cuts[sh], play="empty-nba", hide=["R"],
       remap=[[0, 0.0], [d, d]], camera=[key(0, BOARD_A), key(d + dur["qEL"], BOARD_B)],
@@ -281,8 +282,8 @@ def build(words, voice, music):
     S(id=sh, name="CLOSE: NBA top / EuroLeague bottom, Which rules would you rather play under?", at=cuts[sh], play="d3s-nba",
       remap=[[0, 2.0], [d, 2.0 + d]], camera=[key(0, HALF_B)],
       split={"play": "d3s-el", "remap": [[0, 2.0], [d, 2.0 + d]], "camera": [key(0, HALF_B)], "ratio": 0.5, "seam": "brand"},
-      screen=[{"type": "leagueLogo", "league": "nba", "src": LOGO["nba"], "y": 40, "w": 120, "h": 180, "from": 0.0, "to": d, "align": "left"},
-              {"type": "leagueLogo", "league": "el", "src": LOGO["el"], "y": 1000, "w": 320, "h": 100, "from": 0.0, "to": d, "align": "left"},
+      screen=[{"type": "leagueLogo", "league": "nba", "plate": PLATE["nba"], "src": LOGO["nba"], "y": 40, "w": 120, "h": 180, "from": 0.0, "to": d, "align": "left"},
+              {"type": "leagueLogo", "league": "el", "plate": PLATE["el"], "src": LOGO["el"], "y": 1000, "w": 320, "h": 100, "from": 0.0, "to": d, "align": "left"},
               {"type": "title", "lines": ["WHICH RULES", "WOULD YOU", "PLAY UNDER?"], "gold": [1, 2], "from": 0.05, "to": d, "y": 560, "size": 96, "noOut": True},
               {"type": "logo", "big": False, "from": 0.2, "to": d}])
 

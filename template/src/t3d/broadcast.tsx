@@ -4,6 +4,8 @@
 //   BroadcastScoreboard  league ID | two team rows (colour bar, name, score) | period + game clock | shot clock
 //   LeagueLogo           official league logo on a white plate (object-fit contain = never distorted). When the file is
 //                        not supplied (src null) it draws a clearly marked PLACEHOLDER, never an invented logo.
+// `plate` = the plate colour; for a logo delivered on a flat background (EuroLeague JPG, #E6E6E6) the plate takes that
+// colour so the file is shown as delivered (no background removal, no recolouring).
 // All pure functions of their age (seek-safe). Times in seconds from the item's start.
 import React from 'react';
 import {Img, staticFile} from 'remotion';
@@ -28,8 +30,8 @@ const parse = (s: string) => {
 
 export const BroadcastScoreboard: React.FC<{
   league: League; age: number; dur: number; y?: number; logo?: string | null; teams: [SbTeam, SbTeam]; period: string;
-  clock: string; shot?: number | null; run?: number | null; highlight?: number | null; dim?: number | null; width?: number;
-}> = ({league, age, dur, y = 600, logo, teams, period, clock, shot = 24, run = null, highlight = null, dim = null, width = 980}) => {
+  clock: string; shot?: number | null; run?: number | null; highlight?: number | null; dim?: number | null; width?: number; plate?: string;
+}> = ({league, age, dur, y = 600, logo, plate = '#FFFFFF', teams, period, clock, shot = 24, run = null, highlight = null, dim = null, width = 980}) => {
   const L = LEAGUE[league];
   const u = ease(age / 0.38);                       // wipe in from the left, no bounce
   const running = run != null && age > run ? age - run : 0;
@@ -51,9 +53,9 @@ export const BroadcastScoreboard: React.FC<{
         transform: `translateY(${((1 - u) * 14).toFixed(1)}px)`, background: 'linear-gradient(180deg, #121A2C 0%, #070B14 100%)',
         border: '1.5px solid rgba(255,255,255,0.14)', boxShadow: '0 14px 34px rgba(0,0,0,0.55)'}}>
         {/* league ID */}
-        <div style={{width: 214, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FFFFFF'}}>
+        <div style={{width: 214, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', background: plate}}>
           {logo ? (
-            <Img src={staticFile(logo)} style={{maxWidth: 176, maxHeight: 136, objectFit: 'contain'}} />
+            <Img src={staticFile(logo)} style={{maxWidth: 190, maxHeight: 136, objectFit: 'contain'}} />
           ) : (
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2}}>
               <span style={{font: `400 ${league === 'el' ? 40 : 64}px ${ANTON}`, color: L.deep, letterSpacing: 2}}>{L.name}</span>
@@ -82,14 +84,14 @@ export const BroadcastScoreboard: React.FC<{
 };
 
 /** official league logo on a white plate; placeholder frame when the file has not been supplied */
-export const LeagueLogo: React.FC<{league: League; src?: string | null; age: number; dur: number; y: number; h?: number; w?: number; delay?: number; align?: 'left' | 'center'}> = ({league, src, age, dur, y, h = 210, w = 470, delay = 0, align = 'center'}) => {
+export const LeagueLogo: React.FC<{league: League; src?: string | null; age: number; dur: number; y: number; h?: number; w?: number; delay?: number; align?: 'left' | 'center'; plate?: string}> = ({league, src, age, dur, y, h = 210, w = 470, delay = 0, align = 'center', plate = '#FFFFFF'}) => {
   const a = age - delay;
   if (a <= 0) return null;
   const u = ease(a / 0.45);
   const L = LEAGUE[league];
   return (
     <div style={{position: 'absolute', left: align === 'left' ? 40 : 0, right: align === 'left' ? undefined : 0, top: y, display: 'flex', justifyContent: 'center', opacity: u * fade(age, dur, 0.01, 0.25)}}>
-      <div data-qc="stamp" style={{width: w, height: h, borderRadius: 22, background: src ? 'rgba(255,255,255,0.96)' : 'rgba(7,11,20,0.78)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+      <div data-qc="stamp" style={{width: w, height: h, borderRadius: 22, background: src ? plate : 'rgba(7,11,20,0.78)', display: 'flex', alignItems: 'center', justifyContent: 'center',
         transform: `scale(${(0.92 + 0.08 * u).toFixed(4)})`, boxShadow: '0 16px 40px rgba(0,0,0,0.45)', border: src ? `3px solid ${L.col}` : `3px dashed ${L.col}`, boxSizing: 'border-box', padding: 18}}>
         {src ? (
           <Img src={staticFile(src)} style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} />
