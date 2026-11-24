@@ -8,6 +8,9 @@ Does NOT regenerate or alter the narrator (same take, same timbre, no pitch/time
   3. curve    per-phrase gain automation following an emotional curve: every line of the script gets a target offset
               (dB, relative to the explanation level). The gain changes only inside the pauses between lines (ramps
               <= 60 ms), never inside a word, so it sounds like delivery, not like a fader.
+     --preserve (expressive takes, e.g. eleven_v3 with emotion tags): never turns a line down, only lifts a line that
+              falls more than --tol dB under its target, so the take's own peaks and dips survive; gentler
+              compression (thr -18 dB, 1.6:1).
   4. level    static gain to -16 LUFS (voice stem) + limiter; no dynamic loudnorm (it would undo the curve)
   5. mix      (optional --music) music ducked under the voice (sidechain), voice-to-music balance, final static gain
               to -14 LUFS integrated, true peak <= -1 dBTP (alimiter at -1.5 dBFS), 48 kHz.
@@ -81,17 +84,28 @@ def main():
     ap.add_argument("--duration", type=float)
     ap.add_argument("--max-gain", type=float, default=6.0)
     ap.add_argument("--report")
+    ap.add_argument("--preserve", action="store_true",
+                    help="expressive take: never turn a line down; only lift lines more than --tol dB under their target")
+    ap.add_argument("--tol", type=float, default=1.5)
     a = ap.parse_args()
 
     words = json.load(open(a.words))
     curve = json.load(open(a.curve))["lines"]
     L = lines_of(words, curve)
-    x = dec(a.voice, TONE)
+    # the compressor threshold assumes a take at about -23 LUFS (ElevenLabs v2 level); a hotter take (v3 shouting comes
+    # in near -15 LUFS) is brought there first, otherwise the whole take sits above threshold and the peaks get squashed
+    pre = -23.0 - lufs(a.voice)["I"]
+    tone = TONE.replace("acompressor=threshold=-24dB:ratio=2.5", "acompressor=threshold=-18dB:ratio=1.6") if a.preserve else TONE
+    x = dec(a.voice, f"volume={pre:.2f}dB," + tone)
     # 3 curve: level of each line after tone + compression, target = reference (median of phase B) + offset
     lev = [rms_db(x[int(l["a"] * SR):int(l["b"] * SR)]) for l in L]
     refs = [v for v, l in zip(lev, L) if l["phase"] == "B"] or lev
     ref = float(np.median(refs))
     gains = [float(np.clip(ref + l["off"] - v, -a.max_gain, a.max_gain)) for v, l in zip(lev, L)]
+    if a.preserve:
+        # keep the performance: a line that already sits above its target keeps its level (0 dB); a line that falls more
+        # than tol under it is lifted to (target - tol)
+        gains = [float(min(a.max_gain, max(0.0, g - a.tol))) for g in gains]
     env = np.zeros(len(x), dtype=np.float64)
     # gain of line k holds from the middle of the pause before it to the middle of the pause after it; the change is
     # a raised-cosine ramp centred in the pause, at most 60 ms and never longer than the pause
@@ -115,7 +129,7 @@ def main():
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", "/dev/shm/_vd_pre.wav", "-af", "aresample=192000,alimiter=limit=0.794:attack=2:release=40:level=false,aresample=48000",
                     "-ar", str(SR), "-c:a", "pcm_s24le", a.out], check=True)
     out_lev = [rms_db(dec(a.out)[int(l["a"] * SR):int(l["b"] * SR)]) for l in L]
-    rep = {"tone": TONE, "reference_db": round(ref, 2), "voice_in": lufs(a.voice), "voice_out": lufs(a.out),
+    rep = {"tone": tone, "reference_db": round(ref, 2), "voice_in": lufs(a.voice), "voice_out": lufs(a.out),
            "lines": [{"text": l["text"], "phase": l["phase"], "target_off": l["off"], "level_in_db": round(v, 2), "gain_db": round(g, 2),
                       "level_out_rel_db": round(o - float(np.median([oo for oo, ll in zip(out_lev, L) if ll["phase"] == "B"])), 2)}
                      for l, v, g, o in zip(L, lev, gains, out_lev)]}
