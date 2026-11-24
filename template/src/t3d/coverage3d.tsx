@@ -118,6 +118,15 @@ export type CoverageOv = {
   recover?: {ids: string[]; t0: number; t1: number};
   /** lag of the trailing smoothing window (s, default 0.12) */
   lag?: number;
+  /** 2026-11-24 (Floor Graphics Stability Standard): ACTIVE set changes INSIDE one overlay, [[overlaySecond, ids], ...],
+   *  cross-faded over `activeFade` s (default 0.3). Replaces chains of abutting coverage overlays, whose fade-out +
+   *  fade-in made every area dip to ~0 and come back at each change (a visible blink). */
+  activeKeys?: [number, string[]][];
+  activeFade?: number;
+  /** 2026-11-24 E2A Floor Graphics Stability Standard: no speed-driven edge brightening/thickening, no reveal pulse,
+   *  dense (21-sample) ball reference so a dribble cannot alias into the ball-side stretch. Default off (old episodes
+   *  render exactly as before). */
+  stable?: boolean;
 };
 export type CovLinkOv = {type: 'covLink'; a: string; b: string; color?: string};
 export type GapRevealOv = {type: 'gapReveal'; at: V2; r?: number; trigger: {id: string; dist?: number; base?: number}; arrowFrom?: string; arrowTo?: V2; color?: string};
@@ -272,12 +281,12 @@ const trail = (play: Play, id: string, pt: number, lag: number): V2 => {
   const ps = ts.map((t) => posAt(tr, cl(play, t)));
   return [(ps[0][0] * 2 + ps[1][0] + ps[2][0] * 0.5) / 3.5, (ps[0][1] * 2 + ps[1][1] + ps[2][1] * 0.5) / 3.5];
 };
-export const coverageState = (play: Play, pt: number, o: Pick<CoverageOv, 'scheme' | 'base' | 'lag' | 'compress'>): DefState[] => {
+export const coverageState = (play: Play, pt: number, o: Pick<CoverageOv, 'scheme' | 'base' | 'lag' | 'compress' | 'stable'>): DefState[] => {
   const sc = COVERAGE_SCHEMES[o.scheme ?? '2-3'];
   const ids = sc.ids.filter((id) => play.tracks[id]);
   // ball reference: trailing 0.4 s average (the areas answer the ball after it moves, never ahead, and a pass in
   // flight does not whip the ball-side stretch around)
-  const bs = [0, 0.1, 0.2, 0.3, 0.4].map((d) => sample(play, cl(play, pt - d)).ball.pos);
+  const bs = (o.stable ? Array.from({length: 21}, (_, k) => k * 0.02) : [0, 0.1, 0.2, 0.3, 0.4]).map((d) => sample(play, cl(play, pt - d)).ball.pos);
   const ball: V2 = [bs.reduce((s, q) => s + q[0], 0) / bs.length, bs.reduce((s, q) => s + q[1], 0) / bs.length];
   const P = Object.fromEntries(ids.map((id) => [id, trail(play, id, pt, o.lag ?? 0.12)])) as Record<string, V2>;
   const cmp = clamp(o.compress ?? 0);
@@ -344,7 +353,19 @@ export const Coverage3D: React.FC<{play: Play; pt: number; o: CoverageOv & {age:
     const ra = o.reveal ? o.age - Math.max(0, order) * o.reveal : 99;
     if (ra <= 0) return;
     const rev = eo(ra / 0.4);
-    const isAct = act.has(d.id);
+    // active weight 0..1 (activeKeys: smooth cross-fade between consecutive sets, no dip)
+    let wa = act.has(d.id) ? 1 : 0;
+    if (o.activeKeys && o.activeKeys.length) {
+      const ks = o.activeKeys, F = o.activeFade ?? 0.3;
+      wa = ks[0][1].includes(d.id) ? 1 : 0;
+      for (let k = 1; k < ks.length; k++) {
+        if (o.age < ks[k][0]) break;
+        const prev = wa, next = ks[k][1].includes(d.id) ? 1 : 0;
+        const u = clamp((o.age - ks[k][0]) / F);
+        wa = prev + (next - prev) * (u * u * (3 - 2 * u));
+      }
+    }
+    const isAct = wa > 0.5;
     let vulK = vul.has(d.id) ? 1 : 0;
     if (o.recover && o.recover.ids.includes(d.id)) {
       // recovery derived from the real defender: coral while far from his reset spot, back to normal as he gets there
@@ -357,11 +378,12 @@ export const Coverage3D: React.FC<{play: Play; pt: number; o: CoverageOv & {age:
     let w = 1, edgeCol = EDGE, fillCol = NAVY, fa = 0.16, ew = 0.05;
     if (mode === 'clean') w = 0.0;
     if (mode === 'active') {
-      if (isAct) { edgeCol = GOLD; fillCol = GOLD_FILL; fa = 0.21; ew = 0.065; }
-      else { edgeCol = COOL; fa = 0.1; w = o.dim ?? 0.55; }
+      // interpolated by the active weight (identical to the old branches at wa = 0 / 1)
+      edgeCol = mix(COOL, GOLD, wa); fillCol = mix(NAVY, GOLD_FILL, wa);
+      fa = 0.1 + 0.11 * wa; ew = 0.05 + 0.015 * wa; w = (o.dim ?? 0.55) + (1 - (o.dim ?? 0.55)) * wa;
     }
     if (vulK > 0) { edgeCol = mix(edgeCol, CORAL, vulK); fillCol = mix(fillCol, CORAL, vulK * 0.9); fa = Math.max(fa, 0.12 + 0.08 * vulK); }
-    const activity = clamp((d.speed - 0.9) / 2.6);
+    const activity = o.stable ? 0 : clamp((d.speed - 0.9) / 2.6);
     const op = a * rev * w;
     if (op <= 0.002) return;
     // reveal: grows from 85 % about the defender
@@ -371,7 +393,7 @@ export const Coverage3D: React.FC<{play: Play; pt: number; o: CoverageOv & {age:
     els.push(<mesh key={`f${d.id}`} geometry={fill(poly, z, fillCol, fa * 0.55, fa)} material={vmat(op)} />);
     // edge: glow + line (+ brighter while the defender is moving: activity indicator)
     const lw = ew * (1 + 0.35 * activity);
-    els.push(<mesh key={`g${d.id}`} geometry={band(poly, lw * 3.6, z + 0.001, true)} material={mat(edgeCol, (0.12 + 0.1 * activity + (isAct ? 0.08 : 0)) * op)} />);
+    els.push(<mesh key={`g${d.id}`} geometry={band(poly, lw * 3.6, z + 0.001, true)} material={mat(edgeCol, (0.12 + 0.1 * activity + 0.08 * (mode === "active" ? wa : act.has(d.id) ? 1 : 0)) * op)} />);
     els.push(<mesh key={`n${d.id}`} geometry={band(poly, lw * 1.9, z + 0.0015, true)} material={mat(NAVY, 0.32 * op)} />);
     els.push(<mesh key={`l${d.id}`} geometry={band(poly, lw, z + 0.002, true)} material={mat(edgeCol, (0.82 + 0.18 * activity) * op)} />);
     // reveal light sweep + one pulse when the area becomes active
@@ -379,19 +401,21 @@ export const Coverage3D: React.FC<{play: Play; pt: number; o: CoverageOv & {age:
       const u = clamp(ra / 0.6);
       els.push(<mesh key={`s${d.id}`} geometry={band(poly, lw * 2.4, z + 0.0025, true, Math.max(0, u - 0.16), u)} material={mat('#FFF6DE', 0.9 * a * (1 - clamp((ra - 0.6) / 0.15)), undefined, true)} />);
     }
-    if (o.reveal && ra > 0.4 && ra < 0.9) {
+    if (o.reveal && !o.stable && ra > 0.4 && ra < 0.9) {
       const u = (ra - 0.4) / 0.5;
       els.push(<mesh key={`p${d.id}`} geometry={band(poly, lw * 5 * (1 + u), z + 0.0005, true)} material={mat(edgeCol, 0.25 * Math.sin(Math.PI * u) * a)} />);
     }
-    const showLab = o.labels === 'all' || (o.labels === 'active' && isAct) || (Array.isArray(o.labels) && o.labels.includes(d.id));
+    // labels 'active' + activeKeys: the label fades with the active weight instead of popping at wa = 0.5
+    const labK = o.labels === 'active' && o.activeKeys ? wa : 1;
+    const showLab = o.labels === 'all' || (o.labels === 'active' && (o.activeKeys ? wa > 0.02 : isAct)) || (Array.isArray(o.labels) && o.labels.includes(d.id));
     if (showLab) {
       const ro = sc.roles[d.id];
       const {right, up} = yawAxes(o.labelYaw ?? 90);
       const t = textTex(ro.label, isAct ? '#FFE2A0' : '#F4EBDD', false);
       const h = o.labelSize ?? 0.38;
       const c: V2 = [clamp(d.pos[0] + ro.labelOff[0], COURT.x0 + 1.2, COURT.x1 - 1.2), clamp(d.pos[1] + ro.labelOff[1], COURT.y0 + 0.4, courtY1(play) - 0.4)];
-      els.push(<mesh key={`tb${d.id}`} geometry={floorQuad(c, right, up, h * t.aspect * 1.04 + 0.16, h * 1.25, z + 0.003)} material={mat(NAVY, 0.55 * op * rev)} />);
-      els.push(<mesh key={`t${d.id}`} geometry={floorQuad(c, right, up, h * t.aspect, h, z + 0.0035)} material={mat('#FFFFFF', 0.95 * op * rev, t.tex)} />);
+      els.push(<mesh key={`tb${d.id}`} geometry={floorQuad(c, right, up, h * t.aspect * 1.04 + 0.16, h * 1.25, z + 0.003)} material={mat(NAVY, 0.55 * op * rev * labK)} />);
+      els.push(<mesh key={`t${d.id}`} geometry={floorQuad(c, right, up, h * t.aspect, h, z + 0.0035)} material={mat('#FFFFFF', 0.95 * op * rev * labK, t.tex)} />);
     }
   });
   return <group>{els}</group>;

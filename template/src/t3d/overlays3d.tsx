@@ -27,7 +27,8 @@ export const WHITE3 = '#FFFFFF';
 const clamp = (x: number, a = 0, b = 1) => Math.max(a, Math.min(b, x));
 const easeOut = (x: number) => 1 - Math.pow(1 - clamp(x), 3);
 /** fade in over `fin`, out over `fout` (age and dur in seconds) */
-export const fade = (age: number, dur: number, fin = 0.25, fout = 0.25) => Math.min(easeOut(age / fin), easeOut((dur - age) / fout));
+// fin / fout = 0: fully on from the first / to the last frame (continuity across a cut on the same frame; was NaN)
+export const fade = (age: number, dur: number, fin = 0.25, fout = 0.25) => Math.min(fin > 0 ? easeOut(age / fin) : 1, fout > 0 ? easeOut((dur - age) / fout) : 1);
 
 const basic = (color: string, opacity: number) => new THREE.MeshBasicMaterial({color, transparent: true, opacity, depthWrite: false, toneMapped: false, side: THREE.DoubleSide});
 

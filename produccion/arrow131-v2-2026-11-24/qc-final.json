@@ -1,0 +1,1025 @@
+{
+ "V1": {
+  "file": "/mnt/project-files/tactical-studio/presion-1-3-1-flecha/E2A-ARROW-PRESS-131-MASTER.mp4",
+  "frames": 1268,
+  "bad_frames": 0,
+  "bad_list": [],
+  "frozen": [
+   {
+    "span": [
+     5.0,
+     9.7
+    ],
+    "n": 140,
+    "diff_mean": 0.942,
+    "diff_p99": 3.51,
+    "diff_max": 3.561,
+    "blinks": 19,
+    "blink_frames": [
+     157,
+     170,
+     182,
+     189,
+     195,
+     200,
+     208,
+     209,
+     210,
+     215,
+     230,
+     239,
+     262,
+     265,
+     268,
+     277,
+     278,
+     282,
+     289
+    ],
+    "dips": [
+     {
+      "series": "luma",
+      "frame": 155,
+      "t": 5.17,
+      "depth": 0.5,
+      "frames": 2
+     },
+     {
+      "series": "luma",
+      "frame": 164,
+      "t": 5.47,
+      "depth": 1.86,
+      "frames": 5
+     },
+     {
+      "series": "luma",
+      "frame": 173,
+      "t": 5.77,
+      "depth": 0.48,
+      "frames": 2
+     },
+     {
+      "series": "luma",
+      "frame": 209,
+      "t": 6.97,
+      "depth": 0.4,
+      "frames": 1
+     },
+     {
+      "series": "luma",
+      "frame": 277,
+      "t": 9.23,
+      "depth": 0.52,
+      "frames": 1
+     },
+     {
+      "series": "luma",
+      "frame": 279,
+      "t": 9.3,
+      "depth": 0.56,
+      "frames": 11
+     },
+     {
+      "series": "gold",
+      "frame": 166,
+      "t": 5.53,
+      "depth": 550.67,
+      "frames": 10
+     },
+     {
+      "series": "gold",
+      "frame": 201,
+      "t": 6.7,
+      "depth": 435.0,
+      "frames": 4
+     }
+    ]
+   },
+   {
+    "span": [
+     17.25,
+     22.05
+    ],
+    "n": 143,
+    "diff_mean": 2.028,
+    "diff_p99": 5.917,
+    "diff_max": 6.156,
+    "blinks": 31,
+    "blink_frames": [
+     523,
+     527,
+     534,
+     537,
+     558,
+     562,
+     569,
+     575,
+     587,
+     588,
+     589,
+     596,
+     602,
+     603,
+     604,
+     609,
+     614,
+     617,
+     622,
+     624
+    ],
+    "dips": [
+     {
+      "series": "luma",
+      "frame": 522,
+      "t": 17.4,
+      "depth": 0.67,
+      "frames": 1
+     },
+     {
+      "series": "luma",
+      "frame": 528,
+      "t": 17.6,
+      "depth": 0.61,
+      "frames": 2
+     },
+     {
+      "series": "luma",
+      "frame": 532,
+      "t": 17.73,
+      "depth": 0.46,
+      "frames": 2
+     },
+     {
+      "series": "luma",
+      "frame": 535,
+      "t": 17.83,
+      "depth": 0.38,
+      "frames": 2
+     },
+     {
+      "series": "luma",
+      "frame": 539,
+      "t": 17.97,
+      "depth": 0.46,
+      "frames": 5
+     },
+     {
+      "series": "luma",
+      "frame": 554,
+      "t": 18.47,
+      "depth": 1.05,
+      "frames": 4
+     },
+     {
+      "series": "luma",
+      "frame": 560,
+      "t": 18.67,
+      "depth": 0.57,
+      "frames": 2
+     },
+     {
+      "series": "luma",
+      "frame": 563,
+      "t": 18.77,
+      "depth": 0.4,
+      "frames": 6
+     },
+     {
+      "series": "luma",
+      "frame": 570,
+      "t": 19.0,
+      "depth": 0.4,
+      "frames": 5
+     },
+     {
+      "series": "luma",
+      "frame": 576,
+      "t": 19.2,
+      "depth": 0.4,
+      "frames": 8
+     },
+     {
+      "series": "luma",
+      "frame": 588,
+      "t": 19.6,
+      "depth": 0.6,
+      "frames": 1
+     },
+     {
+      "series": "luma",
+      "frame": 599,
+      "t": 19.97,
+      "depth": 0.94,
+      "frames": 3
+     },
+     {
+      "series": "luma",
+      "frame": 607,
+      "t": 20.23,
+      "depth": 0.83,
+      "frames": 2
+     },
+     {
+      "series": "luma",
+      "frame": 610,
+      "t": 20.33,
+      "depth": 0.4,
+      "frames": 4
+     },
+     {
+      "series": "luma",
+      "frame": 615,
+      "t": 20.5,
+      "depth": 0.39,
+      "frames": 2
+     },
+     {
+      "series": "luma",
+      "frame": 619,
+      "t": 20.63,
+      "depth": 0.47,
+      "frames": 3
+     },
+     {
+      "series": "luma",
+      "frame": 623,
+      "t": 20.77,
+      "depth": 0.38,
+      "frames": 1
+     },
+     {
+      "series": "luma",
+      "frame": 625,
+      "t": 20.83,
+      "depth": 0.53,
+      "frames": 1
+     },
+     {
+      "series": "luma",
+      "frame": 627,
+      "t": 20.9,
+      "depth": 0.49,
+      "frames": 1
+     },
+     {
+      "series": "luma",
+      "frame": 630,
+      "t": 21.0,
+      "depth": 0.47,
+      "frames": 1
+     },
+     {
+      "series": "luma",
+      "frame": 632,
+      "t": 21.07,
+      "depth": 0.48,
+      "frames": 2
+     },
+     {
+      "series": "luma",
+      "frame": 635,
+      "t": 21.17,
+      "depth": 0.37,
+      "frames": 1
+     },
+     {
+      "series": "luma",
+      "frame": 637,
+      "t": 21.23,
+      "depth": 0.49,
+      "frames": 3
+     },
+     {
+      "series": "luma",
+      "frame": 641,
+      "t": 21.37,
+      "depth": 0.38,
+      "frames": 1
+     },
+     {
+      "series": "luma",
+      "frame": 643,
+      "t": 21.43,
+      "depth": 0.53,
+      "frames": 1
+     },
+     {
+      "series": "luma",
+      "frame": 645,
+      "t": 21.5,
+      "depth": 0.52,
+      "frames": 5
+     },
+     {
+      "series": "luma",
+      "frame": 651,
+      "t": 21.7,
+      "depth": 0.38,
+      "frames": 3
+     },
+     {
+      "series": "luma",
+      "frame": 655,
+      "t": 21.83,
+      "depth": 0.37,
+      "frames": 2
+     },
+     {
+      "series": "gold",
+      "frame": 527,
+      "t": 17.57,
+      "depth": 1854.0,
+      "frames": 1
+     },
+     {
+      "series": "gold",
+      "frame": 534,
+      "t": 17.8,
+      "depth": 1775.67,
+      "frames": 1
+     },
+     {
+      "series": "gold",
+      "frame": 546,
+      "t": 18.2,
+      "depth": 6922.0,
+      "frames": 9
+     },
+     {
+      "series": "gold",
+      "frame": 562,
+      "t": 18.73,
+      "depth": 1845.0,
+      "frames": 1
+     },
+     {
+      "series": "gold",
+      "frame": 569,
+      "t": 18.97,
+      "depth": 1892.33,
+      "frames": 1
+     },
+     {
+      "series": "gold",
+      "frame": 575,
+      "t": 19.17,
+      "depth": 1664.0,
+      "frames": 1
+     },
+     {
+      "series": "gold",
+      "frame": 587,
+      "t": 19.57,
+      "depth": 1916.33,
+      "frames": 1
+     },
+     {
+      "series": "gold",
+      "frame": 596,
+      "t": 19.87,
+      "depth": 1767.0,
+      "frames": 1
+     },
+     {
+      "series": "gold",
+      "frame": 602,
+      "t": 20.07,
+      "depth": 1773.67,
+      "frames": 1
+     },
+     {
+      "series": "gold",
+      "frame": 609,
+      "t": 20.3,
+      "depth": 1965.0,
+      "frames": 1
+     },
+     {
+      "series": "gold",
+      "frame": 614,
+      "t": 20.47,
+      "depth": 1942.0,
+      "frames": 1
+     },
+     {
+      "series": "gold",
+      "frame": 622,
+      "t": 20.73,
+      "depth": 1905.33,
+      "frames": 1
+     },
+     {
+      "series": "gold",
+      "frame": 634,
+      "t": 21.13,
+      "depth": 1912.67,
+      "frames": 1
+     },
+     {
+      "series": "gold",
+      "frame": 640,
+      "t": 21.33,
+      "depth": 1763.33,
+      "frames": 1
+     },
+     {
+      "series": "gold",
+      "frame": 650,
+      "t": 21.67,
+      "depth": 1834.33,
+      "frames": 1
+     },
+     {
+      "series": "gold",
+      "frame": 654,
+      "t": 21.8,
+      "depth": 1874.33,
+      "frames": 1
+     },
+     {
+      "series": "gold",
+      "frame": 658,
+      "t": 21.93,
+      "depth": 1965.33,
+      "frames": 1
+     }
+    ]
+   },
+   {
+    "span": [
+     37.75,
+     40.5
+    ],
+    "n": 82,
+    "diff_mean": 0.868,
+    "diff_p99": 3.642,
+    "diff_max": 3.713,
+    "blinks": 7,
+    "blink_frames": [
+     1137,
+     1149,
+     1160,
+     1163,
+     1186,
+     1206,
+     1210
+    ],
+    "dips": [
+     {
+      "series": "luma",
+      "frame": 1136,
+      "t": 37.87,
+      "depth": 0.37,
+      "frames": 1
+     },
+     {
+      "series": "luma",
+      "frame": 1138,
+      "t": 37.93,
+      "depth": 1.0,
+      "frames": 5
+     },
+     {
+      "series": "luma",
+      "frame": 1148,
+      "t": 38.27,
+      "depth": 0.38,
+      "frames": 1
+     },
+     {
+      "series": "luma",
+      "frame": 1150,
+      "t": 38.33,
+      "depth": 0.51,
+      "frames": 5
+     },
+     {
+      "series": "luma",
+      "frame": 1183,
+      "t": 39.43,
+      "depth": 2.4,
+      "frames": 10
+     },
+     {
+      "series": "luma",
+      "frame": 1196,
+      "t": 39.87,
+      "depth": 0.5,
+      "frames": 4
+     },
+     {
+      "series": "luma",
+      "frame": 1202,
+      "t": 40.07,
+      "depth": 0.53,
+      "frames": 4
+     },
+     {
+      "series": "gold",
+      "frame": 1137,
+      "t": 37.9,
+      "depth": 224.33,
+      "frames": 1
+     },
+     {
+      "series": "gold",
+      "frame": 1142,
+      "t": 38.07,
+      "depth": 204.0,
+      "frames": 1
+     },
+     {
+      "series": "gold",
+      "frame": 1163,
+      "t": 38.77,
+      "depth": 186.67,
+      "frames": 1
+     },
+     {
+      "series": "gold",
+      "frame": 1183,
+      "t": 39.43,
+      "depth": 943.33,
+      "frames": 9
+     },
+     {
+      "series": "gold",
+      "frame": 1206,
+      "t": 40.2,
+      "depth": 259.0,
+      "frames": 1
+     },
+     {
+      "series": "gold",
+      "frame": 1210,
+      "t": 40.33,
+      "depth": 269.0,
+      "frames": 1
+     }
+    ]
+   }
+  ],
+  "shots": [
+   {
+    "shot": "hook",
+    "gold_mean": 35735.3,
+    "gold_jitter_mean": 0.0051,
+    "gold_jitter_p99": 0.022,
+    "gold_jitter_max": 0.0319
+   },
+   {
+    "shot": "this+shape",
+    "gold_mean": 2495.4,
+    "gold_jitter_mean": 0.0203,
+    "gold_jitter_p99": 0.2217,
+    "gold_jitter_max": 0.4243
+   },
+   {
+    "shot": "turns",
+    "gold_mean": 4899.0,
+    "gold_jitter_mean": 0.0173,
+    "gold_jitter_p99": 0.0977,
+    "gold_jitter_max": 0.1267
+   },
+   {
+    "shot": "trap+lines",
+    "gold_mean": 32274.9,
+    "gold_jitter_mean": 0.0348,
+    "gold_jitter_p99": 0.2182,
+    "gold_jitter_max": 0.5204
+   },
+   {
+    "shot": "reads",
+    "gold_mean": 3092.3,
+    "gold_jitter_mean": 0.0739,
+    "gold_jitter_p99": 0.2751,
+    "gold_jitter_max": 0.296
+   },
+   {
+    "shot": "escape",
+    "gold_mean": 2533.0,
+    "gold_jitter_mean": 0.061,
+    "gold_jitter_p99": 0.3318,
+    "gold_jitter_max": 0.3523
+   },
+   {
+    "shot": "zone+close",
+    "gold_mean": 2305.1,
+    "gold_jitter_mean": 0.0639,
+    "gold_jitter_p99": 0.3101,
+    "gold_jitter_max": 0.5112
+   }
+  ],
+  "cuts": [
+   {
+    "t": 3.175,
+    "frame": 95,
+    "diff": 0.867
+   },
+   {
+    "t": 5.644,
+    "frame": 169,
+    "diff": 0.976
+   },
+   {
+    "t": 9.736,
+    "frame": 292,
+    "diff": 0.351
+   },
+   {
+    "t": 13.621,
+    "frame": 409,
+    "diff": 37.043
+   },
+   {
+    "t": 18.304,
+    "frame": 549,
+    "diff": 2.74
+   },
+   {
+    "t": 22.08,
+    "frame": 662,
+    "diff": 6.826
+   },
+   {
+    "t": 29.069,
+    "frame": 872,
+    "diff": 3.281
+   },
+   {
+    "t": 32.715,
+    "frame": 981,
+    "diff": 1.402
+   },
+   {
+    "t": 37.817,
+    "frame": 1135,
+    "diff": 1.052
+   }
+  ]
+ },
+ "V2": {
+  "file": "/tmp/claude-0/-home-user/728ff9d3-ef88-5075-85c0-837c7e38c123/scratchpad/v2/E2A-ARROW-PRESS-131-V2.mp4",
+  "frames": 1267,
+  "bad_frames": 0,
+  "bad_list": [],
+  "frozen": [
+   {
+    "span": [
+     5.0,
+     9.7
+    ],
+    "n": 140,
+    "diff_mean": 0.098,
+    "diff_p99": 0.733,
+    "diff_max": 1.145,
+    "blinks": 0,
+    "blink_frames": [],
+    "dips": [
+     {
+      "series": "luma",
+      "frame": 169,
+      "t": 5.63,
+      "depth": 2.39,
+      "frames": 11
+     },
+     {
+      "series": "gold",
+      "frame": 169,
+      "t": 5.63,
+      "depth": 550.67,
+      "frames": 6
+     },
+     {
+      "series": "gold",
+      "frame": 205,
+      "t": 6.83,
+      "depth": 433.33,
+      "frames": 6
+     }
+    ]
+   },
+   {
+    "span": [
+     17.25,
+     22.05
+    ],
+    "n": 143,
+    "diff_mean": 0.11,
+    "diff_p99": 1.304,
+    "diff_max": 1.456,
+    "blinks": 0,
+    "blink_frames": [],
+    "dips": []
+   },
+   {
+    "span": [
+     37.75,
+     40.5
+    ],
+    "n": 82,
+    "diff_mean": 0.193,
+    "diff_p99": 1.411,
+    "diff_max": 1.482,
+    "blinks": 0,
+    "blink_frames": [],
+    "dips": [
+     {
+      "series": "luma",
+      "frame": 1183,
+      "t": 39.43,
+      "depth": 2.16,
+      "frames": 10
+     },
+     {
+      "series": "gold",
+      "frame": 1183,
+      "t": 39.43,
+      "depth": 788.33,
+      "frames": 10
+     }
+    ]
+   }
+  ],
+  "shots": [
+   {
+    "shot": "hook",
+    "gold_mean": 35271.0,
+    "gold_jitter_mean": 0.0015,
+    "gold_jitter_p99": 0.0081,
+    "gold_jitter_max": 0.0166
+   },
+   {
+    "shot": "this+shape",
+    "gold_mean": 2627.4,
+    "gold_jitter_mean": 0.0141,
+    "gold_jitter_p99": 0.195,
+    "gold_jitter_max": 0.4008
+   },
+   {
+    "shot": "turns",
+    "gold_mean": 4384.4,
+    "gold_jitter_mean": 0.018,
+    "gold_jitter_p99": 0.1005,
+    "gold_jitter_max": 0.1626
+   },
+   {
+    "shot": "trap+lines",
+    "gold_mean": 32631.2,
+    "gold_jitter_mean": 0.0052,
+    "gold_jitter_p99": 0.0107,
+    "gold_jitter_max": 0.5039
+   },
+   {
+    "shot": "reads",
+    "gold_mean": 3122.4,
+    "gold_jitter_mean": 0.0086,
+    "gold_jitter_p99": 0.1075,
+    "gold_jitter_max": 0.1756
+   },
+   {
+    "shot": "escape",
+    "gold_mean": 2570.5,
+    "gold_jitter_mean": 0.0289,
+    "gold_jitter_p99": 0.0667,
+    "gold_jitter_max": 0.0843
+   },
+   {
+    "shot": "zone+close",
+    "gold_mean": 2357.4,
+    "gold_jitter_mean": 0.0159,
+    "gold_jitter_p99": 0.1152,
+    "gold_jitter_max": 0.2398
+   }
+  ],
+  "cuts": [
+   {
+    "t": 3.175,
+    "frame": 95,
+    "diff": 0.825
+   },
+   {
+    "t": 5.644,
+    "frame": 169,
+    "diff": 1.145
+   },
+   {
+    "t": 9.736,
+    "frame": 292,
+    "diff": 0.308
+   },
+   {
+    "t": 13.621,
+    "frame": 409,
+    "diff": 37.054
+   },
+   {
+    "t": 18.304,
+    "frame": 549,
+    "diff": 0.345
+   },
+   {
+    "t": 22.08,
+    "frame": 662,
+    "diff": 1.897
+   },
+   {
+    "t": 29.069,
+    "frame": 872,
+    "diff": 0.691
+   },
+   {
+    "t": 32.715,
+    "frame": 981,
+    "diff": 0.871
+   },
+   {
+    "t": 37.817,
+    "frame": 1135,
+    "diff": 0.047
+   }
+  ]
+ },
+ "V2TRIAL": {
+  "file": "/tmp/claude-0/-home-user/728ff9d3-ef88-5075-85c0-837c7e38c123/scratchpad/v2/E2A-ARROW-PRESS-131-V2-TRIAL.mp4",
+  "frames": 1267,
+  "bad_frames": 0,
+  "bad_list": [],
+  "frozen": [
+   {
+    "span": [
+     5.0,
+     9.7
+    ],
+    "n": 140,
+    "diff_mean": 0.098,
+    "diff_p99": 0.683,
+    "diff_max": 0.934,
+    "blinks": 0,
+    "blink_frames": [],
+    "dips": [
+     {
+      "series": "luma",
+      "frame": 167,
+      "t": 5.57,
+      "depth": 2.63,
+      "frames": 13
+     },
+     {
+      "series": "gold",
+      "frame": 168,
+      "t": 5.6,
+      "depth": 867.67,
+      "frames": 7
+     },
+     {
+      "series": "gold",
+      "frame": 205,
+      "t": 6.83,
+      "depth": 588.67,
+      "frames": 6
+     }
+    ]
+   },
+   {
+    "span": [
+     17.25,
+     22.05
+    ],
+    "n": 143,
+    "diff_mean": 0.129,
+    "diff_p99": 1.331,
+    "diff_max": 1.815,
+    "blinks": 0,
+    "blink_frames": [],
+    "dips": []
+   },
+   {
+    "span": [
+     37.75,
+     40.5
+    ],
+    "n": 82,
+    "diff_mean": 0.181,
+    "diff_p99": 1.535,
+    "diff_max": 1.559,
+    "blinks": 0,
+    "blink_frames": [],
+    "dips": [
+     {
+      "series": "luma",
+      "frame": 1183,
+      "t": 39.43,
+      "depth": 1.73,
+      "frames": 9
+     },
+     {
+      "series": "gold",
+      "frame": 1183,
+      "t": 39.43,
+      "depth": 601.67,
+      "frames": 9
+     }
+    ]
+   }
+  ],
+  "shots": [
+   {
+    "shot": "hook",
+    "gold_mean": 39124.9,
+    "gold_jitter_mean": 0.0016,
+    "gold_jitter_p99": 0.0065,
+    "gold_jitter_max": 0.0163
+   },
+   {
+    "shot": "this+shape",
+    "gold_mean": 4063.8,
+    "gold_jitter_mean": 0.0093,
+    "gold_jitter_p99": 0.116,
+    "gold_jitter_max": 0.1541
+   },
+   {
+    "shot": "turns",
+    "gold_mean": 5722.2,
+    "gold_jitter_mean": 0.0182,
+    "gold_jitter_p99": 0.0944,
+    "gold_jitter_max": 0.1113
+   },
+   {
+    "shot": "trap+lines",
+    "gold_mean": 38956.0,
+    "gold_jitter_mean": 0.0032,
+    "gold_jitter_p99": 0.009,
+    "gold_jitter_max": 0.1933
+   },
+   {
+    "shot": "reads",
+    "gold_mean": 4671.9,
+    "gold_jitter_mean": 0.0065,
+    "gold_jitter_p99": 0.0757,
+    "gold_jitter_max": 0.1219
+   },
+   {
+    "shot": "escape",
+    "gold_mean": 3828.5,
+    "gold_jitter_mean": 0.0313,
+    "gold_jitter_p99": 0.0863,
+    "gold_jitter_max": 0.0864
+   },
+   {
+    "shot": "zone+close",
+    "gold_mean": 3437.3,
+    "gold_jitter_mean": 0.0227,
+    "gold_jitter_p99": 0.0926,
+    "gold_jitter_max": 0.1637
+   }
+  ],
+  "cuts": [
+   {
+    "t": 3.175,
+    "frame": 95,
+    "diff": 0.879
+   },
+   {
+    "t": 5.644,
+    "frame": 169,
+    "diff": 0.934
+   },
+   {
+    "t": 9.736,
+    "frame": 292,
+    "diff": 0.309
+   },
+   {
+    "t": 13.621,
+    "frame": 409,
+    "diff": 37.094
+   },
+   {
+    "t": 18.304,
+    "frame": 549,
+    "diff": 0.414
+   },
+   {
+    "t": 22.08,
+    "frame": 662,
+    "diff": 2.094
+   },
+   {
+    "t": 29.069,
+    "frame": 872,
+    "diff": 0.756
+   },
+   {
+    "t": 32.715,
+    "frame": 981,
+    "diff": 1.021
+   },
+   {
+    "t": 37.817,
+    "frame": 1135,
+    "diff": 0.074
+   }
+  ]
+ }
+}

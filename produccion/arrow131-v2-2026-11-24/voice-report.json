@@ -1,0 +1,197 @@
+{
+ "tone": "highpass=f=85,equalizer=f=300:t=q:w=1.0:g=-2,equalizer=f=2800:t=q:w=1.4:g=3,equalizer=f=7000:t=q:w=1.5:g=-1.5,deesser=i=0.45,acompressor=threshold=-24dB:ratio=2.5:attack=8:release=140:makeup=2",
+ "reference_db": -22.87,
+ "voice_in": {
+  "I": -23.3,
+  "LRA": 4.8,
+  "TP": -4.4
+ },
+ "voice_out": {
+  "I": -16.0,
+  "LRA": 2.4,
+  "TP": -2.0
+ },
+ "lines": [
+  {
+   "text": "Half court isn't a line.",
+   "phase": "A",
+   "target_off": 1.5,
+   "level_in_db": -22.68,
+   "gain_db": 1.3,
+   "level_out_rel_db": 1.38
+  },
+  {
+   "text": "It's a trap.",
+   "phase": "A",
+   "target_off": 2.5,
+   "level_in_db": -25.06,
+   "gain_db": 4.69,
+   "level_out_rel_db": 2.3
+  },
+  {
+   "text": "This is the one-three-one arrow press.",
+   "phase": "B",
+   "target_off": 0.5,
+   "level_in_db": -21.67,
+   "gain_db": -0.7,
+   "level_out_rel_db": 0.5
+  },
+  {
+   "text": "One at the point.",
+   "phase": "B",
+   "target_off": 0,
+   "level_in_db": -23.3,
+   "gain_db": 0.43,
+   "level_out_rel_db": 0.01
+  },
+  {
+   "text": "Three across half court.",
+   "phase": "B",
+   "target_off": 0,
+   "level_in_db": -22.87,
+   "gain_db": 0.0,
+   "level_out_rel_db": -0.0
+  },
+  {
+   "text": "One safety deep.",
+   "phase": "B",
+   "target_off": 0,
+   "level_in_db": -23.23,
+   "gain_db": 0.35,
+   "level_out_rel_db": -0.0
+  },
+  {
+   "text": "The point turns the ball to the sideline.",
+   "phase": "B",
+   "target_off": 0,
+   "level_in_db": -22.7,
+   "gain_db": -0.18,
+   "level_out_rel_db": 0.0
+  },
+  {
+   "text": "Never let it go middle.",
+   "phase": "C",
+   "target_off": 1.0,
+   "level_in_db": -20.56,
+   "gain_db": -1.31,
+   "level_out_rel_db": 1.01
+  },
+  {
+   "text": "The ball crosses half court...",
+   "phase": "C",
+   "target_off": 1.0,
+   "level_in_db": -21.42,
+   "gain_db": -0.46,
+   "level_out_rel_db": 1.0
+  },
+  {
+   "text": "and the wing jumps.",
+   "phase": "C",
+   "target_off": 2.0,
+   "level_in_db": -21.87,
+   "gain_db": 0.99,
+   "level_out_rel_db": 2.0
+  },
+  {
+   "text": "Trap!",
+   "phase": "C",
+   "target_off": 3.0,
+   "level_in_db": -23.29,
+   "gain_db": 3.41,
+   "level_out_rel_db": 2.6
+  },
+  {
+   "text": "The sideline and the half-court line are two extra defenders.",
+   "phase": "C",
+   "target_off": 0.5,
+   "level_in_db": -23.1,
+   "gain_db": 0.73,
+   "level_out_rel_db": 0.5
+  },
+  {
+   "text": "The middle takes away the middle.",
+   "phase": "D",
+   "target_off": 0,
+   "level_in_db": -23.08,
+   "gain_db": 0.21,
+   "level_out_rel_db": -0.0
+  },
+  {
+   "text": "The far wing reads the cross-court pass.",
+   "phase": "D",
+   "target_off": 0,
+   "level_in_db": -22.38,
+   "gain_db": -0.49,
+   "level_out_rel_db": 0.0
+  },
+  {
+   "text": "The safety guards the long pass.",
+   "phase": "D",
+   "target_off": 0,
+   "level_in_db": -22.13,
+   "gain_db": -0.75,
+   "level_out_rel_db": 0.0
+  },
+  {
+   "text": "Now the ball escapes.",
+   "phase": "C",
+   "target_off": 1.5,
+   "level_in_db": -20.96,
+   "gain_db": -0.42,
+   "level_out_rel_db": 1.5
+  },
+  {
+   "text": "Don't chase it.",
+   "phase": "C",
+   "target_off": 1.0,
+   "level_in_db": -24.17,
+   "gain_db": 2.3,
+   "level_out_rel_db": 0.67
+  },
+  {
+   "text": "Sprint back.",
+   "phase": "C",
+   "target_off": 2.5,
+   "level_in_db": -25.75,
+   "gain_db": 5.37,
+   "level_out_rel_db": 1.56
+  },
+  {
+   "text": "Same five players, same spots...",
+   "phase": "E",
+   "target_off": -0.5,
+   "level_in_db": -22.88,
+   "gain_db": -0.5,
+   "level_out_rel_db": -0.5
+  },
+  {
+   "text": "and the arrow becomes a one-three-one zone.",
+   "phase": "E",
+   "target_off": 1.0,
+   "level_in_db": -22.38,
+   "gain_db": 0.51,
+   "level_out_rel_db": 0.96
+  },
+  {
+   "text": "Would you trap at half court...",
+   "phase": "E",
+   "target_off": 0.5,
+   "level_in_db": -22.36,
+   "gain_db": -0.01,
+   "level_out_rel_db": 0.5
+  },
+  {
+   "text": "or wait in the zone?",
+   "phase": "E",
+   "target_off": 0,
+   "level_in_db": -22.83,
+   "gain_db": -0.04,
+   "level_out_rel_db": -0.0
+  }
+ ],
+ "mix": {
+  "I": -14.2,
+  "LRA": 2.1,
+  "TP": -1.5
+ }
+}

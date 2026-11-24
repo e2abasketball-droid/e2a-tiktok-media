@@ -1,0 +1,115 @@
+{
+ "about": "E2A Voice Dynamics curve, Arrow Press 1-3-1 V2: dB offset per line vs the explanation (B) level. A hook, B explanation, C activation, D defensive reads, E conclusion.",
+ "lines": [
+  [
+   "Half court isn't a line.",
+   1.5,
+   "A"
+  ],
+  [
+   "It's a trap.",
+   2.5,
+   "A"
+  ],
+  [
+   "This is the one-three-one arrow press.",
+   0.5,
+   "B"
+  ],
+  [
+   "One at the point.",
+   0,
+   "B"
+  ],
+  [
+   "Three across half court.",
+   0,
+   "B"
+  ],
+  [
+   "One safety deep.",
+   0,
+   "B"
+  ],
+  [
+   "The point turns the ball to the sideline.",
+   0,
+   "B"
+  ],
+  [
+   "Never let it go middle.",
+   1.0,
+   "C"
+  ],
+  [
+   "The ball crosses half court...",
+   1.0,
+   "C"
+  ],
+  [
+   "and the wing jumps.",
+   2.0,
+   "C"
+  ],
+  [
+   "Trap!",
+   3.0,
+   "C"
+  ],
+  [
+   "The sideline and the half-court line are two extra defenders.",
+   0.5,
+   "C"
+  ],
+  [
+   "The middle takes away the middle.",
+   0,
+   "D"
+  ],
+  [
+   "The far wing reads the cross-court pass.",
+   0,
+   "D"
+  ],
+  [
+   "The safety guards the long pass.",
+   0,
+   "D"
+  ],
+  [
+   "Now the ball escapes.",
+   1.5,
+   "C"
+  ],
+  [
+   "Don't chase it.",
+   1.0,
+   "C"
+  ],
+  [
+   "Sprint back.",
+   2.5,
+   "C"
+  ],
+  [
+   "Same five players, same spots...",
+   -0.5,
+   "E"
+  ],
+  [
+   "and the arrow becomes a one-three-one zone.",
+   1.0,
+   "E"
+  ],
+  [
+   "Would you trap at half court...",
+   0.5,
+   "E"
+  ],
+  [
+   "or wait in the zone?",
+   0,
+   "E"
+  ]
+ ]
+}
