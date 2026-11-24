@@ -8,5 +8,10 @@
   "track": "trap_b",
   "story": "highlight",
   "out": "public/rules4/music.mp3"
+ },
+ {
+  "track": "hiphop_a",
+  "story": "curiosity",
+  "out": "template/public/rules4t/music.mp3"
  }
 ]

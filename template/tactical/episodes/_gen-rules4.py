@@ -117,28 +117,37 @@ def build(words, voice, music, trial=False):
     S = lambda **kw: shots.append(kw)
 
     # ------------------------------------------------------------------ HOOK: four 1 s plates, one idea each
-    d = dur["h1"]
-    S(id="h1", name="HOOK 1 travel: the pivot foot lifts and lands, red ring", at=cuts["h1"], play="travel",
+    # trial copy: different montage order (three first), the foul plate keeps the title; slots keep their timing
+    slot_of = {"h1": "h2", "h2": "h3", "h3": "h1", "h4": "h4"} if trial else {k: k for k in ("h1", "h2", "h3", "h4")}
+    hook_title = ["4 RULES", "YOU MUST KNOW"] if trial else ["4 RULES", "EVERY PLAYER NEEDS"]
+    hook = []
+    S = lambda **kw: hook.append(kw)
+    d = dur[slot_of["h1"]]
+    S(id="h1", name="HOOK 1 travel: the pivot foot lifts and lands, red ring", at=cuts[slot_of["h1"]], play="travel",
       remap=[[0, 2.95], [0.62, 3.45], [d, 3.45]], camera=[key(0, TRAVEL_A), key(d, TRAVEL_FEET, "inOut")],
       ov3=[{"type": "footRing", "player": "O1", "foot": "L", "color": RED, "from": 0.0, "to": d, "fin": 0, "fout": 0}],
       screen=[{"type": "verdict", "text": "TRAVEL", "tone": "red", "y": 330, "from": 0.58, "to": d, "size": 62}])
-    d = dur["h2"]
-    S(id="h2", name="HOOK 2 double dribble: held ball goes back to the floor", at=cuts["h2"], play="dribble",
+    d = dur[slot_of["h2"]]
+    S(id="h2", name="HOOK 2 double dribble: held ball goes back to the floor", at=cuts[slot_of["h2"]], play="dribble",
       remap=[[0, 3.05], [0.68, 3.68], [d, 3.68]], camera=[key(0, DRIB_HANDS)],
       ov3=[{"type": "ballRing", "color": RED, "from": 0.5, "to": d, "fout": 0}],
       screen=[{"type": "verdict", "text": "DOUBLE DRIBBLE", "tone": "red", "y": 330, "from": 0.6, "to": d, "size": 62}])
-    d = dur["h3"]
-    S(id="h3", name="HOOK 3 three: clean arc, +3", at=cuts["h3"], play="three",
+    d = dur[slot_of["h3"]]
+    S(id="h3", name="HOOK 3 three: clean arc, +3", at=cuts[slot_of["h3"]], play="three",
       remap=[[0, 0.72], [0.86, 2.17], [d, 2.25]], camera=[key(0, SCORE_3)],
       ov3=[{"type": "ballTrail", "len": 0.35, "from": 0.1, "to": 0.86}],
       screen=[{"type": "score", "text": "+3", "y": 560, "size": 200, "from": 0.8, "to": d}])
-    d = dur["h4"]
-    S(id="h4", name="HOOK 4 foul: the grab, freeze, FOUL; title", at=cuts["h4"], play="foul",
+    d = dur[slot_of["h4"]]
+    S(id="h4", name="HOOK 4 foul: the grab, freeze, FOUL; title", at=cuts[slot_of["h4"]], play="foul",
       remap=[[0, 0.8], [0.5, 1.4], [d, 1.4]], camera=[key(0, FOUL_HAND)],
       ov3=[{"type": "handRing", "player": "X1", "hand": 0, "from": 0.3, "to": d, "fout": 0}],
       screen=[{"type": "freeze", "from": 0.5, "to": d},
               {"type": "verdict", "text": "FOUL", "tone": "red", "y": 1180, "from": 0.5, "to": d, "size": 62},
-              {"type": "title", "lines": ["4 RULES", "EVERY PLAYER NEEDS"], "gold": [0], "from": 0.05, "to": d - 0.05, "y": 236, "size": 96}])
+              {"type": "title", "lines": hook_title, "gold": [0], "from": 0.05, "to": d - 0.05, "y": 236, "size": 96}])
+
+    hook.sort(key=lambda sh: sh["at"])
+    shots.extend(hook)
+    S = lambda **kw: shots.append(kw)
 
     # ------------------------------------------------------------------ 01 TRAVELING
     sh = "travel"
