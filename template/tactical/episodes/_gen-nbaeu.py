@@ -195,10 +195,17 @@ def build(words, voice, music, trial=False):
             ("nba2", "three-nba", "nba", "a8", "TWO", "+2", "INSIDE 7.24 m", NBA_C, "nba")):
         d = dur[sh]
         t_w = L(ws(word_line, word), sh)
-        # the ball drops through the rim ON the number word; real speed (the remap never speeds the shot up)
-        p0 = max(0.2, make - t_w)
-        S(id=sh, name=f"{lg.upper()}: the same 7.00 m shot = {val}", at=cuts[sh], play=pid,
-          remap=[[0, p0], [t_w, make], [d, min(PL[pid]["duration"], make + (d - t_w))]], camera=[key(0, SHOT)],
+        # the whole shooting motion is on screen (from 0.3 s before the release) and the ball drops through the rim during
+        # the number word; real speed when the word leaves time for it, else at most 1.1x
+        need = make - (rel - 0.3)
+        if t_w >= need:
+            t_mk, p0, spd = t_w, make - t_w, 1.0
+        else:
+            spd = 1.1
+            t_mk, p0 = need / spd, rel - 0.3
+        t_w = round(t_mk, 3)
+        S(id=sh, name=f"{lg.upper()}: the same 7 m shot = {val} (speed {spd})", at=cuts[sh], play=pid,
+          remap=[[0, round(p0, 3)], [t_w, make], [d, min(PL[pid]["duration"], make + (d - t_w))]], camera=[key(0, SHOT)],
           ov3=[{"type": "arc3", "rules": r, "color": c, "width": 0.13, "z": 0.014, "from": 0.0, "to": d, "fin": 0},
                {"type": "footRing", "player": "O1", "foot": "L", "color": GOLD, "r": 0.42, "from": 0.0, "to": max(0.1, t_w - (make - rel) + 0.05), "fin": 0},
                {"type": "ballTrail", "len": 0.35, "from": max(0.0, t_w - (make - rel)), "to": t_w + 0.1}],
@@ -246,7 +253,8 @@ def build(words, voice, music, trial=False):
     # play clock: the count starts at 'One' = play mark count0 (1.0 s); real speed after the title
     p_one = PL["d3s-nba"]["marks"]["count0"]
     S(id=sh, name="04 DEFENSIVE 3 SECONDS (NBA): offence in control, X5 in the lane guarding nobody, 1-2-3, technical foul", at=cuts[sh], play="d3s-nba",
-      remap=[[0, max(0.0, p_one - c1 * 0.3)], [c1, p_one], [c3 + 0.9, p_one + (c3 + 0.9 - c1)], [d, p_one + (c3 + 0.9 - c1)]],
+      # game clock: one second of play per spoken count ("One" = 1 s in the lane ... the technical at 3.1 s)
+      remap=[[0, max(0.0, p_one - c1 * 0.3)], [c1, p_one], [c2, p_one + 1.0], [c3, p_one + 2.0], [t_tech, p_one + 3.1], [d, p_one + 3.1]],
       camera=[key(0, D3S), key(d, orb([0.06, 5.4, 0.0], 21.5, 38, 0, 44))],
       ov3=[{"type": "lane", "rules": "nba", "color": RED, "opacity": 0.16, "from": t_title, "to": d, "fin": 0.25, "fout": 0},
            {"type": "footRing", "player": "X5", "foot": "L", "color": WHITE, "r": 1.15, "from": t_guard, "to": c1, "fout": 0.15},
@@ -254,11 +262,11 @@ def build(words, voice, music, trial=False):
       screen=[{"type": "section", "n": "04", "text": "THE BIG ONE", "y": 200, "from": 0.05, "to": t_title},
               {"type": "title", "lines": ["DEFENSIVE", "3 SECONDS"], "gold": [1], "from": t_title, "to": t_nba + 0.6, "y": 200, "size": 104},
               {"type": "league", "league": "nba", "y": 170, "from": t_nba + 0.6, "to": d, "size": 62},
-              {"type": "chip", "text": "BALL IN THE FRONTCOURT", "tone": "gold", "align": "center", "size": 48, "from": t_nba, "to": t_guard, "y": 300},
+              {"type": "chip", "text": "BALL IN THE FRONTCOURT", "tone": "gold", "align": "center", "size": 48, "from": t_nba + 0.6, "to": t_guard, "y": 300},
               {"type": "chip", "text": "NOT GUARDING ANYONE", "tone": "red", "align": "center", "size": 54, "from": t_guard, "to": c1, "y": 300},
               {"type": "micro", "text": "NOBODY WITHIN ARM'S LENGTH", "y": 390, "from": t_guard + 0.2, "to": c1},
               {"type": "count3", "ticks": [c1, c2, c3], "from": c1, "to": t_tech, "y": 290, "size": 200},
-              {"type": "freeze", "from": c3 + 0.9, "to": d},
+              {"type": "freeze", "from": t_tech, "to": d},
               {"type": "verdict", "text": "DEFENSIVE 3 SECONDS", "tone": "red", "y": 300, "from": t_tech, "to": d, "size": 60},
               {"type": "micro", "text": "TECHNICAL FOUL · 1 FREE THROW · BALL KEPT", "y": 410, "from": t_tech + 0.25, "to": d}])
     sh = "d3sEL"
@@ -283,7 +291,7 @@ def build(words, voice, music, trial=False):
       split={"play": "d3s-el", "remap": [[0, 2.0], [d, 2.0 + d]], "camera": [key(0, orb([0.0, 5.0, 0.0], 15.5, 44, 0, 40))], "ratio": 0.5},
       screen=[{"type": "league", "league": "nba", "y": 70, "from": 0.0, "to": d, "size": 56, "align": "left"},
               {"type": "league", "league": "el", "y": 1000, "from": 0.0, "to": d, "size": 56, "align": "left"},
-              {"type": "title", "lines": ["WHICH RULES", "DO YOU PREFER?"], "gold": [1], "from": 0.05, "to": d, "y": 700, "size": 104, "noOut": True},
+              {"type": "title", "lines": ["WHICH RULES", "DO YOU PREFER?"], "gold": [1], "from": 0.05, "to": d, "y": 640, "size": 104, "noOut": True},
               {"type": "logo", "big": False, "from": 0.2, "to": d}])
 
     groups = []

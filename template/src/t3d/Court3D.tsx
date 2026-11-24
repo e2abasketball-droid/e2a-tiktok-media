@@ -197,7 +197,7 @@ export const buildFloor = (logo?: HTMLImageElement, full = false, rules: CourtRu
     g.font = `400 ${Math.round(m2px(1.05))}px Anton, Impact, sans-serif`;
     g.textAlign = 'center';
     g.textBaseline = 'middle';
-    g.globalAlpha = 0.42;
+    g.globalAlpha = 0.32;
     g.fillStyle = apronInk;
     g.fillText(word, 0, 0);
     g.restore();

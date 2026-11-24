@@ -1,0 +1,96 @@
+{
+ "peak_norm": 0.644,
+ "words": [
+  {
+   "word": "FORTY-EIGHT!",
+   "t": 8.068,
+   "gain_db": 2.0,
+   "rms_before_dbfs": -11.0,
+   "rms_after_dbfs_first500ms": -11.5
+  },
+  {
+   "word": "FORTY!",
+   "t": 10.582,
+   "gain_db": 1.5,
+   "rms_before_dbfs": -9.0,
+   "rms_after_dbfs_first500ms": -10.1
+  },
+  {
+   "word": "THREE!",
+   "t": 20.986,
+   "gain_db": 4.5,
+   "rms_before_dbfs": -16.0,
+   "rms_after_dbfs_first500ms": -14.3
+  },
+  {
+   "word": "TWO!",
+   "t": 22.878,
+   "gain_db": 6.0,
+   "rms_before_dbfs": -21.3,
+   "rms_after_dbfs_first500ms": -20.6
+  },
+  {
+   "word": "FIVE!",
+   "t": 25.706,
+   "gain_db": 2.0,
+   "rms_before_dbfs": -12.0,
+   "rms_after_dbfs_first500ms": -12.4
+  },
+  {
+   "word": "SIX!",
+   "t": 28.122,
+   "gain_db": 4.0,
+   "rms_before_dbfs": -15.0,
+   "rms_after_dbfs_first500ms": -13.4
+  },
+  {
+   "word": "DEFENSIVE",
+   "t": 29.986,
+   "gain_db": 2.0,
+   "rms_before_dbfs": -15.8,
+   "rms_after_dbfs_first500ms": -19.6
+  },
+  {
+   "word": "THREE",
+   "t": 30.606,
+   "gain_db": 2.0,
+   "rms_before_dbfs": -16.7,
+   "rms_after_dbfs_first500ms": -19.8
+  },
+  {
+   "word": "SECONDS.",
+   "t": 30.956,
+   "gain_db": 3.0,
+   "rms_before_dbfs": -22.9,
+   "rms_after_dbfs_first500ms": -22.3
+  },
+  {
+   "word": "TECHNICAL",
+   "t": 38.238,
+   "gain_db": 1.5,
+   "rms_before_dbfs": -12.2,
+   "rms_after_dbfs_first500ms": -14.7
+  },
+  {
+   "word": "FOUL!",
+   "t": 38.728,
+   "gain_db": 4.0,
+   "rms_before_dbfs": -17.4,
+   "rms_after_dbfs_first500ms": -16.8
+  },
+  {
+   "word": "rim.",
+   "t": 43.474,
+   "gain_db": 2.5,
+   "rms_before_dbfs": -20.7,
+   "rms_after_dbfs_first500ms": -23.1
+  },
+  {
+   "word": "prefer?",
+   "t": 44.767,
+   "gain_db": 3.0,
+   "rms_before_dbfs": -20.0,
+   "rms_after_dbfs_first500ms": -20.7
+  }
+ ]
+}

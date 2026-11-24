@@ -1,0 +1,124 @@
+{
+ "FINAL": {
+  "file": "out/nbaeu/E2A-NBA-VS-EUROLEAGUE-FINAL.mp4",
+  "frames": 1373,
+  "bad_frames": 0,
+  "bad_list": [],
+  "frozen": [
+   {
+    "span": [
+     38.288,
+     39.22
+    ],
+    "n": 27,
+    "diff_mean": 0.262,
+    "diff_p99": 0.539,
+    "diff_max": 0.564,
+    "blinks": 0,
+    "blink_frames": [],
+    "dips": []
+   }
+  ],
+  "shots": [
+   {
+    "shot": "h1",
+    "gold_mean": 33643.3,
+    "gold_jitter_mean": 0.0162,
+    "gold_jitter_p99": 0.0316,
+    "gold_jitter_max": 0.032
+   },
+   {
+    "shot": "h2",
+    "gold_mean": 22688.4,
+    "gold_jitter_mean": 0.0286,
+    "gold_jitter_p99": 0.0529,
+    "gold_jitter_max": 0.0533
+   },
+   {
+    "shot": "h3",
+    "gold_mean": 26759.5,
+    "gold_jitter_mean": 0.0126,
+    "gold_jitter_p99": 0.0473,
+    "gold_jitter_max": 0.0638
+   },
+   {
+    "shot": "time",
+    "gold_mean": 1201.0,
+    "gold_jitter_mean": 0.6027,
+    "gold_jitter_p99": 25.869,
+    "gold_jitter_max": 37.0
+   },
+   {
+    "shot": "timeEL",
+    "gold_mean": 4683.3,
+    "gold_jitter_mean": 0.0416,
+    "gold_jitter_p99": 0.4809,
+    "gold_jitter_max": 0.841
+   },
+   {
+    "shot": "arcs",
+    "gold_mean": 18224.2,
+    "gold_jitter_mean": 0.0067,
+    "gold_jitter_p99": 0.1175,
+    "gold_jitter_max": 0.1311
+   },
+   {
+    "shot": "el3",
+    "gold_mean": 30021.2,
+    "gold_jitter_mean": 0.0054,
+    "gold_jitter_p99": 0.0457,
+    "gold_jitter_max": 0.0468
+   },
+   {
+    "shot": "nba2",
+    "gold_mean": 16662.0,
+    "gold_jitter_mean": 0.0085,
+    "gold_jitter_p99": 0.0795,
+    "gold_jitter_max": 0.0799
+   },
+   {
+    "shot": "foulEL",
+    "gold_mean": 48241.0,
+    "gold_jitter_mean": 0.0092,
+    "gold_jitter_p99": 0.0638,
+    "gold_jitter_max": 0.0707
+   },
+   {
+    "shot": "walk",
+    "gold_mean": 46926.6,
+    "gold_jitter_mean": 0.0066,
+    "gold_jitter_p99": 0.0224,
+    "gold_jitter_max": 0.0243
+   },
+   {
+    "shot": "foulNBA",
+    "gold_mean": 36658.2,
+    "gold_jitter_mean": 0.0116,
+    "gold_jitter_p99": 0.0335,
+    "gold_jitter_max": 0.0339
+   },
+   {
+    "shot": "d3s",
+    "gold_mean": 23963.8,
+    "gold_jitter_mean": 0.0085,
+    "gold_jitter_p99": 0.0211,
+    "gold_jitter_max": 0.8296
+   },
+   {
+    "shot": "d3sEL",
+    "gold_mean": 39354.4,
+    "gold_jitter_mean": 0.0039,
+    "gold_jitter_p99": 0.0177,
+    "gold_jitter_max": 0.0199
+   },
+   {
+    "shot": "end",
+    "gold_mean": 31408.3,
+    "gold_jitter_mean": 0.0025,
+    "gold_jitter_p99": 0.0226,
+    "gold_jitter_max": 0.0248
+   }
+  ],
+  "cuts": []
+ }
+}

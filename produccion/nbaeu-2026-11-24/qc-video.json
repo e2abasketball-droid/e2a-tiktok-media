@@ -1,0 +1,240 @@
+{
+ "episode": "nbaeu",
+ "mp4": "/home/user/e2a-tiktok-media/template/out/nbaeu/E2A-NBA-VS-EUROLEAGUE-FINAL.mp4",
+ "result": "PASS",
+ "checks": {
+  "technical": {
+   "pass": true,
+   "width": 1080,
+   "height": 1920,
+   "fps": 30.0,
+   "vcodec": "h264",
+   "acodec": "aac",
+   "duration": 45.8,
+   "mb": 36.092335
+  },
+  "audio": {
+   "pass": true,
+   "I": -14.8,
+   "TP": -2.7,
+   "margin_lu": 0.2,
+   "tp_headroom_db": 1.7
+  }
+ },
+ "warnings": [
+  {
+   "check": "transient",
+   "why": "1\u20133 frame pop (near-camera occluder or flash)",
+   "items": [
+    {
+     "frame": 820,
+     "frames": 3,
+     "t": 27.333,
+     "enter": 17.8,
+     "leave": 20.0,
+     "motion_per_frame": 4.3,
+     "back_to_path": 23.6
+    }
+   ]
+  }
+ ],
+ "planned_shots": [
+  {
+   "shot": "h2",
+   "start": 1.03,
+   "hard_cut": false
+  },
+  {
+   "shot": "h3",
+   "start": 2.142,
+   "hard_cut": true
+  },
+  {
+   "shot": "time",
+   "start": 4.494,
+   "hard_cut": true
+  },
+  {
+   "shot": "timeEL",
+   "start": 9.13,
+   "hard_cut": false
+  },
+  {
+   "shot": "arcs",
+   "start": 11.312,
+   "hard_cut": true
+  },
+  {
+   "shot": "el3",
+   "start": 20.134,
+   "hard_cut": true
+  },
+  {
+   "shot": "nba2",
+   "start": 21.628,
+   "hard_cut": false
+  },
+  {
+   "shot": "foulEL",
+   "start": 23.28,
+   "hard_cut": true
+  },
+  {
+   "shot": "walk",
+   "start": 26.488,
+   "hard_cut": true
+  },
+  {
+   "shot": "foulNBA",
+   "start": 27.33,
+   "hard_cut": false
+  },
+  {
+   "shot": "d3s",
+   "start": 28.884,
+   "hard_cut": true
+  },
+  {
+   "shot": "d3sEL",
+   "start": 39.27,
+   "hard_cut": false
+  },
+  {
+   "shot": "end",
+   "start": 43.957,
+   "hard_cut": true
+  }
+ ],
+ "moments": [
+  {
+   "t": 0.4,
+   "label": "h1: count0",
+   "shot": "h1",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 1.23,
+   "label": "h2: start",
+   "shot": "h2",
+   "kind": "shot",
+   "prio": 2
+  },
+  {
+   "t": 9.163333333333334,
+   "label": "timeEL: count3",
+   "shot": "timeEL",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 20.434,
+   "label": "el3: release",
+   "shot": "el3",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 21.467333333333332,
+   "label": "el3: make",
+   "shot": "el3",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 21.928,
+   "label": "nba2: release",
+   "shot": "nba2",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 22.961333333333332,
+   "label": "nba2: make",
+   "shot": "nba2",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 24.21333333333333,
+   "label": "foulEL: drive",
+   "shot": "foulEL",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 25.08,
+   "label": "foulEL: grab",
+   "shot": "foulEL",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 26.146666666666665,
+   "label": "foulEL: stopped",
+   "shot": "foulEL",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 26.65466666666667,
+   "label": "walk: walk",
+   "shot": "walk",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 27.333,
+   "label": "WARN visual defect",
+   "flag": true,
+   "kind": "warn"
+  },
+  {
+   "t": 27.596666666666668,
+   "label": "foulNBA: drive",
+   "shot": "foulNBA",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 28.096666666666668,
+   "label": "foulNBA: grab",
+   "shot": "foulNBA",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 35.650666666666666,
+   "label": "d3s: count0",
+   "shot": "d3s",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 38.150666666666666,
+   "label": "d3s: count3",
+   "shot": "d3s",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 42.07,
+   "label": "d3sEL: count3",
+   "shot": "d3sEL",
+   "kind": "mark",
+   "prio": 1
+  }
+ ],
+ "timing": {
+  "moments_s": 0.11,
+  "probe_loudness_s": 0.47,
+  "frame_analysis_s": 3.96,
+  "contact_sheet_s": 4.89,
+  "total_s": 9.43
+ },
+ "contact_sheet": "/home/user/e2a-tiktok-media/template/out/nbaeu/qc/contact-sheet.png",
+ "not_measured": [
+  "player-on-player occlusion (needs depth or an ID pass)",
+  "text over a key player (needs projected player boxes per frame: see qc-tactical3d rays)"
+ ]
+}

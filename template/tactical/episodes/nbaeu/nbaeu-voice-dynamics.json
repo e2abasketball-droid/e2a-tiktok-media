@@ -1,0 +1,155 @@
+{
+ "about": "NBA vs EuroLeague curve (dB vs explanation): hook 8, game time 7->8, three-point line 8.5 (surprise), foul out 9 (fast), defensive 3 s 9.5 = the big reveal, close 8.",
+ "lines": [
+  [
+   "Same sport.",
+   2,
+   "A"
+  ],
+  [
+   "Different rules.",
+   2,
+   "A"
+  ],
+  [
+   "Here's NBA versus EuroLeague!",
+   2.5,
+   "A"
+  ],
+  [
+   "Rule one: GAME TIME.",
+   1,
+   "B"
+  ],
+  [
+   "NBA quarters are twelve minutes...",
+   0,
+   "B"
+  ],
+  [
+   "FORTY-EIGHT!",
+   2.5,
+   "C"
+  ],
+  [
+   "EuroLeague plays ten...",
+   0.5,
+   "B"
+  ],
+  [
+   "FORTY!",
+   2.5,
+   "C"
+  ],
+  [
+   "Rule two: the THREE-POINT LINE.",
+   1.5,
+   "B"
+  ],
+  [
+   "NBA: seven point two four metres.",
+   0.5,
+   "B"
+  ],
+  [
+   "EuroLeague: six point seven five.",
+   0.5,
+   "B"
+  ],
+  [
+   "Same shot, seven metres out.",
+   1,
+   "C"
+  ],
+  [
+   "EuroLeague?",
+   1.5,
+   "C"
+  ],
+  [
+   "THREE!",
+   3,
+   "C"
+  ],
+  [
+   "NBA?",
+   1.5,
+   "C"
+  ],
+  [
+   "Just TWO!",
+   3,
+   "C"
+  ],
+  [
+   "Rule three: FOUL OUT.",
+   1.5,
+   "B"
+  ],
+  [
+   "EuroLeague: FIVE!",
+   2.5,
+   "C"
+  ],
+  [
+   "And you're out.",
+   1.5,
+   "C"
+  ],
+  [
+   "NBA?",
+   1.5,
+   "C"
+  ],
+  [
+   "SIX!",
+   3,
+   "C"
+  ],
+  [
+   "And the BIG one...",
+   1.5,
+   "C"
+  ],
+  [
+   "DEFENSIVE THREE SECONDS.",
+   2.5,
+   "C"
+  ],
+  [
+   "In the NBA, a defender can't stay in the paint without guarding someone.",
+   0.5,
+   "B"
+  ],
+  [
+   "One... two... three...",
+   1.5,
+   "C"
+  ],
+  [
+   "TECHNICAL FOUL!",
+   3,
+   "C"
+  ],
+  [
+   "EuroLeague?",
+   1.5,
+   "D"
+  ],
+  [
+   "No defensive three-second rule.",
+   2,
+   "D"
+  ],
+  [
+   "The big can stay home and protect the rim.",
+   1,
+   "D"
+  ],
+  [
+   "Which rules do you prefer?",
+   2,
+   "E"
+  ]
+ ]
+}

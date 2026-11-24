@@ -1,0 +1,256 @@
+{
+ "tone": "highpass=f=85,equalizer=f=300:t=q:w=1.0:g=-2,equalizer=f=2800:t=q:w=1.4:g=3,equalizer=f=7000:t=q:w=1.5:g=-1.5,deesser=i=0.45,acompressor=threshold=-18dB:ratio=1.6:attack=8:release=140:makeup=2",
+ "reference_db": -19.7,
+ "voice_in": {
+  "I": -17.3,
+  "LRA": 5.7,
+  "TP": -0.2
+ },
+ "voice_out": {
+  "I": -16.1,
+  "LRA": 3.8,
+  "TP": -2.0
+ },
+ "lines": [
+  {
+   "text": "Same sport.",
+   "phase": "A",
+   "target_off": 2,
+   "level_in_db": -18.3,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.11
+  },
+  {
+   "text": "Different rules.",
+   "phase": "A",
+   "target_off": 2,
+   "level_in_db": -23.77,
+   "gain_db": 4.5,
+   "level_out_rel_db": 0.15
+  },
+  {
+   "text": "Here's NBA versus EuroLeague!",
+   "phase": "A",
+   "target_off": 2.5,
+   "level_in_db": -16.03,
+   "gain_db": 0.0,
+   "level_out_rel_db": 3.39
+  },
+  {
+   "text": "Rule one: GAME TIME.",
+   "phase": "B",
+   "target_off": 1,
+   "level_in_db": -19.05,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.31
+  },
+  {
+   "text": "NBA quarters are twelve minutes...",
+   "phase": "B",
+   "target_off": 0,
+   "level_in_db": -18.12,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.29
+  },
+  {
+   "text": "FORTY-EIGHT!",
+   "phase": "C",
+   "target_off": 2.5,
+   "level_in_db": -15.86,
+   "gain_db": 0.0,
+   "level_out_rel_db": 3.27
+  },
+  {
+   "text": "EuroLeague plays ten...",
+   "phase": "B",
+   "target_off": 0.5,
+   "level_in_db": -18.27,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.14
+  },
+  {
+   "text": "FORTY!",
+   "phase": "C",
+   "target_off": 2.5,
+   "level_in_db": -14.83,
+   "gain_db": 0.0,
+   "level_out_rel_db": 4.24
+  },
+  {
+   "text": "Rule two: the THREE-POINT LINE.",
+   "phase": "B",
+   "target_off": 1.5,
+   "level_in_db": -21.31,
+   "gain_db": 1.61,
+   "level_out_rel_db": -0.31
+  },
+  {
+   "text": "NBA: seven point two four metres.",
+   "phase": "B",
+   "target_off": 0.5,
+   "level_in_db": -20.34,
+   "gain_db": 0.0,
+   "level_out_rel_db": -0.93
+  },
+  {
+   "text": "EuroLeague: six point seven five.",
+   "phase": "B",
+   "target_off": 0.5,
+   "level_in_db": -21.54,
+   "gain_db": 0.84,
+   "level_out_rel_db": -1.29
+  },
+  {
+   "text": "Same shot, seven metres out.",
+   "phase": "C",
+   "target_off": 1,
+   "level_in_db": -18.84,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.55
+  },
+  {
+   "text": "EuroLeague?",
+   "phase": "C",
+   "target_off": 1.5,
+   "level_in_db": -17.01,
+   "gain_db": 0.0,
+   "level_out_rel_db": 2.41
+  },
+  {
+   "text": "THREE!",
+   "phase": "C",
+   "target_off": 3,
+   "level_in_db": -17.72,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.7
+  },
+  {
+   "text": "NBA?",
+   "phase": "C",
+   "target_off": 1.5,
+   "level_in_db": -18.52,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.89
+  },
+  {
+   "text": "Just TWO!",
+   "phase": "C",
+   "target_off": 3,
+   "level_in_db": -19.96,
+   "gain_db": 1.76,
+   "level_out_rel_db": 0.92
+  },
+  {
+   "text": "Rule three: FOUL OUT.",
+   "phase": "B",
+   "target_off": 1.5,
+   "level_in_db": -18.53,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.83
+  },
+  {
+   "text": "EuroLeague: FIVE!",
+   "phase": "C",
+   "target_off": 2.5,
+   "level_in_db": -17.51,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.61
+  },
+  {
+   "text": "And you're out.",
+   "phase": "C",
+   "target_off": 1.5,
+   "level_in_db": -20.95,
+   "gain_db": 1.25,
+   "level_out_rel_db": -0.28
+  },
+  {
+   "text": "NBA?",
+   "phase": "C",
+   "target_off": 1.5,
+   "level_in_db": -18.56,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.85
+  },
+  {
+   "text": "SIX!",
+   "phase": "C",
+   "target_off": 3,
+   "level_in_db": -18.3,
+   "gain_db": 0.1,
+   "level_out_rel_db": 0.29
+  },
+  {
+   "text": "And the BIG one...",
+   "phase": "C",
+   "target_off": 1.5,
+   "level_in_db": -19.75,
+   "gain_db": 0.05,
+   "level_out_rel_db": -0.28
+  },
+  {
+   "text": "DEFENSIVE THREE SECONDS.",
+   "phase": "C",
+   "target_off": 2.5,
+   "level_in_db": -21.21,
+   "gain_db": 2.51,
+   "level_out_rel_db": 0.28
+  },
+  {
+   "text": "In the NBA, a defender can't stay in the paint without guarding someone.",
+   "phase": "B",
+   "target_off": 0.5,
+   "level_in_db": -20.92,
+   "gain_db": 0.22,
+   "level_out_rel_db": -1.28
+  },
+  {
+   "text": "One... two... three...",
+   "phase": "C",
+   "target_off": 1.5,
+   "level_in_db": -22.9,
+   "gain_db": 3.21,
+   "level_out_rel_db": -0.28
+  },
+  {
+   "text": "TECHNICAL FOUL!",
+   "phase": "C",
+   "target_off": 3,
+   "level_in_db": -17.84,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.16
+  },
+  {
+   "text": "EuroLeague?",
+   "phase": "D",
+   "target_off": 1.5,
+   "level_in_db": -18.05,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.37
+  },
+  {
+   "text": "No defensive three-second rule.",
+   "phase": "D",
+   "target_off": 2,
+   "level_in_db": -21.12,
+   "gain_db": 1.93,
+   "level_out_rel_db": -0.01
+  },
+  {
+   "text": "The big can stay home and protect the rim.",
+   "phase": "D",
+   "target_off": 1,
+   "level_in_db": -20.77,
+   "gain_db": 0.57,
+   "level_out_rel_db": -0.78
+  },
+  {
+   "text": "Which rules do you prefer?",
+   "phase": "E",
+   "target_off": 2,
+   "level_in_db": -18.91,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.5
+  }
+ ]
+}
