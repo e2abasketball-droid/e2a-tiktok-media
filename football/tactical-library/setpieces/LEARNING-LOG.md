@@ -135,3 +135,18 @@ the master camera goes BEHIND THE ATTACK (azimuth 0, elevation ~70, focus = box 
 the run depth (x 33 → 52.5) becomes the vertical of the Short and players are larger than in the azimuth-90 wide.
 The single wide shot (azimuth 90, corner at the bottom) was tested: the late runner is in the safe frame only
 5.43 of 7.4 s (fails), so the PiP version was chosen. Check framing with `qc_edit.mjs` BEFORE rendering.
+
+## FB-SETPIECE-001 V09 — Narrated release candidate (2026-11-24, owner directive V09)
+
+Play unchanged (V07 tracks). What V09 adds and how to reuse it:
+| # | Owner ask | How it was done | Component | Reuse |
+|---|---|---|---|---|
+| N1 | Narration synced to the action, voice never slowed | AUDIO-FIRST LOCK: one Deuce take (eleven_v3) is cut at its own silences; each phrase is placed at a video time so its key word lands on its event; the picture clock is then built around the placements. A phrase can be dropped (P4) without touching the others; overlaps fail | `scripts/fb_voice_plan.py`, `episodes/narratedV09.ts` (LIVE_KEYS / REPLAY_KEYS) | Every narrated set piece: generate the take, align (Scribe), place, THEN finish the picture |
+| N2 | Match time separate from video time | Two monotone cubic clocks (live, replay), 1/30 s dense remap; live never rewinds | `mono()` + `remapOf()` | Same |
+| N3 | Show the space being created, never an already-free zone | FB SPACE CREATION VISUALIZER: state A covered (dashed ring + line to the nearest defender), lit only when that defender has moved away (u from 3.2 → 4.3 m), radius = min(1.7, gap − 2.7 m), off when the runner occupies it or a defender closes it | overlay `space` + `spaceState()`; QC `scripts/fb_space.py` (5/5 PASS) | Any play with a created space |
+| N4 | Mobile framing with room for subtitles + YouTube UI | Camera FIT search: closest overview camera keeping the protagonists, the space and the goal mouth inside 64-920 × 230-1310 for the whole window | `qa/fit_cam.mjs` | Fit every master shot before rendering |
+| N5 | Corner pace ~0.85× | Rate test clips 1.00/0.90/0.85/0.80 rendered; the voice fixed the final rate at 0.82× (kick → NOW) | `cornerRateTest(k)` | Test pace on short clips first |
+| N6 | Subtitles legible, gold only on key words | 'keys' mode: navy band, white text, gold on movement/defender/defence/space/now/timed/time, hidden under titles | `Subtitles mode='keys'` | Same |
+| N7 | Close over action, not over the finish | Titles placed on empty grass under the box (y 1060/1150) after a first render put them over the shot and the keeper | episode `close` shot | Check the close frames for title vs ball/keeper overlap |
+| N8 | Music without bounces/SFX | In-house library (licensed music/synth/*) through a wrapper that zeroes the FX bus after rendering; shared engine untouched, rotation history not written | `scripts/fb_music.py` | Same |
+Lesson: an audio cut must end below about −50 dB; the first plan cut "goes." at −35 dB (raw 7.83 → 7.88 s fixed it).

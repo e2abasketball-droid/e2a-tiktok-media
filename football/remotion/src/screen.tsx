@@ -99,7 +99,7 @@ export const Pin: React.FC<{x: number; y: number; text: string; age: number; dur
 export type Word = {text: string; start: number; end: number; br?: boolean};
 
 /** word-by-word subtitles: 2 lines max, the spoken word lights up gold, keywords stay gold */
-export const Subtitles: React.FC<{words: Word[]; t: number; keys: string[]; y?: number}> = ({words, t, keys, y = 1920 - SAFE.bottom - 210}) => {
+export const Subtitles: React.FC<{words: Word[]; t: number; keys: string[]; y?: number; mode?: 'karaoke' | 'keys'; size?: number}> = ({words, t, keys, y = 1920 - SAFE.bottom - 210, mode = 'karaoke', size = 58}) => {
   // phrases: break on punctuation or every ~5 words
   const phrases: Word[][] = [];
   let cur: Word[] = [];
@@ -120,13 +120,14 @@ export const Subtitles: React.FC<{words: Word[]; t: number; keys: string[]; y?: 
   const isKey = (s: string) => keys.includes(s.replace(/[^A-Za-z'-]/g, '').toLowerCase());
   return (
     <div style={{position: 'absolute', left: SAFE.left + 10, right: SAFE.right - 40, top: y, display: 'flex', justifyContent: 'center', opacity: a, transform: `translateY(${(1 - eo(age / 0.15)) * 14}px)`}}>
-      <div data-qc="subtitle" style={{textAlign: 'center', fontFamily: BODY, fontWeight: 900, fontSize: 58, lineHeight: 1.18, letterSpacing: 0.3, textTransform: 'uppercase', maxWidth: 860}}>
+      <div data-qc="subtitle" style={{textAlign: 'center', fontFamily: BODY, fontWeight: 900, fontSize: size, lineHeight: 1.18, letterSpacing: 0.3, textTransform: 'uppercase', maxWidth: 860, ...(mode === 'keys' ? {background: 'rgba(11,28,61,0.58)', borderRadius: 14, padding: '8px 14px'} : {})}}>
         {ph.map((w, i) => {
           const on = t >= w.start - 0.03;
           const now = t >= w.start - 0.03 && t <= w.end + 0.05;
-          const col = isKey(w.text) ? GOLD : now ? GOLD : WHITE;
+          // V09 'keys': white text, gold ONLY on the tactical keywords; the spoken word is marked by opacity, not colour
+          const col = isKey(w.text) ? GOLD : mode === 'keys' ? WHITE : now ? GOLD : WHITE;
           return (
-            <span key={i} style={{color: col, opacity: on ? 1 : 0.55, textShadow: '0 4px 0 rgba(0,0,0,0.55), 0 0 22px rgba(0,0,0,0.65)', display: 'inline-block', transform: `scale(${now ? 1.05 : 1})`, margin: '0 9px'}}>
+            <span key={i} style={{color: col, opacity: on ? 1 : mode === 'keys' ? 0.5 : 0.55, textShadow: mode === 'keys' ? '0 2px 0 rgba(0,0,0,0.5)' : '0 4px 0 rgba(0,0,0,0.55), 0 0 22px rgba(0,0,0,0.65)', display: 'inline-block', transform: `scale(${now && mode !== 'keys' ? 1.05 : 1})`, margin: mode === 'keys' ? '0 7px' : '0 9px'}}>
               {w.text}
             </span>
           );

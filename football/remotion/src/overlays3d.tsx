@@ -26,7 +26,12 @@ export type Ov =
   // V07 off-ball timing graphics: an activation halo under the player who is ABOUT to make the decisive move
   // (before the arrow exists), and ghost bodies at the player's REAL earlier positions (tactical ghost replay)
   | {type: 'halo'; player: string; color?: string; r?: number}
-  | {type: 'ghost'; player: string; times: number[]; color?: string; opacity?: number};
+  | {type: 'ghost'; player: string; times: number[]; color?: string; opacity?: number; ringsOnly?: boolean}
+  // V09 FB SPACE CREATION VISUALIZER: a zone whose state is COMPUTED from the play at every frame (never authored):
+  // covered (a defender within `covered` m: thin dashed reference + a faint line to that defender) -> opening
+  // (the nearest defender moves away: gold light grows with the real gap) -> closed or occupied (fades when a
+  // defender comes back or when `runner` arrives). See spaceState() and scripts/fb_space.py (same numbers).
+  | {type: 'space'; c: V2; runner: string; covered?: number; open?: number; rMax?: number; color?: string; noRef?: boolean};
 export type LiveOv = Ov & {age: number; dur: number; draw?: number; contIn?: boolean; contOut?: boolean};
 /** V07 role-based line language: the decisive run is the only solid gold line; decoy runs are thin white
  *  dashes; defensive movements thin red dashes; support runs faint. Heads are smaller than V05's. */
@@ -560,6 +565,72 @@ const Halo: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'halo'
 
 /** V07 tactical ghost: translucent bodies at the player's REAL positions at earlier play times (only times
  *  already played are drawn, so the ghosts appear as the replay runs) */
+const clamp01 = (x: number) => Math.max(0, Math.min(1, x));
+/** V09: the measured state of a space at play time pt (shared by the graphic and the QC numbers) */
+export const spaceState = (play: FBPlay, c: V2, runner: string, pt: number, covered = 3.2, open = 4.3, rMax = 1.7) => {
+  let dmin = 1e9;
+  let who = '';
+  for (const p of play.players) {
+    if (p.team !== 'defence' || p.role === 'GK') continue;
+    const q = playerAt(play, p.id, pt).pos;
+    const d = Math.hypot(q[0] - c[0], q[1] - c[1]);
+    if (d < dmin) {
+      dmin = d;
+      who = p.id;
+    }
+  }
+  const u = clamp01((dmin - covered) / (open - covered)); // 0 covered .. 1 open
+  const r = Math.min(rMax, Math.max(0, dmin - 2.7)); // the drawn size follows the real gap (a few steps, never a hole)
+  const q = playerAt(play, runner, pt).pos;
+  const occ = clamp01((Math.hypot(q[0] - c[0], q[1] - c[1]) - 0.6) / 1.4); // 1 = still free of the runner
+  return {dmin, who, u, r, occ};
+};
+
+const Space: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'space'}>}> = ({play, pt, o}) => {
+  const st = spaceState(play, o.c, o.runner, pt, o.covered, o.open, o.rMax);
+  const a = fade(o);
+  const col = o.color ?? GOLD;
+  const lit = smooth(st.u) * st.occ;
+  const ref = (1 - st.u) * st.occ * (o.noRef ? 0 : 1);
+  const d = playerAt(play, st.who, pt).pos;
+  const L = Math.hypot(d[0] - o.c[0], d[1] - o.c[1]) || 1;
+  const ux = (d[0] - o.c[0]) / L;
+  const uy = (d[1] - o.c[1]) / L;
+  const rr = Math.max(0.9, st.r);
+  const wave = ((o.age * 0.7) % 1 + 1) % 1;
+  return (
+    <group>
+      {ref > 0.02 && (
+        <>
+          <group position={W3([o.c[0], o.c[1], H - 0.01])}>
+            <mesh rotation={[-Math.PI / 2, 0, 0]} renderOrder={4}>
+              <ringGeometry args={[0.86, 0.9, 64]} />
+              <meshBasicMaterial color={WHITE} transparent opacity={0.6 * ref * a} depthWrite={false} toneMapped={false} />
+            </mesh>
+          </group>
+          {L > 1.4 && <Paint2 pts={[[o.c[0] + ux * 0.95, o.c[1] + uy * 0.95], [d[0] - ux * 0.45, d[1] - uy * 0.45]]} w={0.03} dashed head={false} color={WHITE} opacity={0.5 * ref * a} />}
+        </>
+      )}
+      {lit > 0.01 && (
+        <group position={W3([o.c[0], o.c[1], H - 0.012])}>
+          <mesh rotation={[-Math.PI / 2, 0, 0]} renderOrder={3} scale={[rr * (0.75 + 0.25 * lit), rr * (0.75 + 0.25 * lit), 1]}>
+            <circleGeometry args={[1, 64]} />
+            <meshBasicMaterial color={col} alphaMap={zoneTexture()} transparent opacity={0.4 * lit * a} depthWrite={false} toneMapped={false} />
+          </mesh>
+          <mesh rotation={[-Math.PI / 2, 0, 0]} renderOrder={4} scale={[rr, rr, 1]}>
+            <ringGeometry args={[0.975, 1, 128]} />
+            <meshBasicMaterial color={col} transparent opacity={0.55 * lit * a} depthWrite={false} toneMapped={false} />
+          </mesh>
+          <mesh rotation={[-Math.PI / 2, 0, 0]} renderOrder={4} scale={[rr * (0.35 + 0.65 * wave), rr * (0.35 + 0.65 * wave), 1]}>
+            <ringGeometry args={[0.96, 1, 96]} />
+            <meshBasicMaterial color={col} transparent opacity={0.3 * lit * a * (1 - wave)} depthWrite={false} toneMapped={false} />
+          </mesh>
+        </group>
+      )}
+    </group>
+  );
+};
+
 const Ghost: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'ghost'}>}> = ({play, pt, o}) => {
   const a = fade(o);
   const col = o.color ?? WHITE;
@@ -571,6 +642,7 @@ const Ghost: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'ghos
         const k = (o.opacity ?? 0.34) * a * (0.55 + 0.45 * ((i + 1) / Math.max(1, shown.length)));
         return (
           <group key={t} position={W3([s.pos[0], s.pos[1], 0])}>
+            {!o.ringsOnly && (<>
             <mesh position={[0, 0.82, 0]} renderOrder={7}>
               <capsuleGeometry args={[0.2, 1.05, 4, 10]} />
               <meshBasicMaterial color={col} transparent opacity={k} depthWrite={false} toneMapped={false} />
@@ -579,6 +651,7 @@ const Ghost: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'ghos
               <sphereGeometry args={[0.12, 12, 10]} />
               <meshBasicMaterial color={col} transparent opacity={k} depthWrite={false} toneMapped={false} />
             </mesh>
+            </>)}
             <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, H, 0]} renderOrder={5}>
               <ringGeometry args={[0.3, 0.38, 32]} />
               <meshBasicMaterial color={col} transparent opacity={k * 1.6} depthWrite={false} toneMapped={false} />
@@ -618,6 +691,8 @@ export const Overlays3D: React.FC<{play: FBPlay; pt: number; items: LiveOv[]; v2
           return <Halo key={i} play={play} pt={pt} o={o} />;
         case 'ghost':
           return <Ghost key={i} play={play} pt={pt} o={o} />;
+        case 'space':
+          return <Space key={i} play={play} pt={pt} o={o} />;
         default:
           return null;
       }

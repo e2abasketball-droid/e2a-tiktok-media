@@ -1,0 +1,22 @@
+{
+ "source": "ElevenLabs eleven_v3, voice Deuce (DaueUomjhh8LFuAV8aGj), flow QTNb8lVvYMlQK3xTKpk3, generation V08BGSfrjqRqpmYoKtNt, one take, 496 credits, 2026-11-24; word timings Scribe (0 credits)",
+ "raw": "voice-raw.mp3",
+ "words": "words-raw.json",
+ "out_dir": ".",
+ "words_out": "../../src/episodes/v09-words.json",
+ "duration": 30.2,
+ "phrases": [
+  {"id": "P1", "raw": [0.0, 2.15], "at": 0.15, "event": "hook"},
+  {"id": "P2", "raw": [2.25, 5.72], "at": 2.45, "event": "setup: decoy A4, runner A6 labelled"},
+  {"id": "P3", "raw": [5.74, 7.88], "at": 6.92, "event": "'touch' = PLAYER_B_RECEIVES 3.70; 'goes' = DECOY_RUN_BEGINS 4.05-4.21"},
+  {"id": "P4", "raw": [7.95, 9.84], "at": 0, "kept": false, "event": "dropped: no room between the decoy start and the runner's hold (shown by the graphics: D7 run line)"},
+  {"id": "P5", "raw": [9.90, 11.62], "at": 9.25, "event": "'runner' = LATE_RUNNER_STARTS 4.40 (slow until 5.40)"},
+  {"id": "P6", "raw": [11.70, 12.40], "at": 10.97, "event": "'NOW' = LATE_RUNNER_ACCELERATES 5.40"},
+  {"id": "P7", "raw": [12.45, 15.30], "at": 11.80, "event": "'defence' = DEFENSIVE_LINE_ADJUSTS 5.78 (D5), D7/D8 with the runs"},
+  {"id": "P8", "raw": [15.40, 17.30], "at": 14.70, "event": "pause at play 6.45: space measured open (nearest defender 4.4 m)"},
+  {"id": "P9", "raw": [17.38, 20.05], "at": 16.62, "event": "'cutback' = FINAL_PASS_CONTACT 6.50"},
+  {"id": "P10", "raw": [20.12, 22.00], "at": 19.315, "event": "'First' = SHOT_CONTACT 7.75; 'corner' ends at BALL_CROSSES_GOAL_LINE 8.33"},
+  {"id": "P11", "raw": [22.05, 27.25], "at": 22.05, "event": "replay: 'leaves' = D7 away, 'opens' = space open, 'arrives' = A6 in the zone 7.58"},
+  {"id": "P12", "raw": [27.32, 29.57], "at": 27.45, "event": "close over the finish: CREATE THE SPACE / TIME THE RUN"}
+ ]
+}

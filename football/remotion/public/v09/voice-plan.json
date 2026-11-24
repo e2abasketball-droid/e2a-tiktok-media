@@ -1,0 +1,173 @@
+{
+ "source": "ElevenLabs eleven_v3, voice Deuce (DaueUomjhh8LFuAV8aGj), flow QTNb8lVvYMlQK3xTKpk3, generation V08BGSfrjqRqpmYoKtNt, one take, 496 credits, 2026-11-24; word timings Scribe (0 credits)",
+ "phrases": [
+  {
+   "id": "P1",
+   "text": "The goal starts OFF the ball.",
+   "raw": [
+    0.0,
+    2.15
+   ],
+   "video": [
+    0.15,
+    2.3
+   ],
+   "kept": true,
+   "event": "hook"
+  },
+  {
+   "id": "P2",
+   "text": "Watch the movement: a decoy... and a runner.",
+   "raw": [
+    2.25,
+    5.72
+   ],
+   "video": [
+    2.45,
+    5.92
+   ],
+   "kept": true,
+   "event": "setup: decoy A4, runner A6 labelled"
+  },
+  {
+   "id": "P3",
+   "text": "First touch. The decoy goes.",
+   "raw": [
+    5.74,
+    7.88
+   ],
+   "video": [
+    6.92,
+    9.06
+   ],
+   "kept": true,
+   "event": "'touch' = PLAYER_B_RECEIVES 3.70; 'goes' = DECOY_RUN_BEGINS 4.05-4.21"
+  },
+  {
+   "id": "P4",
+   "text": "His defender follows.",
+   "raw": [
+    7.95,
+    9.84
+   ],
+   "video": [
+    0.0,
+    1.89
+   ],
+   "kept": false,
+   "event": "dropped: no room between the decoy start and the runner's hold (shown by the graphics: D7 run line)"
+  },
+  {
+   "id": "P5",
+   "text": "The runner holds his run...",
+   "raw": [
+    9.9,
+    11.62
+   ],
+   "video": [
+    9.25,
+    10.97
+   ],
+   "kept": true,
+   "event": "'runner' = LATE_RUNNER_STARTS 4.40 (slow until 5.40)"
+  },
+  {
+   "id": "P6",
+   "text": "NOW!",
+   "raw": [
+    11.7,
+    12.4
+   ],
+   "video": [
+    10.97,
+    11.67
+   ],
+   "kept": true,
+   "event": "'NOW' = LATE_RUNNER_ACCELERATES 5.40"
+  },
+  {
+   "id": "P7",
+   "text": "Two runs drag the defence to the near post.",
+   "raw": [
+    12.45,
+    15.3
+   ],
+   "video": [
+    11.8,
+    14.65
+   ],
+   "kept": true,
+   "event": "'defence' = DEFENSIVE_LINE_ADJUSTS 5.78 (D5), D7/D8 with the runs"
+  },
+  {
+   "id": "P8",
+   "text": "The SPACE is open.",
+   "raw": [
+    15.4,
+    17.3
+   ],
+   "video": [
+    14.7,
+    16.6
+   ],
+   "kept": true,
+   "event": "pause at play 6.45: space measured open (nearest defender 4.4 m)"
+  },
+  {
+   "id": "P9",
+   "text": "The cutback is timed to his arrival.",
+   "raw": [
+    17.38,
+    20.05
+   ],
+   "video": [
+    16.62,
+    19.29
+   ],
+   "kept": true,
+   "event": "'cutback' = FINAL_PASS_CONTACT 6.50"
+  },
+  {
+   "id": "P10",
+   "text": "First time. Far corner!",
+   "raw": [
+    20.12,
+    22.0
+   ],
+   "video": [
+    19.315,
+    21.195
+   ],
+   "kept": true,
+   "event": "'First' = SHOT_CONTACT 7.75; 'corner' ends at BALL_CROSSES_GOAL_LINE 8.33"
+  },
+  {
+   "id": "P11",
+   "text": "Again: the defender leaves... the space opens... the runner arrives.",
+   "raw": [
+    22.05,
+    27.25
+   ],
+   "video": [
+    22.05,
+    27.25
+   ],
+   "kept": true,
+   "event": "replay: 'leaves' = D7 away, 'opens' = space open, 'arrives' = A6 in the zone 7.58"
+  },
+  {
+   "id": "P12",
+   "text": "Create the space. Time the run.",
+   "raw": [
+    27.32,
+    29.57
+   ],
+   "video": [
+    27.45,
+    29.7
+   ],
+   "kept": true,
+   "event": "close over the finish: CREATE THE SPACE / TIME THE RUN"
+  }
+ ]
+}

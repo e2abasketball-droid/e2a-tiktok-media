@@ -36,7 +36,7 @@ export type ScreenItem = Timed &
   );
 /** V07 picture-in-picture: a second camera on the SAME play instant (e.g. the corner execution while the main
  *  picture holds the box). x/y/w/h in composition pixels. */
-export type Pip = {from: number; to: number; cam: CamKey[]; x: number; y: number; w: number; h: number; label?: string};
+export type Pip = {from: number; to: number; cam: CamKey[]; x: number; y: number; w: number; h: number; label?: string; style?: 'min'};
 /** V07 focus shift: everybody except `keep` is muted (k 0..1) */
 export type Focus = {from: number; to?: number; keep: string[]; k?: number};
 export type Shot = {
@@ -65,6 +65,9 @@ export type Episode = {
   logoBug?: boolean;
   subtitleHide?: [number, number][];
   subtitleY?: number;
+  /** V09: 'keys' = white subtitles with gold only on the tactical keywords, on a soft navy band */
+  subtitleStyle?: 'karaoke' | 'keys';
+  subtitleSize?: number;
   /** V03+: 'day' = bright match lighting (default 'night' keeps older episodes identical) */
   look?: Look;
   /** V03+: 'clean' = no vignette, only a light top band behind titles (default 'classic') */
@@ -263,10 +266,12 @@ export const FBTactical3D: React.FC<{episode: Episode}> = ({episode: ep}) => {
       {pips.map((p, i) => {
         const a = Math.min(1, (lt - p.from) / 0.22, (p.to - lt) / 0.22);
         const pc = camAt(play, p.cam, lt - p.from, pt);
+        const mn = p.style === 'min';
+        // V09 'min': thin gold edge, soft shadow, plain fade (no scale pop), small label
         return (
-          <div key={`pip${i}`} style={{position: 'absolute', left: p.x, top: p.y, width: p.w, height: p.h, opacity: a, transform: `scale(${0.94 + 0.06 * a})`, borderRadius: 18, overflow: 'hidden', border: '4px solid #C9A24D', boxShadow: '0 14px 36px rgba(0,0,0,0.45)'}}>
-            <Scene play={play} pt={pt} cam={pc} W={p.w} H={p.h} ov={[]} look={ep.look} gv2={ep.graphicsV2} shadows={false} />
-            {p.label && <div style={{position: 'absolute', left: 12, top: 10, fontFamily: 'Inter, Arial, sans-serif', fontWeight: 900, fontSize: 20, letterSpacing: 3, color: '#FFFFFF', background: 'rgba(11,28,61,0.85)', padding: '4px 10px', borderRadius: 6}}>{p.label}</div>}
+          <div key={`pip${i}`} style={{position: 'absolute', left: p.x, top: p.y, width: p.w, height: p.h, opacity: a, transform: mn ? undefined : `scale(${0.94 + 0.06 * a})`, borderRadius: mn ? 14 : 18, overflow: 'hidden', border: mn ? '2px solid rgba(201,162,77,0.95)' : '4px solid #C9A24D', boxShadow: mn ? '0 8px 22px rgba(0,0,0,0.35)' : '0 14px 36px rgba(0,0,0,0.45)'}}>
+            <Scene play={play} pt={pt} cam={pc} W={p.w} H={p.h} ov={[]} look={ep.look} gv2={ep.graphicsV2} shadows={mn} />
+            {p.label && <div style={{position: 'absolute', left: mn ? 10 : 12, top: mn ? 8 : 10, fontFamily: 'Inter, Arial, sans-serif', fontWeight: 900, fontSize: mn ? 16 : 20, letterSpacing: 3, color: '#FFFFFF', background: 'rgba(11,28,61,0.8)', padding: mn ? '3px 8px' : '4px 10px', borderRadius: 6}}>{p.label}</div>}
           </div>
         );
       })}
@@ -317,7 +322,7 @@ export const FBTactical3D: React.FC<{episode: Episode}> = ({episode: ep}) => {
             return null;
         }
       })}
-      {ep.subtitles !== false && !ending && !(ep.subtitleHide ?? []).some(([a, b]) => t >= a && t < b) && <Subtitles words={ep.words} t={t} keys={ep.keywords} y={ep.subtitleY} />}
+      {ep.subtitles !== false && !ending && !(ep.subtitleHide ?? []).some(([a, b]) => t >= a && t < b) && <Subtitles words={ep.words} t={t} keys={ep.keywords} y={ep.subtitleY} mode={ep.subtitleStyle} size={ep.subtitleSize} />}
       {ep.logoBug !== false && !ending && <LogoBug opacity={0.92} />}
       {shot.flash !== undefined && lt < 0.25 && <Flash age={lt} strength={shot.flash} />}
       {ep.music && <Audio src={staticFile(ep.music.src)} volume={ep.music.volume} />}

@@ -39,7 +39,9 @@ const play = ep.play;
 const fps = 30;
 const W = 1080;
 const H = 1920;
-const SAFE = {top: 220, bottom: 1920 - 440, left: 64, right: 1080 - 160};
+// V09: SAFE_BOTTOM env = top of the subtitle band (action must stay above it); DUR env = 'min-max' seconds
+const SAFE = {top: 220, bottom: +(process.env.SAFE_BOTTOM ?? 1920 - 440), left: 64, right: 1080 - 160};
+const [DMIN, DMAX] = (process.env.DUR ?? '23-29').split('-').map(Number);
 
 const remapAt = (r, lt) => {
   if (lt <= r[0][0]) return r[0][1];
@@ -82,9 +84,18 @@ for (let f = 0; f < N; f++) {
   };
   const end = si + 1 < ep.shots.length ? ep.shots[si + 1].from : ep.duration;
   const live = (items = []) => items.filter((o) => lt >= o.from && lt < (o.to ?? end - shot.from));
-  const replay = shot.kind === 'replay' || /replay|reveal/.test(shot.name);
+  const close = shot.name === 'close';
+  const replay = !close && (shot.kind === 'replay' || /replay|reveal/.test(shot.name));
+  // V09: what the inset and the subtitles could hide (key players, the ball, the space)
+  const pips = (shot.pip ?? []).filter((p) => lt >= p.from && lt < p.to);
+  const inRect = (r, p, z = 1.0) => { const q = proj([p[0], p[1], z]); return q.visible && q.x >= r.x - 10 && q.x <= r.x + r.w + 10 && q.y >= r.y - 10 && q.y <= r.y + r.h + 10; };
+  const keyPts = Object.fromEntries(['A4', 'A6', 'A7', 'A9', 'D7', 'D9'].map((id) => [id, M.playerAt(play, id, pt).pos]));
+  const spaceOv = (shot.ov ?? []).find((o) => o.type === 'space');
+  if (spaceOv) keyPts.SPACE = spaceOv.c;
+  keyPts.BALL = M.ballAt(play, pt).pos.slice(0, 2);
+  const hiddenByPip = pips.length ? Object.keys(keyPts).filter((k) => pips.some((r) => inRect(r, keyPts[k], k === 'SPACE' || k === 'BALL' ? 0.1 : 1.0))) : [];
   frames.push({
-    t, si, name: shot.name, replay, pt, frozen: (shot.freeze ?? []).some(([a, b]) => lt >= a && lt < b),
+    t, si, name: shot.name, replay, close, pt, hiddenByPip, frozen: (shot.freeze ?? []).some(([a, b]) => lt >= a && lt < b),
     box: vis([41.5, 0]) && vis([48.5, -5.5]),
     corner: vis([52.5, -34]),
     ball: vis(M.ballAt(play, pt).pos.slice(0, 2), 0.11),
@@ -105,7 +116,7 @@ const jumps = [];
 for (let i = 1; i < ep.shots.length; i++) {
   const a = frames.filter((x) => x.si === i - 1);
   const b = frames.filter((x) => x.si === i);
-  if (!a.length || !b.length || b[0].replay) continue;
+  if (!a.length || !b.length || b[0].replay || b[0].close) continue;
   const prev = [...frames.filter((x) => x.si < i && !x.replay)].pop();
   if (!prev) continue;
   const d = b[0].pt - prev.pt;
@@ -153,7 +164,10 @@ const metrics = {
 };
 add('structure: replay <= 5 s', metrics.replay_s <= 5 ? 'PASS' : 'FAIL', `${metrics.replay_s} s`);
 add('structure: static ending <= 1.2 s', metrics.static_end_s <= 1.2 ? 'PASS' : 'FAIL', `${metrics.static_end_s} s with scrim / end card`);
-add('structure: duration 23-29 s', ep.duration >= 23 && ep.duration <= 29 ? 'PASS' : 'FAIL', `${ep.duration} s`);
+add(`structure: duration ${DMIN}-${DMAX} s`, ep.duration >= DMIN && ep.duration <= DMAX ? 'PASS' : 'FAIL', `${ep.duration} s`);
+const hid = frames.filter((x) => x.hiddenByPip.length);
+add('inset: the picture-in-picture hides no key player, the ball or the space', hid.length ? 'FAIL' : 'PASS', hid.length ? [...new Set(hid.flatMap((x) => x.hiddenByPip))].join(', ') + ` (${sec(hid)} s, first at ${hid[0].t.toFixed(2)} s)` : `${metrics.pip_s} s of inset checked`);
+metrics.close_s = sec(frames.filter((x) => x.close));
 add('structure: <= 3 labels at once', metrics.max_labels <= 3 ? 'PASS' : 'FAIL', `max ${metrics.max_labels}`);
 
 if (process.env.DEBUG) for (const x of frames.filter((x, i) => i % 6 === 0)) console.log(x.t.toFixed(1), x.name, x.pt.toFixed(2), 'A6', x.p.A6, 'D9', x.p.D9, 'A4', x.p.A4, JSON.stringify(x.xy));
