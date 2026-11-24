@@ -78,7 +78,7 @@ for (const f of files) {
   // (baseline, y >= -1.5 m); he must stay OUT (centre y <= -0.2 m: both feet behind the line) until the release, release
   // the ball before limit - margin (FIBA art. 17: 5 s), and the ball must leave HIM (first pass of the play from him).
   const inb = p.inbound as {player: string; release: number; limit?: number; margin?: number} | undefined;
-  const oob = ids.filter((id) => p.tracks[id].some((w: number[]) => Math.abs(w[1]) > FIBA.halfW - 0.2 || w[2] > FIBA.halfL ||
+  const oob = ids.filter((id) => p.tracks[id].some((w: number[]) => Math.abs(w[1]) > FIBA.halfW - 0.2 || w[2] > ((p as {court?: string}).court === 'full' ? 2 * FIBA.halfL - 0.2 : FIBA.halfL) ||
     (inb && id === inb.player ? w[2] < -1.5 : w[2] < 0.2)));
   check(p.id, 'everyone stays in bounds' + (inb ? ` (thrower ${inb.player} on the baseline)` : ''), oob.length === 0, oob.join(',') || 'ok');
   if (inb) {

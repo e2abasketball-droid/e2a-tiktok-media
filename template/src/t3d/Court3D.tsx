@@ -9,15 +9,18 @@ import {W3} from './Athlete';
 import {useThree} from '@react-three/fiber';
 import {RoomEnvironment} from 'three/examples/jsm/environments/RoomEnvironment.js';
 
-// texture covers x in [-8.5, 8.5], y in [-1.5, 15.5] (17 m x 17 m)
+// texture covers x in [-8.5, 8.5], y in [-1.5, 15.5] (17 m x 17 m); FULL court (2026-11-24, 1-3-1 arrow press, opt-in
+// per play `court: 'full'`): y in [-1.5, 29.5] (17 m x 31 m), the far half mirrored about half court (y = 14)
 const X0 = -8.5;
 const Y0 = -1.5;
 const SPAN = 17;
 const PX = 2560;
-const toPx = (x: number, y: number): [number, number] => [((x - X0) / SPAN) * PX, PX - ((y - Y0) / SPAN) * PX];
+let SPAN_Y = SPAN;
+let PY = PX;
+const toPx = (x: number, y: number): [number, number] => [((x - X0) / SPAN) * PX, PY - ((y - Y0) / SPAN) * PX];
 const m2px = (m: number) => (m / SPAN) * PX;
 
-let floorTex: {map: THREE.Texture; rough: THREE.Texture} | null = null;
+const floorTexs: Record<string, {map: THREE.Texture; rough: THREE.Texture}> = {};
 
 const makeCanvas = (w: number, h: number) => {
   const c = document.createElement('canvas');
@@ -32,20 +35,23 @@ const rnd = (i: number) => {
   return x - Math.floor(x);
 };
 
-export const buildFloor = (logo?: HTMLImageElement) => {
-  if (floorTex) return floorTex;
-  const c = makeCanvas(PX, PX);
+export const buildFloor = (logo?: HTMLImageElement, full = false) => {
+  const fk = full ? 'full' : 'half';
+  if (floorTexs[fk]) return floorTexs[fk];
+  SPAN_Y = full ? 31 : SPAN;
+  PY = Math.round((SPAN_Y / SPAN) * PX);
+  const c = makeCanvas(PX, PY);
   const g = c.getContext('2d')!;
-  const r = makeCanvas(PX / 2, PX / 2);
+  const r = makeCanvas(PX / 2, PY / 2);
   const gr = r.getContext('2d')!;
   // planks run along y (toward half court), 0.07 m wide, random lengths
   const plankW = m2px(0.075);
   let n = 0;
   gr.fillStyle = 'rgb(120,120,120)';
-  gr.fillRect(0, 0, PX / 2, PX / 2);
+  gr.fillRect(0, 0, PX / 2, PY / 2);
   for (let x = 0; x < PX; x += plankW) {
     let y = -rnd(n++) * 400;
-    while (y < PX) {
+    while (y < PY) {
       const L = m2px(1.2 + rnd(n++) * 2.2);
       const tone = rnd(n++);
       const base = [168 + tone * 30, 112 + tone * 24, 64 + tone * 18];
@@ -86,10 +92,13 @@ export const buildFloor = (logo?: HTMLImageElement) => {
   const [lx] = toPx(-FIBA.halfW, 0);
   const [rx] = toPx(FIBA.halfW, 0);
   const [, by] = toPx(0, 0);
-  g.fillRect(0, 0, lx, PX);
-  g.fillRect(rx, 0, PX - rx, PX);
-  g.fillRect(0, by, PX, PX - by);
+  g.fillRect(0, 0, lx, PY);
+  g.fillRect(rx, 0, PX - rx, PY);
+  g.fillRect(0, by, PX, PY - by);
+  const L2 = 2 * FIBA.halfL;
+  if (full) g.fillRect(0, 0, PX, toPx(0, L2)[1]);
   paint(-FIBA.keyHalfW, 0, FIBA.keyHalfW, FIBA.ftY, 'rgba(11,28,61,0.9)');
+  if (full) paint(-FIBA.keyHalfW, L2 - FIBA.ftY, FIBA.keyHalfW, L2, 'rgba(11,28,61,0.9)');
   // lines
   g.strokeStyle = 'rgba(250,248,240,0.96)';
   g.lineWidth = m2px(0.05);
@@ -103,7 +112,9 @@ export const buildFloor = (logo?: HTMLImageElement) => {
     g.stroke();
   };
   // boundary
-  line([[-FIBA.halfW, 0], [FIBA.halfW, 0], [FIBA.halfW, FIBA.halfL], [-FIBA.halfW, FIBA.halfL], [-FIBA.halfW, 0]]);
+  const yEnd = full ? L2 : FIBA.halfL;
+  line([[-FIBA.halfW, 0], [FIBA.halfW, 0], [FIBA.halfW, yEnd], [-FIBA.halfW, yEnd], [-FIBA.halfW, 0]]);
+  if (full) line([[-FIBA.halfW, FIBA.halfL], [FIBA.halfW, FIBA.halfL]]);
   // key
   line([[-FIBA.keyHalfW, 0], [-FIBA.keyHalfW, FIBA.ftY], [FIBA.keyHalfW, FIBA.ftY], [FIBA.keyHalfW, 0]]);
   // free-throw circle
@@ -133,8 +144,25 @@ export const buildFloor = (logo?: HTMLImageElement) => {
   }
   // centre circle (at half court) with the logo
   arc(0, FIBA.halfL, FIBA.centreR, Math.PI, 2 * Math.PI);
+  if (full) {
+    // far half: the same marks mirrored about half court (y -> 28 - y)
+    const M = (pts: [number, number][]) => line(pts.map(([x, y]) => [x, L2 - y] as [number, number]));
+    const arcM = (cx: number, cy: number, R: number, a0: number, a1: number, dashed = false) => arc(cx, L2 - cy, R, -a1, -a0, dashed);
+    M([[-FIBA.keyHalfW, 0], [-FIBA.keyHalfW, FIBA.ftY], [FIBA.keyHalfW, FIBA.ftY], [FIBA.keyHalfW, 0]]);
+    arcM(0, FIBA.ftY, FIBA.ftR, 0, Math.PI);
+    arcM(0, FIBA.ftY, FIBA.ftR, Math.PI, 2 * Math.PI, true);
+    M([[-FIBA.cornerX, 0], [-FIBA.cornerX, threeJoinY]]);
+    M([[FIBA.cornerX, 0], [FIBA.cornerX, threeJoinY]]);
+    arcM(FIBA.basket[0], FIBA.basket[1], FIBA.threeR, ja, Math.PI - ja);
+    arcM(FIBA.basket[0], FIBA.basket[1], FIBA.restrictedR, 0, Math.PI);
+    for (const y of [1.75, 2.6, 3.45, 4.3]) {
+      M([[-FIBA.keyHalfW - 0.1, y], [-FIBA.keyHalfW, y]]);
+      M([[FIBA.keyHalfW, y], [FIBA.keyHalfW + 0.1, y]]);
+    }
+    arc(0, FIBA.halfL, FIBA.centreR, 0, Math.PI);
+  }
   if (logo) {
-    const [cx, cy] = toPx(0, FIBA.halfL - 0.9);
+    const [cx, cy] = toPx(0, full ? FIBA.halfL : FIBA.halfL - 0.9);
     const w = m2px(1.6);
     const h = (w * logo.height) / logo.width;
     g.globalAlpha = 0.5;
@@ -145,12 +173,13 @@ export const buildFloor = (logo?: HTMLImageElement) => {
   g.fillStyle = 'rgba(201,162,77,0.85)';
   const [, by2] = toPx(0, -0.55);
   g.fillRect(lx, by2, rx - lx, m2px(0.06));
+  if (full) g.fillRect(lx, toPx(0, L2 + 0.55)[1], rx - lx, m2px(0.06));
   const map = new THREE.CanvasTexture(c);
   map.colorSpace = THREE.SRGBColorSpace;
   map.anisotropy = 8;
   const rough = new THREE.CanvasTexture(r);
-  floorTex = {map, rough};
-  return floorTex;
+  floorTexs[fk] = {map, rough};
+  return floorTexs[fk];
 };
 
 const NetGeo = (() => {
@@ -255,16 +284,17 @@ export const Basket: React.FC<{swish?: number; snap?: boolean}> = ({swish = 0, s
  *  dark stands from ANY orbit direction, a slightly lifted navy background and a warmer key on faces. */
 export type SceneEnv = 'practice' | 'game' | 'academy' | 'cinema';
 
-export const Court3D: React.FC<{logo?: HTMLImageElement; swish?: number; env?: SceneEnv; netSnap?: boolean}> = ({logo, swish, env, netSnap}) => {
-  const tex = React.useMemo(() => buildFloor(logo), [logo]);
+export const Court3D: React.FC<{logo?: HTMLImageElement; swish?: number; env?: SceneEnv; netSnap?: boolean; full?: boolean; farBasket?: boolean}> = ({logo, swish, env, netSnap, full = false, farBasket = false}) => {
+  const tex = React.useMemo(() => buildFloor(logo, full), [logo, full]);
+  const spanY = full ? 31 : SPAN;
   const cx = 0;
-  const cy = Y0 + SPAN / 2;
+  const cy = Y0 + spanY / 2;
   const [px, , pz] = W3([cx, cy, 0]);
   return (
     <group>
       {/* parquet */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[px, 0, pz]} receiveShadow>
-        <planeGeometry args={[SPAN, SPAN]} />
+        <planeGeometry args={[SPAN, spanY]} />
         {env === 'cinema' ? (
           <meshStandardMaterial map={tex.map} roughnessMap={tex.rough} roughness={0.8} metalness={0.0} envMapIntensity={0.36} />
         ) : env === 'academy' ? (
@@ -278,8 +308,15 @@ export const Court3D: React.FC<{logo?: HTMLImageElement; swish?: number; env?: S
         <planeGeometry args={[80, 80]} />
         <meshStandardMaterial color="#070D1A" roughness={0.9} />
       </mesh>
-      <Arena env={env} />
+      <Arena env={env} full={full} />
       <Basket swish={swish} snap={netSnap} />
+      {/* full court: NO far basket unit by default - from the tactical camera behind the offence its stanchion stands
+          between the lens and the press (it hid the ball handler); only the floor marks of the far half are drawn */}
+      {full && farBasket && (
+        <group rotation={[0, Math.PI, 0]} position={[0, 0, -2 * FIBA.halfL]}>
+          <Basket />
+        </group>
+      )}
     </group>
   );
 };
@@ -419,16 +456,16 @@ const PracticeGym: React.FC = () => (
   </group>
 );
 
-export const Arena: React.FC<{env?: SceneEnv}> = ({env}) => env === 'practice' ? <PracticeGym /> : (
+export const Arena: React.FC<{env?: SceneEnv; full?: boolean}> = ({env, full = false}) => env === 'practice' ? <PracticeGym /> : (
   <group>
     <EnvMap />
     {/* behind the baseline (world y < 0 -> three z > 0) */}
     <Stand origin={[0, 0, 4.2]} along={[1, 0, 0]} out={[0, 0, 1]} length={30} rows={14} seed={1} fill={env === 'game' ? 0.95 : 0.78} />
     {/* both sidelines */}
-    <Stand origin={[-10.2, 0, -8]} along={[0, 0, 1]} out={[-1, 0, 0]} length={30} rows={14} seed={2} fill={env === 'game' ? 0.95 : 0.78} />
-    <Stand origin={[10.2, 0, -8]} along={[0, 0, 1]} out={[1, 0, 0]} length={30} rows={14} seed={3} fill={env === 'game' ? 0.95 : 0.78} />
+    <Stand origin={[-10.2, 0, full ? -12 : -8]} along={[0, 0, 1]} out={[-1, 0, 0]} length={full ? 38 : 30} rows={14} seed={2} fill={env === 'game' ? 0.95 : 0.78} />
+    <Stand origin={[10.2, 0, full ? -12 : -8]} along={[0, 0, 1]} out={[1, 0, 0]} length={full ? 38 : 30} rows={14} seed={3} fill={env === 'game' ? 0.95 : 0.78} />
     {/* far end */}
-    <Stand origin={[0, 0, -30]} along={[1, 0, 0]} out={[0, 0, -1]} length={30} rows={14} seed={4} />
+    <Stand origin={[0, 0, full ? -32.2 : -30]} along={[1, 0, 0]} out={[0, 0, -1]} length={30} rows={14} seed={4} />
     {/* ceiling light banks */}
     {Array.from({length: 18}, (_, i) => {
       const x = ((i % 6) - 2.5) * 4.2;

@@ -72,6 +72,22 @@ export const COVERAGE_SCHEMES: Record<string, CoverageScheme> = {
       X4: {label: 'X4 · TAIL', r: [3.1, 0.85], rh: 1.1, labelOff: [0, -0.95]},
     },
   },
+  // 2026-11-24 (1-3-1 ARROW press reel): three-quarter-court 1-3-1 press, full-court play (`court: 'full'`). Bigger
+  // areas: five players cover the whole width of the floor. X1 point (turns the ball to the sideline), X2 left wing /
+  // X3 right wing (the trap line at half court), X5 middle (the middle lane), X4 safety (the long pass, the rim).
+  'arrow-131': {
+    name: '1-3-1 arrow press',
+    ids: ['X1', 'X2', 'X3', 'X4', 'X5'],
+    gap: 0.2,
+    reveal: ['X1', 'X2', 'X5', 'X3', 'X4'],
+    roles: {
+      X1: {label: 'X1 · POINT', r: [2.6, 2.1], rh: 1.6, labelOff: [0, 1.6]},
+      X2: {label: 'X2 · WING', r: [2.5, 2.4], rh: 1.6, labelOff: [0, 1.5]},
+      X3: {label: 'X3 · WING', r: [2.5, 2.4], rh: 1.6, labelOff: [0, 1.5]},
+      X5: {label: 'X5 · MIDDLE', r: [2.2, 2.1], rh: 1.5, labelOff: [0, -1.5]},
+      X4: {label: 'X4 · SAFETY', r: [3.3, 2.7], rh: 1.7, labelOff: [0, -1.7]},
+    },
+  },
 };
 
 // ---------------------------------------------------------------- overlay types
@@ -117,6 +133,8 @@ const clamp = (x: number, a = 0, b = 1) => Math.max(a, Math.min(b, x));
 const eo = (x: number) => 1 - Math.pow(1 - clamp(x), 3);
 const mix = (c1: string, c2: string, u: number) => '#' + new THREE.Color(c1).lerp(new THREE.Color(c2), clamp(u)).getHexString();
 const COURT = {x0: -7.42, x1: 7.42, y0: 0.05, y1: 13.95};
+/** 2026-11-24: full-court plays (`court: 'full'`, arrow press) clip the areas to the far baseline instead of half court */
+const courtY1 = (play: Play) => ((play as {court?: string}).court === 'full' ? 27.95 : COURT.y1);
 const mat = (color: string, opacity: number, map?: THREE.Texture, additive = false) =>
   new THREE.MeshBasicMaterial({color, ...(map ? {map} : {}), transparent: true, opacity: clamp(opacity), depthWrite: false, toneMapped: false, side: THREE.DoubleSide,
     polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2, ...(additive ? {blending: THREE.AdditiveBlending} : {})});
@@ -304,7 +322,7 @@ export const coverageState = (play: Play, pt: number, o: Pick<CoverageOv, 'schem
     }
     poly = clipHalf(poly, [1, 0], COURT.x1);
     poly = clipHalf(poly, [-1, 0], -COURT.x0);
-    poly = clipHalf(poly, [0, 1], COURT.y1);
+    poly = clipHalf(poly, [0, 1], courtY1(play));
     poly = clipHalf(poly, [0, -1], -COURT.y0);
     if (poly.length >= 3) poly = chaikin(poly, 3);
     return {id, pos: p, home, speed, away, poly};
@@ -371,7 +389,7 @@ export const Coverage3D: React.FC<{play: Play; pt: number; o: CoverageOv & {age:
       const {right, up} = yawAxes(o.labelYaw ?? 90);
       const t = textTex(ro.label, isAct ? '#FFE2A0' : '#F4EBDD', false);
       const h = o.labelSize ?? 0.38;
-      const c: V2 = [clamp(d.pos[0] + ro.labelOff[0], COURT.x0 + 1.2, COURT.x1 - 1.2), clamp(d.pos[1] + ro.labelOff[1], COURT.y0 + 0.4, COURT.y1 - 0.4)];
+      const c: V2 = [clamp(d.pos[0] + ro.labelOff[0], COURT.x0 + 1.2, COURT.x1 - 1.2), clamp(d.pos[1] + ro.labelOff[1], COURT.y0 + 0.4, courtY1(play) - 0.4)];
       els.push(<mesh key={`tb${d.id}`} geometry={floorQuad(c, right, up, h * t.aspect * 1.04 + 0.16, h * 1.25, z + 0.003)} material={mat(NAVY, 0.55 * op * rev)} />);
       els.push(<mesh key={`t${d.id}`} geometry={floorQuad(c, right, up, h * t.aspect, h, z + 0.0035)} material={mat('#FFFFFF', 0.95 * op * rev, t.tex)} />);
     }

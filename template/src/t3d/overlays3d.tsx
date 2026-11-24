@@ -107,7 +107,9 @@ export type Ov3 =
   /** consume (2026-11-19): the route ahead of the player only (born under him, eaten as he runs it) */
   | {type: 'route'; player: string; t0: number; t1: number; color?: string; draw?: number; dashed?: boolean; width?: number; pts?: V2[]; trail?: boolean; consume?: boolean;
      /** 2026-11-21 (BLOB V2 fork): a plated floor label at the arrow tip, read from camera yaw `labelYaw` */
-     label?: string; labelYaw?: number; labelOffset?: V2; labelSize?: number}
+     label?: string; labelYaw?: number; labelOffset?: V2; labelSize?: number;
+     /** 2026-11-24 (arrow press): a lit court line (half-court line, sideline) with no arrowhead */
+     noHead?: boolean}
   | {type: 'screen'; player?: string; at?: V2; n: number; facing?: number}
   /** travel (2026-11-19): seconds for a lit segment to run from the passer to the catch point; dstAt = play time of the catch */
   | {type: 'passLane'; src: string; dst: string | V2; color?: string; travel?: number; dstAt?: number}
@@ -589,7 +591,7 @@ export const Overlays3D: React.FC<{play: Play; pt: number; items: LiveOv3[]}> = 
               <group key={i}>
                 <mesh geometry={ribbon(part, w * 2.2, 0.011)} material={basic(col, 0.18 * a)} />
                 <mesh geometry={ribbon(part, w, 0.013, o.dashed)} material={basic(col, 0.95 * a)} />
-                <mesh geometry={arrowHead(tip, [tip[0] - prev[0], tip[1] - prev[1]], w * 3.2)} material={basic(col, 0.95 * a)} />
+                {!o.noHead && <mesh geometry={arrowHead(tip, [tip[0] - prev[0], tip[1] - prev[1]], w * 3.2)} material={basic(col, 0.95 * a)} />}
                 {o.label && u > 0.85 && (() => {
                   const t = textTex(o.label, col, true);
                   const {right, up} = yawAxes(o.labelYaw ?? 0);
