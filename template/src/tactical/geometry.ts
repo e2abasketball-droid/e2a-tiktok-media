@@ -214,3 +214,27 @@ export const segPath = (pr: Projector, a: V3, b: V3): string | null => {
 /** floor circle as a polygon path */
 export const floorCircle = (pr: Projector, c: V2, r: number, n = 28, z = 0.005): string =>
   polyPath(pr, Array.from({length: n}, (_, i) => [c[0] + r * Math.cos((i / n) * 2 * Math.PI), c[1] + r * Math.sin((i / n) * 2 * Math.PI), z] as V3));
+
+/** 2026-11-24 (NBA vs EuroLeague reel): court line sets drawn on the same world (basket centre fixed at FIBA.basket,
+ *  so the rim, the players and the plays never move; only the painted lines change).
+ *  FIBA (= EuroLeague): FIBA OBR 2024 Art. 2: 28 x 15 m, arc 6.75 m from the point under the basket centre, corner lines
+ *  0.90 m from the sidelines (6.60 m from the basket), basket centre 1.575 m from the baseline, key 4.90 x 5.80 m.
+ *  NBA: Rule 1: 94 x 50 ft (28.65 x 15.24 m), arc 23'9" (7.24 m), corner lines 3 ft (0.914 m) from the sidelines
+ *  (22 ft = 6.71 m from the basket), basket centre 63 in (1.60 m) from the baseline (board 4 ft + 15 in), lane 16 ft
+ *  (4.88 m) wide, free-throw line 15 ft from the board (19 ft = 5.79 m from the baseline), FT circle r 6 ft,
+ *  restricted area r 4 ft, centre circle r 6 ft. NBA values are converted from feet (1 ft = 0.3048 m). */
+export type CourtRules = 'fiba' | 'nba';
+export type CourtLines = {halfW: number; baseY: number; halfY: number; keyHalfW: number; ftY: number; ftR: number; threeR: number; cornerX: number;
+  restrictedR: number; centreR: number; laneMarks: number[]};
+const FT = 0.3048;
+const NBA_BASE = FIBA.basket[1] - 63 * 0.0254;
+export const COURTS: Record<CourtRules, CourtLines> = {
+  fiba: {halfW: FIBA.halfW, baseY: 0, halfY: FIBA.halfL, keyHalfW: FIBA.keyHalfW, ftY: FIBA.ftY, ftR: FIBA.ftR, threeR: FIBA.threeR,
+    cornerX: FIBA.cornerX, restrictedR: FIBA.restrictedR, centreR: FIBA.centreR, laneMarks: [1.75, 2.6, 3.45, 4.3]},
+  nba: {halfW: 25 * FT, baseY: NBA_BASE, halfY: NBA_BASE + 47 * FT, keyHalfW: 8 * FT, ftY: NBA_BASE + 19 * FT, ftR: 6 * FT, threeR: (23 + 9 / 12) * FT,
+    cornerX: 22 * FT, restrictedR: 4 * FT, centreR: 6 * FT, laneMarks: [7, 8, 11, 14].map((f) => NBA_BASE + f * FT)},
+};
+/** y where the straight corner line meets the arc, for a line set */
+export const joinY = (c: CourtLines) => FIBA.basket[1] + Math.sqrt(c.threeR ** 2 - c.cornerX ** 2);
+/** true if a floor point is a three-point spot for a line set (a foot ON the line is two points) */
+export const isThreeFor = (c: CourtLines, p: V2) => (p[1] <= joinY(c) ? Math.abs(p[0]) > c.cornerX : distToBasket(p) > c.threeR);

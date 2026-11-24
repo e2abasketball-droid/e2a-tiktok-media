@@ -4,7 +4,14 @@
 // overhead rigs) so the court reads as a physical space instead of a floating rectangle.
 import React from 'react';
 import * as THREE from 'three';
-import {FIBA, threeJoinY} from '../tactical/geometry.ts';
+import {COURTS, FIBA, joinY} from '../tactical/geometry.ts';
+import type {CourtRules} from '../tactical/geometry.ts';
+
+/** 2026-11-24 (NBA vs EuroLeague): secondary tone per line set; E2A navy apron and gold stripe stay. Default (fiba) as before. */
+const KEY_PAINT: Record<CourtRules, string> = {fiba: 'rgba(11,28,61,0.9)', nba: 'rgba(11,28,61,0.9)'};
+const APRON_WORD: Record<CourtRules, string> = {fiba: '', nba: ''};
+const APRON_INK: Record<CourtRules, string> = {fiba: 'rgba(255,255,255,0.9)', nba: 'rgba(255,255,255,0.9)'};
+
 import {W3} from './Athlete';
 import {useThree} from '@react-three/fiber';
 import {RoomEnvironment} from 'three/examples/jsm/environments/RoomEnvironment.js';
@@ -35,8 +42,12 @@ const rnd = (i: number) => {
   return x - Math.floor(x);
 };
 
-export const buildFloor = (logo?: HTMLImageElement, full = false) => {
-  const fk = full ? 'full' : 'half';
+export type CourtLook = {paint?: string; word?: string; ink?: string};
+export const buildFloor = (logo?: HTMLImageElement, full = false, rules: CourtRules = 'fiba', look?: CourtLook) => {
+  const fk = (full ? 'full' : 'half') + (rules === 'fiba' ? '' : rules) + (look ? JSON.stringify(look) : '');
+  const paintCol = look?.paint ?? KEY_PAINT[rules], apronWord = look?.word ?? APRON_WORD[rules], apronInk = look?.ink ?? APRON_INK[rules];
+  const C = COURTS[rules];
+  const B0 = C.baseY;
   if (floorTexs[fk]) return floorTexs[fk];
   // full court: 2048 px wide (2048 x 3735) - a 2560 x 4668 canvas texture per tab made concurrent renders fail
   PX = full ? 2048 : 2560;
@@ -91,16 +102,16 @@ export const buildFloor = (logo?: HTMLImageElement, full = false) => {
   };
   // out of bounds apron (navy) around the court
   g.fillStyle = 'rgba(11,28,61,0.94)';
-  const [lx] = toPx(-FIBA.halfW, 0);
-  const [rx] = toPx(FIBA.halfW, 0);
-  const [, by] = toPx(0, 0);
+  const [lx] = toPx(-C.halfW, B0);
+  const [rx] = toPx(C.halfW, B0);
+  const [, by] = toPx(0, B0);
   g.fillRect(0, 0, lx, PY);
   g.fillRect(rx, 0, PX - rx, PY);
   g.fillRect(0, by, PX, PY - by);
   const L2 = 2 * FIBA.halfL;
   if (full) g.fillRect(0, 0, PX, toPx(0, L2)[1]);
-  paint(-FIBA.keyHalfW, 0, FIBA.keyHalfW, FIBA.ftY, 'rgba(11,28,61,0.9)');
-  if (full) paint(-FIBA.keyHalfW, L2 - FIBA.ftY, FIBA.keyHalfW, L2, 'rgba(11,28,61,0.9)');
+  paint(-C.keyHalfW, B0, C.keyHalfW, C.ftY, paintCol);
+  if (full) paint(-C.keyHalfW, L2 - C.ftY, C.keyHalfW, L2, 'rgba(11,28,61,0.9)');
   // lines
   g.strokeStyle = 'rgba(250,248,240,0.96)';
   g.lineWidth = m2px(0.05);
@@ -114,11 +125,11 @@ export const buildFloor = (logo?: HTMLImageElement, full = false) => {
     g.stroke();
   };
   // boundary
-  const yEnd = full ? L2 : FIBA.halfL;
-  line([[-FIBA.halfW, 0], [FIBA.halfW, 0], [FIBA.halfW, yEnd], [-FIBA.halfW, yEnd], [-FIBA.halfW, 0]]);
-  if (full) line([[-FIBA.halfW, FIBA.halfL], [FIBA.halfW, FIBA.halfL]]);
+  const yEnd = full ? L2 : C.halfY;
+  line([[-C.halfW, B0], [C.halfW, B0], [C.halfW, yEnd], [-C.halfW, yEnd], [-C.halfW, B0]]);
+  if (full) line([[-C.halfW, FIBA.halfL], [C.halfW, FIBA.halfL]]);
   // key
-  line([[-FIBA.keyHalfW, 0], [-FIBA.keyHalfW, FIBA.ftY], [FIBA.keyHalfW, FIBA.ftY], [FIBA.keyHalfW, 0]]);
+  line([[-C.keyHalfW, B0], [-C.keyHalfW, C.ftY], [C.keyHalfW, C.ftY], [C.keyHalfW, B0]]);
   // free-throw circle
   const arc = (cx: number, cy: number, R: number, a0: number, a1: number, dashed = false) => {
     const pts: [number, number][] = [];
@@ -130,41 +141,41 @@ export const buildFloor = (logo?: HTMLImageElement, full = false) => {
     line(pts);
     g.setLineDash([]);
   };
-  arc(0, FIBA.ftY, FIBA.ftR, 0, Math.PI);
-  arc(0, FIBA.ftY, FIBA.ftR, Math.PI, 2 * Math.PI, true);
+  arc(0, C.ftY, C.ftR, 0, Math.PI);
+  arc(0, C.ftY, C.ftR, Math.PI, 2 * Math.PI, true);
   // three-point line
-  const ja = Math.atan2(threeJoinY - FIBA.basket[1], FIBA.cornerX);
-  line([[-FIBA.cornerX, 0], [-FIBA.cornerX, threeJoinY]]);
-  line([[FIBA.cornerX, 0], [FIBA.cornerX, threeJoinY]]);
-  arc(FIBA.basket[0], FIBA.basket[1], FIBA.threeR, ja, Math.PI - ja);
+  const ja = Math.atan2(joinY(C) - FIBA.basket[1], C.cornerX);
+  line([[-C.cornerX, B0], [-C.cornerX, joinY(C)]]);
+  line([[C.cornerX, B0], [C.cornerX, joinY(C)]]);
+  arc(FIBA.basket[0], FIBA.basket[1], C.threeR, ja, Math.PI - ja);
   // restricted area
-  arc(FIBA.basket[0], FIBA.basket[1], FIBA.restrictedR, 0, Math.PI);
+  arc(FIBA.basket[0], FIBA.basket[1], C.restrictedR, 0, Math.PI);
   // lane marks
-  for (const y of [1.75, 2.6, 3.45, 4.3]) {
-    line([[-FIBA.keyHalfW - 0.1, y], [-FIBA.keyHalfW, y]]);
-    line([[FIBA.keyHalfW, y], [FIBA.keyHalfW + 0.1, y]]);
+  for (const y of C.laneMarks) {
+    line([[-C.keyHalfW - 0.1, y], [-C.keyHalfW, y]]);
+    line([[C.keyHalfW, y], [C.keyHalfW + 0.1, y]]);
   }
   // centre circle (at half court) with the logo
-  arc(0, FIBA.halfL, FIBA.centreR, Math.PI, 2 * Math.PI);
+  arc(0, C.halfY, C.centreR, Math.PI, 2 * Math.PI);
   if (full) {
     // far half: the same marks mirrored about half court (y -> 28 - y)
     const M = (pts: [number, number][]) => line(pts.map(([x, y]) => [x, L2 - y] as [number, number]));
     const arcM = (cx: number, cy: number, R: number, a0: number, a1: number, dashed = false) => arc(cx, L2 - cy, R, -a1, -a0, dashed);
-    M([[-FIBA.keyHalfW, 0], [-FIBA.keyHalfW, FIBA.ftY], [FIBA.keyHalfW, FIBA.ftY], [FIBA.keyHalfW, 0]]);
-    arcM(0, FIBA.ftY, FIBA.ftR, 0, Math.PI);
-    arcM(0, FIBA.ftY, FIBA.ftR, Math.PI, 2 * Math.PI, true);
-    M([[-FIBA.cornerX, 0], [-FIBA.cornerX, threeJoinY]]);
-    M([[FIBA.cornerX, 0], [FIBA.cornerX, threeJoinY]]);
-    arcM(FIBA.basket[0], FIBA.basket[1], FIBA.threeR, ja, Math.PI - ja);
-    arcM(FIBA.basket[0], FIBA.basket[1], FIBA.restrictedR, 0, Math.PI);
+    M([[-C.keyHalfW, 0], [-C.keyHalfW, C.ftY], [C.keyHalfW, C.ftY], [C.keyHalfW, 0]]);
+    arcM(0, C.ftY, C.ftR, 0, Math.PI);
+    arcM(0, C.ftY, C.ftR, Math.PI, 2 * Math.PI, true);
+    M([[-C.cornerX, 0], [-C.cornerX, joinY(C)]]);
+    M([[C.cornerX, 0], [C.cornerX, joinY(C)]]);
+    arcM(FIBA.basket[0], FIBA.basket[1], C.threeR, ja, Math.PI - ja);
+    arcM(FIBA.basket[0], FIBA.basket[1], C.restrictedR, 0, Math.PI);
     for (const y of [1.75, 2.6, 3.45, 4.3]) {
-      M([[-FIBA.keyHalfW - 0.1, y], [-FIBA.keyHalfW, y]]);
-      M([[FIBA.keyHalfW, y], [FIBA.keyHalfW + 0.1, y]]);
+      M([[-C.keyHalfW - 0.1, y], [-C.keyHalfW, y]]);
+      M([[C.keyHalfW, y], [C.keyHalfW + 0.1, y]]);
     }
-    arc(0, FIBA.halfL, FIBA.centreR, 0, Math.PI);
+    arc(0, FIBA.halfL, C.centreR, 0, Math.PI);
   }
   if (logo) {
-    const [cx, cy] = toPx(0, full ? FIBA.halfL : FIBA.halfL - 0.9);
+    const [cx, cy] = toPx(0, full ? FIBA.halfL : C.halfY - 0.9);
     const w = m2px(1.6);
     const h = (w * logo.height) / logo.width;
     g.globalAlpha = 0.5;
@@ -173,9 +184,24 @@ export const buildFloor = (logo?: HTMLImageElement, full = false) => {
   }
   // gold baseline accent stripe on the apron
   g.fillStyle = 'rgba(201,162,77,0.85)';
-  const [, by2] = toPx(0, -0.55);
+  const [, by2] = toPx(0, B0 - 0.55);
   g.fillRect(lx, by2, rx - lx, m2px(0.06));
   if (full) g.fillRect(lx, toPx(0, L2 + 0.55)[1], rx - lx, m2px(0.06));
+  if (apronWord) {
+    const word = apronWord;
+    // painted between the top of the arc and half court, readable from the half-court cameras (rotated 180 deg)
+    const [wx, wy] = toPx(0, C.halfY - 3.1);
+    g.save();
+    g.translate(wx, wy);
+    g.rotate(Math.PI);
+    g.font = `400 ${Math.round(m2px(1.05))}px Anton, Impact, sans-serif`;
+    g.textAlign = 'center';
+    g.textBaseline = 'middle';
+    g.globalAlpha = 0.42;
+    g.fillStyle = apronInk;
+    g.fillText(word, 0, 0);
+    g.restore();
+  }
   const map = new THREE.CanvasTexture(c);
   map.colorSpace = THREE.SRGBColorSpace;
   map.anisotropy = 8;
@@ -286,8 +312,9 @@ export const Basket: React.FC<{swish?: number; snap?: boolean}> = ({swish = 0, s
  *  dark stands from ANY orbit direction, a slightly lifted navy background and a warmer key on faces. */
 export type SceneEnv = 'practice' | 'game' | 'academy' | 'cinema';
 
-export const Court3D: React.FC<{logo?: HTMLImageElement; swish?: number; env?: SceneEnv; netSnap?: boolean; full?: boolean; farBasket?: boolean}> = ({logo, swish, env, netSnap, full = false, farBasket = false}) => {
-  const tex = React.useMemo(() => buildFloor(logo, full), [logo, full]);
+export const Court3D: React.FC<{logo?: HTMLImageElement; swish?: number; env?: SceneEnv; netSnap?: boolean; full?: boolean; farBasket?: boolean; rules?: CourtRules; look?: CourtLook}> = ({logo, swish, env, netSnap, full = false, farBasket = false, rules = 'fiba', look}) => {
+  const lk = look ? JSON.stringify(look) : '';
+  const tex = React.useMemo(() => buildFloor(logo, full, rules, look), [logo, full, rules, lk]); // eslint-disable-line react-hooks/exhaustive-deps
   const spanY = full ? 31 : SPAN;
   const cx = 0;
   const cy = Y0 + spanY / 2;

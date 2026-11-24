@@ -805,6 +805,8 @@ export const Overlays3D: React.FC<{play: Play; pt: number; items: LiveOv3[]}> = 
           case 'handRing':
           case 'area2':
           case 'arc3':
+          case 'lane':
+          case 'measure':
             return <Rules3D key={i} play={play} pt={pt} o={o} a={a} />;
           default:
             return null;

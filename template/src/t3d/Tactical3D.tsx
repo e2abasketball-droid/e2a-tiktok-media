@@ -19,6 +19,8 @@ import type {FaceCfg} from './Scene';
 import {choosePin, placePin} from './pinPlace';
 import {FocusVignette, FreezeFrame, KineticTitle, Logo, OfferCounter, PinLabel, PremiumSubtitles, RewindTag, Stamp, StepBadge, StepCounter, TacticalHUD, sceneFx} from './screen3d';
 import {Flash} from '../pro/fx';
+import {ClockDuel, Count3, FoulTrack, LeagueTag, VsTitle} from './leagues';
+import type {League} from './leagues';
 import {countedSteps} from './overlays3d';
 import '../theme';
 import {LOGO} from '../brand';
@@ -41,7 +43,14 @@ type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: n
    *  verdict badge with a round icon (red X = violation / foul, green check = legal); section tag "01 TRAVELING" */
   | {type: 'score'; text: string; y?: number; size?: number; sub?: string}
   | {type: 'verdict'; text: string; tone: 'red' | 'green'; y?: number; size?: number}
-  | {type: 'section'; n: string; text: string; y?: number});
+  | {type: 'section'; n: string; text: string; y?: number}
+  /** 2026-11-24 (NBA vs EuroLeague): league tag, NBA vs EUROLEAGUE lock-up, regulation clocks, a player's personal-foul
+   *  track, a big 1-2-3 count. Inner times are anchors (resolved like `counter` steps). */
+  | {type: 'league'; league: League; y?: number; align?: 'left' | 'center' | 'right'; size?: number}
+  | {type: 'vs'; y?: number; size?: number; question?: string}
+  | {type: 'clocks'; nba: Anchor; nbaTotal: Anchor; el: Anchor; elTotal: Anchor; y?: number; sub?: string}
+  | {type: 'fouls'; league: League; max: number; ticks: Anchor[]; out: Anchor; y?: number; label?: string}
+  | {type: 'count3'; ticks: Anchor[]; y?: number; size?: number});
 /** 2026-11-22 (Chicago V3 split screen): a SECOND live 3D view stacked under the shot's own view (same clock, own play,
  *  remap, camera and world graphics). The shot's view takes the top `ratio` of the frame. Shots without `split` are
  *  rendered exactly as before. */
@@ -467,6 +476,22 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
           case 'tint': {
             const o = Math.max(0, Math.min(1, s.age / 0.3, (s.dur - s.age) / 0.3)) * (s.strength ?? 0.5);
             return <AbsoluteFill key={i} style={{boxShadow: `inset 0 0 160px 40px ${s.color ?? 'rgba(229,72,58,0.9)'}`, opacity: o}} />;
+          }
+          case 'league':
+            return <LeagueTag key={i} league={s.league} age={s.age} dur={s.dur} y={s.y} align={s.align} size={s.size} />;
+          case 'vs':
+            return <VsTitle key={i} age={s.age} dur={s.dur} y={s.y} size={s.size} question={s.question} />;
+          case 'clocks': {
+            const r = (a: Anchor) => toLocal(a) - (lt - s.age);
+            return <ClockDuel key={i} age={s.age} dur={s.dur} y={s.y} sub={s.sub} nba={r(s.nba)} nbaTotal={r(s.nbaTotal)} el={r(s.el)} elTotal={r(s.elTotal)} />;
+          }
+          case 'fouls': {
+            const r = (a: Anchor) => toLocal(a) - (lt - s.age);
+            return <FoulTrack key={i} league={s.league} max={s.max} ticks={s.ticks.map(r)} out={r(s.out)} age={s.age} dur={s.dur} y={s.y} label={s.label} />;
+          }
+          case 'count3': {
+            const r = (a: Anchor) => toLocal(a) - (lt - s.age);
+            return <Count3 key={i} ticks={s.ticks.map(r)} age={s.age} dur={s.dur} y={s.y} size={s.size} />;
           }
           case 'flash':
             return <Flash key={i} age={s.age} color={s.color} strength={s.strength ?? 0.35} />;

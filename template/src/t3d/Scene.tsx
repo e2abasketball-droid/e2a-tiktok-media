@@ -307,7 +307,8 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
       <color attach="background" args={[env === 'practice' ? '#1B140E' : env === 'academy' ? '#04070F' : env === 'cinema' ? '#071022' : '#050A15']} />
       <fog attach="fog" args={[env === 'practice' ? '#1B140E' : env === 'academy' ? '#04070F' : env === 'cinema' ? '#071022' : '#050A15', env === 'academy' ? 12 : env === 'cinema' ? 22 : 14, env === 'academy' ? 34 : env === 'cinema' ? 58 : 40]} />
       <ArenaLights focus={W3([cam.target[0] * 0.5, Math.max(2, cam.target[1] * 0.7 + 1.5), 0])} env={env} />
-      <Court3D logo={logo} swish={swish} env={env} netSnap={realismV3(play)} full={(play as {court?: string}).court === 'full'} />
+      <Court3D logo={logo} swish={swish} env={env} netSnap={realismV3(play)} full={(play as {court?: string}).court === 'full'}
+        rules={(play as {courtRules?: 'fiba' | 'nba'}).courtRules} look={(play as {courtLook?: {paint?: string; word?: string; ink?: string}}).courtLook} />
       {play.players.map((p, i) => {
         if (hide.includes(p.id)) return null;
         const pp = plan[p.id];

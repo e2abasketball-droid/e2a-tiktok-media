@@ -13,7 +13,8 @@
 import React from 'react';
 import * as THREE from 'three';
 import type {V3} from '../tactical/geometry.ts';
-import {FIBA} from '../tactical/geometry.ts';
+import {COURTS, FIBA, joinY} from '../tactical/geometry.ts';
+import type {CourtRules} from '../tactical/geometry.ts';
 import type {Play} from '../tactical/play.ts';
 import {W3} from './Athlete';
 import {PLAYER3D_V32} from './realism-v3-2/index.ts';
@@ -23,8 +24,12 @@ export type RulesOv =
   | {type: 'footRing'; player: string; foot: 'L' | 'R'; color?: string; r?: number}
   | {type: 'ballRing'; color?: string; r?: number}
   | {type: 'handRing'; player: string; hand: 0 | 1; color?: string}
-  | {type: 'area2'; color?: string; opacity?: number}
-  | {type: 'arc3'; color?: string; width?: number; draw?: number};
+  | {type: 'area2'; color?: string; opacity?: number; rules?: CourtRules}
+  | {type: 'arc3'; color?: string; width?: number; draw?: number; rules?: CourtRules; z?: number}
+  /** 2026-11-24 (NBA vs EuroLeague): the lane (key) of a line set, filled; a measured floor line from the point under the
+   *  basket centre to a floor point (static width, drawn once with `draw`) */
+  | {type: 'lane'; color?: string; opacity?: number; rules?: CourtRules}
+  | {type: 'measure'; end: [number, number]; color?: string; width?: number; draw?: number};
 
 const clamp = (x: number, a = 0, b = 1) => Math.max(a, Math.min(b, x));
 const eo = (x: number) => 1 - Math.pow(1 - clamp(x), 3);
@@ -51,28 +56,29 @@ const glowTex = (() => {
 const rigOf = (play: Play, id: string) => PLAYER3D_V32[play.players.find((p) => p.id === id)?.team === 'X' ? 'def' : 'off'].rig;
 
 /** the two-point area outline (floor polygon, metres): baseline corners, corner lanes, the arc */
-export const area2Poly = (): [number, number][] => {
+export const area2Poly = (rules: CourtRules = 'fiba'): [number, number][] => {
+  const C = COURTS[rules];
   const [bx, by] = FIBA.basket;
-  const yJ = by + Math.sqrt(FIBA.threeR ** 2 - FIBA.cornerX ** 2);
-  const a0 = Math.atan2(yJ - by, FIBA.cornerX), a1 = Math.PI - a0;
-  const pts: [number, number][] = [[FIBA.cornerX, 0], [FIBA.cornerX, yJ]];
+  const yJ = joinY(C);
+  const a0 = Math.atan2(yJ - by, C.cornerX), a1 = Math.PI - a0;
+  const pts: [number, number][] = [[C.cornerX, C.baseY], [C.cornerX, yJ]];
   for (let i = 1; i < 64; i++) {
     const a = a0 + ((a1 - a0) * i) / 64;
-    pts.push([bx + FIBA.threeR * Math.cos(a), by + FIBA.threeR * Math.sin(a)]);
+    pts.push([bx + C.threeR * Math.cos(a), by + C.threeR * Math.sin(a)]);
   }
-  pts.push([-FIBA.cornerX, yJ], [-FIBA.cornerX, 0]);
+  pts.push([-C.cornerX, yJ], [-C.cornerX, C.baseY]);
   return pts;
 };
-const shapeGeo = (() => {
-  let g: THREE.ShapeGeometry | null = null;
-  return () => {
-    if (g) return g;
-    // floor (x, y) -> local plane (x, y); the mesh is rotated -90 deg about X so local y = world -z = floor y
-    const s = new THREE.Shape(area2Poly().map(([x, y]) => new THREE.Vector2(x, y)));
-    g = new THREE.ShapeGeometry(s, 4);
-    return g;
-  };
-})();
+const shapeGeos: Record<string, THREE.ShapeGeometry> = {};
+const shapeGeo = (rules: CourtRules = 'fiba', kind: 'area2' | 'lane' = 'area2') => {
+  const k = kind + rules;
+  if (shapeGeos[k]) return shapeGeos[k];
+  const C = COURTS[rules];
+  const poly: [number, number][] = kind === 'area2' ? area2Poly(rules) : [[C.keyHalfW, C.baseY], [C.keyHalfW, C.ftY], [-C.keyHalfW, C.ftY], [-C.keyHalfW, C.baseY]];
+  // floor (x, y) -> local plane (x, y); the mesh is rotated -90 deg about X so local y = world -z = floor y
+  shapeGeos[k] = new THREE.ShapeGeometry(new THREE.Shape(poly.map(([x, y]) => new THREE.Vector2(x, y))), 4);
+  return shapeGeos[k];
+};
 const ribbonGeo = (pts: [number, number][], w: number, z: number) => {
   const pos: number[] = [];
   const idx: number[] = [];
@@ -92,10 +98,7 @@ const ribbonGeo = (pts: [number, number][], w: number, z: number) => {
   g.setIndex(idx);
   return g;
 };
-const arcPts = (): [number, number][] => {
-  const p = area2Poly();
-  return p.slice(0, p.length);
-};
+const arcPts = (rules: CourtRules = 'fiba'): [number, number][] => area2Poly(rules);
 
 export const Rules3D: React.FC<{play: Play; pt: number; o: RulesOv & {age: number}; a: number}> = ({play, pt, o, a}) => {
   const t = clamp(pt, 0, play.duration);
@@ -153,14 +156,41 @@ export const Rules3D: React.FC<{play: Play; pt: number; o: RulesOv & {age: numbe
     case 'area2': {
       const col = o.color ?? '#E0B455';
       return (
-        <mesh geometry={shapeGeo()} position={[0, 0.02, 0]} renderOrder={2} rotation={[-Math.PI / 2, 0, 0]} material={mat(col, (o.opacity ?? 0.2) * a)} />
+        <mesh geometry={shapeGeo(o.rules)} position={[0, 0.02, 0]} renderOrder={2} rotation={[-Math.PI / 2, 0, 0]} material={mat(col, (o.opacity ?? 0.2) * a)} />
       );
     }
     case 'arc3': {
       const col = o.color ?? '#E0B455';
-      const pts = arcPts();
+      const pts = arcPts(o.rules);
       const n = Math.max(2, Math.round(pts.length * clamp(o.draw ? o.age / o.draw : 1)));
-      return <mesh geometry={ribbonGeo(pts.slice(0, n), o.width ?? 0.11, 0.012)} material={mat(col, 0.95 * a)} />;
+      return <mesh geometry={ribbonGeo(pts.slice(0, n), o.width ?? 0.11, o.z ?? 0.012)} material={mat(col, 0.95 * a)} />;
+    }
+    case 'lane': {
+      const col = o.color ?? '#E5483A';
+      const C = COURTS[o.rules ?? 'fiba'];
+      const edge: [number, number][] = [[C.keyHalfW, C.baseY], [C.keyHalfW, C.ftY], [-C.keyHalfW, C.ftY], [-C.keyHalfW, C.baseY]];
+      return (
+        <group>
+          <mesh geometry={shapeGeo(o.rules, 'lane')} position={[0, 0.016, 0]} renderOrder={2} rotation={[-Math.PI / 2, 0, 0]} material={mat(col, (o.opacity ?? 0.18) * a)} />
+          <mesh geometry={ribbonGeo(edge, 0.12, 0.017)} material={mat(col, 0.95 * a)} />
+        </group>
+      );
+    }
+    case 'measure': {
+      const col = o.color ?? '#FFFFFF';
+      const [bx, by] = FIBA.basket;
+      const u = clamp(o.draw ? o.age / o.draw : 1);
+      const e: [number, number] = [bx + (o.end[0] - bx) * u, by + (o.end[1] - by) * u];
+      const w = o.width ?? 0.07;
+      const dx = o.end[0] - bx, dy = o.end[1] - by, L = Math.hypot(dx, dy) || 1;
+      const nx = (-dy / L) * 0.22, ny = (dx / L) * 0.22;
+      return (
+        <group>
+          <mesh geometry={ribbonGeo([[bx, by], e], w, 0.016)} material={mat(col, 0.95 * a)} />
+          <mesh geometry={ribbonGeo([[bx - nx, by - ny], [bx + nx, by + ny]], w, 0.016)} material={mat(col, 0.95 * a)} />
+          {u >= 1 && <mesh geometry={ribbonGeo([[e[0] - nx, e[1] - ny], [e[0] + nx, e[1] + ny]], w, 0.016)} material={mat(col, 0.95 * a)} />}
+        </group>
+      );
     }
   }
   return null;
