@@ -1,0 +1,1294 @@
+{
+ "id": "FB-PLAY-SP001-V07-off-ball-timing",
+ "version": 7,
+ "title": "Short corner: near-post decoy + late arrival",
+ "duration": 10.4,
+ "receivePose": true,
+ "animV2": true,
+ "headLook": true,
+ "interp": "spline",
+ "teams": {
+  "attack": {
+   "name": "Navy (fictional)",
+   "colour": "#0B1C3D"
+  },
+  "defence": {
+   "name": "White (fictional)",
+   "colour": "#F4F5F7"
+  }
+ },
+ "setPiece": {
+  "type": "corner",
+  "corner": [
+   52.5,
+   -34.0
+  ],
+  "side": "right corner, attacking towards +x",
+  "roles": {
+   "A": "A7",
+   "B": "A10",
+   "C": "A4",
+   "D": "A9",
+   "E": "A6",
+   "GK": "D1"
+  },
+  "fragment": "11 v 11, mixed defence (post + 3 zonal + 3 man-markers + short + edge + outlet + keeper)."
+ },
+ "tactics": {
+  "name": "SHORT CORNER \u2014 NEAR-POST DECOY + LATE ARRIVAL",
+  "status": "training proposal (invented routine, fictional teams; not a real team's play)",
+  "kick": 3.0,
+  "trigger": 4.3,
+  "delivery": 6.5,
+  "strike": 7.75,
+  "scorer": "A6",
+  "keeper": "D1",
+  "marks": [
+   [
+    "D7",
+    "A4"
+   ],
+   [
+    "D8",
+    "A9"
+   ],
+   [
+    "D10",
+    "A5"
+   ]
+  ],
+  "zones": [
+   "D3",
+   "D5",
+   "D6"
+  ],
+  "post": "D2",
+  "short": "D4",
+  "edge": "D9",
+  "outlet": "D11",
+  "compromised": "D5",
+  "late": "D9"
+ },
+ "timeline": [
+  {
+   "id": "PLAYER_A_STARTS_APPROACH",
+   "t": 1.5,
+   "who": [
+    "A7"
+   ],
+   "kind": "ball",
+   "what": "A7 starts the approach to the ball"
+  },
+  {
+   "id": "CORNER_KICK_CONTACT",
+   "t": 3.0,
+   "who": [
+    "A7"
+   ],
+   "kind": "ball",
+   "what": "short corner A7 -> A10"
+  },
+  {
+   "id": "DEFENDER_D_STEPS_OUT",
+   "t": 3.2,
+   "who": [
+    "D4"
+   ],
+   "kind": "reaction",
+   "measure": {
+    "onset": "D4",
+    "after": 3.0
+   },
+   "what": "D4 leaves his position to press A10"
+  },
+  {
+   "id": "PLAYER_B_RECEIVES",
+   "t": 3.7,
+   "who": [
+    "A10"
+   ],
+   "kind": "ball",
+   "what": "A10 controls, body open to return"
+  },
+  {
+   "id": "DECOY_RUN_BEGINS",
+   "t": 4.05,
+   "who": [
+    "A4"
+   ],
+   "kind": "run",
+   "what": "A4 sprints to the near post (after a feint step away)"
+  },
+  {
+   "id": "RETURN_PASS_CONTACT",
+   "t": 4.3,
+   "who": [
+    "A10"
+   ],
+   "kind": "ball",
+   "what": "A10 returns it behind D4 (the box trigger)"
+  },
+  {
+   "id": "LATE_RUNNER_STARTS",
+   "t": 4.4,
+   "who": [
+    "A6"
+   ],
+   "kind": "run",
+   "what": "A6 leaves his hiding spot, still slow"
+  },
+  {
+   "id": "MARKER_FOLLOWS_DECOY",
+   "t": 4.5,
+   "who": [
+    "D7"
+   ],
+   "kind": "reaction",
+   "measure": {
+    "onset": "D7",
+    "after": 4.1
+   },
+   "what": "D7 goes with A4 (goal-side)"
+  },
+  {
+   "id": "SECOND_DECOY_BEGINS",
+   "t": 4.85,
+   "who": [
+    "A9"
+   ],
+   "kind": "run",
+   "what": "A9 attacks the front of the six-yard box"
+  },
+  {
+   "id": "TAKER_RECEIVES_RETURN",
+   "t": 4.95,
+   "who": [
+    "A7"
+   ],
+   "kind": "ball",
+   "what": "A7 receives on the move, facing the box"
+  },
+  {
+   "id": "LATE_RUNNER_ACCELERATES",
+   "t": 5.4,
+   "who": [
+    "A6"
+   ],
+   "kind": "run",
+   "what": "A6 accelerates from D9's blind side"
+  },
+  {
+   "id": "DEFENSIVE_LINE_ADJUSTS",
+   "t": 5.78,
+   "who": [
+    "D5"
+   ],
+   "kind": "reaction",
+   "measure": {
+    "onset": "D5",
+    "after": 5.5
+   },
+   "what": "central zone D5 shifts towards the near post where both runs arrive"
+  },
+  {
+   "id": "FINAL_PASS_CONTACT",
+   "t": 6.5,
+   "who": [
+    "A7"
+   ],
+   "kind": "ball",
+   "what": "cutback A7 -> space in front of the spot"
+  },
+  {
+   "id": "EDGE_DEFENDER_REACTS",
+   "t": 6.92,
+   "who": [
+    "D9"
+   ],
+   "kind": "reaction",
+   "measure": {
+    "onset": "D9",
+    "after": 6.6
+   },
+   "what": "D9 turns and chases A6 (too late)"
+  },
+  {
+   "id": "FINAL_RECEIVER_ARRIVES",
+   "t": 7.75,
+   "who": [
+    "A6"
+   ],
+   "kind": "ball",
+   "what": "A6 meets the cutback in stride"
+  },
+  {
+   "id": "SHOT_CONTACT",
+   "t": 7.75,
+   "who": [
+    "A6"
+   ],
+   "kind": "ball",
+   "what": "first-time side-foot finish, far corner"
+  },
+  {
+   "id": "KEEPER_DIVES",
+   "t": 7.92,
+   "who": [
+    "D1"
+   ],
+   "kind": "reaction",
+   "what": "D1 dives (set at the strike)"
+  },
+  {
+   "id": "BALL_CROSSES_GOAL_LINE",
+   "t": 8.33,
+   "who": [],
+   "kind": "ball",
+   "what": "goal"
+  }
+ ],
+ "runs": [
+  {
+   "runner": "A4",
+   "role": [
+    "THE DECOY"
+   ],
+   "start": "DECOY_RUN_BEGINS",
+   "trigger": "PLAYER_B_RECEIVES",
+   "cue": "ON THE FIRST TOUCH",
+   "reacts": "D7",
+   "arrive": [
+    48.6,
+    -5.8
+   ],
+   "arrive_by": 6.25,
+   "r": 1.0,
+   "intent": "pull D7 to the near post and give the zonal line a first runner to cover",
+   "early": "arrives before the return: D7 and D5 settle again before the cutback, the line is not moving when the ball arrives",
+   "late": "arrives after the cutback: the line never moves, the middle stays crowded"
+  },
+  {
+   "runner": "A9",
+   "role": [
+    "THE SPACE CREATOR"
+   ],
+   "start": "SECOND_DECOY_BEGINS",
+   "trigger": "DECOY_RUN_BEGINS",
+   "cue": "A BEAT LATER",
+   "reacts": "D8",
+   "arrive": [
+    46.8,
+    -3.5
+   ],
+   "arrive_by": 7.1,
+   "r": 1.0,
+   "intent": "second runner into the same zone: takes D8 and pulls the central zone D5 towards the near post",
+   "early": "both runs arrive together: one movement of the line, D5 can stay central",
+   "late": "D5 is not pulled before the cutback: the finishing lane stays closed"
+  },
+  {
+   "runner": "A6",
+   "role": [
+    "THE LATE RUNNER",
+    "THE FINAL RECEIVER"
+   ],
+   "start": "LATE_RUNNER_STARTS",
+   "trigger": "RETURN_PASS_CONTACT",
+   "cue": "ON THE RETURN \u00b7 WAIT \u00b7 NOW",
+   "reacts": "D9",
+   "arrive": [
+    43.25,
+    -6.35
+   ],
+   "arrive_by": 7.75,
+   "ball_at": 7.75,
+   "r": 0.6,
+   "accel": "LATE_RUNNER_ACCELERATES",
+   "intent": "arrive in the space the shifted line leaves, from the edge defender's blind side, exactly as the ball arrives",
+   "early": "waits in the space: D9 sees him and the zone recovers, the cutback is blocked",
+   "late": "the ball runs past the spot before he gets there (or he meets it off balance)"
+  }
+ ],
+ "offBallRoles": {
+  "THE DECOY": [
+   "A4"
+  ],
+  "THE SPACE CREATOR": [
+   "A9",
+   "A4"
+  ],
+  "THE LATE RUNNER": [
+   "A6"
+  ],
+  "THE FINAL RECEIVER": [
+   "A6"
+  ],
+  "THE DEFENSIVE REFERENCE": [
+   "D5",
+   "D9"
+  ]
+ },
+ "players": [
+  {
+   "id": "A1",
+   "team": "attack",
+   "role": "GK",
+   "number": 1
+  },
+  {
+   "id": "A2",
+   "team": "attack",
+   "role": "REST",
+   "number": 2
+  },
+  {
+   "id": "A3",
+   "team": "attack",
+   "role": "REST",
+   "number": 3
+  },
+  {
+   "id": "A4",
+   "team": "attack",
+   "role": "DECOY",
+   "number": 4
+  },
+  {
+   "id": "A5",
+   "team": "attack",
+   "role": "FAR",
+   "number": 5
+  },
+  {
+   "id": "A6",
+   "team": "attack",
+   "role": "SCORER",
+   "number": 6
+  },
+  {
+   "id": "A7",
+   "team": "attack",
+   "role": "TAKER",
+   "number": 7
+  },
+  {
+   "id": "A8",
+   "team": "attack",
+   "role": "EDGE",
+   "number": 8
+  },
+  {
+   "id": "A9",
+   "team": "attack",
+   "role": "DECOY2",
+   "number": 9
+  },
+  {
+   "id": "A10",
+   "team": "attack",
+   "role": "SHORT",
+   "number": 10
+  },
+  {
+   "id": "A11",
+   "team": "attack",
+   "role": "FAR",
+   "number": 11
+  },
+  {
+   "id": "D1",
+   "team": "defence",
+   "role": "GK",
+   "number": 1,
+   "actions": [
+    {
+     "type": "dive",
+     "t0": 7.92,
+     "t1": 8.47,
+     "side": 1
+    }
+   ]
+  },
+  {
+   "id": "D2",
+   "team": "defence",
+   "role": "POST",
+   "number": 2
+  },
+  {
+   "id": "D3",
+   "team": "defence",
+   "role": "ZONE",
+   "number": 3
+  },
+  {
+   "id": "D4",
+   "team": "defence",
+   "role": "SHORT",
+   "number": 4
+  },
+  {
+   "id": "D5",
+   "team": "defence",
+   "role": "ZONE",
+   "number": 5
+  },
+  {
+   "id": "D6",
+   "team": "defence",
+   "role": "ZONE",
+   "number": 6
+  },
+  {
+   "id": "D7",
+   "team": "defence",
+   "role": "MARK",
+   "number": 7
+  },
+  {
+   "id": "D8",
+   "team": "defence",
+   "role": "MARK",
+   "number": 8
+  },
+  {
+   "id": "D9",
+   "team": "defence",
+   "role": "EDGE",
+   "number": 9
+  },
+  {
+   "id": "D10",
+   "team": "defence",
+   "role": "MARK",
+   "number": 10
+  },
+  {
+   "id": "D11",
+   "team": "defence",
+   "role": "OUTLET",
+   "number": 11
+  }
+ ],
+ "ball": {
+  "events": [
+   {
+    "t": 0.0,
+    "type": "rest",
+    "at": [
+     52.0,
+     -33.4
+    ]
+   },
+   {
+    "t": 3.0,
+    "type": "pass",
+    "by": "A7",
+    "to": "A10",
+    "t1": 3.7,
+    "height": "ground",
+    "decel": 1.8,
+    "foot": "inside"
+   },
+   {
+    "t": 3.7,
+    "type": "hold",
+    "by": "A10"
+   },
+   {
+    "t": 4.3,
+    "type": "pass",
+    "by": "A10",
+    "to": "A7",
+    "t1": 4.95,
+    "height": "ground",
+    "decel": 1.8,
+    "foot": "inside"
+   },
+   {
+    "t": 4.95,
+    "type": "dribble",
+    "by": "A7"
+   },
+   {
+    "t": 6.5,
+    "type": "pass",
+    "by": "A7",
+    "to": "A6",
+    "t1": 7.75,
+    "height": "ground",
+    "decel": 2.0,
+    "foot": "inside"
+   },
+   {
+    "t": 7.75,
+    "type": "shot",
+    "by": "A6",
+    "t1": 8.33,
+    "target": [
+     52.75,
+     3.2
+    ],
+    "lift": 0.1,
+    "net": [
+     54.05,
+     3.3
+    ],
+    "foot": "inside"
+   }
+  ]
+ },
+ "motion": {
+  "A7": [
+   {
+    "t": 0,
+    "p": [
+     54.2,
+     -32.3
+    ]
+   },
+   {
+    "t": 1.5,
+    "p": [
+     54.2,
+     -32.3
+    ]
+   },
+   {
+    "t": 3.0,
+    "p": [
+     52.33,
+     -33.59
+    ],
+    "v": [
+     -1.7,
+     0.6
+    ]
+   },
+   {
+    "t": 3.6,
+    "p": [
+     51.7,
+     -32.4
+    ],
+    "v": [
+     -0.7,
+     2.4
+    ]
+   },
+   {
+    "t": 4.95,
+    "p": [
+     51.25,
+     -27.6
+    ],
+    "v": [
+     -0.3,
+     3.4
+    ]
+   },
+   {
+    "t": 5.75,
+    "p": [
+     50.8,
+     -23.6
+    ],
+    "v": [
+     -0.35,
+     3.4
+    ]
+   },
+   {
+    "t": 6.5,
+    "p": [
+     50.35,
+     -20.6
+    ],
+    "v": [
+     -0.2,
+     1.6
+    ]
+   },
+   {
+    "t": 7.3,
+    "p": [
+     50.15,
+     -19.8
+    ],
+    "v": [
+     -0.1,
+     0.4
+    ]
+   },
+   {
+    "t": 8.4,
+    "p": [
+     50.1,
+     -19.6
+    ]
+   }
+  ],
+  "A10": [
+   {
+    "t": 0,
+    "p": [
+     46.9,
+     -24.4
+    ]
+   },
+   {
+    "t": 1.15,
+    "p": [
+     46.9,
+     -24.4
+    ]
+   },
+   {
+    "t": 3.7,
+    "p": [
+     48.38,
+     -29.85
+    ],
+    "v": [
+     0.25,
+     -0.5
+    ]
+   },
+   {
+    "t": 4.3,
+    "p": [
+     48.45,
+     -29.95
+    ]
+   },
+   {
+    "t": 4.55,
+    "p": [
+     48.45,
+     -29.95
+    ]
+   },
+   {
+    "t": 7.4,
+    "p": [
+     47.2,
+     -24.6
+    ]
+   },
+   {
+    "t": 8.6,
+    "p": [
+     46.9,
+     -23.6
+    ]
+   }
+  ],
+  "A4": [
+   {
+    "t": 0,
+    "p": [
+     44.3,
+     -8.8
+    ]
+   },
+   {
+    "t": 3.0,
+    "p": [
+     44.3,
+     -8.8
+    ]
+   },
+   {
+    "t": 3.7,
+    "p": [
+     44.2,
+     -8.5
+    ]
+   },
+   {
+    "t": 4.05,
+    "p": [
+     44.2,
+     -8.5
+    ]
+   },
+   {
+    "t": 4.6,
+    "p": [
+     44.75,
+     -8.15
+    ]
+   },
+   {
+    "t": 5.1,
+    "p": [
+     46.15,
+     -7.35
+    ]
+   },
+   {
+    "t": 5.55,
+    "p": [
+     47.95,
+     -6.3
+    ]
+   },
+   {
+    "t": 5.95,
+    "p": [
+     49.0,
+     -5.6
+    ]
+   },
+   {
+    "t": 6.5,
+    "p": [
+     49.45,
+     -5.25
+    ]
+   },
+   {
+    "t": 7.2,
+    "p": [
+     49.6,
+     -5.15
+    ]
+   }
+  ],
+  "A9": [
+   {
+    "t": 0,
+    "p": [
+     44.2,
+     1.0
+    ]
+   },
+   {
+    "t": 3.9,
+    "p": [
+     44.2,
+     1.0
+    ]
+   },
+   {
+    "t": 4.85,
+    "p": [
+     43.95,
+     1.3
+    ]
+   },
+   {
+    "t": 6.3,
+    "p": [
+     45.7,
+     -1.5
+    ],
+    "v": [
+     1.8,
+     -3.0
+    ]
+   },
+   {
+    "t": 7.1,
+    "p": [
+     46.8,
+     -3.5
+    ],
+    "v": [
+     1.0,
+     -2.0
+    ]
+   },
+   {
+    "t": 8.0,
+    "p": [
+     47.2,
+     -4.3
+    ],
+    "v": [
+     0.2,
+     -0.4
+    ]
+   },
+   {
+    "t": 8.8,
+    "p": [
+     47.3,
+     -4.5
+    ]
+   }
+  ],
+  "A6": [
+   {
+    "t": 0,
+    "p": [
+     33.4,
+     2.6
+    ]
+   },
+   {
+    "t": 3.1,
+    "p": [
+     33.4,
+     2.6
+    ]
+   },
+   {
+    "t": 4.4,
+    "p": [
+     32.85,
+     3.15
+    ]
+   },
+   {
+    "t": 5.4,
+    "p": [
+     34.35,
+     1.75
+    ],
+    "v": [
+     1.6,
+     -1.4
+    ]
+   },
+   {
+    "t": 6.55,
+    "p": [
+     38.6,
+     -2.3
+    ],
+    "v": [
+     4.6,
+     -3.4
+    ]
+   },
+   {
+    "t": 7.75,
+    "p": [
+     43.25,
+     -6.35
+    ],
+    "v": [
+     2.6,
+     -1.3
+    ]
+   },
+   {
+    "t": 8.5,
+    "p": [
+     44.4,
+     -6.6
+    ],
+    "v": [
+     0.9,
+     -0.1
+    ]
+   },
+   {
+    "t": 9.4,
+    "p": [
+     44.7,
+     -6.5
+    ]
+   }
+  ],
+  "A5": [
+   {
+    "t": 0,
+    "p": [
+     45.4,
+     3.4
+    ]
+   },
+   {
+    "t": 5.2,
+    "p": [
+     45.4,
+     3.4
+    ]
+   },
+   {
+    "t": 7.4,
+    "p": [
+     46.5,
+     3.9
+    ]
+   },
+   {
+    "t": 8.4,
+    "p": [
+     46.7,
+     4.0
+    ]
+   }
+  ],
+  "A11": [
+   {
+    "t": 0,
+    "p": [
+     46.3,
+     6.4
+    ]
+   },
+   {
+    "t": 5.4,
+    "p": [
+     46.3,
+     6.4
+    ]
+   },
+   {
+    "t": 7.8,
+    "p": [
+     46.5,
+     6.0
+    ]
+   }
+  ],
+  "A8": [
+   {
+    "t": 0,
+    "p": [
+     34.6,
+     10.4
+    ]
+   },
+   {
+    "t": 5.6,
+    "p": [
+     34.6,
+     10.4
+    ]
+   },
+   {
+    "t": 8.6,
+    "p": [
+     36.2,
+     8.6
+    ]
+   }
+  ],
+  "A2": [
+   {
+    "t": 0,
+    "p": [
+     12.0,
+     -7.0
+    ]
+   },
+   {
+    "t": 3.5,
+    "p": [
+     12.0,
+     -7.0
+    ]
+   },
+   {
+    "t": 8.5,
+    "p": [
+     13.5,
+     -6.4
+    ]
+   }
+  ],
+  "A3": [
+   {
+    "t": 0,
+    "p": [
+     12.0,
+     6.5
+    ]
+   },
+   {
+    "t": 3.5,
+    "p": [
+     12.0,
+     6.5
+    ]
+   },
+   {
+    "t": 8.5,
+    "p": [
+     13.5,
+     5.9
+    ]
+   }
+  ],
+  "A1": [
+   {
+    "t": 0,
+    "p": [
+     -44.0,
+     0.0
+    ]
+   },
+   {
+    "t": 3.0,
+    "p": [
+     -44.0,
+     0.0
+    ]
+   },
+   {
+    "t": 9.0,
+    "p": [
+     -41.0,
+     0.0
+    ]
+   }
+  ],
+  "D1": [
+   {
+    "t": 0,
+    "p": [
+     51.75,
+     -0.6
+    ]
+   },
+   {
+    "t": 4.4,
+    "p": [
+     51.75,
+     -0.6
+    ]
+   },
+   {
+    "t": 6.45,
+    "p": [
+     51.85,
+     -2.45
+    ]
+   },
+   {
+    "t": 6.6,
+    "p": [
+     51.85,
+     -2.45
+    ]
+   },
+   {
+    "t": 7.62,
+    "p": [
+     51.5,
+     -1.55
+    ]
+   },
+   {
+    "t": 7.87,
+    "p": [
+     51.48,
+     -1.5
+    ]
+   },
+   {
+    "t": 9.2,
+    "p": [
+     51.48,
+     -1.5
+    ]
+   }
+  ]
+ },
+ "behaviours": {
+  "D2": [
+   {
+    "t0": 0,
+    "type": "hold",
+    "p": [
+     52.0,
+     -3.95
+    ]
+   }
+  ],
+  "D4": [
+   {
+    "t0": 0,
+    "type": "hold",
+    "p": [
+     44.85,
+     -27.05
+    ]
+   },
+   {
+    "t0": 3.0,
+    "type": "press",
+    "target": "A10",
+    "stop": 1.75,
+    "goal": [
+     40.0,
+     -24.0
+    ],
+    "react": 0.22,
+    "w": 3.6
+   },
+   {
+    "t0": 4.6,
+    "type": "chase",
+    "target": "A7",
+    "gap": 1.85,
+    "goal": [
+     41.0,
+     -31.0
+    ],
+    "react": 0.3,
+    "w": 3.4,
+    "vmax": 7.0
+   },
+   {
+    "t0": 6.75,
+    "type": "to",
+    "p": [
+     49.3,
+     -22.0
+    ],
+    "w": 2.5
+   }
+  ],
+  "D3": [
+   {
+    "t0": 0,
+    "type": "zone",
+    "p": [
+     49.1,
+     -7.7
+    ],
+    "shade": "ball",
+    "k": 0.07,
+    "max": 1.2,
+    "react": 0.3
+   }
+  ],
+  "D5": [
+   {
+    "t0": 0,
+    "type": "zone",
+    "p": [
+     47.5,
+     -0.6
+    ],
+    "shade": "ball",
+    "k": 0.03,
+    "max": 0.6,
+    "react": 0.3
+   },
+   {
+    "t0": 5.6,
+    "type": "to",
+    "p": [
+     49.1,
+     -2.75
+    ],
+    "w": 3.2
+   },
+   {
+    "t0": 6.88,
+    "type": "to",
+    "p": [
+     48.3,
+     -3.3
+    ],
+    "w": 3.0
+   }
+  ],
+  "D6": [
+   {
+    "t0": 0,
+    "type": "zone",
+    "p": [
+     47.5,
+     5.6
+    ],
+    "shade": "ball",
+    "k": 0.04,
+    "max": 0.9,
+    "react": 0.3
+   }
+  ],
+  "D7": [
+   {
+    "t0": 0,
+    "type": "mark",
+    "target": "A4",
+    "gap": 1.15,
+    "ball": 0.3,
+    "react": 0.15
+   }
+  ],
+  "D8": [
+   {
+    "t0": 0,
+    "type": "mark",
+    "target": "A9",
+    "gap": 1.05,
+    "ball": 0.0,
+    "react": 0.15
+   }
+  ],
+  "D10": [
+   {
+    "t0": 0,
+    "type": "mark",
+    "target": "A5",
+    "gap": 0.95,
+    "ball": 0.15,
+    "react": 0.3
+   }
+  ],
+  "D9": [
+   {
+    "t0": 0,
+    "type": "zone",
+    "p": [
+     38.6,
+     -4.4
+    ],
+    "shade": "ball",
+    "k": 0.05,
+    "max": 0.8,
+    "react": 0.3
+   },
+   {
+    "t0": 6.7,
+    "type": "chase",
+    "target": "A6",
+    "gap": 1.3,
+    "goal": [
+     30.0,
+     -2.0
+    ],
+    "react": 0.32,
+    "w": 3.8,
+    "amax": 4.2
+   },
+   {
+    "t0": 7.9,
+    "type": "to",
+    "p": [
+     42.3,
+     -5.6
+    ],
+    "w": 2.6,
+    "amax": 4.2
+   }
+  ],
+  "D11": [
+   {
+    "t0": 0,
+    "type": "hold",
+    "p": [
+     24.0,
+     -6.0
+    ]
+   },
+   {
+    "t0": 8.6,
+    "type": "to",
+    "p": [
+     25.2,
+     -5.2
+    ],
+    "w": 2.0
+   }
+  ]
+ }
+}

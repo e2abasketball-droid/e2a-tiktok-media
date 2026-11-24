@@ -1,0 +1,90 @@
+{
+ "programme": "E2A SPORTS — SET PIECES STUDIO",
+ "directive": "MASTER PRODUCTION DIRECTIVE V1.0 (owner, 2026-11-23)",
+ "rule": "one video = one new technical challenge; no video starts before the owner approves the previous one; quality before complexity",
+ "status_values": [
+  "planned",
+  "in_production",
+  "delivered_for_review",
+  "approved",
+  "rejected"
+ ],
+ "videos": [
+  {
+   "id": "FB-SETPIECE-001",
+   "level": 1,
+   "title": "Short corner: near-post decoy + late arrival",
+   "category": "attacking_corner",
+   "tactical_difficulty": 1,
+   "new_capability": "player-ball synchronisation: ground passes and runs; V03 (owner review): 3-pass corner routine ending in a legal goal, 11 v 11, animation v2, day look, continuous opening camera, graphics v2; V05 (owner directive V05, first-team standard): mixed defence built first with reusable defensive behaviours (mark/zone/press/chase), tactical validator (marking, pressure, shift, advantage window, keeper bisector, no contact), head look-at, analytical graphics (marking links, orientation cone, passing window, finishing lane, timed runs); V07 (owner directive V07, off-ball intelligence): master match timeline (named events, measured reactions, run book) + off-ball timing validator, pre-run behaviour, box-first master camera + corner picture-in-picture, timing graphics (activation halo, run cues, trigger steps, focus shift, ghosts, role-based lines), goal payoff, edit QC (continuity across cuts, framing, run visibility); V09 (owner directive V09, narrated release candidate): audio-first editorial lock (one Deuce take cut at its silences, phrases placed on events, no time-stretch), separate live/replay clocks (monotone remap), FB SPACE CREATION VISUALIZER (covered -> opened by a defender -> occupied/closed, radius = real gap, fb_space QC), educational replay, minimal PiP, fitted mobile cameras (qa/fit_cam.mjs), key-word subtitles, in-house music bed without SFX",
+   "status": "v09_delivered_for_review"
+  },
+  {
+   "id": "FB-SETPIECE-002",
+   "level": 2,
+   "title": "The one-two corner",
+   "category": "attacking_corner",
+   "tactical_difficulty": 2,
+   "new_capability": "wall passes, changes of pace, turns, directional first touch, two-attacker timing",
+   "status": "planned"
+  },
+  {
+   "id": "FB-SETPIECE-003",
+   "level": 3,
+   "title": "The near-post run",
+   "category": "attacking_corner",
+   "tactical_difficulty": 2,
+   "new_capability": "aerial crosses, parabolic trajectories, near-post run, ball-run sync, first simple headers/finishes",
+   "status": "planned"
+  },
+  {
+   "id": "FB-SETPIECE-004",
+   "level": 4,
+   "title": "The dummy run",
+   "category": "attacking_corner",
+   "tactical_difficulty": 3,
+   "new_capability": "simultaneous movements, decoy runs, defensive reactions, changes of direction, space occupation",
+   "status": "planned"
+  },
+  {
+   "id": "FB-SETPIECE-005",
+   "level": 5,
+   "title": "The cutback corner",
+   "category": "attacking_corner",
+   "tactical_difficulty": 3,
+   "new_capability": "cutback pass, three-attacker coordination, shooting animations, new cameras, better ball contact",
+   "status": "planned"
+  },
+  {
+   "id": "FB-SETPIECE-006",
+   "level": 6,
+   "title": "The free-kick layoff",
+   "category": "indirect_free_kick",
+   "tactical_difficulty": 4,
+   "new_capability": "walls, preparation touches, shots, improved ball physics, defensive reactions",
+   "status": "planned"
+  },
+  {
+   "id": "FB-SETPIECE-007",
+   "level": 7,
+   "title": "The corner screen",
+   "category": "attacking_corner",
+   "tactical_difficulty": 4,
+   "new_capability": "close player interactions, marking, legal screens without punishable obstruction, multiple defensive reactions",
+   "status": "planned"
+  },
+  {
+   "id": "FB-SETPIECE-008",
+   "level": 8,
+   "title": "The ultimate corner routine",
+   "category": "attacking_corner",
+   "tactical_difficulty": 5,
+   "new_capability": "5-6 coordinated movements, complex marking, crosses and finishes, animated goalkeeper, multiple cameras, advanced replays, simultaneous graphics",
+   "status": "planned"
+  }
+ ],
+ "order_notes": [
+  "Proposal (not applied, needs the owner): 006 (free kick) introduces walls AND shots AND new physics at once; it could follow 005 because 005 already brings the shooting animation. Kept as written.",
+  "003 is the first aerial ball: before it, the ground-pass system of 001 and the first touch of 002 must be approved."
+ ]
+}

@@ -4,8 +4,10 @@ División de vídeo de **fútbol** de E2A Sports. Vive entera en esta carpeta (`
 `/mnt/project-files/football/`, y comparte con baloncesto solo la tecnología general (voz, edición, audio, QC,
 portadas), **sin tocar ni un archivo de baloncesto**.
 
-> Estado: **Fase 1 (infraestructura)**, aprobada por el propietario el 2026-11-22. Todavía **no** hay motor 3D de
-> fútbol ni vídeos. La publicación está **desactivada**. La Fase 2 necesita aprobación escrita.
+> Estado (2026-11-23): Fase 1 (infraestructura) y Fase 2 (motor 3D, piloto third-man run) hechas en ramas sin fusionar.
+> Desde la directiva **SET PIECES STUDIO V1.0** la línea editorial es **solo balón parado**, vídeo a vídeo con
+> aprobación del propietario entre uno y otro (hoja de ruta en `tactical-library/setpieces/roadmap.json`).
+> La publicación sigue **desactivada**.
 
 ## 1. Qué es E2A Football
 Una línea de producción de vídeos tácticos y educativos de fútbol (YouTube Shorts primero, 1080×1920, inglés),
@@ -54,6 +56,16 @@ Pasos completos en [documentation/PRODUCCION.md](documentation/PRODUCCION.md).
 
 ### Render 3D (fase 2)
 Motor y comandos en [remotion/README.md](remotion/README.md). Primer vídeo: `FB-20261123-third-man-run`.
+
+### Set Pieces Studio (balón parado)
+1. Diseña la jugada como **spec** con waypoints (posición + velocidad) en `tactical-library/setpieces/FB-SETPIECE-nnn.spec.json`.
+2. `python3 football/scripts/fb_motion.py build <spec> tactical-library/plays/<play>.json` construye las trayectorias
+   (curvas de mínimo tirón) y valida reglas (Ley 17, 9,15 m, doble toque, fuera de juego, carril de pase) y física.
+3. `node football/qa/qc_play_motion.mjs <play>.json` revisa el balón y los cuerpos con el motor real (sin render).
+4. Episodio en `remotion/src/episodes/`, composición `FBSetPiece<nnn>` en `Root.tsx`, fotogramas con `out/stills.mjs`.
+5. QC del vídeo con `qa/qc_render.py --duration 20-25` y la lista `qa/SETPIECE-QC-CHECKLIST.md`.
+6. Registra lo aprendido en `tactical-library/setpieces/LEARNING-LOG.md` (capacidades, errores, arreglos, límites,
+   requisitos del siguiente vídeo) y la ficha educativa `FB-SETPIECE-nnn.json`.
 
 ## 7. Dónde se guardan los vídeos
 `/mnt/project-files/football/productions/FB-AAAAMMDD-<slug>/` con `script/ voice/ scenes/ renders/ thumbnails/ qa/

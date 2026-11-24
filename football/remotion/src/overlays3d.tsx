@@ -9,13 +9,39 @@ import type {FBPlay, V2} from './play';
 import {ballPath, offsideLine, playerAt, routeOf, smooth} from './play';
 
 export type Ov =
-  | {type: 'pass'; t0: number; t1: number; color?: string; dashed?: boolean; width?: number}
-  | {type: 'run'; player: string; t0: number; t1: number; color?: string; width?: number; dashed?: boolean}
+  | {type: 'pass'; t0: number; t1: number; color?: string; dashed?: boolean; width?: number; trail?: boolean} // trail: the line follows the real ball (head at the ball)
+  | {type: 'run'; player: string; t0: number; t1: number; color?: string; width?: number; dashed?: boolean; trail?: boolean; role?: RunRole} // trail (V05): drawn up to the player in play time — shows the TIMING of the run; role (V07): style by job
   | {type: 'zone'; c: V2; r: V2; color?: string; label?: string; follow?: string}
   | {type: 'defline'; players: string[]; at?: number; color?: string}
   | {type: 'ring'; player: string; color?: string; r?: number}
-  | {type: 'offside'; at: number; color?: string; span?: [number, number]};
-export type LiveOv = Ov & {age: number; dur: number; draw?: number};
+  | {type: 'offside'; at: number; color?: string; span?: [number, number]}
+  // FB-SETPIECE-001: a ring at a fixed point (ghost of a player's start spot, a legal distance) and a straight arrow
+  | {type: 'circle'; c: V2; r: number; color?: string; dashed?: boolean; arc?: [number, number]; width?: number; fill?: number}
+  | {type: 'arrow'; p0: V2; p1: V2; color?: string; dashed?: boolean; width?: number}
+  // V05 analytical graphics: a marking connection between two players (follows them), and a ground wedge
+  // from a player or a point — orientation / line of sight (dir 'heading'), passing window or finishing lane
+  // (dir = a point or a player). `len` metres, `half` = half-angle in radians.
+  | {type: 'link'; a: string; b: string; color?: string; dashed?: boolean; width?: number}
+  | {type: 'cone'; player?: string; p?: V2; dir: 'heading' | V2 | string; len: number; half: number; color?: string; opacity?: number}
+  // V07 off-ball timing graphics: an activation halo under the player who is ABOUT to make the decisive move
+  // (before the arrow exists), and ghost bodies at the player's REAL earlier positions (tactical ghost replay)
+  | {type: 'halo'; player: string; color?: string; r?: number}
+  | {type: 'ghost'; player: string; times: number[]; color?: string; opacity?: number; ringsOnly?: boolean}
+  // V09 FB SPACE CREATION VISUALIZER: a zone whose state is COMPUTED from the play at every frame (never authored):
+  // covered (a defender within `covered` m: thin dashed reference + a faint line to that defender) -> opening
+  // (the nearest defender moves away: gold light grows with the real gap) -> closed or occupied (fades when a
+  // defender comes back or when `runner` arrives). See spaceState() and scripts/fb_space.py (same numbers).
+  | {type: 'space'; c: V2; runner: string; covered?: number; open?: number; rMax?: number; color?: string; noRef?: boolean};
+export type LiveOv = Ov & {age: number; dur: number; draw?: number; contIn?: boolean; contOut?: boolean};
+/** V07 role-based line language: the decisive run is the only solid gold line; decoy runs are thin white
+ *  dashes; defensive movements thin red dashes; support runs faint. Heads are smaller than V05's. */
+export type RunRole = 'decisive' | 'decoy' | 'defence' | 'support';
+const ROLE: Record<RunRole, {color: string; w: number; dashed: boolean; op: number; head: number}> = {
+  decisive: {color: GOLD, w: 0.075, dashed: false, op: 1, head: 0.7},
+  decoy: {color: WHITE, w: 0.055, dashed: true, op: 0.85, head: 0.6},
+  defence: {color: RED, w: 0.05, dashed: true, op: 0.8, head: 0.55},
+  support: {color: WHITE, w: 0.04, dashed: true, op: 0.5, head: 0.5},
+};
 
 const H = 0.03;
 
@@ -116,6 +142,139 @@ const ribbon = (pts: V2[], w: number, dashed: boolean, head: boolean, h = H) => 
   return g;
 };
 
+// ---------- graphics v2 (FB-SETPIECE-001 V03): smoothed curves, tapered tails, notched heads, dark under-stroke
+const chaikin = (pts: V2[], it = 2): V2[] => {
+  let p = pts;
+  for (let k = 0; k < it && p.length > 2; k++) {
+    const q: V2[] = [p[0]];
+    for (let i = 0; i < p.length - 1; i++) {
+      const a = p[i];
+      const b = p[i + 1];
+      q.push([0.75 * a[0] + 0.25 * b[0], 0.75 * a[1] + 0.25 * b[1]], [0.25 * a[0] + 0.75 * b[0], 0.25 * a[1] + 0.75 * b[1]]);
+    }
+    q.push(p[p.length - 1]);
+    p = q;
+  }
+  return p;
+};
+/** thin out a dense polyline (keeps the curve, avoids thousands of tiny quads) */
+const decimate = (pts: V2[], minStep = 0.25): V2[] => {
+  if (pts.length < 3) return pts;
+  const out: V2[] = [pts[0]];
+  for (let i = 1; i < pts.length - 1; i++) {
+    const l = out[out.length - 1];
+    if (Math.hypot(pts[i][0] - l[0], pts[i][1] - l[1]) >= minStep) out.push(pts[i]);
+  }
+  out.push(pts[pts.length - 1]);
+  return out;
+};
+const ribbon2 = (raw: V2[], w: number, dashed: boolean, head: boolean, h = H, headK = 1) => {
+  const pts = chaikin(decimate(raw));
+  if (pts.length < 2) return null;
+  const L: number[] = [0];
+  for (let i = 1; i < pts.length; i++) L.push(L[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+  const total = L[L.length - 1];
+  if (total < 0.08) return null;
+  const headL = head ? Math.min(1.25, Math.max(0.45, total * 0.3)) * headK : 0;
+  const bodyEnd = total - headL * 0.72;
+  const pos: number[] = [];
+  const push = (p: V2, z = h) => pos.push(...W3([p[0], p[1], z]));
+  const at = (d: number): {p: V2; n: V2} => {
+    let i = 1;
+    while (i < L.length - 1 && L[i] < d) i++;
+    const a = pts[i - 1];
+    const b = pts[i];
+    const u = (d - L[i - 1]) / Math.max(1e-6, L[i] - L[i - 1]);
+    const dx = b[0] - a[0];
+    const dy = b[1] - a[1];
+    const l = Math.hypot(dx, dy) || 1;
+    return {p: [a[0] + dx * u, a[1] + dy * u], n: [-dy / l, dx / l]};
+  };
+  const width = (d: number) => w * (0.3 + 0.7 * smooth(d / Math.max(0.6, total * 0.3)));
+  const step = 0.18;
+  const dash = 0.75;
+  const gap = 0.45;
+  for (let d = 0; d < bodyEnd - 1e-4; d += step) {
+    let d1 = Math.min(bodyEnd, d + step);
+    if (dashed) {
+      const m = d % (dash + gap);
+      if (m >= dash) continue;
+      d1 = Math.min(d1, d - m + dash);
+    }
+    const A = at(d);
+    const B = at(d1);
+    const wa = width(d);
+    const wb = width(d1);
+    const a1: V2 = [A.p[0] + A.n[0] * wa, A.p[1] + A.n[1] * wa];
+    const a2: V2 = [A.p[0] - A.n[0] * wa, A.p[1] - A.n[1] * wa];
+    const b1: V2 = [B.p[0] + B.n[0] * wb, B.p[1] + B.n[1] * wb];
+    const b2: V2 = [B.p[0] - B.n[0] * wb, B.p[1] - B.n[1] * wb];
+    push(a1);
+    push(a2);
+    push(b1);
+    push(b1);
+    push(a2);
+    push(b2);
+  }
+  if (head) {
+    const tip = at(total).p;
+    const base = at(total - headL);
+    const notch = at(total - headL * 0.72).p;
+    const hw = Math.max(w * 2.6, 0.32 * headK);
+    const l1: V2 = [base.p[0] + base.n[0] * hw, base.p[1] + base.n[1] * hw];
+    const r1: V2 = [base.p[0] - base.n[0] * hw, base.p[1] - base.n[1] * hw];
+    push(l1, h + 0.001);
+    push(notch, h + 0.001);
+    push(tip, h + 0.001);
+    push(notch, h + 0.001);
+    push(r1, h + 0.001);
+    push(tip, h + 0.001);
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  return g;
+};
+
+/** v2 paint: dark under-stroke (legible on bright grass) + the colour stroke */
+const Paint2: React.FC<{pts: V2[]; w: number; dashed: boolean; head: boolean; color: string; opacity: number; headK?: number}> = ({pts, w, dashed, head, color, opacity, headK = 1}) => {
+  const key = pts.length ? `${pts.length}:${pts[pts.length - 1][0].toFixed(3)},${pts[pts.length - 1][1].toFixed(3)}:${w}:${dashed}:${head}:${headK}` : '';
+  const g = React.useMemo(() => ribbon2(pts, w, dashed, head, H + 0.004, headK), [key]);
+  const gs = React.useMemo(() => ribbon2(pts, w * 1.7, dashed, head, H, headK), [key]);
+  useDispose(g);
+  useDispose(gs);
+  if (!g) return null;
+  return (
+    <>
+      {gs && (
+        <mesh geometry={gs} renderOrder={4}>
+          <meshBasicMaterial color="#06122A" transparent opacity={opacity * 0.38} depthWrite={false} side={THREE.DoubleSide} toneMapped={false} />
+        </mesh>
+      )}
+      <mesh geometry={g} renderOrder={5}>
+        <meshBasicMaterial color={color} transparent opacity={opacity} depthWrite={false} side={THREE.DoubleSide} toneMapped={false} />
+      </mesh>
+    </>
+  );
+};
+
+let zoneTex: THREE.Texture | null = null;
+const zoneTexture = () => {
+  if (zoneTex) return zoneTex;
+  const c = document.createElement('canvas');
+  c.width = 256;
+  c.height = 256;
+  const g = c.getContext('2d')!;
+  const grd = g.createRadialGradient(128, 128, 0, 128, 128, 128);
+  grd.addColorStop(0, 'rgba(255,255,255,0.75)');
+  grd.addColorStop(0.55, 'rgba(255,255,255,0.45)');
+  grd.addColorStop(0.92, 'rgba(255,255,255,0.12)');
+  grd.addColorStop(1, 'rgba(255,255,255,0)');
+  g.fillStyle = grd;
+  g.fillRect(0, 0, 256, 256);
+  zoneTex = new THREE.CanvasTexture(c);
+  return zoneTex;
+};
+
 const useDispose = (g: THREE.BufferGeometry | null) => {
   React.useEffect(() => () => g?.dispose(), [g]);
 };
@@ -137,26 +296,65 @@ const Paint: React.FC<{g: THREE.BufferGeometry | null; color: string; opacity: n
   );
 };
 
-const fade = (o: LiveOv) => Math.min(1, o.age / 0.18) * Math.min(1, Math.max(0, (o.dur - o.age) / 0.2));
+// V08: contIn / contOut = the graphic continues from / into the neighbouring shot (no blink at a continuous cut)
+const fade = (o: LiveOv) => (o.contIn ? 1 : Math.min(1, o.age / 0.18)) * (o.contOut ? 1 : Math.min(1, Math.max(0, (o.dur - o.age) / 0.2)));
 
-const PassLine: React.FC<{play: FBPlay; o: Extract<LiveOv, {type: 'pass'}>}> = ({play, o}) => {
+const PassLine: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'pass'}>; v2?: boolean}> = ({play, pt, o, v2}) => {
   const prog = smooth(o.age / (o.draw ?? 0.6));
-  const g = React.useMemo(() => ribbon(cut(ballPath(play, o.t0, o.t1), prog), o.width ?? 0.16, o.dashed ?? true, true), [play, o.t0, o.t1, prog, o.width, o.dashed]);
+  if (v2) {
+    const end = o.trail ? Math.max(o.t0, Math.min(o.t1, pt)) : o.t1;
+    const pts = o.trail ? (end - o.t0 > 0.02 ? ballPath(play, o.t0, end, 1 / 60) : []) : cut(ballPath(play, o.t0, o.t1, 1 / 60), prog);
+    return <Paint2 pts={pts} w={o.width ?? 0.11} dashed={o.dashed ?? false} head color={o.color ?? GOLD} opacity={0.96 * fade(o)} />;
+  }
+  const end = o.trail ? Math.max(o.t0, Math.min(o.t1, pt)) : o.t1;
+  const g = React.useMemo(
+    () => (o.trail ? (end - o.t0 > 0.02 ? ribbon(ballPath(play, o.t0, end, 1 / 60), o.width ?? 0.16, o.dashed ?? true, true) : null) : ribbon(cut(ballPath(play, o.t0, o.t1), prog), o.width ?? 0.16, o.dashed ?? true, true)),
+    [play, o.t0, o.t1, end, o.trail, prog, o.width, o.dashed],
+  );
   return <Paint g={g} color={o.color ?? GOLD} opacity={0.95 * fade(o)} />;
 };
 
-const Run: React.FC<{play: FBPlay; o: Extract<LiveOv, {type: 'run'}>}> = ({play, o}) => {
+const Run: React.FC<{play: FBPlay; o: Extract<LiveOv, {type: 'run'}>; v2?: boolean; pt?: number}> = ({play, o, v2, pt}) => {
   const prog = smooth(o.age / (o.draw ?? 0.8));
+  if (v2 && o.role) {
+    const R = ROLE[o.role];
+    const end = o.trail ? Math.max(o.t0, Math.min(o.t1, pt ?? o.t1)) : o.t1;
+    const raw = end - o.t0 > 0.05 ? routeOf(play, o.player, o.t0, end) : [];
+    const pts = o.trail ? raw : cut(raw, prog);
+    return <Paint2 pts={pts} w={o.width ?? R.w} dashed={o.dashed ?? R.dashed} head color={o.color ?? R.color} opacity={R.op * fade(o)} headK={R.head} />;
+  }
+  if (v2 && o.trail) {
+    const end = Math.max(o.t0, Math.min(o.t1, pt ?? o.t1));
+    const pts = end - o.t0 > 0.05 ? routeOf(play, o.player, o.t0, end) : [];
+    return <Paint2 pts={pts} w={o.width ?? 0.085} dashed={o.dashed ?? true} head color={o.color ?? WHITE} opacity={0.95 * fade(o)} />;
+  }
+  if (v2) return <Paint2 pts={cut(routeOf(play, o.player, o.t0, o.t1), prog)} w={o.width ?? 0.085} dashed={o.dashed ?? true} head color={o.color ?? WHITE} opacity={0.95 * fade(o)} />;
   const g = React.useMemo(() => ribbon(cut(routeOf(play, o.player, o.t0, o.t1), prog), o.width ?? 0.2, o.dashed ?? false, true), [play, o.player, o.t0, o.t1, prog, o.width, o.dashed]);
   return <Paint g={g} color={o.color ?? WHITE} opacity={0.92 * fade(o)} />;
 };
 
-const Zone: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'zone'}>}> = ({play, pt, o}) => {
+const Zone: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'zone'}>; v2?: boolean}> = ({play, pt, o, v2}) => {
   const a = fade(o);
   const grow = smooth(o.age / 0.5);
   const pulse = 0.85 + 0.15 * Math.sin(o.age * 5);
   const c = o.follow ? playerAt(play, o.follow, pt).pos : o.c;
   const col = o.color ?? GOLD;
+  if (v2) {
+    // soft radial light on the grass (texture stays visible) + a fine edge
+    const breathe = 0.92 + 0.08 * Math.sin(o.age * 3.2);
+    return (
+      <group position={W3([c[0], c[1], H - 0.012])} scale={[o.r[0] * (0.7 + 0.3 * grow), 1, o.r[1] * (0.7 + 0.3 * grow)]}>
+        <mesh rotation={[-Math.PI / 2, 0, 0]} renderOrder={3}>
+          <circleGeometry args={[1, 64]} />
+          <meshBasicMaterial color={col} alphaMap={zoneTexture()} transparent opacity={0.42 * a * grow * breathe} depthWrite={false} toneMapped={false} />
+        </mesh>
+        <mesh rotation={[-Math.PI / 2, 0, 0]} renderOrder={4}>
+          <ringGeometry args={[0.985, 1, 128]} />
+          <meshBasicMaterial color={col} transparent opacity={0.55 * a * grow} depthWrite={false} toneMapped={false} />
+        </mesh>
+      </group>
+    );
+  }
   return (
     <group position={W3([c[0], c[1], H - 0.01])} scale={[o.r[0] * grow, 1, o.r[1] * grow]}>
       <mesh rotation={[-Math.PI / 2, 0, 0]} renderOrder={3}>
@@ -204,9 +402,30 @@ const Offside: React.FC<{play: FBPlay; o: Extract<LiveOv, {type: 'offside'}>}> =
   return <Paint g={g} color={o.color ?? GOLD} opacity={0.95 * fade(o)} />;
 };
 
-const Ring: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'ring'}>}> = ({play, pt, o}) => {
+const Ring: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'ring'}>; v2?: boolean}> = ({play, pt, o, v2}) => {
   const p = playerAt(play, o.player, pt).pos;
   const a = fade(o);
+  if (v2) {
+    // proportioned to a body (r 0.62 m), thin line, faint fill, a short pop on entry
+    const r = (o.r ?? 0.62) * (0.75 + 0.25 * smooth(o.age / 0.3)) * (1 + 0.12 * Math.exp(-o.age * 6) * Math.sin(o.age * 18));
+    const col = o.color ?? GOLD;
+    return (
+      <group position={W3([p[0], p[1], H])}>
+        <mesh rotation={[-Math.PI / 2, 0, 0]} renderOrder={6}>
+          <ringGeometry args={[r * 0.9, r, 64]} />
+          <meshBasicMaterial color={col} transparent opacity={0.95 * a} depthWrite={false} toneMapped={false} />
+        </mesh>
+        <mesh rotation={[-Math.PI / 2, 0, 0]} renderOrder={5}>
+          <ringGeometry args={[r, r * 1.16, 64]} />
+          <meshBasicMaterial color="#06122A" transparent opacity={0.3 * a} depthWrite={false} toneMapped={false} />
+        </mesh>
+        <mesh rotation={[-Math.PI / 2, 0, 0]} renderOrder={5}>
+          <circleGeometry args={[r * 0.9, 48]} />
+          <meshBasicMaterial color={col} transparent opacity={0.1 * a} depthWrite={false} toneMapped={false} />
+        </mesh>
+      </group>
+    );
+  }
   const r = (o.r ?? 0.85) * (0.6 + 0.4 * smooth(o.age / 0.35));
   const col = o.color ?? GOLD;
   return (
@@ -223,22 +442,257 @@ const Ring: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'ring'
   );
 };
 
-export const Overlays3D: React.FC<{play: FBPlay; pt: number; items: LiveOv[]}> = ({play, pt, items}) => (
+const Circle: React.FC<{o: Extract<LiveOv, {type: 'circle'}>}> = ({o}) => {
+  const prog = smooth(o.age / (o.draw ?? 0.5));
+  const [a0, a1] = o.arc ?? [0, Math.PI * 2];
+  const g = React.useMemo(() => {
+    const n = Math.max(12, Math.round(Math.abs(a1 - a0) * o.r * 3));
+    const pts: V2[] = [];
+    for (let i = 0; i <= n; i++) {
+      const a = a0 + ((a1 - a0) * i) / n;
+      pts.push([o.c[0] + Math.cos(a) * o.r, o.c[1] + Math.sin(a) * o.r]);
+    }
+    return ribbon(cut(pts, prog), o.width ?? 0.07, o.dashed ?? true, false);
+  }, [o.c[0], o.c[1], o.r, a0, a1, prog, o.dashed, o.width]);
+  const a = fade(o);
+  return (
+    <>
+      <Paint g={g} color={o.color ?? WHITE} opacity={0.95 * a} />
+      {o.fill ? (
+        <mesh position={W3([o.c[0], o.c[1], H - 0.012])} rotation={[-Math.PI / 2, 0, 0]} renderOrder={3}>
+          <circleGeometry args={[o.r, 48]} />
+          <meshBasicMaterial color={o.color ?? WHITE} transparent opacity={o.fill * a * smooth(o.age / 0.4)} depthWrite={false} toneMapped={false} />
+        </mesh>
+      ) : null}
+    </>
+  );
+};
+
+const Arrow: React.FC<{o: Extract<LiveOv, {type: 'arrow'}>; v2?: boolean}> = ({o, v2}) => {
+  const prog = smooth(o.age / (o.draw ?? 0.6));
+  if (v2) {
+    // gentle curve (quadratic, bulging to the left of travel by 12 % of the length)
+    const dx = o.p1[0] - o.p0[0];
+    const dy = o.p1[1] - o.p0[1];
+    const m: V2 = [(o.p0[0] + o.p1[0]) / 2 - dy * 0.12, (o.p0[1] + o.p1[1]) / 2 + dx * 0.12];
+    const pts: V2[] = [];
+    for (let i = 0; i <= 24; i++) {
+      const u = i / 24;
+      pts.push([(1 - u) ** 2 * o.p0[0] + 2 * u * (1 - u) * m[0] + u * u * o.p1[0], (1 - u) ** 2 * o.p0[1] + 2 * u * (1 - u) * m[1] + u * u * o.p1[1]]);
+    }
+    return <Paint2 pts={cut(pts, prog)} w={o.width ?? 0.11} dashed={o.dashed ?? false} head color={o.color ?? GOLD} opacity={0.95 * fade(o)} />;
+  }
+  const g = React.useMemo(() => ribbon(cut([o.p0, o.p1], prog), o.width ?? 0.16, o.dashed ?? false, true), [o.p0[0], o.p0[1], o.p1[0], o.p1[1], prog, o.width, o.dashed]);
+  return <Paint g={g} color={o.color ?? GOLD} opacity={0.92 * fade(o)} />;
+};
+
+const Link: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'link'}>}> = ({play, pt, o}) => {
+  const a = playerAt(play, o.a, pt).pos;
+  const b = playerAt(play, o.b, pt).pos;
+  const L = Math.hypot(b[0] - a[0], b[1] - a[1]);
+  if (L < 0.5) return null;
+  // stop 0.45 m short of each body so the line connects the players without crossing their feet
+  const u: V2 = [(b[0] - a[0]) / L, (b[1] - a[1]) / L];
+  const g = smooth(o.age / 0.35);
+  const p0: V2 = [a[0] + u[0] * 0.45, a[1] + u[1] * 0.45];
+  const p1: V2 = [p0[0] + u[0] * (L - 0.9) * g, p0[1] + u[1] * (L - 0.9) * g];
+  return <Paint2 pts={[p0, p1]} w={o.width ?? 0.05} dashed={o.dashed ?? false} head={false} color={o.color ?? WHITE} opacity={0.9 * fade(o)} />;
+};
+
+let fanTex: THREE.Texture | null = null;
+/** linear fade along the wedge (bright at the apex, gone at the end) */
+const fanTexture = () => {
+  if (fanTex) return fanTex;
+  const c = document.createElement('canvas');
+  c.width = 256;
+  c.height = 256;
+  const x = c.getContext('2d')!;
+  const g = x.createRadialGradient(128, 128, 0, 128, 128, 128);
+  g.addColorStop(0, 'rgba(255,255,255,1)');
+  g.addColorStop(0.55, 'rgba(255,255,255,0.55)');
+  g.addColorStop(1, 'rgba(255,255,255,0)');
+  x.fillStyle = g;
+  x.fillRect(0, 0, 256, 256);
+  fanTex = new THREE.CanvasTexture(c);
+  return fanTex;
+};
+
+const Cone: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'cone'}>}> = ({play, pt, o}) => {
+  const st = o.player ? playerAt(play, o.player, pt) : null;
+  const c: V2 = st ? st.pos : o.p!;
+  let ang: number;
+  if (o.dir === 'heading') ang = st!.heading;
+  else {
+    const q: V2 = typeof o.dir === 'string' ? playerAt(play, o.dir, pt).pos : o.dir;
+    ang = Math.atan2(q[1] - c[1], q[0] - c[0]);
+  }
+  const grow = smooth(o.age / 0.45);
+  // world angle -> three: the ground circle lies in x/z with z = -y, rotated -90 deg about x
+  return (
+    <mesh position={W3([c[0], c[1], H - 0.008])} rotation={[-Math.PI / 2, 0, 0]} renderOrder={3} scale={[o.len * grow, o.len * grow, 1]}>
+      <circleGeometry args={[1, 48, ang - o.half, 2 * o.half]} />
+      <meshBasicMaterial color={o.color ?? WHITE} alphaMap={fanTexture()} transparent opacity={(o.opacity ?? 0.34) * fade(o)} depthWrite={false} toneMapped={false} side={THREE.DoubleSide} />
+    </mesh>
+  );
+};
+
+/** V07 activation halo: a soft gold light under the player plus two slow ripples — "this one is about to go" */
+const Halo: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'halo'}>}> = ({play, pt, o}) => {
+  const p = playerAt(play, o.player, pt).pos;
+  const a = fade(o) * smooth(o.age / 0.25);
+  const r = o.r ?? 0.85;
+  const col = o.color ?? GOLD;
+  const wave = (k: number) => ((o.age * 1.1 + k) % 1 + 1) % 1;
+  return (
+    <group position={W3([p[0], p[1], H - 0.004])}>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} renderOrder={3} scale={[r * 1.35, r * 1.35, 1]}>
+        <circleGeometry args={[1, 48]} />
+        <meshBasicMaterial color={col} alphaMap={zoneTexture()} transparent opacity={0.55 * a} depthWrite={false} toneMapped={false} />
+      </mesh>
+      {[0, 0.5].map((k) => {
+        const u = wave(k);
+        const rr = r * (0.75 + 0.9 * u);
+        return (
+          <mesh key={k} rotation={[-Math.PI / 2, 0, 0]} renderOrder={6}>
+            <ringGeometry args={[rr * 0.93, rr, 64]} />
+            <meshBasicMaterial color={col} transparent opacity={0.85 * a * (1 - u)} depthWrite={false} toneMapped={false} />
+          </mesh>
+        );
+      })}
+    </group>
+  );
+};
+
+/** V07 tactical ghost: translucent bodies at the player's REAL positions at earlier play times (only times
+ *  already played are drawn, so the ghosts appear as the replay runs) */
+const clamp01 = (x: number) => Math.max(0, Math.min(1, x));
+/** V09: the measured state of a space at play time pt (shared by the graphic and the QC numbers) */
+export const spaceState = (play: FBPlay, c: V2, runner: string, pt: number, covered = 3.2, open = 4.3, rMax = 1.7) => {
+  let dmin = 1e9;
+  let who = '';
+  for (const p of play.players) {
+    if (p.team !== 'defence' || p.role === 'GK') continue;
+    const q = playerAt(play, p.id, pt).pos;
+    const d = Math.hypot(q[0] - c[0], q[1] - c[1]);
+    if (d < dmin) {
+      dmin = d;
+      who = p.id;
+    }
+  }
+  const u = clamp01((dmin - covered) / (open - covered)); // 0 covered .. 1 open
+  const r = Math.min(rMax, Math.max(0, dmin - 2.7)); // the drawn size follows the real gap (a few steps, never a hole)
+  const q = playerAt(play, runner, pt).pos;
+  const occ = clamp01((Math.hypot(q[0] - c[0], q[1] - c[1]) - 0.6) / 1.4); // 1 = still free of the runner
+  return {dmin, who, u, r, occ};
+};
+
+const Space: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'space'}>}> = ({play, pt, o}) => {
+  const st = spaceState(play, o.c, o.runner, pt, o.covered, o.open, o.rMax);
+  const a = fade(o);
+  const col = o.color ?? GOLD;
+  const lit = smooth(st.u) * st.occ;
+  const ref = (1 - st.u) * st.occ * (o.noRef ? 0 : 1);
+  const d = playerAt(play, st.who, pt).pos;
+  const L = Math.hypot(d[0] - o.c[0], d[1] - o.c[1]) || 1;
+  const ux = (d[0] - o.c[0]) / L;
+  const uy = (d[1] - o.c[1]) / L;
+  const rr = Math.max(0.9, st.r);
+  const wave = ((o.age * 0.7) % 1 + 1) % 1;
+  return (
+    <group>
+      {ref > 0.02 && (
+        <>
+          <group position={W3([o.c[0], o.c[1], H - 0.01])}>
+            <mesh rotation={[-Math.PI / 2, 0, 0]} renderOrder={4}>
+              <ringGeometry args={[0.86, 0.9, 64]} />
+              <meshBasicMaterial color={WHITE} transparent opacity={0.6 * ref * a} depthWrite={false} toneMapped={false} />
+            </mesh>
+          </group>
+          {L > 1.4 && <Paint2 pts={[[o.c[0] + ux * 0.95, o.c[1] + uy * 0.95], [d[0] - ux * 0.45, d[1] - uy * 0.45]]} w={0.03} dashed head={false} color={WHITE} opacity={0.5 * ref * a} />}
+        </>
+      )}
+      {lit > 0.01 && (
+        <group position={W3([o.c[0], o.c[1], H - 0.012])}>
+          <mesh rotation={[-Math.PI / 2, 0, 0]} renderOrder={3} scale={[rr * (0.75 + 0.25 * lit), rr * (0.75 + 0.25 * lit), 1]}>
+            <circleGeometry args={[1, 64]} />
+            <meshBasicMaterial color={col} alphaMap={zoneTexture()} transparent opacity={0.4 * lit * a} depthWrite={false} toneMapped={false} />
+          </mesh>
+          <mesh rotation={[-Math.PI / 2, 0, 0]} renderOrder={4} scale={[rr, rr, 1]}>
+            <ringGeometry args={[0.975, 1, 128]} />
+            <meshBasicMaterial color={col} transparent opacity={0.55 * lit * a} depthWrite={false} toneMapped={false} />
+          </mesh>
+          <mesh rotation={[-Math.PI / 2, 0, 0]} renderOrder={4} scale={[rr * (0.35 + 0.65 * wave), rr * (0.35 + 0.65 * wave), 1]}>
+            <ringGeometry args={[0.96, 1, 96]} />
+            <meshBasicMaterial color={col} transparent opacity={0.3 * lit * a * (1 - wave)} depthWrite={false} toneMapped={false} />
+          </mesh>
+        </group>
+      )}
+    </group>
+  );
+};
+
+const Ghost: React.FC<{play: FBPlay; pt: number; o: Extract<LiveOv, {type: 'ghost'}>}> = ({play, pt, o}) => {
+  const a = fade(o);
+  const col = o.color ?? WHITE;
+  const shown = o.times.filter((t) => t <= pt + 1e-6);
+  return (
+    <group>
+      {shown.map((t, i) => {
+        const s = playerAt(play, o.player, t);
+        const k = (o.opacity ?? 0.34) * a * (0.55 + 0.45 * ((i + 1) / Math.max(1, shown.length)));
+        return (
+          <group key={t} position={W3([s.pos[0], s.pos[1], 0])}>
+            {!o.ringsOnly && (<>
+            <mesh position={[0, 0.82, 0]} renderOrder={7}>
+              <capsuleGeometry args={[0.2, 1.05, 4, 10]} />
+              <meshBasicMaterial color={col} transparent opacity={k} depthWrite={false} toneMapped={false} />
+            </mesh>
+            <mesh position={[0, 1.66, 0]} renderOrder={7}>
+              <sphereGeometry args={[0.12, 12, 10]} />
+              <meshBasicMaterial color={col} transparent opacity={k} depthWrite={false} toneMapped={false} />
+            </mesh>
+            </>)}
+            <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, H, 0]} renderOrder={5}>
+              <ringGeometry args={[0.3, 0.38, 32]} />
+              <meshBasicMaterial color={col} transparent opacity={k * 1.6} depthWrite={false} toneMapped={false} />
+            </mesh>
+          </group>
+        );
+      })}
+    </group>
+  );
+};
+
+export const Overlays3D: React.FC<{play: FBPlay; pt: number; items: LiveOv[]; v2?: boolean}> = ({play, pt, items, v2}) => (
   <group>
     {items.map((o, i) => {
       switch (o.type) {
         case 'pass':
-          return <PassLine key={i} play={play} o={o} />;
+          return <PassLine key={i} play={play} pt={pt} o={o} v2={v2} />;
         case 'run':
-          return <Run key={i} play={play} o={o} />;
+          return <Run key={i} play={play} o={o} v2={v2} pt={pt} />;
         case 'zone':
-          return <Zone key={i} play={play} pt={pt} o={o} />;
+          return <Zone key={i} play={play} pt={pt} o={o} v2={v2} />;
         case 'defline':
           return <DefLine key={i} play={play} pt={pt} o={o} />;
         case 'offside':
           return <Offside key={i} play={play} o={o} />;
         case 'ring':
-          return <Ring key={i} play={play} pt={pt} o={o} />;
+          return <Ring key={i} play={play} pt={pt} o={o} v2={v2} />;
+        case 'circle':
+          return <Circle key={i} o={o} />;
+        case 'arrow':
+          return <Arrow key={i} o={o} v2={v2} />;
+        case 'link':
+          return <Link key={i} play={play} pt={pt} o={o} />;
+        case 'cone':
+          return <Cone key={i} play={play} pt={pt} o={o} />;
+        case 'halo':
+          return <Halo key={i} play={play} pt={pt} o={o} />;
+        case 'ghost':
+          return <Ghost key={i} play={play} pt={pt} o={o} />;
+        case 'space':
+          return <Space key={i} play={play} pt={pt} o={o} />;
         default:
           return null;
       }
