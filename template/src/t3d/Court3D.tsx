@@ -14,7 +14,7 @@ import {RoomEnvironment} from 'three/examples/jsm/environments/RoomEnvironment.j
 const X0 = -8.5;
 const Y0 = -1.5;
 const SPAN = 17;
-const PX = 2560;
+let PX = 2560;
 let SPAN_Y = SPAN;
 let PY = PX;
 const toPx = (x: number, y: number): [number, number] => [((x - X0) / SPAN) * PX, PY - ((y - Y0) / SPAN) * PX];
@@ -38,6 +38,8 @@ const rnd = (i: number) => {
 export const buildFloor = (logo?: HTMLImageElement, full = false) => {
   const fk = full ? 'full' : 'half';
   if (floorTexs[fk]) return floorTexs[fk];
+  // full court: 2048 px wide (2048 x 3735) - a 2560 x 4668 canvas texture per tab made concurrent renders fail
+  PX = full ? 2048 : 2560;
   SPAN_Y = full ? 31 : SPAN;
   PY = Math.round((SPAN_Y / SPAN) * PX);
   const c = makeCanvas(PX, PY);
