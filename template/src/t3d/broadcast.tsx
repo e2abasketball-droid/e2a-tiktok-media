@@ -29,7 +29,7 @@ const parse = (s: string) => {
 };
 
 export const BroadcastScoreboard: React.FC<{
-  league: League; age: number; dur: number; y?: number; logo?: string | null; teams: [SbTeam, SbTeam]; period: string;
+  league: League; age: number; dur: number; y?: number; logo?: string | null; teams?: [SbTeam, SbTeam] | null; period: string;
   clock: string; shot?: number | null; run?: number | null; highlight?: number | null; dim?: number | null; width?: number; plate?: string;
 }> = ({league, age, dur, y = 600, logo, plate = '#FFFFFF', teams, period, clock, shot = 24, run = null, highlight = null, dim = null, width = 980}) => {
   const L = LEAGUE[league];
@@ -63,12 +63,12 @@ export const BroadcastScoreboard: React.FC<{
           )}
           <span style={{position: 'absolute', right: 0, top: 0, bottom: 0, width: 8, background: L.col}} />
         </div>
-        {/* teams */}
-        <div style={{flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 0 0 22px'}}>{teams.map(row)}</div>
+        {/* teams (V3 compact board, 2026-11-24: teams null = no team rows, no scores; period + clock fill the bar) */}
+        {teams ? <div style={{flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 0 0 22px'}}>{teams.map(row)}</div> : null}
         {/* period + game clock */}
-        <div style={{width: 300, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.04)', borderLeft: '1px solid rgba(255,255,255,0.1)', position: 'relative'}}>
-          <span style={{font: `700 26px ${INTER}`, letterSpacing: 5, color: GOLD, marginBottom: 2}}>{period}</span>
-          <span style={{font: `800 92px ${INTER}`, fontVariantNumeric: 'tabular-nums', letterSpacing: -1, color: '#FFFFFF', lineHeight: 1}}>{gc}</span>
+        <div style={{width: teams ? 300 : undefined, flex: teams ? undefined : 1, display: 'flex', flexDirection: teams ? 'column' : 'row', gap: teams ? 0 : 26, alignItems: 'center', justifyContent: 'center', background: 'rgba(255,255,255,0.04)', borderLeft: '1px solid rgba(255,255,255,0.1)', position: 'relative'}}>
+          <span style={{font: `700 ${teams ? 26 : 40}px ${INTER}`, letterSpacing: 5, color: GOLD, marginBottom: 2}}>{period}</span>
+          <span style={{font: `800 ${teams ? 92 : 104}px ${INTER}`, fontVariantNumeric: 'tabular-nums', letterSpacing: -1, color: '#FFFFFF', lineHeight: 1}}>{gc}</span>
           <span style={{position: 'absolute', inset: 8, borderRadius: 10, border: `3px solid ${GOLD}`, opacity: hl, boxShadow: `0 0 ${(14 * hl).toFixed(1)}px rgba(201,162,77,0.45)`}} />
         </div>
         {/* shot clock */}
@@ -84,11 +84,28 @@ export const BroadcastScoreboard: React.FC<{
 };
 
 /** official league logo on a white plate; placeholder frame when the file has not been supplied */
-export const LeagueLogo: React.FC<{league: League; src?: string | null; age: number; dur: number; y: number; h?: number; w?: number; delay?: number; align?: 'left' | 'center'; plate?: string}> = ({league, src, age, dur, y, h = 210, w = 470, delay = 0, align = 'center', plate = '#FFFFFF'}) => {
+export const LeagueLogo: React.FC<{league: League; src?: string | null; age: number; dur: number; y: number; h?: number; w?: number; delay?: number; align?: 'left' | 'center'; plate?: string;
+  variant?: 'card' | 'tab'; dock?: 'above' | 'below'}> = ({league, src, age, dur, y, h = 210, w = 470, delay = 0, align = 'center', plate = '#FFFFFF', variant = 'card', dock = 'above'}) => {
   const a = age - delay;
   if (a <= 0) return null;
   const u = ease(a / 0.45);
   const L = LEAGUE[league];
+  if (variant === 'tab') {
+    // V3 (2026-11-24) "integrated" league ID: a small tab docked on the split seam (y = the seam), left edge, sliding
+    // out of the seam (clip), the league colour as a stripe on the seam side. No floating card, no scale pop.
+    const top = dock === 'above' ? y - h : y;
+    const clip = dock === 'above' ? `inset(${((1 - u) * 100).toFixed(2)}% 0 0 0)` : `inset(0 0 ${((1 - u) * 100).toFixed(2)}% 0)`;
+    const r = dock === 'above' ? '0 14px 0 0' : '0 0 14px 0';
+    return (
+      <div style={{position: 'absolute', left: 0, top, width: w, height: h, clipPath: clip, opacity: fade(age, dur, 0.01, 0.25)}}>
+        <div data-qc="stamp" style={{position: 'absolute', inset: 0, borderRadius: r, background: src ? plate : 'rgba(7,11,20,0.82)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          boxSizing: 'border-box', padding: '10px 18px 10px 26px', boxShadow: '0 6px 18px rgba(0,0,0,0.35)', [dock === 'above' ? 'borderBottom' : 'borderTop']: `5px solid ${L.col}`}}>
+          <span style={{position: 'absolute', left: 0, top: 0, bottom: 0, width: 8, background: GOLD}} />
+          {src ? <Img src={staticFile(src)} style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} /> : <span style={{font: `700 18px ${INTER}`, letterSpacing: 2, color: L.col}}>LOGO PLACEHOLDER</span>}
+        </div>
+      </div>
+    );
+  }
   return (
     <div style={{position: 'absolute', left: align === 'left' ? 40 : 0, right: align === 'left' ? undefined : 0, top: y, display: 'flex', justifyContent: 'center', opacity: u * fade(age, dur, 0.01, 0.25)}}>
       <div data-qc="stamp" style={{width: w, height: h, borderRadius: 22, background: src ? plate : 'rgba(7,11,20,0.78)', display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -105,3 +122,22 @@ export const LeagueLogo: React.FC<{league: League; src?: string | null; age: num
     </div>
   );
 };
+
+/** V3 (2026-11-24): one compact key for two coloured lines (e.g. the two three-point arcs): a colour stroke matching the
+ *  3D line, the league name, the value. One text region instead of two league tags + two numbers. */
+export const ArcKey: React.FC<{rows: {league: League; color: string; value: string}[]; age: number; dur: number; y?: number}> = ({rows, age, dur, y = 210}) => (
+  <div style={{position: 'absolute', left: 0, right: 0, top: y, display: 'flex', justifyContent: 'center', opacity: fade(age, dur)}}>
+    <div data-qc="stamp" style={{display: 'flex', flexDirection: 'column', gap: 10, padding: '16px 26px', borderRadius: 14, background: 'rgba(7,11,20,0.8)', border: '1.5px solid rgba(255,255,255,0.14)', boxShadow: '0 10px 28px rgba(0,0,0,0.45)'}}>
+      {rows.map((r, i) => {
+        const u = ease((age - 0.12 * i) / 0.3);
+        return (
+          <div key={i} style={{display: 'flex', alignItems: 'center', gap: 18, opacity: u, transform: `translateX(${((1 - u) * -18).toFixed(1)}px)`}}>
+            <span style={{width: 54, height: 9, borderRadius: 5, background: r.color}} />
+            <span style={{font: `400 46px ${ANTON}`, letterSpacing: 2, color: '#FFFFFF', minWidth: 290, paddingTop: 4}}>{LEAGUE[r.league].name}</span>
+            <span style={{font: `800 50px ${INTER}`, fontVariantNumeric: 'tabular-nums', color: r.color}}>{r.value}</span>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+);

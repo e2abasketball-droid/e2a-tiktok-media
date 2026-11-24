@@ -99,10 +99,13 @@ export const FoulTrack: React.FC<{league: League; max: number; ticks: number[]; 
   const sz = max >= 6 ? 128 : 138;
   return (
     <div style={{position: 'absolute', left: 0, right: 0, top: y, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, opacity: fade(age, dur)}}>
-      <div data-qc="stamp" style={{display: 'flex', alignItems: 'stretch', borderRadius: 10, overflow: 'hidden', boxShadow: '0 6px 22px rgba(0,0,0,0.5)'}}>
-        <span style={{background: L.col, color: '#FFFFFF', font: `400 50px ${ANTON}`, letterSpacing: 3, padding: '4px 18px 0'}}>{L.name}</span>
-        <span style={{background: 'rgba(11,28,61,0.94)', color: '#FFFFFF', font: `700 32px Inter, sans-serif`, letterSpacing: 3, padding: '14px 18px 0'}}>{label}</span>
-      </div>
+      {/* label '' (2026-11-24 V3 opt-in): no header at all (the league is identified elsewhere) */}
+      {label ? (
+        <div data-qc="stamp" style={{display: 'flex', alignItems: 'stretch', borderRadius: 10, overflow: 'hidden', boxShadow: '0 6px 22px rgba(0,0,0,0.5)'}}>
+          <span style={{background: L.col, color: '#FFFFFF', font: `400 50px ${ANTON}`, letterSpacing: 3, padding: '4px 18px 0'}}>{L.name}</span>
+          <span style={{background: 'rgba(11,28,61,0.94)', color: '#FFFFFF', font: `700 32px Inter, sans-serif`, letterSpacing: 3, padding: '14px 18px 0'}}>{label}</span>
+        </div>
+      ) : null}
       <div data-qc="stamp" style={{display: 'flex', gap: 14}}>
         {Array.from({length: max}, (_, i) => {
           const lit = i < n;

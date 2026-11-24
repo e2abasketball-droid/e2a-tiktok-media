@@ -20,7 +20,7 @@ import {choosePin, placePin} from './pinPlace';
 import {FocusVignette, FreezeFrame, KineticTitle, Logo, OfferCounter, PinLabel, PremiumSubtitles, RewindTag, Stamp, StepBadge, StepCounter, TacticalHUD, sceneFx} from './screen3d';
 import {Flash} from '../pro/fx';
 import {ClockDuel, Count3, FoulTrack, LeagueTag, VsTitle} from './leagues';
-import {BroadcastScoreboard, LeagueLogo} from './broadcast';
+import {ArcKey, BroadcastScoreboard, LeagueLogo} from './broadcast';
 import type {SbTeam} from './broadcast';
 import type {League} from './leagues';
 import {countedSteps} from './overlays3d';
@@ -43,7 +43,8 @@ type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: n
   | {type: 'chip'; text: string; y?: number; tone?: 'red' | 'blue' | 'gold'; align?: 'left' | 'center' | 'right'; size?: number}
   /** 2026-11-24 (4 Rules): score number (+1 / +2 / +3) that pops (scale 1.45 -> 0.94 -> 1, 0.32 s), settles and fades;
    *  verdict badge with a round icon (red X = violation / foul, green check = legal); section tag "01 TRAVELING" */
-  | {type: 'score'; text: string; y?: number; size?: number; sub?: string}
+  | {type: 'score'; text: string; y?: number; size?: number; sub?: string;
+     /** V3 2026-11-24 (opt-in): 'depth' = grows out of the court (0.35 -> 1.06 -> 1, shadow deepens); out = anchor where it lifts off and fades (0.28 s) */ enter?: 'depth'; out?: Anchor}
   | {type: 'verdict'; text: string; tone: 'red' | 'green'; y?: number; size?: number}
   | {type: 'section'; n: string; text: string; y?: number}
   /** 2026-11-24 (NBA vs EuroLeague): league tag, NBA vs EUROLEAGUE lock-up, regulation clocks, a player's personal-foul
@@ -54,13 +55,17 @@ type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: n
   | {type: 'fouls'; league: League; max: number; ticks: Anchor[]; out: Anchor; y?: number; label?: string}
   | {type: 'count3'; ticks: Anchor[]; y?: number; size?: number}
   /** 2026-11-24 V2 (opt-in): E2A Broadcast Scoreboard + official league logo slot (src null = marked placeholder) */
-  | {type: 'scoreboard'; league: League; logo?: string | null; teams: [SbTeam, SbTeam]; period: string; clock: string; shot?: number | null; run?: Anchor | null; highlight?: Anchor | null; dim?: Anchor | null; y?: number; width?: number; plate?: string}
-  | {type: 'leagueLogo'; league: League; src?: string | null; y: number; h?: number; w?: number; delay?: number; align?: 'left' | 'center'; plate?: string});
+  | {type: 'scoreboard'; league: League; logo?: string | null; teams?: [SbTeam, SbTeam] | null; period: string; clock: string; shot?: number | null; run?: Anchor | null; highlight?: Anchor | null; dim?: Anchor | null; y?: number; width?: number; plate?: string}
+  | {type: 'leagueLogo'; league: League; src?: string | null; y: number; h?: number; w?: number; delay?: number; align?: 'left' | 'center'; plate?: string; variant?: 'card' | 'tab'; dock?: 'above' | 'below'}
+  /** V3 2026-11-24: one key for two coloured lines (league, colour, value) */
+  | {type: 'arcKey'; rows: {league: League; color: string; value: string}[]; y?: number});
 /** 2026-11-22 (Chicago V3 split screen): a SECOND live 3D view stacked under the shot's own view (same clock, own play,
  *  remap, camera and world graphics). The shot's view takes the top `ratio` of the frame. Shots without `split` are
  *  rendered exactly as before. */
 export type Split3 = {play: string; remap: RemapKey[]; camera: CamKeyA[]; ov3?: (Timed & Ov3)[]; hide?: string[]; ratio?: number; athleteRenderer?: AthleteRenderer;
-  /** 2026-11-24 V2: 'brand' = thin navy/gold seam (default: the original red/gold/blue seam) */ seam?: 'brand'};
+  /** 2026-11-24 V2: 'brand' = thin navy/gold seam (default: the original red/gold/blue seam) */ seam?: 'brand';
+  /** V3 2026-11-24 (opt-in): animated split [anchor, ratio] keys (smoothstep between keys), e.g. 1 -> 0.5 = the second court
+   *  slides in from the bottom while both cameras keep moving; overrides `ratio` */ ratioKeys?: [Anchor, number][]};
 type CamKeyA = Omit<CamKey3, 'at'> & {at: Anchor};
 /** 2026-11-22 Realism V3.2 comparison panels: N live 3D views stacked top to bottom with equal heights (same clock),
  *  each with its own renderer / motion / mesh / material switches; play, remap and camera default to the shot's.
@@ -108,7 +113,9 @@ export type Episode3 = {
   keywords?: string[];
   subtitleHide?: [Anchor, Anchor][];
   /** optional explicit subtitle bursts: number of words per burst, in order (must add up to the word count) */
-  subtitleGroups?: number[]; subtitleY?: number; subtitleBlock?: boolean; subtitleYAt?: [Anchor, Anchor, number][]; gradeBottom?: number;
+  subtitleGroups?: number[]; subtitleY?: number; subtitleBlock?: boolean;
+  /** V3 2026-11-24 (opt-in): 'sentence' = sentence-case subtitles (default upper case as before); subtitleSize (default 56) */
+  subtitleCase?: 'upper' | 'sentence'; subtitleSize?: number; subtitleYAt?: [Anchor, Anchor, number][]; gradeBottom?: number;
   /** sound by event (2026-11-13): bounces, catches, braking squeaks and the net, placed on their visible
    *  contact through each shot's remap (silent in freezes, rewinds and slow motion below 0.3x) */
   autoSfx?: boolean | {bounce?: number; catch?: number; squeak?: number; swish?: number; land?: number; rim?: number; players?: string[]};
@@ -281,7 +288,20 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
   const split = shot.split
     ? (() => {
         const sp = shot.split;
-        const h1 = Math.round(H * (sp.ratio ?? 0.5));
+        let ratio = sp.ratio ?? 0.5;
+        if (sp.ratioKeys && sp.ratioKeys.length) {
+          const ks = sp.ratioKeys.map(([a, v]) => [toLocal(a), v] as [number, number]);
+          ratio = ks[0][1];
+          for (let k = 0; k < ks.length; k++) {
+            if (lt >= ks[k][0]) ratio = ks[k][1];
+            if (k + 1 < ks.length && lt >= ks[k][0] && lt < ks[k + 1][0]) {
+              const u = (lt - ks[k][0]) / Math.max(1e-6, ks[k + 1][0] - ks[k][0]);
+              ratio = ks[k][1] + (ks[k + 1][1] - ks[k][1]) * u * u * (3 - 2 * u);
+            }
+          }
+        }
+        const h1 = Math.min(H, Math.round(H * ratio));
+        if (h1 >= H - 1) return undefined; // animated split fully open: single view (no zero-height canvas)
         const play2 = ep.plays[sp.play];
         const rm2 = resolveRemap(sp.remap, play2, toLocal);
         const pt2 = remapAt(rm2, lt);
@@ -428,11 +448,15 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
           }
           case 'score': {
             const u = Math.min(1, s.age / 0.32);
-            const k = u < 0.55 ? 1.45 - 0.51 * (u / 0.55) : 0.94 + 0.06 * ((u - 0.55) / 0.45);
-            const o = Math.max(0, Math.min(1, s.age / 0.08, (s.dur - s.age) / 0.25));
+            const depth = s.enter === 'depth';
+            const ou = s.out != null ? Math.max(0, Math.min(1, (s.age - (toLocal(s.out) - (lt - s.age))) / 0.28)) : 0;
+            const k0 = depth ? (u < 0.6 ? 0.35 + 0.71 * Math.sin((u / 0.6) * Math.PI / 2) : 1.06 - 0.06 * ((u - 0.6) / 0.4)) : u < 0.55 ? 1.45 - 0.51 * (u / 0.55) : 0.94 + 0.06 * ((u - 0.55) / 0.45);
+            const k = k0 * (1 + 0.22 * ou);
+            const o = Math.max(0, Math.min(1, s.age / 0.08, (s.dur - s.age) / 0.25)) * (1 - ou);
+            if (o <= 0) return null;
             return (
               <div key={i} style={{position: 'absolute', left: 0, right: 0, top: s.y ?? 520, display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: o}}>
-                <div data-qc="stamp" style={{transform: `scale(${k.toFixed(3)})`, font: `400 ${s.size ?? 230}px Anton, Impact, sans-serif`, color: '#FFC447', lineHeight: 1, letterSpacing: 4, textShadow: '0 0 34px rgba(255,196,71,0.55), 0 8px 26px rgba(0,0,0,0.6)', WebkitTextStroke: '3px #0B1C3D'}}>{s.text}</div>
+                <div data-qc="stamp" style={{transform: `${depth ? `translateY(${((1 - Math.min(1, u / 0.6)) * 40 - ou * 30).toFixed(1)}px) ` : ''}scale(${k.toFixed(3)})`, font: `400 ${s.size ?? 230}px Anton, Impact, sans-serif`, color: '#FFC447', lineHeight: 1, letterSpacing: 4, textShadow: '0 0 34px rgba(255,196,71,0.55), 0 8px 26px rgba(0,0,0,0.6)', WebkitTextStroke: '3px #0B1C3D'}}>{s.text}</div>
                 {s.sub && <div style={{marginTop: 10, padding: '6px 18px', borderRadius: 8, background: 'rgba(5,10,21,0.78)', color: '#FFFFFF', font: '700 34px Inter, sans-serif', letterSpacing: 3}}>{s.sub}</div>}
               </div>
             );
@@ -501,10 +525,12 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
           }
           case 'scoreboard': {
             const r = (a: Anchor | null | undefined) => (a == null ? null : toLocal(a) - (lt - s.age));
-            return <BroadcastScoreboard key={i} league={s.league} logo={s.logo} teams={s.teams} period={s.period} clock={s.clock} shot={s.shot} run={r(s.run)} highlight={r(s.highlight)} dim={r(s.dim)} age={s.age} dur={s.dur} y={s.y} width={s.width} plate={s.plate} />;
+            return <BroadcastScoreboard key={i} league={s.league} logo={s.logo} teams={s.teams ?? null} period={s.period} clock={s.clock} shot={s.shot} run={r(s.run)} highlight={r(s.highlight)} dim={r(s.dim)} age={s.age} dur={s.dur} y={s.y} width={s.width} plate={s.plate} />;
           }
           case 'leagueLogo':
-            return <LeagueLogo key={i} league={s.league} src={s.src} age={s.age} dur={s.dur} y={s.y} h={s.h} w={s.w} delay={s.delay} align={s.align} plate={s.plate} />;
+            return <LeagueLogo key={i} league={s.league} src={s.src} age={s.age} dur={s.dur} y={s.y} h={s.h} w={s.w} delay={s.delay} align={s.align} plate={s.plate} variant={s.variant} dock={s.dock} />;
+          case 'arcKey':
+            return <ArcKey key={i} rows={s.rows} age={s.age} dur={s.dur} y={s.y} />;
           case 'flash':
             return <Flash key={i} age={s.age} color={s.color} strength={s.strength ?? 0.35} />;
           case 'stepCount': {
@@ -516,7 +542,7 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
             return null;
         }
       })}
-      <PremiumSubtitles words={ep.words} t={t} keys={ep.keywords ?? []} hideRanges={subHide} sizes={ep.subtitleGroups} block={ep.subtitleBlock} y={(ep.subtitleYAt ?? []).map(([a, b, yy]) => [T(a), T(b), yy] as [number, number, number]).find(([a, b]) => t >= a && t < b)?.[2] ?? ep.subtitleY ?? 1290} />
+      <PremiumSubtitles words={ep.words} t={t} keys={ep.keywords ?? []} hideRanges={subHide} sizes={ep.subtitleGroups} block={ep.subtitleBlock} sentence={ep.subtitleCase === 'sentence'} size={ep.subtitleSize} y={(ep.subtitleYAt ?? []).map(([a, b, yy]) => [T(a), T(b), yy] as [number, number, number]).find(([a, b]) => t >= a && t < b)?.[2] ?? ep.subtitleY ?? 1290} />
       {qcProbe && <BoundsProbe frame={frame} />}
       {!qcProbe && <Audio src={staticFile(ep.voiceMix ?? ep.voice)} />}
       {!qcProbe && ep.music?.src && <Audio src={staticFile(ep.music.src)} volume={ep.music.volume ?? 1} />}

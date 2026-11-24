@@ -128,7 +128,8 @@ export const FreezeFrame: React.FC<{age: number; dur: number; label?: string}> =
       {corner({right: 40, top: 240, borderRightWidth: 5, borderTopWidth: 5})}
       {corner({left: 40, bottom: 440, borderLeftWidth: 5, borderBottomWidth: 5})}
       {corner({right: 40, bottom: 440, borderRightWidth: 5, borderBottomWidth: 5})}
-      <div data-qc="freeze" style={{position: 'absolute', right: 60, top: 258, fontFamily: BODY, fontWeight: 900, fontSize: 26, letterSpacing: 5, color: NAVY, background: GOLD, padding: '4px 12px', borderRadius: 6, opacity: a}}>❚❚ {label}</div>
+      {/* label '' (2026-11-24 V3 opt-in): corners only, no tag */}
+      {label ? <div data-qc="freeze" style={{position: 'absolute', right: 60, top: 258, fontFamily: BODY, fontWeight: 900, fontSize: 26, letterSpacing: 5, color: NAVY, background: GOLD, padding: '4px 12px', borderRadius: 6, opacity: a}}>❚❚ {label}</div> : null}
     </>
   );
 };
@@ -156,7 +157,7 @@ type W = {text: string; start: number; end: number};
 const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
 
 /** premium subtitles: max two short lines, words appear exactly when spoken, key words in gold */
-export const PremiumSubtitles: React.FC<{words: W[]; t: number; keys: string[]; y?: number; size?: number; hideRanges?: [number, number][]; sizes?: number[]; block?: boolean}> = ({words, t, keys, y = 1290, size = 56, hideRanges = [], sizes, block = false}) => {
+export const PremiumSubtitles: React.FC<{words: W[]; t: number; keys: string[]; y?: number; size?: number; hideRanges?: [number, number][]; sizes?: number[]; block?: boolean; sentence?: boolean}> = ({words, t, keys, y = 1290, size = 56, hideRanges = [], sizes, block = false, sentence = false}) => {
   const groups = React.useMemo(() => {
     // explicit burst sizes (2026-11-15, Ghost Screen brief: 3-7 words per burst) when the episode gives them
     if (sizes && sizes.reduce((a, b) => a + b, 0) === words.length) {
@@ -198,7 +199,8 @@ export const PremiumSubtitles: React.FC<{words: W[]; t: number; keys: string[]; 
   const end = g[g.length - 1].end + 0.35;
   const outA = clamp((end - t) / 0.18);
   return (
-    <div style={{position: 'absolute', left: 90, right: 170, top: y, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: `4px ${size * 0.26}px`, opacity: outA}}>
+    // 2026-11-24 (NBA vs EuroLeague V3, opt-in `sentence`): sentence case, centred on the frame, slightly lighter weight
+    <div style={{position: 'absolute', left: sentence ? 70 : 90, right: sentence ? 70 : 170, top: y, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: `4px ${size * 0.26}px`, opacity: outA}}>
       {g.map((w, i) => {
         // block mode (Ghost V2 brief: no word-by-word reveal): the whole sense unit appears at once
         const t0 = block ? g[0].start : w.start;
@@ -211,11 +213,11 @@ export const PremiumSubtitles: React.FC<{words: W[]; t: number; keys: string[]; 
             data-qc="subtitle"
             style={{
               fontFamily: BODY,
-              fontWeight: 900,
+              fontWeight: sentence ? 800 : 900,
               fontSize: size,
               lineHeight: 1.2,
-              letterSpacing: 0.5,
-              textTransform: 'uppercase',
+              letterSpacing: sentence ? 0 : 0.5,
+              textTransform: sentence ? 'none' : 'uppercase',
               color: k ? GOLD : WHITE,
               opacity: on ? 0.35 + 0.65 * a : 0.0,
               transform: `translateY(${(1 - a) * 10}px)`,
