@@ -1,4 +1,4 @@
-// EVERY COURT HAS ONE — episode renderer (V02 edit) (YouTube Shorts 1080x1920, 30 fps).
+// EVERY COURT HAS ONE — episode renderer (V03 edit) (YouTube Shorts 1080x1920, 30 fps).
 // Picture only: the audio master is mixed separately (tools/comedy/mix_ep.py) and muxed after.
 import React from 'react';
 import {AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame} from 'remotion';
@@ -6,7 +6,7 @@ import '../theme';
 import {AND1, ACE} from './characters';
 import {Ball, Stage} from './stage';
 import {Toon, fk} from './toon';
-import {CAPTION_Y, EDIT_DURATION, FPS, HIGHLIGHT, LINES, SHOTS, ballAt, mouthOf, poseAt, swishAt, toOld} from './ep001';
+import {CAPTION_Y, EDIT_DURATION, FPS, HIGHLIGHT, LINES, NO_CAPTION, SHOTS, ballAt, mouthOf, poseAt, swishAt, toOld} from './ep001';
 
 export const comedyDuration = () => Math.round(EDIT_DURATION * FPS);
 
@@ -14,7 +14,7 @@ const GOLD = '#E3BE68';
 
 const Caption: React.FC<{t: number; y: number; shotStart: number}> = ({t, y, shotStart}) => {
   // a line shows while it is spoken (+0.2 s); it never carries over into the next shot
-  const line = LINES.lines.find((l) => t >= l.words[0].start - 0.04 && t < l.end + 0.2 && !(shotStart > l.words[l.words.length - 1].end + 0.05));
+  const line = LINES.lines.find((l) => !NO_CAPTION.has(l.id) && t >= l.words[0].start - 0.04 && t < l.end + 0.2 && !(shotStart > l.words[l.words.length - 1].end + 0.05));
   if (!line) return null;
   const hl = HIGHLIGHT.has(line.id);
   // words appear exactly when they are spoken (never early)
@@ -57,21 +57,26 @@ const Title: React.FC<{t: number}> = ({t}) => {
   );
 };
 
+// V03 shareable ending: the CTA lands with ACE's spoken "Tag that friend." (never before it)
+const END_IN = 29.3;
 const EndCard: React.FC<{t: number}> = ({t}) => {
-  if (t < 21.95) return null;
-  const a = interpolate(t, [21.95, 22.1], [0, 1], {extrapolateRight: 'clamp'});
-  const s = interpolate(t, [21.95, 22.12], [1.12, 1], {extrapolateRight: 'clamp'});
-  const sig = interpolate(t, [22.55, 22.8], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  if (t < END_IN) return null;
+  const a = interpolate(t, [END_IN, END_IN + 0.12], [0, 1], {extrapolateRight: 'clamp'});
+  const s = interpolate(t, [END_IN, END_IN + 0.15], [1.12, 1], {extrapolateRight: 'clamp'});
+  const a2 = interpolate(t, [END_IN + 0.45, END_IN + 0.6], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const sig = interpolate(t, [END_IN + 0.9, END_IN + 1.15], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const stroke = {WebkitTextStroke: '10px #05070C', paintOrder: 'stroke fill', textShadow: '0 6px 18px rgba(0,0,0,0.55)'} as const;
   return (
     <>
-      <div style={{position: 'absolute', left: 100, right: 100, top: 1250, textAlign: 'center', opacity: a, transform: `scale(${s})`}}>
-        <span style={{fontFamily: 'Anton', fontSize: 104, color: '#fff', WebkitTextStroke: '10px #05070C', paintOrder: 'stroke fill', textShadow: '0 6px 18px rgba(0,0,0,0.55)'}}>
-          YOU KNOW <span style={{color: GOLD}}>THIS GUY.</span>
-        </span>
+      <div style={{position: 'absolute', left: 70, right: 70, top: 1210, textAlign: 'center', opacity: a, transform: `scale(${s})`}}>
+        <span style={{fontFamily: 'Anton', fontSize: 108, lineHeight: 1.0, letterSpacing: 1.5, color: GOLD, ...stroke}}>TAG THAT FRIEND</span>
       </div>
-      <div style={{position: 'absolute', left: 0, right: 0, top: 1420, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 14, opacity: sig * 0.92}}>
-        <Img src={staticFile('comedy/e2a_logo_2026_color.png')} style={{height: 72}} />
-        <span style={{fontFamily: 'Inter', fontWeight: 700, fontSize: 26, letterSpacing: 4, color: '#fff', textShadow: '0 2px 8px rgba(0,0,0,0.7)'}}>E2A SPORTS</span>
+      <div style={{position: 'absolute', left: 60, right: 60, top: 1335, textAlign: 'center', opacity: a2}}>
+        <span style={{fontFamily: 'Anton', fontSize: 64, lineHeight: 1.0, letterSpacing: 1, color: '#fff', ...stroke, WebkitTextStroke: '8px #05070C'}}>WHO CALLS FOUL ON EVERYTHING.</span>
+      </div>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 1445, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 12, opacity: sig * 0.9}}>
+        <Img src={staticFile('comedy/e2a_logo_2026_color.png')} style={{height: 60}} />
+        <span style={{fontFamily: 'Inter', fontWeight: 700, fontSize: 24, letterSpacing: 4, color: '#fff', textShadow: '0 2px 8px rgba(0,0,0,0.7)'}}>E2A SPORTS</span>
       </div>
     </>
   );
@@ -79,7 +84,7 @@ const EndCard: React.FC<{t: number}> = ({t}) => {
 
 export const ComedyShort: React.FC<{only?: string}> = () => {
   const frame = useCurrentFrame();
-  // V02: the edit removes dead time on the cuts; everything below runs on the animation clock
+  // the edit removes dead time on the cuts; everything below runs on the animation clock
   const t = toOld(frame / FPS);
   const shots = SHOTS();
   const shot = shots.find((s) => t >= s.t0 && t < s.t1) ?? shots[shots.length - 1];

@@ -1,5 +1,5 @@
 {
-  "_doc": "V02 music bed. Times are EPISODE (edited) seconds. Levels in dBFS RMS of the bed before the final loudness pass. Ducking follows the dialogue automatically; 'automation' adds the comedy cues on top.",
+  "_doc": "V03 music bed (V02 groove). Times are EPISODE (edited) seconds. Levels in dBFS RMS of the bed before the final loudness pass. Ducking follows the dialogue automatically; 'automation' adds the comedy cues on top.",
   "file": "comedy/ep001/music/e2a_comedy_groove_A.mp3",
   "start_offset": 0.0,
   "bed_db": -27,
@@ -7,12 +7,68 @@
   "attack": 0.06,
   "release": 0.32,
   "automation": [
-    {"from": 2.30, "to": 4.75, "db": -3, "why": "ACE: 'Bro, nobody touched you.' (deadpan carries it)"},
-    {"from": 5.35, "to": 8.10, "db": 2, "why": "second AND ONE: a touch more energy"},
-    {"from": 10.92, "to": 11.55, "mute": true, "why": "rhythmic stop on the trip; only the soft fall lands"},
-    {"from": 15.30, "to": 17.70, "db": -4, "why": "'Who fouled you?' — groove recedes"},
-    {"from": 17.70, "to": 19.90, "mute": true, "why": "comic pause + 'The floor.' with no music"},
-    {"from": 19.90, "to": 22.17, "db": 1, "why": "groove returns on ACE's look; carries the loop"}
+    {
+      "from": 2.3,
+      "to": 4.55,
+      "db": -3,
+      "why": "ACE: 'Bro, nobody touched you.' (deadpan carries it)"
+    },
+    {
+      "from": 6.75,
+      "to": 9.3,
+      "db": 2,
+      "why": "second AND ONE: a touch more energy"
+    },
+    {
+      "from": 9.4,
+      "to": 11.45,
+      "db": -2,
+      "why": "ACE: 'Bro, you airballed.' deadpan"
+    },
+    {
+      "from": 15.62,
+      "to": 16.25,
+      "mute": true,
+      "why": "rhythmic stop on the trip; only the soft fall lands"
+    },
+    {
+      "from": 20.0,
+      "to": 22.4,
+      "db": -4,
+      "why": "'Who fouled you?' - groove recedes"
+    },
+    {
+      "from": 22.4,
+      "to": 26.95,
+      "mute": true,
+      "why": "comic pause, 'The floor.', ACE's stare and the muttered 'Flagrant two.' with no music"
+    },
+    {
+      "from": 26.95,
+      "to": 29.77,
+      "db": 1,
+      "why": "groove returns on ACE's look to camera and the CTA"
+    }
   ],
-  "edit": {"cuts": [[1.95, 2.35], [15.32, 15.5], [18.45, 19.0], [21.05, 21.25]], "old_end": 23.5}
+  "edit": {
+    "cuts": [
+      [
+        1.95,
+        2.35
+      ],
+      [
+        20.02,
+        20.2
+      ],
+      [
+        23.15,
+        23.7
+      ],
+      [
+        25.75,
+        25.95
+      ]
+    ],
+    "old_end": 31.1
+  }
 }

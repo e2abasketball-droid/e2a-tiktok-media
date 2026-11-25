@@ -1,5 +1,5 @@
 {
- "duration": 24.4,
+ "duration": 31.1,
  "cues": [
   {
    "file": "swish.mp3",
@@ -9,13 +9,13 @@
   },
   {
    "file": "squeak.mp3",
-   "at": 11.34,
+   "at": 16.04,
    "gain_db": -11,
    "fade": 0.05
   },
   {
    "file": "impact.mp3",
-   "at": 11.78,
+   "at": 16.48,
    "gain_db": -17,
    "lowpass": 700,
    "trim": 0.45,

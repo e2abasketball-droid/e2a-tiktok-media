@@ -11,16 +11,36 @@ import {RIM} from './gym';
 import lines from '../../comedy/ep001/lines.json';
 
 export const FPS = 30;
-export const DURATION = 24.4; // length of the animation clock (V01 timeline)
+export const DURATION = 31.1; // length of the animation clock (V03 timeline)
 
-// ---------- V02 edit: the episode plays the animation clock with these spans removed ----------
+// ---------- V03: new beats are INSERTED into the V02 animation clock ----------
+// Every V02 key / shot / gait / blink time below is still written on the V02 clock and mapped with sh();
+// the new beats (V03_* arrays) are written directly on the V03 clock.
+//   I1 at 5.74  (+1.41): AND1 "Still a foul." + ACE gestures at the empty court (replaces the V02 wave)
+//   I2 at 9.0   (+0.90): room for the longer "Bro, you airballed."
+//   I3 at 10.25 (+2.39): AND1 "He hit my shooting hand!" + ACE checks behind him for the defender
+// After the V02 punchline (V02 21.25 -> V03 25.95) the ending is new: stare, "Flagrant two.", "Tag that friend."
+const INS: [number, number][] = [[5.74, 1.41], [9.0, 0.9], [10.25, 2.39]];
+/** V02 animation clock -> V03 animation clock */
+export const sh = (o: number) => o + INS.reduce((a, [at, len]) => a + (o >= at ? len : 0), 0);
+/** V03 animation clock -> V02 animation clock (inside an inserted beat: just before the insert point) */
+export const unsh = (t: number) => {
+  let off = 0;
+  for (const [at, len] of INS) {
+    if (t >= at + off + len) off += len;
+    else if (t >= at + off) return at - 1e-4;
+  }
+  return t - off;
+};
+
+// ---------- edit: the episode plays the animation clock with these spans removed ----------
 // Every removal sits on a cut (or the tail), so no action jumps inside a shot; dialogue is never touched.
-export const OLD_END = 23.5; // V01 ran to 24.4: the final look is shortened
+export const OLD_END = 31.1;
 export const CUTS: [number, number][] = [
   [1.95, 2.35], // A->B: ACE's shot starts already mid head-turn
-  [15.32, 15.5], // I->J: ACE already walking
-  [18.45, 19.0], // J->K: shorter silence before the punchline (pause kept ~1.4 s)
-  [21.05, 21.25], // K->L: cut to ACE sooner after "The floor."
+  [20.02, 20.2], // I->J: ACE already walking (V02 15.32)
+  [23.15, 23.7], // J->K: shorter silence before the punchline (V02 18.45)
+  [25.75, 25.95], // K->stare: cut to ACE sooner after "The floor." (V02 21.05)
 ];
 const removed = CUTS.reduce((a, [x, y]) => a + (y - x), 0);
 export const EDIT_DURATION = Math.round((OLD_END - removed) * 30) / 30;
@@ -76,7 +96,7 @@ const F = (t: number, name: keyof typeof MV.FACES | Partial<Face>, extra: Partia
 });
 
 // ================= AND1 =================
-const AND1_BODY: Key[] = [
+const V02_AND1_BODY: Key[] = [
   // SCENE 1 — layup already in the air at frame 0, nobody near
   K(0, {...MV.STAND, x: 0.66, z: -2.38, yaw: faceTo([0.66, -2.38], [0, -1.575]), lift: 0.5, rShPitch: 2.95, rShOut: 0.12, rElbow: 0.12, lShPitch: 1.1, lShOut: 0.45, lElbow: 0.9,
     lHip: 1.15, lKnee: 1.55, rHip: 0.1, rKnee: 0.25, rAnkle: 0.5, headPitch: -0.3}),
@@ -144,7 +164,7 @@ const AND1_BODY: Key[] = [
   K(24.4, {...MV.SIT_POINT_L_PROP, yaw: Y_SEAT, spineTwist: HEAD_TO_ACE * 0.35, headYaw: HEAD_TO_ACE * 0.65, headPitch: -0.28, lShPitch: 0.28}),
 ];
 
-const AND1_FACE: Key[] = [
+const V02_AND1_FACE: Key[] = [
   F(0, 'serious', {gazeY: 0.5, smile: 0.1}),
   F(0.42, 'triumph', {gazeY: 0}),
   F(0.62, 'shout', {gazeX: 0, gazeY: 0.05}),
@@ -184,7 +204,7 @@ const AND1_FACE: Key[] = [
 ];
 
 // ================= ACE =================
-const ACE_BODY: Key[] = [
+const V02_ACE_BODY: Key[] = [
   K(0, {...MV.RELAXED, x: ACE_1[0], z: ACE_1[1], yaw: Y_ACE_A1 + 0.2, headYaw: 0.1}),
   // scene 2: slow head turn to AND1
   K(2.0, {...MV.RELAXED, x: ACE_1[0], z: ACE_1[1], yaw: Y_ACE_A1 + 0.2, headYaw: 0.55, headPitch: 0.05}),
@@ -221,7 +241,7 @@ const ACE_BODY: Key[] = [
   K(24.4, {headPitch: 0.04, headYaw: 0.42, headRoll: 0.03, spineBend: 0.06}),
 ];
 
-const ACE_FACE: Key[] = [
+const V02_ACE_FACE: Key[] = [
   F(0, 'flat', {gazeX: 0.2}),
   F(2.0, 'flat', {gazeX: 0.6}),
   F(2.55, 'flat', {gazeX: -0.1, lid: 0.2, browL: 0.25, browR: 0.1}),
@@ -250,10 +270,120 @@ const ACE_FACE: Key[] = [
   F(24.4, 'done', {gazeY: 0, gazeX: -0.3, lid: 0.24, browL: 0.4, browR: 0.22}),
 ];
 
+// ================= V03 beats (written on the V03 clock) =================
+const V03_AND1_BODY: Key[] = [
+  // C — "Still a foul.": dead serious, one flat palm toward ACE, a small nod on "foul"
+  K(4.97, {...MV.STAND, x: A_LAY[0], z: A_LAY[1], yaw: Y_A1_ACE, headPitch: -0.1, headRoll: 0, headYaw: 0}),
+  K(5.12, {spineBend: 0.06, headPitch: 0.02, headRoll: -0.05, rShPitch: 0.6, rShOut: 0.28, rElbow: 1.25, rShTwist: 0.8, lShOut: 0.2}, 'out'),
+  K(5.55, {headPitch: 0.14, rShPitch: 0.5, rElbow: 1.05, spineBend: 0.08}, 'in'),
+  K(5.8, {headPitch: 0.0, rShPitch: 0.45, rElbow: 1.1}),
+  K(6.1, {headPitch: -0.04, headRoll: -0.08, rShPitch: 0.2, rElbow: 0.6, rShTwist: 0.3}),
+  // G — "He hit my shooting hand!": recoils, shows the shooting hand, taps the wrist, leans in
+  K(11.86, {...MV.STAND, x: A_SHOT[0], z: A_SHOT[1], yaw: Y_SHOT_ACE - 0.25, headYaw: 0.1, headRoll: 0, headPitch: 0}, 'step'),
+  K(12.02, {spineBend: -0.1, lean: -0.06, headPitch: -0.12, lShOut: 0.4, rShOut: 0.4, lElbow: 0.9, rElbow: 0.9, lShPitch: 0.3, rShPitch: 0.3}, 'back'),
+  K(12.3, {spineBend: 0.02, lean: 0.03, headPitch: -0.04, rShPitch: 2.25, rShOut: 0.3, rElbow: 1.55, rShTwist: 0.3, lShPitch: 0.45, lShOut: 0.3, lElbow: 1.1}, 'out'),
+  K(12.62, {lShPitch: 0.75, lShOut: 0.55, lShTwist: 0.6, lElbow: 0.7, headPitch: 0.04}, 'out'),
+  K(12.78, {lShPitch: 0.7, lElbow: 0.65}),
+  K(12.95, {rShPitch: 2.4, rElbow: 1.45, lShPitch: 0.85, lShOut: 0.6, lElbow: 0.55, headPitch: -0.02}),
+  K(13.3, {lean: 0.08, headPitch: 0.08, rShPitch: 2.2, rElbow: 1.6, lShPitch: 0.6, lShOut: 0.5, lElbow: 0.7}, 'in'),
+  K(13.75, {lean: 0.06, headPitch: 0.05, rShPitch: 2.1, rElbow: 1.6}),
+  // ending — "Flagrant two.": chin up, one nod, looks away (case closed)
+  K(26.85, {...MV.SIT_POINT_L_PROP, yaw: Y_SEAT, spineTwist: HEAD_TO_ACE * 0.35, headYaw: HEAD_TO_ACE * 0.65, headPitch: -0.28, lShPitch: 0.28}),
+  K(27.12, {headPitch: -0.36, headRoll: 0.06}),
+  K(27.5, {headPitch: -0.16}, 'in'),
+  K(27.75, {headPitch: -0.3}),
+  K(28.05, {headYaw: HEAD_TO_ACE * 0.25, headPitch: -0.22, lShPitch: 0.2}),
+  K(31.1, {headYaw: HEAD_TO_ACE * 0.25, headPitch: -0.22}),
+];
+const V03_AND1_FACE: Key[] = [
+  F(4.97, 'serious', {gazeX: 0, gazeY: 0.05, lid: 0.34}),
+  F(5.5, 'serious', {lid: 0.42, browTilt: -0.55}),
+  F(6.1, 'serious', {lid: 0.4}),
+  F(11.86, 'outrage', {gazeX: 0.25}, 'step'),
+  F(12.3, 'outrage', {browTilt: -0.85, gazeX: 0.2}),
+  F(13.3, 'outrage', {browTilt: -0.9, squint: 0.4}),
+  F(13.75, 'annoyed', {gazeX: 0.25, lid: 0.3}),
+  F(26.85, 'serious', {gazeX: 0, gazeY: 0.45, lid: 0.24, browTilt: -0.35}),
+  F(27.1, 'serious', {gazeY: 0.3, lid: 0.45, smile: -0.1, smirk: 0.25}),
+  F(28.05, 'smug', {gazeX: -0.3, gazeY: 0.2, lid: 0.6, smile: 0.05}),
+  F(31.1, 'smug', {gazeX: -0.3, gazeY: 0.2, lid: 0.6, smile: 0.05}),
+];
+const V03_ACE_BODY: Key[] = [
+  // C2 — eyebrow, head tilt, open palm at the empty court ("touched by WHO?")
+  K(6.1, {...MV.RELAXED, x: ACE_1[0], z: ACE_1[1], yaw: Y_ACE_A1 + 0.2, headYaw: -0.1, headPitch: 0.02, headRoll: 0.11, spineSide: 0.07}),
+  K(6.3, {headRoll: 0.2, headPitch: 0.04}, 'out'),
+  K(6.55, {rShPitch: 0.95, rShOut: 0.85, rElbow: 0.35, rShTwist: 0.9, spineTwist: -0.12, headYaw: -0.45, headRoll: 0.08, lean: 0.03}, 'out'),
+  K(6.85, {rShPitch: 0.9, rShOut: 0.95, headYaw: -0.45}),
+  K(7.1, {headYaw: -0.05, headRoll: 0.14, rShPitch: 0.7, rShOut: 0.8}),
+  // F — small head tilt on "airballed"
+  K(10.95, {headRoll: 0.0, headPitch: -0.04}),
+  K(11.25, {headRoll: 0.12, headPitch: 0.05}),
+  // G2 — "who is he talking about?": checks behind himself for the defender, both sides
+  K(13.75, {...MV.CROSSED, x: ACE_1[0], z: ACE_1[1], yaw: Y_ACE_SHOT, headRoll: 0.06, headPitch: 0.02, headYaw: 0}),
+  K(13.95, {headYaw: 0.0}),
+  K(14.2, {headYaw: 1.05, spineTwist: 0.28, headPitch: 0.04}, 'out'),
+  K(14.42, {headYaw: 1.05, spineTwist: 0.28}),
+  K(14.62, {headYaw: -0.7, spineTwist: -0.15}),
+  K(14.8, {headYaw: -0.7, spineTwist: -0.15}),
+  K(14.9, {headYaw: -0.4}),
+  // I — stares at the empty space beside AND1, closes his eyes, exhales
+  K(18.5, {...MV.RELAXED, x: ACE_2[0], z: ACE_2[1], yaw: Y_ACE2, headYaw: 0.25, headPitch: 0.12, spineTwist: 0, lShOut: 0.4, rShOut: 0.4, lElbow: 0.9, rElbow: 0.9, lShPitch: 0.35, rShPitch: 0.35}),
+  K(18.85, {headYaw: 0.3, headPitch: 0.14}),
+  K(19.05, {headYaw: 0.05, headPitch: 0.2, spineBend: 0.1, lShPitch: 0.25, rShPitch: 0.25, lShOut: 0.3, rShOut: 0.3}, 'in'),
+  K(19.45, {headPitch: 0.24, spineBend: 0.12}),
+  K(19.7, {headPitch: 0.15, spineBend: 0.05}),
+  // stare after "The floor."
+  K(26.3, {headRoll: 0.1, headPitch: 0.4}),
+  K(26.8, {headRoll: 0.12}),
+  // L — closes his eyes, exhales, turns to the lens: "Tag that friend."
+  K(28.3, {...MV.RELAXED, x: ACE_3[0], z: ACE_3[1], yaw: Y_ACE3, headPitch: 0.38, headRoll: 0.08, headYaw: 0, spineTwist: 0}),
+  K(28.75, {headPitch: 0.5, spineBend: 0.12, lShPitch: -0.05, rShPitch: -0.05, lShOut: 0.08, rShOut: 0.08, headRoll: 0.02}, 'in'),
+  K(29.1, {headPitch: 0.04, headYaw: 0.42, spineTwist: 0.12, spineBend: 0.05, headRoll: 0}, 'out'),
+  K(29.6, {headRoll: 0.05}),
+  K(30.1, {headPitch: 0.0, headRoll: 0.07}),
+  K(30.45, {headYaw: 0.36}),
+  K(30.65, {headYaw: 0.48}),
+  K(30.85, {headYaw: 0.42}),
+  K(31.1, {headYaw: 0.42}),
+];
+const V03_ACE_FACE: Key[] = [
+  F(6.1, 'doubt', {gazeX: -0.1, lid: 0.25, browL: 0.85, browR: 0.0}),
+  F(6.55, 'doubt', {gazeX: -0.6, lid: 0.3, browL: 0.7}),
+  F(7.1, 'deadpan', {gazeX: 0, lid: 0.38, browL: 0.35}),
+  F(11.05, 'deadpan', {lid: 0.3, browL: 0.45, browR: 0.3}),
+  F(13.75, 'flat', {gazeX: 0, lid: 0.25}),
+  F(14.2, 'lookAround', {gazeX: 0.85}),
+  F(14.42, 'lookAround', {gazeX: 0.85}),
+  F(14.62, 'lookAround', {gazeX: -0.85}),
+  F(14.85, 'doubt', {gazeX: -0.6}),
+  F(18.48, 'flat', {gazeX: 0.2, gazeY: -0.2}),
+  F(18.85, 'deadpan', {gazeX: 0.25, gazeY: -0.3, lid: 0.4}),
+  F(19.02, 'done', {lid: 0.97}),
+  F(19.5, 'done', {lid: 0.97}),
+  F(19.7, 'flat', {gazeY: -0.25}),
+  F(25.95, 'deadpan', {gazeX: 0, gazeY: -0.5, lid: 0.42}),
+  F(26.8, 'deadpan', {gazeY: -0.5, lid: 0.45, browL: 0.2}),
+  F(28.3, 'deadpan', {gazeY: -0.5, lid: 0.45}),
+  F(28.42, 'done', {lid: 0.97, gazeY: -0.3}),
+  F(28.95, 'done', {lid: 0.97}),
+  F(29.15, 'done', {gazeY: 0, gazeX: -0.3, lid: 0.32, browL: 0.3, browR: 0.15}),
+  F(30.0, 'done', {gazeY: 0, gazeX: -0.3, lid: 0.25, browL: 0.55, browR: 0.2}),
+  F(31.1, 'done', {gazeY: 0, gazeX: -0.3, lid: 0.25, browL: 0.55, browR: 0.2}),
+];
+
+/** V02 keys minus the beats V03 replaces (tested on the V02 clock), mapped to the V03 clock, merged with the V03 keys */
+const build = (v02: Key[], drop: (o: number) => boolean, v03: Key[]) =>
+  [...v02.filter((k) => !drop(k.t)).map((k) => ({...k, t: sh(k.t)})), ...v03].sort((a, b) => a.t - b.t);
+const AND1_DROP = (o: number) => (o > 4.95 && o < 5.74) || (o >= 9.5 && o < 10.25) || o > 21;
+const AND1_BODY = build(V02_AND1_BODY, AND1_DROP, V03_AND1_BODY);
+const AND1_FACE = build(V02_AND1_FACE, AND1_DROP, V03_AND1_FACE);
+const ACE_BODY = build(V02_ACE_BODY, (o) => (o > 13.8 && o < 15.0) || o > 21.5, V03_ACE_BODY);
+const ACE_FACE = build(V02_ACE_FACE, (o) => (o > 13.8 && o < 15.1) || o > 21.25, V03_ACE_FACE);
+
 // blinks (start times); lids close over 0.06 s and open over 0.1 s. Long blink = [t, 0.35]
 const BLINKS: Record<'AND1' | 'ACE', [number, number?][]> = {
-  AND1: [[1.85], [5.05], [9.62], [12.25], [16.6], [18.35], [20.95, 0.18]],
-  ACE: [[0.9], [3.7], [8.25], [9.45], [13.95], [15.6], [17.95], [20.6], [22.0, 0.35]],
+  AND1: [...([[1.85], [5.05], [12.25], [16.6], [18.35], [20.95, 0.18]] as [number, number?][]).map(([t, h]): [number, number?] => [sh(t), h]), [13.82], [27.0], [28.5]],
+  ACE: [...([[0.9], [3.7], [8.25], [9.45], [15.6], [17.95], [20.6]] as [number, number?][]).map(([t, h]): [number, number?] => [sh(t), h]), [6.05], [13.9], [26.35, 0.25]],
 };
 
 const blinkAt = (who: 'AND1' | 'ACE', t: number) => {
@@ -278,8 +408,8 @@ const mouthAt = (who: 'AND1' | 'ACE', t: number) => {
 // ---------- procedural gait (steps) for the drive and ACE's walk ----------
 type Gait = {t0: number; t1: number; stride: number; amp: number; run: boolean; dribble?: boolean; fade?: number};
 const GAITS: Record<'AND1' | 'ACE', Gait[]> = {
-  AND1: [{t0: 10.25, t1: 11.36, stride: 0.95, amp: 1, run: true, dribble: true, fade: 0.08}],
-  ACE: [{t0: 15.05, t1: 16.8, stride: 0.74, amp: 0.85, run: false}],
+  AND1: [{t0: sh(10.25), t1: sh(11.36), stride: 0.95, amp: 1, run: true, dribble: true, fade: 0.08}],
+  ACE: [{t0: sh(15.05), t1: sh(16.8), stride: 0.74, amp: 0.85, run: false}],
 };
 
 const rootAt = (keys: Key[], t: number): V2 => {
@@ -370,6 +500,8 @@ const VIS: Record<string, [number, number]> = {
 };
 const WORD_PH: Record<string, string> = {
   and: 'AND', one: 'UAN', bro: 'MRO', nobody: 'NOMODI', touched: 'TACT', you: 'IU', missed: 'MIST', foul: 'FAUL', who: 'HU', fouled: 'FAULD', the: 'DA', floor: 'FLOR',
+  // V03
+  still: 'STIL', a: 'A', airballed: 'ERMOLD', he: 'HI', hit: 'HIT', my: 'MAI', shooting: 'SUTIN', hand: 'HAND', flagrant: 'FLECRANT', two: 'TU', tag: 'TAC', that: 'DAT', friend: 'FREND',
 };
 const isV = (c: string) => 'AOUEI'.includes(c);
 const visemeAt = (who: 'AND1' | 'ACE', t: number): [number, number] | null => {
@@ -429,9 +561,10 @@ const bounceRoll = (from: THREE.Vector3, to: THREE.Vector3, u: number, h0: numbe
   return p;
 };
 
-const handBall = (who: 'AND1' | 'ACE', t: number, side: 'l' | 'r' = 'r') => ballInHand(fk(poseAt(who, t), 1.06), side);
-const twoHand = (t: number) => {
-  const s = fk(poseAt('AND1', t), 1.06);
+// ball logic stays on the V02 clock (no ball action happens inside a V03 insert); poses are read on the V03 clock
+const handBall = (who: 'AND1' | 'ACE', o: number, side: 'l' | 'r' = 'r') => ballInHand(fk(poseAt(who, sh(o)), 1.06), side);
+const twoHand = (o: number) => {
+  const s = fk(poseAt('AND1', sh(o)), 1.06);
   return ballInHand(s, 'l').add(ballInHand(s, 'r')).multiplyScalar(0.5);
 };
 
@@ -439,7 +572,8 @@ const RIM_TOP = RIM.clone().add(new THREE.Vector3(0, 0.15, 0));
 const FLOOR_UNDER_RIM = new THREE.Vector3(0.05, 0.121, -1.45);
 const AIRBALL_LAND = new THREE.Vector3(-1.55, 0.121, -0.85);
 
-export const ballAt = (t: number): {pos: THREE.Vector3; spin: number} => {
+export const ballAt = (t: number) => ballV02(unsh(t));
+const ballV02 = (t: number): {pos: THREE.Vector3; spin: number} => {
   if (t < 0.3) {
     const a = handBall('AND1', 0);
     return {pos: arc(a, RIM_TOP, 0.12, smooth(t / 0.3)), spin: t * 6};
@@ -466,8 +600,8 @@ export const ballAt = (t: number): {pos: THREE.Vector3; spin: number} => {
   if (t < 11.36) {
     // dribble: hand height -> floor once per step pair, beside the right foot
     const g = GAITS.AND1[0];
-    const ph = gaitPhase(AND1_BODY, g, t);
-    const s = fk(poseAt('AND1', t), 1.06);
+    const ph = gaitPhase(AND1_BODY, g, sh(t));
+    const s = fk(poseAt('AND1', sh(t)), 1.06);
     const hand = ballInHand(s, 'r');
     const root = bonePos(s, 'root');
     const fwd = new THREE.Vector3(Math.sin(Y_RUN), 0, Math.cos(Y_RUN));
@@ -524,62 +658,76 @@ const SHOTS_DEF = (): Shot[] => {
   }});
   // B — ACE slow look + "Bro, nobody touched you."
   s.push({id: 'B_ace', t0: 1.95, t1: 4.97, focus: [ACE_1[0], 1.3, ACE_1[1]], cam: still(frameHead('ACE', 2.62, A_LAY, 2.0, -0.38, -0.05, 30, 0.06, -0.2), 1.95, 4.97)});
-  // C — AND1 dismissive wave
-  s.push({id: 'C_wave', t0: 4.97, t1: 5.74, focus: [A_LAY[0], 1.3, A_LAY[1]], cam: still(frameHead('AND1', 5.2, ACE_1, 2.6, 0.35, -0.1, 34, 0.05, -0.38), 4.97, 5.74)});
+  // C — V03: AND1 "Still a foul."
+  s.push({id: 'C_still', t0: 4.97, t1: 6.1, focus: [A_LAY[0], 1.3, A_LAY[1]], cam: still(frameHead('AND1', 5.3, ACE_1, 2.6, 0.35, -0.1, 34, 0.05, -0.38), 4.97, 6.1)});
+  // C2 — V03: ACE eyebrow + open palm at the empty court (medium, so the gesture reads)
+  s.push({id: 'C2_ace', t0: 6.1, t1: 7.15, focus: [ACE_1[0], 1.2, ACE_1[1]], cam: still(frameHead('ACE', 6.2, A_LAY, 3.0, -0.6, -0.15, 36, 0.04, -0.4), 6.1, 7.15)});
   // D — wide from behind the shooter: wide open, misses badly
-  s.push({id: 'D_shot', t0: 5.74, t1: 6.78, focus: [0.4, 1, -3.5], cam: (t) => {
-    const u = smooth((t - 5.74) / 1.04);
+  s.push({id: 'D_shot', t0: sh(5.74), t1: sh(6.78), focus: [0.4, 1, -3.5], cam: (t) => {
+    const u = smooth((unsh(t) - 5.74) / 1.04);
     return {pos: arr(V(2.9, 2.2, -10.6).lerp(V(2.6, 2.3, -9.9), u)), target: [lerp(0.0, -0.4, u), lerp(1.9, 1.4, u), -2.6], fov: 50};
   }});
   // E — AND1 chop: "AND ONE!"
-  s.push({id: 'E_chop', t0: 6.78, t1: 8.15, focus: [A_SHOT[0], 1.2, A_SHOT[1]], cam: still(frameHead('AND1', 7.2, ACE_1, 2.5, 0.45, -0.25, 36, 0.06, -0.38), 6.78, 8.15)});
-  // F — ACE: "You missed."
-  s.push({id: 'F_missed', t0: 8.15, t1: 9.55, focus: [ACE_1[0], 1.3, ACE_1[1]], cam: still(frameHead('ACE', 8.6, A_SHOT, 1.75, 0.2, -0.03, 30, 0.08, -0.2), 8.15, 9.55)});
-  // G — AND1 annoyed close-up
-  s.push({id: 'G_annoyed', t0: 9.55, t1: 10.25, focus: [A_SHOT[0], 1.3, A_SHOT[1]], cam: still(frameHead('AND1', 9.9, ACE_1, 1.45, 0.15, -0.02, 30, 0.06, -0.14), 9.55, 10.25)});
-  // H — high wide: drive, trip, spin, sit, "FOUL!" on an empty court
-  s.push({id: 'H_trip', t0: 10.25, t1: 13.78, focus: [1.8, 0.8, -4.2], cam: (t) => {
-    // V02: lower, closer tracking angle that keeps his feet AND the floor in frame (he trips by himself)
-    const pel = (tt: number) => bonePos(fk(poseAt('AND1', tt), 1.06), 'root');
-    const a = pel(Math.max(10.25, t - 0.12)).lerp(pel(t), 0.5);
+  s.push({id: 'E_chop', t0: sh(6.78), t1: sh(8.15), focus: [A_SHOT[0], 1.2, A_SHOT[1]], cam: still(frameHead('AND1', sh(7.2), ACE_1, 2.5, 0.45, -0.25, 36, 0.06, -0.38), sh(6.78), sh(8.15))});
+  // F — ACE: "Bro, you airballed."
+  s.push({id: 'F_airball', t0: sh(8.15), t1: 11.86, focus: [ACE_1[0], 1.3, ACE_1[1]], cam: still(frameHead('ACE', sh(8.6), A_SHOT, 1.75, 0.2, -0.03, 30, 0.08, -0.2), sh(8.15), 11.86)});
+  // G — V03: AND1 "He hit my shooting hand!" (a little wider than V02 so the raised hand stays in frame)
+  s.push({id: 'G_hand', t0: 11.86, t1: 13.75, focus: [A_SHOT[0], 1.3, A_SHOT[1]], cam: still(frameHead('AND1', 12.0, ACE_1, 1.75, -0.2, 0.0, 52, 0.05, -0.12), 11.86, 13.75)});
+  // G2 — V03: ACE checks behind himself for the defender
+  s.push({id: 'G2_look', t0: 13.75, t1: 14.95, focus: [ACE_1[0], 1.3, ACE_1[1]], cam: still(frameHead('ACE', 13.8, A_SHOT, 2.3, 0.25, -0.05, 32, 0.04, -0.25), 13.75, 14.95)});
+  // H — tracking: drive, trip, sit, "FOUL!" on an empty court
+  s.push({id: 'H_trip', t0: sh(10.25), t1: sh(13.78), focus: [1.8, 0.8, -4.2], cam: (t) => {
+    const o = unsh(t);
+    const pel = (tt: number) => bonePos(fk(poseAt('AND1', sh(tt)), 1.06), 'root');
+    const a = pel(Math.max(10.25, o - 0.12)).lerp(pel(o), 0.5);
     const dir = V(A_TRIP[0] - A_RUN0[0], 0, A_TRIP[1] - A_RUN0[1]).normalize();
     const side = V(dir.z, 0, -dir.x);
-    const u = smooth((t - 10.25) / 1.6);
+    const u = smooth((o - 10.25) / 1.6);
     const pos = a.clone().add(side.multiplyScalar(lerp(4.3, 3.5, u))).add(dir.clone().multiplyScalar(lerp(1.6, 0.6, u)));
     pos.y = lerp(1.75, 1.35, u);
     return {pos: arr(pos), target: [a.x, lerp(0.75, 0.55, u), a.z], fov: 44};
   }});
-  // I — ACE looks around the empty court
-  s.push({id: 'I_look', t0: 13.78, t1: 15.32, focus: [ACE_2[0], 1.2, ACE_2[1]], cam: still(frameHead('ACE', 14.0, A_SEAT, 2.6, -0.4, -0.3, 40, 0.04, -0.35), 13.78, 15.32)});
+  // I — ACE stares at the empty space, closes his eyes, exhales
+  s.push({id: 'I_look', t0: sh(13.78), t1: sh(15.32), focus: [ACE_2[0], 1.2, ACE_2[1]], cam: still(frameHead('ACE', sh(14.0), A_SEAT, 2.6, -0.4, -0.3, 40, 0.04, -0.35), sh(13.78), sh(15.32))});
   // J — low over AND1's shoulder: ACE walks over, "Who fouled you?"; silence; AND1 turns
-  s.push({id: 'J_who', t0: 15.32, t1: 18.75, focus: [0.6, 1, -4.2], cam: (t) => {
+  s.push({id: 'J_who', t0: sh(15.32), t1: sh(18.75), focus: [0.6, 1, -4.2], cam: (t) => {
+    const o = unsh(t);
     const a = V(A_SEAT[0], 0, A_SEAT[1]);
     const dir = V(ACE_3[0] - a.x, 0, ACE_3[1] - a.z).normalize();
     const right = V(-dir.z, 0, dir.x);
     const pos = a.clone().add(dir.clone().multiplyScalar(-1.45)).add(right.multiplyScalar(0.8));
     pos.y = 1.3;
-    const u = smooth((t - 15.32) / 3.43);
-    // follow ACE's head (slightly lagged) as he walks in, then settle between the two
-    const h = headOf('ACE', Math.min(t, 17.2));
+    const u = smooth((o - 15.32) / 3.43);
+    const h = headOf('ACE', sh(Math.min(o, 17.2)));
     const tgt = V(h.x, lerp(h.y - 0.25, h.y - 0.45, u), h.z).lerp(V(A_SEAT[0], 0.9, A_SEAT[1]), 0.12 * u);
     return {pos: arr(pos.lerp(tgt, 0.06 * u)), target: arr(tgt), fov: 46};
   }});
   // K — AND1 close-up: points at the floor. "The floor."
-  s.push({id: 'K_floor', t0: 18.75, t1: 21.25, focus: [A_SEAT[0], 0.8, A_SEAT[1]], cam: (t) => {
-    const c = frameHead('AND1', 19.6, ACE_3, 1.95, 0.7, 0.15, 46, 0, -0.52);
-    // slow push-in that lands right after "floor."
-    const u = smooth((t - 18.75) / 2.0);
+  s.push({id: 'K_floor', t0: sh(18.75), t1: sh(21.25), focus: [A_SEAT[0], 0.8, A_SEAT[1]], cam: (t) => {
+    const c = frameHead('AND1', sh(19.6), ACE_3, 1.95, 0.7, 0.15, 46, 0, -0.52);
+    const u = smooth((unsh(t) - 18.75) / 2.0);
     const pos = c.pos.clone().lerp(c.target, 0.1 * u);
     return {pos: arr(pos), target: arr(c.target), fov: c.fov};
   }});
-  // L — ACE looks into the lens. Speechless.
-  s.push({id: 'L_done', t0: 21.25, t1: OLD_END, focus: [ACE_3[0], 1.3, ACE_3[1]], cam: (t) => {
-    const h = headOf('ACE', 22.4);
+  // L1 — V03: ACE stares down at him (the reaction beat)
+  s.push({id: 'L_stare', t0: 25.95, t1: 26.85, focus: [ACE_3[0], 1.3, ACE_3[1]], cam: (t) => {
+    const h = headOf('ACE', 26.3);
+    const yaw = Y_ACE3 + 0.62;
+    const pos = h.clone().add(V(Math.sin(yaw), 0, Math.cos(yaw)).multiplyScalar(2.6));
+    pos.y = h.y - 0.3;
+    const u = smooth((t - 25.95) / 0.9);
+    return {pos: arr(pos.lerp(h, 0.05 * u)), target: [h.x, h.y - 0.18, h.z], fov: 32};
+  }});
+  // K2 — V03: AND1 mutters "Flagrant two."
+  s.push({id: 'K2_flagrant', t0: 26.85, t1: 28.3, focus: [A_SEAT[0], 0.8, A_SEAT[1]], cam: still(frameHead('AND1', 27.3, ACE_3, 1.8, 0.6, 0.18, 42, 0.05, -0.28), 26.85, 28.3)});
+  // L — ACE closes his eyes, exhales, looks into the lens: "Tag that friend."
+  s.push({id: 'L_tag', t0: 28.3, t1: OLD_END, focus: [ACE_3[0], 1.3, ACE_3[1]], cam: (t) => {
+    const h = headOf('ACE', 29.6);
     const yaw = Y_ACE3 + 0.42 + 0.12;
     const dir = V(Math.sin(yaw), 0, Math.cos(yaw));
     const pos = h.clone().add(dir.multiplyScalar(1.95));
     pos.y = h.y + 0.03;
-    const u = smooth((t - 21.25) / 3.1);
+    const u = smooth((t - 28.3) / 2.8);
     return {pos: arr(pos.lerp(h, 0.1 * u)), target: [h.x, h.y - 0.2, h.z], fov: 30};
   }});
   return s;
@@ -589,8 +737,11 @@ let SHOTS_CACHE: Shot[] | null = null;
 export const SHOTS = () => (SHOTS_CACHE ??= SHOTS_DEF());
 
 // ---------- captions ----------
-export const HIGHLIGHT = new Set(['L1', 'L3', 'L4', 'L7']);
+export const HIGHLIGHT = new Set(['L1', 'L2B', 'L3', 'L4', 'L7', 'L8']);
+/** lines without a caption block (the end card carries the CTA text) */
+export const NO_CAPTION = new Set(['L9']);
 /** caption vertical centre per shot (px from top, 1920 frame) — kept clear of faces and YouTube UI */
 export const CAPTION_Y: Record<string, number> = {
-  A_hook: 1300, B_ace: 1330, C_wave: 1330, D_shot: 1300, E_chop: 1320, F_missed: 1330, G_annoyed: 1350, H_trip: 1300, I_look: 1330, J_who: 1300, K_floor: 1340, L_done: 1320,
+  A_hook: 1300, B_ace: 1330, C_still: 1330, C2_ace: 1380, D_shot: 1300, E_chop: 1320, F_airball: 1330, G_hand: 1380, G2_look: 1330, H_trip: 1300, I_look: 1330, J_who: 1300, K_floor: 1340,
+  L_stare: 1320, K2_flagrant: 1340, L_tag: 1320,
 };
