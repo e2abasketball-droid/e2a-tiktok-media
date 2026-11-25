@@ -75,7 +75,7 @@ fol = lambda ids, z=0.8, off=None: {"follow": ids, "z": z, **({"offset": off} if
 # cameras (frame-fit + stills; no orbit spins, no 180-degree moves)
 EIGHT_A = orb(fol("O1", 0.5), 9.0, 52, 28, 40)                 # elevated 3/4 behind the ball, the line across the frame
 EIGHT_FEET = orb([0.55, 13.95, 0.2], 3.6, 50, 28, 38)         # close: ball, line and both feet
-BACK_A = orb([-0.1, 14.9, 0.5], 13.5, 46, 12, 42)              # elevated: passer, line, trajectory, receiver
+BACK_A = orb([-0.9, 14.95, 0.5], 14.0, 46, 12, 42)              # elevated: passer, line, trajectory, receiver
 THREE_A = orb([0.8, 5.4, 0.6], 12.5, 64, 10, 42)              # the paint and the ball handler at the top
 GOAL_WIDE = orb([-1.4, 3.3, 1.3], 12, 72, 75, 40)            # shooter + defender, rim in frame
 GOAL_CLOSE = orb([-0.2, 1.95, 3.0], 4.6, 84, 75, 38)          # close at ring height: ball, hand, ring line
@@ -204,8 +204,7 @@ def build(words, voice, music, hook="A"):
     S(id=sh, name="04 GOALTENDING: two-point shot, the ball descends entirely above the ring, X5 touches it = GOALTENDING, +2",
       at=cuts[sh], play="goal", remap=rm,
       camera=[key(0, GOAL_WIDE), key(t_down - 0.2, GOAL_WIDE), key(slow0, GOAL_CLOSE, "inOut"), key(d, GOAL_CLOSE)],
-      ov3=[{"type": "ballTrail", "len": 0.5, "from": t_rel, "to": slow0},
-           {"type": "rimLine", "from": t_rim, "to": d, "fin": 0.2},
+      ov3=[{"type": "rimLine", "from": t_rim, "to": d, "fin": 0.2},
            {"type": "handRing", "player": "X5", "hand": 0, "from": t_touch, "to": d}],
       screen=[{"type": "section", "n": "04", "text": "ABOVE THE RIM", "y": 200, "from": 0.05, "to": min(d, t_rel + 0.4)},
               {"type": "chip", "text": "DESCENDING", "tone": "gold", "align": "center", "size": 54, "from": t_down, "to": t_touch, "y": 330},
