@@ -87,15 +87,95 @@ const fkAt = (p: Pose, rootY: number, build = 1): Skel => {
 
 const posOf = (m: THREE.Matrix4) => V(0, 0, 0).applyMatrix4(m);
 
-/** full FK with automatic ground contact: the lowest foot touches the floor (+ p.lift when airborne);
- *  sitting lerps the pelvis down onto the floor. */
-export const fk = (p: Pose, build = 1): Skel => {
+// ---------- ground contact (collision proxies) ----------
+/** shoe sole points in ankle space (shoe capsule bottom = -0.093, heel .. toe) */
+const SOLE: [number, number][] = [[-0.093, -0.03], [-0.093, 0.06], [-0.093, 0.15]];
+const solesY = (s: Skel, a: 'lAnkle' | 'rAnkle') => Math.min(...SOLE.map(([y, z]) => V(0, y, z).applyMatrix4(s[a]).y));
+/** seat = bottom ring of the shorts (root space) */
+const seatY = (s: Skel) => {
+  let m = Infinity;
+  for (let i = 0; i < 12; i++) {
+    const a = (i / 12) * Math.PI * 2;
+    m = Math.min(m, V(0.15 * Math.cos(a), -0.13, 0.12 * Math.sin(a)).applyMatrix4(s.root).y);
+  }
+  return m;
+};
+/** every body proxy (point + radius) that must stay above the floor */
+const proxiesY = (s: Skel) => {
+  const pts: number[] = [solesY(s, 'lAnkle'), solesY(s, 'rAnkle'), seatY(s)];
+  for (const side of ['l', 'r'] as const) {
+    const h = s[`${side}Hip`];
+    const k = s[`${side}Knee`];
+    pts.push(V(0, -D.thigh * 0.5, 0).applyMatrix4(h).y - 0.074, posOf(k).y - 0.072, V(0, -D.shin * 0.5, 0).applyMatrix4(k).y - 0.058);
+    pts.push(posOf(s[`${side}El`]).y - 0.05, V(0, -0.045, 0).applyMatrix4(s[`${side}Hand`]).y - 0.066);
+  }
+  pts.push(V(0, D.headY, 0).applyMatrix4(s.head).y - D.headR);
+  return Math.min(...pts);
+};
+
+/** full FK with ground contact:
+ *  1. standing: the lowest shoe sole touches the floor (+ p.lift when airborne);
+ *  2. sitting (p.sit): the pelvis is lerped down until the seat rests ON the floor;
+ *  3. while seated, each leg's hip pitch is solved so its sole rests on the floor (no shin through the court);
+ *  4. collision pass: if any proxy (soles, seat, thighs, knees, shins, elbows, hands, head) is still below
+ *     the floor, the whole body is raised by that amount. Nothing can ever be drawn under the court. */
+export const fk = (p0: Pose, build = 1): Skel => {
+  let p = p0;
   const probe = fkAt(p, 0, build);
-  const minAnkle = Math.min(posOf(probe.lAnkle).y, posOf(probe.rAnkle).y);
-  const stand = D.foot - minAnkle + Math.max(0, p.lift);
-  const seat = 0.15;
-  const y = p.sit > 0 ? stand + (seat - stand) * p.sit : stand;
-  return fkAt(p, y, build);
+  const stand = -Math.min(solesY(probe, 'lAnkle'), solesY(probe, 'rAnkle')) + Math.max(0, p.lift);
+  const seat = -seatY(probe);
+  let y = p.sit > 0 ? stand + (seat - stand) * p.sit : stand;
+  if (p.sit > 0.01) {
+    // leg ground IK (seated): raise / lower the thigh until the sole touches the floor
+    const fixLeg = (side: 'l' | 'r') => {
+      const key = side === 'l' ? 'lHip' : 'rHip';
+      const ank = side === 'l' ? 'lAnkle' : 'rAnkle';
+      const soleAt = (d: number) => solesY(fkAt({...p, [key]: p[key] + d}, y, build), ank);
+      const s0 = soleAt(0);
+      if (s0 >= 0 && s0 < 0.02) return;
+      if (s0 > 0 && p.sit < 0.9) return; // still dropping: feet may be in the air
+      // sole height is monotonic in the hip pitch over this range for a seated leg; bisect
+      let a = -0.9;
+      let b = 1.1;
+      const fa = soleAt(a);
+      const fb = soleAt(b);
+      if (Math.sign(fa) === Math.sign(fb)) return;
+      for (let i = 0; i < 22; i++) {
+        const m = (a + b) / 2;
+        if (Math.sign(soleAt(m)) === Math.sign(fa)) a = m;
+        else b = m;
+      }
+      const d = (a + b) / 2;
+      p = {...p, [key]: p[key] + d * Math.min(1, p.sit * 1.2)};
+    };
+    fixLeg('l');
+    fixLeg('r');
+    // arm support (seated, arm reaching back/down): the palm is placed ON the floor
+    const fixArm = (side: 'l' | 'r') => {
+      const key = side === 'l' ? 'lShPitch' : 'rShPitch';
+      const hand = side === 'l' ? 'lHand' : 'rHand';
+      if (p.sit < 0.9 || p[key] > -0.2) return;
+      const palm = (d: number) => V(0, -0.045, 0).applyMatrix4(fkAt({...p, [key]: p[key] + d}, y, build)[hand]).y - 0.066;
+      const h0 = palm(0);
+      if (h0 < 0 || h0 > 0.12) return;
+      // pitching the arm back toward vertical lowers the palm onto the floor
+      let a = 0;
+      let b = 0.6;
+      if (palm(b) > 0) return;
+      for (let i = 0; i < 18; i++) {
+        const m = (a + b) / 2;
+        if (palm(m) > 0) a = m;
+        else b = m;
+      }
+      p = {...p, [key]: p[key] + a * Math.min(1, (p.sit - 0.9) * 10)};
+    };
+    fixArm('l');
+    fixArm('r');
+  }
+  const s = fkAt(p, y, build);
+  const low = proxiesY(s);
+  if (low < 0) y -= low;
+  return low < 0 ? fkAt(p, y, build) : s;
 };
 
 export const bonePos = (s: Skel, b: Bone) => posOf(s[b]);

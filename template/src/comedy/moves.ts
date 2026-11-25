@@ -42,6 +42,10 @@ export const SIT_POINT: PosePatch = {...SIT_REST, rShPitch: 0.35, rShOut: 0.55, 
 
 /** seated, pointing down at the floor beside him (left hand) */
 export const SIT_POINT_L: PosePatch = {...SIT_REST, lShPitch: 0.6, lShOut: 0.5, lElbow: 0.1, lPoint: 1, lShTwist: 0.2};
+/** V02: same point, with the right palm planted on the floor behind him (visible weight support) */
+export const SIT_POINT_L_PROP: PosePatch = {...SIT_POINT_L, lean: -0.14, rShPitch: -0.55, rShOut: 0.3, rElbow: 0.05, rShTwist: 0};
+/** V02: seated, propped back on both hands (after the fall, while ACE walks over) */
+export const SIT_PROP: PosePatch = {...SIT_REST, lean: -0.16, spineBend: 0.22, lShPitch: -0.5, rShPitch: -0.55, lShOut: 0.32, rShOut: 0.32, lElbow: 0.05, rElbow: 0.05};
 
 /** arms crossed (ACE) */
 export const CROSSED: PosePatch = {...RELAXED, lShPitch: 0.75, rShPitch: 0.8, lShOut: 0.12, rShOut: 0.12, lShTwist: -1.1, rShTwist: -1.1, lElbow: 1.95, rElbow: 2.0};

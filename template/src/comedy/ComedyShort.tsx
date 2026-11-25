@@ -1,4 +1,4 @@
-// EVERY COURT HAS ONE — episode renderer (YouTube Shorts 1080x1920, 30 fps).
+// EVERY COURT HAS ONE — episode renderer (V02 edit) (YouTube Shorts 1080x1920, 30 fps).
 // Picture only: the audio master is mixed separately (tools/comedy/mix_ep.py) and muxed after.
 import React from 'react';
 import {AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame} from 'remotion';
@@ -6,9 +6,9 @@ import '../theme';
 import {AND1, ACE} from './characters';
 import {Ball, Stage} from './stage';
 import {Toon, fk} from './toon';
-import {CAPTION_Y, DURATION, FPS, HIGHLIGHT, LINES, SHOTS, ballAt, mouthOf, poseAt, swishAt} from './ep001';
+import {CAPTION_Y, EDIT_DURATION, FPS, HIGHLIGHT, LINES, SHOTS, ballAt, mouthOf, poseAt, swishAt, toOld} from './ep001';
 
-export const comedyDuration = () => Math.round(DURATION * FPS);
+export const comedyDuration = () => Math.round(EDIT_DURATION * FPS);
 
 const GOLD = '#E3BE68';
 
@@ -79,7 +79,8 @@ const EndCard: React.FC<{t: number}> = ({t}) => {
 
 export const ComedyShort: React.FC<{only?: string}> = () => {
   const frame = useCurrentFrame();
-  const t = frame / FPS;
+  // V02: the edit removes dead time on the cuts; everything below runs on the animation clock
+  const t = toOld(frame / FPS);
   const shots = SHOTS();
   const shot = shots.find((s) => t >= s.t0 && t < s.t1) ?? shots[shots.length - 1];
   const cam = shot.cam(t);
