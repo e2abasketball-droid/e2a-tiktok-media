@@ -1,0 +1,322 @@
+{
+ "id": "rules4p2-goal",
+ "title": "GOALTENDING: X5 touches the shot on its way DOWN, entirely above the ring -> the two points count",
+ "branch": {
+  "group": "rules4p2"
+ },
+ "duration": 4.0,
+ "concept": "rules4p2-goal",
+ "source": "original E2A rule demonstration (FIBA Official Basketball Rules: Art. 26, 28, 30, 31)",
+ "v33": "compile",
+ "squareUp": true,
+ "catchV2": 2,
+ "handBallClear": true,
+ "realism": 3,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Shoots a two"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "Jumps and touches the descending ball above the ring (illegal)",
+   "guards": "O1"
+  }
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0.0,
+    -2.55,
+    4.95
+   ],
+   [
+    4.0,
+    -2.55,
+    4.95
+   ]
+  ],
+  "X5": [
+   [
+    0.0,
+    1.25,
+    3.9
+   ],
+   [
+    0.1,
+    1.25,
+    3.9
+   ],
+   [
+    0.2,
+    1.25,
+    3.9
+   ],
+   [
+    0.3,
+    1.25,
+    3.9
+   ],
+   [
+    0.4,
+    1.2482,
+    3.8978
+   ],
+   [
+    0.5,
+    1.2094,
+    3.8497
+   ],
+   [
+    0.6,
+    1.0946,
+    3.7073
+   ],
+   [
+    0.7,
+    0.9032,
+    3.47
+   ],
+   [
+    0.8,
+    0.6628,
+    3.1718
+   ],
+   [
+    0.9,
+    0.4155,
+    2.8652
+   ],
+   [
+    1.0,
+    0.2056,
+    2.605
+   ],
+   [
+    1.1,
+    0.0664,
+    2.4323
+   ],
+   [
+    1.2,
+    0.007,
+    2.3586
+   ],
+   [
+    1.3,
+    0.0,
+    2.35
+   ],
+   [
+    1.4,
+    0.0,
+    2.35
+   ],
+   [
+    1.5,
+    0.0,
+    2.35
+   ],
+   [
+    1.6,
+    0.0,
+    2.35
+   ],
+   [
+    1.7,
+    0.0,
+    2.35
+   ],
+   [
+    1.8,
+    0.0,
+    2.35
+   ],
+   [
+    1.9,
+    0.0,
+    2.35
+   ],
+   [
+    2.0,
+    0.0,
+    2.35
+   ],
+   [
+    2.1,
+    0.0,
+    2.35
+   ],
+   [
+    2.2,
+    0.0,
+    2.35
+   ],
+   [
+    2.3,
+    0.0,
+    2.35
+   ],
+   [
+    2.4,
+    0.0,
+    2.35
+   ],
+   [
+    2.5,
+    0.0,
+    2.35
+   ],
+   [
+    2.6,
+    0.0,
+    2.35
+   ],
+   [
+    2.7,
+    0.0,
+    2.35
+   ],
+   [
+    2.8,
+    0.0,
+    2.35
+   ],
+   [
+    2.9,
+    0.0,
+    2.35
+   ],
+   [
+    3.0,
+    0.0,
+    2.35
+   ],
+   [
+    3.1,
+    0.0,
+    2.35
+   ],
+   [
+    3.2,
+    0.0,
+    2.35
+   ],
+   [
+    3.3,
+    0.0,
+    2.35
+   ],
+   [
+    3.4,
+    0.0,
+    2.35
+   ],
+   [
+    3.5,
+    0.0,
+    2.35
+   ],
+   [
+    3.6,
+    0.0,
+    2.35
+   ],
+   [
+    3.7,
+    0.0,
+    2.35
+   ],
+   [
+    3.8,
+    0.0,
+    2.35
+   ],
+   [
+    3.9,
+    0.0,
+    2.35
+   ],
+   [
+    4.0,
+    0.0,
+    2.35
+   ]
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 1.25
+  },
+  {
+   "type": "shot",
+   "player": "O1",
+   "t0": 1.25,
+   "t1": 2.1,
+   "make": true
+  }
+ ],
+ "actions": {
+  "O1": [
+   {
+    "type": "face",
+    "from": 0,
+    "to": 4.0,
+    "face": -0.9237
+   }
+  ],
+  "X5": [
+   {
+    "type": "face",
+    "from": 0,
+    "to": 4.0,
+    "face": 2.3465
+   }
+  ]
+ },
+ "screens": [],
+ "marks": {
+  "release": 1.25,
+  "land": 2.1,
+  "touch": 2.03,
+  "end": 4.0,
+  "contact": 2.033
+ },
+ "claims": [],
+ "notes": [
+  "Ball descending, entirely above the ring (centre >= 3.05 + r), not yet touched the ring, still able to enter: X5's touch = goaltending, the basket counts (Art. 31.2.1, 31.3.1).",
+  "The edit freezes at the touch and awards +2; the ball's later path is not shown."
+ ],
+ "v33extra": {
+  "X5": [
+   {
+    "k": "jumpshot",
+    "release": 2.03,
+    "H": 0.65
+   }
+  ]
+ },
+ "v33still": {
+  "X5": [
+   [
+    1.28,
+    4.0
+   ]
+  ]
+ },
+ "v33grab": [
+  {
+   "player": "X5",
+   "target": "ball",
+   "hand": 0,
+   "from": 1.71,
+   "to": 2.33,
+   "reach": 0.9
+  }
+ ]
+}

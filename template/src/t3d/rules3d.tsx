@@ -8,6 +8,13 @@
 //   area2     {color?, opacity?}                                 the FIBA two-point field-goal area, filled (inside the
 //             arc + the corner lanes down to the baseline). Stable: no opacity oscillation, depthTest on, no depthWrite
 //   arc3      {color?, width?, draw?}                             the three-point line traced (corner + arc), static width
+// 2026-11-25 (4 Rules Part 2), same rules:
+//   paint      {color?, opacity?, edge?}                          the restricted area (4.90 x 5.80 m, lines included) softly
+//              filled + its outline (offensive 3 seconds)
+//   centerLine {color?, width?, draw?}                            the half-court line lit (full court: y = 14), drawn from the
+//              centre out; the line itself belongs to the backcourt (FIBA)
+//   rimLine    {color?, half?}                                    a thin horizontal line at ring height (3.05 m) through the
+//              ring, so "above the ring" reads in a close shot (goaltending)
 // Floor graphics follow the E2A Floor Graphics Stability Standard: one mesh per idea, constant geometry while active,
 // fixed height (8-14 mm), polygonOffset, fade only by the shot's fin / fout.
 import React from 'react';
@@ -24,7 +31,10 @@ export type RulesOv =
   | {type: 'ballRing'; color?: string; r?: number}
   | {type: 'handRing'; player: string; hand: 0 | 1; color?: string}
   | {type: 'area2'; color?: string; opacity?: number}
-  | {type: 'arc3'; color?: string; width?: number; draw?: number};
+  | {type: 'arc3'; color?: string; width?: number; draw?: number}
+  | {type: 'paint'; color?: string; opacity?: number; edge?: number}
+  | {type: 'centerLine'; color?: string; width?: number; draw?: number}
+  | {type: 'rimLine'; color?: string; half?: number};
 
 const clamp = (x: number, a = 0, b = 1) => Math.max(a, Math.min(b, x));
 const eo = (x: number) => 1 - Math.pow(1 - clamp(x), 3);
@@ -92,6 +102,17 @@ const ribbonGeo = (pts: [number, number][], w: number, z: number) => {
   g.setIndex(idx);
   return g;
 };
+/** restricted area (FIBA: 4.90 m wide outside the lines, 5.80 m from the inner edge of the end line) */
+export const PAINT = {halfW: FIBA.keyHalfW, depth: FIBA.ftY};
+const paintGeo = (() => {
+  let g: THREE.ShapeGeometry | null = null;
+  return () => {
+    if (g) return g;
+    const {halfW: w, depth: d} = PAINT;
+    g = new THREE.ShapeGeometry(new THREE.Shape([new THREE.Vector2(-w, 0), new THREE.Vector2(w, 0), new THREE.Vector2(w, d), new THREE.Vector2(-w, d)]), 1);
+    return g;
+  };
+})();
 const arcPts = (): [number, number][] => {
   const p = area2Poly();
   return p.slice(0, p.length);
@@ -161,6 +182,34 @@ export const Rules3D: React.FC<{play: Play; pt: number; o: RulesOv & {age: numbe
       const pts = arcPts();
       const n = Math.max(2, Math.round(pts.length * clamp(o.draw ? o.age / o.draw : 1)));
       return <mesh geometry={ribbonGeo(pts.slice(0, n), o.width ?? 0.11, 0.012)} material={mat(col, 0.95 * a)} />;
+    }
+    case 'paint': {
+      const col = o.color ?? '#E0B455';
+      const {halfW: w, depth: d} = PAINT;
+      const ew = o.edge ?? 0.08;
+      return (
+        <group>
+          <mesh geometry={paintGeo()} position={[0, 0.02, 0]} renderOrder={2} rotation={[-Math.PI / 2, 0, 0]} material={mat(col, (o.opacity ?? 0.22) * a)} />
+          <mesh geometry={ribbonGeo([[-w + ew / 2, 0], [-w + ew / 2, d - ew / 2], [w - ew / 2, d - ew / 2], [w - ew / 2, 0]], ew, 0.013)} material={mat(col, 0.9 * a)} />
+        </group>
+      );
+    }
+    case 'centerLine': {
+      const col = o.color ?? '#E0B455';
+      const half = FIBA.halfW;
+      const k = clamp(o.draw ? eo(o.age / o.draw) : 1);
+      const x = Math.max(0.05, half * k);
+      return <mesh geometry={ribbonGeo([[-x, FIBA.halfL], [0, FIBA.halfL], [x, FIBA.halfL]], o.width ?? 0.12, 0.013)} material={mat(col, 0.95 * a)} />;
+    }
+    case 'rimLine': {
+      const col = o.color ?? '#FFFFFF';
+      const [bx, by] = FIBA.basket;
+      const h = o.half ?? 1.1;
+      return (
+        <mesh position={W3([bx, by, FIBA.rimZ])} rotation={[0, 0, Math.PI / 2]} material={new THREE.MeshBasicMaterial({color: col, transparent: true, opacity: 0.85 * a, toneMapped: false, depthWrite: false})}>
+          <cylinderGeometry args={[0.009, 0.009, 2 * h, 8]} />
+        </mesh>
+      );
     }
   }
   return null;

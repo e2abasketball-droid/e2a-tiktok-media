@@ -41,7 +41,10 @@ type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: n
    *  verdict badge with a round icon (red X = violation / foul, green check = legal); section tag "01 TRAVELING" */
   | {type: 'score'; text: string; y?: number; size?: number; sub?: string}
   | {type: 'verdict'; text: string; tone: 'red' | 'green'; y?: number; size?: number}
-  | {type: 'section'; n: string; text: string; y?: number});
+  | {type: 'section'; n: string; text: string; y?: number}
+  /** 2026-11-25 (4 Rules Part 2): ONE counter box whose number steps at given times (relative to the item's start), each
+   *  step pops (0.25 s); `skip` steps show a fast-forward mark (signalled time ellipsis); tone red = the count is up */
+  | {type: 'clock'; steps: {at: number; text: string; tone?: 'gold' | 'red'; skip?: boolean}[]; label?: string; y?: number; align?: 'left' | 'center' | 'right'; size?: number});
 /** 2026-11-22 (Chicago V3 split screen): a SECOND live 3D view stacked under the shot's own view (same clock, own play,
  *  remap, camera and world graphics). The shot's view takes the top `ratio` of the frame. Shots without `split` are
  *  rendered exactly as before. */
@@ -434,6 +437,27 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
                     {s.tone === 'red' ? <path d="M13 13 L27 27 M27 13 L13 27" stroke={col} strokeWidth="5" strokeLinecap="round" /> : <path d="M11 21 L17.5 27 L29 14" stroke={col} strokeWidth="5" fill="none" strokeLinecap="round" strokeLinejoin="round" />}
                   </svg>
                   <span style={{font: `400 ${sz}px Anton, Impact, sans-serif`, color: '#FFFFFF', letterSpacing: 2, lineHeight: 1.05}}>{s.text}</span>
+                </div>
+              </div>
+            );
+          }
+          case 'clock': {
+            const st = s.steps.filter((q) => q.at <= s.age + 1e-6);
+            const cur = st.length ? st[st.length - 1] : s.steps[0];
+            const age = Math.max(0, s.age - cur.at);
+            const o = Math.max(0, Math.min(1, s.age / 0.15, (s.dur - s.age) / 0.25));
+            const k = 1 + 0.32 * Math.max(0, 1 - age / 0.25) ** 2;
+            const red = cur.tone === 'red';
+            const sz = s.size ?? 120;
+            const al = s.align ?? 'right';
+            return (
+              <div key={i} style={{position: 'absolute', left: 56, right: 56, top: s.y ?? 330, display: 'flex', justifyContent: al === 'left' ? 'flex-start' : al === 'center' ? 'center' : 'flex-end', opacity: o}}>
+                <div data-qc="stamp" style={{display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: sz * 1.25, padding: '8px 18px 10px', borderRadius: 16,
+                  background: red ? 'rgba(229,72,58,0.95)' : 'rgba(11,28,61,0.9)', border: `4px solid ${red ? '#FFFFFF' : '#C9A24D'}`, boxShadow: '0 8px 26px rgba(0,0,0,0.45)'}}>
+                  <span style={{transform: `scale(${k.toFixed(3)})`, font: `400 ${sz}px Anton, Impact, sans-serif`, lineHeight: 1, color: red ? '#FFFFFF' : '#FFC447', letterSpacing: 2}}>
+                    {cur.skip ? '\u23E9' : cur.text}
+                  </span>
+                  {s.label && <span style={{marginTop: 4, font: '700 26px Inter, sans-serif', letterSpacing: 3, color: '#FFFFFF'}}>{cur.skip ? 'TIME SKIP' : s.label}</span>}
                 </div>
               </div>
             );

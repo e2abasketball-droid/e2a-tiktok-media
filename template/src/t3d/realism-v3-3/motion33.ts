@@ -1127,6 +1127,24 @@ const grab33 = (play: Play, id: string, t: number, b: Body, a: ArmOut): ArmOut =
   for (const g of gs) {
     const w = smooth((t - g.from) / 0.18) * smooth((g.to - t) / 0.18);
     if (w <= 1e-4) continue;
+    if (g.target === 'ball') {
+      // opt-in (4 Rules Part 2, goaltending / block): the palm goes to the ball surface on the side facing the
+      // shoulder, so the hand meets the ball without entering it; reach-capped like the body grab
+      const sh = b.shoulders[g.hand];
+      const bp = ballV33(play, t);
+      let P: V3 = add(bp, mul(norm(sub(sh, bp)), 0.125));
+      const reach = g.reach ?? 0.64;
+      const d = sub(P, sh);
+      if (len(d) > reach) P = add(sh, mul(norm(d), reach));
+      const tip = [...out.tip] as [V3, V3];
+      const dir = [...out.dir] as [V3, V3];
+      const palm = [...out.palm] as [V3 | null, V3 | null];
+      tip[g.hand] = lerp3(out.tip[g.hand], P, w);
+      dir[g.hand] = norm(lerp3(out.dir[g.hand], norm(sub(P, sh)), w));
+      if (w > 0.5) palm[g.hand] = tip[g.hand];
+      out = {...out, tip, dir, palm, contact: out.contact ?? (w > 0.5 ? 'touch ball' : undefined)};
+      continue;
+    }
     const team = play.players.find((p) => p.id === g.target)?.team === 'X' ? 'def' : 'off';
     const m = motionV33(play, g.target, t, PLAYER3D_V32[team].rig);
     if (!m) continue;
