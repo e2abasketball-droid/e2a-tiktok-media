@@ -200,7 +200,8 @@ const lookAngle = (play: PlayWithActions, id: string, t: number, acts: Action[])
     if (a.face !== undefined && t >= a.from - 0.1 && t <= a.to + 0.1) {
       if (typeof a.face === 'number') return a.face;
       const me = posAt(play.tracks[id], t);
-      const q = a.face === 'ball' ? ballSpot(play, t) : posAt(play.tracks[a.face], t);
+      // 2026-11-25 (3-2 Zone Defense, box-out): face 'rim' = the basket (before: undefined track -> crash; no old play used it)
+      const q = a.face === 'ball' ? ballSpot(play, t) : a.face === 'rim' ? ([0, 1.575] as [number, number]) : posAt(play.tracks[a.face], t);
       return Math.atan2(q[1] - me[1], q[0] - me[0]);
     }
   }

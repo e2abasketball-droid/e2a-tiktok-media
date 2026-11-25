@@ -1,0 +1,102 @@
+PASS  [zone32d-a-wing-corner] 5 attackers and 5 defenders — 5 O / 5 X
+PASS  [zone32d-a-wing-corner] every player has a track over the whole play — tracks
+PASS  [zone32d-a-wing-corner] zone 3-2: every defender owns a floor area — X1,X2,X3,X4,X5
+PASS  [zone32d-a-wing-corner] top speed ≤ 7.5 m/s (no teleports) — 5.04 m/s (X2@1.37)
+PASS  [zone32d-a-wing-corner] acceleration ≤ 22 m/s² (no jerks) — 20.8 m/s² (X2@1.84)
+PASS  [zone32d-a-wing-corner] no two bodies overlap (≥ 0.5 m centre to centre) — 0.93 m (O4-X5@3.90)
+PASS  [zone32d-a-wing-corner] everyone stays in bounds — ok
+PASS  [zone32d-a-wing-corner] ball horizontal speed ≤ 15 m/s and continuous — 10.9 m/s
+PASS  [zone32d-a-wing-corner] ball always held, in flight or dropping after a make — 0 orphan samples
+PASS  [zone32d-a-wing-corner] pass O1→O2: lane open (ball ≥ 0.6 m from every defender) — 0.73 m (X3@1.20)
+PASS  [zone32d-a-wing-corner] pass O1→O2: speed 6–14 m/s — 10.9 m/s over 6.7 m
+PASS  [zone32d-a-wing-corner] pass O1→O2: receiver under control at the catch (≤ 3.5 m/s) — 0.00 m/s
+PASS  [zone32d-a-wing-corner] pass O2→O4: lane open (ball ≥ 0.6 m from every defender) — 0.77 m (X3@2.79)
+PASS  [zone32d-a-wing-corner] pass O2→O4: speed 6–14 m/s — 9.0 m/s over 4.9 m
+PASS  [zone32d-a-wing-corner] pass O2→O4: receiver under control at the catch (≤ 3.5 m/s) — 0.00 m/s
+PASS  [zone32d-a-wing-corner] claim "Three defenders up top (X1-X2 on one line)" — X1–X2 4.07 m (≤ 4.3)
+PASS  [zone32d-a-wing-corner] claim "Three defenders up top (X1-X3 on one line)" — X1–X3 4.07 m (≤ 4.3)
+PASS  [zone32d-a-wing-corner] claim "Two down low (one per block)" — X4–X5 4.10 m (≥ 3.6)
+PASS  [zone32d-a-wing-corner] claim "the nearest defender closes out (after the pass)" — 0.7 < 1.32 < 1.65
+PASS  [zone32d-a-wing-corner] claim "the nearest defender closes out" — X3–O2 1.08 m (≤ 1.3)
+PASS  [zone32d-a-wing-corner] claim "everyone shifts (X1 to the ball-side elbow)" — X1–O2 4.55 m (≤ 5)
+PASS  [zone32d-a-wing-corner] claim "X1 has left the top: he guards the high post, not O1" — X1–O1 3.15 m (≥ 2.4)
+PASS  [zone32d-a-wing-corner] claim "to protect the gaps (weak-side low in front of the rim)" — 0.85 m (≤ 1.4)
+PASS  [zone32d-a-wing-corner] claim "the bottom defender steps out" — X5–O4 0.93 m (≤ 1.2)
+PASS  [zone32d-a-wing-corner] claim "protect the paint (X4 across to the ball-side block)" — 1.81 m (≤ 2.2)
+PASS  [zone32d-a-wing-corner] claim "cover the weak side (X2 drops to the weak-side block)" — 1.61 m (≤ 1.9)
+PASS  [zone32d-a-wing-corner] claim "X3 is not a second trapper: he cuts off the pass out of the corner" — X3–O4 3.62 m (≥ 2.5)
+PASS  [zone32d-a-wing-corner] claim "two separate defenders under the rim (no double team in the paint)" — X4–X2 3.13 m (≥ 2.4)
+PASS  [zone32d-a-wing-corner] claim "When the ball reaches the corner, the bottom defender steps out" — 2.75 < 3.3 < 3.95
+PASS  [zone32d-b-high-post] 5 attackers and 5 defenders — 5 O / 5 X
+PASS  [zone32d-b-high-post] every player has a track over the whole play — tracks
+PASS  [zone32d-b-high-post] zone 3-2: every defender owns a floor area — X1,X2,X3,X4,X5
+PASS  [zone32d-b-high-post] top speed ≤ 7.5 m/s (no teleports) — 6.52 m/s (O5@1.12)
+PASS  [zone32d-b-high-post] acceleration ≤ 22 m/s² (no jerks) — 20.5 m/s² (O5@0.51)
+PASS  [zone32d-b-high-post] no two bodies overlap (≥ 0.5 m centre to centre) — 0.68 m (O5-X4@0.95)
+PASS  [zone32d-b-high-post] everyone stays in bounds — ok
+PASS  [zone32d-b-high-post] ball horizontal speed ≤ 15 m/s and continuous — 8.8 m/s
+PASS  [zone32d-b-high-post] ball always held, in flight or dropping after a make — 0 orphan samples
+PASS  [zone32d-b-high-post] pass O1→O5: lane open (ball ≥ 0.6 m from every defender) — 0.81 m (X1@2.12)
+PASS  [zone32d-b-high-post] pass O1→O5: speed 6–14 m/s — 9.6 m/s over 4.0 m
+PASS  [zone32d-b-high-post] pass O1→O5: receiver under control at the catch (≤ 3.5 m/s) — 0.00 m/s
+PASS  [zone32d-b-high-post] claim "Three defenders up top (X1-X2 on one line)" — X1–X2 4.11 m (≤ 4.3)
+PASS  [zone32d-b-high-post] claim "Three defenders up top (X1-X3 on one line)" — X1–X3 2.64 m (≤ 4.3)
+PASS  [zone32d-b-high-post] claim "Two down low (one per block)" — X4–X5 4.10 m (≥ 3.6)
+PASS  [zone32d-b-high-post] claim "watch the high post: the gap behind X1 when he is on the ball" — X1–O5 3.09 m (≥ 2)
+PASS  [zone32d-b-high-post] claim "the middle defender must react" — X1–O5 1.10 m (≤ 1.4)
+PASS  [zone32d-b-high-post] claim "the entire defense adjusts (lows wall the paint, stay home)" — 2.21 m (≤ 2.6)
+PASS  [zone32d-b-high-post] claim "the entire defense adjusts (lows wall the paint, stay home)" — 2.21 m (≤ 2.6)
+PASS  [zone32d-b-high-post] claim "wings pinch, they do not double: still in the lanes to the wings" — X2–O5 2.05 m (≥ 1.6)
+PASS  [zone32d-b-high-post] claim "wings pinch, they do not double: still in the lanes to the wings" — X3–O5 3.21 m (≥ 1.6)
+PASS  [zone32d-b-high-post] claim "If the ball gets inside, the middle defender must react" — 2 < 2.42 < 3
+PASS  [zone32d-c-shot-boxout] 5 attackers and 5 defenders — 5 O / 5 X
+PASS  [zone32d-c-shot-boxout] every player has a track over the whole play — tracks
+PASS  [zone32d-c-shot-boxout] zone 3-2: every defender owns a floor area — X1,X2,X3,X4,X5
+PASS  [zone32d-c-shot-boxout] top speed ≤ 7.5 m/s (no teleports) — 5.04 m/s (X3@1.27)
+PASS  [zone32d-c-shot-boxout] acceleration ≤ 22 m/s² (no jerks) — 21.3 m/s² (X5@3.14)
+PASS  [zone32d-c-shot-boxout] no two bodies overlap (≥ 0.5 m centre to centre) — 0.86 m (O5-X4@3.27)
+PASS  [zone32d-c-shot-boxout] everyone stays in bounds — ok
+PASS  [zone32d-c-shot-boxout] ball horizontal speed ≤ 15 m/s and continuous — 10.0 m/s
+PASS  [zone32d-c-shot-boxout] ball always held, in flight or dropping after a make — 0 orphan samples
+PASS  [zone32d-c-shot-boxout] pass O1→O3: lane open (ball ≥ 0.6 m from every defender) — 0.67 m (X2@1.07)
+PASS  [zone32d-c-shot-boxout] pass O1→O3: speed 6–14 m/s — 10.9 m/s over 6.5 m
+PASS  [zone32d-c-shot-boxout] pass O1→O3: receiver under control at the catch (≤ 3.5 m/s) — 0.00 m/s
+PASS  [zone32d-c-shot-boxout] O3 shoots from behind the FIBA 3-pt line — 7.79 m from the basket
+PASS  [zone32d-c-shot-boxout] shot flight 0.9–1.3 s — 1.10 s
+PASS  [zone32d-c-shot-boxout] claim "Three defenders up top (X1-X2 on one line)" — X1–X2 4.07 m (≤ 4.3)
+PASS  [zone32d-c-shot-boxout] claim "Three defenders up top (X1-X3 on one line)" — X1–X3 4.07 m (≤ 4.3)
+PASS  [zone32d-c-shot-boxout] claim "Two down low (one per block)" — X4–X5 4.10 m (≥ 3.6)
+PASS  [zone32d-c-shot-boxout] claim "contesting perimeter shots (the shooter is behind the arc)" — 7.79 m
+PASS  [zone32d-c-shot-boxout] claim "great at contesting perimeter shots" — X2–O3 0.96 m (≤ 1.3)
+PASS  [zone32d-c-shot-boxout] claim "find a body (X5 on O4)" — X5–O4 1.33 m (≤ 1.6)
+PASS  [zone32d-c-shot-boxout] claim "find a body (X4 on O5)" — X4–O5 0.87 m (≤ 1.2)
+PASS  [zone32d-c-shot-boxout] claim "find a body (X3 on O2, weak side)" — X3–O2 1.37 m (≤ 1.6)
+PASS  [zone32d-c-shot-boxout] claim "find a body (X1 on O1)" — X1–O1 1.27 m (≤ 1.4)
+PASS  [zone32d-c-shot-boxout] claim "find a body (X2 on the shooter)" — X2–O3 1.20 m (≤ 1.6)
+PASS  [zone32d-c-shot-boxout] claim "On every shot: find a body. Box out." — 1.95 < 3.15
+PASS  [zone32d-d-swing] 5 attackers and 5 defenders — 5 O / 5 X
+PASS  [zone32d-d-swing] every player has a track over the whole play — tracks
+PASS  [zone32d-d-swing] zone 3-2: every defender owns a floor area — X1,X2,X3,X4,X5
+PASS  [zone32d-d-swing] top speed ≤ 7.5 m/s (no teleports) — 5.04 m/s (X2@4.22)
+PASS  [zone32d-d-swing] acceleration ≤ 22 m/s² (no jerks) — 20.8 m/s² (X2@4.69)
+PASS  [zone32d-d-swing] no two bodies overlap (≥ 0.5 m centre to centre) — 1.03 m (O3-X2@1.60)
+PASS  [zone32d-d-swing] everyone stays in bounds — ok
+PASS  [zone32d-d-swing] ball horizontal speed ≤ 15 m/s and continuous — 10.4 m/s
+PASS  [zone32d-d-swing] ball always held, in flight or dropping after a make — 0 orphan samples
+PASS  [zone32d-d-swing] pass O1→O3: lane open (ball ≥ 0.6 m from every defender) — 0.76 m (X2@0.98)
+PASS  [zone32d-d-swing] pass O1→O3: speed 6–14 m/s — 10.6 m/s over 6.4 m
+PASS  [zone32d-d-swing] pass O1→O3: receiver under control at the catch (≤ 3.5 m/s) — 0.00 m/s
+PASS  [zone32d-d-swing] pass O3→O1: lane open (ball ≥ 0.6 m from every defender) — 0.93 m (X2@2.19)
+PASS  [zone32d-d-swing] pass O3→O1: speed 6–14 m/s — 11.5 m/s over 6.4 m
+PASS  [zone32d-d-swing] pass O3→O1: receiver under control at the catch (≤ 3.5 m/s) — 0.00 m/s
+PASS  [zone32d-d-swing] pass O1→O2: lane open (ball ≥ 0.6 m from every defender) — 0.73 m (X3@4.01)
+PASS  [zone32d-d-swing] pass O1→O2: speed 6–14 m/s — 11.0 m/s over 6.6 m
+PASS  [zone32d-d-swing] pass O1→O2: receiver under control at the catch (≤ 3.5 m/s) — 0.00 m/s
+PASS  [zone32d-d-swing] claim "Three defenders up top (X1-X2 on one line)" — X1–X2 4.07 m (≤ 4.3)
+PASS  [zone32d-d-swing] claim "Three defenders up top (X1-X3 on one line)" — X1–X3 4.07 m (≤ 4.3)
+PASS  [zone32d-d-swing] claim "Two down low (one per block)" — X4–X5 4.10 m (≥ 3.6)
+PASS  [zone32d-d-swing] claim "Five defenders. (left wing closed out)" — X2–O3 1.03 m (≤ 1.3)
+PASS  [zone32d-d-swing] claim "One connected unit. (right wing closed out)" — X3–O2 1.07 m (≤ 1.3)
+PASS  [zone32d-d-swing] claim "the ball travels around the perimeter" — 0.5 < 1.1 < 2.15 < 2.7 < 3.55 < 4.15
+
+100/100 generic tactical checks passed

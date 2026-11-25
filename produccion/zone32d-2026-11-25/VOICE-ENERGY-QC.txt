@@ -1,0 +1,53 @@
+{
+ "z32": {
+  "dur_s": 47.03,
+  "f0_median_hz": 160.0,
+  "f0_range_st_p5_p95": 9.17,
+  "f0_std_st": 3.58,
+  "energy_range_db_p10_p95": 20.92,
+  "keys": [
+   {
+    "word": "shut",
+    "t": 0.627,
+    "rms_dbfs": -12.9,
+    "f0_hz": 225.4
+   },
+   {
+    "word": "down",
+    "t": 1.016,
+    "rms_dbfs": -10.9,
+    "f0_hz": 186.0
+   },
+   {
+    "word": "down",
+    "t": 6.664,
+    "rms_dbfs": -13.3,
+    "f0_hz": 163.3
+   },
+   {
+    "word": "everyone",
+    "t": 14.527,
+    "rms_dbfs": -13.8,
+    "f0_hz": 161.6
+   },
+   {
+    "word": "steps",
+    "t": 19.42,
+    "rms_dbfs": -16.9,
+    "f0_hz": 152.4
+   },
+   {
+    "word": "Box",
+    "t": 41.249,
+    "rms_dbfs": -13.5,
+    "f0_hz": 144.8
+   },
+   {
+    "word": "connected",
+    "t": 43.807,
+    "rms_dbfs": -17.1,
+    "f0_hz": 156.9
+   }
+  ]
+ }
+}

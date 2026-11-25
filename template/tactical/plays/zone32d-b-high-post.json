@@ -1,0 +1,744 @@
+{
+ "id": "zone32d-b-high-post",
+ "title": "3-2 zone (B): O5 flashes to the high post behind X1, bounce entry; X1 reacts, wings pinch, lows wall the paint",
+ "duration": 5.0,
+ "concept": "zone-3-2-defense",
+ "source": "original E2A didactic choreography (owner master brief '3-2 Zone Defense', 2026-11-25) on the conventional half-court 3-2 zone, 'low defender takes the corner' rotation as summarised by HoopTactics '3-2 Zone' and Coach's Clipboard (search snippets 2026-11-25: 'Baseline defender X5 is on ball, X4 covers low post area, X3 drops to weakside baseline, X2 cuts off pass out of corner and X1 defends the high post area'; 'the ball-side low defender steps out to the corner, the weak-side low defender rotates to the ball-side block'). Source pages NOT reachable from the render container (DNS blocked), so not live-verified. No diagram, frame or track copied.",
+ "v33": "compile",
+ "squareUp": true,
+ "catchV2": 2,
+ "handBallClear": true,
+ "realism": 3,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Point guard at the top"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Right wing shooter"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Left wing shooter"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Right corner"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Big: left short corner, flashes to the high post (B), crashes the glass (C)"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "TOP-MIDDLE: the ball at the top, then the high post"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "LEFT WING: closes out left, drops to the middle / weak-side block"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "RIGHT WING: closes out right, cuts off the pass out of the corner"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "LEFT LOW: left block / corner; slides across the lane"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "RIGHT LOW: right block / corner closeout; front of the rim"
+  }
+ ],
+ "zone": {
+  "type": "3-2",
+  "variant": "half-court 3-2, low defender takes the corner (ball-side low out, weak-side low across)",
+  "areas": {
+   "X1": "top-middle: the ball at the top, the high post / ball-side elbow on any pass",
+   "X2": "left wing: left wing; drops to the middle (ball right wing) or the weak-side block (ball right corner)",
+   "X3": "right wing: right wing; cuts off the pass out of the right corner",
+   "X4": "left low: left block + left corner; slides across to the right block when the ball goes to the right corner",
+   "X5": "right low: right block + right corner; front of the rim when the ball is on the left"
+  },
+  "rules": "produccion/zone32d-2026-11-25/REGLAS-ROTACION-3-2.md"
+ },
+ "tracks": {
+  "O1": [
+   [
+    0.0,
+    -2.3,
+    9.0
+   ],
+   [
+    2.4,
+    -2.3,
+    9.0
+   ],
+   [
+    2.5,
+    -2.3301,
+    8.9828
+   ],
+   [
+    2.6,
+    -2.4094,
+    8.9375
+   ],
+   [
+    2.7,
+    -2.5215,
+    8.8734
+   ],
+   [
+    2.8,
+    -2.65,
+    8.8
+   ],
+   [
+    2.9,
+    -2.7785,
+    8.7266
+   ],
+   [
+    3.0,
+    -2.8906,
+    8.6625
+   ],
+   [
+    3.1,
+    -2.9699,
+    8.6172
+   ],
+   [
+    3.2,
+    -3.0,
+    8.6
+   ],
+   [
+    5.0,
+    -3.0,
+    8.6
+   ]
+  ],
+  "O2": [
+   [
+    0.0,
+    -5.9,
+    6.2
+   ],
+   [
+    5.0,
+    -5.9,
+    6.2
+   ]
+  ],
+  "O3": [
+   [
+    0.0,
+    5.9,
+    6.75
+   ],
+   [
+    5.0,
+    5.9,
+    6.75
+   ]
+  ],
+  "O4": [
+   [
+    0.0,
+    -6.85,
+    1.2
+   ],
+   [
+    5.0,
+    -6.85,
+    1.2
+   ]
+  ],
+  "O5": [
+   [
+    0.0,
+    3.3,
+    1.45
+   ],
+   [
+    0.5,
+    3.3,
+    1.45
+   ],
+   [
+    0.6042,
+    3.2551,
+    1.5469
+   ],
+   [
+    0.7083,
+    3.1375,
+    1.8179
+   ],
+   [
+    0.8125,
+    2.9593,
+    2.227
+   ],
+   [
+    0.9167,
+    2.7211,
+    2.733
+   ],
+   [
+    1.0208,
+    2.4094,
+    3.2855
+   ],
+   [
+    1.125,
+    2.0048,
+    3.8221
+   ],
+   [
+    1.2292,
+    1.5614,
+    4.3276
+   ],
+   [
+    1.3333,
+    1.1323,
+    4.7953
+   ],
+   [
+    1.4375,
+    0.763,
+    5.2153
+   ],
+   [
+    1.5417,
+    0.4678,
+    5.5499
+   ],
+   [
+    1.6458,
+    0.271,
+    5.7702
+   ],
+   [
+    1.75,
+    0.2,
+    5.85
+   ],
+   [
+    5.0,
+    0.2,
+    5.85
+   ]
+  ],
+  "X1": [
+   [
+    0.0,
+    -2.15,
+    7.85
+   ],
+   [
+    2.15,
+    -2.15,
+    7.85
+   ],
+   [
+    2.2563,
+    -2.0733,
+    7.7973
+   ],
+   [
+    2.3625,
+    -1.873,
+    7.6556
+   ],
+   [
+    2.4688,
+    -1.5886,
+    7.4571
+   ],
+   [
+    2.575,
+    -1.2559,
+    7.2395
+   ],
+   [
+    2.6812,
+    -0.9022,
+    7.059
+   ],
+   [
+    2.7875,
+    -0.5746,
+    6.9456
+   ],
+   [
+    2.8937,
+    -0.3388,
+    6.8776
+   ],
+   [
+    3.0,
+    -0.25,
+    6.85
+   ],
+   [
+    5.0,
+    -0.25,
+    6.85
+   ]
+  ],
+  "X2": [
+   [
+    0.0,
+    1.8,
+    6.7
+   ],
+   [
+    2.2,
+    1.8,
+    6.7
+   ],
+   [
+    2.2938,
+    1.8193,
+    6.6592
+   ],
+   [
+    2.3875,
+    1.8703,
+    6.5516
+   ],
+   [
+    2.4813,
+    1.9424,
+    6.3994
+   ],
+   [
+    2.575,
+    2.025,
+    6.225
+   ],
+   [
+    2.6688,
+    2.1076,
+    6.0506
+   ],
+   [
+    2.7625,
+    2.1797,
+    5.8984
+   ],
+   [
+    2.8563,
+    2.2307,
+    5.7908
+   ],
+   [
+    2.95,
+    2.25,
+    5.75
+   ],
+   [
+    5.0,
+    2.25,
+    5.75
+   ]
+  ],
+  "X3": [
+   [
+    0.0,
+    -4.45,
+    6.55
+   ],
+   [
+    2.2,
+    -4.45,
+    6.55
+   ],
+   [
+    2.2938,
+    -4.3877,
+    6.5113
+   ],
+   [
+    2.3875,
+    -4.2234,
+    6.4094
+   ],
+   [
+    2.4813,
+    -3.9912,
+    6.2652
+   ],
+   [
+    2.575,
+    -3.725,
+    6.1
+   ],
+   [
+    2.6688,
+    -3.4588,
+    5.9348
+   ],
+   [
+    2.7625,
+    -3.2266,
+    5.7906
+   ],
+   [
+    2.8563,
+    -3.0623,
+    5.6887
+   ],
+   [
+    2.95,
+    -3.0,
+    5.65
+   ],
+   [
+    5.0,
+    -3.0,
+    5.65
+   ]
+  ],
+  "X4": [
+   [
+    0.0,
+    2.05,
+    2.55
+   ],
+   [
+    2.25,
+    2.05,
+    2.55
+   ],
+   [
+    2.3438,
+    2.0156,
+    2.5865
+   ],
+   [
+    2.4375,
+    1.925,
+    2.6828
+   ],
+   [
+    2.5312,
+    1.7969,
+    2.8189
+   ],
+   [
+    2.625,
+    1.65,
+    2.975
+   ],
+   [
+    2.7188,
+    1.5031,
+    3.1311
+   ],
+   [
+    2.8125,
+    1.375,
+    3.2672
+   ],
+   [
+    2.9062,
+    1.2844,
+    3.3635
+   ],
+   [
+    3.0,
+    1.25,
+    3.4
+   ],
+   [
+    5.0,
+    1.25,
+    3.4
+   ]
+  ],
+  "X5": [
+   [
+    0.0,
+    -2.05,
+    2.55
+   ],
+   [
+    2.25,
+    -2.05,
+    2.55
+   ],
+   [
+    2.3438,
+    -2.0156,
+    2.5865
+   ],
+   [
+    2.4375,
+    -1.925,
+    2.6828
+   ],
+   [
+    2.5312,
+    -1.7969,
+    2.8189
+   ],
+   [
+    2.625,
+    -1.65,
+    2.975
+   ],
+   [
+    2.7188,
+    -1.5031,
+    3.1311
+   ],
+   [
+    2.8125,
+    -1.375,
+    3.2672
+   ],
+   [
+    2.9062,
+    -1.2844,
+    3.3635
+   ],
+   [
+    3.0,
+    -1.25,
+    3.4
+   ],
+   [
+    5.0,
+    -1.25,
+    3.4
+   ]
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 2.0
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O5",
+   "t0": 2.0,
+   "t1": 2.42,
+   "style": "bounce",
+   "eyes": 0.35
+  },
+  {
+   "type": "hold",
+   "player": "O5",
+   "from": 2.42,
+   "to": 5.0
+  }
+ ],
+ "actions": {
+  "O1": [
+   {
+    "type": "face",
+    "from": 0,
+    "to": 5.0,
+    "face": "ball"
+   }
+  ],
+  "O2": [
+   {
+    "type": "face",
+    "from": 0,
+    "to": 5.0,
+    "face": "ball"
+   }
+  ],
+  "O3": [
+   {
+    "type": "face",
+    "from": 0,
+    "to": 5.0,
+    "face": "ball"
+   }
+  ],
+  "O4": [
+   {
+    "type": "face",
+    "from": 0,
+    "to": 5.0,
+    "face": "ball"
+   }
+  ],
+  "O5": [
+   {
+    "type": "catchReady",
+    "from": 1.5,
+    "to": 2.42,
+    "face": "O1"
+   },
+   {
+    "type": "face",
+    "from": 2.77,
+    "to": 5.0,
+    "face": "rim"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 2.1,
+    "face": "O1"
+   },
+   {
+    "type": "stance",
+    "from": 2.1,
+    "to": 5.0,
+    "face": "O5"
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 5.0,
+    "face": "ball"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 5.0,
+    "face": "ball"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 5.0,
+    "face": "ball"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 5.0,
+    "face": "ball"
+   }
+  ]
+ },
+ "screens": [],
+ "marks": {
+  "start": 0,
+  "flash": 0.5,
+  "nail": 1.75,
+  "entry": 2.0,
+  "entryCatch": 2.42,
+  "react": 3.0,
+  "end": 5.0
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "X1",
+   "b": "X2",
+   "at": "start",
+   "max": 4.3,
+   "says": "Three defenders up top (X1-X2 on one line)"
+  },
+  {
+   "type": "near",
+   "a": "X1",
+   "b": "X3",
+   "at": "start",
+   "max": 4.3,
+   "says": "Three defenders up top (X1-X3 on one line)"
+  },
+  {
+   "type": "far",
+   "a": "X4",
+   "b": "X5",
+   "at": "start",
+   "min": 3.6,
+   "says": "Two down low (one per block)"
+  },
+  {
+   "type": "far",
+   "a": "X1",
+   "b": "O5",
+   "at": "entry",
+   "min": 2.0,
+   "says": "watch the high post: the gap behind X1 when he is on the ball"
+  },
+  {
+   "type": "near",
+   "a": "X1",
+   "b": "O5",
+   "at": "react",
+   "max": 1.4,
+   "says": "the middle defender must react"
+  },
+  {
+   "type": "near_rim",
+   "player": "X4",
+   "at": "react",
+   "max": 2.6,
+   "says": "the entire defense adjusts (lows wall the paint, stay home)"
+  },
+  {
+   "type": "near_rim",
+   "player": "X5",
+   "at": "react",
+   "max": 2.6,
+   "says": "the entire defense adjusts (lows wall the paint, stay home)"
+  },
+  {
+   "type": "far",
+   "a": "X2",
+   "b": "O5",
+   "at": "react",
+   "min": 1.6,
+   "says": "wings pinch, they do not double: still in the lanes to the wings"
+  },
+  {
+   "type": "far",
+   "a": "X3",
+   "b": "O5",
+   "at": "react",
+   "min": 1.6,
+   "says": "wings pinch, they do not double: still in the lanes to the wings"
+  },
+  {
+   "type": "order",
+   "marks": [
+    "entry",
+    "entryCatch",
+    "react"
+   ],
+   "says": "If the ball gets inside, the middle defender must react"
+  }
+ ],
+ "notes": [
+  "The high post is not undefended: X1 recovers onto it; the zone changes shape (compresses) and the corners/wings open."
+ ]
+}

@@ -1,0 +1,1196 @@
+{
+ "id": "zone32d-c-shot-boxout",
+ "title": "3-2 zone (C): ball to the left wing, X2 contests the three (miss), all five box out",
+ "duration": 4.3,
+ "concept": "zone-3-2-defense",
+ "source": "original E2A didactic choreography (owner master brief '3-2 Zone Defense', 2026-11-25) on the conventional half-court 3-2 zone, 'low defender takes the corner' rotation as summarised by HoopTactics '3-2 Zone' and Coach's Clipboard (search snippets 2026-11-25: 'Baseline defender X5 is on ball, X4 covers low post area, X3 drops to weakside baseline, X2 cuts off pass out of corner and X1 defends the high post area'; 'the ball-side low defender steps out to the corner, the weak-side low defender rotates to the ball-side block'). Source pages NOT reachable from the render container (DNS blocked), so not live-verified. No diagram, frame or track copied.",
+ "v33": "compile",
+ "squareUp": true,
+ "catchV2": 2,
+ "handBallClear": true,
+ "realism": 3,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Point guard at the top"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Right wing shooter"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Left wing shooter"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Right corner"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Big: left short corner, flashes to the high post (B), crashes the glass (C)"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "TOP-MIDDLE: the ball at the top, then the high post"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "LEFT WING: closes out left, drops to the middle / weak-side block"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "RIGHT WING: closes out right, cuts off the pass out of the corner"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "LEFT LOW: left block / corner; slides across the lane"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "RIGHT LOW: right block / corner closeout; front of the rim"
+  }
+ ],
+ "zone": {
+  "type": "3-2",
+  "variant": "half-court 3-2, low defender takes the corner (ball-side low out, weak-side low across)",
+  "areas": {
+   "X1": "top-middle: the ball at the top, the high post / ball-side elbow on any pass",
+   "X2": "left wing: left wing; drops to the middle (ball right wing) or the weak-side block (ball right corner)",
+   "X3": "right wing: right wing; cuts off the pass out of the right corner",
+   "X4": "left low: left block + left corner; slides across to the right block when the ball goes to the right corner",
+   "X5": "right low: right block + right corner; front of the rim when the ball is on the left"
+  },
+  "rules": "produccion/zone32d-2026-11-25/REGLAS-ROTACION-3-2.md"
+ },
+ "tracks": {
+  "O1": [
+   [
+    0.0,
+    0.0,
+    9.1
+   ],
+   [
+    2.25,
+    0.0,
+    9.1
+   ],
+   [
+    2.35,
+    0.0084,
+    9.0608
+   ],
+   [
+    2.45,
+    0.0312,
+    8.9544
+   ],
+   [
+    2.55,
+    0.0648,
+    8.7976
+   ],
+   [
+    2.65,
+    0.1056,
+    8.6072
+   ],
+   [
+    2.75,
+    0.15,
+    8.4
+   ],
+   [
+    2.85,
+    0.1944,
+    8.1928
+   ],
+   [
+    2.95,
+    0.2352,
+    8.0024
+   ],
+   [
+    3.05,
+    0.2688,
+    7.8456
+   ],
+   [
+    3.15,
+    0.2916,
+    7.7392
+   ],
+   [
+    3.25,
+    0.3,
+    7.7
+   ],
+   [
+    4.3,
+    0.3,
+    7.7
+   ]
+  ],
+  "O2": [
+   [
+    0.0,
+    -5.9,
+    6.2
+   ],
+   [
+    2.25,
+    -5.9,
+    6.2
+   ],
+   [
+    2.35,
+    -5.8664,
+    6.1664
+   ],
+   [
+    2.45,
+    -5.7752,
+    6.0752
+   ],
+   [
+    2.55,
+    -5.6408,
+    5.9408
+   ],
+   [
+    2.65,
+    -5.4776,
+    5.7776
+   ],
+   [
+    2.75,
+    -5.3,
+    5.6
+   ],
+   [
+    2.85,
+    -5.1224,
+    5.4224
+   ],
+   [
+    2.95,
+    -4.9592,
+    5.2592
+   ],
+   [
+    3.05,
+    -4.8248,
+    5.1248
+   ],
+   [
+    3.15,
+    -4.7336,
+    5.0336
+   ],
+   [
+    3.25,
+    -4.7,
+    5.0
+   ],
+   [
+    4.3,
+    -4.7,
+    5.0
+   ]
+  ],
+  "O3": [
+   [
+    0.0,
+    5.9,
+    6.75
+   ],
+   [
+    0.1,
+    5.9,
+    6.75
+   ],
+   [
+    0.2,
+    5.9055,
+    6.7389
+   ],
+   [
+    0.3,
+    5.9198,
+    6.7103
+   ],
+   [
+    0.4,
+    5.9394,
+    6.6713
+   ],
+   [
+    0.5,
+    5.9606,
+    6.6287
+   ],
+   [
+    0.6,
+    5.9802,
+    6.5897
+   ],
+   [
+    0.7,
+    5.9945,
+    6.5611
+   ],
+   [
+    0.8,
+    6.0,
+    6.55
+   ],
+   [
+    4.3,
+    6.0,
+    6.55
+   ]
+  ],
+  "O4": [
+   [
+    0.0,
+    -6.85,
+    1.2
+   ],
+   [
+    2.25,
+    -6.85,
+    1.2
+   ],
+   [
+    2.35,
+    -6.7842,
+    1.2154
+   ],
+   [
+    2.45,
+    -6.6056,
+    1.2572
+   ],
+   [
+    2.55,
+    -6.3424,
+    1.3188
+   ],
+   [
+    2.65,
+    -6.0228,
+    1.3936
+   ],
+   [
+    2.75,
+    -5.675,
+    1.475
+   ],
+   [
+    2.85,
+    -5.3272,
+    1.5564
+   ],
+   [
+    2.95,
+    -5.0076,
+    1.6312
+   ],
+   [
+    3.05,
+    -4.7444,
+    1.6928
+   ],
+   [
+    3.15,
+    -4.5658,
+    1.7346
+   ],
+   [
+    3.25,
+    -4.5,
+    1.75
+   ],
+   [
+    4.3,
+    -4.5,
+    1.75
+   ]
+  ],
+  "O5": [
+   [
+    0.0,
+    3.3,
+    1.45
+   ],
+   [
+    2.25,
+    3.3,
+    1.45
+   ],
+   [
+    2.35,
+    3.2846,
+    1.464
+   ],
+   [
+    2.45,
+    3.2428,
+    1.502
+   ],
+   [
+    2.55,
+    3.1812,
+    1.558
+   ],
+   [
+    2.65,
+    3.1064,
+    1.626
+   ],
+   [
+    2.75,
+    3.025,
+    1.7
+   ],
+   [
+    2.85,
+    2.9436,
+    1.774
+   ],
+   [
+    2.95,
+    2.8688,
+    1.842
+   ],
+   [
+    3.05,
+    2.8072,
+    1.898
+   ],
+   [
+    3.15,
+    2.7654,
+    1.936
+   ],
+   [
+    3.25,
+    2.75,
+    1.95
+   ],
+   [
+    4.3,
+    2.75,
+    1.95
+   ]
+  ],
+  "X1": [
+   [
+    0.0,
+    0.0,
+    7.75
+   ],
+   [
+    0.75,
+    0.0,
+    7.75
+   ],
+   [
+    0.85,
+    0.0497,
+    7.6951
+   ],
+   [
+    0.95,
+    0.183,
+    7.5481
+   ],
+   [
+    1.05,
+    0.3759,
+    7.3352
+   ],
+   [
+    1.15,
+    0.6047,
+    7.0828
+   ],
+   [
+    1.25,
+    0.8453,
+    6.8172
+   ],
+   [
+    1.35,
+    1.0741,
+    6.5648
+   ],
+   [
+    1.45,
+    1.267,
+    6.3519
+   ],
+   [
+    1.55,
+    1.4003,
+    6.2049
+   ],
+   [
+    1.65,
+    1.45,
+    6.15
+   ],
+   [
+    2.25,
+    1.45,
+    6.15
+   ],
+   [
+    2.35,
+    1.426,
+    6.1637
+   ],
+   [
+    2.45,
+    1.3617,
+    6.2005
+   ],
+   [
+    2.55,
+    1.2685,
+    6.2537
+   ],
+   [
+    2.65,
+    1.1581,
+    6.3168
+   ],
+   [
+    2.75,
+    1.0419,
+    6.3832
+   ],
+   [
+    2.85,
+    0.9315,
+    6.4463
+   ],
+   [
+    2.95,
+    0.8383,
+    6.4995
+   ],
+   [
+    3.05,
+    0.774,
+    6.5363
+   ],
+   [
+    3.15,
+    0.75,
+    6.55
+   ],
+   [
+    4.3,
+    0.75,
+    6.55
+   ]
+  ],
+  "X2": [
+   [
+    0.0,
+    3.95,
+    6.75
+   ],
+   [
+    0.75,
+    3.95,
+    6.75
+   ],
+   [
+    0.845,
+    3.9826,
+    6.7214
+   ],
+   [
+    0.94,
+    4.0695,
+    6.6417
+   ],
+   [
+    1.035,
+    4.1973,
+    6.5241
+   ],
+   [
+    1.13,
+    4.3555,
+    6.3847
+   ],
+   [
+    1.225,
+    4.5358,
+    6.2427
+   ],
+   [
+    1.32,
+    4.7348,
+    6.1293
+   ],
+   [
+    1.415,
+    4.9311,
+    6.0523
+   ],
+   [
+    1.51,
+    5.0964,
+    5.9991
+   ],
+   [
+    1.605,
+    5.209,
+    5.9643
+   ],
+   [
+    1.7,
+    5.25,
+    5.95
+   ],
+   [
+    2.7,
+    5.25,
+    5.95
+   ],
+   [
+    2.8,
+    5.2352,
+    5.9352
+   ],
+   [
+    2.9,
+    5.1981,
+    5.8981
+   ],
+   [
+    3.0,
+    5.15,
+    5.85
+   ],
+   [
+    3.1,
+    5.1019,
+    5.8019
+   ],
+   [
+    3.2,
+    5.0648,
+    5.7648
+   ],
+   [
+    3.3,
+    5.05,
+    5.75
+   ],
+   [
+    4.3,
+    5.05,
+    5.75
+   ]
+  ],
+  "X3": [
+   [
+    0.0,
+    -3.95,
+    6.75
+   ],
+   [
+    0.8,
+    -3.95,
+    6.75
+   ],
+   [
+    0.9056,
+    -3.8467,
+    6.7135
+   ],
+   [
+    1.0111,
+    -3.5696,
+    6.6162
+   ],
+   [
+    1.1167,
+    -3.1685,
+    6.4751
+   ],
+   [
+    1.2222,
+    -2.6935,
+    6.3063
+   ],
+   [
+    1.3278,
+    -2.1953,
+    6.1242
+   ],
+   [
+    1.4333,
+    -1.7237,
+    5.9462
+   ],
+   [
+    1.5389,
+    -1.3266,
+    5.7943
+   ],
+   [
+    1.6444,
+    -1.0524,
+    5.6891
+   ],
+   [
+    1.75,
+    -0.95,
+    5.65
+   ],
+   [
+    2.25,
+    -0.95,
+    5.65
+   ],
+   [
+    2.35,
+    -1.0392,
+    5.6054
+   ],
+   [
+    2.45,
+    -1.2781,
+    5.4859
+   ],
+   [
+    2.55,
+    -1.6241,
+    5.313
+   ],
+   [
+    2.65,
+    -2.0342,
+    5.1079
+   ],
+   [
+    2.75,
+    -2.4658,
+    4.8921
+   ],
+   [
+    2.85,
+    -2.8759,
+    4.687
+   ],
+   [
+    2.95,
+    -3.2219,
+    4.5141
+   ],
+   [
+    3.05,
+    -3.4608,
+    4.3946
+   ],
+   [
+    3.15,
+    -3.55,
+    4.35
+   ],
+   [
+    4.3,
+    -3.55,
+    4.35
+   ]
+  ],
+  "X4": [
+   [
+    0.0,
+    2.05,
+    2.55
+   ],
+   [
+    0.8,
+    2.05,
+    2.55
+   ],
+   [
+    0.9,
+    2.0672,
+    2.5393
+   ],
+   [
+    1.0,
+    2.1125,
+    2.5109
+   ],
+   [
+    1.1,
+    2.1766,
+    2.4709
+   ],
+   [
+    1.2,
+    2.25,
+    2.425
+   ],
+   [
+    1.3,
+    2.3234,
+    2.3791
+   ],
+   [
+    1.4,
+    2.3875,
+    2.3391
+   ],
+   [
+    1.5,
+    2.4328,
+    2.3107
+   ],
+   [
+    1.6,
+    2.45,
+    2.3
+   ],
+   [
+    2.3,
+    2.45,
+    2.3
+   ],
+   [
+    2.4,
+    2.4264,
+    2.2893
+   ],
+   [
+    2.5,
+    2.3641,
+    2.2609
+   ],
+   [
+    2.6,
+    2.276,
+    2.2209
+   ],
+   [
+    2.7,
+    2.175,
+    2.175
+   ],
+   [
+    2.8,
+    2.074,
+    2.1291
+   ],
+   [
+    2.9,
+    1.9859,
+    2.0891
+   ],
+   [
+    3.0,
+    1.9236,
+    2.0607
+   ],
+   [
+    3.1,
+    1.9,
+    2.05
+   ],
+   [
+    4.3,
+    1.9,
+    2.05
+   ]
+  ],
+  "X5": [
+   [
+    0.0,
+    -2.05,
+    2.55
+   ],
+   [
+    0.85,
+    -2.05,
+    2.55
+   ],
+   [
+    0.95,
+    -1.9917,
+    2.5431
+   ],
+   [
+    1.05,
+    -1.8355,
+    2.5248
+   ],
+   [
+    1.15,
+    -1.6093,
+    2.4981
+   ],
+   [
+    1.25,
+    -1.3411,
+    2.4666
+   ],
+   [
+    1.35,
+    -1.0589,
+    2.4334
+   ],
+   [
+    1.45,
+    -0.7907,
+    2.4019
+   ],
+   [
+    1.55,
+    -0.5645,
+    2.3752
+   ],
+   [
+    1.65,
+    -0.4083,
+    2.3569
+   ],
+   [
+    1.75,
+    -0.35,
+    2.35
+   ],
+   [
+    2.25,
+    -0.35,
+    2.35
+   ],
+   [
+    2.35,
+    -0.4495,
+    2.3363
+   ],
+   [
+    2.45,
+    -0.716,
+    2.2995
+   ],
+   [
+    2.55,
+    -1.1019,
+    2.2463
+   ],
+   [
+    2.65,
+    -1.5593,
+    2.1832
+   ],
+   [
+    2.75,
+    -2.0407,
+    2.1168
+   ],
+   [
+    2.85,
+    -2.4981,
+    2.0537
+   ],
+   [
+    2.95,
+    -2.884,
+    2.0005
+   ],
+   [
+    3.05,
+    -3.1505,
+    1.9637
+   ],
+   [
+    3.15,
+    -3.25,
+    1.95
+   ],
+   [
+    4.3,
+    -3.25,
+    1.95
+   ]
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 0.6
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O3",
+   "t0": 0.6,
+   "t1": 1.2,
+   "style": "chest",
+   "eyes": 0.3
+  },
+  {
+   "type": "hold",
+   "player": "O3",
+   "from": 1.2,
+   "to": 1.95
+  },
+  {
+   "type": "shot",
+   "player": "O3",
+   "t0": 1.95,
+   "t1": 3.05,
+   "make": false,
+   "side": 1,
+   "contested": true
+  }
+ ],
+ "actions": {
+  "O1": [
+   {
+    "type": "face",
+    "from": 0,
+    "to": 4.3,
+    "face": "ball"
+   }
+  ],
+  "O2": [
+   {
+    "type": "face",
+    "from": 0,
+    "to": 4.3,
+    "face": "ball"
+   }
+  ],
+  "O3": [
+   {
+    "type": "catchReady",
+    "from": 0.85,
+    "to": 1.2,
+    "face": "O1"
+   }
+  ],
+  "O4": [
+   {
+    "type": "face",
+    "from": 0,
+    "to": 4.3,
+    "face": "ball"
+   }
+  ],
+  "O5": [
+   {
+    "type": "face",
+    "from": 0,
+    "to": 4.3,
+    "face": "ball"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 2.6,
+    "face": "ball"
+   },
+   {
+    "type": "stance",
+    "from": 2.6,
+    "to": 4.3,
+    "face": "rim"
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 0.65,
+    "face": "ball"
+   },
+   {
+    "type": "closeout",
+    "from": 1.1,
+    "to": 1.95,
+    "face": "O3"
+   },
+   {
+    "type": "contest",
+    "from": 1.95,
+    "to": 2.6,
+    "face": "O3"
+   },
+   {
+    "type": "stance",
+    "from": 2.8,
+    "to": 4.3,
+    "face": "rim"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 2.6,
+    "face": "ball"
+   },
+   {
+    "type": "stance",
+    "from": 2.6,
+    "to": 4.3,
+    "face": "rim"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 2.6,
+    "face": "ball"
+   },
+   {
+    "type": "stance",
+    "from": 2.6,
+    "to": 4.3,
+    "face": "rim"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 2.6,
+    "face": "ball"
+   },
+   {
+    "type": "stance",
+    "from": 2.6,
+    "to": 4.3,
+    "face": "rim"
+   }
+  ]
+ },
+ "screens": [],
+ "marks": {
+  "start": 0,
+  "leftPass": 0.6,
+  "leftCatch": 1.2,
+  "closeout": 1.5499999999999998,
+  "release": 1.95,
+  "rim": 3.05,
+  "box": 3.15,
+  "end": 4.3
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "X1",
+   "b": "X2",
+   "at": "start",
+   "max": 4.3,
+   "says": "Three defenders up top (X1-X2 on one line)"
+  },
+  {
+   "type": "near",
+   "a": "X1",
+   "b": "X3",
+   "at": "start",
+   "max": 4.3,
+   "says": "Three defenders up top (X1-X3 on one line)"
+  },
+  {
+   "type": "far",
+   "a": "X4",
+   "b": "X5",
+   "at": "start",
+   "min": 3.6,
+   "says": "Two down low (one per block)"
+  },
+  {
+   "type": "behind_arc",
+   "player": "O3",
+   "at": "release",
+   "says": "contesting perimeter shots (the shooter is behind the arc)"
+  },
+  {
+   "type": "near",
+   "a": "X2",
+   "b": "O3",
+   "at": "release",
+   "max": 1.3,
+   "says": "great at contesting perimeter shots"
+  },
+  {
+   "type": "near",
+   "a": "X5",
+   "b": "O4",
+   "at": "box",
+   "max": 1.6,
+   "says": "find a body (X5 on O4)"
+  },
+  {
+   "type": "near",
+   "a": "X4",
+   "b": "O5",
+   "at": "box",
+   "max": 1.2,
+   "says": "find a body (X4 on O5)"
+  },
+  {
+   "type": "near",
+   "a": "X3",
+   "b": "O2",
+   "at": "box",
+   "max": 1.6,
+   "says": "find a body (X3 on O2, weak side)"
+  },
+  {
+   "type": "near",
+   "a": "X1",
+   "b": "O1",
+   "at": "box",
+   "max": 1.4,
+   "says": "find a body (X1 on O1)"
+  },
+  {
+   "type": "near",
+   "a": "X2",
+   "b": "O3",
+   "at": "box",
+   "max": 1.6,
+   "says": "find a body (X2 on the shooter)"
+  },
+  {
+   "type": "order",
+   "marks": [
+    "release",
+    "box"
+   ],
+   "says": "On every shot: find a body. Box out."
+  }
+ ],
+ "notes": [
+  "Box-out = a body between each offensive player and the rim, facing the rim; the rebound itself is not shown."
+ ]
+}

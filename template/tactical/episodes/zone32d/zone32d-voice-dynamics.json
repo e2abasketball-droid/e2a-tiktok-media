@@ -1,0 +1,95 @@
+{
+ "about": "E2A Voice Dynamics curve, 3-2 Zone Defense: brief intensity curve hook 9 / formation 7 / rotations 8.5 / corner 8 / weaknesses 7.5 / ending 9 (dB vs explanation level). --preserve: never lowers the take.",
+ "lines": [
+  [
+   "Want to shut down perimeter shooters?",
+   2.5,
+   "A"
+  ],
+  [
+   "This is how the three-two zone works.",
+   1.0,
+   "A"
+  ],
+  [
+   "Three defenders up top.",
+   0,
+   "B"
+  ],
+  [
+   "Two down low.",
+   0,
+   "B"
+  ],
+  [
+   "Control the wings... and make outside shots difficult.",
+   0,
+   "B"
+  ],
+  [
+   "Ball to the wing: the nearest defender closes out...",
+   1.0,
+   "C"
+  ],
+  [
+   "and everyone shifts to protect the gaps.",
+   1.5,
+   "C"
+  ],
+  [
+   "Ball in the corner?",
+   1.0,
+   "C"
+  ],
+  [
+   "The bottom defender steps out.",
+   1.0,
+   "C"
+  ],
+  [
+   "The others rotate to protect the paint and cover the weak side.",
+   0.5,
+   "C"
+  ],
+  [
+   "But watch the high post.",
+   0.5,
+   "D"
+  ],
+  [
+   "If the ball gets inside, the middle defender must react,",
+   0.5,
+   "D"
+  ],
+  [
+   "and the whole defense has to adjust.",
+   0.5,
+   "D"
+  ],
+  [
+   "The three-two is great at contesting perimeter shots.",
+   0,
+   "D"
+  ],
+  [
+   "But the corners, the high post and defensive rebounding can become problems.",
+   0,
+   "D"
+  ],
+  [
+   "Find a body. Box out.",
+   1.5,
+   "C"
+  ],
+  [
+   "Five defenders. One connected unit.",
+   2.0,
+   "E"
+  ],
+  [
+   "Follow for more European basketball.",
+   2.0,
+   "E"
+  ]
+ ]
+}

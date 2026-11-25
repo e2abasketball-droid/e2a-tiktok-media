@@ -72,6 +72,22 @@ export const COVERAGE_SCHEMES: Record<string, CoverageScheme> = {
       X4: {label: 'X4 · TAIL', r: [3.1, 0.85], rh: 1.1, labelOff: [0, -0.95]},
     },
   },
+  // 2026-11-25 (3-2 Zone Defense reel): conventional half-court 3-2, low defender takes the corner. Three on ONE line up
+  // top (X1 middle, X2 LEFT wing repo x > 0, X3 RIGHT wing), two low (X4 left block, X5 right block). Wider, shallower top
+  // areas (perimeter), deeper low areas (block + short corner + corner). Rules: produccion/zone32d-2026-11-25/.
+  '3-2': {
+    name: '3-2 zone',
+    ids: ['X1', 'X2', 'X3', 'X4', 'X5'],
+    gap: 0.16,
+    reveal: ['X1', 'X2', 'X3', 'X4', 'X5'],
+    roles: {
+      X1: {label: 'X1 · TOP', r: [1.6, 1.4], rh: 1.25, labelOff: [0, 1.3]},
+      X2: {label: 'X2 · WING', r: [1.75, 1.5], rh: 1.3, labelOff: [0, 1.3]},
+      X3: {label: 'X3 · WING', r: [1.75, 1.5], rh: 1.3, labelOff: [0, 1.3]},
+      X4: {label: 'X4 · LOW', r: [1.7, 1.6], rh: 1.25, labelOff: [0, -1.4]},
+      X5: {label: 'X5 · LOW', r: [1.7, 1.6], rh: 1.25, labelOff: [0, -1.4]},
+    },
+  },
   // 2026-11-24 (1-3-1 ARROW press reel): three-quarter-court 1-3-1 press, full-court play (`court: 'full'`). Bigger
   // areas: five players cover the whole width of the floor. X1 point (turns the ball to the sideline), X2 left wing /
   // X3 right wing (the trap line at half court), X5 middle (the middle lane), X4 safety (the long pass, the rim).
