@@ -488,6 +488,9 @@ const chestBall = (b: Body) => add(add(b.chest, mul(fwd(b.chestYaw), 0.28)), add
 const setBall = (b: Body) => add(add(b.head, mul(fwd(b.chestYaw), 0.24)), add(mul(UP, 0.12), mul(right(b.chestYaw), 0.11)));
 /** the shot release point: arm extended up and forward over the shooting shoulder */
 const releaseBall = (b: Body) => add(add(b.head, mul(fwd(b.chestYaw), 0.34)), add(mul(UP, 0.4), mul(right(b.chestYaw), 0.13)));
+/** opt-in layup event `reach` (2026-11-26, Zero Cut TEST): the release of a running layup, arm extended further UP and
+ *  FORWARD toward the rim (finger-roll finish) instead of the jump shot's release over the forehead */
+const layupBall = (b: Body) => add(add(b.head, mul(fwd(b.chestYaw), 0.42)), add(mul(UP, 0.46), mul(right(b.chestYaw), 0.14)));
 
 type PassEv = Extract<BallEvent, {type: 'pass'}>;
 type ShotEv = Extract<BallEvent, {type: 'shot' | 'layup'}>;
@@ -545,7 +548,7 @@ const flightOf = (play: Play, ev: BallEvent, k: number): Flight => {
   if (ev.type === 'pass') f = {t0: ev.t0, t1: ev.t1, P0: releaseSpot(play, ev), P1: catchSpot(play, ev), style: ev.style ?? 'chest', ev};
   else if (ev.type === 'shot' || ev.type === 'layup') {
     const sb = bodyOf(play, ev.player, ev.t0);
-    const P0 = sb ? releaseBall(sb) : engineBall(play, ev.t0);
+    const P0 = sb ? (ev.type === 'layup' && (ev as {reach?: boolean}).reach ? layupBall(sb) : releaseBall(sb)) : engineBall(play, ev.t0);
     const aim: V3 = ev.make === false ? engineBall(play, ev.t1) : [RIM3[0], RIM3[1], RIM3[2] + 0.05];
     f = {t0: ev.t0, t1: ev.t1, P0, P1: aim, style: ev.type, ev};
   } else throw new Error('not a flight');

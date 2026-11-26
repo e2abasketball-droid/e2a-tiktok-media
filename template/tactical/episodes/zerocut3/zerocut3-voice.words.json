@@ -1,0 +1,507 @@
+[
+{
+"text": "STOP",
+"start": 0.18,
+"end": 0.5
+},
+{
+"text": "calling",
+"start": 0.55,
+"end": 0.9
+},
+{
+"text": "yourself",
+"start": 0.971,
+"end": 1.54
+},
+{
+"text": "ELITE...",
+"start": 1.7,
+"end": 2.67
+},
+{
+"text": "if",
+"start": 2.947,
+"end": 3.0
+},
+{
+"text": "you",
+"start": 3.06,
+"end": 3.24
+},
+{
+"text": "can't",
+"start": 3.3,
+"end": 3.56
+},
+{
+"text": "READ",
+"start": 3.64,
+"end": 3.96
+},
+{
+"text": "THIS.",
+"start": 4.072,
+"end": 4.68
+},
+{
+"text": "This",
+"start": 5.354,
+"end": 5.37
+},
+{
+"text": "is",
+"start": 5.423,
+"end": 5.53
+},
+{
+"text": "the",
+"start": 5.55,
+"end": 5.61
+},
+{
+"text": "Zero",
+"start": 5.674,
+"end": 5.93
+},
+{
+"text": "Cut.",
+"start": 6.01,
+"end": 6.41
+},
+{
+"text": "It",
+"start": 7.02,
+"end": 7.21
+},
+{
+"text": "starts",
+"start": 7.256,
+"end": 7.53
+},
+{
+"text": "by",
+"start": 7.583,
+"end": 7.69
+},
+{
+"text": "SELLING",
+"start": 7.81,
+"end": 8.17
+},
+{
+"text": "the",
+"start": 8.21,
+"end": 8.33
+},
+{
+"text": "handoff.",
+"start": 8.394,
+"end": 9.05
+},
+{
+"text": "Watch",
+"start": 9.7,
+"end": 10.05
+},
+{
+"text": "the",
+"start": 10.07,
+"end": 10.13
+},
+{
+"text": "defender.",
+"start": 10.192,
+"end": 10.77
+},
+{
+"text": "His",
+"start": 11.54,
+"end": 11.75
+},
+{
+"text": "weight",
+"start": 11.796,
+"end": 12.07
+},
+{
+"text": "is",
+"start": 12.123,
+"end": 12.23
+},
+{
+"text": "already",
+"start": 12.28,
+"end": 12.63
+},
+{
+"text": "on",
+"start": 12.71,
+"end": 12.87
+},
+{
+"text": "the",
+"start": 12.89,
+"end": 12.95
+},
+{
+"text": "WRONG",
+"start": 13.03,
+"end": 13.43
+},
+{
+"text": "leg.",
+"start": 13.53,
+"end": 14.01
+},
+{
+"text": "The",
+"start": 15.34,
+"end": 15.46
+},
+{
+"text": "guard",
+"start": 15.513,
+"end": 15.78
+},
+{
+"text": "changes",
+"start": 15.84,
+"end": 16.26
+},
+{
+"text": "direction...",
+"start": 16.316,
+"end": 16.87
+},
+{
+"text": "slips",
+"start": 17.473,
+"end": 17.74
+},
+{
+"text": "BEHIND",
+"start": 17.82,
+"end": 18.22
+},
+{
+"text": "him...",
+"start": 18.3,
+"end": 18.85
+},
+{
+"text": "and",
+"start": 19.22,
+"end": 19.28
+},
+{
+"text": "the",
+"start": 19.32,
+"end": 19.44
+},
+{
+"text": "lane",
+"start": 19.488,
+"end": 19.68
+},
+{
+"text": "OPENS.",
+"start": 19.76,
+"end": 20.51
+},
+{
+"text": "No",
+"start": 21.14,
+"end": 21.3
+},
+{
+"text": "handoff.",
+"start": 21.364,
+"end": 21.94
+},
+{
+"text": "One",
+"start": 22.04,
+"end": 22.34
+},
+{
+"text": "pass.",
+"start": 22.436,
+"end": 22.9
+},
+{
+"text": "EASY",
+"start": 23.36,
+"end": 23.77
+},
+{
+"text": "finish.",
+"start": 23.839,
+"end": 24.46
+},
+{
+"text": "But",
+"start": 26.18,
+"end": 26.24
+},
+{
+"text": "if",
+"start": 26.293,
+"end": 26.4
+},
+{
+"text": "the",
+"start": 26.42,
+"end": 26.48
+},
+{
+"text": "help",
+"start": 26.528,
+"end": 26.72
+},
+{
+"text": "defender",
+"start": 26.764,
+"end": 27.12
+},
+{
+"text": "steps",
+"start": 27.173,
+"end": 27.44
+},
+{
+"text": "across...",
+"start": 27.52,
+"end": 28.2
+},
+{
+"text": "don't",
+"start": 28.89,
+"end": 29.17
+},
+{
+"text": "force",
+"start": 29.223,
+"end": 29.49
+},
+{
+"text": "it.",
+"start": 29.543,
+"end": 29.94
+},
+{
+"text": "That",
+"start": 30.482,
+"end": 30.61
+},
+{
+"text": "rotation",
+"start": 30.672,
+"end": 31.17
+},
+{
+"text": "leaves",
+"start": 31.204,
+"end": 31.41
+},
+{
+"text": "the",
+"start": 31.45,
+"end": 31.57
+},
+{
+"text": "CORNER",
+"start": 31.63,
+"end": 31.97
+},
+{
+"text": "open.",
+"start": 32.05,
+"end": 32.76
+},
+{
+"text": "One",
+"start": 34.32,
+"end": 34.56
+},
+{
+"text": "cut.",
+"start": 34.64,
+"end": 34.96
+},
+{
+"text": "Two",
+"start": 36.02,
+"end": 36.24
+},
+{
+"text": "reads.",
+"start": 36.32,
+"end": 36.88
+},
+{
+"text": "Elite",
+"start": 38.04,
+"end": 38.44
+},
+{
+"text": "players",
+"start": 38.49,
+"end": 38.84
+},
+{
+"text": "don't",
+"start": 38.88,
+"end": 39.12
+},
+{
+"text": "just",
+"start": 39.144,
+"end": 39.24
+},
+{
+"text": "run",
+"start": 39.32,
+"end": 39.56
+},
+{
+"text": "plays.",
+"start": 39.64,
+"end": 40.09
+},
+{
+"text": "They",
+"start": 40.6,
+"end": 40.81
+},
+{
+"text": "READ",
+"start": 40.906,
+"end": 41.29
+},
+{
+"text": "the",
+"start": 41.31,
+"end": 41.37
+},
+{
+"text": "defense.",
+"start": 41.46,
+"end": 42.24
+},
+{
+"text": "The",
+"start": 43.218,
+"end": 43.23
+},
+{
+"text": "future",
+"start": 43.287,
+"end": 43.63
+},
+{
+"text": "elite",
+"start": 43.697,
+"end": 44.03
+},
+{
+"text": "will",
+"start": 44.062,
+"end": 44.19
+},
+{
+"text": "think",
+"start": 44.243,
+"end": 44.51
+},
+{
+"text": "faster...",
+"start": 44.579,
+"end": 45.39
+},
+{
+"text": "read",
+"start": 45.438,
+"end": 45.63
+},
+{
+"text": "faster...",
+"start": 45.699,
+"end": 46.51
+},
+{
+"text": "and",
+"start": 46.53,
+"end": 46.59
+},
+{
+"text": "punish",
+"start": 46.659,
+"end": 47.07
+},
+{
+"text": "every",
+"start": 47.137,
+"end": 47.47
+},
+{
+"text": "mistake.",
+"start": 47.54,
+"end": 48.19
+},
+{
+"text": "Follow",
+"start": 49.0,
+"end": 49.46
+},
+{
+"text": "E2A...",
+"start": 49.54,
+"end": 50.34
+},
+{
+"text": "and",
+"start": 50.36,
+"end": 50.42
+},
+{
+"text": "be",
+"start": 50.473,
+"end": 50.58
+},
+{
+"text": "part",
+"start": 50.628,
+"end": 50.82
+},
+{
+"text": "of",
+"start": 50.847,
+"end": 50.9
+},
+{
+"text": "the",
+"start": 50.92,
+"end": 50.98
+},
+{
+"text": "elite",
+"start": 51.06,
+"end": 51.46
+},
+{
+"text": "of",
+"start": 51.513,
+"end": 51.62
+},
+{
+"text": "the",
+"start": 51.64,
+"end": 51.7
+},
+{
+"text": "future.",
+"start": 51.757,
+"end": 52.24
+}
+]
