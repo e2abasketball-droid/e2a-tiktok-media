@@ -1,0 +1,562 @@
+{
+ "id": "zerocut-a-layup",
+ "title": "Zero Cut A: fake handoff, X2 jumps over the top, back cut, bounce pass, layup",
+ "duration": 5.6,
+ "concept": "zero-cut",
+ "source": "original E2A staging of the 'Zero Cut' (backdoor out of a fake dribble handoff, the counter of the Zoom/DHO action) as shown in the owner's reference (BYU game clips, labels Trail / Contact / Dime / Leave) and WABC/FIBA backdoor teaching; production coordinates, no frame or diagram copied",
+ "squareUp": true,
+ "catchV2": 2,
+ "handBallClear": true,
+ "v33": "compile",
+ "realism": 3,
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Left slot: enters the ball to the big, keeps the spacing"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Right wing: sprints toward the big to sell the handoff, plants, cuts behind his defender (the cutter)"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Weak-side (left) corner shooter"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Strong-side (right) corner: spacing"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Big: pops to the top, catches, the passer (bounce pass / skip pass)"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On O1",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "On O2: trails the sprint and jumps over the top to beat the handoff",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "LOW HELP on O3: stays home (A) / steps across to the rim (B)",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "On O4: stays home in the strong-side corner",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "On O5: follows the pop, cheats to the handoff side (ready to show on the DHO)",
+   "guards": "O5"
+  }
+ ],
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 0.56
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O5",
+   "t0": 0.56,
+   "t1": 1.06,
+   "style": "chest",
+   "eyes": 0.3
+  },
+  {
+   "type": "hold",
+   "player": "O5",
+   "from": 1.06,
+   "to": 3.01
+  },
+  {
+   "type": "pass",
+   "from": "O5",
+   "to": "O2",
+   "t0": 3.01,
+   "t1": 3.46,
+   "style": "bounce",
+   "eyes": 0.4,
+   "lead": true
+  },
+  {
+   "type": "hold",
+   "player": "O2",
+   "from": 3.46,
+   "to": 3.92
+  },
+  {
+   "type": "layup",
+   "player": "O2",
+   "t0": 3.92,
+   "t1": 4.34,
+   "make": true
+  }
+ ],
+ "marks": {
+  "start": 0,
+  "pop": 0.1,
+  "entry": 0.56,
+  "bigCatch": 1.06,
+  "sprint": 0.91,
+  "show": 1.72,
+  "plant": 2.22,
+  "cut": 2.44,
+  "x2turn": 2.74,
+  "pass": 3.01,
+  "catch": 3.46,
+  "finish": 3.92,
+  "make": 4.34,
+  "end": 5.6
+ },
+ "actions": {
+  "O1": [
+   {
+    "type": "face",
+    "from": 0,
+    "to": 1.36,
+    "face": "O5"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6.4,
+    "face": "O1"
+   }
+  ],
+  "O5": [
+   {
+    "type": "catchReady",
+    "from": 0.6,
+    "to": 1.06,
+    "face": "O1"
+   },
+   {
+    "type": "face",
+    "from": 1.1600000000000001,
+    "to": 3.01,
+    "face": "O2"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6.4,
+    "face": "O5"
+   }
+  ],
+  "O2": [
+   {
+    "type": "face",
+    "from": 0.91,
+    "to": 1.72,
+    "face": "O5"
+   },
+   {
+    "type": "call",
+    "from": 1.72,
+    "to": 2.22,
+    "amt": 0.55
+   },
+   {
+    "type": "roll",
+    "from": 2.24,
+    "to": 2.8400000000000003,
+    "face": "O5",
+    "turn": 0.42
+   },
+   {
+    "type": "catchReady",
+    "from": 3.11,
+    "to": 3.46,
+    "face": "O5"
+   },
+   {
+    "type": "celebrate",
+    "from": 4.82,
+    "to": 5.5
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 1.72,
+    "face": "O2"
+   },
+   {
+    "type": "topLock",
+    "from": 1.72,
+    "to": 2.8400000000000003,
+    "face": "O5",
+    "side": 1
+   },
+   {
+    "type": "stance",
+    "from": 2.89,
+    "to": 6.4,
+    "face": "O2"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6.4,
+    "face": "O4"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6.4,
+    "face": "ball"
+   }
+  ],
+  "O3": [],
+  "O4": []
+ },
+ "claims": [
+  {
+   "type": "reacts_after",
+   "player": "O2",
+   "event": "entry",
+   "min": 0.2,
+   "says": "The big catches up top. The guard sprints toward him"
+  },
+  {
+   "type": "reacts_after",
+   "player": "X2",
+   "event": "sprint",
+   "min": 0.2,
+   "says": "and his defender follows"
+  },
+  {
+   "type": "near",
+   "a": "O2",
+   "b": "O5",
+   "at": "plant",
+   "max": 1.9,
+   "says": "selling a handoff (handoff distance)"
+  },
+  {
+   "type": "order",
+   "marks": [
+    "cut",
+    "x2turn"
+   ],
+   "says": "The cutter slips behind him (X2 turns 0.3 s after the cut starts)"
+  },
+  {
+   "type": "far",
+   "a": "X2",
+   "b": "O2",
+   "at": "catch",
+   "min": 1.5,
+   "says": "behind him: X2 is beaten on the catch"
+  },
+  {
+   "type": "far",
+   "a": "X3",
+   "b": "O2",
+   "at": "catch",
+   "min": 2.4,
+   "says": "the low help stays home (read A)"
+  },
+  {
+   "type": "near_rim",
+   "player": "O2",
+   "at": "finish",
+   "max": 1.6,
+   "says": "takes the pass, and finishes"
+  },
+  {
+   "type": "order",
+   "marks": [
+    "pop",
+    "entry",
+    "bigCatch",
+    "show",
+    "plant",
+    "cut",
+    "x2turn",
+    "pass",
+    "catch",
+    "finish",
+    "make"
+   ],
+   "says": "sell the handoff, cut behind, pass, finish"
+  }
+ ],
+ "screens": [],
+ "notes": [
+  "No screen: X2 is beaten by his own anticipation of the handoff.",
+  "O2 plants only when X2 has committed to the top side; X2 turns 0.3 s after the cut starts.",
+  "X3 (low help) takes a look and stays with O3: nobody rotates, the layup is there."
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0,
+    2.9,
+    8.45
+   ],
+   [
+    1.36,
+    2.9,
+    8.45
+   ],
+   [
+    2.52,
+    4.55,
+    7.3
+   ],
+   [
+    5.6,
+    4.55,
+    7.3
+   ]
+  ],
+  "O2": [
+   [
+    0,
+    -5.6,
+    5
+   ],
+   [
+    0.91,
+    -5.6,
+    5
+   ],
+   [
+    1.567,
+    -4.1,
+    6.35
+   ],
+   [
+    2.228,
+    -2.3,
+    7.3
+   ],
+   [
+    2.44,
+    -2.3,
+    7.3
+   ],
+   [
+    2.95,
+    -2.5,
+    5.9
+   ],
+   [
+    3.292,
+    -1.75,
+    4.3
+   ],
+   [
+    3.467,
+    -1.3,
+    3.55
+   ],
+   [
+    3.96,
+    -0.72,
+    2.35
+   ],
+   [
+    5.6,
+    -0.72,
+    2.35
+   ]
+  ],
+  "O3": [
+   [
+    0,
+    6.6,
+    1.25
+   ],
+   [
+    5.6,
+    6.6,
+    1.25
+   ]
+  ],
+  "O4": [
+   [
+    0,
+    -6.6,
+    1.2
+   ],
+   [
+    5.6,
+    -6.6,
+    1.2
+   ]
+  ],
+  "O5": [
+   [
+    0,
+    -1.4,
+    6.1
+   ],
+   [
+    0.1,
+    -1.4,
+    6.1
+   ],
+   [
+    1.05,
+    -0.6,
+    8.05
+   ],
+   [
+    5.6,
+    -0.6,
+    8.05
+   ]
+  ],
+  "X1": [
+   [
+    0,
+    2.45,
+    7.45
+   ],
+   [
+    1.61,
+    2.45,
+    7.45
+   ],
+   [
+    2.645,
+    3.95,
+    6.75
+   ],
+   [
+    5.6,
+    3.95,
+    6.75
+   ]
+  ],
+  "X2": [
+   [
+    0,
+    -4.95,
+    4.7
+   ],
+   [
+    1.16,
+    -4.95,
+    4.7
+   ],
+   [
+    1.727,
+    -4.35,
+    6.2
+   ],
+   [
+    2.495,
+    -2.55,
+    8
+   ],
+   [
+    2.74,
+    -2.55,
+    8
+   ],
+   [
+    3.28,
+    -2.75,
+    6.6
+   ],
+   [
+    3.914,
+    -2.15,
+    4.9
+   ],
+   [
+    5.6,
+    -2.15,
+    4.9
+   ]
+  ],
+  "X3": [
+   [
+    0,
+    3.35,
+    2.45
+   ],
+   [
+    2.89,
+    3.35,
+    2.45
+   ],
+   [
+    3.483,
+    2.75,
+    2.65
+   ],
+   [
+    5.6,
+    2.75,
+    2.65
+   ]
+  ],
+  "X4": [
+   [
+    0,
+    -5.65,
+    1.85
+   ],
+   [
+    5.6,
+    -5.65,
+    1.85
+   ]
+  ],
+  "X5": [
+   [
+    0,
+    -0.9,
+    5.45
+   ],
+   [
+    0.35,
+    -0.9,
+    5.45
+   ],
+   [
+    1.357,
+    -1.45,
+    7.75
+   ],
+   [
+    5.6,
+    -1.45,
+    7.75
+   ]
+  ]
+ }
+}

@@ -38,6 +38,12 @@ export type TeleOvBP =
   | {type: 'ghost'; player?: string; t?: number; at?: V2; color?: string; link?: boolean}
   | {type: 'ballPath'; src: string; dst: string; color?: string; draw?: number}
   | {type: 'motionTrail'; player: string; len?: number; color?: string; width?: number}
+  /** 2026-11-26 (Zero Cut): OpenLane — translucent corridor that opens BEHIND a beaten defender toward a target (the
+   *  rim by default). Anchored to the defender's REAL position every frame (live), so it only exists where the space
+   *  really is; `anchor` = a player id (corridor starts `gap` m behind him on the target side) or a fixed spot. Grows
+   *  from the defender to `target` over `draw` s; chevrons run toward the target. Width tapers to `tip` at the end.
+   *  (`from` / `to` stay the overlay's shot-time window, as for every overlay.) */
+  | {type: 'openLane'; anchor: string | V2; target?: V2 | string; width?: number; tip?: number; gap?: number; color?: string; draw?: number; chevrons?: boolean}
   /** DEBUG ONLY (2026-11-19 catch fix; never in a published edit): trunk volume (elliptic cylinder used by
    *  scripts/qc-catch.mts), ball sphere coloured by ball phase, palm contact points, body forward vector (cyan),
    *  chest forward (white) and the ball's direction of travel (magenta) */
@@ -376,6 +382,52 @@ export const TelestrationBP: React.FC<{play: Play; pt: number; o: TeleOvBP & {ag
           )}
         </group>
       );
+    }
+    case 'openLane': {
+      const col = o.color ?? GOLD;
+      const tg: V2 = typeof o.target === 'string' ? P(play, o.target, pt) : o.target ?? [0, 1.575];
+      const base: V2 = typeof o.anchor === 'string' ? P(play, o.anchor, pt) : o.anchor;
+      const dx = tg[0] - base[0];
+      const dy = tg[1] - base[1];
+      const L = Math.hypot(dx, dy);
+      if (L < 0.6) return null;
+      const ux = dx / L;
+      const uy = dy / L;
+      const g0 = typeof o.anchor === 'string' ? (o.gap ?? 0.45) : 0;
+      const s0: V2 = [base[0] + ux * g0, base[1] + uy * g0];
+      const grow = o.draw ? eo(o.age / o.draw) : 1;
+      const s1: V2 = [s0[0] + (tg[0] - s0[0]) * grow, s0[1] + (tg[1] - s0[1]) * grow];
+      const w0 = o.width ?? 1.5;
+      const w1 = (o.tip ?? 0.7) * grow + w0 * (1 - grow);
+      const nx = -uy;
+      const ny = ux;
+      const quad = (wa: number, wb: number, z: number) => {
+        const g = new THREE.BufferGeometry();
+        const v = [
+          ...W3([s0[0] + (nx * wa) / 2, s0[1] + (ny * wa) / 2, z]), ...W3([s0[0] - (nx * wa) / 2, s0[1] - (ny * wa) / 2, z]),
+          ...W3([s1[0] + (nx * wb) / 2, s1[1] + (ny * wb) / 2, z]), ...W3([s1[0] - (nx * wb) / 2, s1[1] - (ny * wb) / 2, z]),
+        ];
+        g.setAttribute('position', new THREE.Float32BufferAttribute(v, 3));
+        g.setIndex([0, 1, 2, 1, 3, 2]);
+        return g;
+      };
+      const els: React.ReactNode[] = [
+        <mesh key="soft" geometry={quad(w0 * 1.25, w1 * 1.25, 0.011)} material={mat(col, 0.12 * a, true)} renderOrder={2} />,
+        <mesh key="core" geometry={quad(w0, w1, 0.013)} material={mat(col, 0.22 * a, true)} renderOrder={3} />,
+        <mesh key="edgeL" geometry={ribbon([[s0[0] + (nx * w0) / 2, s0[1] + (ny * w0) / 2], [s1[0] + (nx * w1) / 2, s1[1] + (ny * w1) / 2]], 0.05, 0.016)} material={mat(col, 0.8 * a)} renderOrder={4} />,
+        <mesh key="edgeR" geometry={ribbon([[s0[0] - (nx * w0) / 2, s0[1] - (ny * w0) / 2], [s1[0] - (nx * w1) / 2, s1[1] - (ny * w1) / 2]], 0.05, 0.016)} material={mat(col, 0.8 * a)} renderOrder={4} />,
+      ];
+      if (o.chevrons !== false && grow > 0.6) {
+        const run = (o.age * 1.6) % 1;
+        for (let k = 0; k < 3; k++) {
+          const u = ((run + k / 3) % 1) * grow;
+          const c: V2 = [s0[0] + (tg[0] - s0[0]) * u, s0[1] + (tg[1] - s0[1]) * u];
+          const cw = 0.32;
+          const pts: V2[] = [[c[0] + nx * cw - ux * 0.22, c[1] + ny * cw - uy * 0.22], c, [c[0] - nx * cw - ux * 0.22, c[1] - ny * cw - uy * 0.22]];
+          els.push(<mesh key={'ch' + k} geometry={ribbon(pts, 0.07, 0.017)} material={mat(WHITE, 0.7 * a * Math.sin(Math.PI * ((run + k / 3) % 1)))} renderOrder={5} />);
+        }
+      }
+      return <group>{els}</group>;
     }
     case 'motionTrail': {
       const len = o.len ?? 0.6;

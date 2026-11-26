@@ -798,6 +798,7 @@ export const Overlays3D: React.FC<{play: Play; pt: number; items: LiveOv3[]}> = 
           case 'ghost':
           case 'ballPath':
           case 'motionTrail':
+          case 'openLane':
           case 'debugCatch':
             return <TelestrationBP key={i} play={play} pt={pt} o={o} a={a} />;
           case 'footRing':
