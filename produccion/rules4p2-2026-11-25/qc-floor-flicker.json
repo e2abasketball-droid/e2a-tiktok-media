@@ -1,0 +1,182 @@
+{
+ "A": {
+  "file": "/tmp/claude-0/r4p2/E2A-4-BASKETBALL-RULES-PART-2.mp4",
+  "frames": 1320,
+  "bad_frames": 0,
+  "bad_list": [],
+  "frozen": [
+   {
+    "span": [
+     4.548,
+     5.019
+    ],
+    "n": 14,
+    "diff_mean": 0.221,
+    "diff_p99": 1.227,
+    "diff_max": 1.282,
+    "blinks": 0,
+    "blink_frames": [],
+    "dips": []
+   },
+   {
+    "span": [
+     11.29,
+     14.387
+    ],
+    "n": 92,
+    "diff_mean": 0.069,
+    "diff_p99": 1.504,
+    "diff_max": 1.887,
+    "blinks": 0,
+    "blink_frames": [],
+    "dips": []
+   },
+   {
+    "span": [
+     20.89,
+     23.783
+    ],
+    "n": 85,
+    "diff_mean": 0.083,
+    "diff_p99": 0.834,
+    "diff_max": 0.914,
+    "blinks": 0,
+    "blink_frames": [],
+    "dips": []
+   },
+   {
+    "span": [
+     30.698,
+     31.598
+    ],
+    "n": 26,
+    "diff_mean": 0.376,
+    "diff_p99": 1.258,
+    "diff_max": 1.287,
+    "blinks": 0,
+    "blink_frames": [],
+    "dips": []
+   },
+   {
+    "span": [
+     37.735,
+     41.488
+    ],
+    "n": 112,
+    "diff_mean": 0.126,
+    "diff_p99": 1.493,
+    "diff_max": 1.676,
+    "blinks": 0,
+    "blink_frames": [],
+    "dips": []
+   }
+  ],
+  "shots": [
+   {
+    "shot": "h1",
+    "gold_mean": 41801.8,
+    "gold_jitter_mean": 0.0094,
+    "gold_jitter_p99": 0.0177,
+    "gold_jitter_max": 0.0181
+   },
+   {
+    "shot": "h2",
+    "gold_mean": 25872.0,
+    "gold_jitter_mean": 0.0008,
+    "gold_jitter_p99": 0.0028,
+    "gold_jitter_max": 0.003
+   },
+   {
+    "shot": "h3",
+    "gold_mean": 9753.1,
+    "gold_jitter_mean": 0.0033,
+    "gold_jitter_p99": 0.0108,
+    "gold_jitter_max": 0.0118
+   },
+   {
+    "shot": "h4",
+    "gold_mean": 2416.1,
+    "gold_jitter_mean": 0.0506,
+    "gold_jitter_p99": 0.6838,
+    "gold_jitter_max": 0.7849
+   },
+   {
+    "shot": "eight",
+    "gold_mean": 33684.3,
+    "gold_jitter_mean": 0.0089,
+    "gold_jitter_p99": 0.0369,
+    "gold_jitter_max": 0.4175
+   },
+   {
+    "shot": "back",
+    "gold_mean": 20669.6,
+    "gold_jitter_mean": 0.0113,
+    "gold_jitter_p99": 0.0665,
+    "gold_jitter_max": 1.8532
+   },
+   {
+    "shot": "three",
+    "gold_mean": 8668.6,
+    "gold_jitter_mean": 0.0188,
+    "gold_jitter_p99": 0.0567,
+    "gold_jitter_max": 2.333
+   },
+   {
+    "shot": "goal",
+    "gold_mean": 5140.8,
+    "gold_jitter_mean": 0.0162,
+    "gold_jitter_p99": 0.2938,
+    "gold_jitter_max": 1.3206
+   },
+   {
+    "shot": "end",
+    "gold_mean": 8075.6,
+    "gold_jitter_mean": 0.0696,
+    "gold_jitter_p99": 0.8522,
+    "gold_jitter_max": 1.9919
+   }
+  ],
+  "cuts": [
+   {
+    "t": 1.267,
+    "frame": 38,
+    "diff": 4.818
+   },
+   {
+    "t": 2.534,
+    "frame": 76,
+    "diff": 0.386
+   },
+   {
+    "t": 3.801,
+    "frame": 114,
+    "diff": 0.746
+   },
+   {
+    "t": 5.069,
+    "frame": 152,
+    "diff": 0.001
+   },
+   {
+    "t": 14.437,
+    "frame": 433,
+    "diff": 3.054
+   },
+   {
+    "t": 23.833,
+    "frame": 715,
+    "diff": 56.815
+   },
+   {
+    "t": 31.648,
+    "frame": 949,
+    "diff": 1.463
+   },
+   {
+    "t": 41.538,
+    "frame": 1246,
+    "diff": 1.117
+   }
+  ]
+ }
+}

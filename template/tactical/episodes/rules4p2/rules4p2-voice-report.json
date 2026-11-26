@@ -1,0 +1,141 @@
+{
+ "tone": "highpass=f=85,equalizer=f=300:t=q:w=1.0:g=-2,equalizer=f=2800:t=q:w=1.4:g=3,equalizer=f=7000:t=q:w=1.5:g=-1.5,deesser=i=0.45,acompressor=threshold=-18dB:ratio=1.6:attack=8:release=140:makeup=2",
+ "reference_db": -20.43,
+ "voice_in": {
+  "I": -17.1,
+  "LRA": 3.5,
+  "TP": -0.2
+ },
+ "voice_out": {
+  "I": -16.1,
+  "LRA": 3.0,
+  "TP": -2.0
+ },
+ "lines": [
+  {
+   "text": "Here are FOUR MORE basketball rules every player needs to understand.",
+   "phase": "A",
+   "target_off": 2.0,
+   "level_in_db": -17.57,
+   "gain_db": 0.0,
+   "level_out_rel_db": 2.86
+  },
+  {
+   "text": "First: EIGHT SECONDS.",
+   "phase": "B",
+   "target_off": 1.0,
+   "level_in_db": -21.63,
+   "gain_db": 0.7,
+   "level_out_rel_db": -1.06
+  },
+  {
+   "text": "You've got eight seconds to get the ball into the frontcourt...",
+   "phase": "B",
+   "target_off": 0.5,
+   "level_in_db": -20.07,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.33
+  },
+  {
+   "text": "and when you're dribbling, BOTH feet AND the ball need to cross!",
+   "phase": "C",
+   "target_off": 1.5,
+   "level_in_db": -18.3,
+   "gain_db": 0.0,
+   "level_out_rel_db": 2.08
+  },
+  {
+   "text": "Second: BACKCOURT.",
+   "phase": "B",
+   "target_off": 1.0,
+   "level_in_db": -20.94,
+   "gain_db": 0.01,
+   "level_out_rel_db": -1.18
+  },
+  {
+   "text": "Once your team has control up front, you can't send the ball back over the line and get it back.",
+   "phase": "B",
+   "target_off": 0,
+   "level_in_db": -19.0,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.44
+  },
+  {
+   "text": "That's a BACKCOURT violation.",
+   "phase": "C",
+   "target_off": 1.5,
+   "level_in_db": -19.93,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.27
+  },
+  {
+   "text": "Third: watch the paint.",
+   "phase": "B",
+   "target_off": 0.5,
+   "level_in_db": -20.79,
+   "gain_db": 0.0,
+   "level_out_rel_db": -0.33
+  },
+  {
+   "text": "Stay in there for more than three seconds on offense while your team controls the ball?",
+   "phase": "B",
+   "target_off": 0,
+   "level_in_db": -19.37,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.01
+  },
+  {
+   "text": "Violation.",
+   "phase": "C",
+   "target_off": 1.5,
+   "level_in_db": -18.94,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.57
+  },
+  {
+   "text": "And this last one catches players out.",
+   "phase": "D",
+   "target_off": 0.5,
+   "level_in_db": -18.87,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.52
+  },
+  {
+   "text": "The shot is coming down, still above the rim...",
+   "phase": "D",
+   "target_off": 1.0,
+   "level_in_db": -17.48,
+   "gain_db": 0.0,
+   "level_out_rel_db": 2.92
+  },
+  {
+   "text": "and the defender touches it?",
+   "phase": "D",
+   "target_off": 1.5,
+   "level_in_db": -18.89,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.55
+  },
+  {
+   "text": "That's GOALTENDING! The basket counts!",
+   "phase": "C",
+   "target_off": 3.0,
+   "level_in_db": -17.91,
+   "gain_db": 0.0,
+   "level_out_rel_db": 2.26
+  },
+  {
+   "text": "Which rule catches you out?",
+   "phase": "E",
+   "target_off": 1.5,
+   "level_in_db": -19.76,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.7
+  }
+ ],
+ "mix": {
+  "I": -14.4,
+  "LRA": 3.0,
+  "TP": -1.5
+ }
+}

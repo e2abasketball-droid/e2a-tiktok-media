@@ -1,0 +1,80 @@
+{
+ "about": "E2A Voice Dynamics curve, 4 Rules Part 2 (2026-11-25): hook confident, 8 s rising, backcourt direct, 3 s calmer, goaltending anticipation -> reveal, short question.",
+ "lines": [
+  [
+   "Here are FOUR MORE basketball rules every player needs to understand.",
+   2.0,
+   "A"
+  ],
+  [
+   "First: EIGHT SECONDS.",
+   1.0,
+   "B"
+  ],
+  [
+   "You've got eight seconds to get the ball into the frontcourt...",
+   0.5,
+   "B"
+  ],
+  [
+   "and when you're dribbling, BOTH feet AND the ball need to cross!",
+   1.5,
+   "C"
+  ],
+  [
+   "Second: BACKCOURT.",
+   1.0,
+   "B"
+  ],
+  [
+   "Once your team has control up front, you can't send the ball back over the line and get it back.",
+   0,
+   "B"
+  ],
+  [
+   "That's a BACKCOURT violation.",
+   1.5,
+   "C"
+  ],
+  [
+   "Third: watch the paint.",
+   0.5,
+   "B"
+  ],
+  [
+   "Stay in there for more than three seconds on offense while your team controls the ball?",
+   0,
+   "B"
+  ],
+  [
+   "Violation.",
+   1.5,
+   "C"
+  ],
+  [
+   "And this last one catches players out.",
+   0.5,
+   "D"
+  ],
+  [
+   "The shot is coming down, still above the rim...",
+   1.0,
+   "D"
+  ],
+  [
+   "and the defender touches it?",
+   1.5,
+   "D"
+  ],
+  [
+   "That's GOALTENDING! The basket counts!",
+   3.0,
+   "C"
+  ],
+  [
+   "Which rule catches you out?",
+   1.5,
+   "E"
+  ]
+ ]
+}
