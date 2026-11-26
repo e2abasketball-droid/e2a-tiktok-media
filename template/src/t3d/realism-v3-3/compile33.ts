@@ -208,7 +208,9 @@ const compilePlayer = (play: Play, id: string): Compiled33 => {
   // steps, the pelvis jumped 3.5 km/s^2 at O2 6.33 s)
   const takeoffs = [...shots, ...layups].map((s) => {
     const lastCatch = Math.max(-Infinity, ...passesIn.map((p) => p.t1).filter((x) => x < s.t0));
-    const H = Number.isFinite(lastCatch) && s.t0 - lastCatch < 0.7 ? 0.22 : 0.44;
+    // opt-in event H (free throw hop, Zero Cut V2 layup take-off): the take-off matches the jump the primitive plays
+    const Hx = (s as {H?: number}).H;
+    const H = Hx ?? (Number.isFinite(lastCatch) && s.t0 - lastCatch < 0.7 ? 0.22 : 0.44);
     return s.t0 + 0.035 - Math.sqrt((2 * H) / 9.81);
   });
   const oneTwo: Seg[] = [];
