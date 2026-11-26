@@ -1,0 +1,84 @@
+{
+ "lines": [
+  [
+   "He beats his man, and here comes the help.",
+   1.5,
+   "A"
+  ],
+  [
+   "Freeze it.",
+   1.5,
+   "A"
+  ],
+  [
+   "Who's open?",
+   1.0,
+   "A"
+  ],
+  [
+   "A, B, or C?",
+   1.0,
+   "A"
+  ],
+  [
+   "Lock it in.",
+   0.5,
+   "A"
+  ],
+  [
+   "Now watch the low defender.",
+   0.0,
+   "B"
+  ],
+  [
+   "He leaves the corner to stop the drive.",
+   0.0,
+   "B"
+  ],
+  [
+   "A, his defender is still home.",
+   0.0,
+   "D"
+  ],
+  [
+   "B, still guarded, and his defender is sitting in the passing lane.",
+   0.0,
+   "D"
+  ],
+  [
+   "C, wide open.",
+   1.0,
+   "C"
+  ],
+  [
+   "Kick it to the corner.",
+   1.5,
+   "C"
+  ],
+  [
+   "The next rotation is too late.",
+   0.5,
+   "C"
+  ],
+  [
+   "Don't watch the ball.",
+   0.5,
+   "E"
+  ],
+  [
+   "Watch the help.",
+   1.0,
+   "E"
+  ],
+  [
+   "Did you find him?",
+   0.5,
+   "E"
+  ],
+  [
+   "Tell us what you picked.",
+   0.0,
+   "E"
+  ]
+ ]
+}

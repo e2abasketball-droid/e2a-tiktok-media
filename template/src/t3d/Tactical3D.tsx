@@ -37,6 +37,9 @@ type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: n
   | {type: 'punch'; amount?: number} | {type: 'whip'; amount?: number; dir?: number} | {type: 'flash'; color?: string; strength?: number}
   /** 2026-11-21 (2-3 Zone): small caption chip (ILLUSTRATIVE COVERAGE); WrongTempo red edge tint */
   | {type: 'micro'; text: string; y?: number} | {type: 'tint'; color?: string; strength?: number}
+  /** 2026-11-26 (Basketball IQ 01, opt-in): answer letter badge (A / B / C) held above a player's head; the same letter
+   *  stays on the same player in every shot. wrong / right anchors switch it to dimmed (red slash) / solved (gold fill). */
+  | {type: 'letter'; player: string; text: string; wrong?: Anchor; right?: Anchor; size?: number; z?: number}
   /** 2026-11-23 E2A Visual Standard v1: small ATTACK / DEFENSE key, top-left, so the two marker styles read instantly */
   | {type: 'legend'; y?: number}
   /** 2026-11-22 (Chicago V3): outcome chip (red TRAIL / blue UNDER / gold), anchored to a screen side and height */
@@ -389,6 +392,28 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
             const p = posAt(play.tracks[s.player], Math.max(0, Math.min(play.duration, pt))) as V2;
             const q = proj([p[0], p[1], s.z ?? 2.25]);
             return q.visible ? <PinLabel key={i} x={q.x} y={q.y} text={s.text} age={s.age} dur={s.dur} tone={s.tone} dy={s.dy} size={s.size} /> : null;
+          }
+          case 'letter': {
+            const p = posAt(play.tracks[s.player], Math.max(0, Math.min(play.duration, pt))) as V2;
+            const q = proj([p[0], p[1], s.z ?? 2.45]);
+            if (!q.visible) return null;
+            const loc = (a?: Anchor) => (a == null ? null : toLocal(a) - (lt - s.age));
+            const tw = loc(s.wrong), tr = loc(s.right);
+            const uw = tw == null ? 0 : Math.max(0, Math.min(1, (s.age - tw) / 0.25));
+            const ur = tr == null ? 0 : Math.max(0, Math.min(1, (s.age - tr) / 0.25));
+            const pop = s.age < 0.22 ? 0.6 + 0.5 * Math.sin((Math.PI / 2) * (s.age / 0.22)) : 1.1 - 0.1 * Math.min(1, (s.age - 0.22) / 0.15);
+            const pulse = ur > 0 ? 1 + 0.06 * Math.sin((s.age - (tr ?? 0)) * 6) * ur : 1;
+            const o = Math.max(0, Math.min(1, s.age / 0.12, (s.dur - s.age) / 0.2)) * (1 - 0.55 * uw);
+            const D = s.size ?? 96;
+            const fill = ur > 0 ? `rgba(201,162,77,${(0.25 + 0.75 * ur).toFixed(3)})` : 'rgba(11,28,61,0.92)';
+            const ink = ur > 0.5 ? '#0B1C3D' : '#FFFFFF';
+            return (
+              <div key={i} data-qc="stamp" style={{position: 'absolute', left: q.x - D / 2, top: q.y - D, width: D, height: D, opacity: o, transform: `scale(${(pop * pulse).toFixed(3)})`, transformOrigin: '50% 100%'}}>
+                <div style={{width: D, height: D, borderRadius: '50%', background: fill, border: `${Math.round(D * 0.07)}px solid ${uw > 0 ? '#8A93A6' : '#C9A24D'}`, boxSizing: 'border-box', display: 'flex', alignItems: 'center', justifyContent: 'center', color: ink, font: `400 ${Math.round(D * 0.6)}px Anton, Impact, sans-serif`, lineHeight: 1, paddingTop: Math.round(D * 0.04), boxShadow: ur > 0 ? `0 0 ${Math.round(30 * ur)}px rgba(255,196,71,0.85)` : '0 6px 18px rgba(0,0,0,0.55)'}}>{s.text}</div>
+                {uw > 0 && <div style={{position: 'absolute', left: D * 0.12, top: D / 2 - 5, width: D * 0.76 * uw, height: 10, borderRadius: 5, background: '#E5483A', transform: 'rotate(-35deg)', transformOrigin: '50% 50%'}} />}
+                <div style={{position: 'absolute', left: D / 2 - 8, top: D - 2, width: 0, height: 0, borderLeft: '8px solid transparent', borderRight: '8px solid transparent', borderTop: `12px solid ${uw > 0 ? '#8A93A6' : '#C9A24D'}`}} />
+              </div>
+            );
           }
           case 'freeze':
             return <FreezeFrame key={i} age={s.age} dur={s.dur} label={s.label} />;

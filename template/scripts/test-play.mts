@@ -39,7 +39,9 @@ for (const f of files) {
   const X = p.players.filter((x: {team: string}) => x.team === 'X');
   const ids: string[] = p.players.map((x: {id: string}) => x.id);
   const T = (v: unknown): number => (typeof v === 'number' ? v : p.marks?.[v as string]);
-  check(p.id, '5 attackers and 5 defenders', O.length === 5 && X.length === 5, `${O.length} O / ${X.length} X`);
+  // (2026-11-26, Basketball IQ 01) small-sided plays opt in with play.format = '4v4' (default 5 v 5, unchanged)
+  const NV = p.format === '4v4' ? 4 : p.format === '3v3' ? 3 : 5;
+  check(p.id, `${NV} attackers and ${NV} defenders`, O.length === NV && X.length === NV, `${O.length} O / ${X.length} X`);
   check(p.id, 'every player has a track over the whole play', ids.every((i) => p.tracks[i] && p.tracks[i][0][0] === 0 && p.tracks[i].at(-1)[0] >= p.duration - 1e-9), 'tracks');
   // (2026-11-21, 2-3 zone) a ZONE defence has no man-to-man match-ups: every defender must own a floor area instead
   if (p.zone?.areas) check(p.id, `zone ${p.zone.type ?? ''}: every defender owns a floor area`, X.every((x: {id: string}) => typeof p.zone.areas[x.id] === 'string' && p.zone.areas[x.id].length > 0), Object.keys(p.zone.areas).join(','));

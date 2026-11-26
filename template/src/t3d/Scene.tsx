@@ -19,7 +19,7 @@ import './players/index.ts'; // side effect: registers the player rigs
 import type {PlayWithSkel} from './skelclip.ts';
 import {bonesFromPose, getClip, meshScale, skelPoseAt} from './skelclip.ts';
 import {SkinnedAthlete, useGlbs} from './SkinnedAthlete';
-import {KITS} from './Athlete';
+import {KITS, kitOf} from './Athlete';
 import {PLAYER3D, describePlan, planPlayers3d, playWithPlan} from './player3d.ts';
 import {PLAYER3D_V3, isV3, isV31, isV32, isV33} from './realism-v3/index.ts';
 import {PLAYER3D_V33, athleteV33, ballV33} from './realism-v3-3/index.ts';
@@ -328,7 +328,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
           return (
             <React.Fragment key={p.id}>
               {spec.look === 'C' && glb && clip && sp.bones && sp.hips ? (
-                <SkinnedAthlete scene={glb} clipBones={clip.bones} bones={sp.bones} hips={sp.hips} inst={`${instNs ?? ''}${p.id}`} skin={skin} num={num} kit={KITS[p.team]} look={env === 'academy' || env === 'cinema' ? 'academy' : undefined} cloth={cloth} g3={rv3} />
+                <SkinnedAthlete scene={glb} clipBones={clip.bones} bones={sp.bones} hips={sp.hips} inst={`${instNs ?? ''}${p.id}`} skin={skin} num={num} kit={kitOf(play as {kitSet?: string}, p.team)} look={env === 'academy' || env === 'cinema' ? 'academy' : undefined} cloth={cloth} g3={rv3} />
               ) : (
                 <Athlete pose={sp.pose} team={p.team} num={num} skin={skin} />
               )}
@@ -343,7 +343,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
           if (debug32 && a.debug) dbg32.push(a);
           return (
             <React.Fragment key={p.id}>
-              <SkinnedAthlete scene={glb} clipBones={rig.bones} bones={a.fr.bones} hips={a.fr.hips} inst={`${instNs ?? ''}v33:${neutral ? 'n' : 'c'}:${p.id}`} scale={a.sc} skin={skin} num={num} kit={KITS[p.team]}
+              <SkinnedAthlete scene={glb} clipBones={rig.bones} bones={a.fr.bones} hips={a.fr.hips} inst={`${instNs ?? ''}v33:${neutral ? 'n' : 'c'}:${p.id}`} scale={a.sc} skin={skin} num={num} kit={kitOf(play as {kitSet?: string}, p.team)}
                 look={env === 'academy' || env === 'cinema' ? 'academy' : undefined} cloth32={a.cloth} v3 morph={a.fr.morph} neutral={neutral} />
               <ContactShadows pose={a.pose} />
             </React.Fragment>
@@ -358,7 +358,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
           const meshV32 = athleteMesh !== 'v31';
           return (
             <React.Fragment key={p.id}>
-              <SkinnedAthlete scene={glb} clipBones={rig.bones} bones={a.fr.bones} hips={a.fr.hips} inst={`${instNs ?? ''}v32:${athleteMesh ?? 'v32'}:${mot32}:${neutral ? 'n' : 'c'}:${p.id}`} scale={a.sc} skin={skin} num={num} kit={KITS[p.team]}
+              <SkinnedAthlete scene={glb} clipBones={rig.bones} bones={a.fr.bones} hips={a.fr.hips} inst={`${instNs ?? ''}v32:${athleteMesh ?? 'v32'}:${mot32}:${neutral ? 'n' : 'c'}:${p.id}`} scale={a.sc} skin={skin} num={num} kit={kitOf(play as {kitSet?: string}, p.team)}
                 look={env === 'academy' || env === 'cinema' ? 'academy' : undefined} cloth={meshV32 ? undefined : a.cloth.jersey} cloth32={meshV32 ? a.cloth : undefined} v3 morph={a.fr.morph} neutral={neutral} />
               <ContactShadows pose={a.pose} />
             </React.Fragment>
@@ -375,7 +375,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
           const cl = (m ? clothV31(play, p.id, pt, rig) : undefined) ?? clothAt(play, p.id, pt);
           return (
             <React.Fragment key={p.id}>
-              <SkinnedAthlete scene={glb} clipBones={rig.bones} bones={fr.bones} hips={fr.hips} inst={`${instNs ?? ''}v31:${p.id}`} scale={sc} skin={skin} num={num} kit={KITS[p.team]} look={env === 'academy' || env === 'cinema' ? 'academy' : undefined} cloth={cl} v3 morph={fr.morph} />
+              <SkinnedAthlete scene={glb} clipBones={rig.bones} bones={fr.bones} hips={fr.hips} inst={`${instNs ?? ''}v31:${p.id}`} scale={sc} skin={skin} num={num} kit={kitOf(play as {kitSet?: string}, p.team)} look={env === 'academy' || env === 'cinema' ? 'academy' : undefined} cloth={cl} v3 morph={fr.morph} />
               <ContactShadows pose={pose} />
             </React.Fragment>
           );
@@ -388,7 +388,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
           const fr = bonesV3(rig3, pose, sc, {pos: ball.pos, held: ball.holder === p.id}, weightShift(play, p.id, pt));
           return (
             <React.Fragment key={p.id}>
-              <SkinnedAthlete scene={glb} clipBones={rig3.bones} bones={fr.bones} hips={fr.hips} inst={`${instNs ?? ''}v3:${p.id}`} scale={sc} skin={skin} num={num} kit={KITS[p.team]} look={env === 'academy' || env === 'cinema' ? 'academy' : undefined} cloth={clothAt(play, p.id, pt)} v3 morph={fr.morph} />
+              <SkinnedAthlete scene={glb} clipBones={rig3.bones} bones={fr.bones} hips={fr.hips} inst={`${instNs ?? ''}v3:${p.id}`} scale={sc} skin={skin} num={num} kit={kitOf(play as {kitSet?: string}, p.team)} look={env === 'academy' || env === 'cinema' ? 'academy' : undefined} cloth={clothAt(play, p.id, pt)} v3 morph={fr.morph} />
               <ContactShadows pose={pose} />
             </React.Fragment>
           );
@@ -399,7 +399,7 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
           const r = bonesFromPose(pkg.rig, pose, sc);
           return (
             <React.Fragment key={p.id}>
-              <SkinnedAthlete scene={glb} clipBones={pkg.rig.bones} bones={r.bones} hips={r.hips} inst={`${instNs ?? ''}${p.id}`} scale={sc} skin={skin} num={num} kit={KITS[p.team]} look={env === 'academy' || env === 'cinema' ? 'academy' : undefined} cloth={cloth} g3={rv3} />
+              <SkinnedAthlete scene={glb} clipBones={pkg.rig.bones} bones={r.bones} hips={r.hips} inst={`${instNs ?? ''}${p.id}`} scale={sc} skin={skin} num={num} kit={kitOf(play as {kitSet?: string}, p.team)} look={env === 'academy' || env === 'cinema' ? 'academy' : undefined} cloth={cloth} g3={rv3} />
               <ContactShadows pose={pose} />
             </React.Fragment>
           );

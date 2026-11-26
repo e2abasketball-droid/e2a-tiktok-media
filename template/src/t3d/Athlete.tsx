@@ -19,6 +19,13 @@ export const KITS: Record<'O' | 'X', Kit> = {
   // opponent: white with crimson
   X: {jersey: '#F3F1EC', trim: '#B8322A', number: '#B8322A', shorts: '#F3F1EC', shoe: '#1D1F24', sole: '#F2F2F2', sock: '#1D1F24'},
 };
+/** 2026-11-26 (Basketball IQ 01, opt-in per play: play.kitSet = 'iq'): attack in LIGHT kits with gold trim, defence in
+ *  E2A navy with white trim (owner brief: attackers gold/light, defenders navy). Default kits unchanged. */
+export const KITS_IQ: Record<'O' | 'X', Kit> = {
+  O: {jersey: '#F3F1EC', trim: '#C9A24D', number: '#B8892F', shorts: '#F3F1EC', shoe: '#F2F2F0', sole: '#1A1A1A', sock: '#F4F4F4'},
+  X: {jersey: '#0E2147', trim: '#FFFFFF', number: '#FFFFFF', shorts: '#0E2147', shoe: '#1D1F24', sole: '#F2F2F2', sock: '#1D1F24'},
+};
+export const kitOf = (play: {kitSet?: string} | undefined, team: 'O' | 'X'): Kit => (play?.kitSet === 'iq' ? KITS_IQ : KITS)[team];
 
 export const SKINS = ['#6B4630', '#C68E63', '#8D5A3B', '#E0B08A', '#4E3122', '#B57A52', '#9C6847', '#D9A27A', '#5C3B28', '#A87250'];
 
