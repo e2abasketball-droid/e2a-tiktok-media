@@ -1,0 +1,194 @@
+{
+ "FINAL": {
+  "file": "out/E2A-3-2-ZONE-DEFENSE-FINAL.mp4",
+  "frames": 1449,
+  "bad_frames": 0,
+  "bad_list": [],
+  "frozen": [
+   {
+    "span": [
+     3.05,
+     4.8
+    ],
+    "n": 51,
+    "diff_mean": 0.494,
+    "diff_p99": 2.651,
+    "diff_max": 2.741,
+    "blinks": 0,
+    "blink_frames": [],
+    "dips": []
+   },
+   {
+    "span": [
+     4.9,
+     11.2
+    ],
+    "n": 188,
+    "diff_mean": 0.071,
+    "diff_p99": 1.198,
+    "diff_max": 1.57,
+    "blinks": 0,
+    "blink_frames": [],
+    "dips": []
+   },
+   {
+    "span": [
+     23.6,
+     24.1
+    ],
+    "n": 14,
+    "diff_mean": 0.39,
+    "diff_p99": 1.895,
+    "diff_max": 1.989,
+    "blinks": 0,
+    "blink_frames": [],
+    "dips": []
+   },
+   {
+    "span": [
+     31.3,
+     31.75
+    ],
+    "n": 12,
+    "diff_mean": 0.238,
+    "diff_p99": 0.753,
+    "diff_max": 0.759,
+    "blinks": 0,
+    "blink_frames": [],
+    "dips": []
+   },
+   {
+    "span": [
+     34.75,
+     39.83
+    ],
+    "n": 152,
+    "diff_mean": 0.081,
+    "diff_p99": 0.862,
+    "diff_max": 0.98,
+    "blinks": 0,
+    "blink_frames": [],
+    "dips": []
+   }
+  ],
+  "shots": [
+   {
+    "shot": "hook",
+    "gold_mean": 23670.1,
+    "gold_jitter_mean": 0.0089,
+    "gold_jitter_p99": 0.0279,
+    "gold_jitter_max": 0.0279
+   },
+   {
+    "shot": "reveal",
+    "gold_mean": 19959.6,
+    "gold_jitter_mean": 0.0336,
+    "gold_jitter_p99": 0.6383,
+    "gold_jitter_max": 0.9737
+   },
+   {
+    "shot": "shape",
+    "gold_mean": 25746.5,
+    "gold_jitter_mean": 0.0009,
+    "gold_jitter_p99": 0.0097,
+    "gold_jitter_max": 0.0167
+   },
+   {
+    "shot": "shift",
+    "gold_mean": 26234.9,
+    "gold_jitter_mean": 0.0022,
+    "gold_jitter_p99": 0.0116,
+    "gold_jitter_max": 0.0137
+   },
+   {
+    "shot": "corner",
+    "gold_mean": 13811.6,
+    "gold_jitter_mean": 0.0231,
+    "gold_jitter_p99": 0.0729,
+    "gold_jitter_max": 2.4459
+   },
+   {
+    "shot": "hp",
+    "gold_mean": 24679.6,
+    "gold_jitter_mean": 0.0155,
+    "gold_jitter_p99": 0.0511,
+    "gold_jitter_max": 2.183
+   },
+   {
+    "shot": "contest",
+    "gold_mean": 7971.7,
+    "gold_jitter_mean": 0.0118,
+    "gold_jitter_p99": 0.0314,
+    "gold_jitter_max": 0.0435
+   },
+   {
+    "shot": "weak",
+    "gold_mean": 5202.2,
+    "gold_jitter_mean": 0.0006,
+    "gold_jitter_p99": 0.0112,
+    "gold_jitter_max": 0.0182
+   },
+   {
+    "shot": "box",
+    "gold_mean": 21585.5,
+    "gold_jitter_mean": 0.0091,
+    "gold_jitter_p99": 0.0399,
+    "gold_jitter_max": 0.0493
+   },
+   {
+    "shot": "close",
+    "gold_mean": 23317.9,
+    "gold_jitter_mean": 0.0034,
+    "gold_jitter_p99": 0.0186,
+    "gold_jitter_max": 0.0229
+   }
+  ],
+  "cuts": [
+   {
+    "t": 2.436,
+    "frame": 73,
+    "diff": 1.76
+   },
+   {
+    "t": 4.847,
+    "frame": 145,
+    "diff": 0.853
+   },
+   {
+    "t": 11.238,
+    "frame": 337,
+    "diff": 0.997
+   },
+   {
+    "t": 17.318,
+    "frame": 520,
+    "diff": 1.807
+   },
+   {
+    "t": 24.13,
+    "frame": 724,
+    "diff": 35.336
+   },
+   {
+    "t": 31.779,
+    "frame": 953,
+    "diff": 1.202
+   },
+   {
+    "t": 34.689,
+    "frame": 1041,
+    "diff": 47.383
+   },
+   {
+    "t": 39.863,
+    "frame": 1196,
+    "diff": 8.548
+   },
+   {
+    "t": 42.281,
+    "frame": 1268,
+    "diff": 1.45
+   }
+  ]
+ }
+}
