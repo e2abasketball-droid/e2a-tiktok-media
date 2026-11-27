@@ -51,7 +51,10 @@ DUR = 5.6
 def play():
     legs = {
         "O1": [{"at": K["drive"], "via": [B(2.15, 6.55)], "to": GATHER, "speed": K["driveSpeed"]}],
-        "X1": [{"at": K["x1"], "via": [B(2.55, 6.0)], "to": X1END, "speed": 5.6}],
+        "X1": [{"at": K["x1"], "via": [B(2.55, 6.0)], "to": X1END, "speed": 5.6},
+               # V2: X1 keeps working on O1's hip instead of stopping dead, then sinks to the paint after the kick
+               {"at": 1.86, "to": B(1.45, 4.4), "speed": 1.9},
+               {"at": K["kick"] + 0.3, "to": B(2.1, 3.3), "speed": 2.2}],
         "X3": [{"at": K["help"], "via": [B(-1.8, 3.2)], "to": HELP, "speed": 6.6},
                {"at": K["kick"] + 0.2, "via": [B(-2.6, 2.75)], "to": CLOSE, "speed": 6.6}],
         "X2": [{"at": K["pinch"], "to": X2PINCH, "speed": 2.2},

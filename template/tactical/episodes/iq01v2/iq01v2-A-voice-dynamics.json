@@ -1,0 +1,94 @@
+{
+ "lines": [
+  [
+   "Three teammates. One right pass.",
+   1.5,
+   "A"
+  ],
+  [
+   "He beats his man.",
+   1.0,
+   "A"
+  ],
+  [
+   "Here comes the help.",
+   1.0,
+   "A"
+  ],
+  [
+   "Freeze.",
+   1.5,
+   "A"
+  ],
+  [
+   "A, B, or C?",
+   1.0,
+   "A"
+  ],
+  [
+   "Two seconds.",
+   0.5,
+   "A"
+  ],
+  [
+   "A is the easy pass.",
+   0,
+   "B"
+  ],
+  [
+   "But his defender stayed home.",
+   0,
+   "B"
+  ],
+  [
+   "B? His defender is sitting in the passing lane.",
+   0,
+   "B"
+  ],
+  [
+   "Now watch the low defender.",
+   0.5,
+   "B"
+  ],
+  [
+   "He left the corner to stop the drive.",
+   0,
+   "B"
+  ],
+  [
+   "That's the read. C.",
+   1.0,
+   "D"
+  ],
+  [
+   "Kick it.",
+   1.0,
+   "D"
+  ],
+  [
+   "The next rotation is a step too late.",
+   0.5,
+   "D"
+  ],
+  [
+   "Stop watching the ball.",
+   0.5,
+   "E"
+  ],
+  [
+   "Watch the help.",
+   1.0,
+   "E"
+  ],
+  [
+   "Got it in two seconds?",
+   0.5,
+   "E"
+  ],
+  [
+   "Run it back.",
+   0.5,
+   "E"
+  ]
+ ]
+}

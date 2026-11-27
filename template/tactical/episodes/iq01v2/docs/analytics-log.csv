@@ -1,0 +1,4 @@
+date_logged,platform,variant,post_id,published_at_local,hours_since_post,views,reach,avg_watch_time_s,video_length_s,completion_rate_pct,replays_or_rewatches,shares,saves,comments,comments_with_A_B_C,follows,traffic_source_feed_pct,traffic_source_explore_or_fyp_pct,traffic_source_profile_pct,traffic_source_other_pct,notes
+,instagram_reel,hookA_master,,,,,,,33.6,,,,,,,,,,,,
+,instagram_trial,hookB,,,,,,,33.6,,,,,,,,,,,,
+,tiktok,hookA_master,,,,,,,33.6,,,,,,,,,,,,

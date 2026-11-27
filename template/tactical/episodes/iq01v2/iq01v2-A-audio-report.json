@@ -1,0 +1,165 @@
+{
+ "tone": "highpass=f=85,equalizer=f=300:t=q:w=1.0:g=-2,equalizer=f=2800:t=q:w=1.4:g=3,equalizer=f=7000:t=q:w=1.5:g=-1.5,deesser=i=0.45,acompressor=threshold=-18dB:ratio=1.6:attack=8:release=140:makeup=2",
+ "reference_db": -18.67,
+ "voice_in": {
+  "I": -16.0,
+  "LRA": 6.5,
+  "TP": -0.4
+ },
+ "voice_out": {
+  "I": -16.3,
+  "LRA": 3.7,
+  "TP": -2.0
+ },
+ "lines": [
+  {
+   "text": "Three teammates. One right pass.",
+   "phase": "A",
+   "target_off": 1.5,
+   "level_in_db": -21.36,
+   "gain_db": 2.69,
+   "level_out_rel_db": -0.21
+  },
+  {
+   "text": "He beats his man.",
+   "phase": "A",
+   "target_off": 1.0,
+   "level_in_db": -20.64,
+   "gain_db": 1.47,
+   "level_out_rel_db": -0.36
+  },
+  {
+   "text": "Here comes the help.",
+   "phase": "A",
+   "target_off": 1.0,
+   "level_in_db": -16.6,
+   "gain_db": 0.0,
+   "level_out_rel_db": 2.03
+  },
+  {
+   "text": "Freeze.",
+   "phase": "A",
+   "target_off": 1.5,
+   "level_in_db": -19.24,
+   "gain_db": 0.57,
+   "level_out_rel_db": 0.14
+  },
+  {
+   "text": "A, B, or C?",
+   "phase": "A",
+   "target_off": 1.0,
+   "level_in_db": -19.88,
+   "gain_db": 0.71,
+   "level_out_rel_db": -0.64
+  },
+  {
+   "text": "Two seconds.",
+   "phase": "A",
+   "target_off": 0.5,
+   "level_in_db": -20.76,
+   "gain_db": 1.09,
+   "level_out_rel_db": -0.9
+  },
+  {
+   "text": "A is the easy pass.",
+   "phase": "B",
+   "target_off": 0,
+   "level_in_db": -17.27,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.13
+  },
+  {
+   "text": "But his defender stayed home.",
+   "phase": "B",
+   "target_off": 0,
+   "level_in_db": -18.78,
+   "gain_db": 0.0,
+   "level_out_rel_db": -0.03
+  },
+  {
+   "text": "B? His defender is sitting in the passing lane.",
+   "phase": "B",
+   "target_off": 0,
+   "level_in_db": -18.67,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.0
+  },
+  {
+   "text": "Now watch the low defender.",
+   "phase": "B",
+   "target_off": 0.5,
+   "level_in_db": -16.49,
+   "gain_db": 0.0,
+   "level_out_rel_db": 2.17
+  },
+  {
+   "text": "He left the corner to stop the drive.",
+   "phase": "B",
+   "target_off": 0,
+   "level_in_db": -19.69,
+   "gain_db": 0.0,
+   "level_out_rel_db": -0.88
+  },
+  {
+   "text": "That's the read. C.",
+   "phase": "D",
+   "target_off": 1.0,
+   "level_in_db": -23.26,
+   "gain_db": 4.09,
+   "level_out_rel_db": -1.12
+  },
+  {
+   "text": "Kick it.",
+   "phase": "D",
+   "target_off": 1.0,
+   "level_in_db": -19.12,
+   "gain_db": 0.0,
+   "level_out_rel_db": -1.63
+  },
+  {
+   "text": "The next rotation is a step too late.",
+   "phase": "D",
+   "target_off": 0.5,
+   "level_in_db": -19.62,
+   "gain_db": 0.0,
+   "level_out_rel_db": -0.95
+  },
+  {
+   "text": "Stop watching the ball.",
+   "phase": "E",
+   "target_off": 0.5,
+   "level_in_db": -15.38,
+   "gain_db": 0.0,
+   "level_out_rel_db": 3.28
+  },
+  {
+   "text": "Watch the help.",
+   "phase": "E",
+   "target_off": 1.0,
+   "level_in_db": -17.85,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.78
+  },
+  {
+   "text": "Got it in two seconds?",
+   "phase": "E",
+   "target_off": 0.5,
+   "level_in_db": -16.47,
+   "gain_db": 0.0,
+   "level_out_rel_db": 2.1
+  },
+  {
+   "text": "Run it back.",
+   "phase": "E",
+   "target_off": 0.5,
+   "level_in_db": -20.48,
+   "gain_db": 0.81,
+   "level_out_rel_db": -0.86
+  }
+ ],
+ "mix": {
+  "I": -16.0,
+  "LRA": 3.5,
+  "TP": -1.5
+ }
+}

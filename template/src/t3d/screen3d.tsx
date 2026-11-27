@@ -157,7 +157,7 @@ type W = {text: string; start: number; end: number};
 const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
 
 /** premium subtitles: max two short lines, words appear exactly when spoken, key words in gold */
-export const PremiumSubtitles: React.FC<{words: W[]; t: number; keys: string[]; y?: number; size?: number; hideRanges?: [number, number][]; sizes?: number[]; block?: boolean; sentence?: boolean}> = ({words, t, keys, y = 1290, size = 56, hideRanges = [], sizes, block = false, sentence = false}) => {
+export const PremiumSubtitles: React.FC<{words: W[]; t: number; keys: string[]; y?: number; size?: number; hideRanges?: [number, number][]; sizes?: number[]; block?: boolean; sentence?: boolean; commas?: boolean}> = ({words, t, keys, y = 1290, size = 56, hideRanges = [], sizes, block = false, sentence = false, commas = false}) => {
   const groups = React.useMemo(() => {
     // explicit burst sizes (2026-11-15, Ghost Screen brief: 3-7 words per burst) when the episode gives them
     if (sizes && sizes.reduce((a, b) => a + b, 0) === words.length) {
@@ -224,7 +224,8 @@ export const PremiumSubtitles: React.FC<{words: W[]; t: number; keys: string[]; 
               textShadow: '0 3px 0 rgba(0,0,0,0.6), 0 6px 22px rgba(0,0,0,0.75)',
             }}
           >
-            {w.text.replace(/[,;]$/, '')}
+            {/* opt-in `subtitleCommas` (IQ01 V2): keep list commas, e.g. "A, B, or C?" */}
+            {commas ? w.text : w.text.replace(/[,;]$/, '')}
           </span>
         );
       })}

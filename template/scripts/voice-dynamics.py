@@ -84,6 +84,7 @@ def main():
     ap.add_argument("--duration", type=float)
     ap.add_argument("--max-gain", type=float, default=6.0)
     ap.add_argument("--report")
+    ap.add_argument("--mix-lufs", type=float, default=-14.0, help="integrated target of the final mix (IQ01 V2: -16)")
     ap.add_argument("--preserve", action="store_true",
                     help="expressive take: never turn a line down; only lift lines more than --tol dB under their target")
     ap.add_argument("--tol", type=float, default=1.5)
@@ -144,7 +145,7 @@ def main():
                         "-ar", str(SR), "-c:a", "pcm_s24le", "/dev/shm/_vd_mix.wav"], check=True)
         mm = lufs("/dev/shm/_vd_mix.wav")
         subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", "/dev/shm/_vd_mix.wav", "-af",
-                        f"volume={-14.0 - mm['I']:.2f}dB,aresample=192000,alimiter=limit=0.84:attack=2:release=50:level=false,aresample=48000", "-ar", str(SR),
+                        f"volume={a.mix_lufs - mm['I']:.2f}dB,aresample=192000,alimiter=limit=0.84:attack=2:release=50:level=false,aresample=48000", "-ar", str(SR),
                         "-c:a", "pcm_s24le", a.mix_out], check=True)
         rep["mix"] = lufs(a.mix_out)
     if a.report:

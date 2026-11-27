@@ -40,6 +40,8 @@ type ScreenItem = Timed & ({type: 'title'; lines: string[]; y?: number; size?: n
   /** 2026-11-26 (Basketball IQ 01, opt-in): answer letter badge (A / B / C) held above a player's head; the same letter
    *  stays on the same player in every shot. wrong / right anchors switch it to dimmed (red slash) / solved (gold fill). */
   | {type: 'letter'; player: string; text: string; wrong?: Anchor; right?: Anchor; size?: number; z?: number}
+  /** honest decision deadline: a gold bar that empties over exactly [from,to] (the real silence) + whole-second numeral */
+  | {type: 'countdown'; label?: string; y?: number}
   /** 2026-11-23 E2A Visual Standard v1: small ATTACK / DEFENSE key, top-left, so the two marker styles read instantly */
   | {type: 'legend'; y?: number}
   /** 2026-11-22 (Chicago V3): outcome chip (red TRAIL / blue UNDER / gold), anchored to a screen side and height */
@@ -116,7 +118,7 @@ export type Episode3 = {
   keywords?: string[];
   subtitleHide?: [Anchor, Anchor][];
   /** optional explicit subtitle bursts: number of words per burst, in order (must add up to the word count) */
-  subtitleGroups?: number[]; subtitleY?: number; subtitleBlock?: boolean;
+  subtitleGroups?: number[]; subtitleY?: number; subtitleBlock?: boolean; subtitleCommas?: boolean;
   /** V3 2026-11-24 (opt-in): 'sentence' = sentence-case subtitles (default upper case as before); subtitleSize (default 56) */
   subtitleCase?: 'upper' | 'sentence'; subtitleSize?: number; subtitleYAt?: [Anchor, Anchor, number][]; gradeBottom?: number;
   /** sound by event (2026-11-13): bounces, catches, braking squeaks and the net, placed on their visible
@@ -453,6 +455,25 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
               </div>
             );
           }
+          case 'countdown': {
+            const rem = Math.max(0, s.dur - s.age);
+            const fr = s.dur > 0 ? rem / s.dur : 0;
+            const o = Math.max(0, Math.min(1, s.age / 0.12, rem / 0.12 + 0.35));
+            const n = Math.max(1, Math.ceil(rem - 1e-3));
+            const tick = (rem % 1) > 0.85 ? 1 + 0.12 * ((rem % 1) - 0.85) / 0.15 : 1;
+            const W = 640;
+            return (
+              <div key={i} style={{position: 'absolute', left: 0, right: 0, top: s.y ?? 300, display: 'flex', flexDirection: 'column', alignItems: 'center', opacity: o}}>
+                <div data-qc="stamp" style={{color: '#FFFFFF', font: '400 54px Anton, Impact, sans-serif', letterSpacing: 4, textShadow: '0 4px 18px rgba(0,0,0,0.6)'}}>{s.label ?? 'YOUR CALL'}</div>
+                <div style={{display: 'flex', alignItems: 'center', gap: 28, marginTop: 14}}>
+                  <div style={{width: W, height: 22, borderRadius: 11, background: 'rgba(5,10,21,0.72)', border: '2px solid rgba(201,162,77,0.55)', overflow: 'hidden'}}>
+                    <div style={{width: `${(fr * 100).toFixed(2)}%`, height: '100%', background: 'linear-gradient(90deg,#A9842F,#FFC447)', borderRadius: 11}} />
+                  </div>
+                  <div style={{width: 84, height: 84, borderRadius: 42, background: '#0B1C3D', border: '4px solid #C9A24D', display: 'flex', alignItems: 'center', justifyContent: 'center', transform: `scale(${tick.toFixed(3)})`, color: '#FFC447', font: '400 56px Anton, Impact, sans-serif'}}>{n}</div>
+                </div>
+              </div>
+            );
+          }
           case 'chip': {
             const o = Math.max(0, Math.min(1, s.age / 0.18, (s.dur - s.age) / 0.22));
             const col = s.tone === 'red' ? '#E5483A' : s.tone === 'blue' ? '#6EA8FF' : '#FFC447';
@@ -567,7 +588,7 @@ export const Tactical3D: React.FC<{episode: Episode3; qcProbe?: boolean}> = ({ep
             return null;
         }
       })}
-      <PremiumSubtitles words={ep.words} t={t} keys={ep.keywords ?? []} hideRanges={subHide} sizes={ep.subtitleGroups} block={ep.subtitleBlock} sentence={ep.subtitleCase === 'sentence'} size={ep.subtitleSize} y={(ep.subtitleYAt ?? []).map(([a, b, yy]) => [T(a), T(b), yy] as [number, number, number]).find(([a, b]) => t >= a && t < b)?.[2] ?? ep.subtitleY ?? 1290} />
+      <PremiumSubtitles words={ep.words} t={t} keys={ep.keywords ?? []} hideRanges={subHide} sizes={ep.subtitleGroups} block={ep.subtitleBlock} commas={ep.subtitleCommas} sentence={ep.subtitleCase === 'sentence'} size={ep.subtitleSize} y={(ep.subtitleYAt ?? []).map(([a, b, yy]) => [T(a), T(b), yy] as [number, number, number]).find(([a, b]) => t >= a && t < b)?.[2] ?? ep.subtitleY ?? 1290} />
       {qcProbe && <BoundsProbe frame={frame} />}
       {!qcProbe && <Audio src={staticFile(ep.voiceMix ?? ep.voice)} />}
       {!qcProbe && ep.music?.src && <Audio src={staticFile(ep.music.src)} volume={ep.music.volume ?? 1} />}
