@@ -75,6 +75,17 @@
    "origin": "Tactical3D procedural athletes, court and arena (code in template/src/t3d)",
    "owner": "E2A",
    "commercial_use": true
+  },
+  "voice/elevenlabs-nathaniel/*": {
+   "origin": "ElevenLabs TTS, voice 'Nathaniel - Live Football Commentator' (9rR45HW0vcBmpCbkc4m9, Voice Library, professional), eleven_v4, E2A account, generated from 2026-11-27",
+   "status": "approved E2A default narrator (owner directive 2026-11-27 21:38Z); published 28 Nov 08:45 Sydney on IG + TikTok on owner order",
+   "rule": "only generations made while the E2A account is on a paid plan (Creator or higher); record flow/generation ids and date in the episode files",
+   "pending": "Voice Library terms set by Nathaniel's creator (allowed use cases, notice period) not re-read in this session",
+   "generations": {
+    "iq01-v3-master": "flow 6GOo3uZ0cfVXdKo1XftG 2026-11-27 693 cr",
+    "iq01-v3-trial-b": "flow 6GOo3uZ0cfVXdKo1XftG gen SsRbmoLnTORPb21qdLwy 2026-11-27 585 cr",
+    "consistency-test": "gen Hb57bunYvV6BVM8iUZel 2026-11-27 283 cr (not published)"
+   }
   }
  }
 }

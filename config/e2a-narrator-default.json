@@ -1,0 +1,71 @@
+{
+ "schema": "e2a-narrator-default/1",
+ "status": "ACTIVE - permanent default narrator for ALL E2A Sports videos (owner directive 2026-11-27 21:38Z)",
+ "approved_by": "E2A owner, thread 'Producir Reel Basketball IQ: find the open player', 2026-11-27 21:38Z",
+ "approved_reference": "e2a-basketball-iq-01-v3-master-hookA.mp4 (published IG https://www.instagram.com/reel/DgQrZH3BkyX/ , TikTok https://www.tiktok.com/@e2a.basketball/video/7712970697273920789)",
+ "narrator_override": false,
+ "override_rule": "Only an explicit owner instruction for a specific video may set narrator_override: true in that episode's own config (never here). Automatic model selection, other agents, scheduled tasks or 'better voice' ideas must NOT change the voice. Record the owner's message (date, thread) next to any override.",
+ "voice": {
+  "provider": "ElevenLabs (E2A account, ElevenLabs MCP connector)",
+  "voice_id": "9rR45HW0vcBmpCbkc4m9",
+  "voice_name": "Nathaniel - Live Football Commentator",
+  "category": "professional (ElevenLabs Voice Library)",
+  "labels": {"accent": "en-british", "language": "en"},
+  "verified_from": "creative_list_voices result 2026-11-27 + the V3 generation call (flow 6GOo3uZ0cfVXdKo1XftG) + the generation record of the 2026-11-27 trial take (voice name returned by creative_get_flow_run_status)"
+ },
+ "synthesis": {
+  "tool": "mcp__ElevenLabs__creative_generate_speech",
+  "model_id": "eleven_v4",
+  "generations_count": 1,
+  "language": "en (prompt in English; language_code not set)",
+  "voice_settings": {
+   "set_explicitly": false,
+   "stability": "not set -> connector default 0.5 (per creative_get_model_schema eleven_v4, read 2026-11-27)",
+   "similarity": "not set -> connector default (the schema publishes no default value)",
+   "style_exaggeration": "not exposed by this connector for eleven_v4",
+   "speed": "not exposed / not set (natural speed of the performance)",
+   "speaker_boost": "not exposed / not set"
+  },
+  "pronunciation_controls": "none used (no dictionary, no IPA). If a name is misread, eleven_v4 accepts IPA between slashes in the prompt (/ʃɪˈvɔːn/).",
+  "direction_method": "inline audio tags in square brackets, one per phrase where the delivery changes (see performance.arc); punctuation for pauses (ellipses for suspense, commas for short beats), CAPS on one key word per line at most.",
+  "never_regenerate": "a take that is used in an edit is never regenerated; re-edits reuse the same take (owner rule 2026-11-16)."
+ },
+ "performance": {
+  "formula": "natural delivery + high energy + emotional variation + dynamic pacing + credible enthusiasm",
+  "arc": [
+   {"phase": "hook", "tags": ["urgent", "intriguing, confident"], "goal": "confident, attention-grabbing first line, close to the action"},
+   {"phase": "setup", "tags": ["fast", "quick, direct"], "goal": "faster delivery, conversational"},
+   {"phase": "suspense", "tags": ["building suspense", "low, building suspense"], "goal": "short pauses (ellipses), rising tension"},
+   {"phase": "explanation", "tags": ["measured, confident", "controlled emphasis"], "goal": "slower for the basketball concept, emphasis on the key word"},
+   {"phase": "pre-reveal", "tags": ["building intensity", "rising intensity"], "goal": "intensity rises right before the reveal"},
+   {"phase": "reveal", "tags": ["excited", "energetic reveal"], "goal": "the peak; energetic but not shouting"},
+   {"phase": "payoff", "tags": ["fast"], "goal": "quick consequence line"},
+   {"phase": "lesson", "tags": ["calm, authoritative", "slower, confident teaching"], "goal": "slower, credible coaching tone"},
+   {"phase": "close", "tags": ["punchy"], "goal": "energetic but controlled ending, a question or call to rewatch"}
+  ],
+  "avoid": ["monotone reading", "robotic cadence", "pauses longer than ~0.6 s inside the take (timed silences are added in the edit only when honest, e.g. a decision window)", "artificial enthusiasm", "shouting every line", "copying the V3 emphasis pattern mechanically: adapt the arc to each script"],
+  "measured_reference": {"pitch_range_semitones": 18.7, "pause_total_s": 2.58, "sibilance_index": 0.145, "words_per_second": 3.6, "note": "measured on the 2026-11-27 casting line (not listened to by Claude)"}
+ },
+ "audio_processing": {
+  "script": "template/scripts/voice-dynamics.py --preserve --mix-lufs -16",
+  "tone": "highpass 85 Hz; -2 dB @ 300 Hz (Q 1.0); +3 dB @ 2.8 kHz (Q 1.4); -1.5 dB @ 7 kHz (Q 1.5); deesser i=0.45",
+  "compression": "--preserve: threshold -18 dB, ratio 1.6:1, attack 8 ms, release 140 ms, makeup 2 dB",
+  "emotional_curve": "per-line gain offsets (0 to +1 dB) changed only inside pauses; --preserve never turns a line down",
+  "voice_stem": "-16 LUFS static gain + limiter",
+  "mix": "music ducked under the voice (sidechain); final -16 LUFS integrated, true peak <= -1 dBTP (alimiter -1.5 dBFS), 48 kHz",
+  "measured_v3": {"mix_integrated_lufs": -16.0, "true_peak_dbtp": -1.5, "lra_lu": 4.0, "voice_minus_music_lu": 12.0, "phone_band_voice_minus_music_lu": 15.8},
+  "sfx": "no ball-bounce / dribble sounds ever; no fake crowd; no gratuitous whooshes"
+ },
+ "reference_assets": {
+  "raw_take_v3": "assets/audio/narrator-reference-v3.mp3 (the unprocessed eleven_v4 take used in the approved master; copy of template/public/iq01v3/nathaniel-v3-take-raw.mp3)",
+  "processed_voice_v3": "assets/audio/narrator-reference-v3-voice-processed.flac (the processed voice stem of the approved master, hook A)",
+  "approved_master": "/mnt/project-files/tactical-studio/basketball-iq-01/v3/e2a-basketball-iq-01-v3-master-hookA.mp4 (sha256 1f77ff132e4b63540fd783c5575508777e5648902f3e4e0ef4d937ee8f3ac779)",
+  "generation_records": {
+   "v3_master": "flow 6GOo3uZ0cfVXdKo1XftG, eleven_v4, 693 credits, 2026-11-27",
+   "v3_trial_read_the_defense": "flow 6GOo3uZ0cfVXdKo1XftG node EPqVo32B9hhS1VzWo5Mb gen SsRbmoLnTORPb21qdLwy, eleven_v4, 585 credits, 2026-11-27"
+  }
+ },
+ "module": "tools/narrator.py (prompt builder, call parameters, guard, processing command)",
+ "doc": "produccion/E2A_NARRATION_STANDARD.md",
+ "licence": "ElevenLabs Voice Library professional voice used under the E2A account's paid plan (see config/asset_licences.json voice/elevenlabs-nathaniel/*)."
+}
