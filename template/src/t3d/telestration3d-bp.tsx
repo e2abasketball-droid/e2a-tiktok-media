@@ -355,7 +355,8 @@ export const TelestrationBP: React.FC<{play: Play; pt: number; o: TeleOvBP & {ag
       pts.forEach((q, k) => {
         if (q[2] < pts[lo][2]) lo = k;
       });
-      const bounce = e.style === 'bounce' ? sample(play, e.t0 + ((e.t1 - e.t0) * 0.62)).ball.pos : undefined;
+      // (2026-11-27, IQ 02) a ballistic bounce pass hits the floor where its own physics put it (the lowest sample)
+      const bounce = e.style === 'bounce' ? ((e as {ballistic?: boolean}).ballistic ? pts[lo] : sample(play, e.t0 + ((e.t1 - e.t0) * 0.62)).ball.pos) : undefined;
       // dots already passed by the ball fade out (the path is consumed by the flight)
       const flown = clamp((pt - e.t0) / (e.t1 - e.t0));
       return (

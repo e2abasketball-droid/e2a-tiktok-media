@@ -1,0 +1,133 @@
+{
+ "tone": "highpass=f=85,equalizer=f=300:t=q:w=1.0:g=-2,equalizer=f=2800:t=q:w=1.4:g=3,equalizer=f=7000:t=q:w=1.5:g=-1.5,deesser=i=0.45,acompressor=threshold=-18dB:ratio=1.6:attack=8:release=140:makeup=2",
+ "reference_db": -19.68,
+ "voice_in": {
+  "I": -23.6,
+  "LRA": 6.7,
+  "TP": -5.4
+ },
+ "voice_out": {
+  "I": -16.2,
+  "LRA": 6.1,
+  "TP": -2.0
+ },
+ "lines": [
+  {
+   "text": "They send two at the ball!",
+   "phase": "A",
+   "target_off": 1.0,
+   "level_in_db": -16.77,
+   "gain_db": 0.0,
+   "level_out_rel_db": 2.71
+  },
+  {
+   "text": "Your big catches the short roll.",
+   "phase": "A",
+   "target_off": 0.5,
+   "level_in_db": -17.47,
+   "gain_db": 0.0,
+   "level_out_rel_db": 2.09
+  },
+  {
+   "text": "Four on three.",
+   "phase": "A",
+   "target_off": 1.0,
+   "level_in_db": -16.5,
+   "gain_db": 0.0,
+   "level_out_rel_db": 3.06
+  },
+  {
+   "text": "Looks easy... until the help moves.",
+   "phase": "B",
+   "target_off": 0.0,
+   "level_in_db": -21.04,
+   "gain_db": 0.0,
+   "level_out_rel_db": -1.4
+  },
+  {
+   "text": "Drive? Corner? Or cut?",
+   "phase": "A",
+   "target_off": 0.5,
+   "level_in_db": -18.11,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.35
+  },
+  {
+   "text": "Drive? The help is already there.",
+   "phase": "B",
+   "target_off": 0.0,
+   "level_in_db": -18.28,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.36
+  },
+  {
+   "text": "Corner? His defender never left.",
+   "phase": "B",
+   "target_off": 0.0,
+   "level_in_db": -18.55,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.07
+  },
+  {
+   "text": "Now watch the weak-side defender.",
+   "phase": "B",
+   "target_off": 0.0,
+   "level_in_db": -20.81,
+   "gain_db": 0.0,
+   "level_out_rel_db": -1.07
+  },
+  {
+   "text": "He steps into the paint...",
+   "phase": "C",
+   "target_off": 0.5,
+   "level_in_db": -18.32,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.12
+  },
+  {
+   "text": "and loses the cutter!",
+   "phase": "D",
+   "target_off": 1.0,
+   "level_in_db": -15.89,
+   "gain_db": 0.0,
+   "level_out_rel_db": 3.57
+  },
+  {
+   "text": "There's the pass!",
+   "phase": "D",
+   "target_off": 1.0,
+   "level_in_db": -16.42,
+   "gain_db": 0.0,
+   "level_out_rel_db": 2.84
+  },
+  {
+   "text": "Read the help.",
+   "phase": "E",
+   "target_off": 0.0,
+   "level_in_db": -17.52,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.88
+  },
+  {
+   "text": "Attack the space it leaves.",
+   "phase": "E",
+   "target_off": 0.0,
+   "level_in_db": -20.64,
+   "gain_db": 0.0,
+   "level_out_rel_db": -1.18
+  },
+  {
+   "text": "Did you see it?",
+   "phase": "E",
+   "target_off": 0.5,
+   "level_in_db": -17.83,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.89
+  }
+ ],
+ "mix": {
+  "I": -16.2,
+  "LRA": 5.6,
+  "TP": -1.5
+ }
+}

@@ -28,7 +28,13 @@ export type BallEvent =
      present?: {toward: string; from: number; peak: number; hold?: number; to: number; amt: number; dz?: number}}
   /** eyes (2026-11-19, Blind Pig): seconds before t0 the passer's eyes go to the receiver (default 0.6);
    *  lead: a lead pass caught in stride (test-play allows a faster receiver at the catch) */
-  | {type: 'pass'; from: string; to: string; t0: number; t1: number; style?: 'chest' | 'bounce' | 'overhead' | 'handoff'; side?: number; eyes?: number; lead?: boolean; phased?: boolean; /** overhead only: peak height of the arc (m, default 2.4); 2026-11-23 1-3-1 skip over the zone */ arc?: number}
+  | {type: 'pass'; from: string; to: string; t0: number; t1: number; style?: 'chest' | 'bounce' | 'overhead' | 'handoff'; side?: number; eyes?: number; lead?: boolean; phased?: boolean; /** overhead only: peak height of the arc (m, default 2.4); 2026-11-23 1-3-1 skip over the zone */ arc?: number;
+     /** (2026-11-27, Basketball IQ 02) opt-in: the vertical path is a true gravity parabola between release and catch
+      *  (rise above the chord = g·T²/8), instead of the fixed sin bump. Chest and overhead passes. */
+     ballistic?: boolean;
+     /** (2026-11-27, Basketball IQ 02) opt-in: overhead load window in seconds (default 0.35): the ball rises above the
+      *  head only during the last `load` s of the hold, so a freeze just before it still shows a triple-threat ball */
+     load?: number}
   | {type: 'shot'; player: string; t0: number; t1: number; make?: boolean; side?: 1 | -1}
   | {type: 'layup'; player: string; t0: number; t1: number; make?: boolean};
 
@@ -270,6 +276,28 @@ const handedSpot = (play: Play, e: Extract<BallEvent, {type: 'hold'}>, t: number
   const lat = ((v2 ? 0.34 : 0.27) + v3w) * sd, fw = (v2 ? 0.36 + Math.min(0.14, 0.04 * spd) : 0.3) + 0.08 * (1 - Math.abs(sd));
   return [st.pos[0] + fx * fw + fy * lat, st.pos[1] + fy * fw - fx * lat, z];
 };
+/** (2026-11-27, Basketball IQ 02) physical bounce pass, mirrored by tools/court_geometry.py bounce_z (the validator). */
+const G_ACC = 9.81;
+export const ballisticBounceZ = (u: number, T: number, z0: number, z1: number, e = 0.78, r = 0.121): number => {
+  const ratio = (k: number) => {
+    const t1 = k * T, t2 = (1 - k) * T;
+    return ((z1 - r) / t2 + (G_ACC * t2) / 2) / ((z0 - r) / t1 + (G_ACC * t1) / 2);
+  };
+  let lo = 0.15, hi = 0.85;
+  for (let i = 0; i < 60; i++) {
+    const mid = (lo + hi) / 2;
+    if (ratio(mid) < e) lo = mid;
+    else hi = mid;
+  }
+  const k = (lo + hi) / 2;
+  if (u < k) {
+    const s = u / k, t1 = k * T;
+    return z0 + (r - z0) * s + 0.5 * G_ACC * t1 * t1 * s * (1 - s);
+  }
+  const s = (u - k) / (1 - k), t2 = (1 - k) * T;
+  return r + (z1 - r) * s + 0.5 * G_ACC * t2 * t2 * s * (1 - s);
+};
+
 /** PHASED overhead throw (2026-11-20, Double Drag V2 pass fix; opt-in `phased: true` on an overhead pass loaded from a
  *  held ball). The old load lifted the ball straight up from the travel-frame hand spot to 2.05 m over 0.35 s (on the
  *  defender's side when the passer runs one way and throws the other, arms locked at full extension for 5 frames).
@@ -567,7 +595,7 @@ const ballAtRaw = (play: Play, t: number, ps: Record<string, PlayerState>): Ball
         const h0 = pv ? (isHanded(pv) ? handedSpot(play, pv, pv.to) : smoothHand(play, cur.player, cur.from)) : smoothHand(play, cur.player, cur.from);
         return {pos: phasedHold(play, ohp, cur.from, t, h, h0), holder: cur.player, event: cur};
       }
-      const ohW = Math.min(0.35, cur.to - cur.from);
+      const ohW = Math.min(ohp?.load ?? 0.35, cur.to - cur.from);
       if (ohp && !cur.dribble && t > cur.to - ohW) {
         const g = Math.min(1, (t - (cur.to - ohW)) / ohW);
         const e = g * g * (3 - 2 * g);
@@ -647,7 +675,11 @@ const ballAtRaw = (play: Play, t: number, ps: Record<string, PlayerState>): Ball
       const x = a0[0] + (b1[0] - a0[0]) * u;
       const y = a0[1] + (b1[1] - a0[1]) * u;
       let z: number;
-      if (cur.style === 'bounce') {
+      if (cur.style === 'bounce' && cur.ballistic) {
+        // (2026-11-27, IQ 02) physical bounce pass: two gravity parabolas, release -> floor (ball radius) -> catch, the
+        // floor contact placed so that the vertical speed after the bounce is 0.78 x the speed before it (hardwood COR)
+        z = ballisticBounceZ(u, cur.t1 - cur.t0, a0[2], b1[2]);
+      } else if (cur.style === 'bounce') {
         // straight down to a bounce at 62 % of the way, then up into the hands
         const k = 0.62;
         z = u < k ? a0[2] * (1 - u / k) ** 1.15 + 0.12 * (u / k) : 0.12 + (b1[2] - 0.12) * Math.sin(((u - k) / (1 - k)) * Math.PI * 0.5);
@@ -655,7 +687,8 @@ const ballAtRaw = (play: Play, t: number, ps: Record<string, PlayerState>): Ball
         // continuous from wherever the ball is at the release (above the head when the pass was loaded,
         // 2026-11-13; the old fixed 2.1 m start teleported the ball up out of a dribble), arcing to ~2.4 m
         const z0 = a0[2];
-        z = z0 + (b1[2] - z0) * u + Math.max(0.25, (cur.arc ?? 2.4) - (z0 + b1[2]) / 2) * Math.sin(Math.PI * u);
+        z = cur.ballistic ? z0 + (b1[2] - z0) * u + 0.5 * 9.81 * (cur.t1 - cur.t0) ** 2 * u * (1 - u)
+          : z0 + (b1[2] - z0) * u + Math.max(0.25, (cur.arc ?? 2.4) - (z0 + b1[2]) / 2) * Math.sin(Math.PI * u);
       } else if (cur.style === 'handoff') {
         // 2026-11-15 dribble hand-off: the ball never flies. It goes hand to hand at hip height along the
         // straight line between the passer's hand at t0 and the receiver's hand at t1 (eased, no arc), so both
@@ -663,7 +696,7 @@ const ballAtRaw = (play: Play, t: number, ps: Record<string, PlayerState>): Ball
         const e = u * u * (3 - 2 * u);
         return {pos: [a0[0] + (b1[0] - a0[0]) * e, a0[1] + (b1[1] - a0[1]) * e, a0[2] + (b1[2] - a0[2]) * e - 0.06 * Math.sin(Math.PI * u)], inFlight: 'pass', event: cur, progress: u};
       } else {
-        z = a0[2] + (b1[2] - a0[2]) * u + 0.35 * Math.sin(Math.PI * u);
+        z = a0[2] + (b1[2] - a0[2]) * u + (cur.ballistic ? 0.5 * 9.81 * (cur.t1 - cur.t0) ** 2 * u * (1 - u) : 0.35 * Math.sin(Math.PI * u));
       }
       return {pos: [x, y, z], inFlight: 'pass', event: cur, progress: u};
     }

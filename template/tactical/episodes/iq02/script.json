@@ -1,0 +1,22 @@
+{"episode": "Basketball IQ 02: Beat the Blitz",
+ "narrator": "E2A standard (Nathaniel, eleven_v4) - tools/narrator.py",
+ "lines": [
+  ["tag:explosive, confident", "They send TWO at the ball!"],
+  ["tag:fast, challenging", "Your big catches the short roll. Four on three."],
+  ["tag:controlled curiosity", "Looks easy... until the help moves."],
+  ["tag:quick decision challenge", "Drive? Corner? Or cut?"],
+  ["tag:measured, confident", "Drive? The help is already there."],
+  ["tag:measured, confident", "Corner? His defender never left."],
+  ["tag:intrigued, focused", "Now watch the weak-side defender."],
+  ["tag:building intensity", "He steps into the paint..."],
+  ["tag:high-energy reveal", "and LOSES the cutter!"],
+  ["tag:decisive", "THERE'S the pass!"],
+  ["tag:lower, authoritative", "Read the help. Attack the space it leaves."],
+  ["tag:short, energetic ending", "Did you see it?"]
+ ],
+ "alternatives": {"lines": [
+  ["tag:fast, confident", "Four on three."],
+  ["tag:quick decision challenge, playful", "Drive? Corner? Or cut?"],
+  ["tag:building suspense", "He steps into the paint..."],
+  ["tag:excited", "And loses the cutter!"]]}
+}

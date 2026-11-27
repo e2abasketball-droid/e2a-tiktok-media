@@ -1,0 +1,791 @@
+{
+ "id": "iq02-beat-the-blitz",
+ "title": "Basketball IQ 02: Beat the Blitz (short roll 4 on 3, X4 helps, 45 cut)",
+ "duration": 6.2,
+ "concept": "blitz-short-roll",
+ "kitSet": "iq",
+ "source": "Original E2A 5v5 possession built from the owner's keyframes. Not a reconstruction of any NBA, EuroLeague or FIBA possession. Coaching principles only (no copied diagrams, footage or graphics): screener as the release valve against two on the ball, 4-on-3 behind the trap, weak-side help and the 45-degree cut behind the helper.",
+ "squareUp": true,
+ "catchV2": 2,
+ "handBallClear": true,
+ "v33": "compile",
+ "realism": 3,
+ "canonical": "tactical/iq02/basketball_iq_02_blitz_short_roll.json",
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Ball handler (right slot). Uses the ball screen, gets two on the ball, outlets early to the screener."
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Strong-side (right) corner. Spacer."
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Weak-side (left) corner. Answer B (CORNER)."
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Weak-side (left) wing. 45-degree cut behind X4. Answer C (CUT, correct)."
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Screener. Short roll to the nail, catches the outlet, decides (4 on 3). Answer A (DRIVE) is his."
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "role": "On the ball. Traps with X5.",
+   "guards": "O1"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "role": "Strong-side corner. Stays home.",
+   "guards": "O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "role": "Weak-side corner. Stays home (the corner pass is contested).",
+   "guards": "O3"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "role": "Weak-side wing / the rotating helper. Tags the roller, steps into the paint to stop O5, loses O4.",
+   "guards": "O4"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "role": "Screener's defender. Leaves O5 to blitz the ball with X1; recovers late.",
+   "guards": "O5"
+  }
+ ],
+ "tracks": {
+  "O1": [
+   [
+    0,
+    -5.75,
+    10.3
+   ],
+   [
+    1.2,
+    -4.65,
+    9.8
+   ],
+   [
+    2.0,
+    -3.55,
+    9.7
+   ],
+   [
+    2.02,
+    -3.55,
+    9.7
+   ],
+   [
+    2.75,
+    -3.6,
+    9.65
+   ],
+   [
+    3.5,
+    -3.7,
+    9.55
+   ],
+   [
+    6.2,
+    -3.7,
+    9.55
+   ]
+  ],
+  "O5": [
+   [
+    0,
+    -2.45,
+    8.05,
+    "fly"
+   ],
+   [
+    0.75,
+    -3.35,
+    9.0
+   ],
+   [
+    1.2,
+    -3.35,
+    9.0
+   ],
+   [
+    2.0,
+    -1.55,
+    7.35
+   ],
+   [
+    2.75,
+    -0.55,
+    5.82
+   ],
+   [
+    3.5,
+    -0.5,
+    5.78
+   ],
+   [
+    4.25,
+    -0.5,
+    5.78
+   ],
+   [
+    4.9,
+    -0.6,
+    5.7
+   ],
+   [
+    6.2,
+    -0.6,
+    5.7
+   ]
+  ],
+  "X1": [
+   [
+    0,
+    -5.45,
+    9.7
+   ],
+   [
+    1.0,
+    -4.25,
+    9.05
+   ],
+   [
+    1.25,
+    -4.25,
+    9.05
+   ],
+   [
+    2.0,
+    -4.4,
+    9.1
+   ],
+   [
+    2.75,
+    -4.25,
+    9.1
+   ],
+   [
+    3.5,
+    -4.3,
+    9.05
+   ],
+   [
+    6.2,
+    -4.3,
+    9.05
+   ]
+  ],
+  "X5": [
+   [
+    0,
+    -2.6,
+    7.1,
+    "fly"
+   ],
+   [
+    0.85,
+    -3.35,
+    7.95
+   ],
+   [
+    1.25,
+    -3.35,
+    7.95
+   ],
+   [
+    2.0,
+    -4.1,
+    8.4
+   ],
+   [
+    2.75,
+    -3.9,
+    8.5
+   ],
+   [
+    3.5,
+    -3.7,
+    8.65
+   ],
+   [
+    4.25,
+    -3.05,
+    7.9
+   ],
+   [
+    4.9,
+    -2.4,
+    7.2
+   ],
+   [
+    5.45,
+    -1.95,
+    6.7
+   ],
+   [
+    6.2,
+    -1.95,
+    6.7
+   ]
+  ],
+  "X4": [
+   [
+    0,
+    3.62,
+    7.34
+   ],
+   [
+    0.9,
+    3.55,
+    7.3
+   ],
+   [
+    1.45,
+    3.55,
+    7.3
+   ],
+   [
+    2.0,
+    2.75,
+    6.6
+   ],
+   [
+    2.75,
+    1.9,
+    6.1
+   ],
+   [
+    3.5,
+    -0.35,
+    4.05
+   ],
+   [
+    4.25,
+    -0.3,
+    4.03
+   ],
+   [
+    4.9,
+    -0.25,
+    3.7
+   ],
+   [
+    5.5,
+    -0.0,
+    3.05
+   ],
+   [
+    6.2,
+    -0.0,
+    3.05
+   ]
+  ],
+  "O4": [
+   [
+    0,
+    5.05,
+    8.22
+   ],
+   [
+    0.9,
+    4.95,
+    8.15
+   ],
+   [
+    1.2,
+    4.95,
+    8.15
+   ],
+   [
+    2.0,
+    4.8,
+    8.0
+   ],
+   [
+    2.75,
+    4.65,
+    7.9
+   ],
+   [
+    3.5,
+    3.65,
+    5.95
+   ],
+   [
+    4.25,
+    2.25,
+    3.55
+   ],
+   [
+    4.9,
+    0.85,
+    1.95
+   ],
+   [
+    5.45,
+    0.35,
+    1.25
+   ],
+   [
+    6.2,
+    0.35,
+    1.25
+   ]
+  ],
+  "O2": [
+   [
+    0,
+    -6.8,
+    2.5
+   ],
+   [
+    1.4,
+    -6.85,
+    2.55
+   ],
+   [
+    6.2,
+    -6.85,
+    2.55
+   ]
+  ],
+  "O3": [
+   [
+    0,
+    6.8,
+    2.62
+   ],
+   [
+    1.4,
+    6.85,
+    2.55
+   ],
+   [
+    4.3,
+    6.85,
+    2.55
+   ],
+   [
+    4.9,
+    6.78,
+    2.45
+   ],
+   [
+    6.2,
+    6.78,
+    2.45
+   ]
+  ],
+  "X2": [
+   [
+    0,
+    -6.0,
+    2.98
+   ],
+   [
+    1.4,
+    -5.9,
+    2.9
+   ],
+   [
+    2.2,
+    -5.9,
+    2.9
+   ],
+   [
+    2.9,
+    -5.82,
+    2.98
+   ],
+   [
+    6.2,
+    -5.82,
+    2.98
+   ]
+  ],
+  "X3": [
+   [
+    0,
+    6.0,
+    2.95
+   ],
+   [
+    1.4,
+    5.9,
+    2.9
+   ],
+   [
+    2.2,
+    5.9,
+    2.9
+   ],
+   [
+    2.9,
+    5.82,
+    2.98
+   ],
+   [
+    4.35,
+    5.82,
+    2.98
+   ],
+   [
+    5.0,
+    5.95,
+    2.8
+   ],
+   [
+    6.2,
+    5.95,
+    2.8
+   ]
+  ]
+ },
+ "ball": [
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 0,
+   "to": 2.0,
+   "dribble": true,
+   "hand": -1
+  },
+  {
+   "type": "hold",
+   "player": "O1",
+   "from": 2.0,
+   "to": 2.06,
+   "hand": -1
+  },
+  {
+   "type": "pass",
+   "from": "O1",
+   "to": "O5",
+   "t0": 2.06,
+   "t1": 2.65,
+   "style": "bounce",
+   "ballistic": true,
+   "eyes": 0.25
+  },
+  {
+   "type": "hold",
+   "player": "O5",
+   "from": 2.65,
+   "to": 3.68
+  },
+  {
+   "type": "pass",
+   "from": "O5",
+   "to": "O4",
+   "t0": 3.68,
+   "t1": 4.25,
+   "style": "bounce",
+   "ballistic": true,
+   "lead": true,
+   "eyes": 0.12
+  },
+  {
+   "type": "hold",
+   "player": "O4",
+   "from": 4.25,
+   "to": 4.9
+  },
+  {
+   "type": "layup",
+   "player": "O4",
+   "t0": 4.9,
+   "t1": 5.35,
+   "make": true
+  }
+ ],
+ "marks": {
+  "start": 0.0,
+  "screen": 0.75,
+  "k0": 1.2,
+  "blitz": 1.25,
+  "outlet": 2.0,
+  "k1": 2.0,
+  "release1": 2.06,
+  "catch1": 2.65,
+  "faceup": 2.75,
+  "k2": 2.75,
+  "freeze": 3.5,
+  "decide": 3.5,
+  "load": 3.52,
+  "release2": 3.68,
+  "catch2": 4.25,
+  "layup": 4.9,
+  "make": 5.35,
+  "end": 6.2
+ },
+ "actions": {
+  "O1": [
+   {
+    "type": "face",
+    "from": 0,
+    "to": 1.2,
+    "face": "X1"
+   },
+   {
+    "type": "face",
+    "from": 1.9,
+    "to": 2.26,
+    "face": "O5"
+   },
+   {
+    "type": "face",
+    "from": 2.36,
+    "to": 6.2,
+    "face": "X5"
+   }
+  ],
+  "O5": [
+   {
+    "type": "screen",
+    "from": 0.8,
+    "to": 1.2,
+    "face": "X1"
+   },
+   {
+    "type": "face",
+    "from": 2.0,
+    "to": 2.65,
+    "face": "O1"
+   }
+  ],
+  "O4": [
+   {
+    "type": "face",
+    "from": 0,
+    "to": 2.75,
+    "face": "O1"
+   },
+   {
+    "type": "catchReady",
+    "from": 3.63,
+    "to": 4.3,
+    "face": "O5"
+   },
+   {
+    "type": "celebrate",
+    "from": 5.6,
+    "to": 6.2
+   }
+  ],
+  "O2": [
+   {
+    "type": "face",
+    "from": 0,
+    "to": 2.65,
+    "face": "O1"
+   },
+   {
+    "type": "face",
+    "from": 2.65,
+    "to": 6.2,
+    "face": "O5"
+   }
+  ],
+  "O3": [
+   {
+    "type": "face",
+    "from": 0,
+    "to": 2.65,
+    "face": "O1"
+   },
+   {
+    "type": "face",
+    "from": 2.65,
+    "to": 6.2,
+    "face": "O5"
+   }
+  ],
+  "X1": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 6.2,
+    "face": "O1"
+   }
+  ],
+  "X5": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 1.25,
+    "face": "O5"
+   },
+   {
+    "type": "stance",
+    "from": 1.25,
+    "to": 2.95,
+    "face": "O1"
+   },
+   {
+    "type": "stance",
+    "from": 3.0,
+    "to": 6.2,
+    "face": "O5"
+   }
+  ],
+  "X4": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 2.45,
+    "face": "O1"
+   },
+   {
+    "type": "stance",
+    "from": 2.5,
+    "to": 4.35,
+    "face": "O5"
+   },
+   {
+    "type": "stance",
+    "from": 4.45,
+    "to": 6.2,
+    "face": "O4"
+   }
+  ],
+  "X3": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 2.65,
+    "face": "O1"
+   },
+   {
+    "type": "stance",
+    "from": 2.65,
+    "to": 6.2,
+    "face": "O5"
+   }
+  ],
+  "X2": [
+   {
+    "type": "stance",
+    "from": 0,
+    "to": 2.65,
+    "face": "O1"
+   },
+   {
+    "type": "stance",
+    "from": 2.65,
+    "to": 6.2,
+    "face": "O5"
+   }
+  ]
+ },
+ "claims": [
+  {
+   "type": "near",
+   "a": "X1",
+   "b": "O1",
+   "at": "k1",
+   "max": 1.6,
+   "says": "They send TWO at the ball!"
+  },
+  {
+   "type": "near",
+   "a": "X5",
+   "b": "O1",
+   "at": "k1",
+   "max": 1.6,
+   "says": "They send TWO at the ball!"
+  },
+  {
+   "type": "far",
+   "a": "X5",
+   "b": "O5",
+   "at": "catch1",
+   "min": 2.5,
+   "says": "Your big catches the short roll. Four on three."
+  },
+  {
+   "type": "near_rim",
+   "player": "X4",
+   "at": "freeze",
+   "max": 2.8,
+   "says": "He steps into the paint..."
+  },
+  {
+   "type": "far",
+   "a": "X4",
+   "b": "O4",
+   "at": "freeze",
+   "min": 3.5,
+   "says": "AND LOSES THE CUTTER!"
+  },
+  {
+   "type": "near",
+   "a": "X3",
+   "b": "O3",
+   "at": "freeze",
+   "max": 1.2,
+   "says": "Corner? (X3 is home)"
+  },
+  {
+   "type": "near",
+   "a": "X2",
+   "b": "O2",
+   "at": "freeze",
+   "max": 1.2,
+   "says": "(the strong-side corner is home too)"
+  },
+  {
+   "type": "open",
+   "player": "O4",
+   "at": "catch2",
+   "min": 2.0,
+   "says": "THERE'S THE PASS!"
+  },
+  {
+   "type": "order",
+   "marks": [
+    "screen",
+    "k0",
+    "blitz",
+    "outlet",
+    "release1",
+    "catch1",
+    "faceup",
+    "freeze",
+    "release2",
+    "catch2",
+    "layup",
+    "make"
+   ],
+   "says": "screen, blitz, outlet, short roll, freeze, pass, layup"
+  }
+ ],
+ "screens": [],
+ "coords": {
+  "system": "repo (engine)",
+  "owner_to_engine": "x = -owner x, y = owner y, t = owner t + 1.2",
+  "basket": [
+   0,
+   1.575
+  ]
+ },
+ "notes": [
+  "K0..K5 at engine times {'K0': 1.2, 'K1': 2.0, 'K2': 2.75, 'K3': 3.5, 'K4': 4.25, 'K5': 4.9} reproduced exactly from the canonical owner file.",
+  "Pre-roll 0..1.2 s, the static four's weight shifts and the outcome after K5 are E2A additions."
+ ]
+}

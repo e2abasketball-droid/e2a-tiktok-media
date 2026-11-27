@@ -1,0 +1,491 @@
+{
+ "schema": "e2a-iq-play/1",
+ "id": "basketball_iq_02_blitz_short_roll",
+ "episode": "Basketball IQ 02: Beat the Blitz",
+ "status": "CANONICAL (owner data, 2026-11-27 22:14Z master directive). Edit ONLY with an owner instruction; every render is generated from this file.",
+ "originality": "Original E2A 5v5 possession built from the owner's keyframes. Not a reconstruction of any NBA, EuroLeague or FIBA possession. Coaching principles only (no copied diagrams, footage or graphics): screener as the release valve against two on the ball, 4-on-3 behind the trap, weak-side help and the 45-degree cut behind the helper.",
+ "principle_sources": [
+  "Tipton, MPnR: the screener as the 'silent assassin' when the ball is blitzed (principle only)",
+  "Hooper University: 45 cuts behind help (principle only)",
+  "The Hoops Geek: pick and roll vs blitz / 4-on-3 reads (principle only)",
+  "FIBA WABC Coaching Manual Level 3: help-side rotation and reading the helper (principle only)",
+  "FIBA Official Basketball Rules 2026: court dimensions (geometry only)"
+ ],
+ "coordinates": {
+  "system": "owner",
+  "origin": "centre of the attacking endline",
+  "x": "lateral metres, -7.5..7.5; negative X = LEFT of the overhead diagram (basket at the top); the ball side starts on the right (+X)",
+  "y": "metres from the endline toward half court, 0..14",
+  "z": "metres up",
+  "hoop": [
+   0,
+   1.575,
+   3.05
+  ],
+  "nail": [
+   0,
+   5.8
+  ],
+  "engine_mapping": "engine x = -owner x (engine x < 0 = the offence's right = screen right with the basket at the top), engine y = owner y, engine t = owner t + engine_offset_s",
+  "engine_offset_s": 1.2
+ },
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Ball handler (right slot). Uses the ball screen, gets two on the ball, outlets early to the screener.",
+   "height_m": 1.88
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Strong-side (right) corner. Spacer.",
+   "height_m": 1.96
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Weak-side (left) corner. Answer B (CORNER).",
+   "height_m": 1.98
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Weak-side (left) wing. 45-degree cut behind X4. Answer C (CUT, correct).",
+   "height_m": 2.03
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "Screener. Short roll to the nail, catches the outlet, decides (4 on 3). Answer A (DRIVE) is his.",
+   "height_m": 2.08
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "guards": "O1",
+   "role": "On the ball. Traps with X5.",
+   "height_m": 1.88
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "guards": "O2",
+   "role": "Strong-side corner. Stays home.",
+   "height_m": 1.96
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "guards": "O3",
+   "role": "Weak-side corner. Stays home (the corner pass is contested).",
+   "height_m": 1.98
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "guards": "O4",
+   "role": "Weak-side wing / the rotating helper. Tags the roller, steps into the paint to stop O5, loses O4.",
+   "height_m": 2.03
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "guards": "O5",
+   "role": "Screener's defender. Leaves O5 to blitz the ball with X1; recovers late.",
+   "height_m": 2.08
+  }
+ ],
+ "keyframes": [
+  {
+   "k": "K0",
+   "t": 0.0,
+   "O1": [
+    4.65,
+    9.8
+   ],
+   "O2": [
+    6.85,
+    2.55
+   ],
+   "O3": [
+    -6.85,
+    2.55
+   ],
+   "O4": [
+    -4.95,
+    8.15
+   ],
+   "O5": [
+    3.35,
+    9.0
+   ],
+   "X1": [
+    4.25,
+    9.05
+   ],
+   "X2": [
+    5.9,
+    2.9
+   ],
+   "X3": [
+    -5.9,
+    2.9
+   ],
+   "X4": [
+    -3.55,
+    7.3
+   ],
+   "X5": [
+    3.35,
+    7.95
+   ]
+  },
+  {
+   "k": "K1",
+   "t": 0.8,
+   "O1": [
+    3.55,
+    9.7
+   ],
+   "O4": [
+    -4.8,
+    8.0
+   ],
+   "O5": [
+    1.55,
+    7.35
+   ],
+   "X1": [
+    4.4,
+    9.1
+   ],
+   "X4": [
+    -2.75,
+    6.6
+   ],
+   "X5": [
+    4.1,
+    8.4
+   ]
+  },
+  {
+   "k": "K2",
+   "t": 1.55,
+   "O1": [
+    3.6,
+    9.65
+   ],
+   "O4": [
+    -4.65,
+    7.9
+   ],
+   "O5": [
+    0.55,
+    5.82
+   ],
+   "X1": [
+    4.25,
+    9.1
+   ],
+   "X4": [
+    -1.9,
+    6.1
+   ],
+   "X5": [
+    3.9,
+    8.5
+   ]
+  },
+  {
+   "k": "K3",
+   "t": 2.3,
+   "freeze": true,
+   "O1": [
+    3.7,
+    9.55
+   ],
+   "O4": [
+    -3.65,
+    5.95
+   ],
+   "O5": [
+    0.5,
+    5.78
+   ],
+   "X1": [
+    4.3,
+    9.05
+   ],
+   "X4": [
+    0.35,
+    4.05
+   ],
+   "X5": [
+    3.7,
+    8.65
+   ]
+  },
+  {
+   "k": "K4",
+   "t": 3.05,
+   "O1": [
+    3.7,
+    9.55
+   ],
+   "O4": [
+    -2.25,
+    3.55
+   ],
+   "O5": [
+    0.5,
+    5.78
+   ],
+   "X1": [
+    4.3,
+    9.05
+   ],
+   "X4": [
+    0.3,
+    4.03
+   ],
+   "X5": [
+    3.05,
+    7.9
+   ]
+  },
+  {
+   "k": "K5",
+   "t": 3.7,
+   "O1": [
+    3.7,
+    9.55
+   ],
+   "O4": [
+    -0.85,
+    1.95
+   ],
+   "O5": [
+    0.6,
+    5.7
+   ],
+   "X1": [
+    4.3,
+    9.05
+   ],
+   "X4": [
+    0.25,
+    3.7
+   ],
+   "X5": [
+    2.4,
+    7.2
+   ]
+  }
+ ],
+ "static_players": {
+  "ids": [
+   "O2",
+   "O3",
+   "X2",
+   "X3"
+  ],
+  "rule": "stay at their K0 spots for the whole possession; only subtle stance adjustments (<= 0.15 m)"
+ },
+ "ball_events": [
+  {
+   "t": 0.0,
+   "event": "O1 has the ball (live dribble)"
+  },
+  {
+   "t": 0.8,
+   "event": "outlet recognised (O1 picks up)"
+  },
+  {
+   "t": 0.86,
+   "event": "release O1 -> O5",
+   "pass": {
+    "from": "O1",
+    "to": "O5",
+    "style": "bounce",
+    "ballistic": true,
+    "why_bounce": "validator 2026-11-27: a chest pass at these release/catch times passes 0.29 m from X5's fingertips (CONTESTED)"
+   }
+  },
+  {
+   "t": 1.45,
+   "event": "O5 catches"
+  },
+  {
+   "t": 1.55,
+   "event": "O5 faces up"
+  },
+  {
+   "t": 2.3,
+   "event": "O5 evaluates (FREEZE)"
+  },
+  {
+   "t": 2.48,
+   "event": "release O5 -> O4",
+   "pass": {
+    "from": "O5",
+    "to": "O4",
+    "style": "bounce",
+    "ballistic": true,
+    "why_bounce": "validator 2026-11-27: an overhead or chest pass at these times stays inside X4's reach (BLOCKED -0.25 m / CONTESTED); a physical bounce pass goes AROUND him, under his arms, OPEN"
+   }
+  },
+  {
+   "t": 3.05,
+   "event": "O4 catches"
+  },
+  {
+   "t": 3.7,
+   "event": "layup release"
+  }
+ ],
+ "decision": {
+  "freeze_t": 2.3,
+  "decider": "O5",
+  "question": "Drive? Corner? Or cut?",
+  "options": [
+   {
+    "letter": "A",
+    "label": "DRIVE",
+    "player": "O5",
+    "correct": false,
+    "why": "X4 has stepped into the paint, on O5's line to the rim."
+   },
+   {
+    "letter": "B",
+    "label": "CORNER",
+    "player": "O3",
+    "correct": false,
+    "why": "X3 stayed home: the pass to the weak-side corner is contested."
+   },
+   {
+    "letter": "C",
+    "label": "CUT",
+    "player": "O4",
+    "correct": true,
+    "why": "X4 left O4 to stop O5; O4 cuts at 45 degrees behind him into the space he left."
+   }
+  ]
+ },
+ "truth_conditions": {
+  "two_on_ball": "X1 and X5 both within 1.6 m of O1 (the ball handler, ball in his hands)",
+  "four_on_three": "after O5's catch: X1 and X5 still within 2.0 m of O1 and both more than 2.5 m from the ball; O5, O2, O3, O4 against X2, X3, X4 only",
+  "x4_in_paint": "X4 inside the restricted lane (|x| <= 2.45, y <= 5.80) at the freeze",
+  "drive_blocked": "the O5 -> rim line passes within X4's reach envelope at the freeze",
+  "corner_contested": "the O5 -> O3 pass lane passes within X3's reach envelope at the freeze",
+  "cut_open": "O5 -> O4 lane clears every defender's reach envelope during the real pass; O4 nearest defender >= 2.0 m at the catch",
+  "x4_loses_cutter": "O4 is outside X4's 120-degree vision cone (X4 faces the ball) when the cut accelerates, and O4 is baseline-side of X4 at the catch"
+ },
+ "graphics_rules": {
+  "2 ON THE BALL": "only while two_on_ball is true",
+  "4 ON 3": "only while four_on_three is true",
+  "X4 tracking / IN THE PAINT": "only while x4_in_paint is true",
+  "lane states": "OPEN / CONTESTED / BLOCKED exactly as the validator computes them"
+ },
+ "future_variants_metadata_only": [
+  {
+   "id": "iq02-var-x3-rotation",
+   "status": "NOT BUILT. Must be a separate possession with its own keyframes and validation.",
+   "idea": "X3 rotates from the corner instead of X4: the weak-side corner (B) becomes the correct read."
+  },
+  {
+   "id": "iq02-var-no-x4-help",
+   "status": "NOT BUILT. Must be a separate possession with its own keyframes and validation.",
+   "idea": "X4 stays attached to O4 and nobody steps into the paint: the drive (A) becomes the correct read."
+  }
+ ],
+ "e2a_additions": {
+  "pre_roll": "1.2 s before K0 (engine time 0..1.2): O5 arrives to set the ball screen and is stationary for 0.45 s before K0 (legal screen); O1 dribbles into the screen; X1 and X5 follow their men; the other six players are alive (weight shifts <= 0.15 m). K0..K5 are reproduced exactly.",
+  "after_K5": "outcome only (after the decision has been read): O4 finishes the layup and lands under the rim, X4 turns late, X5 keeps recovering."
+ },
+ "defensive_causes": {
+  "_rule": "Every defender movement onset (owner time) must follow one of his declared causes by >= 0.15 s (reaction), except 'pre-roll' following of his own man before K0.",
+  "X1": [
+   {
+    "cause": "O1 dribbles into the screen (pre-roll)",
+    "t": -1.2
+   },
+   {
+    "cause": "screen contact, blitz call: trap O1",
+    "t": 0.0
+   }
+  ],
+  "X5": [
+   {
+    "cause": "O5 comes up to screen (pre-roll, follows his man)",
+    "t": -1.2
+   },
+   {
+    "cause": "screen set at K0: blitz, leaves O5 to trap O1",
+    "t": 0.0
+   },
+   {
+    "cause": "O1 releases the outlet to O5: recover",
+    "t": 0.86
+   }
+  ],
+  "X4": [
+   {
+    "cause": "X5 leaves the roller to blitz: weak-side tag responsibility",
+    "t": 0.05
+   },
+   {
+    "cause": "outlet O1 -> O5 released: steps toward the roller / paint",
+    "t": 0.86
+   },
+   {
+    "cause": "O5 catches and faces up at the nail: stops the drive",
+    "t": 1.45
+   },
+   {
+    "cause": "pass O5 -> O4 released: turns, too late",
+    "t": 2.48
+   }
+  ],
+  "X2": [
+   {
+    "cause": "ball moves (blitz / outlet): weight shift",
+    "t": 0.0
+   },
+   {
+    "cause": "outlet released",
+    "t": 0.86
+   }
+  ],
+  "X3": [
+   {
+    "cause": "ball moves (blitz / outlet): weight shift",
+    "t": 0.0
+   },
+   {
+    "cause": "outlet released",
+    "t": 0.86
+   },
+   {
+    "cause": "pass O5 -> O4 released",
+    "t": 2.48
+   }
+  ]
+ },
+ "corrections_log": [
+  {
+   "date": "2026-11-27",
+   "what": "pass styles",
+   "change": "both passes are physical bounce passes (two gravity parabolas, COR 0.78) instead of chest / overhead",
+   "keyframes_changed": false,
+   "times_changed": false
+  },
+  {
+   "date": "2026-11-27",
+   "what": "X4 at the freeze",
+   "change": "X4 passes through K3 exactly at 2.30 still sliding (0.28 m beyond it by 2.48) and settles at K4; a dead stop at K3 needed 18.6-22.5 m/s^2 braking",
+   "keyframes_changed": false,
+   "times_changed": false
+  }
+ ]
+}

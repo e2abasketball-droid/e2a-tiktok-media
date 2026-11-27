@@ -149,7 +149,9 @@ export const actionsOf = (play: PlayWithActions, id: string): Action[] => {
     if (e.type === 'pass' && e.from === id) {
       // overhead arms only when the pass is loaded from a held ball (play.ts raises it above the head)
       const loaded = e.style === 'overhead' && play.ball.some((h) => h.type === 'hold' && h.player === id && !h.dribble && Math.abs(h.to - e.t0) < 1e-6);
-      out.push({type: 'pass', from: e.t0 - (loaded ? 0.4 : 0.22), to: e.t0 + 0.18, ...(loaded ? {pose: 'overhead' as const} : {})});
+      // (2026-11-27, IQ 02) an explicit load window (e.load) starts the overhead arms with the ball, not 0.4 s before
+      const lw = loaded ? ((e as {load?: number}).load ?? 0.4) : 0.22;
+      out.push({type: 'pass', from: e.t0 - lw, to: e.t0 + 0.18, ...(loaded ? {pose: 'overhead' as const} : {})});
     }
     if (e.type === 'pass' && e.to === id && !own.some((a) => a.type === 'catchReady' && a.to >= e.t1 - 0.05 && a.from <= e.t1)) out.push({type: 'catchReady', from: e.t1 - 0.45, to: e.t1 + 0.1});
     if (e.type === 'hold' && e.player === id && e.dribble) out.push({type: 'dribble', from: e.from, to: e.to});

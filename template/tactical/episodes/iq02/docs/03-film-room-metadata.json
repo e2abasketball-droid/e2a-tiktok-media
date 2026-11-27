@@ -1,0 +1,38 @@
+{
+ "schema": "e2a-film-room-lesson/1",
+ "id": "basketball-iq-02-beat-the-blitz",
+ "series": "Basketball IQ",
+ "episode": 2,
+ "title": "Beat the Blitz",
+ "concept": "Pick and roll vs blitz: the screener short-rolls, catches the outlet, and plays 4 on 3. Read the weak-side helper.",
+ "level": "intermediate",
+ "age_range": "U14+",
+ "positions": ["big (short-roll decision maker)", "ball handler (early outlet)", "weak-side wing (45-degree cut)"],
+ "possession": "original E2A 5v5, canonical file tactical/iq02/basketball_iq_02_blitz_short_roll.json (not a reconstruction of any real possession)",
+ "decision": {"freeze_s_owner": 2.30, "question": "Drive? Corner? Or cut?",
+  "options": [{"letter": "A", "label": "Drive", "correct": false, "why": "X4 has stepped into the paint, on the line to the rim"},
+              {"letter": "B", "label": "Corner", "correct": false, "why": "X3 stayed home in the corner"},
+              {"letter": "C", "label": "Cut", "correct": true, "why": "X4 left O4 to stop the big; O4 cuts behind him at 45 degrees"}]},
+ "teaching_points": [
+  "Against two on the ball, the ball handler outlets EARLY, before the trap closes.",
+  "The screener's short roll to the nail creates a 4 on 3 behind the trap.",
+  "The big reads the HELP, not the ball: who left whom?",
+  "When the weak-side helper steps into the paint, the space behind him is the target: cut at 45 degrees behind him.",
+  "Pass around the helper (here: a bounce pass under his arms)."
+ ],
+ "lesson_line": "Read the help. Attack the space it leaves.",
+ "checks_for_understanding": [
+  "Who is the defender to watch after the short-roll catch?",
+  "Why is the corner pass wrong in THIS possession?",
+  "What would change if X3 rotated instead of X4?"
+ ],
+ "drills_suggested": ["2-on-2 blitz outlet + short-roll catch", "4-on-3 short-roll advantage drill (weak-side helper choice)", "45-degree cut timing vs a sinking helper"],
+ "future_variants_metadata_only": [
+  {"id": "iq02-var-x3-rotation", "status": "NOT BUILT", "correct": "B CORNER", "idea": "X3 rotates from the corner instead of X4. Needs its own keyframes and validation."},
+  {"id": "iq02-var-no-x4-help", "status": "NOT BUILT", "correct": "A DRIVE", "idea": "Nobody steps into the paint. Needs its own keyframes and validation."}
+ ],
+ "assets": {"video": "e2a-basketball-iq-02-beat-the-blitz-v1.mp4", "srt": "e2a-basketball-iq-02-beat-the-blitz-v1.srt",
+            "tactical_preview": "iq02-tactical-preview.png", "validation": "iq02-tactical-validation.md"},
+ "narrator": "E2A standard (Nathaniel, eleven_v4)",
+ "publication": "NOT PUBLISHED. Awaiting owner review."
+}

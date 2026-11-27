@@ -1,0 +1,74 @@
+{
+ "lines": [
+  [
+   "They send two at the ball!",
+   1.0,
+   "A"
+  ],
+  [
+   "Your big catches the short roll.",
+   0.5,
+   "A"
+  ],
+  [
+   "Four on three.",
+   1.0,
+   "A"
+  ],
+  [
+   "Looks easy... until the help moves.",
+   0.0,
+   "B"
+  ],
+  [
+   "Drive? Corner? Or cut?",
+   0.5,
+   "A"
+  ],
+  [
+   "Drive? The help is already there.",
+   0.0,
+   "B"
+  ],
+  [
+   "Corner? His defender never left.",
+   0.0,
+   "B"
+  ],
+  [
+   "Now watch the weak-side defender.",
+   0.0,
+   "B"
+  ],
+  [
+   "He steps into the paint...",
+   0.5,
+   "C"
+  ],
+  [
+   "and loses the cutter!",
+   1.0,
+   "D"
+  ],
+  [
+   "There's the pass!",
+   1.0,
+   "D"
+  ],
+  [
+   "Read the help.",
+   0.0,
+   "E"
+  ],
+  [
+   "Attack the space it leaves.",
+   0.0,
+   "E"
+  ],
+  [
+   "Did you see it?",
+   0.5,
+   "E"
+  ]
+ ]
+}
