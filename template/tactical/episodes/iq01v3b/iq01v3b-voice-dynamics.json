@@ -1,0 +1,74 @@
+{
+ "lines": [
+  [
+   "You're watching the wrong player.",
+   1.0,
+   "A"
+  ],
+  [
+   "Your eyes go to the ball,",
+   0.0,
+   "A"
+  ],
+  [
+   "but that's not where the answer is.",
+   0.0,
+   "A"
+  ],
+  [
+   "Watch this defender.",
+   0.0,
+   "B"
+  ],
+  [
+   "He's guarding the corner,",
+   0.0,
+   "B"
+  ],
+  [
+   "the drive starts,",
+   0.0,
+   "B"
+  ],
+  [
+   "and he steps into the paint.",
+   0.5,
+   "B"
+  ],
+  [
+   "Now look what he leaves behind!",
+   0.5,
+   "D"
+  ],
+  [
+   "That's your passing window!",
+   1.0,
+   "D"
+  ],
+  [
+   "Kick it.",
+   0.5,
+   "D"
+  ],
+  [
+   "The next rotation is a step too late.",
+   0.5,
+   "D"
+  ],
+  [
+   "Great passers don't just see who's open.",
+   0,
+   "E"
+  ],
+  [
+   "They see who's about to be open.",
+   0,
+   "E"
+  ],
+  [
+   "Did you catch it the first time?",
+   0.5,
+   "E"
+  ]
+ ]
+}
