@@ -1,0 +1,99 @@
+{
+ "lines": [
+  [
+   "One defender just left a shooter wide open.",
+   1.0,
+   "A"
+  ],
+  [
+   "Can you spot him?",
+   0.5,
+   "A"
+  ],
+  [
+   "He beats his man and the help is coming.",
+   0.5,
+   "A"
+  ],
+  [
+   "Freeze.",
+   1.0,
+   "A"
+  ],
+  [
+   "A, B, or C?",
+   0.5,
+   "A"
+  ],
+  [
+   "Two seconds. Make your call.",
+   0.0,
+   "A"
+  ],
+  [
+   "A looks easy.",
+   0,
+   "B"
+  ],
+  [
+   "But his man is still home.",
+   0,
+   "B"
+  ],
+  [
+   "B? His defender is sitting in the lane.",
+   0,
+   "B"
+  ],
+  [
+   "Now watch the low defender.",
+   0.0,
+   "B"
+  ],
+  [
+   "He left the corner to stop the drive.",
+   0.0,
+   "B"
+  ],
+  [
+   "There! That's your window.",
+   1.0,
+   "D"
+  ],
+  [
+   "C!",
+   1.0,
+   "D"
+  ],
+  [
+   "Kick it.",
+   0.5,
+   "D"
+  ],
+  [
+   "The next rotation is a step too late.",
+   0.5,
+   "D"
+  ],
+  [
+   "The ball tells you where the play is.",
+   0,
+   "E"
+  ],
+  [
+   "The defense tells you where to pass.",
+   0,
+   "E"
+  ],
+  [
+   "Did you see it before the reveal?",
+   0.5,
+   "E"
+  ],
+  [
+   "Run it back.",
+   0.5,
+   "E"
+  ]
+ ]
+}

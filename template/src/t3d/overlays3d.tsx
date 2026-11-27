@@ -117,7 +117,7 @@ export type Ov3 =
      noHead?: boolean}
   | {type: 'screen'; player?: string; at?: V2; n: number; facing?: number}
   /** travel (2026-11-19): seconds for a lit segment to run from the passer to the catch point; dstAt = play time of the catch */
-  | {type: 'passLane'; src: string; dst: string | V2; color?: string; travel?: number; dstAt?: number}
+  | {type: 'passLane'; src: string; dst: string | V2; color?: string; travel?: number; dstAt?: number; /** opt-in width scale (IQ01 V3: 1.6 for phone legibility) */ w?: number}
   /** 2026-11-19 broadcast telestration (telestration3d.tsx): spot, ripple, floorText, ballTrail, ghostTrail */
   | TeleOv
   /** 2026-11-19 telestration v2 (Blind Pig, telestration3d-bp.tsx): arrow3d, lockRing, vision, tether, ghost, ballPath, motionTrail */
@@ -647,9 +647,9 @@ export const Overlays3D: React.FC<{play: Play; pt: number; items: LiveOv3[]}> = 
             void shifted;
             return (
               <group key={i}>
-                <mesh geometry={ribbon(part, 0.34, 0.01)} material={basic(col, 0.14 * a)} />
-                <mesh geometry={ribbon(part.map((q, k) => (k === 0 ? q : q)), 0.09, 0.013, true)} material={basic(col, 0.9 * a)} position={[0, 0, 0]} />
-                <mesh geometry={arrowHead(tip, [e[0] - s[0], e[1] - s[1]], 0.5)} material={basic(col, 0.95 * a)} />
+                <mesh geometry={ribbon(part, 0.34 * (o.w ?? 1), 0.01)} material={basic(col, 0.14 * a)} />
+                <mesh geometry={ribbon(part.map((q, k) => (k === 0 ? q : q)), 0.09 * (o.w ?? 1), 0.013, true)} material={basic(col, 0.9 * a)} position={[0, 0, 0]} />
+                <mesh geometry={arrowHead(tip, [e[0] - s[0], e[1] - s[1]], 0.5 * Math.sqrt(o.w ?? 1))} material={basic(col, 0.95 * a)} />
                 {void shift}
               </group>
             );
