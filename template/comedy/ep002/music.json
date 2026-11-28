@@ -1,0 +1,20 @@
+{
+  "_doc": "EP002 V01 music bed: the licensed E2A Comedy Groove A (same as EP001, ElevenLabs Music, paid plan; see EP001 MUSIC_LICENCE.md). Times are EPISODE seconds (no edit cuts). Ducking follows the dialogue automatically; 'automation' adds the comedy cues.",
+  "file": "comedy/ep001/music/e2a_comedy_groove_A.mp3",
+  "start_offset": 0.0,
+  "bed_db": -27,
+  "under_speech_db": -36,
+  "attack": 0.06,
+  "release": 0.32,
+  "automation": [
+    {"from": 5.55, "to": 6.75, "db": 3, "why": "accent: the wild shot flies and slaps the wall pad"},
+    {"from": 6.75, "to": 8.4, "db": -3, "why": "ACE catches it: 'That's a wall.' deadpan"},
+    {"from": 12.2, "to": 13.75, "mute": true, "why": "dip before and under 'Warmups.' (the punchline lands dry)"},
+    {"from": 13.75, "to": 14.75, "db": -6, "why": "groove creeps back under the stare"},
+    {"from": 15.05, "to": 15.5, "mute": true, "why": "hesitation: the music stops on the fake pass"},
+    {"from": 20.2, "to": 22.0, "db": -3, "why": "'Now you want a pass?'"},
+    {"from": 22.15, "to": 26.2, "mute": true, "why": "silence before and after 'Bro, don't be selfish!' and through ACE's freeze"},
+    {"from": 26.2, "to": 30.0, "db": 1, "why": "groove back for ACE's look to camera and the CTA"}
+  ],
+  "edit": {"cuts": [], "old_end": 30.0}
+}

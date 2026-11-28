@@ -1,0 +1,20 @@
+{
+  "episode": "EP002_THE_BALL_HOG",
+  "version": "V01",
+  "duration": 30.0,
+  "target_rms_db": -19,
+  "lines": [
+    {"id": "B1", "who": "BUCKETS", "take": "bk_open1_b", "cut": [0.04, 2.8], "at": 0.08, "text": "I'm open! I'm open!", "words": [["I'm", 0.14, 0.36], ["open!", 0.58, 1.12], ["I'm", 1.64, 1.84], ["open!", 2.06, 2.68]]},
+    {"id": "A1", "who": "ACE", "take": "ace_double_b", "cut": [0.05, 1.5], "at": 2.68, "text": "You're double-teamed!", "words": [["You're", 0.14, 0.3], ["double-teamed!", 0.5, 1.38]]},
+    {"id": "B2", "who": "BUCKETS", "take": "bk_window_b", "cut": [0.03, 1.15], "at": 4.3, "text": "I see a window!", "words": [["I", 0.12, 0.18], ["see", 0.32, 0.44], ["a", 0.48, 0.54], ["window!", 0.66, 1.1]]},
+    {"id": "A2", "who": "ACE", "take": "ace_wall_b", "cut": [0.1, 1.1], "at": 7.0, "text": "That's a wall.", "words": [["That's", 0.2, 0.42], ["a", 0.48, 0.54], ["wall.", 0.62, 0.98]]},
+    {"id": "A3", "who": "ACE", "take": "ace_passonce_b", "cut": [0.2, 1.7], "at": 8.55, "text": "Just pass once.", "words": [["Just", 0.32, 0.58], ["pass", 0.68, 1.0], ["once.", 1.16, 1.56]]},
+    {"id": "B3", "who": "BUCKETS", "take": "bk_idopass_b", "cut": [0.0, 1.12], "at": 10.25, "text": "I do pass.", "words": [["I", 0.1, 0.18], ["do", 0.3, 0.48], ["pass.", 0.62, 1.02]]},
+    {"id": "A4", "who": "ACE", "take": "ace_when_b", "cut": [0.3, 0.95], "at": 11.6, "text": "When?", "words": [["When?", 0.42, 0.78]]},
+    {"id": "B4", "who": "BUCKETS", "take": "bk_warmups_a", "cut": [0.2, 1.2], "at": 12.75, "text": "Warmups.", "words": [["Warmups.", 0.34, 1.08]]},
+    {"id": "B5", "who": "BUCKETS", "take": "bk_open2_a", "cut": [0.1, 2.05], "at": 18.05, "text": "Yo! I'm open!", "words": [["Yo!", 0.22, 0.62], ["I'm", 1.0, 1.24], ["open!", 1.36, 1.96]]},
+    {"id": "A5", "who": "ACE", "take": "ace_nowpass_b", "cut": [0.22, 1.9], "at": 20.3, "text": "Now you want a pass?", "words": [["Now", 0.34, 0.56], ["you", 0.66, 0.76], ["want", 0.82, 0.96], ["a", 0.98, 1.06], ["pass?", 1.24, 1.78]]},
+    {"id": "B6", "who": "BUCKETS", "take": "bk_selfish_b", "cut": [0.0, 2.05], "at": 22.75, "text": "Bro, don't be selfish!", "words": [["Bro,", 0.1, 0.38], ["don't", 0.72, 0.9], ["be", 0.96, 1.04], ["selfish!", 1.26, 1.9]]},
+    {"id": "A6", "who": "ACE", "take": "ace_tag_a", "cut": [0.15, 1.6], "at": 26.75, "text": "Tag that friend.", "words": [["Tag", 0.28, 0.58], ["that", 0.64, 0.82], ["friend.", 0.9, 1.32]], "gain_db": -1.5}
+  ]
+}

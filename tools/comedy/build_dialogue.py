@@ -22,7 +22,8 @@ def load(path):
 dur = spec['duration']
 N = int(dur * SR)
 mix = np.zeros(N)
-env = {c: np.zeros(int(dur * FPS) + 1) for c in ('AND1', 'ACE')}
+# one mouth envelope per speaking character (EP001: AND1 + ACE; EP002 adds BUCKETS)
+env = {c: np.zeros(int(dur * FPS) + 1) for c in sorted({'AND1', 'ACE'} | {L['who'] for L in spec['lines']})}
 lines_out = []
 for L in spec['lines']:
     x = load(os.path.join(takes, L['take'] + '.mp3'))

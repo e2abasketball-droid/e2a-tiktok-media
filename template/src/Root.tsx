@@ -9,6 +9,7 @@ import pilot from '../episodes/pilot.json';
 import {Probe} from './t3d/Probe';
 import {ComedyLab} from './comedy/Lab';
 import {ComedyShort, comedyDuration} from './comedy/ComedyShort';
+import {ComedyEP002, ep002Duration} from './comedy/ComedyEP002';
 import {Tactical3D, tactical3dDuration} from './t3d/Tactical3D';
 import {staggerEpisode, staggerEpisodeV2} from './t3d/episode';
 import {Tactical, tacticalDuration} from './tactical/Tactical';
@@ -101,6 +102,7 @@ export const Root: React.FC = () => (
     <Composition id="Probe3D" component={Probe} durationInFrames={300} fps={60} width={1080} height={1920} defaultProps={{cam: 'broadcast'}} />
     {/* E2A YouTube Comedy (separate series): character lab + episodes */}
     <Composition id="ComedyEP001" component={ComedyShort} durationInFrames={comedyDuration()} fps={30} width={1080} height={1920} defaultProps={{}} />
-    <Composition id="ComedyLab" component={ComedyLab} durationInFrames={32} fps={30} width={1080} height={1920} defaultProps={{mode: 'turn' as const, who: 'AND1' as const}} />
+    <Composition id="ComedyEP002" component={ComedyEP002} durationInFrames={ep002Duration()} fps={30} width={1080} height={1920} defaultProps={{hook: 'A' as const, clean: false}} />
+    <Composition id="ComedyLab" component={ComedyLab} durationInFrames={32} fps={30} width={1080} height={1920} defaultProps={{mode: 'turn' as const, who: 'AND1' as 'AND1' | 'ACE' | 'BUCKETS' | 'DEF1' | 'DEF2'}} />
   </>
 );

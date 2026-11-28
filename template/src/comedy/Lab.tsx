@@ -2,7 +2,7 @@
 import React from 'react';
 import {AbsoluteFill, useCurrentFrame} from 'remotion';
 import '../theme';
-import {AND1, ACE} from './characters';
+import {AND1, ACE, BUCKETS, DEF1, DEF2} from './characters';
 import {POSE0, apply} from './pose';
 import type {PosePatch} from './pose';
 import {Stage} from './stage';
@@ -20,9 +20,9 @@ const EXPR: Record<string, PosePatch> = {
 import * as MV from './moves';
 const BODY: [string, PosePatch][] = [['FLEX', MV.FLEX], ['CHOP_UP', MV.CHOP_UP], ['CHOP_DOWN', MV.CHOP_DOWN], ['WAVE_A', MV.WAVE_A], ['WAVE_B', MV.WAVE_B], ['SHOT_SET', MV.SHOT_SET], ['SHOT_RELEASE', MV.SHOT_RELEASE], ['ARMS_UP', {...MV.STAND, ...MV.ARMS_UP}], ['SIT', MV.SIT], ['SIT_REST', MV.SIT_REST], ['SIT_POINT', MV.SIT_POINT], ['CROSSED', MV.CROSSED], ['READY', MV.READY], ['RELAXED', MV.RELAXED]];
 
-export const ComedyLab: React.FC<{mode: 'turn' | 'faces' | 'body'; who: 'AND1' | 'ACE'; yaw?: number}> = ({mode, who, yaw: y0 = 0.5}) => {
+export const ComedyLab: React.FC<{mode: 'turn' | 'faces' | 'body'; who: 'AND1' | 'ACE' | 'BUCKETS' | 'DEF1' | 'DEF2'; yaw?: number}> = ({mode, who, yaw: y0 = 0.5}) => {
   const f = useCurrentFrame();
-  const look = who === 'AND1' ? AND1 : ACE;
+  const look = {AND1, ACE, BUCKETS, DEF1, DEF2}[who];
   if (mode === 'turn') {
     const yaw = (f / 8) * (Math.PI / 2);
     const pose = apply(POSE0, {x: 0, z: -5, yaw});

@@ -1,0 +1,7 @@
+{
+ "_doc": "EP002: one soft, low-passed thud when the ball hits the padded wall (6.47 s). No ball-bounce SFX (owner rule), no meme or cartoon SFX.",
+ "duration": 30.0,
+ "cues": [
+  {"file": "impact.mp3", "at": 6.46, "gain_db": -21, "lowpass": 600, "trim": 0.35, "fade": 0.15}
+ ]
+}

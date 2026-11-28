@@ -11,7 +11,7 @@ export type Look = {
   id: string;
   skin: string;
   hair: string;
-  hairStyle: 'fade' | 'curls';
+  hairStyle: 'fade' | 'curls' | 'flattop';
   jersey: string;
   trim: string;
   number: string;
@@ -463,6 +463,22 @@ const Head: React.FC<{look: Look; face: Face; mouth: number}> = ({look, face, mo
       {look.hairStyle === 'fade' ? (
         <group rotation={[-0.74, 0, 0]}>
           <mesh geometry={G.capTop} material={hairM} scale={[R * 1.025, R * 1.07, R * 1.0]} />
+        </group>
+      ) : look.hairStyle === 'flattop' ? (
+        // EP002 BUCKETS: tight fade on the sides + a tall, slightly forward-leaning flat-top block
+        <group>
+          <group rotation={[-0.74, 0, 0]}>
+            <mesh geometry={G.capTop} material={hairM} scale={[R * 1.02, R * 1.05, R * 1.0]} />
+          </group>
+          <group position={[0, R * 0.8, -R * 0.06]} rotation={[0.1, 0, 0]}>
+            <mesh material={hairM} castShadow>
+              <cylinderGeometry args={[R * 0.82, R * 0.9, R * 0.78, 28, 1]} />
+            </mesh>
+            {/* slightly lighter flat top so the silhouette edge reads */}
+            <mesh material={std(shade(look.hair, 0.12), 0.9)} position={[0, R * 0.392, 0]}>
+              <cylinderGeometry args={[R * 0.82, R * 0.82, 0.004, 28, 1]} />
+            </mesh>
+          </group>
         </group>
       ) : (
         <group rotation={[-0.6, 0, 0]}>
