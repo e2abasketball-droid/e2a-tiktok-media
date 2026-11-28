@@ -1,0 +1,1959 @@
+{
+ "schema": "e2a-tactical-play/1",
+ "id": "e2a_shuffle_cut_v1",
+ "episode": "Shuffle Cut: the screen you never see coming",
+ "status": "CANONICAL (designed from the owner brief 2026-11-28 09:18Z). Every render, replay and graphic is generated from this file.",
+ "originality": "Original E2A 5v5 possession. Coaching principles only; no copied diagrams, footage or graphics.",
+ "principle_sources": [
+  "FIBA WABC Coaching Manual Level 3, 2.1.3 'The Shuffle' (manual p.168): ball reversal starts the movement; the first cutter cutting off the high-post screen is the basic Shuffle Cut",
+  "FIBA WABC Level 3, 2.2.4 Blind (back) screens (p.186): set behind the defender, at least one step away from his current position",
+  "FIBA WABC Level 3, 2.1.1 layer 8 (p.165): the cutter does not move until the screener has set",
+  "Coach's Clipboard, Shuffle Offense: O5 screens for O1, who cuts off the screen looking for the feeder's pass for the lay-up",
+  "Coach's Clipboard, Cutting and Faking: slow fake then quick cut, quick strong first step; V-cut: plant, push off toward the cut",
+  "Coach's Clipboard, Pete Carril's Princeton Offense: cutters have their hands ready, looking for the pass"
+ ],
+ "coordinates": {
+  "system": "owner",
+  "origin": "centre of the attacking endline",
+  "x": "lateral metres; negative = LEFT of the overhead diagram (basket at the top)",
+  "y": "metres from the endline toward half court",
+  "hoop": [
+   0,
+   1.575,
+   3.05
+  ],
+  "units": "player centres",
+  "engine_mapping": "engine x = -owner x, engine y = owner y, engine t = owner t + engine_offset_s",
+  "engine_offset_s": 0.6
+ },
+ "anchors_brief": {
+  "O1": [
+   -3.7,
+   8.9
+  ],
+  "O2": [
+   0.2,
+   10.2
+  ],
+  "O3": [
+   5.5,
+   7.2
+  ],
+  "O4": [
+   -6.65,
+   2.7
+  ],
+  "O5": [
+   -1.55,
+   6.3
+  ],
+  "X1": [
+   -3.15,
+   8.05
+  ],
+  "X2": [
+   0.1,
+   9.35
+  ],
+  "X3": [
+   4.7,
+   6.9
+  ],
+  "X4": [
+   -5.7,
+   3.1
+  ],
+  "X5": [
+   -0.85,
+   5.75
+  ]
+ },
+ "anchors_T0": {
+  "O1": [
+   -3.7,
+   8.9
+  ],
+  "O2": [
+   0.2,
+   10.2
+  ],
+  "O3": [
+   5.5,
+   7.2
+  ],
+  "O4": [
+   -6.65,
+   2.7
+  ],
+  "O5": [
+   -1.55,
+   6.3
+  ],
+  "X1": [
+   -3.15,
+   8.05
+  ],
+  "X2": [
+   -0.4,
+   9.0
+  ],
+  "X3": [
+   4.7,
+   6.9
+  ],
+  "X4": [
+   -5.7,
+   3.1
+  ],
+  "X5": [
+   -0.85,
+   5.75
+  ]
+ },
+ "designed_spots": {
+  "screen_spot_O5": [
+   -2.5,
+   7.3
+  ],
+  "O1_setup_plant": [
+   -3.3,
+   9.3
+  ],
+  "O1_brush_point": [
+   -3.05,
+   7.3
+  ],
+  "O1_catch": [
+   -1.56,
+   4.43
+  ],
+  "O1_release": [
+   -0.65,
+   2.45
+  ],
+  "O1_landing": [
+   -0.47,
+   2.08
+  ]
+ },
+ "timeline_owner_s": {
+  "start": -0.6,
+  "k0": 0.0,
+  "rel1": 0.25,
+  "k1": 0.85,
+  "x1_set": 1.2,
+  "x3_set": 2.0,
+  "screen_set": 1.25,
+  "k2": 1.3,
+  "k3": 1.55,
+  "x1_react": 1.72,
+  "k4": 2.1,
+  "rel2": 2.1,
+  "contact": 2.15,
+  "brush": 2.2,
+  "clear": 2.65,
+  "screen_release": 2.7,
+  "k5": 2.85,
+  "k6": 3.5,
+  "make": 3.95,
+  "end": 4.800000000000001
+ },
+ "players": [
+  {
+   "id": "O1",
+   "team": "O",
+   "role": "Shuffle cutter (left slot): set-up step, cuts off O5's back screen, catches, layup"
+  },
+  {
+   "id": "O2",
+   "team": "O",
+   "role": "Point / entry passer: passes to O3, spaces, available for reversal"
+  },
+  {
+   "id": "O3",
+   "team": "O",
+   "role": "Feeder (right wing): catches, squares up, passes to the cutter"
+  },
+  {
+   "id": "O4",
+   "team": "O",
+   "role": "Left-corner spacer: keeps X4 away from the action"
+  },
+  {
+   "id": "O5",
+   "team": "O",
+   "role": "High-post screener: legal stationary back screen on X1, then steps to the ball"
+  },
+  {
+   "id": "X1",
+   "team": "X",
+   "guards": "O1",
+   "role": "Denies O1 ball side, chases, is delayed by the screen"
+  },
+  {
+   "id": "X2",
+   "team": "X",
+   "guards": "O2",
+   "role": "Stays high and connected to O2"
+  },
+  {
+   "id": "X3",
+   "team": "X",
+   "guards": "O3",
+   "role": "High-side pressure on the wing passer"
+  },
+  {
+   "id": "X4",
+   "team": "X",
+   "guards": "O4",
+   "role": "Stays connected to O4 in the corner (too far to contest)"
+  },
+  {
+   "id": "X5",
+   "team": "X",
+   "guards": "O5",
+   "role": "Stays with O5, one show step of controlled help"
+  }
+ ],
+ "keyframes": [
+  {
+   "k": "K0",
+   "t": 0.0,
+   "what": "Initial formation: O2 has the ball at the top",
+   "ball_owner": "O2",
+   "screen_state": "none",
+   "defensive_reaction": "none (formation)",
+   "players": {
+    "O1": {
+     "pos": [
+      -3.7,
+      8.9
+     ],
+     "root_velocity": [
+      0.001,
+      0.002
+     ],
+     "speed": 0.002,
+     "facing_target": "ball",
+     "state": "set (alive)",
+     "assignment": "offence"
+    },
+    "O2": {
+     "pos": [
+      0.2,
+      10.2
+     ],
+     "root_velocity": [
+      -0.009,
+      -0.009
+     ],
+     "speed": 0.012,
+     "facing_target": "O3",
+     "state": "holding (ball)",
+     "assignment": "offence"
+    },
+    "O3": {
+     "pos": [
+      5.5,
+      7.2
+     ],
+     "root_velocity": [
+      0.411,
+      1.156
+     ],
+     "speed": 1.227,
+     "facing_target": "O2",
+     "state": "ready",
+     "assignment": "offence"
+    },
+    "O4": {
+     "pos": [
+      -6.65,
+      2.7
+     ],
+     "root_velocity": [
+      -0.001,
+      -0.001
+     ],
+     "speed": 0.001,
+     "facing_target": "ball",
+     "state": "spacing",
+     "assignment": "offence"
+    },
+    "O5": {
+     "pos": [
+      -1.55,
+      6.3
+     ],
+     "root_velocity": [
+      -0.003,
+      0.004
+     ],
+     "speed": 0.005,
+     "facing_target": "ball",
+     "state": "ready",
+     "assignment": "offence"
+    },
+    "X1": {
+     "pos": [
+      -3.15,
+      8.05
+     ],
+     "root_velocity": [
+      0.001,
+      0.002
+     ],
+     "speed": 0.002,
+     "facing_target": "O1",
+     "state": "deny stance",
+     "assignment": "guards O1"
+    },
+    "X2": {
+     "pos": [
+      -0.4,
+      9
+     ],
+     "root_velocity": [
+      -0.002,
+      -0.003
+     ],
+     "speed": 0.003,
+     "facing_target": "O2",
+     "state": "on-ball stance",
+     "assignment": "guards O2"
+    },
+    "X3": {
+     "pos": [
+      4.7,
+      6.9
+     ],
+     "root_velocity": [
+      0.001,
+      0.002
+     ],
+     "speed": 0.002,
+     "facing_target": "O3",
+     "state": "deny stance",
+     "assignment": "guards O3"
+    },
+    "X4": {
+     "pos": [
+      -5.7,
+      3.1
+     ],
+     "root_velocity": [
+      0.001,
+      0.001
+     ],
+     "speed": 0.001,
+     "facing_target": "O4",
+     "state": "stance (corner)",
+     "assignment": "guards O4"
+    },
+    "X5": {
+     "pos": [
+      -0.85,
+      5.75
+     ],
+     "root_velocity": [
+      -0.002,
+      0.003
+     ],
+     "speed": 0.003,
+     "facing_target": "O5",
+     "state": "post stance",
+     "assignment": "guards O5"
+    }
+   }
+  },
+  {
+   "k": "K1",
+   "t": 0.85,
+   "what": "Wing pass completed: O3 catches on the right wing",
+   "ball_owner": "O3",
+   "screen_state": "O5 approaching",
+   "defensive_reaction": "X3 closes out high on the catch; X2 jumps to the ball; X5 follows O5 up",
+   "players": {
+    "O1": {
+     "pos": [
+      -3.414,
+      9.186
+     ],
+     "root_velocity": [
+      0.645,
+      0.645
+     ],
+     "speed": 0.912,
+     "facing_target": "ball",
+     "state": "slow set-up step",
+     "assignment": "offence"
+    },
+    "O2": {
+     "pos": [
+      0.2,
+      10.2
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "O3",
+     "state": "follow-through",
+     "assignment": "offence"
+    },
+    "O3": {
+     "pos": [
+      5.85,
+      8.3
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "O2",
+     "state": "catch, square up",
+     "assignment": "offence"
+    },
+    "O4": {
+     "pos": [
+      -6.65,
+      2.7
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "ball",
+     "state": "spacing",
+     "assignment": "offence"
+    },
+    "O5": {
+     "pos": [
+      -2.208,
+      6.993
+     ],
+     "root_velocity": [
+      -1.396,
+      1.469
+     ],
+     "speed": 2.027,
+     "facing_target": "screen spot",
+     "state": "walking to the screen",
+     "assignment": "offence"
+    },
+    "X1": {
+     "pos": [
+      -2.848,
+      8.352
+     ],
+     "root_velocity": [
+      1.095,
+      1.095
+     ],
+     "speed": 1.548,
+     "facing_target": "O1",
+     "state": "following O1 (ball side)",
+     "assignment": "guards O1"
+    },
+    "X2": {
+     "pos": [
+      0.106,
+      9.127
+     ],
+     "root_velocity": [
+      1.125,
+      0.281
+     ],
+     "speed": 1.159,
+     "facing_target": "ball",
+     "state": "jump to the ball",
+     "assignment": "guards O2"
+    },
+    "X3": {
+     "pos": [
+      4.7,
+      6.9
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "O3",
+     "state": "closeout (baseline side)",
+     "assignment": "guards O3"
+    },
+    "X4": {
+     "pos": [
+      -5.7,
+      3.1
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "O4",
+     "state": "stance",
+     "assignment": "guards O4"
+    },
+    "X5": {
+     "pos": [
+      -1.3,
+      6.4
+     ],
+     "root_velocity": [
+      -1.5,
+      2.166
+     ],
+     "speed": 2.635,
+     "facing_target": "O5",
+     "state": "following O5",
+     "assignment": "guards O5"
+    }
+   }
+  },
+  {
+   "k": "K2",
+   "t": 1.3,
+   "what": "O5's back screen established (feet set at 1.25, 1.30 m behind X1)",
+   "ball_owner": "O3",
+   "screen_state": "SET (legal: stationary, 1.30 m behind X1, outside his vision)",
+   "defensive_reaction": "X1 stays ball side of O1, denying (he does not see O5 behind him)",
+   "players": {
+    "O1": {
+     "pos": [
+      -3.3,
+      9.3
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "ball",
+     "state": "slow set-up step",
+     "assignment": "offence"
+    },
+    "O2": {
+     "pos": [
+      -0.003,
+      10.18
+     ],
+     "root_velocity": [
+      -0.923,
+      -0.092
+     ],
+     "speed": 0.927,
+     "facing_target": "ball",
+     "state": "spacing left",
+     "assignment": "offence"
+    },
+    "O3": {
+     "pos": [
+      5.85,
+      8.3
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "rim",
+     "state": "triple threat",
+     "assignment": "offence"
+    },
+    "O4": {
+     "pos": [
+      -6.65,
+      2.7
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "ball",
+     "state": "spacing",
+     "assignment": "offence"
+    },
+    "O5": {
+     "pos": [
+      -2.5,
+      7.3
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "X1",
+     "state": "SCREEN SET (stationary)",
+     "assignment": "offence"
+    },
+    "X1": {
+     "pos": [
+      -2.6,
+      8.6
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "O1",
+     "state": "deny stance",
+     "assignment": "guards O1"
+    },
+    "X2": {
+     "pos": [
+      0.2,
+      9.15
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "O2",
+     "state": "stance",
+     "assignment": "guards O2"
+    },
+    "X3": {
+     "pos": [
+      5.078,
+      6.986
+     ],
+     "root_velocity": [
+      2.205,
+      0.504
+     ],
+     "speed": 2.262,
+     "facing_target": "O3",
+     "state": "on-ball pressure",
+     "assignment": "guards O3"
+    },
+    "X4": {
+     "pos": [
+      -5.7,
+      3.1
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "O4",
+     "state": "stance",
+     "assignment": "guards O4"
+    },
+    "X5": {
+     "pos": [
+      -1.75,
+      7.05
+     ],
+     "root_velocity": [
+      -0.014,
+      0.02
+     ],
+     "speed": 0.024,
+     "facing_target": "O5",
+     "state": "post denial",
+     "assignment": "guards O5"
+    }
+   }
+  },
+  {
+   "k": "K3",
+   "t": 1.55,
+   "what": "O1 plants (end of the slow set-up) and starts using the screen",
+   "ball_owner": "O3",
+   "screen_state": "set",
+   "defensive_reaction": "none yet: X1 reacts 0.17 s after the plant",
+   "players": {
+    "O1": {
+     "pos": [
+      -3.3,
+      9.3
+     ],
+     "root_velocity": [
+      -0.002,
+      -0.029
+     ],
+     "speed": 0.029,
+     "facing_target": "ball",
+     "state": "PLANT (V-cut)",
+     "assignment": "offence"
+    },
+    "O2": {
+     "pos": [
+      -0.222,
+      10.158
+     ],
+     "root_velocity": [
+      -0.703,
+      -0.07
+     ],
+     "speed": 0.706,
+     "facing_target": "ball",
+     "state": "spacing",
+     "assignment": "offence"
+    },
+    "O3": {
+     "pos": [
+      5.85,
+      8.3
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "O1",
+     "state": "reading the cut",
+     "assignment": "offence"
+    },
+    "O4": {
+     "pos": [
+      -6.65,
+      2.7
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "ball",
+     "state": "spacing",
+     "assignment": "offence"
+    },
+    "O5": {
+     "pos": [
+      -2.5,
+      7.3
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "X1",
+     "state": "screen (stationary)",
+     "assignment": "offence"
+    },
+    "X1": {
+     "pos": [
+      -2.6,
+      8.6
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "O1",
+     "state": "stance (screen behind him)",
+     "assignment": "guards O1"
+    },
+    "X2": {
+     "pos": [
+      0.2,
+      9.15
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "O2",
+     "state": "stance",
+     "assignment": "guards O2"
+    },
+    "X3": {
+     "pos": [
+      5.706,
+      7.13
+     ],
+     "root_velocity": [
+      2.599,
+      0.594
+     ],
+     "speed": 2.666,
+     "facing_target": "O3",
+     "state": "on-ball pressure",
+     "assignment": "guards O3"
+    },
+    "X4": {
+     "pos": [
+      -5.7,
+      3.1
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "O4",
+     "state": "stance",
+     "assignment": "guards O4"
+    },
+    "X5": {
+     "pos": [
+      -1.75,
+      7.05
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "O5",
+     "state": "post denial",
+     "assignment": "guards O5"
+    }
+   }
+  },
+  {
+   "k": "K4",
+   "t": 2.1,
+   "what": "X1 runs into the screen and is delayed; O1 enters the passing window; O3 releases",
+   "ball_owner": "O3 (release)",
+   "screen_state": "set, X1 in contact",
+   "defensive_reaction": "X1 turns to chase and runs into O5's chest: delayed ~0.4 s; X5 shows one step at the cutter but stays attached to O5",
+   "players": {
+    "O1": {
+     "pos": [
+      -3.171,
+      7.76
+     ],
+     "root_velocity": [
+      0.968,
+      -4.518
+     ],
+     "speed": 4.62,
+     "facing_target": "path (head to the ball)",
+     "state": "sprint (brushing O5)",
+     "assignment": "offence"
+    },
+    "O2": {
+     "pos": [
+      -0.3,
+      10.15
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "ball",
+     "state": "spacing",
+     "assignment": "offence"
+    },
+    "O3": {
+     "pos": [
+      5.85,
+      8.3
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "O1",
+     "state": "PASS release",
+     "assignment": "offence"
+    },
+    "O4": {
+     "pos": [
+      -6.646,
+      2.707
+     ],
+     "root_velocity": [
+      0.069,
+      0.139
+     ],
+     "speed": 0.155,
+     "facing_target": "ball",
+     "state": "spacing",
+     "assignment": "offence"
+    },
+    "O5": {
+     "pos": [
+      -2.5,
+      7.3
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "X1",
+     "state": "screen (stationary, contact)",
+     "assignment": "offence"
+    },
+    "X1": {
+     "pos": [
+      -2.523,
+      7.953
+     ],
+     "root_velocity": [
+      0.105,
+      -0.881
+     ],
+     "speed": 0.888,
+     "facing_target": "O1 (path)",
+     "state": "CONTACT with the screen (delayed)",
+     "assignment": "guards O1"
+    },
+    "X2": {
+     "pos": [
+      0.148,
+      9.086
+     ],
+     "root_velocity": [
+      -0.366,
+      -0.452
+     ],
+     "speed": 0.581,
+     "facing_target": "ball",
+     "state": "sinking",
+     "assignment": "guards O2"
+    },
+    "X3": {
+     "pos": [
+      6.45,
+      7.3
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "O3",
+     "state": "pressure, reacts to the pass",
+     "assignment": "guards O3"
+    },
+    "X4": {
+     "pos": [
+      -5.7,
+      3.1
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "ball",
+     "state": "stance",
+     "assignment": "guards O4"
+    },
+    "X5": {
+     "pos": [
+      -1.934,
+      6.785
+     ],
+     "root_velocity": [
+      -0.804,
+      -1.153
+     ],
+     "speed": 1.406,
+     "facing_target": "O1",
+     "state": "show (controlled help)",
+     "assignment": "guards O5"
+    }
+   }
+  },
+  {
+   "k": "K5",
+   "t": 2.85,
+   "what": "O1 catches on the move (gather)",
+   "ball_owner": "O1",
+   "screen_state": "released (X1 through)",
+   "defensive_reaction": "X1 trails ~1.7 m; X4 stays connected to O4 (corner shooter, no rotation); X2 stays high on O2",
+   "players": {
+    "O1": {
+     "pos": [
+      -1.56,
+      4.43
+     ],
+     "root_velocity": [
+      2.169,
+      -3.913
+     ],
+     "speed": 4.474,
+     "facing_target": "path (catching)",
+     "state": "CATCH on the move",
+     "assignment": "offence"
+    },
+    "O2": {
+     "pos": [
+      -0.3,
+      10.15
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "ball",
+     "state": "spacing",
+     "assignment": "offence"
+    },
+    "O3": {
+     "pos": [
+      5.85,
+      8.3
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "O1",
+     "state": "follow-through",
+     "assignment": "offence"
+    },
+    "O4": {
+     "pos": [
+      -6.6,
+      2.8
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "ball",
+     "state": "spacing",
+     "assignment": "offence"
+    },
+    "O5": {
+     "pos": [
+      -2.461,
+      7.383
+     ],
+     "root_velocity": [
+      0.546,
+      1.169
+     ],
+     "speed": 1.29,
+     "facing_target": "ball",
+     "state": "stepping to the ball",
+     "assignment": "offence"
+    },
+    "X1": {
+     "pos": [
+      -3.07,
+      6.91
+     ],
+     "root_velocity": [
+      0.846,
+      -3.163
+     ],
+     "speed": 3.275,
+     "facing_target": "path",
+     "state": "chasing (trailing)",
+     "assignment": "guards O1"
+    },
+    "X2": {
+     "pos": [
+      -0.098,
+      8.763
+     ],
+     "root_velocity": [
+      -0.12,
+      -0.202
+     ],
+     "speed": 0.235,
+     "facing_target": "ball",
+     "state": "stance high",
+     "assignment": "guards O2"
+    },
+    "X3": {
+     "pos": [
+      5.906,
+      7.106
+     ],
+     "root_velocity": [
+      -1.085,
+      -0.388
+     ],
+     "speed": 1.152,
+     "facing_target": "ball",
+     "state": "sinking",
+     "assignment": "guards O3"
+    },
+    "X4": {
+     "pos": [
+      -5.7,
+      3.1
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "ball",
+     "state": "stance",
+     "assignment": "guards O4"
+    },
+    "X5": {
+     "pos": [
+      -1.98,
+      6.72
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "O5",
+     "state": "recovering to O5",
+     "assignment": "guards O5"
+    }
+   }
+  },
+  {
+   "k": "K6",
+   "t": 3.5,
+   "what": "O1 releases the left-hand layup off the glass",
+   "ball_owner": "O1 (release)",
+   "screen_state": "none",
+   "defensive_reaction": "X1 contests late from behind (~1.6 m); X5 recovers to O5",
+   "players": {
+    "O1": {
+     "pos": [
+      -0.65,
+      2.45
+     ],
+     "root_velocity": [
+      0.936,
+      -2.091
+     ],
+     "speed": 2.291,
+     "facing_target": "rim",
+     "state": "LAYUP release (airborne)",
+     "assignment": "offence"
+    },
+    "O2": {
+     "pos": [
+      -0.3,
+      10.15
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "ball",
+     "state": "spacing",
+     "assignment": "offence"
+    },
+    "O3": {
+     "pos": [
+      5.85,
+      8.3
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "ball",
+     "state": "watching",
+     "assignment": "offence"
+    },
+    "O4": {
+     "pos": [
+      -6.6,
+      2.8
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "ball",
+     "state": "spacing",
+     "assignment": "offence"
+    },
+    "O5": {
+     "pos": [
+      -2.15,
+      8.05
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "ball",
+     "state": "available high",
+     "assignment": "offence"
+    },
+    "X1": {
+     "pos": [
+      -1.65,
+      3.75
+     ],
+     "root_velocity": [
+      1.996,
+      -3.744
+     ],
+     "speed": 4.243,
+     "facing_target": "O1",
+     "state": "late contest from behind",
+     "assignment": "guards O1"
+    },
+    "X2": {
+     "pos": [
+      -0.082,
+      8.74
+     ],
+     "root_velocity": [
+      0.136,
+      0.094
+     ],
+     "speed": 0.165,
+     "facing_target": "ball",
+     "state": "stance high",
+     "assignment": "guards O2"
+    },
+    "X3": {
+     "pos": [
+      5.75,
+      7.05
+     ],
+     "root_velocity": [
+      0,
+      0
+     ],
+     "speed": 0.0,
+     "facing_target": "ball",
+     "state": "sinking",
+     "assignment": "guards O3"
+    },
+    "X4": {
+     "pos": [
+      -5.253,
+      3.117
+     ],
+     "root_velocity": [
+      -0.193,
+      -0.06
+     ],
+     "speed": 0.203,
+     "facing_target": "ball",
+     "state": "stunt step",
+     "assignment": "guards O4"
+    },
+    "X5": {
+     "pos": [
+      -1.568,
+      7.671
+     ],
+     "root_velocity": [
+      0.598,
+      1.31
+     ],
+     "speed": 1.44,
+     "facing_target": "O5",
+     "state": "with O5",
+     "assignment": "guards O5"
+    }
+   }
+  }
+ ],
+ "tracks_owner": {
+  "O1": [
+   [
+    -0.6,
+    [
+     -3.78,
+     8.8
+    ]
+   ],
+   [
+    0.0,
+    [
+     -3.7,
+     8.9
+    ]
+   ],
+   [
+    0.3,
+    [
+     -3.7,
+     8.9
+    ]
+   ],
+   [
+    1.15,
+    [
+     -3.3,
+     9.3
+    ]
+   ],
+   [
+    1.55,
+    [
+     -3.3,
+     9.3
+    ]
+   ],
+   [
+    2.2,
+    [
+     -3.05,
+     7.3
+    ]
+   ],
+   [
+    2.85,
+    [
+     -1.56,
+     4.43
+    ]
+   ],
+   [
+    3.5,
+    [
+     -0.65,
+     2.45
+    ]
+   ],
+   [
+    3.8,
+    [
+     -0.47,
+     2.08
+    ]
+   ],
+   [
+    4.8,
+    [
+     -0.47,
+     2.08
+    ]
+   ]
+  ],
+  "O2": [
+   [
+    -0.6,
+    [
+     0.7,
+     10.7
+    ]
+   ],
+   [
+    0.0,
+    [
+     0.2,
+     10.2
+    ]
+   ],
+   [
+    0.95,
+    [
+     0.2,
+     10.2
+    ]
+   ],
+   [
+    1.75,
+    [
+     -0.3,
+     10.15
+    ]
+   ],
+   [
+    4.8,
+    [
+     -0.3,
+     10.15
+    ]
+   ]
+  ],
+  "O3": [
+   [
+    -0.6,
+    [
+     5.4,
+     7.05
+    ]
+   ],
+   [
+    0.0,
+    [
+     5.5,
+     7.2
+    ]
+   ],
+   [
+    0.8,
+    [
+     5.85,
+     8.3
+    ]
+   ],
+   [
+    4.8,
+    [
+     5.85,
+     8.3
+    ]
+   ]
+  ],
+  "O4": [
+   [
+    -0.6,
+    [
+     -6.62,
+     2.78
+    ]
+   ],
+   [
+    0.0,
+    [
+     -6.65,
+     2.7
+    ]
+   ],
+   [
+    2.0,
+    [
+     -6.65,
+     2.7
+    ]
+   ],
+   [
+    2.6,
+    [
+     -6.6,
+     2.8
+    ]
+   ],
+   [
+    4.8,
+    [
+     -6.6,
+     2.8
+    ]
+   ]
+  ],
+  "O5": [
+   [
+    -0.6,
+    [
+     -1.4,
+     6.05
+    ]
+   ],
+   [
+    0.0,
+    [
+     -1.55,
+     6.3
+    ]
+   ],
+   [
+    0.25,
+    [
+     -1.55,
+     6.3
+    ]
+   ],
+   [
+    1.2,
+    [
+     -2.5,
+     7.3
+    ]
+   ],
+   [
+    2.72,
+    [
+     -2.5,
+     7.3
+    ]
+   ],
+   [
+    3.35,
+    [
+     -2.15,
+     8.05
+    ]
+   ],
+   [
+    4.8,
+    [
+     -2.15,
+     8.05
+    ]
+   ]
+  ],
+  "X1": [
+   [
+    -0.6,
+    [
+     -3.2,
+     7.95
+    ]
+   ],
+   [
+    0.0,
+    [
+     -3.15,
+     8.05
+    ]
+   ],
+   [
+    0.45,
+    [
+     -3.15,
+     8.05
+    ]
+   ],
+   [
+    1.2,
+    [
+     -2.6,
+     8.6
+    ]
+   ],
+   [
+    1.7,
+    [
+     -2.6,
+     8.6
+    ]
+   ],
+   [
+    2.15,
+    [
+     -2.52,
+     7.93
+    ]
+   ],
+   [
+    2.24,
+    [
+     -2.52,
+     7.93
+    ]
+   ],
+   [
+    2.5,
+    [
+     -2.92,
+     7.78
+    ]
+   ],
+   [
+    2.72,
+    [
+     -3.12,
+     7.28
+    ]
+   ],
+   [
+    2.95,
+    [
+     -2.95,
+     6.55
+    ]
+   ],
+   [
+    3.5,
+    [
+     -1.65,
+     3.75
+    ]
+   ],
+   [
+    4.05,
+    [
+     -1.2,
+     3.05
+    ]
+   ],
+   [
+    4.8,
+    [
+     -1.2,
+     3.05
+    ]
+   ]
+  ],
+  "X2": [
+   [
+    -0.6,
+    [
+     -0.3,
+     9.15
+    ]
+   ],
+   [
+    0.0,
+    [
+     -0.4,
+     9.0
+    ]
+   ],
+   [
+    0.4,
+    [
+     -0.4,
+     9.0
+    ]
+   ],
+   [
+    1.0,
+    [
+     0.2,
+     9.15
+    ]
+   ],
+   [
+    1.85,
+    [
+     0.2,
+     9.15
+    ]
+   ],
+   [
+    2.45,
+    [
+     0.0,
+     8.9
+    ]
+   ],
+   [
+    4.8,
+    [
+     0.1,
+     8.9
+    ]
+   ]
+  ],
+  "X3": [
+   [
+    -0.6,
+    [
+     4.65,
+     6.8
+    ]
+   ],
+   [
+    0.0,
+    [
+     4.7,
+     6.9
+    ]
+   ],
+   [
+    1.0,
+    [
+     4.7,
+     6.9
+    ]
+   ],
+   [
+    2.0,
+    [
+     6.45,
+     7.3
+    ]
+   ],
+   [
+    2.28,
+    [
+     6.45,
+     7.3
+    ]
+   ],
+   [
+    3.1,
+    [
+     5.75,
+     7.05
+    ]
+   ],
+   [
+    4.8,
+    [
+     5.75,
+     7.05
+    ]
+   ]
+  ],
+  "X4": [
+   [
+    -0.6,
+    [
+     -5.75,
+     3.05
+    ]
+   ],
+   [
+    0.0,
+    [
+     -5.7,
+     3.1
+    ]
+   ],
+   [
+    3.0,
+    [
+     -5.7,
+     3.1
+    ]
+   ],
+   [
+    3.35,
+    [
+     -5.3,
+     3.12
+    ]
+   ],
+   [
+    4.0,
+    [
+     -5.55,
+     3.08
+    ]
+   ],
+   [
+    4.8,
+    [
+     -5.55,
+     3.08
+    ]
+   ]
+  ],
+  "X5": [
+   [
+    -0.6,
+    [
+     -0.75,
+     5.6
+    ]
+   ],
+   [
+    0.0,
+    [
+     -0.85,
+     5.75
+    ]
+   ],
+   [
+    0.4,
+    [
+     -0.85,
+     5.75
+    ]
+   ],
+   [
+    1.3,
+    [
+     -1.75,
+     7.05
+    ]
+   ],
+   [
+    1.85,
+    [
+     -1.75,
+     7.05
+    ]
+   ],
+   [
+    2.2,
+    [
+     -1.98,
+     6.72
+    ]
+   ],
+   [
+    2.86,
+    [
+     -1.98,
+     6.72
+    ]
+   ],
+   [
+    3.45,
+    [
+     -1.6,
+     7.6
+    ]
+   ],
+   [
+    4.8,
+    [
+     -1.55,
+     7.55
+    ]
+   ]
+  ]
+ },
+ "ball_events": [
+  {
+   "t": 0.0,
+   "event": "O2 holds the ball at the top (live dribble ended at -0.05)"
+  },
+  {
+   "t": 0.25,
+   "event": "release O2 -> O3 (chest)"
+  },
+  {
+   "t": 0.85,
+   "event": "O3 catches (K1)"
+  },
+  {
+   "t": 2.1,
+   "event": "release O3 -> O1 (bounce, lead pass into the cut)"
+  },
+  {
+   "t": 2.85,
+   "event": "O1 catches on the move (K5)"
+  },
+  {
+   "t": 3.5,
+   "event": "layup release, left hand, off the glass (K6)"
+  },
+  {
+   "t": 3.95,
+   "event": "make"
+  }
+ ],
+ "screen": {
+  "screener": "O5",
+  "screened": "X1",
+  "type": "back (blind) screen at the high post",
+  "set_at": 1.25,
+  "released_at": 2.7,
+  "spot": [
+   -2.5,
+   7.3
+  ],
+  "legality": [
+   "stationary from set to release (<= 0.15 m/s)",
+   "set >= 1.2 m (one normal step) from X1, who is stationary when it is set",
+   "behind X1 (outside his field of vision), so the one-step rule applies",
+   "the defender moves into the screener, never the reverse",
+   "the screener stays within his cylinder (feet shoulder width, arms in)"
+  ]
+ },
+ "coverage": {
+  "name": "chase (trail) the cutter, no switch",
+  "X1": "chases and is delayed",
+  "X5": "shows one step, stays with O5 (no switch)",
+  "X4": "stays home on the corner shooter",
+  "X2": "stays high on O2",
+  "X3": "pressure on the ball from the baseline side (takes the baseline drive away)",
+  "honesty": "This is ONE designed coverage. Against a switch, a top-lock or early weak-side help the shuffle cut does not produce this layup; it then creates other advantages (screener open, second cutter)."
+ },
+ "defensive_causes": {
+  "X1": [
+   {
+    "t": -0.6,
+    "cause": "pre-roll: guards O1"
+   },
+   {
+    "t": 0.3,
+    "cause": "O1 starts his set-up step up and in: follows, ball side"
+   },
+   {
+    "t": 1.55,
+    "cause": "O1 plants and cuts: chases"
+   }
+  ],
+  "X2": [
+   {
+    "t": -0.6,
+    "cause": "pre-roll: guards O2"
+   },
+   {
+    "t": 0.25,
+    "cause": "O2 passes to O3: jumps to the ball"
+   },
+   {
+    "t": 1.55,
+    "cause": "O1 cuts: sinks a step, stays high on O2"
+   }
+  ],
+  "X3": [
+   {
+    "t": -0.6,
+    "cause": "pre-roll: guards O3"
+   },
+   {
+    "t": 0.85,
+    "cause": "O3 catches: closeout to baseline-side pressure"
+   },
+   {
+    "t": 2.1,
+    "cause": "O3 passes: jumps to the ball / sinks"
+   }
+  ],
+  "X4": [
+   {
+    "t": -0.6,
+    "cause": "pre-roll: guards O4"
+   },
+   {
+    "t": 2.85,
+    "cause": "O1 catches in the lane: stunt step, stays with O4"
+   }
+  ],
+  "X5": [
+   {
+    "t": -0.6,
+    "cause": "pre-roll: guards O5"
+   },
+   {
+    "t": 0.25,
+    "cause": "O5 moves up to screen: follows, ball side"
+   },
+   {
+    "t": 1.55,
+    "cause": "O1 cuts off the screen: shows one step (controlled help)"
+   },
+   {
+    "t": 2.7,
+    "cause": "O5 releases the screen and steps to the ball: recovers"
+   }
+  ]
+ },
+ "corrections_log": [
+  {
+   "date": "2026-11-28",
+   "what": "anchors T0",
+   "change": "nine of ten anchors kept exactly (centre to centre >= 0.85 m, all in bounds, O4 outside the corner three)"
+  },
+  {
+   "date": "2026-11-28",
+   "what": "X2 anchor (0.10, 9.35) -> (-0.40, 9.00), moved 0.61 m",
+   "change": "at 0.86 m from O2 the release of the entry pass (0.44 m in front of O2's chest, toward O3) is inside X2's reach envelope (validator: BLOCKED, -0.19 m). Smallest move tested that leaves the entry OPEN (>= 0.30 m clearance): 1.34 m from O2, on his left hip, still connected and on the top side. Positions 0.25-0.54 m away stayed CONTESTED"
+  },
+  {
+   "date": "2026-11-28",
+   "what": "screen spot",
+   "change": "O5 starts at (-1.55, 6.30), 2.37 m from X1: too far for a screen. He walks 1.38 m up and out to (-2.50, 7.30), 1.30 m behind X1 (one normal step + bodies), and sets his feet 0.30 s before O1 plants"
+  },
+  {
+   "date": "2026-11-28",
+   "what": "X3",
+   "change": "X3's anchor (4.70, 6.90) is on the low (lane) side of O3: an O3 -> cutter pass from there goes through him (0.06 m). He stays at the anchor through the entry pass (he gives the catch, no full deny), then closes out to the baseline side (6.45, 7.30), 1.17 m from O3: normal pressure that takes the baseline drive away; the pass to the cutter goes to the middle, away from him (validator: 0.6 m clearance)"
+  },
+  {
+   "date": "2026-11-28",
+   "what": "O3",
+   "change": "O3 V-cuts 1.15 m up the wing to meet the entry pass at (5.85, 8.30): with X3 at his anchor the catch spot is 1.7 m from X3's shoulders (OPEN); a catch at the anchor spot is inside X3's reach"
+  }
+ ]
+}

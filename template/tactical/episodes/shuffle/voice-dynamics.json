@@ -1,0 +1,74 @@
+{
+ "lines": [
+  [
+   "One screen. One cut. And the defender never sees it coming!",
+   1.0,
+   "A"
+  ],
+  [
+   "This is the Shuffle Cut.",
+   0.5,
+   "A"
+  ],
+  [
+   "First, the ball swings to the wing.",
+   0.0,
+   "B"
+  ],
+  [
+   "Now watch the big man.",
+   0.0,
+   "B"
+  ],
+  [
+   "He sets the back screen... right behind the defender.",
+   0.0,
+   "B"
+  ],
+  [
+   "The cutter waits for it.",
+   0.0,
+   "C"
+  ],
+  [
+   "Slow... slow...",
+   0.0,
+   "C"
+  ],
+  [
+   "then he explodes off the screener's shoulder!",
+   1.0,
+   "D"
+  ],
+  [
+   "The defender gets caught chasing, right into the screen.",
+   0.5,
+   "D"
+  ],
+  [
+   "The wing hits the cutter in stride...",
+   0.5,
+   "D"
+  ],
+  [
+   "and there's your layup!",
+   1.0,
+   "D"
+  ],
+  [
+   "Screen. Cut. Finish.",
+   0.0,
+   "E"
+  ],
+  [
+   "That's why timing matters more than just speed.",
+   0.0,
+   "E"
+  ],
+  [
+   "One screen. Perfect timing. Easy advantage.",
+   0.5,
+   "E"
+  ]
+ ]
+}

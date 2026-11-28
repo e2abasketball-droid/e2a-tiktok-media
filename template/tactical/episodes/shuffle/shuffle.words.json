@@ -1,0 +1,442 @@
+[
+{
+"text": "One",
+"start": 0.22,
+"end": 0.36
+},
+{
+"text": "screen.",
+"start": 0.46,
+"end": 0.86
+},
+{
+"text": "One",
+"start": 1.24,
+"end": 1.4
+},
+{
+"text": "cut.",
+"start": 1.52,
+"end": 1.78
+},
+{
+"text": "And",
+"start": 2.06,
+"end": 2.14
+},
+{
+"text": "the",
+"start": 2.16,
+"end": 2.22
+},
+{
+"text": "defender",
+"start": 2.28,
+"end": 2.72
+},
+{
+"text": "never",
+"start": 2.9,
+"end": 3.14
+},
+{
+"text": "sees",
+"start": 3.24,
+"end": 3.42
+},
+{
+"text": "it",
+"start": 3.46,
+"end": 3.56
+},
+{
+"text": "coming!",
+"start": 3.62,
+"end": 3.98
+},
+{
+"text": "This",
+"start": 4.42,
+"end": 4.68
+},
+{
+"text": "is",
+"start": 4.86,
+"end": 4.96
+},
+{
+"text": "the",
+"start": 5.02,
+"end": 5.12
+},
+{
+"text": "Shuffle",
+"start": 5.16,
+"end": 5.46
+},
+{
+"text": "Cut.",
+"start": 5.54,
+"end": 5.82
+},
+{
+"text": "First,",
+"start": 8.16,
+"end": 8.54
+},
+{
+"text": "the",
+"start": 8.74,
+"end": 8.8
+},
+{
+"text": "ball",
+"start": 8.9,
+"end": 9.1
+},
+{
+"text": "swings",
+"start": 9.22,
+"end": 9.52
+},
+{
+"text": "to",
+"start": 9.56,
+"end": 9.64
+},
+{
+"text": "the",
+"start": 9.68,
+"end": 9.74
+},
+{
+"text": "wing.",
+"start": 9.82,
+"end": 10.08
+},
+{
+"text": "Now",
+"start": 10.44,
+"end": 10.56
+},
+{
+"text": "watch",
+"start": 10.72,
+"end": 10.94
+},
+{
+"text": "the",
+"start": 10.98,
+"end": 11.06
+},
+{
+"text": "big",
+"start": 11.12,
+"end": 11.28
+},
+{
+"text": "man.",
+"start": 11.34,
+"end": 11.58
+},
+{
+"text": "He",
+"start": 11.94,
+"end": 12.06
+},
+{
+"text": "sets",
+"start": 12.12,
+"end": 12.32
+},
+{
+"text": "the",
+"start": 12.36,
+"end": 12.46
+},
+{
+"text": "back",
+"start": 12.5,
+"end": 12.68
+},
+{
+"text": "screen...",
+"start": 12.74,
+"end": 13.06
+},
+{
+"text": "right",
+"start": 13.42,
+"end": 13.6
+},
+{
+"text": "behind",
+"start": 13.66,
+"end": 13.96
+},
+{
+"text": "the",
+"start": 14.0,
+"end": 14.06
+},
+{
+"text": "defender.",
+"start": 14.1,
+"end": 14.6
+},
+{
+"text": "The",
+"start": 14.96,
+"end": 15.04
+},
+{
+"text": "cutter",
+"start": 15.1,
+"end": 15.36
+},
+{
+"text": "waits",
+"start": 15.42,
+"end": 15.68
+},
+{
+"text": "for",
+"start": 15.72,
+"end": 15.82
+},
+{
+"text": "it.",
+"start": 15.88,
+"end": 16.02
+},
+{
+"text": "Slow...",
+"start": 16.48,
+"end": 16.8
+},
+{
+"text": "slow...",
+"start": 17.5,
+"end": 17.9
+},
+{
+"text": "then",
+"start": 18.3,
+"end": 18.4
+},
+{
+"text": "he",
+"start": 18.44,
+"end": 18.5
+},
+{
+"text": "explodes",
+"start": 18.54,
+"end": 19.18
+},
+{
+"text": "off",
+"start": 19.22,
+"end": 19.32
+},
+{
+"text": "the",
+"start": 19.36,
+"end": 19.44
+},
+{
+"text": "screener's",
+"start": 19.5,
+"end": 19.88
+},
+{
+"text": "shoulder!",
+"start": 19.92,
+"end": 20.28
+},
+{
+"text": "The",
+"start": 20.64,
+"end": 20.72
+},
+{
+"text": "defender",
+"start": 20.76,
+"end": 21.14
+},
+{
+"text": "gets",
+"start": 21.18,
+"end": 21.36
+},
+{
+"text": "caught",
+"start": 21.42,
+"end": 21.62
+},
+{
+"text": "chasing,",
+"start": 21.68,
+"end": 22.12
+},
+{
+"text": "right",
+"start": 22.4,
+"end": 22.62
+},
+{
+"text": "into",
+"start": 22.68,
+"end": 22.86
+},
+{
+"text": "the",
+"start": 22.9,
+"end": 23.0
+},
+{
+"text": "screen.",
+"start": 23.04,
+"end": 23.42
+},
+{
+"text": "The",
+"start": 23.66,
+"end": 23.74
+},
+{
+"text": "wing",
+"start": 23.82,
+"end": 24.02
+},
+{
+"text": "hits",
+"start": 24.06,
+"end": 24.24
+},
+{
+"text": "the",
+"start": 24.28,
+"end": 24.36
+},
+{
+"text": "cutter",
+"start": 24.4,
+"end": 24.66
+},
+{
+"text": "in",
+"start": 24.7,
+"end": 24.82
+},
+{
+"text": "stride...",
+"start": 24.9,
+"end": 25.28
+},
+{
+"text": "and",
+"start": 25.58,
+"end": 25.74
+},
+{
+"text": "there's",
+"start": 25.84,
+"end": 26.08
+},
+{
+"text": "your",
+"start": 26.14,
+"end": 26.24
+},
+{
+"text": "layup!",
+"start": 26.3,
+"end": 26.72
+},
+{
+"text": "Screen.",
+"start": 27.65,
+"end": 28.05
+},
+{
+"text": "Cut.",
+"start": 28.43,
+"end": 28.69
+},
+{
+"text": "Finish.",
+"start": 29.11,
+"end": 29.51
+},
+{
+"text": "That's",
+"start": 29.89,
+"end": 30.11
+},
+{
+"text": "why",
+"start": 30.15,
+"end": 30.33
+},
+{
+"text": "timing",
+"start": 30.43,
+"end": 30.83
+},
+{
+"text": "matters",
+"start": 30.89,
+"end": 31.23
+},
+{
+"text": "more",
+"start": 31.31,
+"end": 31.51
+},
+{
+"text": "than",
+"start": 31.55,
+"end": 31.69
+},
+{
+"text": "just",
+"start": 31.75,
+"end": 31.89
+},
+{
+"text": "speed.",
+"start": 32.01,
+"end": 32.37
+},
+{
+"text": "One",
+"start": 32.75,
+"end": 32.89
+},
+{
+"text": "screen.",
+"start": 32.99,
+"end": 33.35
+},
+{
+"text": "Perfect",
+"start": 33.69,
+"end": 34.07
+},
+{
+"text": "timing.",
+"start": 34.13,
+"end": 34.53
+},
+{
+"text": "Easy",
+"start": 34.87,
+"end": 35.13
+},
+{
+"text": "advantage.",
+"start": 35.19,
+"end": 35.83
+}
+]

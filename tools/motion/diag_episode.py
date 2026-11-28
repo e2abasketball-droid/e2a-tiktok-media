@@ -16,6 +16,8 @@ CAMS = {  # orbit rigs (engine coordinates): target, dist, pitch (0 = straight d
     "fin": {"type": "orbit", "target": [0.4, 2.4, 1.3], "dist": 7.5, "pitch": 76, "yaw": 70, "fov": 50},
     "nail": {"type": "orbit", "target": [-0.6, 6.4, 1.1], "dist": 7.5, "pitch": 74, "yaw": 160, "fov": 50},
     "side": {"type": "orbit", "target": [0.0, 5.0, 0.6], "dist": 15.0, "pitch": 64, "yaw": -90, "fov": 70},
+    # 2026-11-28 Shuffle Cut: the whole half court from the top of the key to the baseline (action at y 1.5-10.5)
+    "half": {"type": "orbit", "target": [0.0, 5.8, 0.0], "dist": 17.0, "pitch": 46, "yaw": 0, "fov": 46},
 }
 
 ap = argparse.ArgumentParser()

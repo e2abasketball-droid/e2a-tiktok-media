@@ -1,0 +1,29 @@
+{
+ "track": "../music/cinematic/cine-10.mp3",
+ "offset_s": 4.09,
+ "duck_db": 4.0,
+ "reference_lufs": -27.3,
+ "bed_lufs": -27.3,
+ "event_hits": [
+  {
+   "event_s": 18.54,
+   "hit_s": 18.51,
+   "strength": 0.99
+  },
+  {
+   "event_s": 23.04,
+   "hit_s": 23.03,
+   "strength": 1.0
+  },
+  {
+   "event_s": 26.3,
+   "hit_s": 26.36,
+   "strength": 1.13
+  }
+ ],
+ "onset_strength_percentile_of_hits": [
+  98.9,
+  99.0,
+  99.7
+ ]
+}

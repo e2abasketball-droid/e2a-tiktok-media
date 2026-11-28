@@ -1,0 +1,512 @@
+{
+ "play": "shuffle-cut-v1",
+ "hz": 60,
+ "thresholds": {
+  "v_max": 8.0,
+  "pelvis_pop": 60.0,
+  "foot_slide": 0.02,
+  "floor_pen": -0.01,
+  "contact_z": 0.02,
+  "leg_overreach": 0.985,
+  "stiff_knee": 12.0,
+  "bob_min": 0.015,
+  "face_travel": 60.0,
+  "yaw_rate": 600.0,
+  "yaw_rate_frames": 4,
+  "knee_max": 150.0,
+  "knee_hyper": -3.0,
+  "elbow_max": 160.0,
+  "body_gap": 0.42,
+  "ball_jump": 0.6,
+  "palm_gap": 0.05,
+  "gaze": 50.0,
+  "pelvis_low": 0.62
+ },
+ "summary": {
+  "leg_overreach": 6,
+  "palm_gap": 1,
+  "pelvis_pop": 1
+ },
+ "n_defects": 8,
+ "players": {
+  "O1": {
+   "v_max": 5.16,
+   "pelvis_acc_max": [
+    353.5,
+    3.7
+   ],
+   "pelvis_min_ratio": 0.788,
+   "contacts": 14,
+   "foot_slide_max": 0.01,
+   "floor_min": -0.0,
+   "overreach_frames": 2,
+   "run_support_knee_mean": 75.2,
+   "cadence_moving": 3.75,
+   "yaw_rate_max": 280.0,
+   "knee_flex_range": [
+    5.1,
+    114.8
+   ],
+   "elbow_flex_max": 155.7,
+   "stand_knee_mean": 57.2,
+   "source": "v33-compiled",
+   "palm_gap_p95": 0.034
+  },
+  "O2": {
+   "v_max": 1.77,
+   "pelvis_acc_max": [
+    18.5,
+    0.5833
+   ],
+   "pelvis_min_ratio": 0.93,
+   "contacts": 6,
+   "foot_slide_max": 0.008,
+   "floor_min": -0.0,
+   "overreach_frames": 0,
+   "run_support_knee_mean": null,
+   "cadence_moving": null,
+   "yaw_rate_max": 271.0,
+   "knee_flex_range": [
+    29.7,
+    83.9
+   ],
+   "elbow_flex_max": 139.9,
+   "stand_knee_mean": 53.2,
+   "source": "v33-compiled",
+   "palm_gap_p95": 0.012
+  },
+  "O3": {
+   "v_max": 1.93,
+   "pelvis_acc_max": [
+    11.9,
+    1.65
+   ],
+   "pelvis_min_ratio": 0.879,
+   "contacts": 5,
+   "foot_slide_max": 0.001,
+   "floor_min": -0.0,
+   "overreach_frames": 1,
+   "run_support_knee_mean": null,
+   "cadence_moving": null,
+   "yaw_rate_max": 348.0,
+   "knee_flex_range": [
+    10.0,
+    98.3
+   ],
+   "elbow_flex_max": 149.3,
+   "stand_knee_mean": 65.2,
+   "source": "v33-compiled",
+   "palm_gap_p95": 0.012
+  },
+  "O4": {
+   "v_max": 0.28,
+   "pelvis_acc_max": [
+    14.4,
+    5.0833
+   ],
+   "pelvis_min_ratio": 0.946,
+   "contacts": 4,
+   "foot_slide_max": 0.002,
+   "floor_min": -0.0,
+   "overreach_frames": 0,
+   "run_support_knee_mean": null,
+   "cadence_moving": null,
+   "yaw_rate_max": 52.0,
+   "knee_flex_range": [
+    45.9,
+    76.3
+   ],
+   "elbow_flex_max": 125.3,
+   "stand_knee_mean": 61.9,
+   "source": "v33-compiled"
+  },
+  "O5": {
+   "v_max": 2.18,
+   "pelvis_acc_max": [
+    18.7,
+    1.3333
+   ],
+   "pelvis_min_ratio": 0.855,
+   "contacts": 6,
+   "foot_slide_max": 0.008,
+   "floor_min": -0.0,
+   "overreach_frames": 1,
+   "run_support_knee_mean": null,
+   "cadence_moving": null,
+   "yaw_rate_max": 272.0,
+   "knee_flex_range": [
+    5.1,
+    102.1
+   ],
+   "elbow_flex_max": 145.9,
+   "stand_knee_mean": 60.5,
+   "source": "v33-compiled"
+  },
+  "X1": {
+   "v_max": 6.26,
+   "pelvis_acc_max": [
+    41.9,
+    0.0167
+   ],
+   "pelvis_min_ratio": 0.815,
+   "contacts": 17,
+   "foot_slide_max": 0.02,
+   "floor_min": -0.0,
+   "overreach_frames": 0,
+   "run_support_knee_mean": 74.0,
+   "cadence_moving": 3.45,
+   "yaw_rate_max": 291.0,
+   "knee_flex_range": [
+    32.9,
+    117.9
+   ],
+   "elbow_flex_max": 147.8,
+   "stand_knee_mean": 70.4,
+   "source": "v33-compiled"
+  },
+  "X2": {
+   "v_max": 1.55,
+   "pelvis_acc_max": [
+    48.3,
+    3.2
+   ],
+   "pelvis_min_ratio": 0.791,
+   "contacts": 8,
+   "foot_slide_max": 0.007,
+   "floor_min": -0.0,
+   "overreach_frames": 0,
+   "run_support_knee_mean": null,
+   "cadence_moving": null,
+   "yaw_rate_max": 269.0,
+   "knee_flex_range": [
+    5.1,
+    91.9
+   ],
+   "elbow_flex_max": 140.5,
+   "stand_knee_mean": 62.8,
+   "source": "v33-compiled"
+  },
+  "X3": {
+   "v_max": 2.69,
+   "pelvis_acc_max": [
+    35.6,
+    2.4
+   ],
+   "pelvis_min_ratio": 0.813,
+   "contacts": 8,
+   "foot_slide_max": 0.006,
+   "floor_min": -0.0,
+   "overreach_frames": 2,
+   "run_support_knee_mean": 56.9,
+   "cadence_moving": 1.94,
+   "yaw_rate_max": 275.0,
+   "knee_flex_range": [
+    5.1,
+    96.6
+   ],
+   "elbow_flex_max": 148.3,
+   "stand_knee_mean": 62.8,
+   "source": "v33-compiled"
+  },
+  "X4": {
+   "v_max": 1.54,
+   "pelvis_acc_max": [
+    34.6,
+    5.1167
+   ],
+   "pelvis_min_ratio": 0.818,
+   "contacts": 4,
+   "foot_slide_max": 0.011,
+   "floor_min": -0.0,
+   "overreach_frames": 0,
+   "run_support_knee_mean": null,
+   "cadence_moving": null,
+   "yaw_rate_max": 274.0,
+   "knee_flex_range": [
+    38.5,
+    92.5
+   ],
+   "elbow_flex_max": 138.9,
+   "stand_knee_mean": 78.0,
+   "source": "v33-compiled"
+  },
+  "X5": {
+   "v_max": 2.63,
+   "pelvis_acc_max": [
+    30.7,
+    3.5167
+   ],
+   "pelvis_min_ratio": 0.815,
+   "contacts": 11,
+   "foot_slide_max": 0.012,
+   "floor_min": -0.0,
+   "overreach_frames": 3,
+   "run_support_knee_mean": null,
+   "cadence_moving": 2.93,
+   "yaw_rate_max": 347.0,
+   "knee_flex_range": [
+    5.1,
+    104.1
+   ],
+   "elbow_flex_max": 149.8,
+   "stand_knee_mean": 64.3,
+   "source": "v33-compiled"
+  }
+ },
+ "pair_min": {
+  "O1-O2": [
+   3.155,
+   2.25
+  ],
+  "O1-O3": [
+   8.364,
+   3.4
+  ],
+  "O1-O4": [
+   5.166,
+   3.1833
+  ],
+  "O1-O5": [
+   0.546,
+   2.85
+  ],
+  "O1-X1": [
+   0.689,
+   2.6833
+  ],
+  "O1-X2": [
+   3.258,
+   1.0667
+  ],
+  "O1-X3": [
+   7.733,
+   3.75
+  ],
+  "O1-X4": [
+   4.244,
+   3.2
+  ],
+  "O1-X5": [
+   0.761,
+   2.9833
+  ],
+  "O2-O3": [
+   5.915,
+   0
+  ],
+  "O2-O4": [
+   9,
+   0
+  ],
+  "O2-O5": [
+   2.847,
+   5.4
+  ],
+  "O2-X1": [
+   2.789,
+   2.25
+  ],
+  "O2-X2": [
+   1.032,
+   1.85
+  ],
+  "O2-X3": [
+   5.48,
+   0.1833
+  ],
+  "O2-X4": [
+   8.645,
+   4.1
+  ],
+  "O2-X5": [
+   2.541,
+   4.6333
+  ],
+  "O3-O4": [
+   9,
+   0
+  ],
+  "O3-O5": [
+   6.872,
+   0
+  ],
+  "O3-X1": [
+   8.364,
+   2.85
+  ],
+  "O3-X2": [
+   5.696,
+   1.5667
+  ],
+  "O3-X3": [
+   0.72,
+   0.3167
+  ],
+  "O3-X4": [
+   9,
+   0
+  ],
+  "O3-X5": [
+   6.317,
+   0
+  ],
+  "O4-O5": [
+   6.12,
+   3.2167
+  ],
+  "O4-X1": [
+   4.868,
+   3.9
+  ],
+  "O4-X2": [
+   8.792,
+   3.6333
+  ],
+  "O4-X3": [
+   9,
+   0
+  ],
+  "O4-X4": [
+   0.917,
+   0
+  ],
+  "O4-X5": [
+   6.038,
+   3.4667
+  ],
+  "O5-X1": [
+   0.586,
+   2.95
+  ],
+  "O5-X2": [
+   2.185,
+   3.9167
+  ],
+  "O5-X3": [
+   6.1,
+   0
+  ],
+  "O5-X4": [
+   5.208,
+   0.4167
+  ],
+  "O5-X5": [
+   0.683,
+   4.2
+  ],
+  "X1-X2": [
+   2.814,
+   2.8667
+  ],
+  "X1-X3": [
+   7.576,
+   1.6333
+  ],
+  "X1-X4": [
+   3.585,
+   3.9833
+  ],
+  "X1-X5": [
+   1.016,
+   3.55
+  ],
+  "X2-X3": [
+   4.995,
+   1.5833
+  ],
+  "X2-X4": [
+   7.667,
+   4.05
+  ],
+  "X2-X5": [
+   1.71,
+   4.5833
+  ],
+  "X3-X4": [
+   9,
+   0
+  ],
+  "X3-X5": [
+   5.535,
+   0
+  ],
+  "X4-X5": [
+   5.163,
+   3.4667
+  ]
+ },
+ "defects": [
+  {
+   "player": "O3",
+   "t_engine": 0.983,
+   "t_owner": 0.383,
+   "video": [],
+   "kind": "leg_overreach",
+   "value": 0.995,
+   "note": "1 frames, root outruns the stride"
+  },
+  {
+   "player": "O5",
+   "t_engine": 1.3,
+   "t_owner": 0.7,
+   "video": [],
+   "kind": "leg_overreach",
+   "value": 0.999,
+   "note": "1 frames, root outruns the stride"
+  },
+  {
+   "player": "X5",
+   "t_engine": 1.433,
+   "t_owner": 0.833,
+   "video": [],
+   "kind": "leg_overreach",
+   "value": 0.999,
+   "note": "1 frames, root outruns the stride"
+  },
+  {
+   "player": "X3",
+   "t_engine": 2.383,
+   "t_owner": 1.783,
+   "video": [],
+   "kind": "leg_overreach",
+   "value": 0.999,
+   "note": "2 frames, root outruns the stride"
+  },
+  {
+   "player": "O1",
+   "t_engine": 3.683,
+   "t_owner": 3.083,
+   "video": [],
+   "kind": "leg_overreach",
+   "value": 0.999,
+   "note": "2 frames, root outruns the stride"
+  },
+  {
+   "player": "X5",
+   "t_engine": 3.717,
+   "t_owner": 3.117,
+   "video": [],
+   "kind": "leg_overreach",
+   "value": 0.999,
+   "note": "2 frames, root outruns the stride"
+  },
+  {
+   "player": "O1",
+   "t_engine": 4.1,
+   "t_owner": 3.5,
+   "video": [],
+   "kind": "palm_gap",
+   "value": 0.055,
+   "note": "1 frames"
+  },
+  {
+   "player": "O1",
+   "t_engine": 4.3,
+   "t_owner": 3.7,
+   "video": [],
+   "kind": "pelvis_pop",
+   "value": 67.166,
+   "note": "1 frames"
+  }
+ ]
+}

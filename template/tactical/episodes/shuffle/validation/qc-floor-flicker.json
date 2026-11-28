@@ -1,0 +1,106 @@
+{
+ "V1": {
+  "file": "/tmp/claude-0/sc/out/e2a-shuffle-cut-v1.mp4",
+  "frames": 1100,
+  "bad_frames": 0,
+  "bad_list": [],
+  "frozen": [
+   {
+    "span": [
+     30.25,
+     32.7
+    ],
+    "n": 72,
+    "diff_mean": 0.172,
+    "diff_p99": 1.366,
+    "diff_max": 1.383,
+    "blinks": 0,
+    "blink_frames": [],
+    "dips": []
+   }
+  ],
+  "shots": [
+   {
+    "shot": "hook",
+    "gold_mean": 10275.6,
+    "gold_jitter_mean": 0.024,
+    "gold_jitter_p99": 0.3957,
+    "gold_jitter_max": 0.6949
+   },
+   {
+    "shot": "full",
+    "gold_mean": 25949.4,
+    "gold_jitter_mean": 0.0033,
+    "gold_jitter_p99": 0.0472,
+    "gold_jitter_max": 0.0548
+   },
+   {
+    "shot": "setup",
+    "gold_mean": 21487.7,
+    "gold_jitter_mean": 0.0091,
+    "gold_jitter_p99": 0.1122,
+    "gold_jitter_max": 0.3354
+   },
+   {
+    "shot": "cut",
+    "gold_mean": 22864.7,
+    "gold_jitter_mean": 0.0068,
+    "gold_jitter_p99": 0.0867,
+    "gold_jitter_max": 0.1469
+   },
+   {
+    "shot": "chase",
+    "gold_mean": 18145.2,
+    "gold_jitter_mean": 0.0135,
+    "gold_jitter_p99": 0.0862,
+    "gold_jitter_max": 0.194
+   },
+   {
+    "shot": "finish",
+    "gold_mean": 7927.7,
+    "gold_jitter_mean": 0.0292,
+    "gold_jitter_p99": 0.2197,
+    "gold_jitter_max": 0.3218
+   },
+   {
+    "shot": "recap",
+    "gold_mean": 22977.4,
+    "gold_jitter_mean": 0.0205,
+    "gold_jitter_p99": 0.5201,
+    "gold_jitter_max": 2.1742
+   }
+  ],
+  "cuts": [
+   {
+    "t": 4.3,
+    "frame": 129,
+    "diff": 51.633
+   },
+   {
+    "t": 7.95,
+    "frame": 238,
+    "diff": 0.226
+   },
+   {
+    "t": 14.85,
+    "frame": 446,
+    "diff": 14.392
+   },
+   {
+    "t": 20.5,
+    "frame": 615,
+    "diff": 7.775
+   },
+   {
+    "t": 23.55,
+    "frame": 706,
+    "diff": 2.099
+   },
+   {
+    "t": 27.45,
+    "frame": 824,
+    "diff": 11.152
+   }
+  ]
+ }
+}

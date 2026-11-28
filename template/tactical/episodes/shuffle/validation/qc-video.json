@@ -1,0 +1,183 @@
+{
+ "episode": "e2a-shuffle-cut-v1",
+ "mp4": "/tmp/claude-0/sc/out/e2a-shuffle-cut-v1.mp4",
+ "result": "PASS",
+ "checks": {
+  "technical": {
+   "pass": true,
+   "width": 1080,
+   "height": 1920,
+   "fps": 30.0,
+   "vcodec": "h264",
+   "acodec": "aac",
+   "duration": 36.75,
+   "mb": 61.121362
+  },
+  "audio": {
+   "pass": true,
+   "I": -16.0,
+   "TP": -1.4,
+   "margin_lu": 1.0,
+   "tp_headroom_db": 0.4
+  }
+ },
+ "warnings": [],
+ "planned_shots": [
+  {
+   "shot": "full",
+   "start": 4.3,
+   "hard_cut": true
+  },
+  {
+   "shot": "setup",
+   "start": 7.95,
+   "hard_cut": false
+  },
+  {
+   "shot": "cut",
+   "start": 14.85,
+   "hard_cut": false
+  },
+  {
+   "shot": "chase",
+   "start": 20.5,
+   "hard_cut": false
+  },
+  {
+   "shot": "finish",
+   "start": 23.55,
+   "hard_cut": true
+  },
+  {
+   "shot": "recap",
+   "start": 27.45,
+   "hard_cut": false
+  }
+ ],
+ "moments": [
+  {
+   "t": 0.3333333333333333,
+   "label": "hook: x1_react",
+   "shot": "hook",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 1.0666666666666667,
+   "label": "hook: x3_set",
+   "shot": "hook",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 1.6,
+   "label": "hook: brush",
+   "shot": "hook",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 4.466666666666667,
+   "label": "full: rel1",
+   "shot": "full",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 5.066666666666666,
+   "label": "full: k1",
+   "shot": "full",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 5.766666666666667,
+   "label": "full: k3",
+   "shot": "full",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 6.3,
+   "label": "full: k4",
+   "shot": "full",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 6.866666666666667,
+   "label": "full: clear",
+   "shot": "full",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 7.699999999999999,
+   "label": "full: k6",
+   "shot": "full",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 8.483333333333334,
+   "label": "setup: k0",
+   "shot": "setup",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 9.25,
+   "label": "setup: rel1",
+   "shot": "setup",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 10.083333333333334,
+   "label": "setup: k1",
+   "shot": "setup",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 12.316666666666666,
+   "label": "setup: x1_set",
+   "shot": "setup",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 13.383333333333333,
+   "label": "setup: k2",
+   "shot": "setup",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 15.716666666666669,
+   "label": "cut: k1",
+   "shot": "cut",
+   "kind": "mark",
+   "prio": 1
+  },
+  {
+   "t": 16.71666666666667,
+   "label": "cut: x1_set",
+   "shot": "cut",
+   "kind": "mark",
+   "prio": 1
+  }
+ ],
+ "timing": {
+  "moments_s": 0.14,
+  "probe_loudness_s": 0.41,
+  "frame_analysis_s": 4.55,
+  "contact_sheet_s": 5.96,
+  "total_s": 11.06
+ },
+ "contact_sheet": "/home/user/e2a-tiktok-media/template/tactical/episodes/shuffle/validation/qc-video.json/contact-sheet.png",
+ "not_measured": [
+  "player-on-player occlusion (needs depth or an ID pass)",
+  "text over a key player (needs projected player boxes per frame: see qc-tactical3d rays)"
+ ]
+}

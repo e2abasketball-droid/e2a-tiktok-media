@@ -1,0 +1,133 @@
+{
+ "tone": "highpass=f=85,equalizer=f=300:t=q:w=1.0:g=-2,equalizer=f=2800:t=q:w=1.4:g=3,equalizer=f=7000:t=q:w=1.5:g=-1.5,deesser=i=0.45,acompressor=threshold=-18dB:ratio=1.6:attack=8:release=140:makeup=2",
+ "reference_db": -18.82,
+ "voice_in": {
+  "I": -23.5,
+  "LRA": 5.4,
+  "TP": -6.1
+ },
+ "voice_out": {
+  "I": -16.2,
+  "LRA": 4.5,
+  "TP": -2.0
+ },
+ "lines": [
+  {
+   "text": "One screen. One cut. And the defender never sees it coming!",
+   "phase": "A",
+   "target_off": 1.0,
+   "level_in_db": -17.77,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.85
+  },
+  {
+   "text": "This is the Shuffle Cut.",
+   "phase": "A",
+   "target_off": 0.5,
+   "level_in_db": -19.17,
+   "gain_db": 0.0,
+   "level_out_rel_db": -0.48
+  },
+  {
+   "text": "First, the ball swings to the wing.",
+   "phase": "B",
+   "target_off": 0.0,
+   "level_in_db": -18.84,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.0
+  },
+  {
+   "text": "Now watch the big man.",
+   "phase": "B",
+   "target_off": 0.0,
+   "level_in_db": -18.23,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.4
+  },
+  {
+   "text": "He sets the back screen... right behind the defender.",
+   "phase": "B",
+   "target_off": 0.0,
+   "level_in_db": -18.82,
+   "gain_db": 0.0,
+   "level_out_rel_db": -0.13
+  },
+  {
+   "text": "The cutter waits for it.",
+   "phase": "C",
+   "target_off": 0.0,
+   "level_in_db": -22.15,
+   "gain_db": 1.83,
+   "level_out_rel_db": -1.62
+  },
+  {
+   "text": "Slow... slow...",
+   "phase": "C",
+   "target_off": 0.0,
+   "level_in_db": -21.06,
+   "gain_db": 0.74,
+   "level_out_rel_db": -1.5
+  },
+  {
+   "text": "then he explodes off the screener's shoulder!",
+   "phase": "D",
+   "target_off": 1.0,
+   "level_in_db": -16.89,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.7
+  },
+  {
+   "text": "The defender gets caught chasing, right into the screen.",
+   "phase": "D",
+   "target_off": 0.5,
+   "level_in_db": -18.03,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.61
+  },
+  {
+   "text": "The wing hits the cutter in stride...",
+   "phase": "D",
+   "target_off": 0.5,
+   "level_in_db": -17.01,
+   "gain_db": 0.0,
+   "level_out_rel_db": 1.66
+  },
+  {
+   "text": "and there's your layup!",
+   "phase": "D",
+   "target_off": 1.0,
+   "level_in_db": -16.27,
+   "gain_db": 0.0,
+   "level_out_rel_db": 2.4
+  },
+  {
+   "text": "Screen. Cut. Finish.",
+   "phase": "E",
+   "target_off": 0.0,
+   "level_in_db": -19.86,
+   "gain_db": 0.0,
+   "level_out_rel_db": -1.03
+  },
+  {
+   "text": "That's why timing matters more than just speed.",
+   "phase": "E",
+   "target_off": 0.0,
+   "level_in_db": -18.56,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.25
+  },
+  {
+   "text": "One screen. Perfect timing. Easy advantage.",
+   "phase": "E",
+   "target_off": 0.5,
+   "level_in_db": -18.66,
+   "gain_db": 0.0,
+   "level_out_rel_db": 0.05
+  }
+ ],
+ "mix": {
+  "I": -16.0,
+  "LRA": 4.1,
+  "TP": -1.5
+ }
+}

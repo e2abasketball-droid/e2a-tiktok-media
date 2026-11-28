@@ -1,0 +1,14 @@
+{"episode": "E2A Tactical Breakdown: Shuffle Cut V1",
+ "narrator": "E2A standard (Nathaniel, eleven_v4) - tools/narrator.py",
+ "lines": [
+  ["tag:strong, excited", "One screen. One cut. And the defender never sees it coming!"],
+  ["tag:quick, confident", "This is the Shuffle Cut."],
+  ["tag:measured, confident", "First, the ball swings to the wing."],
+  ["tag:building energy", "Now watch the big man."],
+  ["tag:controlled emphasis", "He sets the back screen... right behind the defender."],
+  ["tag:low, building suspense", "The cutter waits for it. Slow... slow..."],
+  ["tag:quick acceleration", "then he explodes off the screener's shoulder!"],
+  ["tag:excited reveal", "The defender gets caught chasing, right into the screen. The wing hits the cutter in stride... and there's your layup!"],
+  ["tag:controlled, authoritative", "Screen. Cut. Finish. That's why timing matters more than just speed."],
+  ["tag:strong ending", "One screen. Perfect timing. Easy advantage."]
+ ]}

@@ -1,0 +1,542 @@
+{
+ "play": "shuffle-cut-v1",
+ "passed": 65,
+ "warnings": 3,
+ "failed": 0,
+ "verdict": "PASS",
+ "rows": [
+  {
+   "section": "roster",
+   "check": "10 players: 5 offence, 5 defence, all tracked",
+   "status": "PASS",
+   "value": "5 O / 5 X"
+  },
+  {
+   "section": "roster",
+   "check": "every defender guards one distinct attacker",
+   "status": "PASS",
+   "value": "O1,O2,O3,O4,O5"
+  },
+  {
+   "section": "fidelity",
+   "check": "T0 anchors reproduced within 0.03 m",
+   "status": "PASS",
+   "value": "max 0.000 m (O3)"
+  },
+  {
+   "section": "fidelity",
+   "check": "brief T0 anchors kept except documented minimum corrections",
+   "status": "PASS",
+   "value": "X2 moved 0.61 m"
+  },
+  {
+   "section": "fidelity",
+   "check": "K0..K6 reproduced within 0.03 m (all ten players)",
+   "status": "PASS",
+   "value": "max 0.001 m (X3@K5)"
+  },
+  {
+   "section": "bounds",
+   "check": "everyone in bounds (centre >= 0.2 m inside the lines)",
+   "status": "PASS",
+   "value": "ok"
+  },
+  {
+   "section": "motion",
+   "check": "O1 top speed <= 7.5 m/s",
+   "status": "PASS",
+   "value": "5.16 m/s at +2.48 s"
+  },
+  {
+   "section": "motion",
+   "check": "O1 acceleration <= 14.0 m/s^2",
+   "status": "WARN",
+   "value": "12.1 m/s^2 at +1.68 s"
+  },
+  {
+   "section": "motion",
+   "check": "O2 top speed <= 7.5 m/s",
+   "status": "PASS",
+   "value": "1.75 m/s at -0.55 s"
+  },
+  {
+   "section": "motion",
+   "check": "O2 acceleration <= 14.0 m/s^2",
+   "status": "PASS",
+   "value": "5.0 m/s^2 at -0.03 s"
+  },
+  {
+   "section": "motion",
+   "check": "O3 top speed <= 7.5 m/s",
+   "status": "PASS",
+   "value": "1.93 m/s at +0.30 s"
+  },
+  {
+   "section": "motion",
+   "check": "O3 acceleration <= 14.0 m/s^2",
+   "status": "PASS",
+   "value": "6.4 m/s^2 at +0.77 s"
+  },
+  {
+   "section": "motion",
+   "check": "O4 top speed <= 7.5 m/s",
+   "status": "PASS",
+   "value": "0.28 m/s at +2.30 s"
+  },
+  {
+   "section": "motion",
+   "check": "O4 acceleration <= 14.0 m/s^2",
+   "status": "PASS",
+   "value": "1.3 m/s^2 at +2.58 s"
+  },
+  {
+   "section": "motion",
+   "check": "O5 top speed <= 7.5 m/s",
+   "status": "PASS",
+   "value": "2.17 m/s at +0.72 s"
+  },
+  {
+   "section": "motion",
+   "check": "O5 acceleration <= 14.0 m/s^2",
+   "status": "PASS",
+   "value": "9.1 m/s^2 at +2.84 s"
+  },
+  {
+   "section": "motion",
+   "check": "X1 top speed <= 7.5 m/s",
+   "status": "PASS",
+   "value": "6.24 m/s at +3.22 s"
+  },
+  {
+   "section": "motion",
+   "check": "X1 acceleration <= 14.0 m/s^2",
+   "status": "WARN",
+   "value": "13.5 m/s^2 at +2.35 s"
+  },
+  {
+   "section": "motion",
+   "check": "X2 top speed <= 7.5 m/s",
+   "status": "PASS",
+   "value": "1.53 m/s at +0.70 s"
+  },
+  {
+   "section": "motion",
+   "check": "X2 acceleration <= 14.0 m/s^2",
+   "status": "PASS",
+   "value": "7.4 m/s^2 at +0.98 s"
+  },
+  {
+   "section": "motion",
+   "check": "X3 top speed <= 7.5 m/s",
+   "status": "PASS",
+   "value": "2.68 m/s at +1.50 s"
+  },
+  {
+   "section": "motion",
+   "check": "X3 acceleration <= 14.0 m/s^2",
+   "status": "PASS",
+   "value": "8.8 m/s^2 at +1.13 s"
+  },
+  {
+   "section": "motion",
+   "check": "X4 top speed <= 7.5 m/s",
+   "status": "PASS",
+   "value": "1.51 m/s at +3.22 s"
+  },
+  {
+   "section": "motion",
+   "check": "X4 acceleration <= 14.0 m/s^2",
+   "status": "PASS",
+   "value": "9.1 m/s^2 at +3.11 s"
+  },
+  {
+   "section": "motion",
+   "check": "X5 top speed <= 7.5 m/s",
+   "status": "PASS",
+   "value": "2.62 m/s at +0.85 s"
+  },
+  {
+   "section": "motion",
+   "check": "X5 acceleration <= 14.0 m/s^2",
+   "status": "WARN",
+   "value": "11.4 m/s^2 at +1.95 s"
+  },
+  {
+   "section": "collisions",
+   "check": "no bodies overlap (>= 0.5 m centre to centre)",
+   "status": "PASS",
+   "value": "min 0.52 m (O1-O5 at +2.23 s)"
+  },
+  {
+   "section": "ball",
+   "check": "ball 3D speed <= 16 m/s frame to frame (no teleports)",
+   "status": "PASS",
+   "value": "max 12.1 m/s"
+  },
+  {
+   "section": "ball",
+   "check": "ball always in a hand or in flight until the layup",
+   "status": "PASS",
+   "value": "0 orphan frames"
+  },
+  {
+   "section": "passes",
+   "check": "pass O2->O3 clears every reach envelope (OPEN)",
+   "status": "PASS",
+   "value": "OPEN: closest X2 0.32 m at +0.28 s, ball 1.20 m"
+  },
+  {
+   "section": "passes",
+   "check": "pass O2->O3 never passes through a body",
+   "status": "PASS",
+   "value": "ok"
+  },
+  {
+   "section": "passes",
+   "check": "pass O2->O3 speed 6-14 m/s",
+   "status": "PASS",
+   "value": "9.9 m/s over 5.96 m"
+  },
+  {
+   "section": "passes",
+   "check": "pass O3->O1 clears every reach envelope (OPEN)",
+   "status": "PASS",
+   "value": "OPEN: closest X3 0.61 m at +2.12 s, ball 1.06 m"
+  },
+  {
+   "section": "passes",
+   "check": "pass O3->O1 never passes through a body",
+   "status": "PASS",
+   "value": "ok"
+  },
+  {
+   "section": "passes",
+   "check": "pass O3->O1 speed 6-14 m/s",
+   "status": "PASS",
+   "value": "11.1 m/s over 8.36 m"
+  },
+  {
+   "section": "screen",
+   "check": "O5 is stationary while the screen is set (<= 0.15 m/s)",
+   "status": "PASS",
+   "value": "max 0.000 m/s from 1.25 to 2.70 s"
+  },
+  {
+   "section": "screen",
+   "check": "set at least one normal step from X1 (>= 1.2 m centre to centre)",
+   "status": "PASS",
+   "value": "1.30 m at 1.25 s"
+  },
+  {
+   "section": "screen",
+   "check": "blind (back) screen: set outside X1's focused vision",
+   "status": "PASS",
+   "value": "O5 at 140 deg from X1's facing"
+  },
+  {
+   "section": "screen",
+   "check": "set behind X1 (basket side)",
+   "status": "PASS",
+   "value": "O5 6.25 m / X1 7.49 m from the hoop"
+  },
+  {
+   "section": "screen",
+   "check": "the screen is effective: X1 reaches O5's body (contact <= 0.65 m)",
+   "status": "PASS",
+   "value": "min 0.62 m at +2.67 s"
+  },
+  {
+   "section": "screen",
+   "check": "the defender moves into the screener, not the reverse",
+   "status": "PASS",
+   "value": "at contact O5 0.00 m/s, X1 2.64 m/s"
+  },
+  {
+   "section": "screen",
+   "check": "X1 is (near) stationary when the blind screen is set (one-step rule applies)",
+   "status": "PASS",
+   "value": "X1 0.39 m/s"
+  },
+  {
+   "section": "cut",
+   "check": "O1 does not cut before the entry catch and the set screen (+0.15 s)",
+   "status": "PASS",
+   "value": "cut onset +1.67 s; catch 0.85, set 1.25"
+  },
+  {
+   "section": "cut",
+   "check": "O1 never passes through the screener (>= 0.5 m)",
+   "status": "PASS",
+   "value": "min 0.52 m at +2.24 s"
+  },
+  {
+   "section": "cut",
+   "check": "O1 cuts tight off the screen (brush: <= 0.75 m)",
+   "status": "PASS",
+   "value": "min 0.52 m"
+  },
+  {
+   "section": "cut",
+   "check": "a plant / first-step burst at the start of the cut",
+   "status": "PASS",
+   "value": "burst at +1.57 s"
+  },
+  {
+   "section": "cut",
+   "check": "change of pace: slow set-up then explosive cut (cut >= 3x set-up speed)",
+   "status": "PASS",
+   "value": "set-up 1.00 m/s, cut 5.16 m/s"
+  },
+  {
+   "section": "cut",
+   "check": "the cut goes toward the basket (dy < 0, diagonal)",
+   "status": "PASS",
+   "value": "70 deg to the baseline"
+  },
+  {
+   "section": "coverage",
+   "check": "X1 is delayed: >= 1.5 m behind O1 at the catch",
+   "status": "PASS",
+   "value": "2.90 m"
+  },
+  {
+   "section": "coverage",
+   "check": "X1 trails (farther from the hoop than O1) at the catch",
+   "status": "PASS",
+   "value": "X1 6.16 / O1 3.25 m from the hoop"
+  },
+  {
+   "section": "coverage",
+   "check": "X5 stays attached to O5 (no switch, <= 1.6 m)",
+   "status": "PASS",
+   "value": "max 1.13 m"
+  },
+  {
+   "section": "coverage",
+   "check": "X4 too far to contest the cut (>= 3.0 m from O1, catch to release)",
+   "status": "PASS",
+   "value": "min 4.35 m"
+  },
+  {
+   "section": "coverage",
+   "check": "X4 stays connected to O4 (<= 1.6 m)",
+   "status": "PASS",
+   "value": "max 1.39 m"
+  },
+  {
+   "section": "coverage",
+   "check": "X2 stays high (y >= 8.0 m) and connected to O2 (<= 1.6 m)",
+   "status": "PASS",
+   "value": "min y 8.73 m"
+  },
+  {
+   "section": "coverage",
+   "check": "X3 pressures the passer after his closeout (0.6-1.4 m until the pass)",
+   "status": "PASS",
+   "value": "1.17-1.17 m"
+  },
+  {
+   "section": "coverage",
+   "check": "no defender is motionless (each moves >= 0.3 m)",
+   "status": "PASS",
+   "value": "all move"
+  },
+  {
+   "section": "finish",
+   "check": "layup released within 1.5 m of the hoop",
+   "status": "PASS",
+   "value": "1.09 m"
+  },
+  {
+   "section": "finish",
+   "check": "nearest defender >= 1.0 m at the release (late contest only)",
+   "status": "PASS",
+   "value": "X1 1.64 m"
+  },
+  {
+   "section": "finish",
+   "check": "catch to release 0.45-0.9 s (gather + two steps, no dribble)",
+   "status": "PASS",
+   "value": "0.65 s"
+  },
+  {
+   "section": "finish",
+   "check": "left-side approach finished with the left hand off the glass",
+   "status": "PASS",
+   "value": "hand -1, x -0.65"
+  },
+  {
+   "section": "causes",
+   "check": "X1: every movement onset follows a declared cause by >= 0.15 s",
+   "status": "PASS",
+   "value": "+0.53s <- O1 starts his set-up step up and in: follows, ball side (+0.233s); +1.73s <- O1 plants and cuts: chases (+0.183s); +2.27s <- O1 plants and cuts: chases (+0.725s)"
+  },
+  {
+   "section": "causes",
+   "check": "X2: every movement onset follows a declared cause by >= 0.15 s",
+   "status": "PASS",
+   "value": "+0.47s <- O2 passes to O3: jumps to the ball (+0.217s); +2.12s <- O1 cuts: sinks a step, stays high on O2 (+0.567s)"
+  },
+  {
+   "section": "causes",
+   "check": "X3: every movement onset follows a declared cause by >= 0.15 s",
+   "status": "PASS",
+   "value": "+1.07s <- O3 catches: closeout to baseline-side pressure (+0.217s); +2.39s <- O3 passes: jumps to the ball / sinks (+0.292s)"
+  },
+  {
+   "section": "causes",
+   "check": "X4: every movement onset follows a declared cause by >= 0.15 s",
+   "status": "PASS",
+   "value": "+3.05s <- O1 catches in the lane: stunt step, stays with O4 (+0.2s); +3.59s <- O1 catches in the lane: stunt step, stays with O4 (+0.742s)"
+  },
+  {
+   "section": "causes",
+   "check": "X5: every movement onset follows a declared cause by >= 0.15 s",
+   "status": "PASS",
+   "value": "+0.46s <- O5 moves up to screen: follows, ball side (+0.208s); +1.89s <- O1 cuts off the screen: shows one step (controlled help) (+0.342s); +2.92s <- O5 releases the screen and steps to the ball: recovers (+0.225s)"
+  },
+  {
+   "section": "truth",
+   "check": "SCREEN SET is true from the set to K4",
+   "status": "PASS",
+   "value": "[[1.25, 2.708]]"
+  },
+  {
+   "section": "truth",
+   "check": "X1 DELAYED is true at K4 and at the catch",
+   "status": "PASS",
+   "value": "[[2.033, 3.158]]"
+  },
+  {
+   "section": "truth",
+   "check": "O1 BEHIND X1 (closer to the rim) from the brush to the release",
+   "status": "PASS",
+   "value": "[[2.192, 3.508]]"
+  }
+ ],
+ "lanes": {
+  "O2->O3": {
+   "state": "OPEN",
+   "closest": "X2",
+   "clearance_m": 0.323,
+   "per_defender": {
+    "X1": 3.016,
+    "X2": 0.323,
+    "X3": 0.437,
+    "X4": 8.141,
+    "X5": 3.135
+   }
+  },
+  "O3->O1": {
+   "state": "OPEN",
+   "closest": "X3",
+   "clearance_m": 0.605,
+   "per_defender": {
+    "X1": 2.069,
+    "X2": 2.003,
+    "X3": 0.605,
+    "X4": 3.464,
+    "X5": 1.107
+   }
+  }
+ },
+ "truth_windows_owner_s": {
+  "screen_set": [
+   [
+    1.25,
+    2.708
+   ]
+  ],
+  "x1_delayed": [
+   [
+    2.033,
+    3.158
+   ]
+  ],
+  "o1_behind_x1": [
+   [
+    2.192,
+    3.508
+   ]
+  ]
+ },
+ "defensive_audit": {
+  "X1": [
+   {
+    "onset": 0.533,
+    "cause": "O1 starts his set-up step up and in: follows, ball side",
+    "reaction": 0.233
+   },
+   {
+    "onset": 1.733,
+    "cause": "O1 plants and cuts: chases",
+    "reaction": 0.183
+   },
+   {
+    "onset": 2.275,
+    "cause": "O1 plants and cuts: chases",
+    "reaction": 0.725
+   }
+  ],
+  "X2": [
+   {
+    "onset": 0.467,
+    "cause": "O2 passes to O3: jumps to the ball",
+    "reaction": 0.217
+   },
+   {
+    "onset": 2.117,
+    "cause": "O1 cuts: sinks a step, stays high on O2",
+    "reaction": 0.567
+   }
+  ],
+  "X3": [
+   {
+    "onset": 1.067,
+    "cause": "O3 catches: closeout to baseline-side pressure",
+    "reaction": 0.217
+   },
+   {
+    "onset": 2.392,
+    "cause": "O3 passes: jumps to the ball / sinks",
+    "reaction": 0.292
+   }
+  ],
+  "X4": [
+   {
+    "onset": 3.05,
+    "cause": "O1 catches in the lane: stunt step, stays with O4",
+    "reaction": 0.2
+   },
+   {
+    "onset": 3.592,
+    "cause": "O1 catches in the lane: stunt step, stays with O4",
+    "reaction": 0.742
+   }
+  ],
+  "X5": [
+   {
+    "onset": 0.458,
+    "cause": "O5 moves up to screen: follows, ball side",
+    "reaction": 0.208
+   },
+   {
+    "onset": 1.892,
+    "cause": "O1 cuts off the screen: shows one step (controlled help)",
+    "reaction": 0.342
+   },
+   {
+    "onset": 2.925,
+    "cause": "O5 releases the screen and steps to the ball: recovers",
+    "reaction": 0.225
+   }
+  ]
+ },
+ "limits": {
+  "speed_max": 7.5,
+  "accel_max": 14.0,
+  "screen_step_m": 1.2,
+  "screen_still_mps": 0.15,
+  "reaction_min_s": 0.15
+ }
+}
