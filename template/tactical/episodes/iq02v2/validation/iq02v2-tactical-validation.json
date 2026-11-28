@@ -1,0 +1,454 @@
+{
+ "play": "iq02-beat-the-blitz-v2",
+ "canonical": "basketball_iq_02_blitz_short_roll.json",
+ "passed": 55,
+ "warnings": 2,
+ "failed": 0,
+ "verdict": "PASS",
+ "rows": [
+  {
+   "section": "roster",
+   "check": "10 players on the floor: 5 offence, 5 defence",
+   "status": "PASS",
+   "value": "5 O / 5 X"
+  },
+  {
+   "section": "roster",
+   "check": "every defender guards one distinct attacker",
+   "status": "PASS",
+   "value": "O1,O2,O3,O4,O5"
+  },
+  {
+   "section": "fidelity",
+   "check": "K0..K5 reproduced within 0.03 m (owner coordinates)",
+   "status": "PASS",
+   "value": "max error 0.007 m (X2@K0)"
+  },
+  {
+   "section": "fidelity",
+   "check": "O2, O3, X2, X3 stay at their K0 spots (<= 0.15 m stance shifts)",
+   "status": "PASS",
+   "value": "max 0.122 m"
+  },
+  {
+   "section": "bounds",
+   "check": "everyone in bounds (centre >= 0.2 m inside the lines)",
+   "status": "PASS",
+   "value": "ok"
+  },
+  {
+   "section": "motion",
+   "check": "O1 top speed <= 7.5 m/s",
+   "status": "PASS",
+   "value": "1.90 m/s at +0.14 s"
+  },
+  {
+   "section": "motion",
+   "check": "O2 top speed <= 7.5 m/s",
+   "status": "PASS",
+   "value": "0.08 m/s at -0.50 s"
+  },
+  {
+   "section": "motion",
+   "check": "O3 top speed <= 7.5 m/s",
+   "status": "PASS",
+   "value": "0.30 m/s at +3.40 s"
+  },
+  {
+   "section": "motion",
+   "check": "O4 top speed <= 7.5 m/s",
+   "status": "PASS",
+   "value": "3.75 m/s at +2.51 s"
+  },
+  {
+   "section": "motion",
+   "check": "O5 top speed <= 7.5 m/s",
+   "status": "PASS",
+   "value": "4.15 m/s at +0.62 s"
+  },
+  {
+   "section": "motion",
+   "check": "X1 top speed <= 7.5 m/s",
+   "status": "PASS",
+   "value": "2.04 m/s at -0.70 s"
+  },
+  {
+   "section": "motion",
+   "check": "X2 top speed <= 7.5 m/s",
+   "status": "PASS",
+   "value": "0.24 m/s at +1.35 s"
+  },
+  {
+   "section": "motion",
+   "check": "X3 top speed <= 7.5 m/s",
+   "status": "PASS",
+   "value": "0.51 m/s at +3.47 s"
+  },
+  {
+   "section": "motion",
+   "check": "X4 top speed <= 7.5 m/s",
+   "status": "PASS",
+   "value": "4.74 m/s at +1.90 s"
+  },
+  {
+   "section": "motion",
+   "check": "X5 top speed <= 7.5 m/s",
+   "status": "PASS",
+   "value": "1.99 m/s at -1.15 s"
+  },
+  {
+   "section": "motion",
+   "check": "O1 acceleration <= 14.0 m/s^2",
+   "status": "PASS",
+   "value": "5.0 m/s^2 at +0.77 s"
+  },
+  {
+   "section": "motion",
+   "check": "O2 acceleration <= 14.0 m/s^2",
+   "status": "PASS",
+   "value": "0.2 m/s^2 at +0.17 s"
+  },
+  {
+   "section": "motion",
+   "check": "O3 acceleration <= 14.0 m/s^2",
+   "status": "PASS",
+   "value": "1.5 m/s^2 at +3.68 s"
+  },
+  {
+   "section": "motion",
+   "check": "O4 acceleration <= 14.0 m/s^2",
+   "status": "PASS",
+   "value": "9.2 m/s^2 at +4.09 s"
+  },
+  {
+   "section": "motion",
+   "check": "O5 acceleration <= 14.0 m/s^2",
+   "status": "WARN",
+   "value": "11.4 m/s^2 at +0.13 s"
+  },
+  {
+   "section": "motion",
+   "check": "X1 acceleration <= 14.0 m/s^2",
+   "status": "PASS",
+   "value": "6.7 m/s^2 at -0.23 s"
+  },
+  {
+   "section": "motion",
+   "check": "X2 acceleration <= 14.0 m/s^2",
+   "status": "PASS",
+   "value": "1.0 m/s^2 at +1.68 s"
+  },
+  {
+   "section": "motion",
+   "check": "X3 acceleration <= 14.0 m/s^2",
+   "status": "PASS",
+   "value": "2.3 m/s^2 at +3.78 s"
+  },
+  {
+   "section": "motion",
+   "check": "X4 acceleration <= 14.0 m/s^2",
+   "status": "WARN",
+   "value": "10.9 m/s^2 at +2.36 s"
+  },
+  {
+   "section": "motion",
+   "check": "X5 acceleration <= 14.0 m/s^2",
+   "status": "PASS",
+   "value": "5.9 m/s^2 at +4.22 s"
+  },
+  {
+   "section": "collisions",
+   "check": "no bodies overlap (>= 0.5 m centre to centre)",
+   "status": "PASS",
+   "value": "min 0.63 m (X1-X5 at +1.98 s)"
+  },
+  {
+   "section": "ball",
+   "check": "ball 3D speed <= 16 m/s frame to frame (no teleports)",
+   "status": "PASS",
+   "value": "max 9.6 m/s"
+  },
+  {
+   "section": "ball",
+   "check": "ball always in a hand or in flight until the layup",
+   "status": "PASS",
+   "value": "0 orphan frames"
+  },
+  {
+   "section": "passes",
+   "check": "pass O1->O5 clears every reach envelope (OPEN)",
+   "status": "PASS",
+   "value": "OPEN: closest X1 clearance 0.40 m at +0.88 s, ball 1.06 m high"
+  },
+  {
+   "section": "passes",
+   "check": "pass O1->O5 never passes through a body",
+   "status": "PASS",
+   "value": "ok"
+  },
+  {
+   "section": "passes",
+   "check": "pass O1->O5 speed 6-14 m/s",
+   "status": "PASS",
+   "value": "8.1 m/s over 4.79 m"
+  },
+  {
+   "section": "passes",
+   "check": "pass O1->O5 vertical path is a gravity parabola",
+   "status": "PASS",
+   "value": "rise over the chord g*T^2/8 = 0.43 m"
+  },
+  {
+   "section": "passes",
+   "check": "pass O5->O4 clears every reach envelope (OPEN)",
+   "status": "PASS",
+   "value": "OPEN: closest X4 clearance 0.35 m at +2.88 s, ball 0.78 m high"
+  },
+  {
+   "section": "passes",
+   "check": "pass O5->O4 never passes through a body",
+   "status": "PASS",
+   "value": "ok"
+  },
+  {
+   "section": "passes",
+   "check": "pass O5->O4 speed 6-14 m/s",
+   "status": "PASS",
+   "value": "6.2 m/s over 3.54 m"
+  },
+  {
+   "section": "passes",
+   "check": "pass O5->O4 vertical path is a gravity parabola",
+   "status": "PASS",
+   "value": "rise over the chord g*T^2/8 = 0.40 m"
+  },
+  {
+   "section": "passes",
+   "check": "the O5->O4 ball goes around X4 (outside his reach for the whole flight)",
+   "status": "PASS",
+   "value": "X4 clearance 0.35 m"
+  },
+  {
+   "section": "decision",
+   "check": "A DRIVE is wrong: X4 is on O5's line to the rim",
+   "status": "PASS",
+   "value": "X4 0.06 m from the O5->rim line at u=0.41 (BLOCKED); next defender 4.30 m"
+  },
+  {
+   "section": "decision",
+   "check": "B CORNER is wrong: X3 is home, the O5->O3 lane is not open",
+   "status": "PASS",
+   "value": "BLOCKED: X3 clearance -1.16 m; X3-O3 1.12 m"
+  },
+  {
+   "section": "decision",
+   "check": "C CUT is right: the lane to O4's catch spot is OPEN at the freeze",
+   "status": "PASS",
+   "value": "OPEN: closest X4 clearance 0.41 m"
+  },
+  {
+   "section": "decision",
+   "check": "C: O4 open at the catch (nearest defender >= 2.0 m)",
+   "status": "PASS",
+   "value": "X4 2.59 m"
+  },
+  {
+   "section": "decision",
+   "check": "exactly one option is open, and it is the marked correct one (C)",
+   "status": "PASS",
+   "value": "A BLOCKED / B BLOCKED / C OPEN"
+  },
+  {
+   "section": "truth",
+   "check": "2 ON THE BALL is true during the blitz",
+   "status": "PASS",
+   "value": "[[0.425, 0.867]]"
+  },
+  {
+   "section": "truth",
+   "check": "4 ON 3 is true from the catch through the freeze",
+   "status": "PASS",
+   "value": "[[1.458, 2.483]]"
+  },
+  {
+   "section": "truth",
+   "check": "X4 is IN THE PAINT at the freeze",
+   "status": "PASS",
+   "value": "[[1.683, 5.0]]"
+  },
+  {
+   "section": "causes",
+   "check": "X1: every movement onset follows a declared cause by >= 0.15 s",
+   "status": "PASS",
+   "value": "no onsets (holds his spot)"
+  },
+  {
+   "section": "causes",
+   "check": "X2: every movement onset follows a declared cause by >= 0.15 s",
+   "status": "PASS",
+   "value": "no onsets (holds his spot)"
+  },
+  {
+   "section": "causes",
+   "check": "X3: every movement onset follows a declared cause by >= 0.15 s",
+   "status": "PASS",
+   "value": "no onsets (holds his spot)"
+  },
+  {
+   "section": "causes",
+   "check": "X4: every movement onset follows a declared cause by >= 0.15 s",
+   "status": "PASS",
+   "value": "+0.30s <- X5 leaves the roller to blitz: weak-side tag responsibility (+0.25s); +3.42s <- pass O5 -> O4 released: turns, too late (+0.937s)"
+  },
+  {
+   "section": "causes",
+   "check": "X5: every movement onset follows a declared cause by >= 0.15 s",
+   "status": "PASS",
+   "value": "+0.15s <- screen set at K0: blitz, leaves O5 to trap O1 (+0.15s); +2.30s <- O1 releases the outlet to O5: recover (+1.44s)"
+  },
+  {
+   "section": "cut",
+   "check": "O4's cut is a diagonal (45-degree family: 35-60 degrees to the baseline)",
+   "status": "PASS",
+   "value": "57 degrees"
+  },
+  {
+   "section": "cut",
+   "check": "O4 is baseline-side of X4 at the catch (behind him)",
+   "status": "PASS",
+   "value": "O4 y 3.55 < X4 y 4.03"
+  },
+  {
+   "section": "cut",
+   "check": "X4 watches O5 while O4 cuts: O4 outside his focused 120-degree cone from the cut to the release",
+   "status": "PASS",
+   "value": "1.55s O4 at 152 deg / O5 at 1 deg; 1.90s O4 at 136 deg / O5 at 10 deg; 2.30s O4 at 76 deg / O5 at 6 deg; 2.48s O4 at 70 deg / O5 at 2 deg"
+  },
+  {
+   "section": "finish",
+   "check": "layup released within 1.5 m of the hoop",
+   "status": "PASS",
+   "value": "0.93 m"
+  },
+  {
+   "section": "finish",
+   "check": "layup uncontested (nearest defender >= 1.0 m at the release)",
+   "status": "PASS",
+   "value": "X4 2.07 m"
+  },
+  {
+   "section": "finish",
+   "check": "catch to layup release 0.45-0.9 s (gather + two steps, no dribble)",
+   "status": "PASS",
+   "value": "0.65 s"
+  },
+  {
+   "section": "finish",
+   "check": "O5's ball screen is legal (stationary <= 0.15 m/s while set)",
+   "status": "PASS",
+   "value": "0.000 m/s"
+  }
+ ],
+ "lanes": {
+  "O1->O5": {
+   "state": "OPEN",
+   "closest": "X1",
+   "clearance_m": 0.403,
+   "at_owner_s": 0.883,
+   "ball_z": 1.06,
+   "per_defender": {
+    "X1": 0.403,
+    "X2": 4.245,
+    "X3": 6.028,
+    "X4": 1.753,
+    "X5": 0.468
+   }
+  },
+  "O5->O4": {
+   "state": "OPEN",
+   "closest": "X4",
+   "clearance_m": 0.355,
+   "at_owner_s": 2.875,
+   "ball_z": 0.78,
+   "per_defender": {
+    "X1": 4.329,
+    "X2": 5.299,
+    "X3": 2.646,
+    "X4": 0.355,
+    "X5": 3.582
+   }
+  }
+ },
+ "decision_lanes": {
+  "A_drive": {
+   "state": "BLOCKED",
+   "x4_from_line_m": 0.055
+  },
+  "B_corner": {
+   "state": "BLOCKED",
+   "closest": "X3",
+   "clearance_m": -1.156
+  },
+  "C_cut": {
+   "state": "OPEN",
+   "closest": "X4",
+   "clearance_m": 0.414
+  }
+ },
+ "truth_windows_owner_s": {
+  "two_on_ball": [
+   [
+    0.425,
+    0.867
+   ]
+  ],
+  "four_on_three": [
+   [
+    1.458,
+    2.483
+   ]
+  ],
+  "x4_in_paint": [
+   [
+    1.683,
+    5.0
+   ]
+  ]
+ },
+ "defensive_audit": {
+  "X1": [],
+  "X2": [],
+  "X3": [],
+  "X4": [
+   {
+    "onset_owner_s": 0.3,
+    "cause": "X5 leaves the roller to blitz: weak-side tag responsibility",
+    "reaction_s": 0.25
+   },
+   {
+    "onset_owner_s": 3.417,
+    "cause": "pass O5 -> O4 released: turns, too late",
+    "reaction_s": 0.937
+   }
+  ],
+  "X5": [
+   {
+    "onset_owner_s": 0.15,
+    "cause": "screen set at K0: blitz, leaves O5 to trap O1",
+    "reaction_s": 0.15
+   },
+   {
+    "onset_owner_s": 2.3,
+    "cause": "O1 releases the outlet to O5: recover",
+    "reaction_s": 1.44
+   }
+  ]
+ },
+ "limits": {
+  "speed_max": 7.5,
+  "accel_max": 14.0,
+  "accel_warn": 10.0,
+  "reaction_min_s": 0.15,
+  "reach": "arm 0.44 H from shoulders at 0.82 H; +0.35 m lunge after 0.25 s"
+ }
+}

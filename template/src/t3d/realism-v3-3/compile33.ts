@@ -65,7 +65,7 @@ const compilePlayer = (play: Play, id: string): Compiled33 => {
   const passesIn = ev.filter((e): e is Extract<BallEvent, {type: 'pass'}> => e.type === 'pass' && e.to === id);
   const shots = ev.filter((e): e is Extract<BallEvent, {type: 'shot'}> => e.type === 'shot' && e.player === id);
   const layups = ev.filter((e): e is Extract<BallEvent, {type: 'layup'}> => e.type === 'layup' && e.player === id);
-  for (const l of layups) unsupported.push(`layup ${r3(l.t0)} s (no layup primitive yet: jump shot used)`);
+  if (!(play as Play & {v4?: boolean}).v4) for (const l of layups) unsupported.push(`layup ${r3(l.t0)} s (no layup primitive yet: jump shot used)`);
   const holding = (t: number) => holds.some((h) => t >= h.from && t < h.to && !h.dribble);
   const dribbling = (t: number) => holds.some((h) => t >= h.from && t < h.to && !!h.dribble);
   // ---------------------------------------------------------------- moving / standing intervals
@@ -105,8 +105,12 @@ const compilePlayer = (play: Play, id: string): Compiled33 => {
   ivs[0].a = 0;
   ivs[ivs.length - 1].b = dur;
   // ---------------------------------------------------------------- stances (standing intervals)
+  // E2A Motion Engine V4 (2026-11-28) opt-in: play.v4 = true -> running layups (no jump shot), trap / help stances
+  const V4 = !!(play as Play & {v4?: boolean}).v4;
   const stanceAt = (t: number): Stance => {
     if (t > tEnd) return 'relaxed';
+    if (V4 && def && actAt(t, 'trap')) return 'trap';
+    if (V4 && def && actAt(t, 'help')) return 'help';
     if (def) return actAt(t, 'closeout') || actAt(t, 'contest') ? 'closeout' : 'defense';
     if (holding(t)) return 'triple';
     if (actAt(t, 'screen')) return 'screen';
@@ -180,9 +184,28 @@ const compilePlayer = (play: Play, id: string): Compiled33 => {
     pieces[0].a = a;
     pieces[pieces.length - 1].b = b;
     for (let i = 1; i < pieces.length; i++) pieces[i].a = pieces[i - 1].b;
+    // V4: the 0.6 s merge could swallow a fast run into a shuffle (X4 iq02 shuffled at 2.5 m/s: legs at full
+    // reach, pelvis dropped 0.2 m, 246 m/s^2 pop). A shuffle piece whose peak speed exceeds 2.1 m/s is run instead.
+    if (V4 && def) for (const pc of pieces) {
+      if (pc.m !== 'shuffle') continue;
+      let vmax = 0;
+      for (let t = pc.a; t <= pc.b; t += 0.025) { const v = vel(t); vmax = Math.max(vmax, Math.hypot(v[0], v[1])); }
+      if (vmax > 2.1) pc.m = 'run';
+    }
+    // V4: a shuffle / backpedal piece is split where a trap or help window starts or ends (the arms change, the feet
+    // keep the same footwork), so the trap arms cover exactly the trap
+    if (V4 && def) {
+      const cuts = acts.filter((x) => x.type === 'trap' || x.type === 'help').flatMap((x) => [x.from, x.to]);
+      for (const ct of cuts) {
+        const i = pieces.findIndex((pc) => pc.m !== 'run' && ct > pc.a + 0.15 && ct < pc.b - 0.15);
+        if (i >= 0) pieces.splice(i, 1, {a: pieces[i].a, b: ct, m: pieces[i].m}, {a: ct, b: pieces[i].b, m: pieces[i].m});
+      }
+    }
     for (const pc of pieces) {
       const f = faceAt((pc.a + pc.b) / 2);
-      script.push({k: 'move', t0: r3(pc.a), t1: r3(pc.b), mode: pc.m, face: pc.m === 'run' ? 'path' : f});
+      const mid = (pc.a + pc.b) / 2;
+      const armsV4 = V4 && def && pc.m !== 'run' ? (actAt(mid, 'trap') ? 'trap' as const : actAt(mid, 'help') ? 'wall' as const : undefined) : undefined;
+      script.push({k: 'move', t0: r3(pc.a), t1: r3(pc.b), mode: pc.m, face: pc.m === 'run' ? 'path' : f, ...(armsV4 ? {arms: armsV4} : {})});
       if (pc.m !== 'run') summary.push(`${pc.m} ${r3(pc.a)}-${r3(pc.b)} s`);
     }
     // plants: sharp heading changes at speed inside run pieces (outside foot, cut = signed turn)
@@ -214,7 +237,28 @@ const compilePlayer = (play: Play, id: string): Compiled33 => {
     return s.t0 + 0.035 - Math.sqrt((2 * H) / 9.81);
   });
   const oneTwo: Seg[] = [];
-  for (const tk of takeoffs) {
+  // V4: a running layup keeps moving into the take-off: legal 1-2 gather steps INSIDE the run (step 1 = the knee-drive
+  // foot, step 2 = the take-off foot, which pushes for 0.17 s), the run ends at the take-off, the body lands and stands
+  const v4Lay = V4 ? layups.map((l) => {
+    const H = (l as {H?: number}).H ?? 0.42;
+    const tk = l.t0 + 0.035 - Math.sqrt((2 * H) / 9.81);
+    return {l, H, tk, hand: ((l as {hand?: number}).hand ?? 1) as 1 | -1};
+  }) : [];
+  for (const v of v4Lay) {
+    const i = ivs.findIndex((x) => x.moving && x.a < v.tk - 0.45 && x.b > v.tk - 0.05);
+    if (i >= 0) {
+      const after = ivs[i].b;
+      ivs[i].b = v.tk;
+      if (ivs[i + 1] && !ivs[i + 1].moving) ivs[i + 1].a = v.tk;
+      else if (after > v.tk + 1e-6) ivs.splice(i + 1, 0, {a: v.tk, b: after, moving: false});
+    }
+    const tkF = (v.hand === 1 ? 0 : 1) as 0 | 1, kdF = (1 - tkF) as 0 | 1;
+    const sg = (sd: 0 | 1) => (sd === 0 ? -1 : 1);
+    oneTwo.push({k: 'step', side: kdF, lift: r3(v.tk - 0.62), land: r3(v.tk - 0.4), f: 0.26, l: sg(kdF) * 0.1, heel: -0.12, h: 0.12},
+      {k: 'step', side: tkF, lift: r3(v.tk - 0.38), land: r3(v.tk - 0.17), f: 0.3, l: sg(tkF) * 0.11, heel: -0.18, h: 0.1});
+    summary.push(`layup gather: step ${kdF ? 'R' : 'L'} ${r3(v.tk - 0.4)} s, step ${tkF ? 'R' : 'L'} ${r3(v.tk - 0.17)} s, take-off ${r3(v.tk)} s, ${v.hand === 1 ? 'right' : 'left'} hand`);
+  }
+  for (const tk of V4 ? takeoffs.slice(0, shots.length) : takeoffs) {
     const stop = tk - 0.06;
     const i = ivs.findIndex((x) => x.moving && x.a < stop - 0.3 && x.b > stop);
     if (i < 0) continue;
@@ -261,7 +305,8 @@ const compilePlayer = (play: Play, id: string): Compiled33 => {
     script.push({k: 'catch', t: r3(p.t1), from: p.from, style: p.style ?? 'chest'});
     summary.push(`catch from ${p.from} ${r3(p.t1)} s`);
   }
-  for (const s of [...shots, ...layups]) {
+  for (const v of v4Lay) script.push({k: 'layup', release: r3(v.l.t0), H: v.H, hand: v.hand});
+  for (const s of [...shots, ...(V4 ? [] : layups)]) {
     const lastCatch = Math.max(-Infinity, ...passesIn.map((p) => p.t1).filter((x) => x < s.t0));
     const quick = Number.isFinite(lastCatch) && s.t0 - lastCatch < 0.7;
     // opt-in (2026-11-24, 4 Rules reel): a shot event may carry its own jump height H (free throw = a small hop)

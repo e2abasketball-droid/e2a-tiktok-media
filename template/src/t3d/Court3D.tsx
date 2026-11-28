@@ -310,7 +310,7 @@ export const Basket: React.FC<{swish?: number; snap?: boolean}> = ({swish = 0, s
 /** 'cinema' (2026-11-21, BLOB V2 brief sec. 8): the academy materials plus a satin parquet (roughness 0.8 x the plank map: no specular hot spot under the key in the top-down; low envMap, keeps
  *  the floor marks legible, no mirror), a cool counter-rim opposite the warm back light so silhouettes separate from the
  *  dark stands from ANY orbit direction, a slightly lifted navy background and a warmer key on faces. */
-export type SceneEnv = 'practice' | 'game' | 'academy' | 'cinema';
+export type SceneEnv = 'practice' | 'game' | 'academy' | 'cinema' | 'arena';
 
 export const Court3D: React.FC<{logo?: HTMLImageElement; swish?: number; env?: SceneEnv; netSnap?: boolean; full?: boolean; farBasket?: boolean; rules?: CourtRules; look?: CourtLook}> = ({logo, swish, env, netSnap, full = false, farBasket = false, rules = 'fiba', look}) => {
   const lk = look ? JSON.stringify(look) : '';
@@ -324,7 +324,10 @@ export const Court3D: React.FC<{logo?: HTMLImageElement; swish?: number; env?: S
       {/* parquet */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[px, 0, pz]} receiveShadow>
         <planeGeometry args={[SPAN, spanY]} />
-        {env === 'cinema' ? (
+        {env === 'arena' ? (
+          // V4 arena: satin maple, a soft broad sheen (no hot spot), contact shadows read on it
+          <meshStandardMaterial map={tex.map} roughnessMap={tex.rough} roughness={0.68} metalness={0.0} envMapIntensity={0.3} color="#F2ECE4" />
+        ) : env === 'cinema' ? (
           <meshStandardMaterial map={tex.map} roughnessMap={tex.rough} roughness={0.8} metalness={0.0} envMapIntensity={0.36} />
         ) : env === 'academy' ? (
           <meshStandardMaterial map={tex.map} roughness={0.74} metalness={0.0} envMapIntensity={0.28} />
@@ -337,7 +340,7 @@ export const Court3D: React.FC<{logo?: HTMLImageElement; swish?: number; env?: S
         <planeGeometry args={[80, 80]} />
         <meshStandardMaterial color="#070D1A" roughness={0.9} />
       </mesh>
-      <Arena env={env} full={full} />
+      <Arena env={env === 'arena' ? 'cinema' : env} full={full} />
       <Basket swish={swish} snap={netSnap} />
       {/* full court: NO far basket unit by default - from the tactical camera behind the offence its stanchion stands
           between the lens and the press (it hid the ball handler); only the floor marks of the far half are drawn */}
@@ -352,6 +355,7 @@ export const Court3D: React.FC<{logo?: HTMLImageElement; swish?: number; env?: S
 
 /** arena light rig: overhead key light with soft shadows, fill, rim/back light, ambient */
 export const ArenaLights: React.FC<{focus?: [number, number, number]; env?: SceneEnv}> = ({focus = [0, 0, -5], env}) => {
+  if (env === 'arena') return <ArenaLightsV4 focus={focus} />;
   // practice: warm and soft; game: colder key, bluer fill, more contrast; default: as before
   const L = env === 'cinema' ? {hemi: ['#CAD6EE', '#3B2A1A', 0.9], key: '#FFEEDC', keyI: 660, fill: '#DCE4FF', fillI: 400, back: '#FFD9A8', side: '#FFE9D2', amb: 0.17, backI: 1.6} : env === 'academy' ? {hemi: ['#C8D4EC', '#3B2A1A', 0.95], key: '#FFF1E0', keyI: 600, fill: '#DCE4FF', fillI: 430, back: '#FFE2B8', side: '#FFE9D2', amb: 0.2, backI: 1.25} : env === 'practice' ? {hemi: ['#FFD9A8', '#3A2410', 0.95], key: '#FFD3A0', keyI: 700, fill: '#FFE2C2', fillI: 300, back: '#FFD9A0', side: '#FFDDB8', amb: 0.22} : env === 'game' ? {hemi: ['#8FB0E8', '#0E1626', 0.42], key: '#E6EEFF', keyI: 860, fill: '#9DB6FF', fillI: 220, back: '#BFD4FF', side: '#D8E4FF', amb: 0.06, backI: 1.7} : {hemi: ['#9fb4dc', '#2a1a0e', 0.55], key: '#fff3e2', keyI: 760, fill: '#cdd9ff', fillI: 260, back: '#ffd9a0', side: '#ffe6c8', amb: 0.1};
   const target = React.useMemo(() => new THREE.Object3D(), []);
@@ -389,6 +393,29 @@ export const ArenaLights: React.FC<{focus?: [number, number, number]; env?: Scen
       {env === 'cinema' && <directionalLight position={[-10, 7, 16]} intensity={0.75} color="#A9C4FF" />}
       {env === 'cinema' && <directionalLight position={[16, 6, -4]} intensity={0.35} color="#FFD7B0" />}
       <ambientLight intensity={L.amb} />
+    </>
+  );
+};
+
+/** V4 'arena' rig (2026-11-28, Beat the Blitz V2): an indoor sports bowl lit from ABOVE by a broad, even roof grid,
+ *  modelled as one high soft-shadowed overhead key (shadows fall straight under the players in every shot), a sky/floor
+ *  hemisphere bounce, two weak broad fills at face height from opposite sides and a cool high rim for separation from
+ *  the dark stands. The rig is FIXED to the court (not to the camera), so the light never changes between shots. */
+const ArenaLightsV4: React.FC<{focus: [number, number, number]}> = ({focus}) => {
+  const target = React.useMemo(() => new THREE.Object3D(), []);
+  target.position.set(...focus);
+  return (
+    <>
+      <hemisphereLight args={['#E4EAF6', '#5A4430', 1.05]} />
+      <primitive object={target} />
+      <directionalLight position={[focus[0] + 1.5, 24, focus[2] + 3]} target={target} intensity={2.3} color="#FFF4E6" castShadow
+        shadow-mapSize-width={4096} shadow-mapSize-height={4096} shadow-bias={-0.0003} shadow-normalBias={0.025} shadow-radius={5}
+        shadow-camera-left={-13} shadow-camera-right={13} shadow-camera-top={13} shadow-camera-bottom={-13} shadow-camera-near={5} shadow-camera-far={45} />
+      <directionalLight position={[focus[0] - 12, 6, focus[2] + 10]} intensity={0.5} color="#F2F0FF" />
+      <directionalLight position={[focus[0] + 12, 6, focus[2] + 6]} intensity={0.32} color="#FFE8D2" />
+      <directionalLight position={[focus[0], 10, focus[2] - 18]} intensity={0.9} color="#B9CCF5" />
+      <directionalLight position={[focus[0] - 6, 9, focus[2] + 18]} intensity={0.35} color="#A9C4FF" />
+      <ambientLight intensity={0.12} />
     </>
   );
 };

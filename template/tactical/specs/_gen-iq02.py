@@ -6,7 +6,8 @@ only the 1.2 s pre-roll before K0, the subtle stance shifts of the four static p
 E2A additions (listed in the canonical file under e2a_additions).
 Coordinates: owner x -> engine x = -x; engine t = owner t + 1.2.
   python3 tactical/specs/_gen-iq02.py        (then: python3 ../tools/iq_play_validate.py ...)"""
-import json, os
+import sys
+import json, math, os
 
 D = os.path.dirname(os.path.abspath(__file__))
 T = os.path.dirname(os.path.dirname(D))
@@ -121,7 +122,73 @@ def play():
                       "Pre-roll 0..1.2 s, the static four's weight shifts and the outcome after K5 are E2A additions."]}
 
 
+def play_v2():
+    """V2 (2026-11-28, E2A Motion Engine V4): SAME owner keyframes K0..K5 and ball events, with the motion layers the V1
+    possession lacked. Tactical data changes (documented in docs/v2/02-root-cause-and-fixes.md):
+      - X4 after K5: recovers toward the rim and contests late (V1: drifted 0.7 m at walking speed after the layup)
+      - O4 after K5: the run ends at the layup landing (V1: kept travelling 0.5 m after the release)
+      - layup event: left-hand finish off the right foot, banked off the glass (V1: rendered as a standing jump shot)
+    Motion layers (compiled by realism-v3-3 with play.v4): trap stance X1/X5, help stance X4, O4 read + burst, O5 opens
+    to the passer before the catch, faces up and reads X4, X4 late contest."""
+    p = play()
+    p["id"] = "iq02-beat-the-blitz-v2"
+    p["v4"] = True
+    tr = p["tracks"]
+    tr["X4"] = tr["X4"][:-2] + [wp(5.5, [-0.1, 2.85]), wp(DUR, [-0.1, 2.85])]
+    tr["O4"] = tr["O4"][:-2] + [wp(5.32, [-0.42, 1.38]), wp(DUR, [-0.42, 1.38])]
+    A = p["actions"]
+    tb = M["blitz"]
+    A["X1"] = [ST("O1", 0, tb), {"type": "trap", "from": r3(tb + 0.05), "to": r3(M["release1"] + 0.12), "face": "O1"}, ST("O1", M["release1"] + 0.15, DUR)]
+    A["X5"] = [ST("O5", 0, tb), {"type": "trap", "from": r3(tb + 0.12), "to": r3(M["release1"] + 0.12), "face": "O1"},
+               ST("O1", M["release1"] + 0.15, M["catch1"] + 0.3), ST("O5", M["catch1"] + 0.35, DUR)]
+    A["X4"] = [ST("O1", 0, M["catch1"] - 0.2), ST("O5", M["catch1"] - 0.15, M["freeze"] - 0.05),
+               {"type": "help", "from": r3(M["freeze"] - 0.05), "to": r3(M["catch2"] + 0.05), "face": "O5"},
+               ST("O4", M["catch2"] + 0.1, M["layup"] - 0.12),
+               {"type": "contest", "from": r3(M["layup"] - 0.1), "to": r3(M["make"] + 0.15), "face": "O4"}, ST("O4", M["make"] + 0.2, DUR)]
+    A["O5"] = [{"type": "screen", "from": 0.8, "to": M["k0"], "face": "X1"}, FACE("O1", M["k1"], M["catch1"]),
+               FACE("rim", M["catch1"] + 0.12, M["release2"] - 0.22), FACE("O4", M["release2"] - 0.2, M["release2"] + 0.4)]
+    for e in p["ball"]:
+        if e["type"] == "layup":
+            e["hand"] = -1                      # left hand: approach from the left side, ball on the side away from X4
+            e["H"] = 0.45
+            e["glass"] = [0.27, 3.42]           # engine x (the cutter's side of the square), height on the board
+    rd = M["catch1"]                            # O5 catches: the read starts
+    # O5's front pivot after the catch: from facing O1 (the passer) to facing the rim (engine coordinates)
+    o5 = [-kp("O5", "K2")[0], kp("O5", "K2")[1]]; o1 = [-kp("O1", "K1")[0], kp("O1", "K1")[1]]
+    a_pass = math.atan2(o1[1] - o5[1], o1[0] - o5[0]); a_rim = math.atan2(1.575 - o5[1], 0 - o5[0])
+    PIV5 = r3(math.atan2(math.sin(a_rim - a_pass), math.cos(a_rim - a_pass)))
+    p["v33extra"] = {
+        "O5": [{"k": "open", "t0": r3(M["outlet"] + 0.15), "t1": r3(M["catch1"] - 0.32), "at": "O1", "max": 1.1},
+               # the last 0.3 s: chest and hands square to the passer (catch facing the ball), then a front pivot to face up
+               {"k": "open", "t0": r3(M["catch1"] - 0.32), "t1": r3(M["catch1"] + 0.1), "at": "O1", "max": 3.1},
+               {"k": "pivot", "side": 1, "t0": r3(M["catch1"] + 0.14), "t1": r3(M["catch1"] + 0.62), "dyaw": PIV5},
+               {"k": "look", "t": r3(M["outlet"] - 0.05), "at": "O1", "b": 0.2},
+               {"k": "look", "t": r3(M["catch1"] + 0.3), "at": "X4", "b": 0.18},
+               {"k": "look", "t": r3(M["release2"] - 0.45), "at": "O4", "b": 0.15}],
+        "O4": [{"k": "look", "t": r3(rd - 0.55), "at": "X4", "b": 0.22},           # reads X4 leaving him
+               {"k": "burst", "t": r3(rd + 0.02), "side": 1, "wide": 0.3},        # plants the right foot, explodes on the 45 cut
+               {"k": "look", "t": r3(rd + 0.3), "at": "ahead", "b": 0.2},
+               {"k": "look", "t": r3(M["release2"] - 0.35), "at": "O5", "b": 0.18}],
+        "X4": [{"k": "step", "side": 0, "lift": 1.47, "land": 1.63, "f": 0.12, "l": -0.12, "h": 0.06, "heel": 0.0, "toeOff": 0.6},
+               {"k": "step", "side": 1, "lift": 1.64, "land": 1.84, "f": 0.28, "l": 0.1, "h": 0.09, "heel": 0.05, "toeOff": 0.55},  # quick first steps of the sprint to the help (V2a: 3 long strides for 2 m)
+               {"k": "step", "side": 0, "lift": 3.96, "land": 4.12, "f": 0.02, "l": -0.05, "h": 0.05, "toeOff": 0.2},   # two short steps back up
+               {"k": "step", "side": 1, "lift": 4.14, "land": 4.3, "f": 0.02, "l": 0.05, "h": 0.05, "toeOff": 0.2},    # toward the ball (help -> show)
+               {"k": "look", "t": r3(M["catch1"] - 0.6), "at": "O5", "b": 0.25},
+               {"k": "look", "t": r3(M["release2"] + 0.05), "at": "ball", "b": 0.1},
+               {"k": "look", "t": r3(M["catch2"] + 0.05), "at": "O4", "b": 0.12}],
+    }
+    p["v33still"] = {"X4": [[3.74, 4.42]], "O5": [[r3(M["catch1"] + 0.1), 3.44]]}      # X4 is set in the help spot: the body works over planted feet + 2 steps
+    p["notes"] = p["notes"] + ["V2 (Motion Engine V4): see play_v2() in tactical/specs/_gen-iq02.py for every change."]
+    return p
+
+
 if __name__ == "__main__":
+    if "--v2" in sys.argv:
+        p = play_v2()
+        out = os.path.join(T, "tactical", "plays", "iq02-beat-the-blitz-v2.json")
+        json.dump(p, open(out, "w"), indent=1)
+        print("wrote", out)
+        sys.exit(0)
     p = play()
     out = os.path.join(T, "tactical", "plays", "iq02-beat-the-blitz.json")
     json.dump(p, open(out, "w"), indent=1)

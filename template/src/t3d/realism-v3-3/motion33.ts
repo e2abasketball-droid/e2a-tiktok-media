@@ -117,9 +117,10 @@ export const shotPhase = (clip: Clip32, t: number, baseDrop: number): ShotP => {
   const s = clip.shot;
   if (!s || t <= s.gatherT || t >= s.recoverT) return {stage: 'none', dz: null, lean: null, air: 0, w: 0, v0: 0};
   const v0 = Math.sqrt(2 * G * s.H);
-  const DIP = (0.24 + 0.4 * (clip.vary.k.drop ?? 0)) * (s.quick ? 0.6 : 1); // V3.3: a quick release dips less
+  const LU = !!s.layup; // V4 running layup: the penultimate step is the dip (short), the trunk stays forward in the air
+  const DIP = LU ? 0.11 : (0.24 + 0.4 * (clip.vary.k.drop ?? 0)) * (s.quick ? 0.6 : 1); // V3.3: a quick release dips less
   const zTo = 0.035; // pelvis over its standing height at toe-off (heels up, legs straight)
-  const LL = s.quick ? 0.2 : 0.3; // V3.3: a quick release loads with less forward lean (0.3 -> 0.05 in 0.17 s: head 313 m/s^2)
+  const LL = LU ? 0.26 : s.quick ? 0.2 : 0.3; // V3.3: a quick release loads with less forward lean (0.3 -> 0.05 in 0.17 s: head 313 m/s^2)
   const loadT = s.t0 - PUSH;
   const w = smooth((t - s.gatherT) / 0.2) * (1 - smooth((t - (s.recoverT - 0.25)) / 0.25));
   if (t < s.dipT) {
@@ -133,12 +134,13 @@ export const shotPhase = (clip: Clip32, t: number, baseDrop: number): ShotP => {
   if (t < s.t0) {
     const u = (t - loadT) / PUSH;
     // leg extension: from the bottom of the dip (at rest) to toe-off with the take-off velocity (C1 into the flight)
-    return {stage: 'takeoff', dz: herm(-DIP, 0, zTo, v0 * PUSH, u), lean: lerp(LL, 0.05, smooth(u * 1.2)), air: 0, w, v0};
+    return {stage: 'takeoff', dz: herm(-DIP, 0, zTo, v0 * PUSH, u), lean: lerp(LL, LU ? 0.22 : 0.05, smooth(u * 1.2)), air: 0, w, v0};
   }
   if (t < s.t1) {
     const tau = t - s.t0;
     const dz = zTo + v0 * tau - 0.5 * G * tau * tau;
     const st: ShotStage = t < s.release - 0.06 ? 'rise' : t < s.release + 0.03 ? 'release' : t < s.release + 0.2 ? 'follow' : 'descent';
+    if (LU) return {stage: st, dz, lean: t < s.release ? lerp(0.22, 0.12, smooth((t - s.t0) / (s.release - s.t0))) : lerp(0.12, 0.2, smooth((t - s.release) / (s.t1 - s.release))), air: dz - zTo, w, v0};
     return {stage: st, dz, lean: t < s.release ? lerp(0.05, -0.02, smooth((t - s.t0) / (s.release - s.t0))) : lerp(-0.02, 0.1, smooth((t - s.release) / (s.t1 - s.release))), air: dz - zTo, w, v0};
   }
   if (t < s.t1 + ABS) {
@@ -152,11 +154,12 @@ export const shotPhase = (clip: Clip32, t: number, baseDrop: number): ShotP => {
 
 // ---------------------------------------------------------------- feet
 export type FootState = {g: V3; yaw: number; pitch: number; support: number; fwdness: number; ankle: V3; planted: boolean};
-const anchorOf = (clip: Clip32, root: (t: number) => V3, st: {f: number; l: number; yaw?: number}, t: number, side: 0 | 1): {g: V3; yaw: number} => {
+const anchorOf = (clip: Clip32, root: (t: number) => V3, st: {f: number; l: number; yaw?: number; dir?: number}, t: number, side: 0 | 1): {g: V3; yaw: number} => {
   const h = keyAt(clip.heading, t);
   const r = root(t);
   const w = keyAt(clip.stanceW, t) * (side === 0 ? -1 : 1);
-  const p = add(add(r, mul(fwd(h), st.f)), mul(right(h), st.l + w));
+  const hd = st.dir ?? h; // V4: strides of an 'open' run are placed along the travel direction
+  const p = add(add(r, mul(fwd(hd), st.f)), mul(right(hd), st.l + w));
   return {g: [p[0], p[1], 0], yaw: h + (st.yaw ?? 0) + (side === 0 ? 0.1 : -0.1) + (side === 0 ? 1 : -1) * 2.2 * keyAt(clip.stanceW, t) * 0.5};
 };
 
@@ -221,6 +224,12 @@ const footAt0 = (clip: Clip32, c: RigC, root: (t: number) => V3, side: 0 | 1, t:
         const ph = shotPhase(clip, t, 0);
         z = Math.max(0, ph.air) + 0.05 * Math.sin(Math.PI * u);
         pitch = 0.62 * (1 - u) * (1 - u) + 0.42 * Math.sin(Math.PI * u) + (st.heel ?? 0.3) * u * u * u;
+        // V4 layup knee drive: the free leg swings up and forward (thigh ~ horizontal at the release), comes down first
+        const kd = (st as Step & {kd?: number}).kd;
+        if (kd) {
+          z = Math.max(z, kd * Math.pow(Math.sin(Math.PI * clamp(u * 1.15)), 0.6) + Math.max(0, ph.air) * 0.7);
+          pitch = 0.35 * (1 - u) * (1 - u) + 0.25 * Math.sin(Math.PI * u) + (st.heel ?? 0.25) * u * u * u;
+        }
       } else {
         // V3.3 running swing: above ~2.2 m/s the foot stays behind longer after toe-off (heel recovery), rises EARLY
         // (peak at ~37 % of the swing instead of 50 %) and higher, then swings through and comes down flat-ish; the
@@ -236,9 +245,19 @@ const footAt0 = (clip: Clip32, c: RigC, root: (t: number) => V3, side: 0 | 1, t:
       }
       const vs2 = st.air ? 0 : Math.hypot(tgt.g[0] - prev.g[0], tgt.g[1] - prev.g[1]) / Math.max(0.1, st.land - st.lift);
       const hsR = 0.5 - 0.5 * Math.cos(Math.PI * Math.pow(clamp(u * 1.06), 1.2));
-      const hsx = lerp(hs, hsR, smooth((vs2 - 2.2) / 2.0));
+      // V4 knee drive: the free foot comes THROUGH early (under / in front of the hips by ~35 % of the flight)
+      const hsx = (st as Step & {kd?: number}).kd ? smooth(clamp(u * 2.4)) : lerp(hs, hsR, smooth((vs2 - 2.2) / 2.0));
       const yaw = prev.yaw + wrap(tgt.yaw - prev.yaw) * hs;
-      const g: V3 = [lerp(prev.g[0], tgt.g[0], hsx), lerp(prev.g[1], tgt.g[1], hsx), z];
+      let g: V3 = [lerp(prev.g[0], tgt.g[0], hsx), lerp(prev.g[1], tgt.g[1], hsx), z];
+      if ((st as Step & {kd?: number}).kd) {
+        // V4 knee drive: in the air the free foot rides UNDER the driven knee (just in front of the hips, shin ~ vertical),
+        // relative to the moving body; it reaches its landing spot only in the last 20 % of the flight
+        const hh = keyAt(clip.heading, t);
+        const rel = add(add(root(t), mul(fwd(hh), 0.2)), mul(right(hh), st.l * 0.6));
+        const a1 = smooth(u / 0.35), a2 = smooth((u - 0.8) / 0.2);
+        const px = lerp(lerp(prev.g[0], rel[0], a1), tgt.g[0], a2), py = lerp(lerp(prev.g[1], rel[1], a1), tgt.g[1], a2);
+        g = [px, py, z];
+      }
       return {g, yaw, pitch, support: 0, fwdness: -1 + 2 * smooth(u), ankle: ankleOf(c, g, yaw, pitch), planted: false};
     }
     prev = tgt;
@@ -492,6 +511,11 @@ const releaseBall = (b: Body) => add(add(b.head, mul(fwd(b.chestYaw), 0.34)), ad
  *  FORWARD toward the rim (finger-roll finish) instead of the jump shot's release over the forehead */
 const layupBall = (b: Body) => add(add(b.head, mul(fwd(b.chestYaw), 0.42)), add(mul(UP, 0.46), mul(right(b.chestYaw), 0.14)));
 
+/** V4 layup anchors: the ball ripped to the chest on the finishing-hand side (protected), and the one-hand release
+ *  point (arm extended up and toward the rim over the finishing shoulder) */
+const ripBall = (b: Body, hand: number) => add(add(b.chest, mul(fwd(b.chestYaw), 0.25)), add(mul(UP, -0.06), mul(right(b.chestYaw), 0.15 * hand)));
+const layupRel = (b: Body, hand: number) => add(add(b.head, mul(fwd(b.chestYaw), 0.3)), add(mul(UP, 0.42), mul(right(b.chestYaw), 0.15 * hand)));
+
 type PassEv = Extract<BallEvent, {type: 'pass'}>;
 type ShotEv = Extract<BallEvent, {type: 'shot' | 'layup'}>;
 const passTo = (play: Play, id: string, t: number) => play.ball.find((e): e is PassEv => e.type === 'pass' && e.to === id && Math.abs(e.t1 - t) < 0.02);
@@ -538,7 +562,7 @@ const takeSpot = (play: Play, ev: PassEv, t: number): V3 => {
 const shotOf = (play: Play, id: string, t: number) => play.ball.find((e): e is ShotEv => (e.type === 'shot' || e.type === 'layup') && e.player === id && Math.abs(e.t0 - t) < 0.02);
 
 // ---------------------------------------------------------------- flights (ballistic, from body-derived end points)
-type Flight = {t0: number; t1: number; P0: V3; P1: V3; style: string; ev: BallEvent};
+type Flight = {t0: number; t1: number; P0: V3; P1: V3; style: string; ev: BallEvent; bank?: V3};
 const fcache = new Map<string, Flight>();
 const flightOf = (play: Play, ev: BallEvent, k: number): Flight => {
   const key = `${play.id}|${k}`;
@@ -548,9 +572,14 @@ const flightOf = (play: Play, ev: BallEvent, k: number): Flight => {
   if (ev.type === 'pass') f = {t0: ev.t0, t1: ev.t1, P0: releaseSpot(play, ev), P1: catchSpot(play, ev), style: ev.style ?? 'chest', ev};
   else if (ev.type === 'shot' || ev.type === 'layup') {
     const sb = bodyOf(play, ev.player, ev.t0);
-    const P0 = sb ? (ev.type === 'layup' && (ev as {reach?: boolean}).reach ? layupBall(sb) : releaseBall(sb)) : engineBall(play, ev.t0);
+    const lh = ev.type === 'layup' ? (ev as {hand?: number}).hand : undefined; // V4: one-hand layup release on the finishing side
+    const P0 = sb ? (lh ? layupRel(sb, lh) : ev.type === 'layup' && (ev as {reach?: boolean}).reach ? layupBall(sb) : releaseBall(sb)) : engineBall(play, ev.t0);
     const aim: V3 = ev.make === false ? engineBall(play, ev.t1) : [RIM3[0], RIM3[1], RIM3[2] + 0.05];
     f = {t0: ev.t0, t1: ev.t1, P0, P1: aim, style: ev.type, ev};
+    // V4 opt-in bank shot: the ball meets the glass at `glass` = [x, z] (front face of the board, ball centre one radius
+    // off it) at 60 % of the flight and drops into the rim from there (two gravity arcs; the board reverses vy)
+    const gl = (ev as {glass?: [number, number]}).glass;
+    if (gl) f.bank = [gl[0], FIBA.basket[1] - 0.375 + BALL_R, gl[1]];
   } else throw new Error('not a flight');
   fcache.set(key, f);
   return f;
@@ -568,6 +597,10 @@ const flightAt = (play: Play, f: Flight, t: number): {p: V3; v: V3} => {
     const e = u * u * (3 - 2 * u);
     const a = presentSpot(play, f.ev, t), z = takeSpot(play, f.ev, t);
     return {p: lerp3(a, z, e), v: [0, 0, 0]};
+  }
+  if (f.bank) {
+    const tb = f.t0 + 0.6 * (f.t1 - f.t0);
+    return t < tb ? arc(f.P0, f.bank, f.t0, tb, t) : arc(f.bank, f.P1, tb, f.t1, t);
   }
   if (f.style === 'bounce') {
     const tb = f.t0 + 0.58 * (f.t1 - f.t0);
@@ -643,6 +676,77 @@ const jumpshotOut = (x: Ctx, b: Body): ArmOut => {
   const Fc = fwd(b.chestYaw);
   const D = (a: V3, z: V3) => norm(lerp3(lerp3(a, Fc, u), lerp3(Fc, z, u), u));
   return {tip: [L(g.tip[0], fo.tip[0]), L(g.tip[1], fo.tip[1])], dir: [D(g.dir[0], fo.dir[0]), D(g.dir[1], fo.dir[1])], pole: [norm(L(g.pole[0], fo.pole[0])), norm(L(g.pole[1], fo.pole[1]))], palm: g.palm, pw: [(g.pw?.[0] ?? 1) * (1 - u), (g.pw?.[1] ?? 1) * (1 - u)]};
+};
+/** V4 one-hand grip: the finishing palm behind / under the ball (fingers up toward the release), the other palm on the
+ *  far side of the ball, fading off as the ball rises (it becomes the shield arm) */
+const gripOne = (b: Body, c: RigC, ball: V3, rel: number, hand: number): ArmOut => {
+  const F = fwd(b.chestYaw), R = right(b.chestYaw);
+  const li = hand === 1 ? 1 : 0, oi = 1 - li;
+  const n = norm(lerp3(add(mul(F, -0.55), mul(UP, -0.83)), add(mul(F, -0.85), mul(UP, -0.5)), rel));
+  const palmLead = add(ball, mul(n, BR + 0.015));
+  const dd = lerp3(UP, add(mul(UP, 0.7), mul(F, 0.7)), rel);
+  const dLead = norm(sub(dd, mul(n, dot(dd, n))));
+  const palmOff = add(ball, mul(norm(add(mul(R, -hand * 0.95), mul(F, -0.1))), BR));
+  const dOff = norm(add(mul(UP, 0.85), mul(F, 0.25)));
+  const shieldTip = armRel(b, oi, 0.22, 0.34, 0.02); // off arm: forearm up in front of the face, toward the defender
+  const shieldDir = norm(add(add(mul(UP, 0.75), mul(F, 0.45)), mul(R, hand * 0.3)));
+  const wOff = 1 - smooth((rel - 0.35) / 0.4);
+  const out: ArmOut = {ball, palm: [null, null], pw: [1, 1], dir: [UP, UP], tip: [UP, UP], pole: [UP, UP]};
+  out.palm[li] = palmLead;
+  out.dir[li] = dLead;
+  out.tip[li] = add(palmLead, mul(dLead, c.handLen * 0.55));
+  out.pole[li] = norm(add(add(mul(UP, -0.7), mul(F, 0.2)), mul(R, hand * 0.35)));
+  out.palm[oi] = palmOff;
+  out.dir[oi] = norm(lerp3(dOff, shieldDir, 1 - wOff));
+  out.tip[oi] = lerp3(add(palmOff, mul(dOff, c.handLen * 0.55)), shieldTip, 1 - wOff);
+  out.pole[oi] = norm(add(mul(R, -hand * 0.8), mul(UP, -0.5)));
+  out.pw![oi] = wOff;
+  return out;
+};
+/** V4 running layup arms + ball (same phase clock as the legs): rip to the protected side during the gather, rise to
+ *  the one-hand release with the off arm shielding, follow-through of the finishing hand, arms down for the landing */
+const layupOut = (x: Ctx, b: Body): ArmOut => {
+  const s = x.clip.shot!;
+  const hand = s.layup!.hand;
+  const t = b.t;
+  const ev = shotOf(x.play, x.id, s.release);
+  const REL = ev ? flightOf(x.play, ev, x.play.ball.indexOf(ev)).P0 : layupRel(bodyAt(x.clip, x.play, x.id, x.c, s.release), hand);
+  const ta = s.t0 - 0.08;
+  if (t < ta) {
+    const ball = lerp3(gatherBall(b), ripBall(b, hand), smooth((t - s.gatherT) / Math.max(0.12, ta - s.gatherT)));
+    return grip2(b, x.c, ball);
+  }
+  if (t < s.release) {
+    const u = clamp((t - ta) / Math.max(0.05, s.release - ta));
+    const ball = lerp3(ripBall(b, hand), REL, Math.pow(u, 1.5));
+    const g1 = gripOne(b, x.c, ball, smooth(u), hand);
+    const w = smooth(u / 0.35);
+    if (w >= 1) return g1;
+    const g2 = grip2(b, x.c, ball);
+    const L = (a: V3, z: V3) => lerp3(a, z, w);
+    return {ball, tip: [L(g2.tip[0], g1.tip[0]), L(g2.tip[1], g1.tip[1])], dir: [norm(L(g2.dir[0], g1.dir[0])), norm(L(g2.dir[1], g1.dir[1]))], pole: [norm(L(g2.pole[0], g1.pole[0])), norm(L(g2.pole[1], g1.pole[1]))],
+      palm: [L(g2.palm[0]!, g1.palm[0]!), L(g2.palm[1]!, g1.palm[1]!)], pw: [lerp(1, g1.pw![0], w), lerp(1, g1.pw![1], w)]};
+  }
+  // follow-through: the finishing hand keeps going up toward the glass, then both arms come down for the landing
+  const F = fwd(b.chestYaw), R = right(b.chestYaw);
+  const li = hand === 1 ? 1 : 0, oi = 1 - li;
+  const down = smooth((t - s.t1 + 0.05) / 0.35);
+  const reach = x.c.arm * 0.98;
+  const dLead = norm(add(add(mul(F, lerp(0.42, 0.55, down)), mul(UP, lerp(0.9, -0.6, down))), mul(R, hand * 0.08)));
+  const wLead = add(b.shoulders[li], mul(dLead, reach * lerp(1, 0.9, down)));
+  const hd = norm(lerp3(add(mul(UP, 0.6), mul(F, 0.8)), add(mul(F, 0.4), mul(UP, -0.9)), down));
+  const out: ArmOut = {palm: [null, null], tip: [UP, UP], dir: [UP, UP], pole: [UP, UP]};
+  out.tip[li] = add(wLead, mul(hd, x.c.handLen));
+  out.dir[li] = hd;
+  out.pole[li] = norm(add(mul(R, hand * 0.7), mul(UP, -0.6)));
+  out.tip[oi] = lerp3(armRel(b, oi, 0.22, 0.34, 0.02), armRel(b, oi, 0.2, 0.22, -0.42), down);
+  out.dir[oi] = norm(lerp3(add(mul(UP, 0.7), mul(F, 0.5)), add(mul(F, 0.4), mul(UP, -0.85)), down));
+  out.pole[oi] = norm(add(mul(R, -hand * 0.8), mul(UP, -0.5)));
+  const u = smooth((t - s.release) / 0.12);
+  if (u >= 1) return out;
+  const g = gripOne(b, x.c, REL, 1, hand);
+  const L = (a: V3, z: V3) => lerp3(a, z, u);
+  return {tip: [L(g.tip[0], out.tip[0]), L(g.tip[1], out.tip[1])], dir: [norm(L(g.dir[0], out.dir[0])), norm(L(g.dir[1], out.dir[1]))], pole: [norm(L(g.pole[0], out.pole[0])), norm(L(g.pole[1], out.pole[1]))], palm: g.palm, pw: [(g.pw?.[0] ?? 1) * (1 - u), (g.pw?.[1] ?? 1) * (1 - u)]};
 };
 const followOut = (x: Ctx, b: Body, s: NonNullable<Clip32['shot']>): ArmOut => {
   const t = b.t;
@@ -916,7 +1020,23 @@ const modeOut = (x: Ctx, m: ArmKey32['m'], b: Body): ArmOut => {
       return out;
     }
     case 'jumpshot':
-      return jumpshotOut(x, b);
+      return clip.shot?.layup ? layupOut(x, b) : jumpshotOut(x, b);
+    case 'layup':
+      return layupOut(x, b);
+    case 'trap':
+      // V4 trap (blitz): both hands HIGH and wide, palms toward the ball handler: the pass over the top is taken away
+      return free((i) => {
+        const s = i === 0 ? -1 : 1;
+        const ph = (clip.vary.seed % 11) * 0.6 + i * 2.1;
+        const wv = 0.03 * Math.sin(2 * Math.PI * 1.4 * t + ph);
+        return {tip: armRel(b, i, 0.42 + wv, 0.3, 0.32 + wv), dir: norm(add(add(mul(UP, 0.75), mul(F, 0.5)), mul(R, s * 0.35))), pole: norm(add(add(mul(R, s * 0.7), mul(UP, -0.5)), mul(F, -0.3)))};
+      });
+    case 'wall':
+      // V4 help defender showing the wall: hands out at chest height, wide (makes himself big in the driving lane)
+      return free((i) => {
+        const s = i === 0 ? -1 : 1;
+        return {tip: armRel(b, i, 0.5, 0.24, -0.08), dir: norm(add(add(mul(R, s * 0.55), mul(F, 0.55)), mul(UP, 0.35))), pole: norm(add(mul(UP, -0.85), mul(F, -0.3)))};
+      });
     case 'set':
       return gripShot(b, c, setBall(b), 0);
     case 'shoot':

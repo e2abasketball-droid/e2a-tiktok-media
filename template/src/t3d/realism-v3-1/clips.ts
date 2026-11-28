@@ -16,7 +16,7 @@ export type Key = [number, number];
 /** one footstep: side 0 = left / 1 = right, lift / land times, landing offsets, optional foot yaw (relative to the
  *  heading), swing height h, heel = landing pitch (- = heel strike / toes up, + = lands on the ball of the foot),
  *  toeOff = heel rise before the lift, air = jump (follows the ballistic pelvis) */
-export type Step = {s: 0 | 1; lift: number; land: number; f: number; l: number; yaw?: number; h?: number; heel?: number; toeOff?: number; air?: boolean};
+export type Step = {s: 0 | 1; lift: number; land: number; f: number; l: number; yaw?: number; h?: number; heel?: number; toeOff?: number; air?: boolean; dir?: number};
 export type ArmKey = {t: number; m: 'ready' | 'run' | 'brake' | 'reach' | 'give' | 'pocket' | 'triple' | 'jab' | 'dribble' | 'gather' | 'set' | 'shoot' | 'follow' | 'land' | 'defense'; b: number};
 export type Clip31 = {
   label: string;

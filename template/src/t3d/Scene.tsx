@@ -225,7 +225,10 @@ const autoBlink = (i: number, t: number) => {
   return ph < 0.13 ? Math.sin((Math.PI * ph) / 0.13) : 0;
 };
 
-export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], children, logo, env, faces, players3d, instNs, athleteRenderer, athleteMotion, athleteMesh, neutral, debug32}) => {
+export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], children, logo, env: envIn, faces, players3d, instNs, athleteRenderer, athleteMotion, athleteMesh, neutral, debug32}) => {
+  // V4 'arena' look (2026-11-28): fixed overhead arena lighting; everything else as 'cinema'
+  const arena = envIn === 'arena';
+  const env = arena ? 'cinema' : envIn;
   const f = sample(play, pt);
   const ball = f.ball;
   // eyes first, head after (2026-11-17 V2): heads turn toward where the ball was 0.2 s ago, the eyes (faceOf) to where it is
@@ -306,8 +309,8 @@ export const Scene3D: React.FC<SceneProps> = ({play, pt, cam, W, H, hide = [], c
       <CameraSync cam={cam} />
       <color attach="background" args={[env === 'practice' ? '#1B140E' : env === 'academy' ? '#04070F' : env === 'cinema' ? '#071022' : '#050A15']} />
       <fog attach="fog" args={[env === 'practice' ? '#1B140E' : env === 'academy' ? '#04070F' : env === 'cinema' ? '#071022' : '#050A15', env === 'academy' ? 12 : env === 'cinema' ? 22 : 14, env === 'academy' ? 34 : env === 'cinema' ? 58 : 40]} />
-      <ArenaLights focus={W3([cam.target[0] * 0.5, Math.max(2, cam.target[1] * 0.7 + 1.5), 0])} env={env} />
-      <Court3D logo={logo} swish={swish} env={env} netSnap={realismV3(play)} full={(play as {court?: string}).court === 'full'}
+      <ArenaLights focus={arena ? W3([0, 5.5, 0]) : W3([cam.target[0] * 0.5, Math.max(2, cam.target[1] * 0.7 + 1.5), 0])} env={arena ? 'arena' : env} />
+      <Court3D logo={logo} swish={swish} env={arena ? 'arena' : env} netSnap={realismV3(play)} full={(play as {court?: string}).court === 'full'}
         rules={(play as {courtRules?: 'fiba' | 'nba'}).courtRules} look={(play as {courtLook?: {paint?: string; word?: string; ink?: string}}).courtLook} />
       {play.players.map((p, i) => {
         if (hide.includes(p.id)) return null;

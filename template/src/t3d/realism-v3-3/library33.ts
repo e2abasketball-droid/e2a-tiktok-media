@@ -32,10 +32,10 @@ import {posAt, sample} from '../../tactical/play.ts';
 import type {ArmKey, Clip31, Key, Step} from '../realism-v3-1/clips.ts';
 
 export type Face = 'path' | 'rim' | string | number;
-export type Stance = 'ready' | 'triple' | 'defense' | 'relaxed' | 'closeout' | 'screen';
+export type Stance = 'ready' | 'triple' | 'defense' | 'relaxed' | 'closeout' | 'screen' | 'trap' | 'help';
 export type Seg =
   | {k: 'stand'; t0: number; t1: number; pose?: Stance; face?: Face}
-  | {k: 'move'; t0: number; t1: number; mode?: 'run' | 'shuffle' | 'backpedal' | 'closeout'; face?: Face}
+  | {k: 'move'; t0: number; t1: number; mode?: 'run' | 'shuffle' | 'backpedal' | 'closeout'; face?: Face; arms?: 'trap' | 'wall'}
   | {k: 'plant'; t: number; side: 0 | 1; cut?: number; wide?: number}
   | {k: 'step'; side: 0 | 1; lift: number; land: number; f: number; l: number; heel?: number; h?: number; toeOff?: number; yaw?: number}
   | {k: 'pivot'; side: 0 | 1; t0: number; t1: number; dyaw: number}
@@ -43,15 +43,25 @@ export type Seg =
   | {k: 'dribble'; push: number; floor: number; catch: number}
   | {k: 'dribbleRun'; t0: number; t1: number; hand?: 1 | -1; floors: number[]}
   | {k: 'pass'; t: number; to: string; style?: PassStyle; t1?: number}
-  | {k: 'jumpshot'; release: number; H?: number; quick?: boolean};
+  | {k: 'jumpshot'; release: number; H?: number; quick?: boolean}
+  // E2A Motion Engine V4 (2026-11-28, opt-in primitives; plays that do not use them compile exactly as before):
+  //   layup   running one-foot layup: legal 1-2 gather steps while moving, take-off from the foot opposite the hand,
+  //           knee drive of the other leg, one-hand release at the hand side, landing and recovery (ONE phase clock)
+  //   burst   explosive first step out of a low-speed set: sink, plant the push foot, big forward lean, short quick step
+  //   look    a timed gaze target (read the defender, find the passer) for b seconds of blend
+  | {k: 'layup'; release: number; H?: number; hand?: 1 | -1}
+  | {k: 'burst'; t: number; side: 0 | 1; wide?: number}
+  | {k: 'look'; t: number; at: string; b?: number}
+  //   open    while running, the hips / chest open toward a target (a roller shows the passer his chest and hands)
+  | {k: 'open'; t0: number; t1: number; at: string; max?: number};
 export type PassStyle = 'chest' | 'bounce' | 'overhead' | 'handoff';
 /** V3.3 body profile: deterministic per player (compile33 derives it from the play: role, height table, seed) */
 export type Profile = {height?: number; cadence?: number; intensity?: number; posture?: number; hand?: 1 | -1};
 export type Vary = {seed: number; timing?: number; amp?: number; profile?: Profile};
-export type ArmKey32 = Omit<ArmKey, 'm'> & {m: ArmKey['m'] | 'closeout' | 'pass' | 'jumpshot' | 'relaxed' | 'screen' | 'handoff' | 'take'};
+export type ArmKey32 = Omit<ArmKey, 'm'> & {m: ArmKey['m'] | 'closeout' | 'pass' | 'jumpshot' | 'relaxed' | 'screen' | 'handoff' | 'take' | 'layup' | 'trap' | 'wall'};
 export type Clip32 = Omit<Clip31, 'arms'> & {
   arms: ArmKey32[];
-  shot?: {release: number; t0: number; t1: number; H: number; dipT: number; gatherT: number; recoverT: number; armT?: number; quick?: boolean};
+  shot?: {release: number; t0: number; t1: number; H: number; dipT: number; gatherT: number; recoverT: number; armT?: number; quick?: boolean; layup?: {hand: 1 | -1}};
   pass?: {t: number; to: string};
   stanceW: Key[]; // extra half-width of the stance (m) added to every planted lateral offset
   /** V3.3: every ball window of the player [start, end) with how it starts (catch / start / handoff) and ends */
@@ -160,7 +170,8 @@ export const buildClip = (play: Play, id: string, script: Seg[], vary: Vary, lab
   const K = {cad: (1 + vr(V.seed, 1, 0.05)) * PF.cadence, lean: vr(V.seed, 2, 0.035) * V.amp + 0.04 * PF.posture, drop: vr(V.seed, 3, 0.018) * V.amp + 0.025 * PF.posture, swing: (1 + vr(V.seed, 4, 0.1) * V.amp) * PF.intensity, width: vr(V.seed, 5, 0.018)};
   const segs = [...script];
   const of = <T extends Seg['k']>(k: T) => segs.filter((s) => s.k === k) as Extract<Seg, {k: T}>[];
-  const shotSeg = of('jumpshot')[0];
+  const layupSeg = of('layup')[0];
+  const shotSeg = of('jumpshot')[0] ?? (layupSeg ? {k: 'jumpshot' as const, release: layupSeg.release, H: layupSeg.H ?? 0.42, quick: false} : undefined);
   // ---------------------------------------------------------------- heading (path direction, or facing targets)
   let lastH = faceAngle(c, (segs.find((s) => s.k === 'stand') as {face?: Face} | undefined)?.face ?? 'rim', 0, 0);
   const rawHeading = (t: number): number => {
@@ -170,6 +181,8 @@ export const buildClip = (play: Play, id: string, script: Seg[], vary: Vary, lab
     const pathH = sp > 0.35 ? Math.atan2(v[1], v[0]) : lastH;
     if (seg?.k === 'move' && (seg.mode === 'shuffle' || seg.mode === 'backpedal')) return faceAngle(c, seg.face ?? 'rim', t, pathH);
     if (seg?.k === 'stand') return faceAngle(c, seg.face, t, lastH);
+    const op = segs.find((q): q is Extract<Seg, {k: 'open'}> => q.k === 'open' && t >= q.t0 && t <= q.t1);
+    if (op && seg?.k === 'move') return pathH + clamp(wrap(faceAngle(c, op.at, t, pathH) - pathH), -(op.max ?? 1.0), op.max ?? 1.0);
     return seg?.k === 'move' && seg.face && seg.face !== 'path' ? faceAngle(c, seg.face, t, pathH) : pathH;
   };
   const hs: Key[] = [];
@@ -203,7 +216,9 @@ export const buildClip = (play: Play, id: string, script: Seg[], vary: Vary, lab
   };
   // ---------------------------------------------------------------- footsteps
   const steps: Step[] = [];
-  const forced = [...of('plant').map((p) => ({t: p.t, side: p.side, p})), ...of('step').map((s) => ({t: s.land, side: s.side, s}))].sort((a, b) => a.t - b.t);
+  const forced = [...of('plant').map((p) => ({t: p.t, side: p.side, p})), ...of('step').map((s) => ({t: s.land, side: s.side, s})),
+    // V4 burst: the push foot is planted wide and slightly behind the hips (it does not brake, it drives)
+    ...of('burst').map((b) => ({t: b.t, side: b.side, s: {k: 'step' as const, side: b.side, lift: b.t - 0.22, land: b.t, f: -0.06, l: (b.side === 0 ? -1 : 1) * (b.wide ?? 0.3), heel: 0.0, h: 0.06, toeOff: 0.7}}))].sort((a, b) => a.t - b.t);
   let lastSide: 0 | 1 = 1; // the first auto step is made with the left foot unless forced otherwise
   const lastLand: [number, number] = [-1, -1];
   const lastSpot: [[number, number] | null, [number, number] | null] = [null, null];
@@ -231,7 +246,10 @@ export const buildClip = (play: Play, id: string, script: Seg[], vary: Vary, lab
     // anchors inside this move: forced steps, and the end of the move
     const fz = forced.filter((f) => f.t > mv.t0 + 0.05 && f.t <= mv.t1 + 0.02);
     let ta = mv.t0;
-    const marks = [...fz.map((f) => ({t: f.t, side: f.side as 0 | 1 | -1, f})), ...(fz.length && Math.abs(fz[fz.length - 1].t - mv.t1) < 0.03 ? [] : [{t: mv.t1, side: -1 as const, f: undefined}])];
+    // V4: a run that ends in a layup take-off has no closing step (the take-off foot is already planted)
+    const tkL = layupSeg ? layupSeg.release + 0.035 - Math.sqrt((2 * (layupSeg.H ?? 0.42)) / 9.81) : -9;
+    const endsInLayup = Math.abs(mv.t1 - tkL) < 0.05;
+    const marks = [...fz.map((f) => ({t: f.t, side: f.side as 0 | 1 | -1, f})), ...((fz.length && Math.abs(fz[fz.length - 1].t - mv.t1) < 0.03) || endsInLayup ? [] : [{t: mv.t1, side: -1 as const, f: undefined}])];
     for (const mk of marks) {
       // integrate the cadence over [ta, mk.t]
       let ph = 0;
@@ -275,7 +293,11 @@ export const buildClip = (play: Play, id: string, script: Seg[], vary: Vary, lab
         } else {
           const acc0 = (c.speed(tl + 0.05) - c.speed(tl - 0.05)) / 0.1;
           const brake = acc0 < -3.5;
-          push({s, lift, land: tl, f: g.fwd + (brake ? 0.14 : 0) + (first ? -0.04 : 0), l: sg * (0.085 + 0.6 * K.width), h: g.h, heel: brake ? -0.2 : v > 3 ? 0.1 : 0.03, toeOff: v > 2 ? 0.55 : 0.4});
+          // V4: while an 'open' seg turns the body away from the path (opening to the passer on the move) the stride is
+          // still placed along the TRAVEL direction (dir); placed along the body heading it landed behind the hips
+          const vv = c.vel(tl), pH = Math.atan2(vv[1], vv[0]);
+          const opn = segs.some((q) => q.k === 'open' && tl >= q.t0 - 0.1 && tl <= q.t1 + 0.1) && Math.hypot(vv[0], vv[1]) > 0.35 && Math.abs(wrap(hAt(tl) - pH)) > 0.5;
+          push({s, lift, land: tl, f: g.fwd + (brake ? 0.14 : 0) + (first ? -0.04 : 0), l: sg * (0.085 + 0.6 * K.width), h: g.h, heel: brake ? -0.2 : v > 3 ? 0.1 : 0.03, toeOff: v > 2 ? 0.55 : 0.4, ...(opn ? {dir: pH} : {})});
         }
       }
       if (mk.f && mk.side !== -1) {
@@ -318,8 +340,24 @@ export const buildClip = (play: Play, id: string, script: Seg[], vary: Vary, lab
     const gatherT = shotSeg.quick ? Math.min(armT, t0 - PUSH33 - 0.24) : armT;
     const dipT = Math.max(t0 - 0.5, gatherT + 0.35 * (t0 - PUSH33 - gatherT));
     shot = {release: shotSeg.release, t0, t1, H, dipT, gatherT, recoverT: t1 + 0.55, armT, quick: !!shotSeg.quick};
-    push({s: 1, lift: t0, land: t1, f: 0.08, l: 0.17 + K.width, heel: 0.3, air: true});
-    push({s: 0, lift: t0, land: t1, f: 0.06, l: -0.17 - K.width, heel: 0.3, air: true});
+    if (layupSeg) {
+      // V4 layup: the gather starts at the catch (or 0.45 s before the take-off), the dip is the penultimate step (short);
+      // take-off foot = opposite the finishing hand, it trails and lands last; the other knee drives up and lands first
+      const hand = layupSeg.hand ?? 1;
+      const tk: 0 | 1 = hand === 1 ? 0 : 1; // right hand -> left foot take-off
+      const kd = (1 - tk) as 0 | 1;
+      shot.layup = {hand};
+      shot.gatherT = Number.isFinite(lastCatch) ? Math.max(lastCatch + 0.02, t0 - 0.62) : t0 - 0.45;
+      shot.armT = shot.gatherT;
+      shot.dipT = Math.max(shot.gatherT + 0.05, t0 - PUSH33 - 0.12);
+      shot.recoverT = t1 + 0.5;
+      const sk = (sd: 0 | 1) => (sd === 0 ? -1 : 1);
+      push({s: tk, lift: t0, land: t1 + 0.07, f: 0.16, l: sk(tk) * (0.15 + K.width), heel: 0.35, air: true});
+      push({s: kd, lift: t0 - 0.1, land: t1, f: 0.3, l: sk(kd) * (0.14 + K.width), heel: 0.25, air: true, kd: 0.42} as Step);
+    } else {
+      push({s: 1, lift: t0, land: t1, f: 0.08, l: 0.17 + K.width, heel: 0.3, air: true});
+      push({s: 0, lift: t0, land: t1, f: 0.06, l: -0.17 - K.width, heel: 0.3, air: true});
+    }
   }
   steps.sort((a, b) => a.land - b.land || a.s - b.s);
   // sanity: per foot, lift after the previous landing of that foot
@@ -345,7 +383,7 @@ export const buildClip = (play: Play, id: string, script: Seg[], vary: Vary, lab
   };
   const widthOf = (t: number) => {
     const p = stanceOf(t);
-    return p === 'defense' ? 0.14 : p === 'screen' ? 0.15 : p === 'closeout' ? 0.08 : p === 'triple' ? 0.06 : p === 'ready' ? 0.04 : 0;
+    return p === 'trap' ? 0.18 : p === 'help' ? 0.15 : p === 'defense' ? 0.14 : p === 'screen' ? 0.15 : p === 'closeout' ? 0.08 : p === 'triple' ? 0.06 : p === 'ready' ? 0.04 : 0;
   };
   const stanceW = keysOf((t) => (widthOf(t - 0.15) + widthOf(t) + widthOf(t + 0.15)) / 3, 0, c.dur, 0.1);
   // ---------------------------------------------------------------- trunk / pelvis channels from the track and segments
@@ -364,6 +402,10 @@ export const buildClip = (play: Play, id: string, script: Seg[], vary: Vary, lab
     else if (p === 'triple') L = 0.26;
     else if (p === 'ready') L = 0.2;
     else if (p === 'closeout') L = 0.12;
+    else if (p === 'trap') L = 0.22; // V4: chest up, hips back, hands high (the pass over the top is taken away)
+    else if (p === 'help') L = 0.3;
+    // V4 burst: sink before the push, the trunk drives forward through the first two steps
+    for (const bu of of('burst')) L += -0.06 * Math.exp(-(((t - bu.t + 0.12) / 0.1) ** 2)) + 0.3 * Math.exp(-(((t - bu.t - 0.22) / 0.2) ** 2));
     // V3.3: same counter-lean / drive, spread over +-0.13 s (the head popped 60-115 m/s^2 on every plant in V3.2)
     for (const pl of plants) L -= 0.2 * Math.exp(-(((t - pl.t + 0.02) / 0.13) ** 2)); // counter-lean on the plant
     for (const pl of plants) L += 0.16 * Math.exp(-(((t - pl.t - 0.24) / 0.13) ** 2)); // explosive first step after it
@@ -373,9 +415,10 @@ export const buildClip = (play: Play, id: string, script: Seg[], vary: Vary, lab
   const dropF = (t: number) => {
     const v = c.speed(t);
     const p = stanceOf(t);
-    let d = p === 'defense' ? 0.22 : p === 'screen' ? 0.15 : p === 'triple' ? 0.15 : p === 'ready' ? 0.1 : p === 'closeout' ? 0.12 : p === 'relaxed' ? 0.02 : 0.05 + 0.012 * Math.min(v, 6);
+    let d = p === 'trap' ? 0.2 : p === 'help' ? 0.23 : p === 'defense' ? 0.22 : p === 'screen' ? 0.15 : p === 'triple' ? 0.15 : p === 'ready' ? 0.1 : p === 'closeout' ? 0.12 : p === 'relaxed' ? 0.02 : 0.05 + 0.012 * Math.min(v, 6);
     for (const pl of plants) d += 0.1 * Math.exp(-(((t - pl.t - 0.03) / 0.12) ** 2)); // centre of mass drops on the plant
     for (const ct of catches) d += 0.05 * Math.exp(-(((t - ct.t - 0.12) / 0.13) ** 2)); // elbows and knees absorb the catch
+    for (const bu of of('burst')) d += 0.09 * Math.exp(-(((t - bu.t + 0.05) / 0.14) ** 2)); // V4: load the hips before the first step
     return Math.max(0, d + K.drop);
   };
   // shoulders lead turns / cuts: the chest offset anticipates the heading change by ~0.15 s
@@ -410,8 +453,8 @@ export const buildClip = (play: Play, id: string, script: Seg[], vary: Vary, lab
   const arms: ArmKey32[] = [];
   const timeline: {t: number; m: ArmKey32['m']; b: number}[] = [];
   for (const s of segs) {
-    if (s.k === 'stand') timeline.push({t: s.t0, m: s.pose === 'defense' ? 'defense' : s.pose === 'screen' ? 'screen' : s.pose === 'triple' ? 'triple' : s.pose === 'closeout' ? 'closeout' : s.pose === 'relaxed' ? 'relaxed' : 'ready', b: 0.35});
-    if (s.k === 'move') timeline.push({t: s.t0 + jt(timeline.length), m: s.mode === 'shuffle' ? 'defense' : s.mode === 'closeout' ? 'closeout' : 'run', b: 0.25});
+    if (s.k === 'stand') timeline.push({t: s.t0, m: s.pose === 'trap' ? 'trap' : s.pose === 'help' ? 'wall' : s.pose === 'defense' ? 'defense' : s.pose === 'screen' ? 'screen' : s.pose === 'triple' ? 'triple' : s.pose === 'closeout' ? 'closeout' : s.pose === 'relaxed' ? 'relaxed' : 'ready', b: 0.35});
+    if (s.k === 'move') timeline.push({t: s.t0 + jt(timeline.length), m: s.arms ? s.arms : s.mode === 'shuffle' ? 'defense' : s.mode === 'closeout' ? 'closeout' : 'run', b: 0.25});
     if (s.k === 'plant') timeline.push({t: s.t - 0.3, m: 'brake', b: 0.18}, {t: s.t + 0.14, m: 'run', b: 0.22});
     if (s.k === 'catch' && s.style === 'handoff') timeline.push({t: s.t - 0.42, m: 'take', b: 0.3}, {t: s.t, m: 'give', b: 0}, {t: s.t + 0.3, m: 'pocket', b: 0.2});
     else if (s.k === 'catch') timeline.push({t: s.t - 0.45, m: 'reach', b: 0.3}, {t: s.t, m: 'give', b: 0}, {t: s.t + 0.42, m: 'pocket', b: 0.2});
@@ -423,13 +466,15 @@ export const buildClip = (play: Play, id: string, script: Seg[], vary: Vary, lab
     if (s.k === 'pass' && s.style === 'handoff') timeline.push({t: Math.max(s.t - 0.36, Math.max(-1, ...segs.filter((d): d is Extract<Seg, {k: 'dribbleRun'}> => d.k === 'dribbleRun' && d.t1 <= s.t).map((d) => d.t1)) + 0.1), m: 'handoff', b: 0.26}, {t: (s.t1 ?? s.t + 0.2) + 0.32, m: 'screen', b: 0.35});
     else if (s.k === 'pass') timeline.push({t: s.t - 0.3, m: 'pocket', b: 0.15}, {t: s.t - 0.14, m: 'pass', b: 0.1}, {t: s.t + 0.45, m: 'ready', b: 0.4});
     if (s.k === 'jumpshot' && shot) timeline.push({t: shot.armT ?? shot.gatherT, m: 'jumpshot', b: 0.2}, {t: shot.recoverT, m: 'ready', b: 0.45});
+    if (s.k === 'layup' && shot) timeline.push({t: shot.armT ?? shot.gatherT, m: 'layup', b: 0.12}, {t: shot.recoverT, m: 'ready', b: 0.45});
+    if (s.k === 'burst') timeline.push({t: s.t - 0.05, m: 'run', b: 0.12});
   }
   timeline.sort((a, b) => a.t - b.t);
   // ball windows own the arms: between the catch (or the start, for a player who has the ball) and the release only
   // ball modes are taken, and inside the jump-shot cycle only the jump shot (a stand 'ready' key at 7.4 s took the
   // ball out of the hands mid-shot: QC palm gap 0.8 m at the release)
   // V3.3: every possession window (catch -> release, or start -> release); inside a window only ball modes are taken
-  const BALL = ['reach', 'take', 'give', 'pocket', 'triple', 'jab', 'dribble', 'gather', 'jumpshot', 'pass', 'handoff'];
+  const BALL = ['reach', 'take', 'give', 'pocket', 'triple', 'jab', 'dribble', 'gather', 'jumpshot', 'pass', 'handoff', 'layup'];
   const wins = windowsOf(segs, shot);
   for (const k of timeline) {
     if (shot && k.t > (shot.armT ?? shot.gatherT) + 1e-6 && k.t < shot.recoverT - 1e-6) continue;
@@ -447,6 +492,8 @@ export const buildClip = (play: Play, id: string, script: Seg[], vary: Vary, lab
     if (s.k === 'catch') look.push({t: s.t - 1.2, at: s.from ?? 'ball', b: 0.3}, {t: s.t - 0.35, at: 'ball', b: 0.2}, {t: s.t + 0.25, at: 'rim', b: 0.4});
     if (s.k === 'pass') look.push({t: s.t - 0.6, at: s.to, b: 0.25});
     if (s.k === 'jumpshot' && shot) look.push({t: shot.armT ?? shot.gatherT, at: 'rim', b: 0.25}, {t: shot.release + 0.1, at: 'ball', b: 0.3}, {t: shot.t1 + 0.4, at: 'rim', b: 0.4});
+    if (s.k === 'layup' && shot) look.push({t: shot.gatherT + 0.05, at: 'rim', b: 0.15}, {t: shot.t1 + 0.35, at: 'ball', b: 0.35});
+    if (s.k === 'look') look.push({t: s.t, at: s.at, b: s.b ?? 0.2});
   }
   look.sort((a, b) => a.t - b.t);
   // ---------------------------------------------------------------- ball
