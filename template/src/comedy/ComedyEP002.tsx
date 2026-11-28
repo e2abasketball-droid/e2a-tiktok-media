@@ -15,7 +15,8 @@ const stroke = {WebkitTextStroke: '10px #05070C', paintOrder: 'stroke fill', tex
 
 const Caption: React.FC<{t: number; y: number; shotStart: number}> = ({t, y, shotStart}) => {
   // a line shows while it is spoken (+0.2 s); never carried into a shot that starts after it ended
-  const line = LINES.lines.find((l) => !NO_CAPTION.has(l.id) && t >= l.words[0].start - 0.04 && t < l.end + 0.2 && !(shotStart > l.words[l.words.length - 1].end + 0.05));
+  // the most recent line wins when two overlap (a reply never sits under the previous speaker's caption)
+  const line = [...LINES.lines].reverse().find((l) => !NO_CAPTION.has(l.id) && t >= l.words[0].start - 0.04 && t < l.end + 0.2 && !(shotStart > l.words[l.words.length - 1].end + 0.05));
   if (!line) return null;
   const hl = HIGHLIGHT.has(line.id);
   // words appear exactly when they are spoken (a punchline is never revealed early)
@@ -77,7 +78,18 @@ const EndCard: React.FC<{t: number}> = ({t}) => {
   );
 };
 
-export const ComedyEP002: React.FC<{hook?: Hook; clean?: boolean}> = ({hook = 'A', clean = false}) => {
+/** cover / thumbnail overlay (render a still with cover: true) */
+const Cover: React.FC = () => (
+  <div style={{position: 'absolute', left: 50, right: 50, top: 170, textAlign: 'center'}}>
+    <span style={{fontFamily: 'Anton', fontSize: 150, lineHeight: 1.0, letterSpacing: 2, color: '#fff', ...stroke, WebkitTextStroke: '14px #05070C'}}>
+      HE <span style={{color: GOLD}}>NEVER</span>
+      <br />
+      <span style={{color: GOLD}}>PASSES.</span>
+    </span>
+  </div>
+);
+
+export const ComedyEP002: React.FC<{hook?: Hook; clean?: boolean; cover?: boolean}> = ({hook = 'A', clean = false, cover = false}) => {
   const frame = useCurrentFrame();
   const t = frame / FPS;
   const shots = SHOTS(hook);
@@ -94,7 +106,8 @@ export const ComedyEP002: React.FC<{hook?: Hook; clean?: boolean}> = ({hook = 'A
         <Ball pos={ball.pos} spin={ball.spin} />
       </Stage>
       <AbsoluteFill style={{background: 'radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.35) 100%)'}} />
-      {clean ? null : (
+      {cover ? <Cover /> : null}
+      {clean || cover ? null : (
         <>
           <Title t={t} />
           <Caption t={t} y={CAPTION_Y[shot.id] ?? 1330} shotStart={shot.t0} />

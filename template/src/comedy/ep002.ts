@@ -317,7 +317,7 @@ const FACE: Record<Who, Key[]> = {BUCKETS: BK_FACE, ACE: ACE_FACE, DEF1: DEF_FAC
 // blinks (start times); long blink = [t, hold]
 const BLINKS: Record<Who, [number, number?][]> = {
   BUCKETS: [[2.95], [6.95], [9.9], [11.9], [14.45], [16.95], [20.6], [22.3], [25.3, 0.05], [27.6]],
-  ACE: [[1.0], [4.35], [7.6], [10.0], [12.5], [14.15, 0.28], [17.6], [22.1], [25.95, 0.3], [28.6]],
+  ACE: [[1.0], [4.35], [7.6], [10.0], [12.5], [14.42], [17.6], [22.1], [25.95, 0.3], [28.6]],
   DEF1: [[1.7], [5.2], [8.9], [13.1], [17.2], [21.4], [26.0]],
   DEF2: [[2.4], [6.6], [10.9], [14.0], [19.0], [23.6], [27.9]],
   AND1: [[3.1], [9.5], [16.1], [22.7], [28.2]],
@@ -574,7 +574,7 @@ const SHOTS_DEF = (hook: Hook): Shot[] => {
   // BUCKETS: "Warmups." (proud)
   s.push({id: 'bk_warmups', t0: 12.45, t1: 13.85, focus: [BK[0], 1.4, BK[1]], cam: still(bkCam(13.0, -0.1, 2.7, 0.1, 21, 0.07, -0.1), 12.45, 13.85)});
   // ACE: the silent stare
-  s.push({id: 'ace_stare', t0: 13.85, t1: 14.62, focus: [ACE1[0], 1.3, ACE1[1]], cam: still(frameHead('ACE', 14.2, BK, 1.6, -0.18, -0.02, 28, 0.05, -0.16), 13.85, 14.62)});
+  s.push({id: 'ace_stare', t0: 13.85, t1: 14.62, focus: [ACE1[0], 1.3, ACE1[1]], cam: still(frameHead('ACE', 14.2, BK, 2.0, -0.2, -0.02, 28, 0.05, -0.18), 13.85, 14.62)});
   // S4 — fake pass, contested miss, rebound to ACE (wide, behind the shooter: ACE's open hands face us)
   s.push({id: 'fake', t0: 14.62, t1: 17.42, focus: [1.5, 1.2, -3.5], cam: move(BEHIND_BK_P.clone().add(V(0.15, 0.0, -0.2)), BEHIND_BK_P.clone().add(V(-0.2, 0.05, 0.3)), BEHIND_BK_T.clone().add(V(0, 0.15, 0)), BEHIND_BK_T.clone().add(V(-0.15, 0.3, 0.2)), 50, 14.62, 17.42)});
   // S5 — BUCKETS, hands up in the double team: "Yo! I'm open!"
